@@ -1,0 +1,4 @@
+{
+  "greetings.hello": "Olá, {name}, essa é uma mensagem traduzida!",
+  "hooray":"Um número aleatório traduzido: {myArbitraryNumber, number} {myArbitraryNumber, plural,\n              one {item}\n              other {items}\n            }"
+}
