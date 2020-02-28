@@ -24,17 +24,23 @@ const JustAnotherPage = () => (
 
 const App = () => {
   const [isOpen, setIsOpen] = useState(true)
+  const [title, setTitle] = useState('')
 
   return (
     <RootContainer>
       <CssBaseline />
-      <AppHeader isOpen={isOpen} handleClick={setIsOpen} />
-      <Drawer isOpen={isOpen} secondaryItems={helper} primaryItems={primary} />
+      <AppHeader isOpen={isOpen} handleClick={setIsOpen} title={title} />
+      <Drawer isOpen={isOpen} secondaryItems={helper} primaryItems={primary} handleChange={setTitle} />
       <ContentContainer>
         <Switch>
           <Route exact path="/" component={ExampleRouteHandler} />
           <Route exact path="/dashboard" component={TestRouteHandler} />
           <Route path="/devices" component={JustAnotherPage} />
+          <Route exact path="/dashboard" component={TestRouteHandler} />
+          <Route exact path="/dashboard" component={TestRouteHandler} />
+          <Route exact path="/dashboard" component={TestRouteHandler} />
+          <Route exact path="/dashboard" component={TestRouteHandler} />
+          <Route exact path="/dashboard" component={TestRouteHandler} />
           <Route path="*" component={ExampleRouteHandler} />
         </Switch>
       </ContentContainer>

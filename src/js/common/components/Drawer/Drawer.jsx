@@ -13,9 +13,15 @@ import { useStyles } from './Drawer'
 const DrawerComponent = (props) => {
   const classes = useStyles()
   const {
-    isOpen, primaryItems, secondaryItems,
+    isOpen, primaryItems, secondaryItems, handleChange,
   } = props
-  const activeRoute = (routeName) => (props.location.pathname.indexOf(routeName) > -1)
+  const activeRoute = (prop) => {
+    if (props.location.pathname.indexOf(prop.path) > -1) {
+      handleChange(prop.label)
+      return true
+    }
+    return false
+  }
 
   return (
     <Drawer
@@ -38,7 +44,7 @@ const DrawerComponent = (props) => {
       <MenuList disablePadding>
         {primaryItems.map((item) => (
           <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem selected={activeRoute(item.path)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
+            <MenuItem selected={activeRoute(item)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
@@ -50,7 +56,7 @@ const DrawerComponent = (props) => {
       <MenuList className={classes.bottomList}>
         {secondaryItems.map((item) => (
           <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem selected={activeRoute(item.path)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
+            <MenuItem selected={activeRoute(item)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
@@ -66,12 +72,14 @@ const DrawerComponent = (props) => {
 DrawerComponent.defaultProps = {
   secondaryItems: [],
   isOpen: true,
+  handleChange: () => {},
 }
 
 DrawerComponent.propTypes = {
   primaryItems: PropTypes.array.isRequired,
   secondaryItems: PropTypes.array,
   isOpen: PropTypes.bool,
+  handleChange: PropTypes.func,
 }
 
 export default withRouter(DrawerComponent)
