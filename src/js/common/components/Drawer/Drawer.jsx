@@ -1,27 +1,21 @@
-import React from 'react';
-import clsx from 'clsx';
-import Drawer from '@material-ui/core/Drawer';
-import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
-import Dashboard from '@material-ui/icons/Dashboard'
+import React from 'react'
+import clsx from 'clsx'
+import Drawer from '@material-ui/core/Drawer'
+import MenuList from '@material-ui/core/MenuList'
+import MenuItem from '@material-ui/core/MenuItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 import logo from 'Assets/images/dojotLogo.png'
+import PropTypes from 'prop-types'
+import { Link, withRouter } from 'react-router-dom'
 import { useStyles } from './Drawer'
 
 const DrawerComponent = (props) => {
-  const classes = useStyles();
-  const { isOpen, handleClick } = props;
-
-  const handleDrawerOpen = () => {
-    handleClick(!isOpen);
-  };
+  const classes = useStyles()
+  const {
+    isOpen, primaryItems, secondaryItems,
+  } = props
+  const activeRoute = (routeName) => (props.location.pathname.indexOf(routeName) > -1)
 
   return (
     <Drawer
@@ -41,24 +35,43 @@ const DrawerComponent = (props) => {
       <div className={classes.toolbar}>
         <img src={logo} alt="dojot logo" />
       </div>
-      <List>
-        {['Dashboard', 'Dispositivos', 'Modelos', 'Fluxos', 'Notificações', 'Usuários', 'Perfis'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+      <MenuList>
+        {primaryItems.map((item) => (
+          <Link to={item.path} className={classes.menuLink} key={item.label}>
+            <MenuItem selected={activeRoute(item.path)}>
+              <ListItemIcon>
+                <item.icon />
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
+            </MenuItem>
+          </Link>
         ))}
-      </List>
-      <List className={classes.bottomList}>
-        {['Ajuda', 'Sair'].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>{index % 2 === 0 ? <Dashboard /> : <MailIcon />}</ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
+      </MenuList>
+      <MenuList className={classes.bottomList}>
+        {secondaryItems.map((item) => (
+          <Link to={item.path} className={classes.menuLink} key={item.label}>
+            <MenuItem selected={activeRoute(item.path)}>
+              <ListItemIcon>
+                <item.icon />
+              </ListItemIcon>
+              <ListItemText primary={item.label} />
+            </MenuItem>
+          </Link>
         ))}
-      </List>
+      </MenuList>
     </Drawer>
-  );
+  )
 }
 
-export default DrawerComponent;
+DrawerComponent.defaultProps = {
+  secondaryItems: [],
+  isOpen: true,
+}
+
+DrawerComponent.propTypes = {
+  primaryItems: PropTypes.array.isRequired,
+  secondaryItems: PropTypes.array,
+  isOpen: PropTypes.bool,
+}
+
+export default withRouter(DrawerComponent)
