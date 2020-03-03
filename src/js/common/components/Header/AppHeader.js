@@ -30,4 +30,7 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(0, 1),
     ...theme.mixins.toolbar,
   },
+  title: {
+    flexGrow: 1,
+  },
 }))

@@ -4,6 +4,7 @@ import Toolbar from '@material-ui/core/Toolbar'
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ArrowBack';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 import Typography from '@material-ui/core/Typography';
 import clsx from 'clsx'
 import { useStyles } from './AppHeader'
@@ -43,9 +44,22 @@ export default (props) => {
         >
           <ChevronLeftIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
+        <Typography
+          className={classes.title}
+          variant="h6"
+          noWrap
+        >
           Dashboard
         </Typography>
+        <IconButton
+          aria-label="account of current user"
+          aria-controls="menu-appbar"
+          aria-haspopup="true"
+          color="inherit"
+        >
+          <AccountCircle />
+        </IconButton>
+        Usuário
       </Toolbar>
     </AppBar>
   )
