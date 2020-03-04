@@ -18,7 +18,7 @@
   "html": [
     {
 			"name": "homepage",
-      "title": "Everything is Awesome",
+      "title": "Dojot - Do IoT",
       "template": "_default.html",
       "filename": "index.html"
     }

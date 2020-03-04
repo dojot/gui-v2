@@ -35,10 +35,10 @@ const DrawerComponent = (props) => {
       <div className={classes.toolbar}>
         <img src={logo} alt="dojot logo" />
       </div>
-      <MenuList>
+      <MenuList disablePadding>
         {primaryItems.map((item) => (
           <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem selected={activeRoute(item.path)}>
+            <MenuItem selected={activeRoute(item.path)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
@@ -50,7 +50,7 @@ const DrawerComponent = (props) => {
       <MenuList className={classes.bottomList}>
         {secondaryItems.map((item) => (
           <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem selected={activeRoute(item.path)}>
+            <MenuItem selected={activeRoute(item.path)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
