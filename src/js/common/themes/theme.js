@@ -26,6 +26,13 @@ const theme = createMuiTheme({
         '@font-face': [raleway],
       },
     },
+    MuiMenuItem: {
+      root: {
+        '&$selected': {
+          backgroundColor: 'rgba(13, 123, 191, 0.1)',
+        },
+      },
+    },
   },
   palette: {
     primary: {
