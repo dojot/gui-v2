@@ -95,6 +95,7 @@
     "@material-ui/icons": "^4.9.1",
     "@material-ui/styles": "latest",
     "clsx": "^1.1.0",
+    "formik": "^2.1.4",
     "history": "^4.10.1",
     "immutable": "^4.0.0-rc.12",
     "prop-types": "^15.7.2",
@@ -110,7 +111,8 @@
     "redux": "^4.0.5",
     "redux-actions": "^2.6.5",
     "redux-saga": "^1.1.3",
-    "reselect": "^4.0.0"
+    "reselect": "^4.0.0",
+    "yup": "^0.28.1"
   },
   "jest": {
     "testURL": "http://www.SomeAwesome.com",

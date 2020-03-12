@@ -6,10 +6,16 @@ import { Drawer } from 'Components/Drawer'
 import CssBaseline from '@material-ui/core/CssBaseline'
 import LazyLoading from 'common/components/LazyLoading'
 import { helper, primary } from 'common/menu'
+import { connect } from 'react-redux'
+import { actions as baseActions } from 'Redux/base'
+import { menuSelector } from 'Selectors/baseSelector'
 
 // This is show case how you can lazy loading component
 const ExampleRouteHandler = LazyLoading(() => import('views/example'))
 const TestRouteHandler = LazyLoading(() => import('views/test'))
+const Dashboard = LazyLoading(() => import('views/dashboard'))
+const Widget = LazyLoading(() => import('views/dashboard/widget'))
+const Wizard = LazyLoading(() => import('views/dashboard/widget/lineChart/Wizard.jsx'))
 
 // Please remove that, it is an example
 const JustAnotherPage = () => (
@@ -22,25 +28,36 @@ const JustAnotherPage = () => (
   </div>
 )
 
-const App = () => {
-  const [isOpen, setIsOpen] = useState(true)
+const App = (props) => {
   const [title, setTitle] = useState('')
+  const { isMenuOpen, updateIsMenuOpen } = props;
 
   return (
     <RootContainer>
       <CssBaseline />
-      <AppHeader isOpen={isOpen} handleClick={setIsOpen} title={title} />
-      <Drawer isOpen={isOpen} secondaryItems={helper} primaryItems={primary} handleChange={setTitle} />
+      <AppHeader
+        isOpen={isMenuOpen}
+        handleClick={updateIsMenuOpen}
+        title={title}
+      />
+      <Drawer
+        isOpen={isMenuOpen}
+        secondaryItems={helper}
+        primaryItems={primary}
+        handleChange={setTitle}
+      />
       <ContentContainer>
         <Switch>
           <Route exact path="/" component={ExampleRouteHandler} />
-          <Route exact path="/dashboard" component={TestRouteHandler} />
+          <Route path="/dashboard/widget/wizard/:id" component={Wizard} />
+          <Route path="/dashboard/widget" component={Widget} />
+          <Route path="/dashboard" component={Dashboard} />
           <Route path="/devices" component={JustAnotherPage} />
-          <Route exact path="/dashboard" component={TestRouteHandler} />
-          <Route exact path="/dashboard" component={TestRouteHandler} />
-          <Route exact path="/dashboard" component={TestRouteHandler} />
-          <Route exact path="/dashboard" component={TestRouteHandler} />
-          <Route exact path="/dashboard" component={TestRouteHandler} />
+          <Route path="/templates" component={TestRouteHandler} />
+          <Route path="/flow" component={TestRouteHandler} />
+          <Route path="/notification" component={TestRouteHandler} />
+          <Route path="/users" component={TestRouteHandler} />
+          <Route path="/profiles" component={TestRouteHandler} />
           <Route path="*" component={ExampleRouteHandler} />
         </Switch>
       </ContentContainer>
@@ -48,6 +65,12 @@ const App = () => {
   )
 }
 
-module.exports = (
-  <App />
-)
+const mapStateToProps = (state) => ({
+  ...menuSelector(state),
+})
+
+const mapDispatchToProps = {
+  ...baseActions,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App)

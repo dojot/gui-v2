@@ -48,6 +48,20 @@ const theme = createMuiTheme({
       default: '#EEE',
     },
   },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        body: {
+          backgroundColor: '#F3F3F1',
+        },
+      },
+    },
+    MuiButtonBase: {
+      root: {
+        verticalAlign: 'top',
+      },
+    },
+  },
 });
 
 export default theme;

@@ -155,6 +155,9 @@ export default {
       Types: path.resolve(__dirname, 'src/js/common/types'),
       Themes: path.resolve(__dirname, 'src/js/common/themes'),
       Assets: path.resolve(__dirname, 'src/assets'),
+      Redux: path.resolve(__dirname, 'src/js/redux/modules'),
+      Sagas: path.resolve(__dirname, 'src/js/redux/sagas'),
+      Selectors: path.resolve(__dirname, 'src/js/redux/selectors'),
     }
   },
   plugins: [
