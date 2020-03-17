@@ -3,7 +3,7 @@ import { Map } from 'immutable'
 
 // import type { baseType } from '../../common/types/example'
 
-const UPDATE_MENU_STATE = 'app/example/UPDATE_EXAMPLE'
+const UPDATE_MENU_STATE = 'app/base/UPDATE_MENU_STATE'
 
 export const constants = {
   UPDATE_MENU_STATE,

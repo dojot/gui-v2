@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
@@ -7,6 +7,8 @@ import Typography from '@material-ui/core/Typography'
 import { General, Devices, InitialStateGeneral as general } from 'Components/Steps'
 import { connect } from 'react-redux'
 import { menuSelector } from 'Selectors/baseSelector'
+import { devicesList } from 'Selectors/devicesSelector'
+import { actions as deviceActions } from 'Redux/devices'
 import useStyles from './Wizard'
 
 const getSteps = () => {
@@ -15,15 +17,30 @@ const getSteps = () => {
 
 const mapStateToProps = (state) => ({
   ...menuSelector(state),
+  ...devicesList(state),
 })
 
-export default connect(mapStateToProps)((props) => {
+const mapDispatchToProps = {
+  ...deviceActions,
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)((props) => {
   const classes = useStyles()
   const [activeStep, setActiveStep] = useState(0)
   const [stepState, setStepState] = useState({
     general,
-    devices: { name: 'Dog', description: 'Cachorro Salsicha' },
+    devices: [],
   })
+
+  useEffect(() => {
+    props.getDevices()
+  }, [])
+
+  useEffect(() => {
+    const { devices } = props;
+    setStepState((prevStepState) => ({ ...prevStepState, devices }))
+  }, [props.devices])
+
   const { isMenuOpen } = props;
   const steps = getSteps()
 

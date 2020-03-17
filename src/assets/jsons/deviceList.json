@@ -1,0 +1,66 @@
+{
+  "data": {
+    "devices": [
+      {
+        "id": "68fc",
+        "label": "TemperatureSensor",
+        "attr": [
+          {
+            "label": "temperature",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          },
+          {
+            "label": "location",
+            "valueType": 3
+          }
+        ]
+      },
+      {
+        "id": "94dc",
+        "label": "TemperatureSensorAlt",
+        "attr": [
+          {
+            "label": "temperature",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "1ebc",
+        "label": "HumiditySensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      }
+    ],
+    "totalPages": 23,
+    "currentPage": 2
+  }
+}

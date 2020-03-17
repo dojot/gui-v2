@@ -48,15 +48,15 @@ const AppHeader = (props) => {
         <Typography variant="h6" noWrap>
           {title}
         </Typography>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="menu-appbar"
-          aria-haspopup="true"
-          color="inherit"
-        >
-          <AccountCircle />
-        </IconButton>
-        Usuário
+        {/* <IconButton */}
+        {/*  aria-label="account of current user" */}
+        {/*  aria-controls="menu-appbar" */}
+        {/*  aria-haspopup="true" */}
+        {/*  color="inherit" */}
+        {/* > */}
+        {/*  <AccountCircle /> */}
+        {/* </IconButton> */}
+        {/* Usuário */}
       </Toolbar>
     </AppBar>
   )

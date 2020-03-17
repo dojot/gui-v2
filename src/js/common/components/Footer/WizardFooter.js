@@ -7,7 +7,8 @@ export const useStyles = makeStyles((theme) => ({
     bottom: 0,
     right: 0,
     left: 0,
-    backgroundColor: 'rgba(243, 243, 241, 0.92)',
+    backgroundColor: theme.palette.background.default,
+    zIndex: theme.zIndex.drawer - 1,
   },
   button: {
     margin: '8px 12px',

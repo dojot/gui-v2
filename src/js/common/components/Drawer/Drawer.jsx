@@ -44,7 +44,10 @@ const DrawerComponent = (props) => {
       <MenuList disablePadding>
         {primaryItems.map((item) => (
           <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem selected={activeRoute(item)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
+            <MenuItem
+              selected={activeRoute(item)}
+              className={clsx({ [classes.menuItemSelected]: activeRoute(item) })}
+            >
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
@@ -56,7 +59,10 @@ const DrawerComponent = (props) => {
       <MenuList className={classes.bottomList}>
         {secondaryItems.map((item) => (
           <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem selected={activeRoute(item)} className={activeRoute(item.path) ? classes.menuItemSelected : ''}>
+            <MenuItem
+              selected={activeRoute(item)}
+              className={clsx({ [classes.menuItemSelected]: activeRoute(item) })}
+            >
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
@@ -72,7 +78,8 @@ const DrawerComponent = (props) => {
 DrawerComponent.defaultProps = {
   secondaryItems: [],
   isOpen: true,
-  handleChange: () => {},
+  handleChange: () => {
+  },
 }
 
 DrawerComponent.propTypes = {

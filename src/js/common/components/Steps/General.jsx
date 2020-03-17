@@ -49,7 +49,7 @@ const GeneralForm = (props) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container spacing={4} direction="column" className={classes.root}>
+      <Grid container direction="column" className={classes.root}>
         <Grid item className={classes.item}>
           <TextField
             variant="outlined"
