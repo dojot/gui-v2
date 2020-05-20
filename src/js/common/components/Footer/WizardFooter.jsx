@@ -2,7 +2,6 @@ import React from 'react'
 import clsx from 'clsx'
 import Button from '@material-ui/core/Button'
 import PropTypes from 'prop-types'
-import General from 'Components/Steps/General'
 import { useStyles } from './WizardFooter'
 
 const WFooter = (props) => {

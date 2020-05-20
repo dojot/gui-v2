@@ -17,11 +17,11 @@ const validationSchema = Yup.object({
 const General = (props) => {
   const { initialState, handleClick, ...otherProps } = props
   const handleSubmit = (values) => {
-    handleClick('next', { values, key: 'general' })
+    handleClick({ type: 'next', payload: { values, key: 'general' } })
   }
 
   const handleBack = () => {
-    handleClick('back')
+    handleClick({ type: 'back' })
   }
 
   return (

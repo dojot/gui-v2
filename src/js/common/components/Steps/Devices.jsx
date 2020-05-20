@@ -5,29 +5,27 @@ import Grid from '@material-ui/core/Grid'
 import PropTypes from 'prop-types'
 import { WFooter } from 'Components/Footer'
 
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Divider from '@material-ui/core/Divider';
-import ListItemText from '@material-ui/core/ListItemText';
-import Checkbox from '@material-ui/core/Checkbox';
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import Divider from '@material-ui/core/Divider'
+import ListItemText from '@material-ui/core/ListItemText'
+import Checkbox from '@material-ui/core/Checkbox'
 import { useStyles } from './Devices'
 
 const validationSchema = Yup.object({
-  name: Yup.string('Nome do Widget')
-    .required('Nome é obrigatório'),
 })
 
 const Devices = (props) => {
   const { initialState, handleClick, ...otherProps } = props
+
   const handleSubmit = (values) => {
-    handleClick('next', { values, key: 'devices' });
+    handleClick({ type: 'next', payload: { values: values.devices, key: 'devices' } })
   }
 
   const handleBack = () => {
-    handleClick('back');
+    handleClick({ type: 'back' })
   }
-
   return (
     <Formik
       initialValues={initialState}
@@ -42,46 +40,51 @@ const Devices = (props) => {
 const GeneralForm = (props) => {
   const {
     values,
+    initialValues,
     touched,
     errors,
     handleChange,
     handleBlur,
     handleSubmit,
+    selectedValues,
   } = props
 
-  console.log(props)
+  const [checked, setChecked] = React.useState(selectedValues)
 
-  const [checked, setChecked] = React.useState([]);
-
-  const handleToggle = (value) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
+  const handleToggle = (value) => {
+    const currentIndex = checked.map((item) => item.id).indexOf(value.id)
+    const newChecked = [...checked]
 
     if (currentIndex === -1) {
-      newChecked.push(value);
+      newChecked.push(value)
     } else {
-      newChecked.splice(currentIndex, 1);
+      newChecked.splice(currentIndex, 1)
     }
+    setChecked(newChecked)
+    handleChange({ currentTarget: { name: 'devices', value: newChecked } })
+  }
 
-    setChecked(newChecked);
-  };
+  const getItemSelected = (id) => checked.map((item) => item.id).indexOf(id) !== -1
+
   const classes = useStyles()
-
   return (
     <form onSubmit={handleSubmit}>
       <Grid container justify="center">
-
         <List className={classes.root}>
-          {values.devices.map((value) => {
-            const labelId = `checkbox-list-label-${value.id}`;
+          {initialValues.devices.map((value) => {
+            const labelId = `checkbox-list-label-${value.id}`
 
             return (
-              <Fragment>
-                <ListItem key={value.id} role={undefined} button onClick={handleToggle(value.id)}>
+              <Fragment key={value.id}>
+                <ListItem
+                  role={undefined}
+                  button
+                  onClick={() => handleToggle(value)}
+                >
                   <ListItemIcon>
                     <Checkbox
                       edge="start"
-                      checked={checked.indexOf(value.id) !== -1}
+                      checked={getItemSelected(value.id)}
                       tabIndex={-1}
                       disableRipple
                       inputProps={{ 'aria-labelledby': labelId }}
@@ -92,7 +95,7 @@ const GeneralForm = (props) => {
                 </ListItem>
                 <Divider />
               </Fragment>
-            );
+            )
           })}
         </List>
 

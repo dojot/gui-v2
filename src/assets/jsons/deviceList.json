@@ -2,7 +2,7 @@
   "data": {
     "devices": [
       {
-        "id": "68fc",
+        "id": "8a50b7",
         "label": "TemperatureSensor",
         "attr": [
           {
@@ -24,7 +24,7 @@
         ]
       },
       {
-        "id": "94dc",
+        "id": "1sd45a",
         "label": "TemperatureSensorAlt",
         "attr": [
           {
@@ -42,8 +42,422 @@
         ]
       },
       {
-        "id": "1ebc",
-        "label": "HumiditySensor",
+        "id": "7a52g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "7a51g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "7r52g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "3a52g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "7a52g9",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "1u22g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "9a02y1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "5t57g2",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "8ku7g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "9s51g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "9s92r6",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "6gh5g9",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "1r52g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "5f52h1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "4y58g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "2z53g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "9t12g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "4p52k1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "7k5sg1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "1o22g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "7h17g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "2z56g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "7p56g1",
+        "label": "Humidity Sensor",
+        "attr": [
+          {
+            "label": "value",
+            "valueType": 0
+          },
+          {
+            "label": "updateFrequency",
+            "valueType": 0
+          },
+          {
+            "label": "unity",
+            "valueType": 1
+          }
+        ]
+      },
+      {
+        "id": "7u83g1",
+        "label": "Humidity Sensor",
         "attr": [
           {
             "label": "value",

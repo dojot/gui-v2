@@ -11,7 +11,7 @@ export function* fetchExampleData() {
   const result: exampleType = {
     title: 'Everything is Awesome',
     description: __CONFIG__.description,
-    source: 'This message is coming from Alguma coisa',
+    source: 'This message is coming from Redux',
   }
 
   yield put(exampleActions.updateExample(result))

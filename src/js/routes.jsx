@@ -16,6 +16,7 @@ const TestRouteHandler = LazyLoading(() => import('views/test'))
 const Dashboard = LazyLoading(() => import('views/dashboard'))
 const Widget = LazyLoading(() => import('views/dashboard/widget'))
 const Wizard = LazyLoading(() => import('views/dashboard/widget/lineChart/Wizard.jsx'))
+const WizardManager = LazyLoading(() => import('./common/managers/WizardManager'))
 
 // Please remove that, it is an example
 const JustAnotherPage = () => (
@@ -49,7 +50,7 @@ const App = (props) => {
       <ContentContainer>
         <Switch>
           <Route exact path="/" component={ExampleRouteHandler} />
-          <Route path="/dashboard/widget/wizard/:id" component={Wizard} />
+          <Route path="/dashboard/widget/wizard/:id" component={WizardManager} />
           <Route path="/dashboard/widget" component={Widget} />
           <Route path="/dashboard" component={Dashboard} />
           <Route path="/devices" component={JustAnotherPage} />
