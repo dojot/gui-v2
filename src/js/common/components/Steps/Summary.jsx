@@ -1,16 +1,15 @@
-import React from 'react'
 // import PropTypes from 'prop-types'
+import React from 'react'
 import Grid from '@material-ui/core/Grid'
 import { WFooter } from 'Components/Footer'
 import { Formik } from 'formik'
-// import { TextField } from '@material-ui/core'
 import Divider from '@material-ui/core/Divider'
 import { useStyles } from './Summary'
 
 const Summary = (props) => {
   const { initialState, handleClick, ...otherProps } = props
   const handleSubmit = (values) => {
-    handleClick({ type: 'next', payload: { values, key: 'general' } })
+    handleClick({ type: 'finish', payload: { values, key: 'general' } })
   }
 
   const handleBack = () => {

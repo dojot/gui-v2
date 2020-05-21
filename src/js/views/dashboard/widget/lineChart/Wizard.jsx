@@ -1,11 +1,15 @@
-import React, { useState, useEffect, useReducer } from 'react'
+import React, { useEffect, useReducer } from 'react'
 import Stepper from '@material-ui/core/Stepper'
 import Step from '@material-ui/core/Step'
 import StepLabel from '@material-ui/core/StepLabel'
 import Button from '@material-ui/core/Button'
 import Typography from '@material-ui/core/Typography'
 import {
-  General, Devices, Attributes, InitialStateGeneral as general, Summary,
+  General,
+  Devices,
+  Attributes,
+  InitialStateGeneral as general,
+  Summary,
 } from 'Components/Steps'
 import { connect } from 'react-redux'
 import { menuSelector } from 'Selectors/baseSelector'
@@ -53,6 +57,8 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
           ...state,
           activeStep: state.activeStep - 1,
         }
+      case 'finish':
+        return {}
       default:
         return {}
     }
@@ -119,7 +125,11 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
 
   return (
     <div className={classes.root}>
-      <Stepper activeStep={state.activeStep} classes={{ root: classes.paper }} alternativeLabel>
+      <Stepper
+        activeStep={state.activeStep}
+        classes={{ root: classes.paper }}
+        alternativeLabel
+      >
         {steps.map((label) => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

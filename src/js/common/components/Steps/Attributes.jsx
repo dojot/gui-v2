@@ -16,7 +16,7 @@ import CommentIcon from '@material-ui/icons/ColorLens';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import Divider from '@material-ui/core/Divider'
-import { BlockPicker } from 'react-color';
+import { GithubPicker } from 'react-color';
 import Tooltip from '@material-ui/core/Tooltip';
 import { useStyles } from './Devices'
 
@@ -222,7 +222,7 @@ const ItemRow = ({
           {
             isOpen ? (
               <div className={classes.picker}>
-                <BlockPicker
+                <GithubPicker
                   triangle="top-right"
                   onChange={(props) => {
                     setColor(props.hex)

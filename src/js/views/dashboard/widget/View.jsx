@@ -1,10 +1,9 @@
+// import PropTypes from 'prop-types'
 import React from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
 import { ImageCard } from 'Components/Cards'
-import Line from 'Assets/images/linha.png'
 import Area from 'Assets/images/area.png'
 import Donut from 'Assets/images/donut.png'
 import Pizza from 'Assets/images/pizza.png'
@@ -22,10 +21,9 @@ const useStyles = makeStyles((theme) => {
 
 const WidgetView = (props) => {
   const classes = useStyles()
-  console.log(props)
 
   const handleClick = (id) => {
-    const { history, match: { params } } = props
+    const { history } = props
     history.push(`/dashboard/widget/wizard/${id}`)
   }
 

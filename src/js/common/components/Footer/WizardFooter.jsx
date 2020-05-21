@@ -23,7 +23,14 @@ const WFooter = (props) => {
       >
         Back
       </Button>
-      <Button className={classes.button} variant="contained" color="primary" type="submit" disabled={!isValid}>
+      <Button
+        className={classes.button}
+        variant="contained"
+        color="primary"
+        type="submit"
+        disabled={!isValid}
+        disableElevation
+      >
         {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
       </Button>
     </div>
