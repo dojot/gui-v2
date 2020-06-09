@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Route, Switch } from 'react-router-dom'
 import { RootContainer, ContentContainer } from 'Components/Containers'
 import { AppHeader } from 'Components/Header'
@@ -8,10 +8,11 @@ import LazyLoading from 'common/components/LazyLoading'
 import { helper, primary } from 'common/menu'
 import { connect } from 'react-redux'
 import { actions as baseActions } from 'Redux/base'
-import { menuSelector } from 'Selectors/baseSelector'
+import { menuSelector, titleSelector } from 'Selectors/baseSelector'
 
 // This is show case how you can lazy loading component
 const ExampleRouteHandler = LazyLoading(() => import('views/example'))
+const GridTest = LazyLoading(() => import('views/gridTest'))
 const TestRouteHandler = LazyLoading(() => import('views/test'))
 const Dashboard = LazyLoading(() => import('views/dashboard'))
 const Widget = LazyLoading(() => import('views/dashboard/widget'))
@@ -30,8 +31,12 @@ const JustAnotherPage = () => (
 )
 
 const App = (props) => {
-  const [title, setTitle] = useState('')
-  const { isMenuOpen, updateIsMenuOpen } = props;
+  const {
+    isMenuOpen,
+    updateIsMenuOpen,
+    headerTitle,
+    updateHeaderTitle,
+  } = props;
 
   return (
     <RootContainer>
@@ -39,13 +44,13 @@ const App = (props) => {
       <AppHeader
         isOpen={isMenuOpen}
         handleClick={updateIsMenuOpen}
-        title={title}
+        title={headerTitle}
       />
       <Drawer
         isOpen={isMenuOpen}
         secondaryItems={helper}
         primaryItems={primary}
-        handleChange={setTitle}
+        handleChange={updateHeaderTitle}
       />
       <ContentContainer>
         <Switch>
@@ -58,7 +63,7 @@ const App = (props) => {
           <Route path="/flow" component={TestRouteHandler} />
           <Route path="/notification" component={TestRouteHandler} />
           <Route path="/users" component={TestRouteHandler} />
-          <Route path="/profiles" component={TestRouteHandler} />
+          <Route path="/profiles" component={GridTest} />
           <Route path="*" component={ExampleRouteHandler} />
         </Switch>
       </ContentContainer>
@@ -68,6 +73,7 @@ const App = (props) => {
 
 const mapStateToProps = (state) => ({
   ...menuSelector(state),
+  ...titleSelector(state),
 })
 
 const mapDispatchToProps = {

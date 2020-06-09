@@ -28,7 +28,7 @@ const WidgetView = (props) => {
   }
 
   return (
-    <Grid container justify="flex-start" className={classes.root} spacing={4}>
+    <Grid container justify="flex-start" className={classes.root}>
       <LineChartCard onClick={() => handleClick(1)} />
       <ImageCard
         title="Gráfico de Área"

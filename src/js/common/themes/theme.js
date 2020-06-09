@@ -27,6 +27,7 @@ const theme = createMuiTheme({
       root: {
         '&$selected': {
           backgroundColor: 'rgba(13, 123, 191, 0.1)',
+          borderLeft: '4px solid #4788DC',
         },
       },
     },

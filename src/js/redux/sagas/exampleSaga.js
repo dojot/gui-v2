@@ -10,7 +10,7 @@ export function* fetchExampleData() {
   // pretend there is an api call
   const result: exampleType = {
     title: 'Everything is Awesome',
-    description: __CONFIG__.description,
+    description: __CONFIG__.hello,
     source: 'This message is coming from Redux',
   }
 

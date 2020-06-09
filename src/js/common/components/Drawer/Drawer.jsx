@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import clsx from 'clsx'
 import Drawer from '@material-ui/core/Drawer'
 import MenuList from '@material-ui/core/MenuList'
@@ -12,9 +12,11 @@ import { useStyles } from './Drawer'
 
 const DrawerComponent = (props) => {
   const classes = useStyles()
+
   const {
     isOpen, primaryItems, secondaryItems, handleChange,
   } = props
+
   const activeRoute = (prop) => {
     if (props.location.pathname.indexOf(prop.path) > -1) {
       handleChange(prop.label)
@@ -43,10 +45,13 @@ const DrawerComponent = (props) => {
       </div>
       <MenuList disablePadding>
         {primaryItems.map((item) => (
-          <Link to={item.path} className={classes.menuLink} key={item.label}>
+          <Link
+            to={item.path}
+            className={classes.menuLink}
+            key={item.label}
+          >
             <MenuItem
               selected={activeRoute(item)}
-              className={clsx({ [classes.menuItemSelected]: activeRoute(item) })}
             >
               <ListItemIcon>
                 <item.icon />
@@ -58,10 +63,14 @@ const DrawerComponent = (props) => {
       </MenuList>
       <MenuList className={classes.bottomList}>
         {secondaryItems.map((item) => (
-          <Link to={item.path} className={classes.menuLink} key={item.label}>
+          <Link
+            to={item.path}
+            className={classes.menuLink}
+            key={item.label}
+            onClick={() => handleChange(item.label)}
+          >
             <MenuItem
               selected={activeRoute(item)}
-              className={clsx({ [classes.menuItemSelected]: activeRoute(item) })}
             >
               <ListItemIcon>
                 <item.icon />
@@ -78,8 +87,7 @@ const DrawerComponent = (props) => {
 DrawerComponent.defaultProps = {
   secondaryItems: [],
   isOpen: true,
-  handleChange: () => {
-  },
+  handleChange: () => {},
 }
 
 DrawerComponent.propTypes = {

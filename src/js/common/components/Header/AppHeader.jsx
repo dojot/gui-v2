@@ -5,10 +5,10 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import ChevronLeftIcon from '@material-ui/icons/ArrowBack'
 import Typography from '@material-ui/core/Typography'
-import AccountCircle from '@material-ui/icons/AccountCircle'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
 import { useStyles } from './AppHeader'
+// import AccountCircle from '@material-ui/icons/AccountCircle'
 
 
 const AppHeader = (props) => {

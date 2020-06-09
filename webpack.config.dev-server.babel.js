@@ -2,8 +2,6 @@ import config from 'config'
 import webpack from 'webpack'
 import HtmlWebpackPlugin from 'html-webpack-plugin'
 import DashboardPlugin from 'webpack-dashboard/plugin'
-import precss from 'precss'
-import postcssPresetEnv from 'postcss-preset-env'
 
 import webpackConfig, { JS_SOURCE } from './webpack.config.common'
 
@@ -114,23 +112,6 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
         importLoaders: 1,
         modules: true,
         localIdentName: '[name]__[local]_[hash:base64]',
-      },
-    },
-    {
-      loader: 'postcss-loader',
-      ident: 'postcss',
-      options: {
-        sourceMap: true,
-        // https://github.com/postcss/postcss-loader/issues/92
-        // https://github.com/postcss/postcss-loader/issues/8
-        plugins: () => [
-          precss(),
-          // https://github.com/csstools/postcss-preset-env
-          postcssPresetEnv({
-            browsers: ['last 2 versions', 'ie >= 9'],
-            compress: true,
-          }),
-        ],
       },
     },
   ],

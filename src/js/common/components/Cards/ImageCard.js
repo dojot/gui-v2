@@ -13,9 +13,11 @@ const useStyles = makeStyles((theme) => {
     control: {
       padding: theme.spacing(2),
     },
+    item: {
+      margin: 16,
+    },
     rootCard: {
       maxWidth: 240,
-
     },
     actions: {
       height: 273,

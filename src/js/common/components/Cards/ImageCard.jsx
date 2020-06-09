@@ -14,7 +14,7 @@ const ImageCard = (props) => {
     title, image, description, handleClick,
   } = props
   return (
-    <Grid item>
+    <Grid item classes={{ item: classes.item }}>
       <Card className={classes.rootCard}>
         <CardActionArea className={classes.actions} onClick={() => handleClick()}>
           <CardMedia
