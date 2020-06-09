@@ -7,7 +7,6 @@ describe('redux.sagas.exampleSaga', () => {
 
     global.__CONFIG__ = {
       description: 'fake description',
-      hello: "fake hello"
     }
 
     const fixture = {
