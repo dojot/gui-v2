@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { fromJS } from 'immutable'
 
-import routes from './routes'
+import App from './routes'
 import Root from './Root'
 import configureStore from './redux/configureStore'
 import { history } from './app-history'
@@ -25,6 +25,6 @@ const store = configureStore(initialState, history)
 // Render the React application to the DOM
 // Root component is to bootstrap Provider, Router and DevTools
 ReactDOM.render(
-  <Root history={history} routes={routes} store={store} />,
+  <Root history={history} Routes={App} store={store} />,
   document.getElementById('app-container')
 )

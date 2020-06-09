@@ -12,9 +12,9 @@ import theme from 'Themes/theme'
 
 export default class Root extends React.PureComponent {
   get content() {
-    const { routes, history } = this.props
+    const { Routes, history } = this.props
 
-    return <Router history={history}>{routes}</Router>
+    return <Router history={history}><Routes /></Router>
   }
 
   render() {
@@ -32,6 +32,6 @@ export default class Root extends React.PureComponent {
 
 Root.propTypes = {
   history: PropTypes.object.isRequired,
-  routes: PropTypes.element.isRequired,
+  Routes: PropTypes.object.isRequired,
   store: PropTypes.object.isRequired,
 }

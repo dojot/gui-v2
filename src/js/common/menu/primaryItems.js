@@ -10,11 +10,6 @@ import {
 
 export default [
   {
-    label: 'Dashboard',
-    path: '/dashboard',
-    icon: Dashboard,
-  },
-  {
     label: 'Dispositivos',
     path: '/devices',
     icon: DevicesOther,
@@ -43,5 +38,10 @@ export default [
     label: 'Perfis',
     path: '/profiles',
     icon: SupervisedUserCircle,
+  },
+  {
+    label: 'Dashboard',
+    path: '/dashboard',
+    icon: Dashboard,
   },
 ]

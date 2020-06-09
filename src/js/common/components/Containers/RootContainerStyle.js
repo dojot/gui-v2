@@ -5,7 +5,9 @@ export const useStyles = makeStyles((theme) => ({
     display: 'flex',
   },
   content: {
+    marginTop: 64,
     flexGrow: 1,
-    padding: theme.spacing(3),
+    padding: theme.spacing(1),
+    width: '50%',
   },
 }))
