@@ -8,7 +8,7 @@ import Area from 'Assets/images/area.png'
 import Donut from 'Assets/images/donut.png'
 import Pizza from 'Assets/images/pizza.png'
 import Bubble from 'Assets/images/bubble.png'
-import { LineChartCard } from './lineChart/Card'
+import { LineChartCard } from './lineChart'
 
 const useStyles = makeStyles((theme) => {
   return {

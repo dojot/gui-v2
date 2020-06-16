@@ -1,8 +1,6 @@
 import {
   race, call, put, fork, take, takeEvery, cancel,
 } from 'redux-saga/effects'
-import { constants as deviceConstants } from 'Redux/devices'
-import { fetchExampleData } from 'Sagas/devicesSaga'
 import {
   constants as dashboardConstants,
   actions as dashboardActions,
@@ -17,11 +15,21 @@ function delay(duration) {
   return promise;
 }
 
+let count = 0;
+
 function* pollData() {
   try {
-    yield call(delay, 2000);
+    yield call(delay, 1000);
     // const response = yield call(get, url)
-    const response = { data: { value: Math.floor(Math.random() * 100) } }
+    count += 1;
+    const response = {
+      data: {
+        name: count,
+        uv: Math.floor(Math.random() * 100),
+        pv: Math.floor(Math.random() * 100),
+        amt: Math.floor(Math.random() * 100),
+      },
+    }
     const condition = 'data' in response;
     if (condition) yield put(dashboardActions.updateValues(response.data))
   } catch (error) {

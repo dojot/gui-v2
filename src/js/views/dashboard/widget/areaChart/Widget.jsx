@@ -1,16 +1,18 @@
-import React, { useState } from 'react'
+import React from 'react'
 import Card from '@material-ui/core/Card'
 import CardHeader from '@material-ui/core/CardHeader'
 import IconButton from '@material-ui/core/IconButton'
 import More from '@material-ui/icons/MoreVert'
 import Menu from '@material-ui/core/Menu'
+import Fade from '@material-ui/core/Fade'
 import MenuItem from '@material-ui/core/MenuItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import CardContent from '@material-ui/core/CardContent'
 import {
+  Area,
+  AreaChart,
   CartesianGrid,
-  Legend, Line,
-  LineChart,
+  Legend,
   ResponsiveContainer,
   Tooltip,
   XAxis,
@@ -32,32 +34,20 @@ const useStyles = makeStyles(() => {
   }
 })
 
-const widgetConfig = [
-  {
-    type: 'monotone', dataKey: 'uv', stroke: '#82ca9d', name: 'Ultra Violeta',
-  },
-  {
-    type: 'monotone', dataKey: 'amt', stroke: '#ca4f4f', name: 'Pressão',
-  },
-  {
-    type: 'monotone', dataKey: 'pv', stroke: '#8884d8', name: 'Temperatura',
-  },
-];
-
 export default ({
-  id, data, config, title, onDelete, onPin, onEdit,
+  id, onDelete, onPin, data,
 }) => {
   const classes = useStyles()
-  const [anchorEl, setAnchorEl] = useState(null)
+
+  const [anchorEl, setAnchorEl] = React.useState(null)
   const open = Boolean(anchorEl)
 
   const handleClickMenu = (event) => {
     setAnchorEl(event.currentTarget)
   }
 
-  const handleClose = (callback = () => {}) => {
+  const handleClose = () => {
     setAnchorEl(null)
-    callback(id);
   }
   return (
     <Card className={classes.card} variant="outlined">
@@ -65,7 +55,7 @@ export default ({
         action={(
           <div>
             <IconButton
-              aria-controls="fade-menu-1"
+              aria-controls="fade-menu-2"
               aria-haspopup="true"
               aria-label="settings"
               onClick={handleClickMenu}
@@ -73,29 +63,30 @@ export default ({
               <More />
             </IconButton>
             <Menu
-              id="fade-menu-1"
+              id="fade-menu-2"
               anchorEl={anchorEl}
               keepMounted
               open={open}
               onClose={handleClose}
+              TransitionComponent={Fade}
             >
-              <MenuItem onClick={() => handleClose()}>
+              <MenuItem onClick={handleClose}>
                 <ListItemText primary="Editar" />
               </MenuItem>
-              <MenuItem onClick={() => handleClose(onPin)}>
+              <MenuItem onClick={() => onPin(id)}>
                 <ListItemText primary="Fixar" />
               </MenuItem>
-              <MenuItem onClick={() => handleClose(onDelete)}>
+              <MenuItem onClick={() => onDelete(id)}>
                 <ListItemText primary="Excluir" />
               </MenuItem>
             </Menu>
           </div>
         )}
-        title={title}
+        title="Velocidade do vento"
       />
       <CardContent className={classes.content}>
         <ResponsiveContainer width="100%" height="100%">
-          <LineChart
+          <AreaChart
             data={data}
             margin={{
               top: 5,
@@ -104,15 +95,38 @@ export default ({
               bottom: 5,
             }}
           >
+            <defs>
+              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
+              </linearGradient>
+              <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
+                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
+              </linearGradient>
+            </defs>
             <XAxis dataKey="name" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
-            {widgetConfig.map((item) => (
-              <Line isAnimationActive={false} key={item.dataKey} {...item} />
-            ))}
-          </LineChart>
+            <Area
+              type="monotone"
+              dataKey="uv"
+              stroke="#8884d8"
+              fillOpacity={1}
+              fill="url(#colorUv)"
+              isAnimationActive={false}
+            />
+            <Area
+              type="monotone"
+              dataKey="pv"
+              stroke="#82ca9d"
+              fillOpacity={1}
+              fill="url(#colorPv)"
+              isAnimationActive={false}
+            />
+          </AreaChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>
