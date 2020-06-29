@@ -42,31 +42,45 @@ const initialState = {
 
 export default connect(mapStateToProps, mapDispatchToProps)((props) => {
   const classes = useStyles()
+  const { area } = __CONFIG__
 
   useEffect(() => {
     props.getDevices()
   }, [])
 
-  const generateLineConfig = (state) => {
+  const generateAreaConfig = (state) => {
     const { attributes, general: generalState } = state;
+
     const meta = {
       title: generalState.name || '',
       subTitle: generalState.description || '',
     }
-    const line = attributes.map((item) => (
+    const areaProps = attributes.map((item) => (
       {
         type: 'monotone',
         dataKey: item.attributeID,
         stroke: item.color,
+        fillOpacity: 1,
+        fill: `url(#color${item.attributeID})`,
         name: item.description || item.label,
       }
     ))
+    const defsProps = attributes.map((item) => (
+      {
+        id: `color${item.attributeID}`,
+        x1: '0',
+        y1: '0',
+        x2: '0',
+        y2: '1',
+        color: item.color,
+      }
+    ))
 
-    return { line, meta }
+    return { areaProps, defsProps, meta }
   }
 
   const createNewWidget = (attributes) => {
-    const widgetId = `0/${uuidv4()}`;
+    const widgetId = `${area}/${uuidv4()}`;
     const newWidget = {
       i: widgetId,
       x: 0,
@@ -79,7 +93,7 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
       moved: false,
     }
     props.addWidget(newWidget);
-    props.addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
+    props.addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) });
   }
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {

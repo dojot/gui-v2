@@ -35,7 +35,7 @@ const useStyles = makeStyles(() => {
 })
 
 export default ({
-  id, data, onDelete, onPin,
+  id, data, onDelete, onPin, config,
 }) => {
   const classes = useStyles()
   const [anchorEl, setAnchorEl] = React.useState(null)
@@ -81,7 +81,8 @@ export default ({
             </Menu>
           </div>
         )}
-        title="Distancia percorrida por hora"
+        title={config.meta.title}
+        subheader={config.meta.subTitle}
       />
       <CardContent className={classes.content}>
         <ResponsiveContainer width="100%" height="100%">
@@ -99,8 +100,9 @@ export default ({
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar isAnimationActive={false} dataKey="pv" fill="#8884d8" />
-            <Bar isAnimationActive={false} dataKey="uv" fill="#82ca9d" />
+            {config.bar.map((item) => (
+              <Bar isAnimationActive={false} {...item} />
+            ))}
           </BarChart>
         </ResponsiveContainer>
       </CardContent>

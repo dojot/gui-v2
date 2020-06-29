@@ -16,7 +16,6 @@ const GridTest = LazyLoading(() => import('views/gridTest'))
 const TestRouteHandler = LazyLoading(() => import('views/test'))
 const Dashboard = LazyLoading(() => import('views/dashboard'))
 const Widget = LazyLoading(() => import('views/dashboard/widget'))
-const Wizard = LazyLoading(() => import('views/dashboard/widget/lineChart/Wizard.jsx'))
 const WizardManager = LazyLoading(() => import('./common/managers/WizardManager'))
 
 // Please remove that, it is an example

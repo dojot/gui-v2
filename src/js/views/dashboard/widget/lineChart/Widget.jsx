@@ -32,18 +32,6 @@ const useStyles = makeStyles(() => {
   }
 })
 
-const widgetConfig = [
-  {
-    type: 'monotone', dataKey: 'uv', stroke: '#82ca9d', name: 'Ultra Violeta',
-  },
-  {
-    type: 'monotone', dataKey: 'amt', stroke: '#ca4f4f', name: 'Pressão',
-  },
-  {
-    type: 'monotone', dataKey: 'pv', stroke: '#8884d8', name: 'Temperatura',
-  },
-];
-
 export default ({
   id, data, config, title, onDelete, onPin, onEdit,
 }) => {
@@ -91,7 +79,8 @@ export default ({
             </Menu>
           </div>
         )}
-        title={title}
+        title={config.meta.title}
+        subheader={config.meta.subTitle}
       />
       <CardContent className={classes.content}>
         <ResponsiveContainer width="100%" height="100%">
@@ -109,7 +98,7 @@ export default ({
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
-            {widgetConfig.map((item) => (
+            {config.line.map((item) => (
               <Line isAnimationActive={false} key={item.dataKey} {...item} />
             ))}
           </LineChart>

@@ -10,7 +10,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon'
 import Divider from '@material-ui/core/Divider'
 import ListItemText from '@material-ui/core/ListItemText'
 import Checkbox from '@material-ui/core/Checkbox'
-import { useStyles } from './Devices'
+import { useStyles } from './Devices.js'
 
 const validationSchema = Yup.object({
 })

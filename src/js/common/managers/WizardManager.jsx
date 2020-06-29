@@ -2,20 +2,28 @@ import React from 'react'
 import LazyLoading from 'Components/LazyLoading'
 
 const WizardLC = LazyLoading(() => import('views/dashboard/widget/lineChart/Wizard.jsx'))
+const WizardAC = LazyLoading(() => import('views/dashboard/widget/areaChart/Wizard.jsx'))
+const WizardBC = LazyLoading(() => import('views/dashboard/widget/barChart/Wizard.jsx'))
 
 
 const Manager = (props) => {
-  const { match: { params } } = props;
+  const { match: { params }, history } = props;
+  const {
+    line, area, bar, pizza, donut, bubble,
+  } = __CONFIG__;
 
-  console.log(params)
+  const toDashboard = () => {
+    history.push('/dashboard')
+  }
 
   switch (params.id) {
-    case '1': return <WizardLC />
-    case '2': return <WizardLC />
-    case '3': return <WizardLC />
-    case '4': return <WizardLC />
-    case '5': return <WizardLC />
-    default: return <WizardLC />
+    case line: return <WizardLC toDashboard={toDashboard} />
+    case area: return <WizardAC toDashboard={toDashboard} />
+    case bar: return <WizardBC toDashboard={toDashboard} />
+    case pizza: return <WizardLC />
+    case donut: return <WizardLC />
+    case bubble: return <WizardLC />
+    default: return <div />
   }
 }
 
