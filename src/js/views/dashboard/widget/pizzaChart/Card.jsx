@@ -1,14 +1,14 @@
 import { ImageCard } from 'Components/Cards'
 import React from 'react'
-import Bar from 'Assets/images/bar.png'
+import Pizza from 'Assets/images/pizza.png'
 
 export default (props) => {
   const { onClick } = props
   return (
     <ImageCard
-      title="Gráfico de Barras"
-      image={Bar}
-      description="Representa os dados por barras"
+      title="Gráfico de Pizza"
+      image={Pizza}
+      description="Cada categoria estatística representada é proporcional às respectivas frequências"
       handleClick={() => onClick()}
     />
   )

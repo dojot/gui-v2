@@ -3,12 +3,12 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Grid from '@material-ui/core/Grid'
 import { makeStyles } from '@material-ui/core/styles'
-import { ImageCard } from 'Components/Cards'
-import Area from 'Assets/images/area.png'
-import Donut from 'Assets/images/donut.png'
-import Pizza from 'Assets/images/pizza.png'
-import Bubble from 'Assets/images/bubble.png'
 import { LineChartCard } from './lineChart'
+import { AreaChartCard } from './areaChart'
+import { BarChartCard } from './barChart'
+import { PizzaChartCard } from './pizzaChart'
+import { DonutChartCard } from './donutChart'
+import { BubbleChartCard } from './bubbleChart'
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -18,9 +18,12 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-
 const WidgetView = (props) => {
   const classes = useStyles()
+
+  const {
+    line, area, bar, pizza, donut, bubble,
+  } = __CONFIG__;
 
   const handleClick = (id) => {
     const { history } = props
@@ -29,31 +32,12 @@ const WidgetView = (props) => {
 
   return (
     <Grid container justify="flex-start" className={classes.root}>
-      <LineChartCard onClick={() => handleClick(1)} />
-      <ImageCard
-        title="Gráfico de Área"
-        image={Area}
-        description="Representa os dados por meio de uma área preenchida"
-        handleClick={() => handleClick(2)}
-      />
-      <ImageCard
-        title="Gráfico de Pizza"
-        image={Pizza}
-        description="Cada categoria estatística representada é proporcional às respectivas frequências"
-        handleClick={() => handleClick(3)}
-      />
-      <ImageCard
-        title="Gráfico de Donut"
-        image={Donut}
-        description="Alternativa ao Gráfico de Pizza"
-        handleClick={() => handleClick(4)}
-      />
-      <ImageCard
-        title="Gráfico de Bolha"
-        image={Bubble}
-        description="Um gráfico de bolhas é uma variação de um gráfico de dispersão"
-        handleClick={() => handleClick(5)}
-      />
+      <LineChartCard onClick={() => handleClick(line)} />
+      <AreaChartCard onClick={() => handleClick(area)} />
+      <PizzaChartCard onClick={() => handleClick(pizza)} />
+      <DonutChartCard onClick={() => handleClick(donut)} />
+      <BubbleChartCard onClick={() => handleClick(bubble)} />
+      <BarChartCard onClick={() => handleClick(bar)} />
     </Grid>
   )
 }

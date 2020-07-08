@@ -1,297 +1,275 @@
-import React from 'react'
+import React, { useEffect, Fragment } from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid'
-import { makeStyles } from '@material-ui/core/styles'
-import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import CardActions from '@material-ui/core/CardActions';
-import CardContent from '@material-ui/core/CardContent';
-import IconButton from '@material-ui/core/IconButton';
+import _ from 'lodash'
+import { Responsive, WidthProvider } from 'react-grid-layout'
+import 'react-grid-layout/css/styles.css'
+import 'react-resizable/css/styles.css'
+import { v4 as uuidv4 } from 'uuid';
 import Button from '@material-ui/core/Button'
-import More from '@material-ui/icons/MoreVert';
-import {
-  LineChart,
-  AreaChart,
-  BarChart,
-  Line,
-  Area,
-  Bar,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-} from 'recharts';
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import Fade from '@material-ui/core/Fade';
-import { actions as dashboardActions } from '../../redux/modules/dashboard'
+import { actions as dashboardActions } from 'Redux/dashboard'
+import { dashboardLayout, dashboardData, dashboardConfig } from 'Selectors/dashboardSelector'
+import { connect } from 'react-redux'
+import { DevelopmentContainer } from 'Components/Containers'
+import { LineChartWidget } from './widget/lineChart'
+import { AreaChartWidget } from './widget/areaChart'
+import { BarChartWidget } from './widget/barChart'
 
+const ResponsiveReactGridLayout = WidthProvider(Responsive)
 
-const useStyles = makeStyles((theme) => {
-  return {
-    root: {
-      flexGrow: 1,
-    },
-    card: {
-      flex: 1,
-      minWidth: 450,
-      margin: 8,
-    },
-    content: {
-      padding: '10px 16px',
-      height: 250,
-      position: 'relative',
-    },
-  }
-})
+const Dashboard = (props) => {
+  const {
+    cols, rowHeight, className, layout, data, configs,
+  } = props;
 
-const data = [
-  {
-    name: 'Page A', uv: 4000, pv: 2400, amt: 2400,
-  },
-  {
-    name: 'Page B', uv: 3000, pv: 1398, amt: 2210,
-  },
-  {
-    name: 'Page C', uv: 2000, pv: 9800, amt: 2290,
-  },
-  {
-    name: 'Page D', uv: 2780, pv: 3908, amt: 2000,
-  },
-  {
-    name: 'Page E', uv: 1890, pv: 4800, amt: 2181,
-  },
-  {
-    name: 'Page F', uv: 2390, pv: 3800, amt: 2500,
-  },
-  {
-    name: 'Page G', uv: 3490, pv: 4300, amt: 2100,
-  },
-];
-
-
-const ExampleView = (props) => {
-  const classes = useStyles()
+  const { bar, line, area } = __CONFIG__;
 
   const handleClick = () => {
     const { history } = props
     history.push('/dashboard/widget')
   }
 
-  return (
-    <Grid container justify="flex-start" className={classes.root}>
+  useEffect(() => {
+    // props.initLayout(staticLayout);
+  }, [])
 
-      <LineChartCard {...props} handleClick={handleClick} />
+  const onLayoutChange = (newLayout) => {
+    props.updateLayout(newLayout);
+  }
 
-      <AreaChartCard {...props} handleClick={handleClick} />
+  const generateWidgetConfig = (type) => {
+    switch (type) {
+      case line:
+        return {
+          meta: {
+            title: 'Chuva acumulada por hora',
+            subTitle: 'Estações da zona norte de campinas',
+          },
+          line: [
+            {
+              type: 'monotone',
+              dataKey: 'uv',
+              stroke: '#bd49ff',
+              name: 'Volume',
+            },
+            {
+              type: 'monotone',
+              dataKey: 'amt',
+              stroke: '#614fca',
+              name: 'Pressão',
+            },
+            {
+              type: 'monotone',
+              dataKey: 'pv',
+              stroke: '#57c64d',
+              name: 'Temperatura',
+            },
+          ],
+        };
+      case area:
+        return {
+          meta: {
+            title: 'Nível de radiação por hora',
+            subTitle: '',
+          },
+          areaProps: [
+            {
+              type: 'monotone',
+              dataKey: 'uv',
+              stroke: '#2c55e7',
+              fillOpacity: 1,
+              fill: 'url(#colorUv)',
+              name: 'Ultra Violeta - A',
+              stackId: '1',
+            },
+            {
+              type: 'monotone',
+              dataKey: 'pv',
+              stroke: '#6d96f3',
+              fillOpacity: 1,
+              fill: 'url(#colorPv)',
+              name: 'Ultra Violeta - B',
+              stackId: '1',
+            },
+            {
+              type: 'monotone',
+              dataKey: 'amt',
+              stroke: '#adc4f8',
+              fillOpacity: 1,
+              fill: 'url(#colorAmt)',
+              name: 'Ultra Violeta - C',
+              stackId: '1',
+            },
+          ],
+          defsProps: [
+            {
+              id: 'colorUv', x1: '0', y1: '0', x2: '0', y2: '1', color: '#2c55e7',
+            },
+            {
+              id: 'colorPv', x1: '0', y1: '0', x2: '0', y2: '1', color: '#6d96f3',
+            },
+            {
+              id: 'colorAmt', x1: '0', y1: '0', x2: '0', y2: '1', color: '#adc4f8',
+            },
+          ],
+        }
+      case bar:
+        return {
+          meta: {
+            title: 'Incidencia de radiação',
+            subTitle: 'Poderia ser de chocolate',
+          },
+          bar: [
+            {
+              dataKey: 'pv',
+              fill: '#b285f1',
+              name: 'Ultra Violeta',
+            },
+            {
+              dataKey: 'uv',
+              fill: '#ff6c6c',
+              name: 'Infra vermelho',
+            },
+          ],
+        }
+      default:
+        return []
+    }
+  }
 
-      <BarChartCard {...props} handleClick={handleClick} />
+  const createNewWidget = (type) => {
+    const widgetId = `${type}/${uuidv4()}`;
+    const newWidget = {
+      i: widgetId,
+      x: (layout.length % 2) * 6,
+      y: Infinity,
+      w: 6,
+      h: 10,
+      minW: 3,
+      minH: 6,
+      static: false,
+      moved: false,
+    }
+    props.addWidget(newWidget);
+    props.addWidgetConfig({ [widgetId]: generateWidgetConfig(type) });
+  }
 
-    </Grid>
-  )
-}
+  const onRemoveItem = (i) => {
+    props.removeWidget(i);
+    props.removeWidgetConfig(i);
+  }
 
-const LineChartCard = ({ handleClick, startPolling, stopPolling }) => {
-  const classes = useStyles()
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  const onPin = (i) => {
+    const newArr = _.map(layout, (item) => {
+      const {
+        static: iStatic, ...otherProps
+      } = item;
+      return item.i === i ? {
+        static: !iStatic,
+        ...otherProps,
+      } : item;
+    });
+    props.updateLayout(newArr);
+  }
 
-  const handleClickMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  return (
-    <Card className={classes.card} variant="outlined">
-      <CardHeader
-        action={(
-          <div>
-            <IconButton aria-controls="fade-menu-1" aria-haspopup="true" aria-label="settings" onClick={handleClickMenu}>
-              <More />
-            </IconButton>
-            <Menu
-              id="fade-menu-1"
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+  const createElement = (element) => {
+    const { i } = element
+    const [type] = i.split('/')
+    switch (type) {
+      case line:
+        return (
+          <div key={i}>
+            <LineChartWidget
+              id={i}
+              onDelete={onRemoveItem}
+              onPin={onPin}
+              data={data}
+              config={configs[i]}
+            />
           </div>
-        )}
-        title="Chuva nas últimas 24h"
-      />
-      <CardContent className={classes.content}>
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={data}
-            margin={{
-              top: 5, right: 10, left: 10, bottom: 5,
-            }}
-          >
-            <XAxis dataKey="name" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Legend />
-            <Line type="monotone" dataKey="pv" stroke="#8884d8" activeDot={{ r: 8 }} />
-            <Line type="monotone" dataKey="uv" stroke="#82ca9d" />
-          </LineChart>
-        </ResponsiveContainer>
-      </CardContent>
-      <CardActions>
-        <Button size="small" variant="outlined" color="primary" onClick={() => handleClick()}>Wizard</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => startPolling()}>start</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => stopPolling()}>stop</Button>
-      </CardActions>
-    </Card>
-  )
-}
-
-const AreaChartCard = ({ handleClick, startPolling, stopPolling }) => {
-  const classes = useStyles()
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleClickMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  return (
-    <Card className={classes.card} variant="outlined">
-      <CardHeader
-        action={(
-          <div>
-            <IconButton aria-controls="fade-menu-2" aria-haspopup="true" aria-label="settings" onClick={handleClickMenu}>
-              <More />
-            </IconButton>
-            <Menu
-              id="fade-menu-2"
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+        )
+      case area:
+        return (
+          <div key={i}>
+            <AreaChartWidget
+              id={i}
+              onDelete={onRemoveItem}
+              onPin={onPin}
+              data={data}
+              config={configs[i]}
+            />
           </div>
-        )}
-        title="Velocidade do vento"
-      />
-      <CardContent className={classes.content}>
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart
-            data={data}
-            margin={{
-              top: 5, right: 10, left: 10, bottom: 5,
-            }}
-          >
-            <defs>
-              <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#8884d8" stopOpacity={0} />
-              </linearGradient>
-              <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#82ca9d" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <XAxis dataKey="name" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
-            <Tooltip />
-            <Legend />
-            <Area type="monotone" dataKey="uv" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-            <Area type="monotone" dataKey="pv" stroke="#82ca9d" fillOpacity={1} fill="url(#colorPv)" />
-          </AreaChart>
-        </ResponsiveContainer>
-
-      </CardContent>
-      <CardActions>
-        <Button size="small" variant="outlined" color="primary" onClick={() => handleClick()}>Wizard</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => startPolling()}>start</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => stopPolling()}>stop</Button>
-      </CardActions>
-    </Card>
-  )
-}
-
-const BarChartCard = ({ handleClick, startPolling, stopPolling }) => {
-  const classes = useStyles()
-
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
-
-  const handleClickMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
-  return (
-    <Card className={classes.card} variant="outlined">
-      <CardHeader
-        action={(
-          <div>
-            <IconButton aria-controls="fade-menu-3" aria-haspopup="true" aria-label="settings" onClick={handleClickMenu}>
-              <More />
-            </IconButton>
-            <Menu
-              id="fade-menu-3"
-              anchorEl={anchorEl}
-              keepMounted
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <MenuItem onClick={handleClose}>Profile</MenuItem>
-              <MenuItem onClick={handleClose}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+        )
+      case bar:
+        return (
+          <div key={i}>
+            <BarChartWidget
+              id={i}
+              onDelete={onRemoveItem}
+              onPin={onPin}
+              data={data}
+              config={configs[i]}
+            />
           </div>
-        )}
-        title="Distancia percorrida por hora"
-      />
-      <CardContent className={classes.content}>
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={data}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis />
-            <Tooltip />
-            <Legend />
-            <Bar dataKey="pv" fill="#8884d8" />
-            <Bar dataKey="uv" fill="#82ca9d" />
-          </BarChart>
-        </ResponsiveContainer>
+        )
+      default:
+        return (
+          <div key={i}>
+            <AreaChartWidget id={i} onDelete={onRemoveItem} onPin={onPin} />
+          </div>
+        )
+    }
+  }
 
-      </CardContent>
-      <CardActions>
+  return (
+    <div>
+      <DevelopmentContainer>
+        <Button size="small" variant="outlined" color="primary" onClick={() => props.startPolling()}>start</Button>
+        <Button size="small" variant="outlined" color="primary" onClick={() => props.stopPolling()}>stop</Button>
+        <Button size="small" variant="outlined" color="primary" onClick={() => createNewWidget(line)}>linha</Button>
+        <Button size="small" variant="outlined" color="primary" onClick={() => createNewWidget(area)}>area</Button>
+        <Button size="small" variant="outlined" color="primary" onClick={() => createNewWidget(bar)}>barra</Button>
         <Button size="small" variant="outlined" color="primary" onClick={() => handleClick()}>Wizard</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => startPolling()}>start</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => stopPolling()}>stop</Button>
-      </CardActions>
-    </Card>
+      </DevelopmentContainer>
+      <ResponsiveReactGridLayout
+        cols={cols}
+        rowHeight={rowHeight}
+        className={className}
+        layouts={{ lg: layout }}
+        onLayoutChange={onLayoutChange}
+        measureBeforeMount={false}
+        compactType="vertical"
+        verticalCompact
+        preventCollision={false}
+      >
+        {_.map(layout, (element) => createElement(element))}
+      </ResponsiveReactGridLayout>
+    </div>
   )
 }
 
-const mapStateToProps = () => ({})
+Dashboard.defaultProps = {
+  className: 'layout',
+  rowHeight: 30,
+  cols: {
+    lg: 12,
+    md: 10,
+    sm: 6,
+    xs: 4,
+    xxs: 2,
+  },
+}
+
+Dashboard.propTypes = {
+  className: PropTypes.string,
+  rowHeight: PropTypes.number,
+  cols: PropTypes.any,
+}
+
+const mapStateToProps = (state) => ({
+  ...dashboardLayout(state),
+  ...dashboardData(state),
+  ...dashboardConfig(state),
+})
 
 const mapDispatchToProps = {
   ...dashboardActions,
@@ -300,4 +278,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ExampleView)
+)(Dashboard)

@@ -42,31 +42,31 @@ const initialState = {
 
 export default connect(mapStateToProps, mapDispatchToProps)((props) => {
   const classes = useStyles()
+  const { bar: barID } = __CONFIG__
 
   useEffect(() => {
     props.getDevices()
   }, [])
 
-  const generateLineConfig = (state) => {
+  const generateBarConfig = (state) => {
     const { attributes, general: generalState } = state;
     const meta = {
       title: generalState.name || '',
       subTitle: generalState.description || '',
     }
-    const line = attributes.map((item) => (
+    const bar = attributes.map((item) => (
       {
-        type: 'monotone',
         dataKey: item.attributeID,
-        stroke: item.color,
+        fill: item.color,
         name: item.description || item.label,
       }
     ))
 
-    return { line, meta }
+    return { bar, meta }
   }
 
   const createNewWidget = (attributes) => {
-    const widgetId = `0/${uuidv4()}`;
+    const widgetId = `${barID}/${uuidv4()}`;
     const newWidget = {
       i: widgetId,
       x: 0,
@@ -79,7 +79,7 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
       moved: false,
     }
     props.addWidget(newWidget);
-    props.addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
+    props.addWidgetConfig({ [widgetId]: generateBarConfig(attributes) });
   }
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {
