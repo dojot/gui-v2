@@ -23,6 +23,8 @@ const REMOVE_WIDGET_CONFIG = 'app/dashboard/REMOVE_WIDGET_CONFIG'
 const GET_LAYOUT = 'app/dashboard/GET_LAYOUT'
 const UPDATE_LAYOUT = 'app/dashboard/UPDATE_LAYOUT'
 const INIT_LAYOUT = 'app/dashboard/INIT_LAYOUT'
+const ADD_WIDGET_SAGA = 'app/dashboard/ADD_WIDGET_SAGA'
+const REMOVE_WIDGET_SAGA = 'app/dashboard/REMOVE_WIDGET_SAGA'
 
 export const constants = {
   START_POLLING,
@@ -37,15 +39,17 @@ export const constants = {
   GET_LAYOUT,
   UPDATE_LAYOUT,
   INIT_LAYOUT,
+  ADD_WIDGET_SAGA,
+  REMOVE_WIDGET_SAGA,
 }
 
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const startPolling = createAction(START_POLLING, () => ({}))
-export const stopPolling = createAction(STOP_POLLING, () => ({}))
-export const setInterval = createAction(SET_INTERVAL, () => ({}))
-export const errorPolling = createAction(ERROR_POLLING, () => ({}))
+export const startPolling = createAction(START_POLLING, (schema) => (schema))
+export const stopPolling = createAction(STOP_POLLING)
+export const setInterval = createAction(SET_INTERVAL, (interval) => (interval))
+export const errorPolling = createAction(ERROR_POLLING)
 export const updateValues = createAction(UPDATE_VALUES, (data) => (data))
 
 export const addWidget = createAction(ADD_WIDGET, (layout) => layout)
@@ -53,6 +57,9 @@ export const removeWidget = createAction(REMOVE_WIDGET, (id) => (id))
 
 export const addWidgetConfig = createAction(ADD_WIDGET_CONFIG, (config) => config)
 export const removeWidgetConfig = createAction(REMOVE_WIDGET_CONFIG, (id) => (id))
+
+export const addWidgetSaga = createAction(ADD_WIDGET_SAGA, (saga) => saga)
+export const removeWidgetSaga = createAction(REMOVE_WIDGET_SAGA, (id) => (id))
 
 export const getLayout = createAction(GET_LAYOUT, (layout) => ({ layout }))
 export const updateLayout = createAction(UPDATE_LAYOUT, (layout) => ({ layout }))
@@ -71,14 +78,18 @@ export const actions = {
   getLayout,
   updateLayout,
   initLayout,
+  addWidgetSaga,
+  removeWidgetSaga,
 }
 
 export const reducers = {
   [UPDATE_VALUES]: (state, { payload }) => state.update('data', (data) => maxPush(data, payload, 15)),
   [UPDATE_LAYOUT]: (state, { payload }) => state.merge({ ...payload }),
   [ADD_WIDGET_CONFIG]: (state, { payload }) => state.mergeIn(['configs'], payload),
+  [ADD_WIDGET_SAGA]: (state, { payload }) => state.mergeIn(['saga'], payload),
   [ADD_WIDGET]: (state, { payload }) => state.update('layout', (layout) => _.concat(layout, payload)),
   [REMOVE_WIDGET_CONFIG]: (state, { payload }) => state.deleteIn(['configs', payload]),
+  [REMOVE_WIDGET_SAGA]: (state, { payload }) => state.deleteIn(['saga', payload]),
   [REMOVE_WIDGET]: (state, { payload }) => state.update('layout', (layout) => _.reject(layout, { i: payload })),
   [INIT_LAYOUT]: (state, { payload }) => state.merge({ ...payload }),
 }
@@ -86,6 +97,7 @@ export const reducers = {
 export const initialState = () => Map({
   configs: {},
   layout: [],
+  saga: {},
   data: [],
 })
 

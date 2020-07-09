@@ -7,9 +7,14 @@ import 'react-resizable/css/styles.css'
 import { v4 as uuidv4 } from 'uuid';
 import Button from '@material-ui/core/Button'
 import { actions as dashboardActions } from 'Redux/dashboard'
-import { dashboardLayout, dashboardData, dashboardConfig } from 'Selectors/dashboardSelector'
+import { actions as layoutActions } from 'Redux/base'
+import {
+  dashboardLayout, dashboardData, dashboardConfig, dashboardSaga,
+} from 'Selectors/dashboardSelector'
+import { menuSelector } from 'Selectors/baseSelector'
 import { connect } from 'react-redux'
 import { DevelopmentContainer } from 'Components/Containers'
+import { AppHeader } from 'Components/Header'
 import { LineChartWidget } from './widget/lineChart'
 import { AreaChartWidget } from './widget/areaChart'
 import { BarChartWidget } from './widget/barChart'
@@ -18,7 +23,17 @@ const ResponsiveReactGridLayout = WidthProvider(Responsive)
 
 const Dashboard = (props) => {
   const {
-    cols, rowHeight, className, layout, data, configs,
+    cols,
+    rowHeight,
+    className,
+    layout,
+    data,
+    configs,
+    sagaConfig,
+    stopPolling,
+    startPolling,
+    updateIsMenuOpen,
+    isMenuOpen,
   } = props;
 
   const { bar, line, area } = __CONFIG__;
@@ -29,8 +44,11 @@ const Dashboard = (props) => {
   }
 
   useEffect(() => {
-    // props.initLayout(staticLayout);
-  }, [])
+    if (!_.isEmpty(sagaConfig)) {
+      startPolling(sagaConfig)
+    }
+    return () => stopPolling()
+  }, [sagaConfig])
 
   const onLayoutChange = (newLayout) => {
     props.updateLayout(newLayout);
@@ -156,6 +174,8 @@ const Dashboard = (props) => {
   const onRemoveItem = (i) => {
     props.removeWidget(i);
     props.removeWidgetConfig(i);
+    props.removeWidgetSaga(i);
+    stopPolling()
   }
 
   const onPin = (i) => {
@@ -221,15 +241,22 @@ const Dashboard = (props) => {
   }
 
   return (
-    <div>
-      <DevelopmentContainer>
-        <Button size="small" variant="outlined" color="primary" onClick={() => props.startPolling()}>start</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => props.stopPolling()}>stop</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => createNewWidget(line)}>linha</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => createNewWidget(area)}>area</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => createNewWidget(bar)}>barra</Button>
-        <Button size="small" variant="outlined" color="primary" onClick={() => handleClick()}>Wizard</Button>
-      </DevelopmentContainer>
+    <Fragment>
+      <AppHeader
+        isOpen={isMenuOpen}
+        handleClick={updateIsMenuOpen}
+        title="Dashboard"
+      >
+        <DevelopmentContainer>
+          <Button style={{ marginLeft: 5 }} size="small" variant="outlined" color="inherit" onClick={() => startPolling('hello')}>start</Button>
+          <Button style={{ marginLeft: 5 }} size="small" variant="outlined" color="inherit" onClick={() => stopPolling()}>stop</Button>
+          <Button style={{ marginLeft: 5 }} size="small" variant="outlined" color="inherit" onClick={() => createNewWidget(line)}>linha</Button>
+          <Button style={{ marginLeft: 5 }} size="small" variant="outlined" color="inherit" onClick={() => createNewWidget(area)}>area</Button>
+          <Button style={{ marginLeft: 5 }} size="small" variant="outlined" color="inherit" onClick={() => createNewWidget(bar)}>barra</Button>
+          <Button style={{ marginLeft: 5 }} size="small" variant="outlined" color="inherit" onClick={() => handleClick()}>Adicionar</Button>
+        </DevelopmentContainer>
+      </AppHeader>
+
       <ResponsiveReactGridLayout
         cols={cols}
         rowHeight={rowHeight}
@@ -243,7 +270,7 @@ const Dashboard = (props) => {
       >
         {_.map(layout, (element) => createElement(element))}
       </ResponsiveReactGridLayout>
-    </div>
+    </Fragment>
   )
 }
 
@@ -269,10 +296,13 @@ const mapStateToProps = (state) => ({
   ...dashboardLayout(state),
   ...dashboardData(state),
   ...dashboardConfig(state),
+  ...dashboardSaga(state),
+  ...menuSelector(state),
 })
 
 const mapDispatchToProps = {
   ...dashboardActions,
+  ...layoutActions,
 }
 
 export default connect(

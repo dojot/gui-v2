@@ -16,13 +16,13 @@ const WFooter = (props) => {
       [classes.collapsed]: isOpen,
     })}
     >
-      <Button
-        disabled={activeStep === 0}
-        onClick={() => onBack(activeStep - 1)}
-        className={classes.button}
-      >
-        Back
-      </Button>
+      {/*<Button*/}
+      {/*  disabled={activeStep === 0}*/}
+      {/*  onClick={() => onBack(activeStep - 1)}*/}
+      {/*  className={classes.button}*/}
+      {/*>*/}
+      {/*  Back*/}
+      {/*</Button>*/}
       <Button
         className={classes.button}
         variant="contained"

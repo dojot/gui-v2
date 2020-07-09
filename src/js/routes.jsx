@@ -1,14 +1,10 @@
 import React from 'react'
 import { Route, Switch } from 'react-router-dom'
-import { RootContainer, ContentContainer } from 'Components/Containers'
-import { AppHeader } from 'Components/Header'
-import { Drawer } from 'Components/Drawer'
-import CssBaseline from '@material-ui/core/CssBaseline'
 import LazyLoading from 'common/components/LazyLoading'
-import { helper, primary } from 'common/menu'
 import { connect } from 'react-redux'
 import { actions as baseActions } from 'Redux/base'
-import { menuSelector, titleSelector } from 'Selectors/baseSelector'
+import { menuSelector } from 'Selectors/baseSelector'
+import { PrivateRoute } from 'Components/Routes'
 
 // This is show case how you can lazy loading component
 const ExampleRouteHandler = LazyLoading(() => import('views/example'))
@@ -17,66 +13,35 @@ const TestRouteHandler = LazyLoading(() => import('views/test'))
 const Dashboard = LazyLoading(() => import('views/dashboard'))
 const Widget = LazyLoading(() => import('views/dashboard/widget'))
 const WizardManager = LazyLoading(() => import('./common/managers/WizardManager'))
+const LogOut = LazyLoading(() => import('views/logout'))
+const LogIn = LazyLoading(() => import('views/login'))
 
-// Please remove that, it is an example
-const JustAnotherPage = () => (
-  <div>
-    <h2>This is Just Another Page</h2>
-    <p>
-      Please remove this from your route, it is just to show case basic setup
-      for router.
-    </p>
-  </div>
+const Routes = (props) => (
+  <Switch>
+    <Route exact path="/" component={ExampleRouteHandler} />
+    <Route path="/login" component={LogIn} />
+    <Route path="/logout" component={LogOut} />
+    <Route path="/help" component={ExampleRouteHandler} />
+    <PrivateRoute path="/dashboard/widget/wizard/:id" component={WizardManager} attrs={props} />
+    <PrivateRoute path="/dashboard/widget" component={Widget} attrs={props} />
+    <PrivateRoute path="/dashboard" component={Dashboard} attrs={props} />
+    <PrivateRoute path="/devices" component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path="/templates" component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path="/flow" component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path="/notification" component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path="/users" component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path="/profiles" component={GridTest} attrs={props} />
+    <Route path="*" component={ExampleRouteHandler} attrs={props} />
+  </Switch>
 )
 
-const App = (props) => {
-  const {
-    isMenuOpen,
-    updateIsMenuOpen,
-    headerTitle,
-    updateHeaderTitle,
-  } = props;
-
-  return (
-    <RootContainer>
-      <CssBaseline />
-      <AppHeader
-        isOpen={isMenuOpen}
-        handleClick={updateIsMenuOpen}
-        title={headerTitle}
-      />
-      <Drawer
-        isOpen={isMenuOpen}
-        secondaryItems={helper}
-        primaryItems={primary}
-        handleChange={updateHeaderTitle}
-      />
-      <ContentContainer>
-        <Switch>
-          <Route exact path="/" component={ExampleRouteHandler} />
-          <Route path="/dashboard/widget/wizard/:id" component={WizardManager} />
-          <Route path="/dashboard/widget" component={Widget} />
-          <Route path="/dashboard" component={Dashboard} />
-          <Route path="/devices" component={JustAnotherPage} />
-          <Route path="/templates" component={TestRouteHandler} />
-          <Route path="/flow" component={TestRouteHandler} />
-          <Route path="/notification" component={TestRouteHandler} />
-          <Route path="/users" component={TestRouteHandler} />
-          <Route path="/profiles" component={GridTest} />
-          <Route path="*" component={ExampleRouteHandler} />
-        </Switch>
-      </ContentContainer>
-    </RootContainer>
-  )
-}
 
 const mapStateToProps = (state) => ({
   ...menuSelector(state),
-  ...titleSelector(state),
 })
 
 const mapDispatchToProps = {
   ...baseActions,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App)
+export default connect(mapStateToProps, mapDispatchToProps)(Routes)

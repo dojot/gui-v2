@@ -7,13 +7,15 @@ import ChevronLeftIcon from '@material-ui/icons/ArrowBack'
 import Typography from '@material-ui/core/Typography'
 import clsx from 'clsx'
 import PropTypes from 'prop-types'
-import { useStyles } from './AppHeader'
+import { useStyles } from './Style'
 // import AccountCircle from '@material-ui/icons/AccountCircle'
 
 
 const AppHeader = (props) => {
   const classes = useStyles()
-  const { isOpen, handleClick, title } = props
+  const {
+    isOpen, handleClick, title, children,
+  } = props
 
   return (
     <AppBar
@@ -48,6 +50,9 @@ const AppHeader = (props) => {
         <Typography variant="h6" noWrap>
           {title}
         </Typography>
+        <div className={classes.childActions}>
+          {children}
+        </div>
         {/* <IconButton */}
         {/*  aria-label="account of current user" */}
         {/*  aria-controls="menu-appbar" */}
@@ -62,12 +67,15 @@ const AppHeader = (props) => {
   )
 }
 
-AppHeader.defaultProps = {}
+AppHeader.defaultProps = {
+  children: React.createElement('div'),
+}
 
 AppHeader.propTypes = {
   title: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
+  children: PropTypes.element,
 }
 
 export default AppHeader

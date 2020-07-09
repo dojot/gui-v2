@@ -8,7 +8,7 @@ export default [
   },
   {
     label: 'Sair',
-    path: '/exit',
+    path: '/logout',
     icon: ExitToApp,
   },
 ]

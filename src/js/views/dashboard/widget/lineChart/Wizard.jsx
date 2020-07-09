@@ -17,6 +17,8 @@ import { devicesList } from 'Selectors/devicesSelector'
 import { actions as deviceActions } from 'Redux/devices'
 import { actions as dashboardActions } from 'Redux/dashboard'
 import { v4 as uuidv4 } from 'uuid'
+import _ from 'lodash'
+import { getHistoryQuery } from 'Utils'
 import useStyles from './Wizard'
 
 const getSteps = () => {
@@ -42,6 +44,7 @@ const initialState = {
 
 export default connect(mapStateToProps, mapDispatchToProps)((props) => {
   const classes = useStyles()
+  const { line: lineID } = __CONFIG__
 
   useEffect(() => {
     props.getDevices()
@@ -65,8 +68,15 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
     return { line, meta }
   }
 
-  const createNewWidget = (attributes) => {
-    const widgetId = `0/${uuidv4()}`;
+  const generateScheme = (state) => {
+    return getHistoryQuery(_.values(_.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
+      deviceID: key,
+      attrs: value.map((val) => val.attributeID),
+    }))))
+  }
+
+  const createLineWidget = (attributes) => {
+    const widgetId = `${lineID}/${uuidv4()}`;
     const newWidget = {
       i: widgetId,
       x: 0,
@@ -80,6 +90,7 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
     }
     props.addWidget(newWidget);
     props.addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
+    props.addWidgetSaga({ [widgetId]: generateScheme(attributes) });
   }
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {
@@ -96,7 +107,7 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
           activeStep: state.activeStep - 1,
         }
       case 'finish':
-        createNewWidget(state)
+        createLineWidget(state)
         props.toDashboard();
         return {}
       default:

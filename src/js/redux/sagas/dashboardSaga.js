@@ -1,12 +1,12 @@
 import {
   race, call, put, fork, take, takeEvery, cancel,
 } from 'redux-saga/effects'
+import { getWithGraphQL } from 'APIs'
 import {
   constants as dashboardConstants,
   actions as dashboardActions,
 } from '../modules/dashboard'
-
-import type { exampleType } from '../../common/types/example'
+// import type { exampleType } from '../../common/types/example'
 
 function delay(duration) {
   const promise = new Promise((resolve) => {
@@ -17,8 +17,13 @@ function delay(duration) {
 
 let count = 0;
 
-function* pollData() {
+function* pollData(schema) {
   try {
+    for (const key in schema) {
+      console.log(schema[key])
+      // getWithGraphQL(schema[key])
+    }
+
     yield call(delay, 1000);
     // const response = yield call(get, url)
     count += 1;
@@ -37,10 +42,10 @@ function* pollData() {
   }
 }
 
-function* pollDashboard() {
+function* pollDashboard({ payload }) {
   while (true) {
     const { end } = yield race({
-      poll: call(pollData),
+      poll: call(pollData, payload),
       end: take(dashboardConstants.STOP_POLLING),
     });
     if (end) {

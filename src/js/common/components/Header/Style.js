@@ -23,6 +23,9 @@ export const useStyles = makeStyles((theme) => ({
   hide: {
     display: 'none',
   },
+  childActions: {
+    marginLeft: 'auto',
+  },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
