@@ -1,27 +1,27 @@
-import React from "react"
-import * as Yup from "yup"
-import { Formik } from "formik"
-import { TextField } from "@material-ui/core"
-import Grid from "@material-ui/core/Grid"
-import PropTypes from "prop-types"
-import { WFooter } from "Components/Footer"
-import { useStyles } from "./General"
+import React from 'react';
+import * as Yup from 'yup';
+import { Formik } from 'formik';
+import { TextField } from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
+import PropTypes from 'prop-types';
+import { WFooter } from 'Components/Footer';
+import { useStyles } from './General';
 
-export const Init = { name: "", description: "" }
+export const Init = { name: '', description: '' };
 
 const validationSchema = Yup.object({
-  name: Yup.string("Nome do Widget").required("Nome é obrigatório"),
-})
+  name: Yup.string('Nome do Widget').required('Nome é obrigatório'),
+});
 
 const General = props => {
-  const { initialState, handleClick, ...otherProps } = props
+  const { initialState, handleClick, ...otherProps } = props;
   const handleSubmit = values => {
-    handleClick({ type: "next", payload: { values, key: "general" } })
-  }
+    handleClick({ type: 'next', payload: { values, key: 'general' } });
+  };
 
   const handleBack = () => {
-    handleClick({ type: "back" })
-  }
+    handleClick({ type: 'back' });
+  };
 
   return (
     <Formik
@@ -33,8 +33,8 @@ const General = props => {
         <GeneralForm {...formikProps} {...otherProps} onBack={handleBack} />
       )}
     </Formik>
-  )
-}
+  );
+};
 
 const GeneralForm = props => {
   const {
@@ -44,9 +44,9 @@ const GeneralForm = props => {
     handleChange,
     handleBlur,
     handleSubmit,
-  } = props
+  } = props;
 
-  const classes = useStyles()
+  const classes = useStyles();
 
   return (
     <form onSubmit={handleSubmit}>
@@ -83,12 +83,12 @@ const GeneralForm = props => {
       </Grid>
       <WFooter {...props} />
     </form>
-  )
-}
+  );
+};
 
 General.defaultProps = {
   isOpen: false,
-}
+};
 
 General.propTypes = {
   initialState: PropTypes.shape({
@@ -99,6 +99,6 @@ General.propTypes = {
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
   isOpen: PropTypes.bool,
-}
+};
 
-export default General
+export default General;

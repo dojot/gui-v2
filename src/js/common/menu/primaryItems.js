@@ -6,42 +6,42 @@ import {
   NotificationImportant,
   People,
   SupervisedUserCircle,
-} from "@material-ui/icons"
+} from '@material-ui/icons';
 
 export default [
   {
-    label: "Dispositivos",
-    path: "/devices",
+    label: 'Dispositivos',
+    path: '/devices',
     icon: DevicesOther,
   },
   {
-    label: "Modelos",
-    path: "/templates",
+    label: 'Modelos',
+    path: '/templates',
     icon: FilterNone,
   },
   {
-    label: "Fluxos",
-    path: "/flow",
+    label: 'Fluxos',
+    path: '/flow',
     icon: DeviceHub,
   },
   {
-    label: "Notificações",
-    path: "/notification",
+    label: 'Notificações',
+    path: '/notification',
     icon: NotificationImportant,
   },
   {
-    label: "Usuários",
-    path: "/users",
+    label: 'Usuários',
+    path: '/users',
     icon: People,
   },
   {
-    label: "Perfis",
-    path: "/profiles",
+    label: 'Perfis',
+    path: '/profiles',
     icon: SupervisedUserCircle,
   },
   {
-    label: "Dashboard",
-    path: "/dashboard",
+    label: 'Dashboard',
+    path: '/dashboard',
     icon: Dashboard,
   },
-]
+];

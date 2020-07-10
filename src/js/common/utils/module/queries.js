@@ -36,7 +36,7 @@ query getDeviceHistory($filter: HistoryInput!) {
     }
   }
 }
-`
+`;
 
 export const GQL_DEVICES_LIST = `
 query getDeviceHistory($filter: HistoryInput!) {
@@ -51,4 +51,4 @@ query getDeviceHistory($filter: HistoryInput!) {
     }
   }
 }
-`
+`;

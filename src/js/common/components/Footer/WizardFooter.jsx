@@ -1,12 +1,12 @@
-import React from "react"
-import clsx from "clsx"
-import Button from "@material-ui/core/Button"
-import PropTypes from "prop-types"
-import { useStyles } from "./WizardFooter"
+import React from 'react';
+import clsx from 'clsx';
+import Button from '@material-ui/core/Button';
+import PropTypes from 'prop-types';
+import { useStyles } from './WizardFooter';
 
 const WFooter = props => {
-  const classes = useStyles()
-  const { isOpen, activeStep, steps, onBack, isValid } = props
+  const classes = useStyles();
+  const { isOpen, activeStep, steps, onBack, isValid } = props;
 
   return (
     <div
@@ -30,16 +30,16 @@ const WFooter = props => {
         disabled={!isValid}
         disableElevation
       >
-        {activeStep === steps.length - 1 ? "Finish" : "Next"}
+        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
       </Button>
     </div>
-  )
-}
+  );
+};
 
 WFooter.defaultProps = {
   isOpen: false,
   isValid: true,
-}
+};
 
 WFooter.propTypes = {
   isOpen: PropTypes.bool,
@@ -47,6 +47,6 @@ WFooter.propTypes = {
   steps: PropTypes.array.isRequired,
   onBack: PropTypes.func.isRequired,
   isValid: PropTypes.bool,
-}
+};
 
-export default WFooter
+export default WFooter;

@@ -1,87 +1,87 @@
-import React, { useEffect, useReducer, useCallback } from "react"
-import Stepper from "@material-ui/core/Stepper"
-import Step from "@material-ui/core/Step"
-import StepLabel from "@material-ui/core/StepLabel"
-import Button from "@material-ui/core/Button"
-import Typography from "@material-ui/core/Typography"
+import React, { useEffect, useReducer, useCallback } from 'react';
+import Stepper from '@material-ui/core/Stepper';
+import Step from '@material-ui/core/Step';
+import StepLabel from '@material-ui/core/StepLabel';
+import Button from '@material-ui/core/Button';
+import Typography from '@material-ui/core/Typography';
 import {
   General,
   Devices,
   Attributes,
   InitialStateGeneral as general,
   Summary,
-} from "Components/Steps"
-import { connect } from "react-redux"
-import { menuSelector } from "Selectors/baseSelector"
-import { devicesList } from "Selectors/devicesSelector"
-import { actions as deviceActions } from "Redux/devices"
-import { actions as dashboardActions } from "Redux/dashboard"
-import { v4 as uuidv4 } from "uuid"
-import _ from "lodash"
-import { getHistoryQuery } from "Utils"
-import useStyles from "./Wizard"
+} from 'Components/Steps';
+import { connect } from 'react-redux';
+import { menuSelector } from 'Selectors/baseSelector';
+import { devicesList } from 'Selectors/devicesSelector';
+import { actions as deviceActions } from 'Redux/devices';
+import { actions as dashboardActions } from 'Redux/dashboard';
+import { v4 as uuidv4 } from 'uuid';
+import _ from 'lodash';
+import { getHistoryQuery } from 'Utils';
+import useStyles from './Wizard';
 
 const getSteps = () => {
-  return ["Geral", "Dispositivos", "Atributos", "Resumo"]
-}
+  return ['Geral', 'Dispositivos', 'Atributos', 'Resumo'];
+};
 
 const mapStateToProps = state => ({
   ...menuSelector(state),
   ...devicesList(state),
-})
+});
 
 const mapDispatchToProps = {
   ...deviceActions,
   ...dashboardActions,
-}
+};
 
 const initialState = {
   general,
   devices: [],
   attributes: [],
   activeStep: 0,
-}
+};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(props => {
-  const classes = useStyles()
-  const { line: lineID } = __CONFIG__
+  const classes = useStyles();
+  const { line: lineID } = __CONFIG__;
 
   useEffect(() => {
-    props.getDevices()
-  }, [])
+    props.getDevices();
+  }, []);
 
   const generateLineConfig = state => {
-    const { attributes, general: generalState } = state
+    const { attributes, general: generalState } = state;
     const meta = {
-      title: generalState.name || "",
-      subTitle: generalState.description || "",
-    }
+      title: generalState.name || '',
+      subTitle: generalState.description || '',
+    };
     const line = attributes.map(item => ({
-      type: "monotone",
+      type: 'monotone',
       dataKey: item.attributeID,
       stroke: item.color,
       name: item.description || item.label,
-    }))
+    }));
 
-    return { line, meta }
-  }
+    return { line, meta };
+  };
 
   const generateScheme = state => {
     return getHistoryQuery(
       _.values(
-        _.mapValues(_.groupBy(state.attributes, "deviceID"), (value, key) => ({
+        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
           deviceID: key,
           attrs: value.map(val => val.attributeID),
-        }))
-      )
-    )
-  }
+        })),
+      ),
+    );
+  };
 
   const createLineWidget = attributes => {
-    const widgetId = `${lineID}/${uuidv4()}`
+    const widgetId = `${lineID}/${uuidv4()}`;
     const newWidget = {
       i: widgetId,
       x: 0,
@@ -92,46 +92,46 @@ export default connect(
       minH: 6,
       static: false,
       moved: false,
-    }
-    props.addWidget(newWidget)
-    props.addWidgetConfig({ [widgetId]: generateLineConfig(attributes) })
-    props.addWidgetSaga({ [widgetId]: generateScheme(attributes) })
-  }
+    };
+    props.addWidget(newWidget);
+    props.addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
+    props.addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+  };
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {
     switch (type) {
-      case "next":
+      case 'next':
         return {
           ...state,
           [payload.key]: payload.values,
           activeStep: state.activeStep + 1,
-        }
-      case "back":
+        };
+      case 'back':
         return {
           ...state,
           activeStep: state.activeStep - 1,
-        }
-      case "finish":
-        createLineWidget(state)
-        props.toDashboard()
-        return {}
+        };
+      case 'finish':
+        createLineWidget(state);
+        props.toDashboard();
+        return {};
       default:
-        return {}
+        return {};
     }
-  }, [])
+  }, []);
 
-  const [state, dispatch] = useReducer(memoizedReducer, initialState)
+  const [state, dispatch] = useReducer(memoizedReducer, initialState);
 
-  const { isMenuOpen } = props
+  const { isMenuOpen } = props;
 
-  const steps = getSteps()
+  const steps = getSteps();
 
   const handleReset = () => {
-    dispatch({ type: "reset" })
-  }
+    dispatch({ type: 'reset' });
+  };
 
   const getStepContent = stepIndex => {
-    const { devices } = props
+    const { devices } = props;
     switch (stepIndex) {
       case 0:
         return (
@@ -142,7 +142,7 @@ export default connect(
             activeStep={stepIndex}
             isOpen={isMenuOpen}
           />
-        )
+        );
       case 1:
         return (
           <Devices
@@ -153,7 +153,7 @@ export default connect(
             activeStep={stepIndex}
             isOpen={isMenuOpen}
           />
-        )
+        );
       case 2:
         return (
           <Attributes
@@ -164,7 +164,7 @@ export default connect(
             activeStep={stepIndex}
             isOpen={isMenuOpen}
           />
-        )
+        );
       case 3:
         return (
           <Summary
@@ -174,13 +174,13 @@ export default connect(
             activeStep={stepIndex}
             isOpen={isMenuOpen}
           />
-        )
+        );
       default:
-        return "Unknown stepIndex"
+        return 'Unknown stepIndex';
     }
-  }
+  };
 
-  const { activeStep } = state
+  const { activeStep } = state;
 
   return (
     <div className={classes.root}>
@@ -198,12 +198,12 @@ export default connect(
               All steps completed
             </Typography>
             <Button onClick={handleReset}>Reset</Button>
-            <Button onClick={() => dispatch({ type: "back" })}>Back</Button>
+            <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
           </div>
         ) : (
           getStepContent(activeStep, steps)
         )}
       </div>
     </div>
-  )
-})
+  );
+});

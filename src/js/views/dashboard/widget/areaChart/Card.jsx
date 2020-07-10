@@ -1,9 +1,9 @@
-import { ImageCard } from "Components/Cards"
-import React from "react"
-import Area from "Assets/images/area.png"
+import { ImageCard } from 'Components/Cards';
+import React from 'react';
+import Area from 'Assets/images/area.png';
 
 export default props => {
-  const { onClick } = props
+  const { onClick } = props;
   return (
     <ImageCard
       title="Gráfico de Área"
@@ -11,5 +11,5 @@ export default props => {
       description="Representa os dados por meio de uma área preenchida"
       handleClick={() => onClick()}
     />
-  )
-}
+  );
+};

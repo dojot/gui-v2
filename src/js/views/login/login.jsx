@@ -1,16 +1,16 @@
-import React from "react"
-import { makeStyles } from "@material-ui/core/styles"
-import { Grid, TextField, Button, Typography } from "@material-ui/core"
-import Card from "@material-ui/core/Card"
-import { Formik } from "formik"
-import * as Yup from "yup"
-import { login } from "Utils"
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { Grid, TextField, Button, Typography } from '@material-ui/core';
+import Card from '@material-ui/core/Card';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { login } from 'Utils';
 
 const useStyles = makeStyles(theme => ({
   grid: {
     margin: 50,
     padding: 16,
-    height: "fit-content",
+    height: 'fit-content',
   },
 
   margin: {
@@ -20,35 +20,35 @@ const useStyles = makeStyles(theme => ({
 
   root: {
     flex: 1,
-    alignItems: "center",
-    height: "100vh",
-    width: "100vw",
-    position: "absolute",
+    alignItems: 'center',
+    height: '100vh',
+    width: '100vw',
+    position: 'absolute',
     top: 0,
     left: 0,
     backgroundColor: theme.palette.background.login,
   },
-}))
+}));
 
 const validationSchema = Yup.object({
-  user: Yup.string("Digite o nome de usuário")
-    .required("Usuário é Obrigatório")
-    .min(5, "Mínimo de 5 caracteres"),
-  password: Yup.string("Digite a senha")
-    .required("Senha é obrigatório")
-    .min(5, "Mínimo de 5 caracteres"),
-})
+  user: Yup.string('Digite o nome de usuário')
+    .required('Usuário é Obrigatório')
+    .min(5, 'Mínimo de 5 caracteres'),
+  password: Yup.string('Digite a senha')
+    .required('Senha é obrigatório')
+    .min(5, 'Mínimo de 5 caracteres'),
+});
 
 export default ({ history }) => {
   const handleSubmit = values => {
-    console.log(values)
-    login("abc123")
-    history.push("/dashboard")
-  }
+    console.log(values);
+    login('abc123');
+    history.push('/dashboard');
+  };
   const initialState = {
-    user: "",
-    password: "",
-  }
+    user: '',
+    password: '',
+  };
 
   return (
     <Formik
@@ -58,8 +58,8 @@ export default ({ history }) => {
     >
       {formikProps => <LoginForm {...formikProps} />}
     </Formik>
-  )
-}
+  );
+};
 
 export const LoginForm = ({
   values,
@@ -69,7 +69,7 @@ export const LoginForm = ({
   handleBlur,
   handleSubmit,
 }) => {
-  const classes = useStyles()
+  const classes = useStyles();
   return (
     <Grid container justify="center" className={classes.root}>
       <Card className={classes.grid}>
@@ -118,5 +118,5 @@ export const LoginForm = ({
         </form>
       </Card>
     </Grid>
-  )
-}
+  );
+};

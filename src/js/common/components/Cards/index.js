@@ -1,1 +1,1 @@
-export { default as ImageCard } from "./ImageCard.jsx"
+export { default as ImageCard } from './ImageCard.jsx';

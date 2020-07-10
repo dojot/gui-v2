@@ -1,9 +1,9 @@
-import { AppHeader } from "Components/Header"
-import PropTypes from "prop-types"
-import React, { Fragment } from "react"
-import { connect } from "react-redux"
-import { actions as layoutActions } from "Redux/base"
-import { menuSelector } from "Selectors/baseSelector"
+import { AppHeader } from 'Components/Header';
+import PropTypes from 'prop-types';
+import React, { Fragment } from 'react';
+import { connect } from 'react-redux';
+import { actions as layoutActions } from 'Redux/base';
+import { menuSelector } from 'Selectors/baseSelector';
 
 const ViewContainer = props => {
   const {
@@ -12,7 +12,7 @@ const ViewContainer = props => {
     updateIsMenuOpen,
     isMenuOpen,
     children,
-  } = props
+  } = props;
 
   return (
     <Fragment>
@@ -26,27 +26,27 @@ const ViewContainer = props => {
 
       {children}
     </Fragment>
-  )
-}
+  );
+};
 
 ViewContainer.defaultProps = {
   headerContent: () => {
-    return null
+    return null;
   },
-}
+};
 
 ViewContainer.propTypes = {
   headerTitle: PropTypes.string.isRequired,
   headerContent: PropTypes.func,
   children: PropTypes.element.isRequired,
-}
+};
 
 const mapStateToProps = state => ({
   ...menuSelector(state),
-})
+});
 
 const mapDispatchToProps = {
   ...layoutActions,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ViewContainer)
+export default connect(mapStateToProps, mapDispatchToProps)(ViewContainer);

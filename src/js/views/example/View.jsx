@@ -1,39 +1,39 @@
-import React, { Component, Fragment } from "react"
-import PropTypes from "prop-types"
-import { connect } from "react-redux"
+import React, { Component, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 // This is i18n and i10n
-import { FormattedMessage, FormattedDate, FormattedTime } from "react-intl"
+import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 
-import LazyLoading from "../../common/components/LazyLoading"
-import { actions as exampleActions } from "../../redux/modules/example"
-import { exampleSelector } from "../../redux/selectors/exampleSelector"
-import { ExampleWithError } from "../../common/components/Example"
-import { ErrorBoundary } from "../../common/components/Utilities"
+import LazyLoading from '../../common/components/LazyLoading';
+import { actions as exampleActions } from '../../redux/modules/example';
+import { exampleSelector } from '../../redux/selectors/exampleSelector';
+import { ExampleWithError } from '../../common/components/Example';
+import { ErrorBoundary } from '../../common/components/Utilities';
 
 // This is lazy loading example
 const LazyExample = LazyLoading(() =>
-  import("../../common/components/Example/Example")
-)
+  import('../../common/components/Example/Example'),
+);
 
 class ExampleView extends Component {
   static propTypes = {
     example: PropTypes.object.isRequired,
-  }
+  };
 
   state = {
     myArbitraryNumber: Math.floor(Math.random() * 10000),
     currentTime: new Date(),
-  }
+  };
 
   componentDidMount() {
-    const { getAwesomeCode } = this.props
+    const { getAwesomeCode } = this.props;
 
-    getAwesomeCode()
+    getAwesomeCode();
   }
 
   render() {
-    const { myArbitraryNumber, currentTime } = this.state
+    const { myArbitraryNumber, currentTime } = this.state;
     // Note for i18n and i10n
     // if `id` is found, it will use the matched message
     // otherwise, it will use defaultMessage as fallback
@@ -45,7 +45,7 @@ class ExampleView extends Component {
         <p>
           <FormattedMessage
             id="greetings.hello"
-            defaultMessage={"Hello {name}"}
+            defaultMessage={'Hello {name}'}
             values={{
               name: <b>Visitor</b>,
             }}
@@ -75,16 +75,16 @@ class ExampleView extends Component {
           <ExampleWithError {...this.props} />
         </ErrorBoundary>
       </Fragment>
-    )
+    );
   }
 }
 
 const mapStateToProps = state => ({
   example: exampleSelector(state),
-})
+});
 
 const mapDispatchToProps = {
   ...exampleActions,
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExampleView)
+export default connect(mapStateToProps, mapDispatchToProps)(ExampleView);
