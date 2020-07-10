@@ -1,16 +1,18 @@
 // import PropTypes from 'prop-types'
-import React from 'react'
-import { connect } from 'react-redux'
-import Grid from '@material-ui/core/Grid'
-import { makeStyles } from '@material-ui/core/styles'
-import { LineChartCard } from './lineChart'
-import { AreaChartCard } from './areaChart'
-import { BarChartCard } from './barChart'
-import { PizzaChartCard } from './pizzaChart'
-import { DonutChartCard } from './donutChart'
-import { BubbleChartCard } from './bubbleChart'
+import React, { useCallback } from "react"
+import Grid from "@material-ui/core/Grid"
+import { makeStyles } from "@material-ui/core/styles"
+import { connect } from "react-redux"
 
-const useStyles = makeStyles((theme) => {
+import ViewContainer from "../../ViewContainer"
+import { AreaChartCard } from "./areaChart"
+import { BarChartCard } from "./barChart"
+import { BubbleChartCard } from "./bubbleChart"
+import { DonutChartCard } from "./donutChart"
+import { LineChartCard } from "./lineChart"
+import { PizzaChartCard } from "./pizzaChart"
+
+const useStyles = makeStyles(theme => {
   return {
     root: {
       flexGrow: 1,
@@ -18,27 +20,29 @@ const useStyles = makeStyles((theme) => {
   }
 })
 
-const WidgetView = (props) => {
+const WidgetView = props => {
   const classes = useStyles()
+  const { history } = props
+  const { line, area, bar, pizza, donut, bubble } = __CONFIG__
 
-  const {
-    line, area, bar, pizza, donut, bubble,
-  } = __CONFIG__;
-
-  const handleClick = (id) => {
-    const { history } = props
-    history.push(`/dashboard/widget/wizard/${id}`)
-  }
+  const handleClick = useCallback(
+    id => {
+      history.push(`/dashboard/widget/wizard/${id}`)
+    },
+    [history]
+  )
 
   return (
-    <Grid container justify="flex-start" className={classes.root}>
-      <LineChartCard onClick={() => handleClick(line)} />
-      <AreaChartCard onClick={() => handleClick(area)} />
-      <PizzaChartCard onClick={() => handleClick(pizza)} />
-      <DonutChartCard onClick={() => handleClick(donut)} />
-      <BubbleChartCard onClick={() => handleClick(bubble)} />
-      <BarChartCard onClick={() => handleClick(bar)} />
-    </Grid>
+    <ViewContainer headerTitle="Widgets">
+      <Grid container justify="flex-start" className={classes.root}>
+        <LineChartCard onClick={() => handleClick(line)} />
+        <AreaChartCard onClick={() => handleClick(area)} />
+        <PizzaChartCard onClick={() => handleClick(pizza)} />
+        <DonutChartCard onClick={() => handleClick(donut)} />
+        <BubbleChartCard onClick={() => handleClick(bubble)} />
+        <BarChartCard onClick={() => handleClick(bar)} />
+      </Grid>
+    </ViewContainer>
   )
 }
 

@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from "@material-ui/core/styles"
 
-
-const useStyles = makeStyles((theme) => {
+const useStyles = makeStyles(theme => {
   return {
     root: {
       flexGrow: 1,
@@ -21,15 +20,15 @@ const useStyles = makeStyles((theme) => {
     },
     actions: {
       height: 273,
-      display: 'flex',
-      flexWrap: 'wrap',
-      alignItems: 'flex-start',
-      justifyContent: 'normal',
-      flexDirection: 'column',
+      display: "flex",
+      flexWrap: "wrap",
+      alignItems: "flex-start",
+      justifyContent: "normal",
+      flexDirection: "column",
     },
     media: {
       height: 140,
-      width: '100%',
+      width: "100%",
     },
   }
 })

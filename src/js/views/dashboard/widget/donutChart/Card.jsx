@@ -1,8 +1,8 @@
-import { ImageCard } from 'Components/Cards'
-import React from 'react'
-import Donut from 'Assets/images/donut.png'
+import { ImageCard } from "Components/Cards"
+import React from "react"
+import Donut from "Assets/images/donut.png"
 
-export default (props) => {
+export default props => {
   const { onClick } = props
   return (
     <ImageCard

@@ -1,23 +1,21 @@
-import React, { useEffect } from 'react'
-import clsx from 'clsx'
-import Drawer from '@material-ui/core/Drawer'
-import MenuList from '@material-ui/core/MenuList'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemIcon from '@material-ui/core/ListItemIcon'
-import ListItemText from '@material-ui/core/ListItemText'
-import logo from 'Assets/images/dojotLogo.png'
-import PropTypes from 'prop-types'
-import { Link, withRouter } from 'react-router-dom'
-import { useStyles } from './Drawer'
+import React, { useEffect } from "react"
+import clsx from "clsx"
+import Drawer from "@material-ui/core/Drawer"
+import MenuList from "@material-ui/core/MenuList"
+import MenuItem from "@material-ui/core/MenuItem"
+import ListItemIcon from "@material-ui/core/ListItemIcon"
+import ListItemText from "@material-ui/core/ListItemText"
+import logo from "Assets/images/dojotLogo.png"
+import PropTypes from "prop-types"
+import { Link, withRouter } from "react-router-dom"
+import { useStyles } from "./Drawer"
 
-const DrawerComponent = (props) => {
+const DrawerComponent = props => {
   const classes = useStyles()
 
-  const {
-    isOpen, primaryItems, secondaryItems, handleChange,
-  } = props
+  const { isOpen, primaryItems, secondaryItems, handleChange } = props
 
-  const activeRoute = (prop) => {
+  const activeRoute = prop => {
     if (props.location.pathname.indexOf(prop.path) > -1) {
       handleChange(prop.label)
       return true
@@ -44,15 +42,9 @@ const DrawerComponent = (props) => {
         <img src={logo} alt="dojot logo" />
       </div>
       <MenuList disablePadding>
-        {primaryItems.map((item) => (
-          <Link
-            to={item.path}
-            className={classes.menuLink}
-            key={item.label}
-          >
-            <MenuItem
-              selected={activeRoute(item)}
-            >
+        {primaryItems.map(item => (
+          <Link to={item.path} className={classes.menuLink} key={item.label}>
+            <MenuItem selected={activeRoute(item)}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
@@ -62,16 +54,14 @@ const DrawerComponent = (props) => {
         ))}
       </MenuList>
       <MenuList className={classes.bottomList}>
-        {secondaryItems.map((item) => (
+        {secondaryItems.map(item => (
           <Link
             to={item.path}
             className={classes.menuLink}
             key={item.label}
             onClick={() => handleChange(item.label)}
           >
-            <MenuItem
-              selected={activeRoute(item)}
-            >
+            <MenuItem selected={activeRoute(item)}>
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>

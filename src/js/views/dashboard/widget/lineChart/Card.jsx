@@ -1,8 +1,8 @@
-import { ImageCard } from 'Components/Cards'
-import Line from 'Assets/images/linha.png'
-import React from 'react'
+import { ImageCard } from "Components/Cards"
+import Line from "Assets/images/linha.png"
+import React from "react"
 
-export default (props) => {
+export default props => {
   const { onClick } = props
   return (
     <ImageCard

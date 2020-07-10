@@ -1,34 +1,34 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import red from '@material-ui/core/colors/red';
+import { createMuiTheme } from "@material-ui/core/styles"
+import red from "@material-ui/core/colors/red"
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#4788DC',
+      main: "#4788DC",
     },
     secondary: {
-      main: '#19857b',
+      main: "#19857b",
     },
     error: {
       main: red.A400,
     },
     background: {
-      default: '#FAFAFA',
-      paper: '#FFF',
-      login: '#dfedff',
+      default: "#FAFAFA",
+      paper: "#FFF",
+      login: "#dfedff",
     },
   },
   overrides: {
     MuiButtonBase: {
       root: {
-        verticalAlign: 'top',
+        verticalAlign: "top",
       },
     },
     MuiMenuItem: {
       root: {
-        '&$selected': {
-          backgroundColor: 'rgba(13, 123, 191, 0.1)',
-          borderLeft: '4px solid #4788DC',
+        "&$selected": {
+          backgroundColor: "rgba(13, 123, 191, 0.1)",
+          borderLeft: "4px solid #4788DC",
         },
       },
     },
@@ -47,6 +47,6 @@ const theme = createMuiTheme({
     //   },
     // },
   },
-});
+})
 
-export default theme;
+export default theme

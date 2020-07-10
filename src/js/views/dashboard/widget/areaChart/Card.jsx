@@ -1,8 +1,8 @@
-import { ImageCard } from 'Components/Cards'
-import React from 'react'
-import Area from 'Assets/images/area.png'
+import { ImageCard } from "Components/Cards"
+import React from "react"
+import Area from "Assets/images/area.png"
 
-export default (props) => {
+export default props => {
   const { onClick } = props
   return (
     <ImageCard

@@ -1,34 +1,33 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react"
 
-import styles from './Loading.css';
+import styles from "./Loading.css"
 
 class Loading extends PureComponent {
   getMessage() {
-    const {
-      isLoading, timedOut, pastDelay, error,
-    } = this.props;
+    const { isLoading, timedOut, pastDelay, error } = this.props
 
-    const errorMessage = 'We can&apos;t pull up information at this point, please try again.';
+    const errorMessage =
+      "We can&apos;t pull up information at this point, please try again."
 
     if (isLoading) {
       if (timedOut) {
-        return <div>{errorMessage}</div>;
+        return <div>{errorMessage}</div>
       }
       if (pastDelay) {
-        return <div className={styles.loader}>Loading...</div>;
+        return <div className={styles.loader}>Loading...</div>
       }
-      return null;
+      return null
     }
     if (error) {
-      return <div>{errorMessage}</div>;
+      return <div>{errorMessage}</div>
     }
 
-    return null;
+    return null
   }
 
   render() {
-    return this.getMessage();
+    return this.getMessage()
   }
 }
 
-export default Loading;
+export default Loading

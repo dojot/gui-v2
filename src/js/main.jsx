@@ -1,11 +1,11 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
-import { fromJS } from 'immutable'
+import React from "react"
+import ReactDOM from "react-dom"
+import { fromJS } from "immutable"
 
-import App from './routes'
-import Root from './Root'
-import configureStore from './redux/configureStore'
-import { history } from './app-history'
+import App from "./routes"
+import Root from "./Root"
+import configureStore from "./redux/configureStore"
+import { history } from "./app-history"
 
 let initialState = {}
 
@@ -15,7 +15,7 @@ if (window.__INITIAL_STATE__) {
 
   // Transform into Immutable.js collections,
   // but leave top level keys untouched for Redux
-  Object.keys(initialState).forEach((key) => {
+  Object.keys(initialState).forEach(key => {
     initialState[key] = fromJS(initialState[key])
   })
 }
@@ -26,5 +26,5 @@ const store = configureStore(initialState, history)
 // Root component is to bootstrap Provider, Router and DevTools
 ReactDOM.render(
   <Root history={history} Routes={App} store={store} />,
-  document.getElementById('app-container')
+  document.getElementById("app-container")
 )

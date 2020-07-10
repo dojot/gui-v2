@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from "@material-ui/core/styles"
 
-export default makeStyles((theme) => ({
+export default makeStyles(theme => ({
   root: {
-    width: '100%',
+    width: "100%",
     marginBottom: 28,
   },
   backButton: {
@@ -13,6 +13,6 @@ export default makeStyles((theme) => ({
     marginBottom: theme.spacing(1),
   },
   paper: {
-    backgroundColor: 'inherit',
+    backgroundColor: "inherit",
   },
 }))

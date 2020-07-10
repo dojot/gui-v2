@@ -1,6 +1,6 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent } from "react"
 
-import styles from './Example.css';
+import styles from "./Example.css"
 
 /**
  * Example
@@ -40,8 +40,8 @@ class Example extends PureComponent {
   /* eslint-enable max-len */
 
   render() {
-    const { example } = this.props;
-    const result = (example && example.result) || null;
+    const { example } = this.props
+    const result = (example && example.result) || null
 
     if (result) {
       return (
@@ -57,10 +57,10 @@ class Example extends PureComponent {
           </p>
           <pre>{JSON.stringify(result, undefined, 2)}</pre>
         </div>
-      );
+      )
     }
-    return <div />;
+    return <div />
   }
 }
 
-export default Example;
+export default Example

@@ -1,10 +1,10 @@
-import { createAction, handleActions } from 'redux-actions'
-import { Map } from 'immutable'
+import { createAction, handleActions } from "redux-actions"
+import { Map } from "immutable"
 
-import type { devicesRet } from 'Types/device'
+import type { devicesRet } from "Types/device"
 
-const GET_DEVICES = 'app/devices/GET_DEVICES'
-const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES'
+const GET_DEVICES = "app/devices/GET_DEVICES"
+const UPDATE_DEVICES = "app/devices/UPDATE_DEVICES"
 
 export const constants = {
   GET_DEVICES,
@@ -26,13 +26,15 @@ export const actions = {
 }
 
 export const reducers = {
-  [UPDATE_DEVICES]: (state, { payload }) => state.merge({
-    ...payload,
-  }),
+  [UPDATE_DEVICES]: (state, { payload }) =>
+    state.merge({
+      ...payload,
+    }),
 }
 
-export const initialState = () => Map({
-  devices: [],
-})
+export const initialState = () =>
+  Map({
+    devices: [],
+  })
 
 export default handleActions(reducers, initialState())

@@ -1,8 +1,8 @@
-import { ImageCard } from 'Components/Cards'
-import React from 'react'
-import Bubble from 'Assets/images/bubble.png'
+import { ImageCard } from "Components/Cards"
+import React from "react"
+import Bubble from "Assets/images/bubble.png"
 
-export default (props) => {
+export default props => {
   const { onClick } = props
   return (
     <ImageCard

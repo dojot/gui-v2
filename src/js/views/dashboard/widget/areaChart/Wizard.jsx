@@ -1,29 +1,29 @@
-import React, { useEffect, useReducer, useCallback } from 'react'
-import Stepper from '@material-ui/core/Stepper'
-import Step from '@material-ui/core/Step'
-import StepLabel from '@material-ui/core/StepLabel'
-import Button from '@material-ui/core/Button'
-import Typography from '@material-ui/core/Typography'
+import React, { useEffect, useReducer, useCallback } from "react"
+import Stepper from "@material-ui/core/Stepper"
+import Step from "@material-ui/core/Step"
+import StepLabel from "@material-ui/core/StepLabel"
+import Button from "@material-ui/core/Button"
+import Typography from "@material-ui/core/Typography"
 import {
   General,
   Devices,
   Attributes,
   InitialStateGeneral as general,
   Summary,
-} from 'Components/Steps'
-import { connect } from 'react-redux'
-import { menuSelector } from 'Selectors/baseSelector'
-import { devicesList } from 'Selectors/devicesSelector'
-import { actions as deviceActions } from 'Redux/devices'
-import { actions as dashboardActions } from 'Redux/dashboard'
-import { v4 as uuidv4 } from 'uuid'
-import useStyles from './Wizard'
+} from "Components/Steps"
+import { connect } from "react-redux"
+import { menuSelector } from "Selectors/baseSelector"
+import { devicesList } from "Selectors/devicesSelector"
+import { actions as deviceActions } from "Redux/devices"
+import { actions as dashboardActions } from "Redux/dashboard"
+import { v4 as uuidv4 } from "uuid"
+import useStyles from "./Wizard"
 
 const getSteps = () => {
-  return ['Geral', 'Dispositivos', 'Atributos', 'Resumo']
+  return ["Geral", "Dispositivos", "Atributos", "Resumo"]
 }
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   ...menuSelector(state),
   ...devicesList(state),
 })
@@ -38,9 +38,12 @@ const initialState = {
   devices: [],
   attributes: [],
   activeStep: 0,
-};
+}
 
-export default connect(mapStateToProps, mapDispatchToProps)((props) => {
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(props => {
   const classes = useStyles()
   const { area } = __CONFIG__
 
@@ -48,39 +51,35 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
     props.getDevices()
   }, [])
 
-  const generateAreaConfig = (state) => {
-    const { attributes, general: generalState } = state;
+  const generateAreaConfig = state => {
+    const { attributes, general: generalState } = state
 
     const meta = {
-      title: generalState.name || '',
-      subTitle: generalState.description || '',
+      title: generalState.name || "",
+      subTitle: generalState.description || "",
     }
-    const areaProps = attributes.map((item) => (
-      {
-        type: 'monotone',
-        dataKey: item.attributeID,
-        stroke: item.color,
-        fillOpacity: 1,
-        fill: `url(#color${item.attributeID})`,
-        name: item.description || item.label,
-      }
-    ))
-    const defsProps = attributes.map((item) => (
-      {
-        id: `color${item.attributeID}`,
-        x1: '0',
-        y1: '0',
-        x2: '0',
-        y2: '1',
-        color: item.color,
-      }
-    ))
+    const areaProps = attributes.map(item => ({
+      type: "monotone",
+      dataKey: item.attributeID,
+      stroke: item.color,
+      fillOpacity: 1,
+      fill: `url(#color${item.attributeID})`,
+      name: item.description || item.label,
+    }))
+    const defsProps = attributes.map(item => ({
+      id: `color${item.attributeID}`,
+      x1: "0",
+      y1: "0",
+      x2: "0",
+      y2: "1",
+      color: item.color,
+    }))
 
     return { areaProps, defsProps, meta }
   }
 
-  const createNewWidget = (attributes) => {
-    const widgetId = `${area}/${uuidv4()}`;
+  const createNewWidget = attributes => {
+    const widgetId = `${area}/${uuidv4()}`
     const newWidget = {
       i: widgetId,
       x: 0,
@@ -92,44 +91,44 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
       static: false,
       moved: false,
     }
-    props.addWidget(newWidget);
-    props.addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) });
+    props.addWidget(newWidget)
+    props.addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) })
   }
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {
     switch (type) {
-      case 'next':
+      case "next":
         return {
           ...state,
           [payload.key]: payload.values,
           activeStep: state.activeStep + 1,
         }
-      case 'back':
+      case "back":
         return {
           ...state,
           activeStep: state.activeStep - 1,
         }
-      case 'finish':
+      case "finish":
         createNewWidget(state)
-        props.toDashboard();
+        props.toDashboard()
         return {}
       default:
         return {}
     }
   }, [])
 
-  const [state, dispatch] = useReducer(memoizedReducer, initialState);
+  const [state, dispatch] = useReducer(memoizedReducer, initialState)
 
-  const { isMenuOpen } = props;
+  const { isMenuOpen } = props
 
   const steps = getSteps()
 
   const handleReset = () => {
-    dispatch({ type: 'reset' })
+    dispatch({ type: "reset" })
   }
 
-  const getStepContent = (stepIndex) => {
-    const { devices } = props;
+  const getStepContent = stepIndex => {
+    const { devices } = props
     switch (stepIndex) {
       case 0:
         return (
@@ -174,32 +173,33 @@ export default connect(mapStateToProps, mapDispatchToProps)((props) => {
           />
         )
       default:
-        return 'Unknown stepIndex'
+        return "Unknown stepIndex"
     }
   }
 
-  const { activeStep } = state;
+  const { activeStep } = state
 
   return (
     <div className={classes.root}>
       <Stepper classes={{ root: classes.paper }} alternativeLabel>
-        {steps.map((label) => (
+        {steps.map(label => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>
           </Step>
         ))}
       </Stepper>
       <div>
-        {
-          activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>All steps completed</Typography>
-              <Button onClick={handleReset}>Reset</Button>
-              <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
-            </div>
-          )
-            : getStepContent(activeStep, steps)
-        }
+        {activeStep === steps.length ? (
+          <div>
+            <Typography className={classes.instructions}>
+              All steps completed
+            </Typography>
+            <Button onClick={handleReset}>Reset</Button>
+            <Button onClick={() => dispatch({ type: "back" })}>Back</Button>
+          </div>
+        ) : (
+          getStepContent(activeStep, steps)
+        )}
       </div>
     </div>
   )
