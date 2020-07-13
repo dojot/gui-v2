@@ -7,6 +7,19 @@ export const useStyles = makeStyles(theme => ({
     position: 'relative',
     zIndex: 999,
   },
+  searchContainer: {
+    width: '100%',
+    maxWidth: '700px',
+    margin: '20px auto',
+  },
+  notFound: {
+    width: '100%',
+    textAlign: 'center',
+
+    '& span': {
+      fontWeight: 700,
+    }
+  },
   button: {
     marginTop: 8,
     marginBottom: 4,
