@@ -7,7 +7,7 @@ export const useStyles = makeStyles(theme => ({
     position: 'relative',
     zIndex: 999,
   },
-  searchContainter: {
+  searchContainer: {
     width: '100%',
     maxWidth: '700px',
     margin: '20px auto',

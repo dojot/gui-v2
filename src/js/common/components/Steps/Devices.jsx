@@ -90,7 +90,7 @@ const GeneralForm = props => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container justify="center">
-        <Grid item className={classes.searchContainter}>
+        <Grid item className={classes.searchContainer}>
           <TextField
             variant="outlined"
             label="Filtro de dispositivos"
