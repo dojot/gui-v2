@@ -1,13 +1,13 @@
-import React from 'react'
-import Card from '@material-ui/core/Card'
-import CardHeader from '@material-ui/core/CardHeader'
-import IconButton from '@material-ui/core/IconButton'
-import More from '@material-ui/icons/MoreVert'
-import Menu from '@material-ui/core/Menu'
-import Fade from '@material-ui/core/Fade'
-import MenuItem from '@material-ui/core/MenuItem'
-import ListItemText from '@material-ui/core/ListItemText'
-import CardContent from '@material-ui/core/CardContent'
+import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardHeader from '@material-ui/core/CardHeader';
+import IconButton from '@material-ui/core/IconButton';
+import More from '@material-ui/icons/MoreVert';
+import Menu from '@material-ui/core/Menu';
+import Fade from '@material-ui/core/Fade';
+import MenuItem from '@material-ui/core/MenuItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import CardContent from '@material-ui/core/CardContent';
 import {
   Area,
   AreaChart,
@@ -17,8 +17,8 @@ import {
   Tooltip,
   XAxis,
   YAxis,
-} from 'recharts'
-import { makeStyles } from '@material-ui/core/styles'
+} from 'recharts';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => {
   return {
@@ -31,24 +31,22 @@ const useStyles = makeStyles(() => {
       height: '100%',
       width: '100%',
     },
-  }
-})
+  };
+});
 
-export default ({
-  id, onDelete, onPin, data, config,
-}) => {
-  const classes = useStyles()
+export default ({ id, onDelete, onPin, data, config }) => {
+  const classes = useStyles();
 
-  const [anchorEl, setAnchorEl] = React.useState(null)
-  const open = Boolean(anchorEl)
+  const [anchorEl, setAnchorEl] = React.useState(null);
+  const open = Boolean(anchorEl);
 
-  const handleClickMenu = (event) => {
-    setAnchorEl(event.currentTarget)
-  }
+  const handleClickMenu = event => {
+    setAnchorEl(event.currentTarget);
+  };
 
   const handleClose = () => {
-    setAnchorEl(null)
-  }
+    setAnchorEl(null);
+  };
   return (
     <Card className={classes.card} variant="outlined">
       <CardHeader
@@ -97,7 +95,7 @@ export default ({
             }}
           >
             <defs>
-              {config.defsProps.map((item) => (
+              {config.defsProps.map(item => (
                 <linearGradient {...item}>
                   <stop offset="5%" stopColor={item.color} stopOpacity={0.8} />
                   <stop offset="95%" stopColor={item.color} stopOpacity={0} />
@@ -109,12 +107,12 @@ export default ({
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
-            {config.areaProps.map((item) => (
+            {config.areaProps.map(item => (
               <Area {...item} isAnimationActive={false} />
             ))}
           </AreaChart>
         </ResponsiveContainer>
       </CardContent>
     </Card>
-  )
-}
+  );
+};

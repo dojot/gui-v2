@@ -1,9 +1,9 @@
-import { ImageCard } from 'Components/Cards'
-import React from 'react'
-import Donut from 'Assets/images/donut.png'
+import { ImageCard } from 'Components/Cards';
+import React from 'react';
+import Donut from 'Assets/images/donut.png';
 
-export default (props) => {
-  const { onClick } = props
+export default props => {
+  const { onClick } = props;
   return (
     <ImageCard
       title="Gráfico de Donut"
@@ -11,5 +11,5 @@ export default (props) => {
       description="Alternativa ao Gráfico de Pizza"
       handleClick={() => onClick()}
     />
-  )
-}
+  );
+};

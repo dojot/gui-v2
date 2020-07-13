@@ -1,1 +1,1 @@
-export { default as WFooter } from './WizardFooter.jsx'
+export { default as WFooter } from './WizardFooter.jsx';

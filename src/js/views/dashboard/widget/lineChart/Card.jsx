@@ -1,9 +1,9 @@
-import { ImageCard } from 'Components/Cards'
-import Line from 'Assets/images/linha.png'
-import React from 'react'
+import { ImageCard } from 'Components/Cards';
+import Line from 'Assets/images/linha.png';
+import React from 'react';
 
-export default (props) => {
-  const { onClick } = props
+export default props => {
+  const { onClick } = props;
   return (
     <ImageCard
       title="Gráfico de Linhas"
@@ -11,5 +11,5 @@ export default (props) => {
       description="Esse gráfico, por padrão, utiliza o tempo como medida da abscissa"
       handleClick={() => onClick()}
     />
-  )
-}
+  );
+};

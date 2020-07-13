@@ -158,6 +158,7 @@ export default {
       Redux: path.resolve(__dirname, 'src/js/redux/modules'),
       Sagas: path.resolve(__dirname, 'src/js/redux/sagas'),
       Selectors: path.resolve(__dirname, 'src/js/redux/selectors'),
+      Utils: path.resolve(__dirname, 'src/js/common/utils'),
     }
   },
   plugins: [

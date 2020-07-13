@@ -1,8 +1,8 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
-const drawerWidth = 215
+const drawerWidth = 215;
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   appBar: {
     zIndex: theme.zIndex.drawer,
     boxShadow: 'none',
@@ -23,6 +23,9 @@ export const useStyles = makeStyles((theme) => ({
   hide: {
     display: 'none',
   },
+  childActions: {
+    marginLeft: 'auto',
+  },
   toolbar: {
     display: 'flex',
     alignItems: 'center',
@@ -33,4 +36,4 @@ export const useStyles = makeStyles((theme) => ({
   title: {
     flexGrow: 1,
   },
-}))
+}));

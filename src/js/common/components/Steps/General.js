@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
-
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   item: {
     maxWidth: 700,
     width: '100%',
@@ -34,4 +33,4 @@ export const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-}))
+}));

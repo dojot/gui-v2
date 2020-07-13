@@ -15,6 +15,7 @@ const theme = createMuiTheme({
     background: {
       default: '#FAFAFA',
       paper: '#FFF',
+      login: '#dadde0',
     },
   },
   overrides: {

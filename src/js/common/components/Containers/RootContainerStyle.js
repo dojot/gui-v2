@@ -1,6 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   root: {
     display: 'flex',
   },
@@ -10,4 +10,4 @@ export const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     width: '50%',
   },
-}))
+}));

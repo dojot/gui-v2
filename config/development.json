@@ -8,6 +8,7 @@
     "bar": "3",
     "pizza": "4",
     "donut": "5",
-    "bubble": "6"
+    "bubble": "6",
+    "apiUrl": "http://localhost:8000/"
   }
 }

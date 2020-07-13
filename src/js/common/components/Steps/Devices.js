@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
-
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
     backgroundColor: theme.palette.background.default,
@@ -23,4 +22,4 @@ export const useStyles = makeStyles((theme) => ({
     transform: 'none',
     top: 0,
   },
-}))
+}));

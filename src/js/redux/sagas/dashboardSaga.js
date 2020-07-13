@@ -1,24 +1,35 @@
 import {
-  race, call, put, fork, take, takeEvery, cancel,
-} from 'redux-saga/effects'
+  race,
+  call,
+  put,
+  fork,
+  take,
+  takeEvery,
+  cancel,
+} from 'redux-saga/effects';
+import { getWithGraphQL } from 'APIs';
 import {
   constants as dashboardConstants,
   actions as dashboardActions,
-} from '../modules/dashboard'
-
-import type { exampleType } from '../../common/types/example'
+} from '../modules/dashboard';
+// import type { exampleType } from '../../common/types/example'
 
 function delay(duration) {
-  const promise = new Promise((resolve) => {
-    setTimeout(() => resolve(true), duration)
+  const promise = new Promise(resolve => {
+    setTimeout(() => resolve(true), duration);
   });
   return promise;
 }
 
 let count = 0;
 
-function* pollData() {
+function* pollData(schema) {
   try {
+    for (const key in schema) {
+      console.log(schema[key]);
+      // getWithGraphQL(schema[key])
+    }
+
     yield call(delay, 1000);
     // const response = yield call(get, url)
     count += 1;
@@ -29,18 +40,18 @@ function* pollData() {
         pv: Math.floor(Math.random() * 100),
         amt: Math.floor(Math.random() * 100),
       },
-    }
+    };
     const condition = 'data' in response;
-    if (condition) yield put(dashboardActions.updateValues(response.data))
+    if (condition) yield put(dashboardActions.updateValues(response.data));
   } catch (error) {
-    yield put(dashboardActions.errorPolling(error))
+    yield put(dashboardActions.errorPolling(error));
   }
 }
 
-function* pollDashboard() {
+function* pollDashboard({ payload }) {
   while (true) {
     const { end } = yield race({
-      poll: call(pollData),
+      poll: call(pollData, payload),
       end: take(dashboardConstants.STOP_POLLING),
     });
     if (end) {
@@ -50,7 +61,7 @@ function* pollDashboard() {
 }
 
 function* watchGetDashboard() {
-  yield takeEvery(dashboardConstants.START_POLLING, pollDashboard)
+  yield takeEvery(dashboardConstants.START_POLLING, pollDashboard);
 }
 
-export const dashboardSaga = [fork(watchGetDashboard)]
+export const dashboardSaga = [fork(watchGetDashboard)];

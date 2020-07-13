@@ -6,7 +6,7 @@ import {
   NotificationImportant,
   People,
   SupervisedUserCircle,
-} from '@material-ui/icons'
+} from '@material-ui/icons';
 
 export default [
   {
@@ -44,4 +44,4 @@ export default [
     path: '/dashboard',
     icon: Dashboard,
   },
-]
+];

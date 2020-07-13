@@ -1,7 +1,6 @@
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
 
-
-export const useStyles = makeStyles((theme) => ({
+export const useStyles = makeStyles(theme => ({
   footer: {
     position: 'fixed',
     bottom: 0,
@@ -27,4 +26,4 @@ export const useStyles = makeStyles((theme) => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
-}))
+}));

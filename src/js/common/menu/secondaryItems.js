@@ -1,4 +1,4 @@
-import { ExitToApp, HelpOutline } from '@material-ui/icons'
+import { ExitToApp, HelpOutline } from '@material-ui/icons';
 
 export default [
   {
@@ -8,7 +8,7 @@ export default [
   },
   {
     label: 'Sair',
-    path: '/exit',
+    path: '/logout',
     icon: ExitToApp,
   },
-]
+];
