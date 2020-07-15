@@ -113,6 +113,7 @@ const AttributesForm = props => {
                 handleToggle={handleToggle}
                 value={item}
                 meta={{ id, label, index }}
+                key={`${id}${item.label}`}
               />
             ));
           })}

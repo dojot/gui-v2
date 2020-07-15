@@ -30,7 +30,7 @@ query getDevices($page: PageInput, $filter: FilterDeviceInput) {
 }
 `;
 
-const parseHistoryQuery = filter => {
+export const parseHistoryQuery = filter => {
   const variables = {
     filter,
   };
@@ -55,6 +55,6 @@ export const getDevicesList = (page, filter) => {
   return protectAPI(parseDevicesListQuery(page, filter));
 };
 
-export const getDevicesHistory = filter => {
-  return protectAPI(parseHistoryQuery(filter));
+export const getDevicesHistoryParsed = filter => {
+  return protectAPI(filter);
 };

@@ -25,7 +25,7 @@ let count = 0;
 function* pollData(schema) {
   try {
     for (const key in schema) {
-      const response = yield Device.getDevicesHistory(schema[key]);
+      const response = yield Device.getDevicesHistoryParsed(schema[key]);
     }
 
     yield call(delay, 1000);

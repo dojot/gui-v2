@@ -18,7 +18,7 @@ import { actions as deviceActions } from 'Redux/devices';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
-import { getHistoryQuery } from 'Utils';
+import { Device } from 'Services';
 import ViewContainer from '../../../ViewContainer';
 import useStyles from './Wizard';
 
@@ -71,7 +71,7 @@ export default connect(
   };
 
   const generateScheme = state => {
-    return getHistoryQuery({
+    return Device.parseHistoryQuery({
       devices: _.values(
         _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
           deviceID: key,
