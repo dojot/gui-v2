@@ -149,15 +149,15 @@ export default {
       "node_modules"
     ],
     alias: {
-      Style: path.resolve(__dirname, 'src/style/'),
       APIs: path.resolve(__dirname, 'src/js/common/api'),
-      Components: path.resolve(__dirname, 'src/js/common/components'),
-      Types: path.resolve(__dirname, 'src/js/common/types'),
-      Themes: path.resolve(__dirname, 'src/js/common/themes'),
       Assets: path.resolve(__dirname, 'src/assets'),
+      Components: path.resolve(__dirname, 'src/js/common/components'),
       Redux: path.resolve(__dirname, 'src/js/redux/modules'),
       Sagas: path.resolve(__dirname, 'src/js/redux/sagas'),
       Selectors: path.resolve(__dirname, 'src/js/redux/selectors'),
+      Services: path.resolve(__dirname, 'src/js/common/services'),
+      Themes: path.resolve(__dirname, 'src/js/common/themes'),
+      Types: path.resolve(__dirname, 'src/js/common/types'),
       Utils: path.resolve(__dirname, 'src/js/common/utils'),
     }
   },

@@ -1,20 +1,21 @@
 import { put, fork, takeLatest } from 'redux-saga/effects';
-import dummy from 'Assets/jsons/deviceList.json';
-import { getDevicesListQuery } from 'Utils';
-import { getWithGraphQL } from 'APIs';
+import { Device } from 'Services';
 import {
   constants as deviceConstants,
   actions as deviceActions,
 } from '../modules/devices';
 
 export function* fetchExampleData() {
-  const page = { size: 999999, number: 1 };
-  const respose = yield getWithGraphQL(getDevicesListQuery(page));
-  const { getDevices } = respose;
-  if (getDevices) {
-    console.log(getDevices.devices);
-    yield put(deviceActions.updateDevices(getDevices.devices));
-  } else {
+  try {
+    const page = { size: 999999, number: 1 };
+    const { getDevices } = yield Device.getDevicesList(page);
+    if (getDevices) {
+      yield put(deviceActions.updateDevices(getDevices.devices));
+    } else {
+      yield put(deviceActions.updateDevices([]));
+    }
+  } catch (e) {
+    // TODO: Handle the exception more appropriately
     yield put(deviceActions.updateDevices([]));
   }
 }

@@ -1,8 +1,8 @@
 import React from 'react';
-import { logout } from 'Utils';
+import { Authentication } from 'Services';
 import { Redirect } from 'react-router-dom';
 
 export default ({ location }) => {
-  logout();
+  Authentication.logout();
   return <Redirect to={{ pathname: '/login', state: { from: location } }} />;
 };
