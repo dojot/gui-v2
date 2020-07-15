@@ -13,7 +13,10 @@ import {
 } from 'Components/Steps';
 import { connect } from 'react-redux';
 import { menuSelector } from 'Selectors/baseSelector';
-import { devicesList } from 'Selectors/devicesSelector';
+import {
+  devicesList,
+  devicesListPaginationControl,
+} from 'Selectors/devicesSelector';
 import { actions as deviceActions } from 'Redux/devices';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { v4 as uuidv4 } from 'uuid';
@@ -29,6 +32,7 @@ const getSteps = () => {
 const mapStateToProps = state => ({
   ...menuSelector(state),
   ...devicesList(state),
+  ...devicesListPaginationControl(state),
 });
 
 const mapDispatchToProps = {
@@ -47,17 +51,28 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(props => {
-  const { getDevices, devices } = props;
+  const { getDevices, devices, paginationControl } = props;
   const classes = useStyles();
   const { line: lineID } = __CONFIG__;
   const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(paginationControl.currentPage);
+
+  // TODO verificar se haverá possibilidade de mudar o número de registros por página
+  const [pageSize] = useState(5);
 
   useEffect(() => {
-    getDevices({ filter: { label: searchDeviceTerm } });
-  }, [searchDeviceTerm, getDevices]);
+    getDevices({
+      page: { number: currentPage, size: pageSize },
+      filter: { label: searchDeviceTerm },
+    });
+  }, [searchDeviceTerm, getDevices, currentPage, pageSize]);
 
   const handleSearchChange = useCallback(searchTerm => {
     setSearchDeviceTerm(searchTerm);
+  }, []);
+
+  const handlePageChange = useCallback((event, page) => {
+    setCurrentPage(page);
   }, []);
 
   const generateLineConfig = state => {
@@ -160,6 +175,9 @@ export default connect(
             activeStep={stepIndex}
             isOpen={isMenuOpen}
             onFilter={handleSearchChange}
+            usePagination
+            totalPages={paginationControl.totalPages}
+            onPageChange={handlePageChange}
           />
         );
       case 2:
@@ -193,31 +211,29 @@ export default connect(
   return (
     <div className={classes.root}>
       <ViewContainer headerTitle="Grafico de Linha">
+        <Stepper
+          classes={{ root: classes.paper }}
+          alternativeLabel
+          activeStep={activeStep}
+        >
+          {steps.map(label => (
+            <Step key={label}>
+              <StepLabel>{label}</StepLabel>
+            </Step>
+          ))}
+        </Stepper>
         <div>
-          <Stepper
-            classes={{ root: classes.paper }}
-            alternativeLabel
-            activeStep={activeStep}
-          >
-            {steps.map(label => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper>
-          <div>
-            {activeStep === steps.length ? (
-              <div>
-                <Typography className={classes.instructions}>
-                  All steps completed
-                </Typography>
-                <Button onClick={handleReset}>Reset</Button>
-                <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
-              </div>
-            ) : (
-              getStepContent(activeStep, steps)
-            )}
-          </div>
+          {activeStep === steps.length ? (
+            <div>
+              <Typography className={classes.instructions}>
+                All steps completed
+              </Typography>
+              <Button onClick={handleReset}>Reset</Button>
+              <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
+            </div>
+          ) : (
+            getStepContent(activeStep, steps)
+          )}
         </div>
       </ViewContainer>
     </div>

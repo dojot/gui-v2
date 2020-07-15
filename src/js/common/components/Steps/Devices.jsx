@@ -15,12 +15,14 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import * as Yup from 'yup';
 
+import Pagination from '@material-ui/lab/Pagination';
+
 import { useStyles } from './Devices';
 
 const validationSchema = Yup.object({});
 
 const Devices = props => {
-  const { initialState, handleClick } = props;
+  const { initialState, handleClick, ...otherProps } = props;
   const handleSubmit = values => {
     handleClick({
       type: 'next',
@@ -36,9 +38,10 @@ const Devices = props => {
       initialValues={initialState}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {formikProps => (
-        <GeneralForm {...formikProps} {...props} onBack={handleBack} />
+        <GeneralForm {...formikProps} {...otherProps} onBack={handleBack} />
       )}
     </Formik>
   );
@@ -47,11 +50,13 @@ const Devices = props => {
 const GeneralForm = props => {
   const {
     initialValues,
-    initialState,
     handleChange,
     handleSubmit,
     selectedValues,
     onFilter,
+    usePagination,
+    onPageChange,
+    totalPages,
   } = props;
 
   const [checked, setChecked] = useState(selectedValues);
@@ -102,12 +107,12 @@ const GeneralForm = props => {
           />
         </Grid>
         <List className={classes.root}>
-          {!initialState.length ? (
+          {!initialValues.length ? (
             <ListItem className={classes.notFound}>
               <ListItemText primary="Nenhum dispositivo encontrado para o filtro informado." />
             </ListItem>
           ) : (
-            initialState.map(value => {
+            initialValues.map(value => {
               const labelId = `checkbox-list-label-${value.id}`;
 
               return (
@@ -138,6 +143,16 @@ const GeneralForm = props => {
             })
           )}
         </List>
+        {usePagination && initialValues.length > 0 && (
+          <Grid item className={classes.paginationContainer}>
+            <Pagination
+              count={totalPages}
+              variant="outlined"
+              shape="rounded"
+              onChange={onPageChange}
+            />
+          </Grid>
+        )}
       </Grid>
       <WFooter {...props} isValid={!!checked.length} />
     </form>
@@ -146,6 +161,9 @@ const GeneralForm = props => {
 
 Devices.defaultProps = {
   onFilter: () => {},
+  usePagination: false,
+  onPageChange: () => {},
+  totalPages: 1,
 };
 
 Devices.propTypes = {
@@ -165,6 +183,9 @@ Devices.propTypes = {
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
   onFilter: PropTypes.func,
+  usePagination: PropTypes.bool,
+  onPageChange: PropTypes.func,
+  totalPages: PropTypes.number,
 };
 
 export default Devices;

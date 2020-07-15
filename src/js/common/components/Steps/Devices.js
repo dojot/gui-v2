@@ -21,6 +21,9 @@ export const useStyles = makeStyles(theme => ({
       fontWeight: 700,
     },
   },
+  paginationContainer: {
+    marginTop: '20px',
+  },
   button: {
     marginTop: 8,
     marginBottom: 4,

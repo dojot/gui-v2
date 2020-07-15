@@ -10,9 +10,15 @@ export function* fetchExampleData(data) {
     const { page, filter } = data.payload;
     const { getDevices } = yield Device.getDevicesList(page, filter);
     if (getDevices) {
-      yield put(deviceActions.updateDevices(getDevices.devices));
+      yield put(deviceActions.updateDevices(getDevices));
     } else {
-      yield put(deviceActions.updateDevices([]));
+      yield put(
+        deviceActions.updateDevices({
+          devices: [],
+          totalPages: 0,
+          currentPage: 1,
+        }),
+      );
     }
   } catch (e) {
     // TODO: Handle the exception more appropriately
