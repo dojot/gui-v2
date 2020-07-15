@@ -25,7 +25,7 @@
 
 export const GQL_WIDGET_HISTORIC = `
 query getDeviceHistory($filter: HistoryInput!) {
-  getDeviceHistory($filter: $filter) {
+  getDeviceHistory(filter: $filter) {
     deviceID
     label
     attrs {
@@ -39,15 +39,27 @@ query getDeviceHistory($filter: HistoryInput!) {
 `;
 
 export const GQL_DEVICES_LIST = `
-query getDeviceHistory($filter: HistoryInput!) {
-  getDeviceHistory($filter: $filter) {
-    deviceID
-    label
-    attrs {
+query getDevices($page: PageInput, $filter: FilterDeviceInput) {
+  getDevices(page: $page, filter: $filter) {
+    devices {
+      id
       label
-      valueType
-      value
-      timestamp
+      attrs{
+        label
+        valueType
+      }
+    }
+  }
+}
+`;
+
+export const GQL_USER_TOKEN = `
+  mutation login($username: String, $passwd: String) {
+  login(username: $username , passwd: $passwd) {
+    jwt
+    user {
+      username
+      profile
     }
   }
 }

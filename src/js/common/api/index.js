@@ -1,1 +1,1 @@
-export { getWithGraphQL } from './module/devices';
+export { getWithGraphQL, getAuthGraphQL } from './module/devices';

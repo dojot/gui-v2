@@ -107,8 +107,8 @@ const AttributesForm = props => {
       <Grid container direction="column" className={classes.root}>
         <List className={classes.root}>
           {initialValues.map(value => {
-            const { attr, id, label } = value;
-            return attr.map((item, index) => (
+            const { attrs, id, label } = value;
+            return attrs.map((item, index) => (
               <ItemRow
                 handleToggle={handleToggle}
                 value={item}

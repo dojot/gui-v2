@@ -14,4 +14,14 @@ instance.interceptors.request.use(async config => {
   return config;
 });
 
+instance.interceptors.response.use(response => {
+  const {
+    data: { errors, data },
+  } = response;
+  if (errors) {
+    return Promise.reject(errors);
+  }
+  return data;
+});
+
 export default instance;

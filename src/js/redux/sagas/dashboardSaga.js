@@ -27,7 +27,8 @@ function* pollData(schema) {
   try {
     for (const key in schema) {
       console.log(schema[key]);
-      // getWithGraphQL(schema[key])
+      const response = yield getWithGraphQL(schema[key]);
+      console.log(response);
     }
 
     yield call(delay, 1000);
@@ -35,7 +36,7 @@ function* pollData(schema) {
     count += 1;
     const response = {
       data: {
-        name: count,
+        timestamp: count,
         uv: Math.floor(Math.random() * 100),
         pv: Math.floor(Math.random() * 100),
         amt: Math.floor(Math.random() * 100),

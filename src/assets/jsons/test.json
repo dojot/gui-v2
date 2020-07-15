@@ -1,0 +1,36 @@
+{
+  "filter": {
+    "devices": [
+      {
+        "deviceID": "9d0c21",
+        "attrs": [
+          "9d0c210"
+        ]
+      }
+    ]
+  }
+}
+{
+  "filter": {
+    "devices": [
+      {
+        "deviceID": "5a709b",
+        "attrs": [
+          "5a709b1"
+        ]
+      },
+      {
+        "deviceID": "7a2c5",
+        "attrs": [
+          "7a2c50"
+        ]
+      },
+      {
+        "deviceID": "9d0c21",
+        "attrs": [
+          "9d0c210"
+        ]
+      }
+    ]
+  }
+}

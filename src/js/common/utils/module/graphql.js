@@ -1,4 +1,8 @@
-import { GQL_WIDGET_HISTORIC, GQL_DEVICES_LIST } from './queries';
+import {
+  GQL_WIDGET_HISTORIC,
+  GQL_DEVICES_LIST,
+  GQL_USER_TOKEN,
+} from './queries';
 
 export const getHistoryQuery = filter => {
   const variables = {
@@ -10,12 +14,24 @@ export const getHistoryQuery = filter => {
   };
 };
 
-export const getDevicesListQuery = IDs => {
+export const getDevicesListQuery = (page, filter) => {
   const variables = {
-    IDs,
+    page,
+    filter,
   };
   return {
     query: GQL_DEVICES_LIST,
+    variables: JSON.stringify(variables),
+  };
+};
+
+export const getUserTokenQuery = (username, passwd) => {
+  const variables = {
+    username,
+    passwd,
+  };
+  return {
+    query: GQL_USER_TOKEN,
     variables: JSON.stringify(variables),
   };
 };

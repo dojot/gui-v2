@@ -1,34 +1,17 @@
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useEffect } from 'react';
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { login } from 'Utils';
-
-const useStyles = makeStyles(theme => ({
-  grid: {
-    margin: 50,
-    padding: 16,
-    height: 'fit-content',
-  },
-
-  margin: {
-    marginTop: 16,
-    marginBottom: 8,
-  },
-
-  root: {
-    flex: 1,
-    alignItems: 'center',
-    height: '100vh',
-    width: '100vw',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    backgroundColor: theme.palette.background.login,
-  },
-}));
+import { connect } from 'react-redux';
+import { actions as authenticationActions } from 'Redux/authentication';
+import {
+  errorSelector,
+  hasTokenSelector,
+} from 'Selectors/authenticationSelector';
+import { isAuthenticated } from 'Utils';
+import { Redirect } from 'react-router-dom';
+import useStyles from './style';
 
 const validationSchema = Yup.object({
   user: Yup.string('Digite o nome de usuário')
@@ -39,16 +22,36 @@ const validationSchema = Yup.object({
     .min(5, 'Mínimo de 5 caracteres'),
 });
 
-export default ({ history }) => {
-  const handleSubmit = values => {
-    console.log(values);
-    login('abc123');
-    history.push('/dashboard');
+const mapDispatchToProps = {
+  ...authenticationActions,
+};
+
+const mapStateToProps = state => ({
+  ...errorSelector(state),
+  ...hasTokenSelector(state),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(({ getUserToken, updateTokenStatus, hasToken, location }) => {
+  useEffect(() => {
+    updateTokenStatus(isAuthenticated());
+  }, [hasToken]);
+
+  const handleSubmit = ({ user, password }) => {
+    getUserToken(user, password);
   };
   const initialState = {
     user: '',
     password: '',
   };
+
+  if (isAuthenticated()) {
+    return (
+      <Redirect to={{ pathname: '/dashboard', state: { from: location } }} />
+    );
+  }
 
   return (
     <Formik
@@ -59,9 +62,9 @@ export default ({ history }) => {
       {formikProps => <LoginForm {...formikProps} />}
     </Formik>
   );
-};
+});
 
-export const LoginForm = ({
+const LoginForm = ({
   values,
   touched,
   errors,
