@@ -18,7 +18,8 @@ import { actions as deviceActions } from 'Redux/devices';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
-import { getHistoryQuery } from 'Utils';
+import { Device } from 'Services';
+import ViewContainer from '../../../ViewContainer';
 import useStyles from './Wizard';
 
 const getSteps = () => {
@@ -70,14 +71,15 @@ export default connect(
   };
 
   const generateScheme = state => {
-    return getHistoryQuery(
-      _.values(
+    return Device.parseHistoryQuery({
+      devices: _.values(
         _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
           deviceID: key,
-          attrs: value.map(val => val.attributeID),
+          attrs: value.map(val => val.label),
         })),
       ),
-    );
+      lastN: 15,
+    });
   };
 
   const createLineWidget = attributes => {
@@ -184,26 +186,34 @@ export default connect(
 
   return (
     <div className={classes.root}>
-      <Stepper classes={{ root: classes.paper }} alternativeLabel>
-        {steps.map(label => (
-          <Step key={label}>
-            <StepLabel>{label}</StepLabel>
-          </Step>
-        ))}
-      </Stepper>
-      <div>
-        {activeStep === steps.length ? (
+      <ViewContainer headerTitle="Grafico de Linha">
+        <div>
+          <Stepper
+            classes={{ root: classes.paper }}
+            alternativeLabel
+            activeStep={activeStep}
+          >
+            {steps.map(label => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
           <div>
-            <Typography className={classes.instructions}>
-              All steps completed
-            </Typography>
-            <Button onClick={handleReset}>Reset</Button>
-            <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
+            {activeStep === steps.length ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  All steps completed
+                </Typography>
+                <Button onClick={handleReset}>Reset</Button>
+                <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
+              </div>
+            ) : (
+              getStepContent(activeStep, steps)
+            )}
           </div>
-        ) : (
-          getStepContent(activeStep, steps)
-        )}
-      </div>
+        </div>
+      </ViewContainer>
     </div>
   );
 });

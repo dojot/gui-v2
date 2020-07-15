@@ -92,7 +92,7 @@ export default ({ id, data, config, title, onDelete, onPin, onEdit }) => {
               bottom: 5,
             }}
           >
-            <XAxis dataKey="name" />
+            <XAxis dataKey="timestamp" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />

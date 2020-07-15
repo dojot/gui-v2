@@ -19,7 +19,6 @@ const validationSchema = Yup.object({});
 
 const Devices = props => {
   const { initialState, handleClick, ...otherProps } = props;
-
   const handleSubmit = values => {
     handleClick({
       type: 'next',
@@ -46,7 +45,7 @@ const Devices = props => {
 const GeneralForm = props => {
   const { initialValues, handleChange, handleSubmit, selectedValues } = props;
 
-  const [checked, setChecked] = useState(selectedValues)
+  const [checked, setChecked] = useState(selectedValues);
   const [filteredDevices, setFilteredDevices] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
@@ -64,7 +63,7 @@ const GeneralForm = props => {
     handleChange({ currentTarget: { name: 'devices', value: newChecked } });
   };
 
-  const handleChangeSearch = useCallback((e) => {
+  const handleChangeSearch = useCallback(e => {
     setSearchTerm(e.target.value ? e.target.value.toLowerCase() : '');
   }, []);
 
@@ -75,16 +74,19 @@ const GeneralForm = props => {
     // Hoje o filtro está sendo feito em cima dos valores recebidos na propriedade initialValues
 
     if (!searchTermDebounced) {
-      setFilteredDevices(initialValues.devices);
+      setFilteredDevices(initialValues);
       return;
     }
-    setFilteredDevices(initialValues.devices.filter(
-      (device) => device.id.includes(searchTermDebounced)
-        || device.label.toLowerCase().includes(searchTermDebounced)
-    ));
-  }, [searchTermDebounced, initialValues.devices]);
+    setFilteredDevices(
+      initialValues.filter(
+        device =>
+          device.id.includes(searchTermDebounced) ||
+          device.label.toLowerCase().includes(searchTermDebounced),
+      ),
+    );
+  }, [searchTermDebounced, initialValues]);
 
-  const getItemSelected = (id) => checked.map((item) => item.id).indexOf(id) !== -1
+  const getItemSelected = id => checked.map(item => item.id).indexOf(id) !== -1;
 
   const classes = useStyles();
   return (
@@ -100,13 +102,13 @@ const GeneralForm = props => {
           />
         </Grid>
         <List className={classes.root}>
-          {!filteredDevices.length
-            ? (<ListItem className={classes.notFound}>
+          {!filteredDevices.length ? (
+            <ListItem className={classes.notFound}>
               <ListItemText primary="Nenhum dispositivo encontrado para o filtro informado." />
-            </ListItem>)
-            :
-            (filteredDevices.map((value) => {
-              const labelId = `checkbox-list-label-${value.id}`
+            </ListItem>
+          ) : (
+            filteredDevices.map(value => {
+              const labelId = `checkbox-list-label-${value.id}`;
 
               return (
                 <Fragment key={value.id}>
@@ -133,8 +135,8 @@ const GeneralForm = props => {
                   <Divider />
                 </Fragment>
               );
-            }))
-          }
+            })
+          )}
         </List>
       </Grid>
       <WFooter {...props} isValid={!!checked.length} />
@@ -145,10 +147,18 @@ const GeneralForm = props => {
 Devices.defaultProps = {};
 
 Devices.propTypes = {
-  initialState: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-  }).isRequired,
+  initialState: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string,
+      label: PropTypes.string,
+      attrs: PropTypes.arrayOf(
+        PropTypes.shape({
+          label: PropTypes.string,
+          valueType: PropTypes.string,
+        }),
+      ),
+    }),
+  ).isRequired,
   handleClick: PropTypes.func.isRequired,
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,

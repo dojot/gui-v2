@@ -1,8 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 
-import type { devicesRet } from 'Types/device';
-
 const GET_DEVICES = 'app/devices/GET_DEVICES';
 const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';
 
@@ -15,10 +13,9 @@ export const constants = {
 // Actions
 // ------------------------------------
 export const getDevices = createAction(GET_DEVICES, () => ({}));
-export const updateDevices = createAction(
-  UPDATE_DEVICES,
-  (devices: devicesRet) => ({ devices }),
-);
+export const updateDevices = createAction(UPDATE_DEVICES, devices => ({
+  devices,
+}));
 
 export const actions = {
   getDevices,

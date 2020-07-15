@@ -1,12 +1,23 @@
 import { put, fork, takeLatest } from 'redux-saga/effects';
-import dummy from 'Assets/jsons/deviceList.json';
+import { Device } from 'Services';
 import {
   constants as deviceConstants,
   actions as deviceActions,
 } from '../modules/devices';
 
 export function* fetchExampleData() {
-  yield put(deviceActions.updateDevices(dummy.data));
+  try {
+    const page = { size: 999999, number: 1 };
+    const { getDevices } = yield Device.getDevicesList(page);
+    if (getDevices) {
+      yield put(deviceActions.updateDevices(getDevices.devices));
+    } else {
+      yield put(deviceActions.updateDevices([]));
+    }
+  } catch (e) {
+    // TODO: Handle the exception more appropriately
+    yield put(deviceActions.updateDevices([]));
+  }
 }
 
 function* watchGetDevices() {

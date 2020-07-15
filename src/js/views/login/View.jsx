@@ -1,34 +1,12 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { login } from 'Utils';
-
-const useStyles = makeStyles(theme => ({
-  grid: {
-    margin: 50,
-    padding: 16,
-    height: 'fit-content',
-  },
-
-  margin: {
-    marginTop: 16,
-    marginBottom: 8,
-  },
-
-  root: {
-    flex: 1,
-    alignItems: 'center',
-    height: '100vh',
-    width: '100vw',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    backgroundColor: theme.palette.background.login,
-  },
-}));
+import { isAuthenticated } from 'Utils';
+import { Redirect } from 'react-router-dom';
+import { Authentication } from 'Services';
+import useStyles from './style';
 
 const validationSchema = Yup.object({
   user: Yup.string('Digite o nome de usuário')
@@ -39,16 +17,29 @@ const validationSchema = Yup.object({
     .min(5, 'Mínimo de 5 caracteres'),
 });
 
-export default ({ history }) => {
-  const handleSubmit = values => {
-    console.log(values);
-    login('abc123');
-    history.push('/dashboard');
+const LoginView = ({ location, history }) => {
+  const handleSubmit = async ({ user, password }) => {
+    try {
+      await Authentication.login({
+        user,
+        password,
+      });
+      history.push('/dashboard');
+    } catch (e) {
+      // TODO: Handle the exception more appropriately
+      console.error(e.message);
+    }
   };
   const initialState = {
     user: '',
     password: '',
   };
+
+  if (isAuthenticated()) {
+    return (
+      <Redirect to={{ pathname: '/dashboard', state: { from: location } }} />
+    );
+  }
 
   return (
     <Formik
@@ -61,7 +52,7 @@ export default ({ history }) => {
   );
 };
 
-export const LoginForm = ({
+const LoginForm = ({
   values,
   touched,
   errors,
@@ -87,7 +78,7 @@ export const LoginForm = ({
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={errors.user && touched.user && errors.user}
-            error={!!errors.user}
+            error={errors.user && touched.user}
             fullWidth
           />
           <TextField
@@ -102,7 +93,7 @@ export const LoginForm = ({
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={errors.password && touched.password && errors.password}
-            error={!!errors.password}
+            error={errors.password && touched.password}
             margin="normal"
           />
           <Button
@@ -120,3 +111,5 @@ export const LoginForm = ({
     </Grid>
   );
 };
+
+export default LoginView;

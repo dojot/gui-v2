@@ -42,9 +42,9 @@ const AttributeBox = ({ name, values = [] }) => {
     <div className={classes.containerText}>
       <div className={classes.title}>{name}</div>
       {values.map(item => {
-        const { label, deviceLabel, color } = item;
+        const { label, deviceLabel, color, attributeID } = item;
         return (
-          <div className={classes.colorContainer}>
+          <div className={classes.colorContainer} key={attributeID}>
             <div
               className={classes.colorArea}
               style={{ backgroundColor: color }}
