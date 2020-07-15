@@ -181,7 +181,11 @@ export default connect(
 
   return (
     <div className={classes.root}>
-      <Stepper classes={{ root: classes.paper }} alternativeLabel>
+      <Stepper
+        classes={{ root: classes.paper }}
+        alternativeLabel
+        activeStep={activeStep}
+      >
         {steps.map(label => (
           <Step key={label}>
             <StepLabel>{label}</StepLabel>

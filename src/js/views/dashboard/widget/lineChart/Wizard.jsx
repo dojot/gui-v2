@@ -188,7 +188,11 @@ export default connect(
     <div className={classes.root}>
       <ViewContainer headerTitle="Grafico de Linha">
         <div>
-          <Stepper classes={{ root: classes.paper }} alternativeLabel>
+          <Stepper
+            classes={{ root: classes.paper }}
+            alternativeLabel
+            activeStep={activeStep}
+          >
             {steps.map(label => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
