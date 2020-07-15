@@ -12,7 +12,10 @@ export const constants = {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const getDevices = createAction(GET_DEVICES, () => ({}));
+export const getDevices = createAction(GET_DEVICES, payload => ({
+  page: payload.page,
+  filter: payload.filter,
+}));
 export const updateDevices = createAction(UPDATE_DEVICES, devices => ({
   devices,
 }));

@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useCallback } from 'react';
+import React, { useState, useEffect, useReducer, useCallback } from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -47,11 +47,17 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(props => {
+  const { getDevices, devices } = props;
   const classes = useStyles();
   const { line: lineID } = __CONFIG__;
+  const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
 
   useEffect(() => {
-    props.getDevices();
+    getDevices({ filter: { label: searchDeviceTerm } });
+  }, [searchDeviceTerm, getDevices]);
+
+  const handleSearchChange = useCallback(searchTerm => {
+    setSearchDeviceTerm(searchTerm);
   }, []);
 
   const generateLineConfig = state => {
@@ -133,7 +139,6 @@ export default connect(
   };
 
   const getStepContent = stepIndex => {
-    const { devices } = props;
     switch (stepIndex) {
       case 0:
         return (
@@ -154,6 +159,7 @@ export default connect(
             steps={steps}
             activeStep={stepIndex}
             isOpen={isMenuOpen}
+            onFilter={handleSearchChange}
           />
         );
       case 2:

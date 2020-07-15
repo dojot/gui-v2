@@ -2,10 +2,12 @@ import { TextField } from '@material-ui/core';
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import SearchIcon from '@material-ui/icons/Search';
 import { WFooter } from 'Components/Footer';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
@@ -18,7 +20,7 @@ import { useStyles } from './Devices';
 const validationSchema = Yup.object({});
 
 const Devices = props => {
-  const { initialState, handleClick, ...otherProps } = props;
+  const { initialState, handleClick } = props;
   const handleSubmit = values => {
     handleClick({
       type: 'next',
@@ -36,17 +38,23 @@ const Devices = props => {
       onSubmit={handleSubmit}
     >
       {formikProps => (
-        <GeneralForm {...formikProps} {...otherProps} onBack={handleBack} />
+        <GeneralForm {...formikProps} {...props} onBack={handleBack} />
       )}
     </Formik>
   );
 };
 
 const GeneralForm = props => {
-  const { initialValues, handleChange, handleSubmit, selectedValues } = props;
+  const {
+    initialValues,
+    initialState,
+    handleChange,
+    handleSubmit,
+    selectedValues,
+    onFilter,
+  } = props;
 
   const [checked, setChecked] = useState(selectedValues);
-  const [filteredDevices, setFilteredDevices] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
 
@@ -68,23 +76,8 @@ const GeneralForm = props => {
   }, []);
 
   useEffect(() => {
-    // TODO aqui nessa rotina quando estivermos com a api funcionando com o filtro de pesquisa
-    // podemos receber uma função como props desse componente e pasar o termo de consulta
-    // para que o objeto pai realize a consulta via Saga e atualize a lista de devices.
-    // Hoje o filtro está sendo feito em cima dos valores recebidos na propriedade initialValues
-
-    if (!searchTermDebounced) {
-      setFilteredDevices(initialValues);
-      return;
-    }
-    setFilteredDevices(
-      initialValues.filter(
-        device =>
-          device.id.includes(searchTermDebounced) ||
-          device.label.toLowerCase().includes(searchTermDebounced),
-      ),
-    );
-  }, [searchTermDebounced, initialValues]);
+    onFilter(searchTermDebounced);
+  }, [searchTermDebounced, onFilter]);
 
   const getItemSelected = id => checked.map(item => item.id).indexOf(id) !== -1;
 
@@ -95,19 +88,26 @@ const GeneralForm = props => {
         <Grid item className={classes.searchContainer}>
           <TextField
             variant="outlined"
-            label="Filtro de dispositivos"
+            placeholder="Digite o nome do dispositivo"
             name="searchDevices"
             onChange={handleChangeSearch}
             fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <List className={classes.root}>
-          {!filteredDevices.length ? (
+          {!initialState.length ? (
             <ListItem className={classes.notFound}>
               <ListItemText primary="Nenhum dispositivo encontrado para o filtro informado." />
             </ListItem>
           ) : (
-            filteredDevices.map(value => {
+            initialState.map(value => {
               const labelId = `checkbox-list-label-${value.id}`;
 
               return (
@@ -144,7 +144,9 @@ const GeneralForm = props => {
   );
 };
 
-Devices.defaultProps = {};
+Devices.defaultProps = {
+  onFilter: () => {},
+};
 
 Devices.propTypes = {
   initialState: PropTypes.arrayOf(
@@ -162,6 +164,7 @@ Devices.propTypes = {
   handleClick: PropTypes.func.isRequired,
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
+  onFilter: PropTypes.func,
 };
 
 export default Devices;

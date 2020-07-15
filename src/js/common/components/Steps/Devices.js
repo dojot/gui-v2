@@ -3,13 +3,14 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
+    padding: '0 20px',
     backgroundColor: theme.palette.background.default,
     position: 'relative',
     zIndex: 999,
   },
   searchContainer: {
     width: '100%',
-    maxWidth: '700px',
+    padding: '0 20px',
     margin: '20px auto',
   },
   notFound: {
@@ -18,7 +19,7 @@ export const useStyles = makeStyles(theme => ({
 
     '& span': {
       fontWeight: 700,
-    }
+    },
   },
   button: {
     marginTop: 8,

@@ -18,6 +18,8 @@ query getDeviceHistory($filter: HistoryInput!) {
 const GQL_DEVICES_LIST = `
 query getDevices($page: PageInput, $filter: FilterDeviceInput) {
   getDevices(page: $page, filter: $filter) {
+    totalPages
+    currentPage
     devices {
       id
       label
