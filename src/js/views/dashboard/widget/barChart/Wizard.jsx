@@ -59,7 +59,7 @@ export default connect(
     devices: [],
     currentPage: 1,
     totalPages: 0,
-    pageSize: 5,
+    pageSize: 10,
   });
 
   useEffect(() => {
@@ -77,6 +77,10 @@ export default connect(
 
   const handleSearchChange = useCallback(searchTerm => {
     setSearchDeviceTerm(searchTerm);
+  }, []);
+
+  const handlePageSizeChange = useCallback(pageSize => {
+    setDevicesData(state => ({ ...state, pageSize }));
   }, []);
 
   const handlePageChange = useCallback((event, page) => {
@@ -169,7 +173,9 @@ export default connect(
             onFilter={handleSearchChange}
             usePagination
             currentPage={devicesData.currentPage}
+            pageSize={devicesData.pageSize}
             totalPages={devicesData.totalPages}
+            onPageSizeChange={handlePageSizeChange}
             onPageChange={handlePageChange}
           />
         );

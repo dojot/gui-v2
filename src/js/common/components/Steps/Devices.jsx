@@ -2,12 +2,16 @@ import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
+import FormControl from '@material-ui/core/FormControl';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import InputLabel from '@material-ui/core/InputLabel';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
 import Pagination from '@material-ui/lab/Pagination';
@@ -24,7 +28,9 @@ const Devices = props => {
     onFilter,
     usePagination,
     onPageChange,
+    onPageSizeChange,
     currentPage,
+    pageSize,
     totalPages,
     handleClick,
   } = props;
@@ -130,7 +136,13 @@ const Devices = props => {
           )}
         </List>
         {usePagination && initialState.length > 0 && (
-          <Grid item className={classes.paginationContainer}>
+          <Grid
+            container
+            direction="row"
+            justify="center"
+            alignItems="center"
+            className={classes.paginationContainer}
+          >
             <Pagination
               count={totalPages}
               page={currentPage}
@@ -138,6 +150,16 @@ const Devices = props => {
               shape="rounded"
               onChange={onPageChange}
             />
+            <Select
+              className={classes.pageSizeSelector}
+              value={!pageSize ? 9999 : pageSize}
+              onChange={e => onPageSizeChange(e.target.value)}
+            >
+              <MenuItem value={5}>5 registros por página</MenuItem>
+              <MenuItem value={10}>10 registros por página</MenuItem>
+              <MenuItem value={20}>20 registros por página</MenuItem>
+              <MenuItem value={9999}>Todos os registros</MenuItem>
+            </Select>
           </Grid>
         )}
       </Grid>
@@ -150,8 +172,10 @@ Devices.defaultProps = {
   onFilter: () => {},
   usePagination: false,
   currentPage: 1,
+  pageSize: 5,
   totalPages: 1,
   onPageChange: () => {},
+  onPageSizeChange: () => {},
 };
 
 Devices.propTypes = {
@@ -173,8 +197,10 @@ Devices.propTypes = {
   onFilter: PropTypes.func,
   usePagination: PropTypes.bool,
   currentPage: PropTypes.number,
+  pageSize: PropTypes.number,
   totalPages: PropTypes.number,
   onPageChange: PropTypes.func,
+  onPageSizeChange: PropTypes.func,
 };
 
 export default Devices;
