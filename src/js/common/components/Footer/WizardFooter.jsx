@@ -1,12 +1,14 @@
 import React from 'react';
-import clsx from 'clsx';
+
 import Button from '@material-ui/core/Button';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
+
 import { useStyles } from './WizardFooter';
 
 const WFooter = props => {
   const classes = useStyles();
-  const { isOpen, activeStep, steps, onBack, isValid } = props;
+  const { isOpen, activeStep, steps, isValid } = props;
 
   return (
     <div
@@ -15,13 +17,6 @@ const WFooter = props => {
         [classes.collapsed]: isOpen,
       })}
     >
-      {/* <Button */}
-      {/*  disabled={activeStep === 0} */}
-      {/*  onClick={() => onBack(activeStep - 1)} */}
-      {/*  className={classes.button} */}
-      {/* > */}
-      {/*  Back */}
-      {/* </Button> */}
       <Button
         className={classes.button}
         variant="contained"
@@ -45,7 +40,6 @@ WFooter.propTypes = {
   isOpen: PropTypes.bool,
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
-  onBack: PropTypes.func.isRequired,
   isValid: PropTypes.bool,
 };
 

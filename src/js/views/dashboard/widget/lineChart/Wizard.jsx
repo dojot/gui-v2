@@ -21,13 +21,8 @@ import {
 import _ from 'lodash';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
-import { actions as deviceActions } from 'Redux/devices';
 import { menuSelector } from 'Selectors/baseSelector';
-import {
-  devicesList,
-  devicesListPaginationControl,
-} from 'Selectors/devicesSelector';
-import { Device } from 'Services';
+import { Device as DeviceService } from 'Services';
 import { v4 as uuidv4 } from 'uuid';
 
 import ViewContainer from '../../../ViewContainer';
@@ -39,12 +34,9 @@ const getSteps = () => {
 
 const mapStateToProps = state => ({
   ...menuSelector(state),
-  ...devicesList(state),
-  ...devicesListPaginationControl(state),
 });
 
 const mapDispatchToProps = {
-  ...deviceActions,
   ...dashboardActions,
 };
 
@@ -59,28 +51,44 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(props => {
-  const { getDevices, devices, paginationControl } = props;
+  const {
+    toDashboard,
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    isMenuOpen,
+  } = props;
   const classes = useStyles();
   const { line: lineID } = __CONFIG__;
-  const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(paginationControl.currentPage);
 
-  // TODO verificar se haverá possibilidade de mudar o número de registros por página
-  const [pageSize] = useState(5);
+  const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
+  const [devicesData, setDevicesData] = useState({
+    devices: [],
+    currentPage: 1,
+    totalPages: 0,
+    pageSize: 5,
+  });
 
   useEffect(() => {
-    getDevices({
-      page: { number: currentPage, size: pageSize },
-      filter: { label: searchDeviceTerm },
-    });
-  }, [searchDeviceTerm, getDevices, currentPage, pageSize]);
+    DeviceService.getDevicesList(
+      { number: devicesData.currentPage, size: devicesData.pageSize },
+      { label: searchDeviceTerm },
+    )
+      .then(response =>
+        setDevicesData(state => ({ ...state, ...response.getDevices })),
+      )
+      .catch(
+        error => console.error(error), // TODO tratamento de erro da api
+      );
+  }, [devicesData.currentPage, devicesData.pageSize, searchDeviceTerm]);
 
   const handleSearchChange = useCallback(searchTerm => {
     setSearchDeviceTerm(searchTerm);
+    setDevicesData(state => ({ ...state, currentPage: 1 }));
   }, []);
 
-  const handlePageChange = useCallback((event, page) => {
-    setCurrentPage(page);
+  const handlePageChange = useCallback((evnt, page) => {
+    setDevicesData(state => ({ ...state, currentPage: page }));
   }, []);
 
   const generateLineConfig = state => {
@@ -100,7 +108,7 @@ export default connect(
   };
 
   const generateScheme = state => {
-    return Device.parseHistoryQuery({
+    return DeviceService.parseHistoryQuery({
       devices: _.values(
         _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
           deviceID: key,
@@ -111,23 +119,26 @@ export default connect(
     });
   };
 
-  const createLineWidget = attributes => {
-    const widgetId = `${lineID}/${uuidv4()}`;
-    const newWidget = {
-      i: widgetId,
-      x: 0,
-      y: Infinity,
-      w: 6,
-      h: 10,
-      minW: 3,
-      minH: 6,
-      static: false,
-      moved: false,
-    };
-    props.addWidget(newWidget);
-    props.addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
-    props.addWidgetSaga({ [widgetId]: generateScheme(attributes) });
-  };
+  const createLineWidget = useCallback(
+    attributes => {
+      const widgetId = `${lineID}/${uuidv4()}`;
+      const newWidget = {
+        i: widgetId,
+        x: 0,
+        y: Infinity,
+        w: 6,
+        h: 10,
+        minW: 3,
+        minH: 6,
+        static: false,
+        moved: false,
+      };
+      addWidget(newWidget);
+      addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
+      addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+    },
+    [addWidget, addWidgetConfig, addWidgetSaga, lineID],
+  );
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {
     switch (type) {
@@ -144,7 +155,7 @@ export default connect(
         };
       case 'finish':
         createLineWidget(state);
-        props.toDashboard();
+        toDashboard();
         return {};
       default:
         return {};
@@ -152,9 +163,6 @@ export default connect(
   }, []);
 
   const [state, dispatch] = useReducer(memoizedReducer, initialState);
-
-  const { isMenuOpen } = props;
-
   const steps = getSteps();
 
   const handleReset = () => {
@@ -176,7 +184,7 @@ export default connect(
       case 1:
         return (
           <Devices
-            initialState={devices}
+            initialState={devicesData.devices}
             selectedValues={state.devices}
             handleClick={dispatch}
             steps={steps}
@@ -184,7 +192,8 @@ export default connect(
             isOpen={isMenuOpen}
             onFilter={handleSearchChange}
             usePagination
-            totalPages={paginationControl.totalPages}
+            currentPage={devicesData.currentPage}
+            totalPages={devicesData.totalPages}
             onPageChange={handlePageChange}
           />
         );

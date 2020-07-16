@@ -5,10 +5,11 @@ import React, {
   useCallback,
   Fragment,
 } from 'react';
-import Stepper from '@material-ui/core/Stepper';
+
+import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
+import Stepper from '@material-ui/core/Stepper';
 import Typography from '@material-ui/core/Typography';
 import {
   General,
@@ -18,14 +19,11 @@ import {
   Summary,
 } from 'Components/Steps';
 import { connect } from 'react-redux';
-import { menuSelector } from 'Selectors/baseSelector';
-import {
-  devicesList,
-  devicesListPaginationControl,
-} from 'Selectors/devicesSelector';
-import { actions as deviceActions } from 'Redux/devices';
 import { actions as dashboardActions } from 'Redux/dashboard';
+import { menuSelector } from 'Selectors/baseSelector';
+import { Device as DeviceService } from 'Services';
 import { v4 as uuidv4 } from 'uuid';
+
 import ViewContainer from '../../../ViewContainer';
 import useStyles from './Wizard';
 
@@ -35,12 +33,9 @@ const getSteps = () => {
 
 const mapStateToProps = state => ({
   ...menuSelector(state),
-  ...devicesList(state),
-  ...devicesListPaginationControl(state),
 });
 
 const mapDispatchToProps = {
-  ...deviceActions,
   ...dashboardActions,
 };
 
@@ -55,28 +50,37 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(props => {
-  const { getDevices, devices, paginationControl } = props;
+  const { toDashboard, addWidget, addWidgetConfig, isMenuOpen } = props;
   const classes = useStyles();
   const { area } = __CONFIG__;
-  const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
-  const [currentPage, setCurrentPage] = useState(paginationControl.currentPage);
 
-  // TODO verificar se haverá possibilidade de mudar o número de registros por página
-  const [pageSize] = useState(5);
+  const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
+  const [devicesData, setDevicesData] = useState({
+    devices: [],
+    currentPage: 1,
+    totalPages: 0,
+    pageSize: 5,
+  });
 
   useEffect(() => {
-    getDevices({
-      page: { number: currentPage, size: pageSize },
-      filter: { label: searchDeviceTerm },
-    });
-  }, [searchDeviceTerm, getDevices, currentPage, pageSize]);
+    DeviceService.getDevicesList(
+      { number: devicesData.currentPage, size: devicesData.pageSize },
+      { label: searchDeviceTerm },
+    )
+      .then(response =>
+        setDevicesData(state => ({ ...state, ...response.getDevices })),
+      )
+      .catch(
+        error => console.error(error), // TODO tratamento de erro da api
+      );
+  }, [devicesData.currentPage, devicesData.pageSize, searchDeviceTerm]);
 
   const handleSearchChange = useCallback(searchTerm => {
     setSearchDeviceTerm(searchTerm);
   }, []);
 
   const handlePageChange = useCallback((event, page) => {
-    setCurrentPage(page);
+    setDevicesData(state => ({ ...state, currentPage: page }));
   }, []);
 
   const generateAreaConfig = state => {
@@ -106,22 +110,25 @@ export default connect(
     return { areaProps, defsProps, meta };
   };
 
-  const createNewWidget = attributes => {
-    const widgetId = `${area}/${uuidv4()}`;
-    const newWidget = {
-      i: widgetId,
-      x: 0,
-      y: Infinity,
-      w: 6,
-      h: 10,
-      minW: 3,
-      minH: 6,
-      static: false,
-      moved: false,
-    };
-    props.addWidget(newWidget);
-    props.addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) });
-  };
+  const createNewWidget = useCallback(
+    attributes => {
+      const widgetId = `${area}/${uuidv4()}`;
+      const newWidget = {
+        i: widgetId,
+        x: 0,
+        y: Infinity,
+        w: 6,
+        h: 10,
+        minW: 3,
+        minH: 6,
+        static: false,
+        moved: false,
+      };
+      addWidget(newWidget);
+      addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) });
+    },
+    [addWidget, addWidgetConfig, area],
+  );
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {
     switch (type) {
@@ -138,7 +145,7 @@ export default connect(
         };
       case 'finish':
         createNewWidget(state);
-        props.toDashboard();
+        toDashboard();
         return {};
       default:
         return {};
@@ -146,9 +153,6 @@ export default connect(
   }, []);
 
   const [state, dispatch] = useReducer(memoizedReducer, initialState);
-
-  const { isMenuOpen } = props;
-
   const steps = getSteps();
 
   const handleReset = () => {
@@ -170,7 +174,7 @@ export default connect(
       case 1:
         return (
           <Devices
-            initialState={devices}
+            initialState={devicesData.devices}
             selectedValues={state.devices}
             handleClick={dispatch}
             steps={steps}
@@ -178,7 +182,8 @@ export default connect(
             isOpen={isMenuOpen}
             onFilter={handleSearchChange}
             usePagination
-            totalPages={paginationControl.totalPages}
+            currentPage={devicesData.currentPage}
+            totalPages={devicesData.totalPages}
             onPageChange={handlePageChange}
           />
         );
