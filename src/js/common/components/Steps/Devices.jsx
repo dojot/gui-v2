@@ -1,4 +1,5 @@
-import { TextField } from '@material-ui/core';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
@@ -7,15 +8,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
+import Pagination from '@material-ui/lab/Pagination';
 import { WFooter } from 'Components/Footer';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
 import * as Yup from 'yup';
-
-import Pagination from '@material-ui/lab/Pagination';
 
 import { useStyles } from './Devices';
 

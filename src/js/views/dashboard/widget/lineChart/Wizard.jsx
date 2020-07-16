@@ -5,10 +5,11 @@ import React, {
   useCallback,
   Fragment,
 } from 'react';
-import Stepper from '@material-ui/core/Stepper';
+
+import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
+import Stepper from '@material-ui/core/Stepper';
 import Typography from '@material-ui/core/Typography';
 import {
   General,
@@ -17,17 +18,18 @@ import {
   InitialStateGeneral as general,
   Summary,
 } from 'Components/Steps';
+import _ from 'lodash';
 import { connect } from 'react-redux';
+import { actions as dashboardActions } from 'Redux/dashboard';
+import { actions as deviceActions } from 'Redux/devices';
 import { menuSelector } from 'Selectors/baseSelector';
 import {
   devicesList,
   devicesListPaginationControl,
 } from 'Selectors/devicesSelector';
-import { actions as deviceActions } from 'Redux/devices';
-import { actions as dashboardActions } from 'Redux/dashboard';
-import { v4 as uuidv4 } from 'uuid';
-import _ from 'lodash';
 import { Device } from 'Services';
+import { v4 as uuidv4 } from 'uuid';
+
 import ViewContainer from '../../../ViewContainer';
 import useStyles from './Wizard';
 

@@ -1,9 +1,11 @@
 // import PropTypes from 'prop-types'
 import React from 'react';
+
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { WFooter } from 'Components/Footer';
 import { Formik } from 'formik';
-import Divider from '@material-ui/core/Divider';
+
 import { useStyles } from './Summary';
 
 const Summary = props => {
@@ -42,7 +44,7 @@ const AttributeBox = ({ name, values = [] }) => {
     <div className={classes.containerText}>
       <div className={classes.title}>{name}</div>
       {values.map(item => {
-        const { label, deviceLabel, color, attributeID } = item;
+        const { label, deviceLabel, color, attributeID, description } = item;
         return (
           <div className={classes.colorContainer} key={attributeID}>
             <div
@@ -50,7 +52,9 @@ const AttributeBox = ({ name, values = [] }) => {
               style={{ backgroundColor: color }}
             />
             <div className={classes.attrItem}>
-              {`${deviceLabel} - ${label}`}
+              {`${deviceLabel} - ${label} ${
+                description ? ` - (${description})` : ''
+              }`}
             </div>
           </div>
         );
