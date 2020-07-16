@@ -77,7 +77,7 @@ const GeneralForm = props => {
   };
 
   const handleChangeSearch = useCallback(e => {
-    setSearchTerm(e.target.value ? e.target.value.toLowerCase() : '');
+    setSearchTerm(e.target.value);
   }, []);
 
   useEffect(() => {

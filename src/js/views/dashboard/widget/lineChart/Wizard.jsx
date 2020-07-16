@@ -1,4 +1,10 @@
-import React, { useState, useEffect, useReducer, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useReducer,
+  useCallback,
+  Fragment,
+} from 'react';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
@@ -211,30 +217,32 @@ export default connect(
   return (
     <div className={classes.root}>
       <ViewContainer headerTitle="Grafico de Linha">
-        <Stepper
-          classes={{ root: classes.paper }}
-          alternativeLabel
-          activeStep={activeStep}
-        >
-          {steps.map(label => (
-            <Step key={label}>
-              <StepLabel>{label}</StepLabel>
-            </Step>
-          ))}
-        </Stepper>
-        <div>
-          {activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed
-              </Typography>
-              <Button onClick={handleReset}>Reset</Button>
-              <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
-            </div>
-          ) : (
-            getStepContent(activeStep, steps)
-          )}
-        </div>
+        <Fragment>
+          <Stepper
+            classes={{ root: classes.paper }}
+            alternativeLabel
+            activeStep={activeStep}
+          >
+            {steps.map(label => (
+              <Step key={label}>
+                <StepLabel>{label}</StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+          <div>
+            {activeStep === steps.length ? (
+              <div>
+                <Typography className={classes.instructions}>
+                  All steps completed
+                </Typography>
+                <Button onClick={handleReset}>Reset</Button>
+                <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
+              </div>
+            ) : (
+              getStepContent(activeStep, steps)
+            )}
+          </div>
+        </Fragment>
       </ViewContainer>
     </div>
   );
