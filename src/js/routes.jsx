@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import LazyLoading from 'common/components/LazyLoading';
 import { connect } from 'react-redux';
-import { actions as baseActions } from 'Redux/base';
 import { menuSelector } from 'Selectors/baseSelector';
 import { PrivateRoute } from 'Components/Routes';
 
@@ -53,8 +52,4 @@ const mapStateToProps = state => ({
   ...menuSelector(state),
 });
 
-const mapDispatchToProps = {
-  ...baseActions,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Routes);
+export default connect(mapStateToProps, null)(Routes);

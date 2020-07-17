@@ -1,0 +1,23 @@
+{
+  "name": "Backstage GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Protected GraphQL Endpoint": {
+        "url": "http://localhost:8000/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL",
+          "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJucm9OeHdXSk1tdlpENEhIRHJuV1R0blZEVXBWN0lETyIsImlhdCI6MTU5NDkxNzQ0MSwiZXhwIjoxNTk0OTE3ODYxLCJwcm9maWxlIjoiYWRtaW4iLCJncm91cHMiOlsxXSwidXNlcmlkIjoxLCJqdGkiOiIxODA5MzFjMzhmODQ4ODhhNjYwZjEyN2NhMjIzNDRmNiIsInNlcnZpY2UiOiJhZG1pbiIsInVzZXJuYW1lIjoiYWRtaW4ifQ.IJT2cpPCT3toXMYCpqNZ37F8Q9tkXHMPHOxezpEy9R8"
+        },
+        "introspect": true
+      },
+      "Unprotected GraphQL Endpoint": {
+        "url": "http://localhost:8000/graphql-auth",
+        "headers": {
+          "user-agent": "JS GraphQL"
+        },
+        "introspect": true
+      }
+    }
+  }
+}

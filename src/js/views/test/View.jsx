@@ -5,16 +5,15 @@ import { connect } from 'react-redux';
 // This is i18n and i10n
 import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 
-import LazyLoading from '../../common/components/LazyLoading';
-import { actions as exampleActions } from '../../redux/modules/example';
-import { exampleSelector } from '../../redux/selectors/exampleSelector';
-import { ExampleWithError } from '../../common/components/Example';
-import { ErrorBoundary } from '../../common/components/Utilities';
+import { exampleSelector } from 'Selectors/exampleSelector';
+import { actions as exampleActions } from 'Redux/example';
+import { ExampleWithError } from 'Components/Example';
+import { ErrorBoundary } from 'Components/Utilities';
+import LazyLoading from 'Components/LazyLoading';
+import ViewContainer from '../ViewContainer';
 
 // This is lazy loading example
-const LazyExample = LazyLoading(() =>
-  import('../../common/components/Example/Example'),
-);
+const LazyExample = LazyLoading(() => import('Components/Example/Example'));
 
 class ExampleView extends Component {
   static propTypes = {
@@ -38,7 +37,7 @@ class ExampleView extends Component {
     // otherwise, it will use defaultMessage as fallback
 
     return (
-      <Fragment>
+      <ViewContainer headerTitle="TODO Page">
         <LazyExample {...this.props} />
         <h2>This framework supports i18n and i10n out of the box.</h2>
         <p>
@@ -73,7 +72,7 @@ class ExampleView extends Component {
         <ErrorBoundary>
           <ExampleWithError {...this.props} />
         </ErrorBoundary>
-      </Fragment>
+      </ViewContainer>
     );
   }
 }

@@ -1,1 +1,6 @@
-export { isAuthenticated, login, logout } from './module/auth';
+export {
+  isAuthenticated,
+  login,
+  logout,
+  getUserInformation,
+} from './module/auth';
