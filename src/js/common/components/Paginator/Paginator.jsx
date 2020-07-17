@@ -61,7 +61,7 @@ const Paginator = props => {
 
 Paginator.defaultProps = {
   pageSize: 9999,
-  rowsPerPage: [2, 5, 10, 20],
+  rowsPerPage: [5, 10, 20],
   disabled: false,
   hidePrevButton: false,
   hideNextButton: false,

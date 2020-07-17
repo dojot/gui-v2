@@ -59,7 +59,7 @@ export default connect(
     devices: [],
     currentPage: 1,
     totalPages: 0,
-    pageSize: 10,
+    pageSize: 5,
     isLoading: false,
   });
 

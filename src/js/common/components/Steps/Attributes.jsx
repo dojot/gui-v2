@@ -21,9 +21,11 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CommentIcon from '@material-ui/icons/ColorLens';
 import SearchIcon from '@material-ui/icons/Search';
 import { WFooter } from 'Components/Footer';
+import { Paginator } from 'Components/Paginator';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
+import { useDebounce } from 'use-debounce';
 import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
@@ -74,6 +76,14 @@ const AttributesForm = props => {
   const [checked, setChecked] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState('');
+  const [searchTermDebounced] = useDebounce(searchTerm, 1000);
+  const [filteredAttributes, setFilteredAttributes] = useState([]);
+  const [paginationData, setPaginationData] = useState({
+    currentPage: 1,
+    totalPages: 0,
+    pageSize: 5,
+  });
+
   const [initialAttributes] = useState(() => {
     const list = [];
     if (!initialValues) return list;
@@ -90,26 +100,51 @@ const AttributesForm = props => {
     });
     return list;
   });
-  const [filteredAttributes, setFilteredAttributes] = useState([]);
 
   useEffect(() => {
-    if (!searchTerm) {
-      setFilteredAttributes(initialAttributes);
-      return;
-    }
-    setFilteredAttributes(
-      initialAttributes.filter(item => {
-        return (
-          item.deviceLabel.toLowerCase().includes(searchTerm) ||
-          item.attributeLabel.toLowerCase().includes(searchTerm)
-        );
-      }),
-    );
-  }, [initialAttributes, searchTerm]);
+    setPaginationData(state => ({ ...state, currentPage: 1 }));
+  }, [searchTermDebounced]);
+
+  useEffect(() => {
+    const filtered = !searchTermDebounced
+      ? initialAttributes
+      : initialAttributes.filter(item => {
+          return (
+            item.deviceLabel.toLowerCase().includes(searchTermDebounced) ||
+            item.attributeLabel.toLowerCase().includes(searchTermDebounced)
+          );
+        });
+
+    const start = paginationData.pageSize * (paginationData.currentPage - 1);
+
+    const end =
+      paginationData.currentPage === 1
+        ? paginationData.pageSize
+        : start + paginationData.pageSize;
+
+    const paginatedAttrs = filtered.slice(start, end);
+
+    const totalPages = Math.ceil(filtered.length / paginationData.pageSize);
+    setPaginationData(state => ({ ...state, totalPages }));
+    setFilteredAttributes(paginatedAttrs);
+  }, [
+    initialAttributes,
+    searchTermDebounced,
+    paginationData.currentPage,
+    paginationData.pageSize,
+  ]);
 
   const handleSearchChange = useCallback(e => {
     const { value } = e.target;
     setSearchTerm(value ? value.toLowerCase() : '');
+  }, []);
+
+  const onPageChange = useCallback((event, currentPage) => {
+    setPaginationData(state => ({ ...state, currentPage }));
+  }, []);
+
+  const onPageSizeChange = useCallback(pageSize => {
+    setPaginationData(state => ({ ...state, currentPage: 1, pageSize }));
   }, []);
 
   const handleToggle = ({
@@ -206,6 +241,17 @@ const AttributesForm = props => {
             })
           )}
         </List>
+        <Grid item className={classes.paginationContainer}>
+          <Paginator
+            totalPages={paginationData.totalPages}
+            currentPage={paginationData.currentPage}
+            pageSize={paginationData.pageSize}
+            onPageChange={onPageChange}
+            onPageSizeChange={onPageSizeChange}
+            showFirstButton
+            showLastButton
+          />
+        </Grid>
       </Grid>
       <WFooter {...props} isValid={!!checked.length} />
     </form>
@@ -276,7 +322,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
             color="primary"
           />
         </ListItemIcon>
-        <Tooltip title={attributeId} placement="bottom-start">
+        <Tooltip title={id} placement="bottom-start">
           <ListItemText id={labelId} primary={`[${label}] ${value.label}`} />
         </Tooltip>
         <ListItemSecondaryAction className={classes.action}>
