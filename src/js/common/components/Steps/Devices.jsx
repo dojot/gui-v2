@@ -28,6 +28,7 @@ const Devices = props => {
     currentPage,
     pageSize,
     totalPages,
+    isLoading,
     handleClick,
   } = props;
 
@@ -132,19 +133,16 @@ const Devices = props => {
           )}
         </List>
         {usePagination && initialState.length > 0 && (
-          <Grid
-            container
-            direction="row"
-            justify="center"
-            alignItems="center"
-            className={classes.paginationContainer}
-          >
+          <Grid item className={classes.paginationContainer}>
             <Paginator
               totalPages={totalPages}
               currentPage={currentPage}
               pageSize={pageSize}
               onPageChange={onPageChange}
               onPageSizeChange={onPageSizeChange}
+              showFirstButton
+              showLastButton
+              disabled={isLoading}
             />
           </Grid>
         )}
@@ -160,6 +158,7 @@ Devices.defaultProps = {
   currentPage: 1,
   pageSize: 5,
   totalPages: 1,
+  isLoading: false,
   onPageChange: () => {},
   onPageSizeChange: () => {},
 };
@@ -185,6 +184,7 @@ Devices.propTypes = {
   currentPage: PropTypes.number,
   pageSize: PropTypes.number,
   totalPages: PropTypes.number,
+  isLoading: PropTypes.bool,
   onPageChange: PropTypes.func,
   onPageSizeChange: PropTypes.func,
 };

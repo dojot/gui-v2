@@ -60,27 +60,35 @@ export default connect(
     currentPage: 1,
     totalPages: 0,
     pageSize: 10,
+    isLoading: false,
   });
 
   useEffect(() => {
+    setDevicesData(state => ({ ...state, isLoading: true }));
     DeviceService.getDevicesList(
       { number: devicesData.currentPage, size: devicesData.pageSize },
       { label: searchDeviceTerm },
     )
       .then(response =>
-        setDevicesData(state => ({ ...state, ...response.getDevices })),
+        setDevicesData(state => ({
+          ...state,
+          ...response.getDevices,
+          isLoading: false,
+        })),
       )
-      .catch(
-        error => console.error(error), // TODO tratamento de erro da api
-      );
+      .catch(error => {
+        console.error(error); // TODO tratamento de erro da api
+        setDevicesData(state => ({ ...state, isLoading: false }));
+      });
   }, [devicesData.currentPage, devicesData.pageSize, searchDeviceTerm]);
 
   const handleSearchChange = useCallback(searchTerm => {
     setSearchDeviceTerm(searchTerm);
+    setDevicesData(state => ({ ...state, currentPage: 1 }));
   }, []);
 
   const handlePageSizeChange = useCallback(pageSize => {
-    setDevicesData(state => ({ ...state, pageSize }));
+    setDevicesData(state => ({ ...state, pageSize, currentPage: 1 }));
   }, []);
 
   const handlePageChange = useCallback((event, page) => {
@@ -191,6 +199,7 @@ export default connect(
             totalPages={devicesData.totalPages}
             onPageSizeChange={handlePageSizeChange}
             onPageChange={handlePageChange}
+            isLoading={devicesData.isLoading}
           />
         );
       case 2:
