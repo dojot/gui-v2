@@ -43,7 +43,7 @@ describe('Paginator', () => {
     fireEvent.click(buttonsPage[2]);
     expect(onPageChangeMocked).not.toHaveBeenCalled();
   });
-  it('should first and last button', () => {
+  it('should show first and last page button', () => {
     const { container } = render(
       <Paginator {...initialProps} showLastButton showFirstButton />,
     );
@@ -58,7 +58,7 @@ describe('Paginator', () => {
     expect(firstButton).toHaveAttribute('aria-label', 'Go to first page');
     expect(lastButton).toHaveAttribute('aria-label', 'Go to last page');
   });
-  it('should hide previos and next button', () => {
+  it('should hide previos and next page button', () => {
     const { container } = render(
       <Paginator {...initialProps} hidePrevButton hideNextButton />,
     );
