@@ -29,7 +29,7 @@ import { useDebounce } from 'use-debounce';
 import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
-import { useStyles } from './Devices';
+import { useStyles } from './Attributes';
 
 const validationSchema = Yup.object({});
 
@@ -86,8 +86,6 @@ const AttributesForm = props => {
 
   const [initialAttributes] = useState(() => {
     const list = [];
-    if (!initialValues) return list;
-
     initialValues.forEach(device => {
       const deviceAttributes = device.attrs.map(attr => ({
         deviceId: device.id,
