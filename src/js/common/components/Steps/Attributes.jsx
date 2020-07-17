@@ -173,29 +173,38 @@ const AttributesForm = props => {
           />
         </Grid>
         <List className={classes.root}>
-          {filteredAttributes.map((item, index) => {
-            const {
-              deviceId,
-              deviceLabel,
-              attributeId,
-              attributeLabel,
-              attributeValueType,
-            } = item;
+          {!filteredAttributes.length ? (
+            <ListItem className={classes.notFound}>
+              <ListItemText primary="Nenhum atributo encontrado para o filtro informado" />
+            </ListItem>
+          ) : (
+            filteredAttributes.map(item => {
+              const {
+                deviceId,
+                deviceLabel,
+                attributeId,
+                attributeLabel,
+                attributeValueType,
+              } = item;
 
-            const isToggled = checked.find(
-              checkedItem => checkedItem.attributeID === attributeId,
-            );
+              const isSelected = checked.find(
+                checkedItem => checkedItem.attributeID === attributeId,
+              );
 
-            return (
-              <ItemRow
-                handleToggle={handleToggle}
-                value={{ label: attributeLabel, valueType: attributeValueType }}
-                meta={{ id: deviceId, label: deviceLabel, attributeId }}
-                key={`${deviceId}${attributeLabel}`}
-                isToggled={isToggled !== undefined}
-              />
-            );
-          })}
+              return (
+                <ItemRow
+                  handleToggle={handleToggle}
+                  value={{
+                    label: attributeLabel,
+                    valueType: attributeValueType,
+                  }}
+                  meta={{ id: deviceId, label: deviceLabel, attributeId }}
+                  key={`${deviceId}${attributeLabel}`}
+                  selected={!!isSelected}
+                />
+              );
+            })
+          )}
         </List>
       </Grid>
       <WFooter {...props} isValid={!!checked.length} />
@@ -203,14 +212,14 @@ const AttributesForm = props => {
   );
 };
 
-const ItemRow = ({ value, handleToggle, meta, isToggled = false }) => {
+const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
   const { id, label, attributeId } = meta;
 
   const classes = useStyles();
   const labelId = `checkbox-list-label-${attributeId}`;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isToggle, setIsToggle] = useState(isToggled);
+  const [isToggle, setIsToggle] = useState(selected);
   const [color, setColor] = useState('#FAFAFA');
   const [description, setDescription] = useState('');
 
