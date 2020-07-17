@@ -2,6 +2,9 @@ import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
 
 import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import PlayIcon from '@material-ui/icons/PlayArrow';
+import PauseIcon from '@material-ui/icons/Pause';
 import { DevelopmentContainer } from 'Components/Containers';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -15,7 +18,6 @@ import {
   dashboardLayout,
   dashboardSaga,
 } from 'Selectors/dashboardSelector';
-import { v4 as uuidv4 } from 'uuid';
 
 import ViewContainer from '../ViewContainer';
 import { AreaChartWidget } from './widget/areaChart';
@@ -36,12 +38,12 @@ const Dashboard = props => {
     stopPolling,
     startPolling,
     history,
-    addWidget,
-    addWidgetConfig,
-    updateLayout,
+    changeLayout,
     removeWidget,
     removeWidgetConfig,
     removeWidgetSaga,
+    removeWidgetData,
+    checkData,
   } = props;
 
   const { bar, line, area } = __CONFIG__;
@@ -53,153 +55,17 @@ const Dashboard = props => {
   useEffect(() => {
     if (!_.isEmpty(sagaConfig)) {
       startPolling(sagaConfig);
+    } else {
+      checkData();
     }
     return () => stopPolling();
-  }, [sagaConfig, startPolling, stopPolling]);
+  }, [sagaConfig, startPolling, stopPolling, checkData]);
 
   const onLayoutChange = useCallback(
     newLayout => {
-      updateLayout(newLayout);
+      changeLayout(newLayout, configs, sagaConfig);
     },
-    [updateLayout],
-  );
-
-  const generateWidgetConfig = useCallback(
-    type => {
-      switch (type) {
-        case line:
-          return {
-            meta: {
-              title: 'Chuva acumulada por hora',
-              subTitle: 'Estações da zona norte de campinas',
-            },
-            line: [
-              {
-                type: 'monotone',
-                dataKey: 'uv',
-                stroke: '#bd49ff',
-                name: 'Volume',
-              },
-              {
-                type: 'monotone',
-                dataKey: 'amt',
-                stroke: '#614fca',
-                name: 'Pressão',
-              },
-              {
-                type: 'monotone',
-                dataKey: 'pv',
-                stroke: '#57c64d',
-                name: 'Temperatura',
-              },
-            ],
-          };
-        case area:
-          return {
-            meta: {
-              title: 'Nível de radiação por hora',
-              subTitle: '',
-            },
-            areaProps: [
-              {
-                type: 'monotone',
-                dataKey: 'uv',
-                stroke: '#2c55e7',
-                fillOpacity: 1,
-                fill: 'url(#colorUv)',
-                name: 'Ultra Violeta - A',
-                stackId: '1',
-              },
-              {
-                type: 'monotone',
-                dataKey: 'pv',
-                stroke: '#6d96f3',
-                fillOpacity: 1,
-                fill: 'url(#colorPv)',
-                name: 'Ultra Violeta - B',
-                stackId: '1',
-              },
-              {
-                type: 'monotone',
-                dataKey: 'amt',
-                stroke: '#adc4f8',
-                fillOpacity: 1,
-                fill: 'url(#colorAmt)',
-                name: 'Ultra Violeta - C',
-                stackId: '1',
-              },
-            ],
-            defsProps: [
-              {
-                id: 'colorUv',
-                x1: '0',
-                y1: '0',
-                x2: '0',
-                y2: '1',
-                color: '#2c55e7',
-              },
-              {
-                id: 'colorPv',
-                x1: '0',
-                y1: '0',
-                x2: '0',
-                y2: '1',
-                color: '#6d96f3',
-              },
-              {
-                id: 'colorAmt',
-                x1: '0',
-                y1: '0',
-                x2: '0',
-                y2: '1',
-                color: '#adc4f8',
-              },
-            ],
-          };
-        case bar:
-          return {
-            meta: {
-              title: 'Incidencia de radiação',
-              subTitle: 'Poderia ser de chocolate',
-            },
-            bar: [
-              {
-                dataKey: 'pv',
-                fill: '#b285f1',
-                name: 'Ultra Violeta',
-              },
-              {
-                dataKey: 'uv',
-                fill: '#ff6c6c',
-                name: 'Infra vermelho',
-              },
-            ],
-          };
-        default:
-          return [];
-      }
-    },
-    [area, bar, line],
-  );
-
-  const createNewWidget = useCallback(
-    type => {
-      const widgetId = `${type}/${uuidv4()}`;
-      const newWidget = {
-        i: widgetId,
-        x: (layout.length % 2) * 6,
-        y: Infinity,
-        w: 6,
-        h: 10,
-        minW: 3,
-        minH: 6,
-        static: false,
-        moved: false,
-      };
-      addWidget(newWidget);
-      addWidgetConfig({ [widgetId]: generateWidgetConfig(type) });
-    },
-    [addWidget, addWidgetConfig, generateWidgetConfig, layout.length],
+    [changeLayout, configs, sagaConfig],
   );
 
   const onRemoveItem = useCallback(
@@ -207,9 +73,16 @@ const Dashboard = props => {
       removeWidget(i);
       removeWidgetConfig(i);
       removeWidgetSaga(i);
+      removeWidgetData(i);
       stopPolling();
     },
-    [removeWidget, removeWidgetConfig, removeWidgetSaga, stopPolling],
+    [
+      removeWidget,
+      removeWidgetConfig,
+      removeWidgetSaga,
+      removeWidgetData,
+      stopPolling,
+    ],
   );
 
   const onPin = useCallback(
@@ -218,9 +91,9 @@ const Dashboard = props => {
         const { static: iStatic, ...otherProps } = item;
         return item.i === i ? { static: !iStatic, ...otherProps } : item;
       });
-      updateLayout(newArr);
+      changeLayout(newArr, configs, sagaConfig);
     },
-    [layout, updateLayout],
+    [layout, changeLayout],
   );
 
   const createElement = useCallback(
@@ -235,7 +108,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
-                data={data}
+                data={data[i]}
                 config={configs[i]}
               />
             </div>
@@ -279,70 +152,38 @@ const Dashboard = props => {
     return (
       <DevelopmentContainer>
         <Button
-          style={{ marginLeft: 5 }}
+          style={{ marginLeft: 10 }}
           size="small"
           variant="outlined"
           color="inherit"
-          onClick={() => startPolling('hello')}
+          startIcon={<PlayIcon />}
+          onClick={() => startPolling(sagaConfig)}
         >
-          start
+          Iniciar
         </Button>
         <Button
-          style={{ marginLeft: 5 }}
+          style={{ marginLeft: 10 }}
           size="small"
           variant="outlined"
           color="inherit"
+          startIcon={<PauseIcon />}
           onClick={() => stopPolling()}
         >
-          stop
+          Parar
         </Button>
         <Button
-          style={{ marginLeft: 5 }}
+          style={{ marginLeft: 10 }}
           size="small"
           variant="outlined"
           color="inherit"
-          onClick={() => createNewWidget(line)}
-        >
-          linha
-        </Button>
-        <Button
-          style={{ marginLeft: 5 }}
-          size="small"
-          variant="outlined"
-          color="inherit"
-          onClick={() => createNewWidget(area)}
-        >
-          area
-        </Button>
-        <Button
-          style={{ marginLeft: 5 }}
-          size="small"
-          variant="outlined"
-          color="inherit"
-          onClick={() => createNewWidget(bar)}
-        >
-          barra
-        </Button>
-        <Button
-          style={{ marginLeft: 5 }}
-          size="small"
-          variant="outlined"
-          color="inherit"
+          startIcon={<AddIcon />}
           onClick={() => handleClick()}
         >
           Adicionar
         </Button>
       </DevelopmentContainer>
     );
-  }, [
-    area,
-    bar,
-    line,
-    createNewWidget,
-    handleClick,
-    startPolling,
-    stopPolling,
-  ]);
+  }, [handleClick, startPolling, stopPolling]);
 
   return (
     <ViewContainer headerTitle="Dashboard" headerContent={getHeaderContent}>

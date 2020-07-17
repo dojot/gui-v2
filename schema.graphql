@@ -1,0 +1,175 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+  query: Query
+  mutation: Mutation
+}
+
+"Necessary data about and attribute of a device#"
+type Attr {
+  label: String!
+  valueType: ValueType!
+}
+
+type Attributes {
+  "Timestamp of create date"
+  created: String
+  "Attribute ID"
+  id: Int
+  "Attribute Label"
+  label: String
+  "List of Metadatas associate to Attribute"
+  metadata: [Metadata]
+  "Value when type is Static"
+  static_value: String
+  "Primary key of a template "
+  template_id: String
+  "Can be static, dynamic, etc."
+  type: String
+  "Can be String, Integer, Float, Geo, etc."
+  value_type: String
+}
+
+"JSON that defines a dashboard's configuration retrieved from database and parsed as string"
+type Config {
+  config: String!
+}
+
+"Necessary informations about device#"
+type Device {
+  attrs: [Attr]
+  id: String!
+  label: String!
+}
+
+"A paginated list of Devices.#"
+type DeviceListPage {
+  currentPage: Int!
+  devices: [Device]
+  totalPages: Int!
+}
+
+"Historical reading from device#"
+type History {
+  attrs: [HistoryAttr]
+  deviceID: String!
+  label: String!
+}
+
+"Historical reading from an attribute#"
+type HistoryAttr {
+  deviceID: String!
+  label: String!
+  timestamp: String!
+  value: String!
+  valueType: ValueType!
+}
+
+type MapStringToString {
+  "key"
+  key: String
+  "value"
+  value: String
+}
+
+type Metadata {
+  "Timestamp of create date"
+  created: String
+  "Metadata ID"
+  id: Int
+  "Metadata Label "
+  label: String
+  "Meta Value"
+  static_value: String
+  "Can be define by user. Like a unit"
+  type: String
+  "Timestamp of update date"
+  updated: String
+  "Can be String, Integer, Float, Geo, etc."
+  value_type: String
+}
+
+type Mutation {
+  "Updates existing information on database, or creates an entry if it doesn't exist. Returns success message if it works or error message if fails."
+  updateConfig(config: String!, tenant: String!, user: String): String
+}
+
+type Query {
+  "Retrieves dashboard configuration by user. Returns the information if successful or error message if it occurs."
+  getConfig(tenant: String!, user: String): String
+  "Finds device information by id"
+  getDeviceById(deviceId: String!): Device
+  "Returns historical data about devices' attributes chosen in the input"
+  getDeviceHistory(filter: HistoryInput!): [HistoryAttr]
+  "Returns a list of devices that can be divided in pages, and the information about how many pages there are in total, along with which page is being shown"
+  getDevices(filter: FilterDeviceInput, page: PageInput): DeviceListPage
+  "Get a template by Id"
+  template(id: Int!): Template
+  """
+
+  Checks if templates has Image Firmware and return a array with objects key-value, where key is a id template and value is a boolean.
+  The value is true if the template has image firmware.
+  """
+  templatesHasImageFirmware(templatesId: [Int]!): [MapStringToString]
+}
+
+type Template {
+  "List of Attributes"
+  attrs: [Attributes]
+  "List of Configuration Attributes"
+  config_attrs: [Attributes]
+  "Timestamp of create date"
+  created: String
+  "List of Data Attributes"
+  data_attrs: [Attributes]
+  "Template ID"
+  id: Int
+  "List of Image Attributes (Firmware)"
+  img_attrs: [Attributes]
+  "Template Label"
+  label: String!
+}
+
+"Value types used by the platform#"
+enum ValueType {
+  BOOLEAN
+  GEO
+  NUMBER
+  STRING
+  UNDEFINED
+}
+
+"A stringified JSON that defines a dashboard's configuration"
+input ConfigInput {
+  config: String!
+}
+
+"Return only devices that are named accordingly (prefix or suffix match)#"
+input FilterDeviceInput {
+  label: String
+}
+
+"Parameters to identify from which device and which attributes to retrieve historical data from#"
+input HistoryDeviceInput {
+  "attributes which readings are to be retrieved#"
+  attrs: [String]!
+  "device selected#"
+  deviceID: String!
+}
+
+"Parameters to query historical device data#"
+input HistoryInput {
+  dateFrom: String
+  dateTo: String
+  "list of devices which attributes will be retrieved#"
+  devices: [HistoryDeviceInput]!
+  lastN: Int
+}
+
+"Determines which page to show and how many items#"
+input PageInput {
+  "set the page number to be accessed (default 20) #"
+  number: Int
+  "set the number of elements to be shown in a page (default 1) #"
+  size: Int
+}
