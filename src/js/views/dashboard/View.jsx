@@ -1,6 +1,5 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import PlayIcon from '@material-ui/icons/PlayArrow';
@@ -55,11 +54,15 @@ const Dashboard = props => {
   useEffect(() => {
     if (!_.isEmpty(sagaConfig)) {
       startPolling(sagaConfig);
-    } else {
-      checkData();
     }
     return () => stopPolling();
-  }, [sagaConfig, startPolling, stopPolling, checkData]);
+  }, [sagaConfig, startPolling, stopPolling]);
+
+  useEffect(() => {
+    if (_.isEmpty(sagaConfig)) {
+      checkData();
+    }
+  }, []);
 
   const onLayoutChange = useCallback(
     newLayout => {
@@ -120,7 +123,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
-                data={data}
+                data={data[i]}
                 config={configs[i]}
               />
             </div>
@@ -132,7 +135,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
-                data={data}
+                data={data[i]}
                 config={configs[i]}
               />
             </div>
@@ -150,27 +153,29 @@ const Dashboard = props => {
 
   const getHeaderContent = useCallback(() => {
     return (
-      <DevelopmentContainer>
-        <Button
-          style={{ marginLeft: 10 }}
-          size="small"
-          variant="outlined"
-          color="inherit"
-          startIcon={<PlayIcon />}
-          onClick={() => startPolling(sagaConfig)}
-        >
-          Iniciar
-        </Button>
-        <Button
-          style={{ marginLeft: 10 }}
-          size="small"
-          variant="outlined"
-          color="inherit"
-          startIcon={<PauseIcon />}
-          onClick={() => stopPolling()}
-        >
-          Parar
-        </Button>
+      <div>
+        <DevelopmentContainer>
+          <Button
+            style={{ marginLeft: 10 }}
+            size="small"
+            variant="outlined"
+            color="inherit"
+            startIcon={<PlayIcon />}
+            onClick={() => startPolling(sagaConfig)}
+          >
+            Iniciar
+          </Button>
+          <Button
+            style={{ marginLeft: 10 }}
+            size="small"
+            variant="outlined"
+            color="inherit"
+            startIcon={<PauseIcon />}
+            onClick={() => stopPolling()}
+          >
+            Parar
+          </Button>
+        </DevelopmentContainer>
         <Button
           style={{ marginLeft: 10 }}
           size="small"
@@ -181,7 +186,7 @@ const Dashboard = props => {
         >
           Adicionar
         </Button>
-      </DevelopmentContainer>
+      </div>
     );
   }, [handleClick, startPolling, stopPolling]);
 

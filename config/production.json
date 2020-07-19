@@ -1,4 +1,13 @@
 {
   "env": "production",
-  "publicPath": "/"
+  "publicPath": "/",
+  "app": {
+    "line": "1",
+    "area": "2",
+    "bar": "3",
+    "pizza": "4",
+    "donut": "5",
+    "bubble": "6",
+    "apiUrl": "http://192.168.1.11:8000/"
+  }
 }

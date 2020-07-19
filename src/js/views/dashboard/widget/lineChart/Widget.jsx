@@ -17,6 +17,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { formatDate } from 'Utils';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => {
@@ -92,13 +93,18 @@ export default ({ id, data, config, title, onDelete, onPin, onEdit }) => {
               bottom: 5,
             }}
           >
-            <XAxis dataKey="timestamp" />
+            <XAxis tickFormatter={formatDate} dataKey="timestamp" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
             {config.line.map(item => (
-              <Line isAnimationActive={false} key={item.dataKey} {...item} />
+              <Line
+                connectNulls
+                isAnimationActive={false}
+                key={item.dataKey}
+                {...item}
+              />
             ))}
           </LineChart>
         </ResponsiveContainer>

@@ -19,6 +19,7 @@ import {
   InitialStateGeneral as general,
   Summary,
 } from 'Components/Steps';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { menuSelector } from 'Selectors/baseSelector';
@@ -51,7 +52,13 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(props => {
-  const { toDashboard, addWidget, addWidgetConfig, isMenuOpen } = props;
+  const {
+    toDashboard,
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    isMenuOpen,
+  } = props;
   const classes = useStyles();
   const { bar: barID } = __CONFIG__;
 
@@ -109,6 +116,18 @@ export default connect(
     return { bar, meta };
   };
 
+  const generateScheme = state => {
+    return DeviceService.parseHistoryQuery({
+      devices: _.values(
+        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
+          deviceID: key,
+          attrs: value.map(val => val.label),
+        })),
+      ),
+      lastN: 15,
+    });
+  };
+
   const createNewWidget = attributes => {
     const widgetId = `${barID}/${uuidv4()}`;
     const newWidget = {
@@ -124,6 +143,7 @@ export default connect(
     };
     addWidget(newWidget);
     addWidgetConfig({ [widgetId]: generateBarConfig(attributes) });
+    addWidgetSaga({ [widgetId]: generateScheme(attributes) });
   };
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {

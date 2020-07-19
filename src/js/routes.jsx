@@ -1,9 +1,10 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+
 import LazyLoading from 'common/components/LazyLoading';
-import { connect } from 'react-redux';
-import { menuSelector } from 'Selectors/baseSelector';
 import { PrivateRoute } from 'Components/Routes';
+import { connect } from 'react-redux';
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { menuSelector } from 'Selectors/baseSelector';
 
 // This is show case how you can lazy loading component
 const ExampleRouteHandler = LazyLoading(() => import('views/example'));
@@ -16,10 +17,11 @@ const WizardManager = LazyLoading(() =>
 );
 const LogOut = LazyLoading(() => import('views/logout'));
 const LogIn = LazyLoading(() => import('views/login'));
+const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
   <Switch>
-    <Route exact path="/" component={ExampleRouteHandler} />
+    <Route exact path="/" component={redirectToDashboard} />
     <Route path="/login" component={LogIn} />
     <Route path="/logout" component={LogOut} />
     <Route path="/help" component={ExampleRouteHandler} />

@@ -23,45 +23,21 @@ const delay = duration => {
   });
 };
 
-// TODO: This code will be removed later
-// TODO: The backstage will be responsible for the correct formatting
-// TODO: The reduceList and convertList functions will be removed
-const reduceList = prop => {
-  const array = [];
-  Object.keys(prop).forEach(list => {
-    array.push(
-      prop[list].reduce((acc, fItem) => {
-        const obj = { ...fItem };
-        Object.keys(obj).forEach(item => {
-          acc[item] = obj[item];
-        });
-        return acc;
-      }, {}),
-    );
-  });
-  return array;
-};
-
-const convertList = prop =>
-  _.groupBy(
-    prop.map(({ label, valueType, deviceID, value, timestamp }) => ({
-      [`${deviceID}${label}`]:
-        valueType === 'NUMBER' ? parseFloat(value) : value,
-      timestamp: moment(timestamp).format('HH:mm:ss'),
-    })),
-    item => item.timestamp,
-  );
-
 function* pollData(schema) {
   try {
     // TODO: This will be improved
     for (const key in schema) {
-      const { getDeviceHistory } = yield Device.getDevicesHistoryParsed(
-        schema[key],
-      );
-      const ret = reduceList(convertList(getDeviceHistory));
-      const condition = !!ret;
-      if (condition) yield put(dashboardActions.updateValues({ [key]: ret }));
+      const {
+        getDeviceHistoryForDashboard,
+      } = yield Device.getDevicesHistoryParsed(schema[key]);
+
+      if (getDeviceHistoryForDashboard) {
+        yield put(
+          dashboardActions.updateValues({
+            [key]: JSON.parse(getDeviceHistoryForDashboard),
+          }),
+        );
+      }
     }
     // TODO: MMake the timing adjustable.
     // For now the timer is set to 15 seconds
@@ -103,14 +79,12 @@ function* checkData() {
 function* updateData({ payload: { layout, configs, saga } }) {
   const { userName, tenant } = getUserInformation();
   try {
-    if (!_.isEmpty(layout) && !_.isEmpty(configs) && !_.isEmpty(saga)) {
-      const exportConfig = JSON.stringify({
-        layout,
-        configs,
-        saga,
-      });
-      yield Configuration.updateDashboardConfig(userName, tenant, exportConfig);
-    }
+    const exportConfig = JSON.stringify({
+      layout,
+      configs,
+      saga,
+    });
+    yield Configuration.updateDashboardConfig(userName, tenant, exportConfig);
     yield put(dashboardActions.updateLayout(layout));
   } catch (e) {
     console.error(e);
