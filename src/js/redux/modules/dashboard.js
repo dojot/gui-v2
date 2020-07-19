@@ -22,9 +22,13 @@ const REMOVE_WIDGET = 'app/dashboard/REMOVE_WIDGET';
 const REMOVE_WIDGET_CONFIG = 'app/dashboard/REMOVE_WIDGET_CONFIG';
 const GET_LAYOUT = 'app/dashboard/GET_LAYOUT';
 const UPDATE_LAYOUT = 'app/dashboard/UPDATE_LAYOUT';
+const CHANGE_LAYOUT = 'app/dashboard/CHANGE_LAYOUT';
 const INIT_LAYOUT = 'app/dashboard/INIT_LAYOUT';
 const ADD_WIDGET_SAGA = 'app/dashboard/ADD_WIDGET_SAGA';
 const REMOVE_WIDGET_SAGA = 'app/dashboard/REMOVE_WIDGET_SAGA';
+const REMOVE_WIDGET_DATA = 'app/dashboard/REMOVE_WIDGET_DATA';
+const RESTORE_STATE = 'app/dashboard/RESTORE_STATE';
+const CHECK_STATE = 'app/dashboard/CHECK_STATE';
 
 export const constants = {
   START_POLLING,
@@ -38,9 +42,13 @@ export const constants = {
   REMOVE_WIDGET_CONFIG,
   GET_LAYOUT,
   UPDATE_LAYOUT,
+  CHANGE_LAYOUT,
   INIT_LAYOUT,
   ADD_WIDGET_SAGA,
   REMOVE_WIDGET_SAGA,
+  REMOVE_WIDGET_DATA,
+  RESTORE_STATE,
+  CHECK_STATE,
 };
 
 // ------------------------------------
@@ -61,12 +69,21 @@ export const addWidgetConfig = createAction(
 );
 export const removeWidgetConfig = createAction(REMOVE_WIDGET_CONFIG, id => id);
 
+export const removeWidgetData = createAction(REMOVE_WIDGET_DATA, id => id);
+
 export const addWidgetSaga = createAction(ADD_WIDGET_SAGA, saga => saga);
 export const removeWidgetSaga = createAction(REMOVE_WIDGET_SAGA, id => id);
 
 export const getLayout = createAction(GET_LAYOUT, layout => ({ layout }));
 export const updateLayout = createAction(UPDATE_LAYOUT, layout => ({ layout }));
+export const changeLayout = createAction(
+  CHANGE_LAYOUT,
+  (layout, configs, saga) => ({ layout, configs, saga }),
+);
 export const initLayout = createAction(INIT_LAYOUT, layout => ({ layout }));
+
+export const restoreData = createAction(RESTORE_STATE, context => context);
+export const checkData = createAction(CHECK_STATE);
 
 export const actions = {
   startPolling,
@@ -80,14 +97,19 @@ export const actions = {
   removeWidgetConfig,
   getLayout,
   updateLayout,
+  changeLayout,
   initLayout,
   addWidgetSaga,
   removeWidgetSaga,
+  removeWidgetData,
+  restoreData,
+  checkData,
 };
 
 export const reducers = {
-  [UPDATE_VALUES]: (state, { payload }) =>
-    state.update('data', data => maxPush(data, payload, 15)),
+  [UPDATE_VALUES]: (state, { payload }) => state.mergeIn(['data'], payload),
+  [REMOVE_WIDGET_DATA]: (state, { payload }) =>
+    state.deleteIn(['data', payload]),
   [UPDATE_LAYOUT]: (state, { payload }) => state.merge({ ...payload }),
   [ADD_WIDGET_CONFIG]: (state, { payload }) =>
     state.mergeIn(['configs'], payload),
@@ -101,6 +123,7 @@ export const reducers = {
   [REMOVE_WIDGET]: (state, { payload }) =>
     state.update('layout', layout => _.reject(layout, { i: payload })),
   [INIT_LAYOUT]: (state, { payload }) => state.merge({ ...payload }),
+  [RESTORE_STATE]: (state, { payload }) => state.merge({ ...payload }),
 };
 
 export const initialState = () =>
@@ -108,7 +131,7 @@ export const initialState = () =>
     configs: {},
     layout: [],
     saga: {},
-    data: [],
+    data: {},
   });
 
 export default handleActions(reducers, initialState());

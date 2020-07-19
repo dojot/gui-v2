@@ -8,11 +8,6 @@ export default ({ isMenuOpen, children }) => {
   return (
     <RootContainer>
       <CssBaseline />
-      {/* <AppHeader */}
-      {/*  isOpen={openSidebar} */}
-      {/*  handleClick={handleSidebar} */}
-      {/*  title={headerTitle} */}
-      {/* /> */}
       <Drawer
         isOpen={isMenuOpen}
         secondaryItems={helper}

@@ -109,7 +109,7 @@ export default connect(
     };
     const line = attributes.map(item => ({
       type: 'monotone',
-      dataKey: item.attributeID,
+      dataKey: `${item.deviceID}${item.label}`,
       stroke: item.color,
       name: item.description || item.label,
     }));
