@@ -21,7 +21,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import CommentIcon from '@material-ui/icons/ColorLens';
 import SearchIcon from '@material-ui/icons/Search';
 import { WFooter } from 'Components/Footer';
-import { Paginator } from 'Components/Paginator';
+import { Paginator, usePaginator } from 'Components/Paginator';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
@@ -77,12 +77,13 @@ const AttributesForm = props => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
-  const [filteredAttributes, setFilteredAttributes] = useState([]);
-  const [paginationData, setPaginationData] = useState({
-    currentPage: 1,
-    totalPages: 0,
-    pageSize: 5,
-  });
+
+  const {
+    paginatorData,
+    setPaginatorData,
+    setCurrentPage,
+    setPageSize,
+  } = usePaginator('client');
 
   const [initialAttributes] = useState(() => {
     const list = [];
@@ -100,8 +101,8 @@ const AttributesForm = props => {
   });
 
   useEffect(() => {
-    setPaginationData(state => ({ ...state, currentPage: 1 }));
-  }, [searchTermDebounced]);
+    setCurrentPage(1);
+  }, [searchTermDebounced, setCurrentPage]);
 
   useEffect(() => {
     const filtered = !searchTermDebounced
@@ -113,36 +114,12 @@ const AttributesForm = props => {
           );
         });
 
-    const start = paginationData.pageSize * (paginationData.currentPage - 1);
-
-    const end =
-      paginationData.currentPage === 1
-        ? paginationData.pageSize
-        : start + paginationData.pageSize;
-
-    const paginatedAttrs = filtered.slice(start, end);
-
-    const totalPages = Math.ceil(filtered.length / paginationData.pageSize);
-    setPaginationData(state => ({ ...state, totalPages }));
-    setFilteredAttributes(paginatedAttrs);
-  }, [
-    initialAttributes,
-    searchTermDebounced,
-    paginationData.currentPage,
-    paginationData.pageSize,
-  ]);
+    setPaginatorData(filtered);
+  }, [initialAttributes, searchTermDebounced, setPaginatorData]);
 
   const handleSearchChange = useCallback(e => {
     const { value } = e.target;
     setSearchTerm(value ? value.toLowerCase() : '');
-  }, []);
-
-  const onPageChange = useCallback((event, currentPage) => {
-    setPaginationData(state => ({ ...state, currentPage }));
-  }, []);
-
-  const onPageSizeChange = useCallback(pageSize => {
-    setPaginationData(state => ({ ...state, currentPage: 1, pageSize }));
   }, []);
 
   const handleToggle = ({
@@ -206,12 +183,12 @@ const AttributesForm = props => {
           />
         </Grid>
         <List className={classes.root}>
-          {!filteredAttributes.length ? (
+          {!paginatorData.pageData.length ? (
             <ListItem className={classes.notFound}>
               <ListItemText primary="Nenhum atributo encontrado para o filtro informado" />
             </ListItem>
           ) : (
-            filteredAttributes.map(item => {
+            paginatorData.pageData.map(item => {
               const {
                 deviceId,
                 deviceLabel,
@@ -241,11 +218,11 @@ const AttributesForm = props => {
         </List>
         <Grid item className={classes.paginationContainer}>
           <Paginator
-            totalPages={paginationData.totalPages}
-            currentPage={paginationData.currentPage}
-            pageSize={paginationData.pageSize}
-            onPageChange={onPageChange}
-            onPageSizeChange={onPageSizeChange}
+            totalPages={paginatorData.totalPages}
+            currentPage={paginatorData.currentPage}
+            pageSize={paginatorData.pageSize}
+            onPageChange={(event, currentPage) => setCurrentPage(currentPage)}
+            onPageSizeChange={pageSize => setPageSize(pageSize)}
             showFirstButton
             showLastButton
           />

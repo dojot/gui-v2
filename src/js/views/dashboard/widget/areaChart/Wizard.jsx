@@ -11,6 +11,7 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import Typography from '@material-ui/core/Typography';
+import { usePaginator } from 'Components/Paginator';
 import {
   General,
   Devices,
@@ -55,45 +56,43 @@ export default connect(
   const { area } = __CONFIG__;
 
   const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
-  const [devicesData, setDevicesData] = useState({
-    devices: [],
-    currentPage: 1,
-    totalPages: 0,
-    pageSize: 5,
-    isLoading: false,
-  });
+  const {
+    paginatorData,
+    setPaginatorData,
+    setCurrentPage,
+    setPageSize,
+    setDisablePaginator,
+  } = usePaginator();
 
   useEffect(() => {
-    setDevicesData(state => ({ ...state, isLoading: true }));
+    setDisablePaginator(true);
     DeviceService.getDevicesList(
-      { number: devicesData.currentPage, size: devicesData.pageSize },
+      { number: paginatorData.currentPage, size: paginatorData.pageSize },
       { label: searchDeviceTerm },
     )
-      .then(response =>
-        setDevicesData(state => ({
-          ...state,
-          ...response.getDevices,
-          isLoading: false,
-        })),
-      )
+      .then(response => {
+        const { devices, currentPage, totalPages } = response.getDevices;
+        setPaginatorData({ data: devices, currentPage, totalPages });
+      })
       .catch(error => {
         console.error(error); // TODO tratamento de erro da api
-        setDevicesData(state => ({ ...state, isLoading: false }));
+        setDisablePaginator(false);
       });
-  }, [devicesData.currentPage, devicesData.pageSize, searchDeviceTerm]);
+  }, [
+    setDisablePaginator,
+    setPaginatorData,
+    paginatorData.currentPage,
+    paginatorData.pageSize,
+    searchDeviceTerm,
+  ]);
 
-  const handleSearchChange = useCallback(searchTerm => {
-    setSearchDeviceTerm(searchTerm);
-    setDevicesData(state => ({ ...state, currentPage: 1 }));
-  }, []);
-
-  const handlePageSizeChange = useCallback(pageSize => {
-    setDevicesData(state => ({ ...state, pageSize, currentPage: 1 }));
-  }, []);
-
-  const handlePageChange = useCallback((event, page) => {
-    setDevicesData(state => ({ ...state, currentPage: page }));
-  }, []);
+  const handleSearchChange = useCallback(
+    searchTerm => {
+      setSearchDeviceTerm(searchTerm);
+      setCurrentPage(1);
+    },
+    [setCurrentPage],
+  );
 
   const generateAreaConfig = state => {
     const { attributes, general: generalState } = state;
@@ -186,7 +185,7 @@ export default connect(
       case 1:
         return (
           <Devices
-            initialState={devicesData.devices}
+            initialState={paginatorData.pageData}
             selectedValues={state.devices}
             handleClick={dispatch}
             steps={steps}
@@ -194,12 +193,12 @@ export default connect(
             isOpen={isMenuOpen}
             onFilter={handleSearchChange}
             usePagination
-            currentPage={devicesData.currentPage}
-            pageSize={devicesData.pageSize}
-            totalPages={devicesData.totalPages}
-            onPageSizeChange={handlePageSizeChange}
-            onPageChange={handlePageChange}
-            isLoading={devicesData.isLoading}
+            currentPage={paginatorData.currentPage}
+            pageSize={paginatorData.pageSize}
+            totalPages={paginatorData.totalPages}
+            onPageSizeChange={pageSize => setPageSize(pageSize)}
+            onPageChange={(event, page) => setCurrentPage(page)}
+            isLoading={paginatorData.disabled}
           />
         );
       case 2:
