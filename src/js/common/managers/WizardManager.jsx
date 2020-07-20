@@ -1,14 +1,9 @@
-import React from 'react';
+import React, { useCallback } from 'react';
+
 import LazyLoading from 'Components/LazyLoading';
 
-const WizardLC = LazyLoading(() =>
-  import('views/dashboard/widget/lineChart/Wizard.jsx'),
-);
-const WizardAC = LazyLoading(() =>
-  import('views/dashboard/widget/areaChart/Wizard.jsx'),
-);
-const WizardBC = LazyLoading(() =>
-  import('views/dashboard/widget/barChart/Wizard.jsx'),
+const Wizard = LazyLoading(() =>
+  import('views/dashboard/widget/wizard/Wizard.jsx'),
 );
 
 const Manager = props => {
@@ -18,26 +13,33 @@ const Manager = props => {
   } = props;
   const { line, area, bar, pizza, donut, bubble } = __CONFIG__;
 
-  const toDashboard = () => {
+  const toDashboard = useCallback(() => {
     history.push('/dashboard');
-  };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-  switch (params.id) {
-    case line:
-      return <WizardLC toDashboard={toDashboard} />;
-    case area:
-      return <WizardAC toDashboard={toDashboard} />;
-    case bar:
-      return <WizardBC toDashboard={toDashboard} />;
-    case pizza:
-      return <WizardLC />;
-    case donut:
-      return <WizardLC />;
-    case bubble:
-      return <WizardLC />;
-    default:
-      return <div />;
-  }
+  const getTitle = useCallback(() => {
+    switch (params.id) {
+      case line:
+        return 'Gráfico de Linha';
+      case area:
+        return 'Gráfico de Área';
+      case bar:
+        return 'Gráfico de Barra';
+      case pizza:
+        return 'Gráfico de Pizza';
+      case donut:
+        return 'Gráfico de Donut';
+      case bubble:
+        return 'Gráfico de Bolhas';
+      default:
+        return '';
+    }
+  }, [area, bar, bubble, donut, line, params.id, pizza]);
+
+  return (
+    <Wizard title={getTitle()} type={params.id} toDashboard={toDashboard} />
+  );
 };
 
 export default Manager;
