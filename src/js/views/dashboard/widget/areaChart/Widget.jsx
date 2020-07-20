@@ -18,6 +18,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
+import { formatDate } from 'Utils';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => {
@@ -44,8 +45,9 @@ export default ({ id, onDelete, onPin, data, config }) => {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
+  const handleClose = (callback = () => {}) => {
     setAnchorEl(null);
+    callback(id);
   };
   return (
     <Card className={classes.card} variant="outlined">
@@ -68,13 +70,13 @@ export default ({ id, onDelete, onPin, data, config }) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={handleClose}>
+              <MenuItem onClick={() => handleClose()}>
                 <ListItemText primary="Editar" />
               </MenuItem>
-              <MenuItem onClick={() => onPin(id)}>
+              <MenuItem onClick={() => handleClose(onPin)}>
                 <ListItemText primary="Fixar" />
               </MenuItem>
-              <MenuItem onClick={() => onDelete(id)}>
+              <MenuItem onClick={() => handleClose(onDelete)}>
                 <ListItemText primary="Excluir" />
               </MenuItem>
             </Menu>
@@ -102,13 +104,13 @@ export default ({ id, onDelete, onPin, data, config }) => {
                 </linearGradient>
               ))}
             </defs>
-            <XAxis dataKey="name" />
+            <XAxis tickFormatter={formatDate} dataKey="timestamp" />
             <YAxis />
             <CartesianGrid strokeDasharray="3 3" />
             <Tooltip />
             <Legend />
             {config.areaProps.map(item => (
-              <Area {...item} isAnimationActive={false} />
+              <Area connectNulls {...item} isAnimationActive={false} />
             ))}
           </AreaChart>
         </ResponsiveContainer>

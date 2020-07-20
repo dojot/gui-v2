@@ -4,6 +4,7 @@ const drawerWidth = 215;
 
 export const useStyles = makeStyles(theme => ({
   appBar: {
+    backgroundColor: theme.palette.primary,
     zIndex: theme.zIndex.drawer,
     boxShadow: 'none',
     width: `calc(100% - ${theme.spacing(8) + 1}px)`,
@@ -13,6 +14,7 @@ export const useStyles = makeStyles(theme => ({
     }),
   },
   appBarShift: {
+    backgroundColor: theme.palette.primary,
     marginLeft: drawerWidth,
     width: `calc(100% - ${drawerWidth}px)`,
     transition: theme.transitions.create(['width', 'margin'], {

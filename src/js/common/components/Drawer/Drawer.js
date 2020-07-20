@@ -33,6 +33,10 @@ export const useStyles = makeStyles(theme => ({
     textDecoration: 'none',
     color: theme.palette.text.secondary,
   },
+  selected: {
+    backgroundColor: 'rgba(13, 123, 191, 0.1)',
+    borderLeft: '4px solid #4788DC',
+  },
   toolbar: {
     display: 'flex',
     alignItems: 'center',

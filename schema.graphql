@@ -101,6 +101,8 @@ type Query {
   getDeviceById(deviceId: String!): Device
   "Returns historical data about devices' attributes chosen in the input"
   getDeviceHistory(filter: HistoryInput!): [HistoryAttr]
+  "Returns historical data about devices' attributes chosen in the input"
+  getDeviceHistoryForDashboard(filter: HistoryInput!): String
   "Returns a list of devices that can be divided in pages, and the information about how many pages there are in total, along with which page is being shown"
   getDevices(filter: FilterDeviceInput, page: PageInput): DeviceListPage
   "Get a template by Id"

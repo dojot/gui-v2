@@ -26,7 +26,6 @@ import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
 import { useDebounce } from 'use-debounce';
-import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
 import { useStyles } from './Attributes';
@@ -91,7 +90,7 @@ const AttributesForm = props => {
       const deviceAttributes = device.attrs.map(attr => ({
         deviceId: device.id,
         deviceLabel: device.label,
-        attributeId: uuidv4(),
+        attributeId: `${device.id}${attr.label}`,
         attributeLabel: attr.label,
         attributeValueType: attr.valueType,
       }));

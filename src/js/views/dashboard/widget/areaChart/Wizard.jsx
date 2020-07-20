@@ -19,6 +19,7 @@ import {
   InitialStateGeneral as general,
   Summary,
 } from 'Components/Steps';
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { menuSelector } from 'Selectors/baseSelector';
@@ -51,7 +52,13 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(props => {
-  const { toDashboard, addWidget, addWidgetConfig, isMenuOpen } = props;
+  const {
+    toDashboard,
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    isMenuOpen,
+  } = props;
   const classes = useStyles();
   const { area } = __CONFIG__;
 
@@ -96,7 +103,6 @@ export default connect(
 
   const generateAreaConfig = state => {
     const { attributes, general: generalState } = state;
-
     const meta = {
       title: generalState.name || '',
       subTitle: generalState.description || '',
@@ -121,6 +127,18 @@ export default connect(
     return { areaProps, defsProps, meta };
   };
 
+  const generateScheme = state => {
+    return DeviceService.parseHistoryQuery({
+      devices: _.values(
+        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
+          deviceID: key,
+          attrs: value.map(val => val.label),
+        })),
+      ),
+      lastN: 15,
+    });
+  };
+
   const createNewWidget = useCallback(
     attributes => {
       const widgetId = `${area}/${uuidv4()}`;
@@ -137,6 +155,7 @@ export default connect(
       };
       addWidget(newWidget);
       addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) });
+      addWidgetSaga({ [widgetId]: generateScheme(attributes) });
     },
     [addWidget, addWidgetConfig, area],
   );

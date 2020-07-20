@@ -1,11 +1,13 @@
 import React from 'react';
+
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import { Formik } from 'formik';
-import * as Yup from 'yup';
-import { isAuthenticated } from 'Utils';
 import { Redirect } from 'react-router-dom';
 import { Authentication } from 'Services';
+import { isAuthenticated } from 'Utils';
+import * as Yup from 'yup';
+
 import useStyles from './style';
 
 const validationSchema = Yup.object({

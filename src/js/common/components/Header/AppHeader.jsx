@@ -1,14 +1,15 @@
 import React from 'react';
+
 import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
-import ChevronLeftIcon from '@material-ui/icons/ArrowBack';
+import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
+import ChevronLeftIcon from '@material-ui/icons/ArrowBack';
+import MenuIcon from '@material-ui/icons/Menu';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+
 import { useStyles } from './Style';
-// import AccountCircle from '@material-ui/icons/AccountCircle'
 
 const AppHeader = props => {
   const classes = useStyles();
@@ -48,15 +49,6 @@ const AppHeader = props => {
           {title}
         </Typography>
         <div className={classes.childActions}>{children}</div>
-        {/* <IconButton */}
-        {/*  aria-label="account of current user" */}
-        {/*  aria-controls="menu-appbar" */}
-        {/*  aria-haspopup="true" */}
-        {/*  color="inherit" */}
-        {/* > */}
-        {/*  <AccountCircle /> */}
-        {/* </IconButton> */}
-        {/* Usuário */}
       </Toolbar>
     </AppBar>
   );

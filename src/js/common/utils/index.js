@@ -4,3 +4,5 @@ export {
   logout,
   getUserInformation,
 } from './module/auth';
+
+export { formatDate } from './module/date';
