@@ -10,7 +10,6 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 
 import { useStyles } from './Style';
-// import AccountCircle from '@material-ui/icons/AccountCircle'
 
 const AppHeader = props => {
   const classes = useStyles();
@@ -50,15 +49,6 @@ const AppHeader = props => {
           {title}
         </Typography>
         <div className={classes.childActions}>{children}</div>
-        {/* <IconButton */}
-        {/*  aria-label="account of current user" */}
-        {/*  aria-controls="menu-appbar" */}
-        {/*  aria-haspopup="true" */}
-        {/*  color="inherit" */}
-        {/* > */}
-        {/*  <AccountCircle /> */}
-        {/* </IconButton> */}
-        {/* Usuário */}
       </Toolbar>
     </AppBar>
   );
