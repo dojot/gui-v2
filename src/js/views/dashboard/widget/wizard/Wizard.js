@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export default makeStyles(theme => ({
   root: {
     width: '100%',
-    marginBottom: 28,
+    marginBottom: 50,
   },
   backButton: {
     marginRight: theme.spacing(1),

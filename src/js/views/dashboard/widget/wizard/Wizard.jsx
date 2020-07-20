@@ -63,8 +63,12 @@ const Wizard = ({
     addWidgetConfig,
     addWidgetSaga,
   );
-  const { createAreaWidget } = useArea(addWidget, addWidgetConfig);
-  const { createBarWidget } = useBar(addWidget, addWidgetConfig);
+  const { createAreaWidget } = useArea(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+  );
+  const { createBarWidget } = useBar(addWidget, addWidgetConfig, addWidgetSaga);
 
   const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
   const {
@@ -243,7 +247,7 @@ const Wizard = ({
 
   return (
     <ViewContainer headerTitle={title}>
-      <Fragment>
+      <div className={classes.root}>
         <Stepper
           classes={{ root: classes.paper }}
           alternativeLabel
@@ -268,7 +272,7 @@ const Wizard = ({
             getStepContent(activeStep, steps)
           )}
         </div>
-      </Fragment>
+      </div>
     </ViewContainer>
   );
 };

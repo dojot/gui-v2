@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 
+import { Device as DeviceService } from 'Services';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga) => {
   const { area: areaID } = __CONFIG__;
 
   const generateAreaConfig = useCallback(state => {
@@ -34,6 +35,18 @@ export default (addWidget, addWidgetConfig) => {
     return { areaProps, defsProps, meta };
   }, []);
 
+  const generateScheme = useCallback(state => {
+    return DeviceService.parseHistoryQuery({
+      devices: _.values(
+        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
+          deviceID: key,
+          attrs: value.map(val => val.label),
+        })),
+      ),
+      lastN: 15,
+    });
+  }, []);
+
   const createAreaWidget = useCallback(
     attributes => {
       const widgetId = `${areaID}/${uuidv4()}`;
@@ -52,8 +65,16 @@ export default (addWidget, addWidgetConfig) => {
 
       addWidget(newWidget);
       addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) });
+      addWidgetSaga({ [widgetId]: generateScheme(attributes) });
     },
-    [generateAreaConfig, addWidget, addWidgetConfig, areaID],
+    [
+      generateAreaConfig,
+      addWidget,
+      addWidgetSaga,
+      addWidgetConfig,
+      areaID,
+      generateScheme,
+    ],
   );
 
   return { createAreaWidget };
