@@ -2,13 +2,7 @@ import { protectAPI } from 'APIs';
 
 const GQL_WIDGET_HISTORIC = `
 query getDeviceHistory($filter: HistoryInput!) {
-  getDeviceHistory(filter: $filter) {
-    label
-    valueType
-    deviceID
-    value
-    timestamp
-  }
+  getDeviceHistoryForDashboard(filter: $filter)
 }
 `;
 

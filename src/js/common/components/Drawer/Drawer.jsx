@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
-import clsx from 'clsx';
+import React, { useCallback } from 'react';
+
 import Drawer from '@material-ui/core/Drawer';
-import MenuList from '@material-ui/core/MenuList';
-import MenuItem from '@material-ui/core/MenuItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import MenuItem from '@material-ui/core/MenuItem';
+import MenuList from '@material-ui/core/MenuList';
 import logo from 'Assets/images/dojotLogo.png';
+import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
+
 import { useStyles } from './Drawer';
 
 const DrawerComponent = props => {
@@ -15,13 +17,16 @@ const DrawerComponent = props => {
 
   const { isOpen, primaryItems, secondaryItems, handleChange } = props;
 
-  const activeRoute = prop => {
-    if (props.location.pathname.indexOf(prop.path) > -1) {
-      handleChange(prop.label);
-      return true;
-    }
-    return false;
-  };
+  const activeRoute = useCallback(
+    prop => {
+      if (props.location.pathname.indexOf(prop.path) > -1) {
+        handleChange(prop.label);
+        return true;
+      }
+      return false;
+    },
+    [handleChange],
+  );
 
   return (
     <Drawer
@@ -44,7 +49,10 @@ const DrawerComponent = props => {
       <MenuList disablePadding>
         {primaryItems.map(item => (
           <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem selected={activeRoute(item)}>
+            <MenuItem
+              selected={activeRoute(item)}
+              classes={{ selected: classes.selected }}
+            >
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>
@@ -61,7 +69,10 @@ const DrawerComponent = props => {
             key={item.label}
             onClick={() => handleChange(item.label)}
           >
-            <MenuItem selected={activeRoute(item)}>
+            <MenuItem
+              selected={activeRoute(item)}
+              classes={{ selected: classes.selected }}
+            >
               <ListItemIcon>
                 <item.icon />
               </ListItemIcon>

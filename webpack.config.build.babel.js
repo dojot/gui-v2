@@ -69,21 +69,7 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
         sourceMap: true,
         importLoaders: 1,
         modules: true,
-        localIdentName: '[name]__[local]_[hash:base64]',
-      },
-    },
-    {
-      loader: 'postcss-loader',
-      ident: 'postcss',
-      options: {
-        sourceMap: true,
-        plugins: () => [
-          precss(),
-          postcssPresetEnv({
-            browsers: ['last 2 versions', 'ie >= 9'],
-            compress: true,
-          }),
-        ],
+        localIdentName: '[local]',
       },
     },
   ],

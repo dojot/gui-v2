@@ -112,7 +112,7 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
         sourceMap: true,
         importLoaders: 1,
         modules: true,
-        localIdentName: '[name]__[local]_[hash:base64]',
+        localIdentName: '[local]',
       },
     },
   ],

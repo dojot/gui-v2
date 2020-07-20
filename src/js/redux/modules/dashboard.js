@@ -2,8 +2,6 @@ import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import _ from 'lodash';
 
-// import type { exampleType } from '../../common/types/example'
-
 const maxPush = (arr, value, max) => {
   if (arr.length >= max) {
     arr.splice(0, arr.length - max + 1);
