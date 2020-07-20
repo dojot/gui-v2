@@ -5,14 +5,20 @@ import {
   actions as deviceActions,
 } from '../modules/devices';
 
-export function* fetchExampleData() {
+export function* fetchExampleData(data) {
   try {
-    const page = { size: 999999, number: 1 };
-    const { getDevices } = yield Device.getDevicesList(page);
+    const { page, filter } = data.payload;
+    const { getDevices } = yield Device.getDevicesList(page, filter);
     if (getDevices) {
-      yield put(deviceActions.updateDevices(getDevices.devices));
+      yield put(deviceActions.updateDevices(getDevices));
     } else {
-      yield put(deviceActions.updateDevices([]));
+      yield put(
+        deviceActions.updateDevices({
+          devices: [],
+          totalPages: 0,
+          currentPage: 1,
+        }),
+      );
     }
   } catch (e) {
     // TODO: Handle the exception more appropriately

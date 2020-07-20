@@ -1,22 +1,35 @@
-import React, { Fragment, useState, useEffect, useRef } from 'react';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+import React, {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
+
+import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
+import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import PropTypes from 'prop-types';
-import { WFooter } from 'Components/Footer';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import Checkbox from '@material-ui/core/Checkbox';
-import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import CommentIcon from '@material-ui/icons/ColorLens';
-import Button from '@material-ui/core/Button';
+import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
-import Divider from '@material-ui/core/Divider';
-import { GithubPicker } from 'react-color';
 import Tooltip from '@material-ui/core/Tooltip';
-import { useStyles } from './Devices';
+import CommentIcon from '@material-ui/icons/ColorLens';
+import SearchIcon from '@material-ui/icons/Search';
+import { WFooter } from 'Components/Footer';
+import { Paginator, usePaginator } from 'Components/Paginator';
+import { Formik } from 'formik';
+import PropTypes from 'prop-types';
+import { GithubPicker } from 'react-color';
+import { useDebounce } from 'use-debounce';
+import { v4 as uuidv4 } from 'uuid';
+import * as Yup from 'yup';
+
+import { useStyles } from './Attributes';
 
 const validationSchema = Yup.object({});
 
@@ -48,6 +61,7 @@ const Attributes = props => {
       initialValues={initialState}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {formikProps => (
         <AttributesForm {...formikProps} {...otherProps} onBack={handleBack} />
@@ -57,10 +71,56 @@ const Attributes = props => {
 };
 
 const AttributesForm = props => {
-  const { handleChange, handleSubmit, initialValues } = props;
-
   const classes = useStyles();
-  const [checked, setChecked] = React.useState([]);
+  const { handleChange, handleSubmit, initialValues } = props;
+  const [checked, setChecked] = useState([]);
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTermDebounced] = useDebounce(searchTerm, 1000);
+
+  const {
+    paginatorData,
+    setPaginatorData,
+    setCurrentPage,
+    setPageSize,
+  } = usePaginator('client');
+
+  const [initialAttributes] = useState(() => {
+    const list = [];
+    initialValues.forEach(device => {
+      const deviceAttributes = device.attrs.map(attr => ({
+        deviceId: device.id,
+        deviceLabel: device.label,
+        attributeId: uuidv4(),
+        attributeLabel: attr.label,
+        attributeValueType: attr.valueType,
+      }));
+      deviceAttributes.forEach(attr => list.push(attr));
+    });
+    return list;
+  });
+
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTermDebounced, setCurrentPage]);
+
+  useEffect(() => {
+    const filtered = !searchTermDebounced
+      ? initialAttributes
+      : initialAttributes.filter(item => {
+          return (
+            item.deviceLabel.toLowerCase().includes(searchTermDebounced) ||
+            item.attributeLabel.toLowerCase().includes(searchTermDebounced)
+          );
+        });
+
+    setPaginatorData(filtered);
+  }, [initialAttributes, searchTermDebounced, setPaginatorData]);
+
+  const handleSearchChange = useCallback(e => {
+    const { value } = e.target;
+    setSearchTerm(value ? value.toLowerCase() : '');
+  }, []);
 
   const handleToggle = ({
     attributeID,
@@ -98,6 +158,7 @@ const AttributesForm = props => {
     } else {
       newChecked.splice(currentIndex, 1);
     }
+
     setChecked(newChecked);
     handleChange({ currentTarget: { name: 'attributes', value: newChecked } });
   };
@@ -105,40 +166,89 @@ const AttributesForm = props => {
   return (
     <form onSubmit={handleSubmit}>
       <Grid container direction="column" className={classes.root}>
+        <Grid item className={classes.searchContainer}>
+          <TextField
+            variant="outlined"
+            placeholder="Digite o nome do dispositivo / atributo"
+            name="searchAttributes"
+            onChange={handleSearchChange}
+            fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
+          />
+        </Grid>
         <List className={classes.root}>
-          {initialValues.map(value => {
-            const { attrs, id, label } = value;
-            return attrs.map((item, index) => (
-              <ItemRow
-                handleToggle={handleToggle}
-                value={item}
-                meta={{ id, label, index }}
-                key={`${id}${item.label}`}
-              />
-            ));
-          })}
+          {!paginatorData.pageData.length ? (
+            <ListItem className={classes.notFound}>
+              <ListItemText primary="Nenhum atributo encontrado para o filtro informado" />
+            </ListItem>
+          ) : (
+            paginatorData.pageData.map(item => {
+              const {
+                deviceId,
+                deviceLabel,
+                attributeId,
+                attributeLabel,
+                attributeValueType,
+              } = item;
+
+              const isSelected = checked.find(
+                checkedItem => checkedItem.attributeID === attributeId,
+              );
+
+              return (
+                <ItemRow
+                  handleToggle={handleToggle}
+                  value={{
+                    label: attributeLabel,
+                    valueType: attributeValueType,
+                  }}
+                  meta={{ id: deviceId, label: deviceLabel, attributeId }}
+                  key={`${deviceId}${attributeLabel}`}
+                  selected={!!isSelected}
+                />
+              );
+            })
+          )}
         </List>
+        <Grid item className={classes.paginationContainer}>
+          <Paginator
+            totalPages={paginatorData.totalPages}
+            currentPage={paginatorData.currentPage}
+            pageSize={paginatorData.pageSize}
+            onPageChange={(event, currentPage) => setCurrentPage(currentPage)}
+            onPageSizeChange={pageSize => setPageSize(pageSize)}
+            showFirstButton
+            showLastButton
+          />
+        </Grid>
       </Grid>
-      <WFooter {...props} />
+      <WFooter {...props} isValid={!!checked.length} />
     </form>
   );
 };
 
-const ItemRow = ({ value, handleToggle, meta }) => {
+const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
+  const { id, label, attributeId } = meta;
+
   const classes = useStyles();
-  const labelId = `checkbox-list-label-${meta.id}`;
+  const labelId = `checkbox-list-label-${attributeId}`;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isToggle, setIsToggle] = useState(false);
+  const [isToggle, setIsToggle] = useState(selected);
   const [color, setColor] = useState('#FAFAFA');
   const [description, setDescription] = useState('');
 
   useDidMountEffect(() => {
-    const { id, label, index } = meta;
     if (isToggle) {
       handleToggle({
         deviceID: id,
-        attributeID: `${id}${index}`,
+        attributeID: `${attributeId}`,
         deviceLabel: label,
         color,
         description,
@@ -149,11 +259,10 @@ const ItemRow = ({ value, handleToggle, meta }) => {
   }, [color]);
 
   useDidMountEffect(() => {
-    const { id, label, index } = meta;
     if (isToggle) {
       handleToggle({
         deviceID: id,
-        attributeID: `${id}${index}`,
+        attributeID: `${attributeId}`,
         deviceLabel: label,
         color,
         description,
@@ -164,10 +273,9 @@ const ItemRow = ({ value, handleToggle, meta }) => {
   }, [description]);
 
   useDidMountEffect(() => {
-    const { id, label, index } = meta;
     handleToggle({
       deviceID: id,
-      attributeID: `${id}${index}`,
+      attributeID: `${attributeId}`,
       deviceLabel: label,
       color,
       description,
@@ -177,7 +285,7 @@ const ItemRow = ({ value, handleToggle, meta }) => {
   }, [isToggle]);
 
   return (
-    <Fragment key={meta.id}>
+    <Fragment key={attributeId}>
       <ListItem role={undefined} button onClick={() => setIsToggle(!isToggle)}>
         <ListItemIcon>
           <Checkbox
@@ -189,11 +297,8 @@ const ItemRow = ({ value, handleToggle, meta }) => {
             color="primary"
           />
         </ListItemIcon>
-        <Tooltip title={meta.id} placement="bottom-start">
-          <ListItemText
-            id={labelId}
-            primary={`[${meta.label}] ${value.label}`}
-          />
+        <Tooltip title={id} placement="bottom-start">
+          <ListItemText id={labelId} primary={`[${label}] ${value.label}`} />
         </Tooltip>
         <ListItemSecondaryAction className={classes.action}>
           <TextField

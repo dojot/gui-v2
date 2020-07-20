@@ -12,9 +12,16 @@ export const constants = {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const getDevices = createAction(GET_DEVICES, () => ({}));
-export const updateDevices = createAction(UPDATE_DEVICES, devices => ({
-  devices,
+export const getDevices = createAction(GET_DEVICES, payload => ({
+  page: payload.page,
+  filter: payload.filter,
+}));
+export const updateDevices = createAction(UPDATE_DEVICES, payload => ({
+  devices: payload.devices,
+  paginationControl: {
+    totalPages: payload.totalPages,
+    currentPage: payload.currentPage,
+  },
 }));
 
 export const actions = {
@@ -32,6 +39,10 @@ export const reducers = {
 export const initialState = () =>
   Map({
     devices: [],
+    paginationControl: {
+      totalPages: 0,
+      currentPage: 1,
+    },
   });
 
 export default handleActions(reducers, initialState());

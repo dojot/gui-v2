@@ -1,24 +1,31 @@
-import React, { useEffect, useReducer, useCallback } from 'react';
-import Stepper from '@material-ui/core/Stepper';
+import React, {
+  Fragment,
+  useCallback,
+  useEffect,
+  useReducer,
+  useState,
+} from 'react';
+
+import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import Button from '@material-ui/core/Button';
+import Stepper from '@material-ui/core/Stepper';
 import Typography from '@material-ui/core/Typography';
+import { usePaginator } from 'Components/Paginator';
 import {
-  General,
-  Devices,
   Attributes,
+  Devices,
+  General,
   InitialStateGeneral as general,
   Summary,
 } from 'Components/Steps';
-import { connect } from 'react-redux';
-import { menuSelector } from 'Selectors/baseSelector';
-import { devicesList } from 'Selectors/devicesSelector';
-import { actions as deviceActions } from 'Redux/devices';
-import { actions as dashboardActions } from 'Redux/dashboard';
-import { v4 as uuidv4 } from 'uuid';
 import _ from 'lodash';
-import { Device } from 'Services';
+import { connect } from 'react-redux';
+import { actions as dashboardActions } from 'Redux/dashboard';
+import { menuSelector } from 'Selectors/baseSelector';
+import { Device as DeviceService } from 'Services';
+import { v4 as uuidv4 } from 'uuid';
+
 import ViewContainer from '../../../ViewContainer';
 import useStyles from './Wizard';
 
@@ -28,11 +35,9 @@ const getSteps = () => {
 
 const mapStateToProps = state => ({
   ...menuSelector(state),
-  ...devicesList(state),
 });
 
 const mapDispatchToProps = {
-  ...deviceActions,
   ...dashboardActions,
 };
 
@@ -47,12 +52,54 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(props => {
+  const {
+    toDashboard,
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    isMenuOpen,
+  } = props;
   const classes = useStyles();
   const { line: lineID } = __CONFIG__;
 
+  const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
+  const {
+    paginatorData,
+    setPaginatorData,
+    setCurrentPage,
+    setPageSize,
+    setDisablePaginator,
+  } = usePaginator();
+
   useEffect(() => {
-    props.getDevices();
-  }, []);
+    setDisablePaginator(true);
+    DeviceService.getDevicesList(
+      { number: paginatorData.currentPage, size: paginatorData.pageSize },
+      { label: searchDeviceTerm },
+    )
+      .then(response => {
+        const { devices, currentPage, totalPages } = response.getDevices;
+        setPaginatorData({ data: devices, currentPage, totalPages });
+      })
+      .catch(error => {
+        console.error(error); // TODO tratamento de erro da api
+        setDisablePaginator(false);
+      });
+  }, [
+    setDisablePaginator,
+    setPaginatorData,
+    paginatorData.currentPage,
+    paginatorData.pageSize,
+    searchDeviceTerm,
+  ]);
+
+  const handleSearchChange = useCallback(
+    searchTerm => {
+      setSearchDeviceTerm(searchTerm);
+      setCurrentPage(1);
+    },
+    [setCurrentPage],
+  );
 
   const generateLineConfig = state => {
     const { attributes, general: generalState } = state;
@@ -71,7 +118,7 @@ export default connect(
   };
 
   const generateScheme = state => {
-    return Device.parseHistoryQuery({
+    return DeviceService.parseHistoryQuery({
       devices: _.values(
         _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
           deviceID: key,
@@ -82,23 +129,26 @@ export default connect(
     });
   };
 
-  const createLineWidget = attributes => {
-    const widgetId = `${lineID}/${uuidv4()}`;
-    const newWidget = {
-      i: widgetId,
-      x: 0,
-      y: Infinity,
-      w: 6,
-      h: 10,
-      minW: 3,
-      minH: 6,
-      static: false,
-      moved: false,
-    };
-    props.addWidget(newWidget);
-    props.addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
-    props.addWidgetSaga({ [widgetId]: generateScheme(attributes) });
-  };
+  const createLineWidget = useCallback(
+    attributes => {
+      const widgetId = `${lineID}/${uuidv4()}`;
+      const newWidget = {
+        i: widgetId,
+        x: 0,
+        y: Infinity,
+        w: 6,
+        h: 10,
+        minW: 3,
+        minH: 6,
+        static: false,
+        moved: false,
+      };
+      addWidget(newWidget);
+      addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
+      addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+    },
+    [addWidget, addWidgetConfig, addWidgetSaga, lineID],
+  );
 
   const memoizedReducer = useCallback((state, { type, payload = {} }) => {
     switch (type) {
@@ -115,7 +165,7 @@ export default connect(
         };
       case 'finish':
         createLineWidget(state);
-        props.toDashboard();
+        toDashboard();
         return {};
       default:
         return {};
@@ -123,9 +173,6 @@ export default connect(
   }, []);
 
   const [state, dispatch] = useReducer(memoizedReducer, initialState);
-
-  const { isMenuOpen } = props;
-
   const steps = getSteps();
 
   const handleReset = () => {
@@ -133,7 +180,6 @@ export default connect(
   };
 
   const getStepContent = stepIndex => {
-    const { devices } = props;
     switch (stepIndex) {
       case 0:
         return (
@@ -148,12 +194,20 @@ export default connect(
       case 1:
         return (
           <Devices
-            initialState={devices}
+            initialState={paginatorData.pageData}
             selectedValues={state.devices}
             handleClick={dispatch}
             steps={steps}
             activeStep={stepIndex}
             isOpen={isMenuOpen}
+            onFilter={handleSearchChange}
+            usePagination
+            currentPage={paginatorData.currentPage}
+            pageSize={paginatorData.pageSize}
+            totalPages={paginatorData.totalPages}
+            onPageSizeChange={pageSize => setPageSize(pageSize)}
+            onPageChange={(event, page) => setCurrentPage(page)}
+            isLoading={paginatorData.disabled}
           />
         );
       case 2:
@@ -187,7 +241,7 @@ export default connect(
   return (
     <div className={classes.root}>
       <ViewContainer headerTitle="Grafico de Linha">
-        <div>
+        <Fragment>
           <Stepper
             classes={{ root: classes.paper }}
             alternativeLabel
@@ -212,7 +266,7 @@ export default connect(
               getStepContent(activeStep, steps)
             )}
           </div>
-        </div>
+        </Fragment>
       </ViewContainer>
     </div>
   );

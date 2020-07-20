@@ -67,6 +67,25 @@
     ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "prettier/prettier": "error"
+    "prettier/prettier": "error",
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
   }
 }

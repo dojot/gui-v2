@@ -1,114 +1,111 @@
-import { TextField } from '@material-ui/core';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
+
 import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import TextField from '@material-ui/core/TextField';
+import SearchIcon from '@material-ui/icons/Search';
 import { WFooter } from 'Components/Footer';
-import { Formik } from 'formik';
+import { Paginator } from 'Components/Paginator';
 import PropTypes from 'prop-types';
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
 import { useDebounce } from 'use-debounce';
-import * as Yup from 'yup';
 
 import { useStyles } from './Devices';
 
-const validationSchema = Yup.object({});
-
 const Devices = props => {
-  const { initialState, handleClick, ...otherProps } = props;
-  const handleSubmit = values => {
-    handleClick({
-      type: 'next',
-      payload: { values: values.devices, key: 'devices' },
-    });
-  };
+  const {
+    initialState,
+    selectedValues,
+    onFilter,
+    usePagination,
+    onPageChange,
+    onPageSizeChange,
+    currentPage,
+    pageSize,
+    totalPages,
+    isLoading,
+    handleClick,
+  } = props;
 
-  const handleBack = () => {
-    handleClick({ type: 'back' });
-  };
-  return (
-    <Formik
-      initialValues={initialState}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {formikProps => (
-        <GeneralForm {...formikProps} {...otherProps} onBack={handleBack} />
-      )}
-    </Formik>
-  );
-};
-
-const GeneralForm = props => {
-  const { initialValues, handleChange, handleSubmit, selectedValues } = props;
-
-  const [checked, setChecked] = useState(selectedValues);
-  const [filteredDevices, setFilteredDevices] = useState([]);
+  const classes = useStyles();
+  const [selectedDevices, setSelectedDevices] = useState(selectedValues);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
 
-  const handleToggle = value => {
-    const currentIndex = checked.map(item => item.id).indexOf(value.id);
-    const newChecked = [...checked];
+  useEffect(() => {
+    onFilter(searchTermDebounced);
+  }, [searchTermDebounced, onFilter]);
 
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-    handleChange({ currentTarget: { name: 'devices', value: newChecked } });
-  };
+  const handleToggle = useCallback(
+    value => {
+      const currentDeviceIndex = selectedDevices
+        .map(item => item.id)
+        .indexOf(value.id);
+      const newSelectedDevices = [...selectedDevices];
+
+      if (currentDeviceIndex === -1) {
+        newSelectedDevices.push(value);
+      } else {
+        newSelectedDevices.splice(currentDeviceIndex, 1);
+      }
+      setSelectedDevices(newSelectedDevices);
+    },
+    [selectedDevices],
+  );
 
   const handleChangeSearch = useCallback(e => {
-    setSearchTerm(e.target.value ? e.target.value.toLowerCase() : '');
+    setSearchTerm(e.target.value);
   }, []);
 
-  useEffect(() => {
-    // TODO aqui nessa rotina quando estivermos com a api funcionando com o filtro de pesquisa
-    // podemos receber uma função como props desse componente e pasar o termo de consulta
-    // para que o objeto pai realize a consulta via Saga e atualize a lista de devices.
-    // Hoje o filtro está sendo feito em cima dos valores recebidos na propriedade initialValues
+  const getSelectedDevice = useCallback(
+    id => selectedDevices.map(item => item.id).indexOf(id) !== -1,
+    [selectedDevices],
+  );
 
-    if (!searchTermDebounced) {
-      setFilteredDevices(initialValues);
-      return;
-    }
-    setFilteredDevices(
-      initialValues.filter(
-        device =>
-          device.id.includes(searchTermDebounced) ||
-          device.label.toLowerCase().includes(searchTermDebounced),
-      ),
-    );
-  }, [searchTermDebounced, initialValues]);
+  const handleSubmit = useCallback(
+    e => {
+      e.preventDefault();
+      handleClick({
+        type: 'next',
+        payload: { values: selectedDevices, key: 'devices' },
+      });
+    },
+    [handleClick, selectedDevices],
+  );
 
-  const getItemSelected = id => checked.map(item => item.id).indexOf(id) !== -1;
-
-  const classes = useStyles();
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={e => handleSubmit(e)}>
       <Grid container justify="center">
         <Grid item className={classes.searchContainer}>
           <TextField
             variant="outlined"
-            label="Filtro de dispositivos"
+            placeholder="Digite o nome do dispositivo"
             name="searchDevices"
             onChange={handleChangeSearch}
             fullWidth
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              ),
+            }}
           />
         </Grid>
         <List className={classes.root}>
-          {!filteredDevices.length ? (
+          {!initialState.length ? (
             <ListItem className={classes.notFound}>
-              <ListItemText primary="Nenhum dispositivo encontrado para o filtro informado." />
+              <ListItemText primary="Nenhum dispositivo encontrado para o filtro informado" />
             </ListItem>
           ) : (
-            filteredDevices.map(value => {
-              const labelId = `checkbox-list-label-${value.id}`;
+            initialState.map(value => {
+              const { id, label } = value;
+              const labelId = `checkbox-list-label-${id}`;
 
               return (
                 <Fragment key={value.id}>
@@ -120,17 +117,14 @@ const GeneralForm = props => {
                     <ListItemIcon>
                       <Checkbox
                         edge="start"
-                        checked={getItemSelected(value.id)}
+                        checked={getSelectedDevice(id)}
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ 'aria-labelledby': labelId }}
                         color="primary"
                       />
                     </ListItemIcon>
-                    <ListItemText
-                      id={labelId}
-                      primary={`[${value.id}] ${value.label}`}
-                    />
+                    <ListItemText id={labelId} primary={`[${id}] ${label}`} />
                   </ListItem>
                   <Divider />
                 </Fragment>
@@ -138,13 +132,36 @@ const GeneralForm = props => {
             })
           )}
         </List>
+        {usePagination && initialState.length > 0 && (
+          <Grid item className={classes.paginationContainer}>
+            <Paginator
+              totalPages={totalPages}
+              currentPage={currentPage}
+              pageSize={pageSize}
+              onPageChange={onPageChange}
+              onPageSizeChange={onPageSizeChange}
+              showFirstButton
+              showLastButton
+              disabled={isLoading}
+            />
+          </Grid>
+        )}
       </Grid>
-      <WFooter {...props} isValid={!!checked.length} />
+      <WFooter {...props} isValid={!!selectedDevices.length} />
     </form>
   );
 };
 
-Devices.defaultProps = {};
+Devices.defaultProps = {
+  onFilter: () => {},
+  usePagination: false,
+  currentPage: 1,
+  pageSize: 5,
+  totalPages: 1,
+  isLoading: false,
+  onPageChange: () => {},
+  onPageSizeChange: () => {},
+};
 
 Devices.propTypes = {
   initialState: PropTypes.arrayOf(
@@ -162,6 +179,14 @@ Devices.propTypes = {
   handleClick: PropTypes.func.isRequired,
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
+  onFilter: PropTypes.func,
+  usePagination: PropTypes.bool,
+  currentPage: PropTypes.number,
+  pageSize: PropTypes.number,
+  totalPages: PropTypes.number,
+  isLoading: PropTypes.bool,
+  onPageChange: PropTypes.func,
+  onPageSizeChange: PropTypes.func,
 };
 
 export default Devices;
