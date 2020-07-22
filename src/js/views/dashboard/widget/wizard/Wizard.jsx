@@ -18,6 +18,7 @@ import {
   General,
   InitialStateGeneral as general,
   Summary,
+  Filters,
 } from 'Components/Steps';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -41,7 +42,7 @@ const Wizard = ({
   isMenuOpen,
 }) => {
   const classes = useStyles();
-  const steps = ['Geral', 'Dispositivos', 'Atributos', 'Resumo'];
+  const steps = ['Geral', 'Dispositivos', 'Atributos', 'Filtros', 'Resumo'];
   const {
     line: wizardLineType,
     area: wizardAreaType,
@@ -55,6 +56,7 @@ const Wizard = ({
     general,
     devices: [],
     attributes: [],
+    filter: {},
     activeStep: 0,
   };
 
@@ -212,6 +214,14 @@ const Wizard = ({
             />
           );
         case 3:
+          return (
+            <Filters
+              handleNavigate={dispatch}
+              steps={steps}
+              activeStep={stepIndex}
+            />
+          );
+        case 4:
           return (
             <Summary
               initialState={{
