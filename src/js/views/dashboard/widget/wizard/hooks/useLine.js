@@ -26,6 +26,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga) => {
   }, []);
 
   const generateScheme = useCallback(state => {
+    const { lastN, operationType, dateFrom, dateTo, isRealTime } = state.filter;
+
     return DeviceService.parseHistoryQuery({
       devices: _.values(
         _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
@@ -33,7 +35,11 @@ export default (addWidget, addWidgetConfig, addWidgetSaga) => {
           attrs: value.map(val => val.label),
         })),
       ),
-      lastN: 15,
+      dateFrom,
+      dateTo,
+      operationType: String(operationType),
+      lastN,
+      isRealTime,
     });
   }, []);
 

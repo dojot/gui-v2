@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';

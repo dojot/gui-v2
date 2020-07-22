@@ -5,4 +5,4 @@ export {
   getUserInformation,
 } from './module/auth';
 
-export { formatDate } from './module/date';
+export { formatDate, formatToISO } from './module/date';

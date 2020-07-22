@@ -51,6 +51,8 @@ export const useStyles = makeStyles(() => ({
               '& .itemLabel': {
                 minWidth: 300,
                 marginLeft: 20,
+                fontSize: '1.3rem',
+                fontWeight: 500,
               },
 
               '& .itemSelect': {

@@ -13,6 +13,7 @@ import Switch from '@material-ui/core/Switch';
 import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
 import { WFooter } from 'Components/Footer';
 import PropTypes from 'prop-types';
+import { formatToISO } from 'Utils';
 
 import { useStyles } from './Filters';
 
@@ -24,11 +25,14 @@ const Filters = props => {
   const [isRealTime, setIsRealTime] = useState(false);
   const [filterType, setFilterType] = useState('0');
   const [operationType, setOperationType] = useState(0);
+
   const [fixedValue, setFixedValue] = useState('');
+  const [dynamicType, setDynamicType] = useState('');
   const [dynamicValue, setDynamicValue] = useState('');
   const [dateFilter, setDateFilter] = useState({
     dateFrom: null,
     dateTo: null,
+    invalidPeriod: false,
   });
 
   // TODO alterar os valores passados
@@ -40,8 +44,12 @@ const Filters = props => {
         isRealTime,
         operationType,
         lastN: fixedValue || dynamicValue,
-        dateFrom: dateFilter.dateFrom ? dateFilter.dateFrom.toISOString() : '',
-        dateTo: dateFilter.dateTo ? dateFilter.dateTo.toISOString() : '',
+        dateFrom: dateFilter.dateFrom
+          ? formatToISO(dateFilter.dateFrom.toDate())
+          : '',
+        dateTo: dateFilter.dateTo
+          ? formatToISO(dateFilter.dateTo.toDate())
+          : '',
       };
 
       handleNavigate({
@@ -83,6 +91,7 @@ const Filters = props => {
 
   const handleChangeDynamicOptions = useCallback(event => {
     const { value } = event.target;
+    setDynamicType(value);
     setOperationType(value);
     if (value === 0) {
       setDynamicValue('');
@@ -94,10 +103,14 @@ const Filters = props => {
     const isValidPeriod =
       hasPeriod && dateFilter.dateTo.isAfter(dateFilter.dateFrom);
     setIsFilterValid(isValidPeriod);
+    if (hasPeriod) {
+      setDateFilter(state => ({ ...state, invalidPeriod: !isValidPeriod }));
+    }
   }, [dateFilter.dateFrom, dateFilter.dateTo]);
 
   useEffect(() => {
     setFixedValue('');
+    setDynamicType('');
     setDynamicValue('');
     setDateFilter({ dateFrom: null, dateTo: null });
   }, [filterType]);
@@ -185,7 +198,7 @@ const Filters = props => {
                         labelId="lastDynamicsOptionLabel"
                         id="lastDynamicsOption"
                         placeholder="Selecione uma opção"
-                        value={operationType}
+                        value={dynamicType}
                         onChange={handleChangeDynamicOptions}
                         label="Age"
                         disabled={filterType !== '1'}
@@ -223,7 +236,7 @@ const Filters = props => {
                       inputProps={{ 'aria-label': '2' }}
                       color="primary"
                     />
-                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                    <MuiPickersUtilsProvider utils={MomentUtils} locale="pt-br">
                       <DateTimePicker
                         id="dateFrom"
                         name="dateFrom"
@@ -233,17 +246,23 @@ const Filters = props => {
                         value={dateFilter.dateFrom}
                         onChange={value => handleDateChange(value, 'dateFrom')}
                         format="DD/MM/YYYY HH:mm"
+                        helperText={dateFilter.invalidPeriod ? ' ' : ''}
+                        error={dateFilter.invalidPeriod}
                         disabled={filterType !== '2'}
                       />
                       <DateTimePicker
                         id="dateTo"
                         name="dateTo"
                         className="itemInput"
-                        label="Data Inicial"
+                        label="Data Final"
                         inputVariant="outlined"
                         value={dateFilter.dateTo}
                         onChange={value => handleDateChange(value, 'dateTo')}
                         format="DD/MM/YYYY HH:mm"
+                        helperText={
+                          dateFilter.invalidPeriod ? 'Período inválido' : ''
+                        }
+                        error={dateFilter.invalidPeriod}
                         disabled={filterType !== '2'}
                       />
                     </MuiPickersUtilsProvider>
