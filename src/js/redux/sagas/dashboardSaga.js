@@ -1,20 +1,20 @@
+import _ from 'lodash';
 import {
-  race,
   call,
-  put,
+  cancel,
   fork,
+  put,
+  race,
   take,
   takeEvery,
   takeLatest,
-  cancel,
 } from 'redux-saga/effects';
 import { Configuration, Device } from 'Services';
-import moment from 'moment';
-import _ from 'lodash';
 import { getUserInformation } from 'Utils';
+
 import {
-  constants as dashboardConstants,
   actions as dashboardActions,
+  constants as dashboardConstants,
 } from '../modules/dashboard';
 
 const delay = duration => {
@@ -23,18 +23,29 @@ const delay = duration => {
   });
 };
 
+const getRealTimeQueriesFromSchema = schema => {
+  return Object.keys(schema)
+    .filter(queryKey => schema[queryKey].isRealTime === true)
+    .map(key => ({
+      key,
+      query: schema[key],
+    }));
+};
+
 function* pollData(schema) {
   try {
-    // TODO: This will be improved
-    for (const key in schema) {
+    const realTimeQueries = getRealTimeQueriesFromSchema(schema);
+
+    // eslint-disable-next-line no-restricted-syntax
+    for (const realTimeQuery of realTimeQueries) {
       const {
         getDeviceHistoryForDashboard,
-      } = yield Device.getDevicesHistoryParsed(schema[key]);
+      } = yield Device.getDevicesHistoryParsed(realTimeQuery.query);
 
       if (getDeviceHistoryForDashboard) {
         yield put(
           dashboardActions.updateValues({
-            [key]: JSON.parse(getDeviceHistoryForDashboard),
+            [realTimeQuery.key]: JSON.parse(getDeviceHistoryForDashboard),
           }),
         );
       }

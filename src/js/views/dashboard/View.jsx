@@ -1,13 +1,14 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
+import React, { useCallback, useEffect } from 'react';
+
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
-import PlayIcon from '@material-ui/icons/PlayArrow';
 import PauseIcon from '@material-ui/icons/Pause';
+import PlayIcon from '@material-ui/icons/PlayArrow';
 import { DevelopmentContainer } from 'Components/Containers';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect } from 'react';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
@@ -62,6 +63,7 @@ const Dashboard = props => {
     if (_.isEmpty(sagaConfig)) {
       checkData();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onLayoutChange = useCallback(
@@ -96,7 +98,7 @@ const Dashboard = props => {
       });
       changeLayout(newArr, configs, sagaConfig);
     },
-    [layout, changeLayout],
+    [layout, changeLayout, configs, sagaConfig],
   );
 
   const createElement = useCallback(
@@ -188,7 +190,7 @@ const Dashboard = props => {
         </Button>
       </div>
     );
-  }, [handleClick, startPolling, stopPolling]);
+  }, [handleClick, startPolling, stopPolling, sagaConfig]);
 
   return (
     <ViewContainer headerTitle="Dashboard" headerContent={getHeaderContent}>
