@@ -9,7 +9,7 @@ export const useStyles = makeStyles(() => ({
     '& .top': {},
     '& .bottom': {
       '& .left': {
-        flexGrow: 1,
+        flex: '1 1 300px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -22,7 +22,7 @@ export const useStyles = makeStyles(() => ({
       },
 
       '& .right': {
-        flexGrow: 1,
+        flex: '1 1 auto',
 
         '& .container': {
           display: 'flex',

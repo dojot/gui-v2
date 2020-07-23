@@ -20,13 +20,14 @@ import { useStyles } from './Filters';
 const Filters = props => {
   const { handleNavigate } = props;
   const classes = useStyles();
+  const defaultFixedValue = '15';
 
   const [isFilterValid, setIsFilterValid] = useState(false);
   const [isRealTime, setIsRealTime] = useState(false);
   const [filterType, setFilterType] = useState('0');
   const [operationType, setOperationType] = useState(0);
 
-  const [fixedValue, setFixedValue] = useState('');
+  const [fixedValue, setFixedValue] = useState(defaultFixedValue);
   const [dynamicType, setDynamicType] = useState('');
   const [dynamicValue, setDynamicValue] = useState('');
   const [dateFilter, setDateFilter] = useState({
@@ -95,6 +96,7 @@ const Filters = props => {
     setOperationType(value);
     if (value === 0) {
       setDynamicValue('');
+      setFixedValue(defaultFixedValue);
     }
   }, []);
 
@@ -109,7 +111,7 @@ const Filters = props => {
   }, [dateFilter.dateFrom, dateFilter.dateTo]);
 
   useEffect(() => {
-    setFixedValue('');
+    setFixedValue(filterType === '0' ? defaultFixedValue : '');
     setDynamicType('');
     setDynamicValue('');
     setDateFilter({ dateFrom: null, dateTo: null });
@@ -213,9 +215,7 @@ const Filters = props => {
                       </Select>
                     </FormControl>
                     <FormControl variant="outlined" className="itemInput">
-                      <InputLabel htmlFor="lastDynamicsValue">
-                        Nº Registros
-                      </InputLabel>
+                      <InputLabel htmlFor="lastDynamicsValue">Valor</InputLabel>
                       <OutlinedInput
                         id="lastDynamicsValue"
                         value={dynamicValue}
