@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import MomentUtils from '@date-io/moment';
 import Divider from '@material-ui/core/Divider';
@@ -10,7 +10,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import Radio from '@material-ui/core/Radio';
 import Select from '@material-ui/core/Select';
 import Switch from '@material-ui/core/Switch';
-import { MuiPickersUtilsProvider, DateTimePicker } from '@material-ui/pickers';
+import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { WFooter } from 'Components/Footer';
 import PropTypes from 'prop-types';
 import { formatToISO } from 'Utils';
@@ -22,35 +22,38 @@ const Filters = props => {
   const classes = useStyles();
   const defaultFixedValue = '15';
 
-  const [isFilterValid, setIsFilterValid] = useState(false);
-  const [isRealTime, setIsRealTime] = useState(false);
-  const [filterType, setFilterType] = useState('0');
-  const [operationType, setOperationType] = useState(0);
-
-  const [fixedValue, setFixedValue] = useState(defaultFixedValue);
-  const [dynamicType, setDynamicType] = useState('');
-  const [dynamicValue, setDynamicValue] = useState('');
-  const [dateFilter, setDateFilter] = useState({
+  const [data, setData] = useState({
+    isFilterValid: false,
+    isRealTime: false,
+    filterType: '0',
+    operationType: 0,
+    fixedValue: defaultFixedValue,
+    dynamicType: '',
+    dynamicValue: '',
     dateFrom: null,
     dateTo: null,
     invalidPeriod: false,
   });
 
-  // TODO alterar os valores passados
   const handleSubmit = useCallback(
     e => {
       e.preventDefault();
+
+      const {
+        isRealTime,
+        operationType,
+        fixedValue,
+        dynamicValue,
+        dateFrom,
+        dateTo,
+      } = data;
 
       const values = {
         isRealTime,
         operationType,
         lastN: fixedValue || dynamicValue,
-        dateFrom: dateFilter.dateFrom
-          ? formatToISO(dateFilter.dateFrom.toDate())
-          : '',
-        dateTo: dateFilter.dateTo
-          ? formatToISO(dateFilter.dateTo.toDate())
-          : '',
+        dateFrom: dateFrom ? formatToISO(dateFrom.toDate()) : '',
+        dateTo: dateTo ? formatToISO(dateTo.toDate()) : '',
       };
 
       handleNavigate({
@@ -61,75 +64,105 @@ const Filters = props => {
         },
       });
     },
-    [
-      handleNavigate,
-      dynamicValue,
-      fixedValue,
-      operationType,
-      isRealTime,
-      dateFilter.dateFrom,
-      dateFilter.dateTo,
-    ],
+    [handleNavigate, data],
   );
 
   const handleFilterType = useCallback(event => {
     const { value } = event.target;
-    setFilterType(value);
-    if (value === '0') {
-      setOperationType(value);
-    }
-    if (value === '2') {
-      setOperationType('');
-    }
-  }, []);
 
-  const handleDateChange = useCallback((value, field) => {
-    setDateFilter(state => ({
+    setData(state => ({
       ...state,
-      [field]: value,
+      filterType: value,
+      operationType: value === '0' ? value : '',
     }));
   }, []);
 
-  const handleChangeDynamicOptions = useCallback(event => {
-    const { value } = event.target;
-    setDynamicType(value);
-    setOperationType(value);
-    if (value === 0) {
-      setDynamicValue('');
-      setFixedValue(defaultFixedValue);
-    }
+  const handleDateChange = useCallback((value, field) => {
+    setData(state => ({ ...state, [field]: value }));
   }, []);
 
-  const checkDatePeriod = useCallback(() => {
-    const hasPeriod = !!dateFilter.dateFrom && !!dateFilter.dateTo;
-    const isValidPeriod =
-      hasPeriod && dateFilter.dateTo.isAfter(dateFilter.dateFrom);
-    setIsFilterValid(isValidPeriod);
-    if (hasPeriod) {
-      setDateFilter(state => ({ ...state, invalidPeriod: !isValidPeriod }));
-    }
-  }, [dateFilter.dateFrom, dateFilter.dateTo]);
+  const handleChangeDynamicOptions = useCallback(
+    event => {
+      const { value } = event.target;
+
+      const dynamicValue = value === 0 ? '' : data.dynamicValue;
+      const fixedValue = value === 0 ? defaultFixedValue : '';
+
+      setData(state => ({
+        ...state,
+        dynamicType: value,
+        operationType: value,
+        dynamicValue,
+        fixedValue,
+      }));
+    },
+    [data.dynamicValue],
+  );
+
+  const checkDatePeriod = useCallback((dateFrom, dateTo) => {
+    const hasPeriod = !!dateFrom && !!dateTo;
+    const isValidPeriod = hasPeriod && dateTo.isAfter(dateFrom);
+
+    setData(state => ({
+      ...state,
+      isFilterValid: isValidPeriod,
+      invalidPeriod: hasPeriod ? !isValidPeriod : state.invalidPeriod,
+    }));
+  }, []);
+
+  const handleChangeRealTime = useCallback(event => {
+    const { checked } = event.target;
+    setData(state => ({ ...state, isRealTime: checked }));
+  }, []);
+
+  const handleChangeFixedValue = useCallback(event => {
+    const { value } = event.target;
+    setData(state => ({ ...state, fixedValue: value }));
+  }, []);
+
+  const handleChangeDynamicValue = useCallback(event => {
+    const { value } = event.target;
+    setData(state => ({ ...state, dynamicValue: value }));
+  }, []);
 
   useEffect(() => {
-    setFixedValue(filterType === '0' ? defaultFixedValue : '');
-    setDynamicType('');
-    setDynamicValue('');
-    setDateFilter({ dateFrom: null, dateTo: null });
-  }, [filterType]);
+    const fixedValue = data.filterType === '0' ? defaultFixedValue : '';
+
+    setData(state => ({
+      ...state,
+      fixedValue,
+      dynamicType: '',
+      dynamicValue: '',
+      dateFrom: null,
+      dateTo: null,
+      invalidPeriod: false,
+    }));
+  }, [data.filterType]);
 
   useEffect(() => {
-    switch (filterType) {
+    switch (data.filterType) {
       case '0':
-        setIsFilterValid(!!fixedValue);
+        setData(state => ({ ...state, isFilterValid: !!data.fixedValue }));
         break;
       case '1':
-        setIsFilterValid(operationType !== 0 && !!dynamicValue);
+        setData(state => ({
+          ...state,
+          isFilterValid: data.operationType !== 0 && !!data.dynamicValue,
+        }));
         break;
       default:
-        checkDatePeriod();
+        checkDatePeriod(data.dateFrom, data.dateTo);
         break;
     }
-  }, [filterType, dynamicValue, fixedValue, operationType, checkDatePeriod]);
+  }, [
+    checkDatePeriod,
+    data.dynamicValue,
+    data.filterType,
+    data.fixedValue,
+    data.operationType,
+    data.dateFrom,
+    data.dateTo,
+  ]);
 
   return (
     <Grid container direction="column" className={classes.root}>
@@ -145,8 +178,8 @@ const Filters = props => {
               <div className="realTimeSwitch">
                 <h2>Tempo Real</h2>
                 <Switch
-                  checked={isRealTime}
-                  onChange={event => setIsRealTime(event.target.checked)}
+                  checked={data.isRealTime}
+                  onChange={handleChangeRealTime}
                   color="primary"
                 />
               </div>
@@ -160,7 +193,7 @@ const Filters = props => {
                   {/* Linha 01 */}
                   <div className="row">
                     <Radio
-                      checked={filterType === '0'}
+                      checked={data.filterType === '0'}
                       onChange={handleFilterType}
                       value="0"
                       name="filterType"
@@ -174,10 +207,10 @@ const Filters = props => {
                       </InputLabel>
                       <OutlinedInput
                         id="lastRegs"
-                        value={fixedValue}
-                        onChange={event => setFixedValue(event.target.value)}
+                        value={data.fixedValue}
+                        onChange={handleChangeFixedValue}
                         label="Nº Registros"
-                        disabled={filterType !== '0'}
+                        disabled={data.filterType !== '0'}
                       />
                     </FormControl>
                   </div>
@@ -185,7 +218,7 @@ const Filters = props => {
                   {/* Linha 02 */}
                   <div className="row">
                     <Radio
-                      checked={filterType === '1'}
+                      checked={data.filterType === '1'}
                       onChange={handleFilterType}
                       value="1"
                       name="filterType"
@@ -200,10 +233,10 @@ const Filters = props => {
                         labelId="lastDynamicsOptionLabel"
                         id="lastDynamicsOption"
                         placeholder="Selecione uma opção"
-                        value={dynamicType}
+                        value={data.dynamicType}
                         onChange={handleChangeDynamicOptions}
                         label="Age"
-                        disabled={filterType !== '1'}
+                        disabled={data.filterType !== '1'}
                       >
                         <MenuItem value={0}>
                           <em>&nbsp;</em>
@@ -218,10 +251,10 @@ const Filters = props => {
                       <InputLabel htmlFor="lastDynamicsValue">Valor</InputLabel>
                       <OutlinedInput
                         id="lastDynamicsValue"
-                        value={dynamicValue}
-                        onChange={event => setDynamicValue(event.target.value)}
+                        value={data.dynamicValue}
+                        onChange={handleChangeDynamicValue}
                         label="Nº Registros"
-                        disabled={filterType !== '1'}
+                        disabled={data.filterType !== '1'}
                       />
                     </FormControl>
                   </div>
@@ -229,7 +262,7 @@ const Filters = props => {
                   {/* Linha 03 */}
                   <div className="row">
                     <Radio
-                      checked={filterType === '2'}
+                      checked={data.filterType === '2'}
                       onChange={handleFilterType}
                       value="2"
                       name="filterType"
@@ -243,12 +276,12 @@ const Filters = props => {
                         className="itemInput"
                         label="Data Inicial"
                         inputVariant="outlined"
-                        value={dateFilter.dateFrom}
+                        value={data.dateFrom}
                         onChange={value => handleDateChange(value, 'dateFrom')}
                         format="DD/MM/YYYY HH:mm"
-                        helperText={dateFilter.invalidPeriod ? ' ' : ''}
-                        error={dateFilter.invalidPeriod}
-                        disabled={filterType !== '2'}
+                        helperText={data.invalidPeriod ? ' ' : ''}
+                        error={data.invalidPeriod}
+                        disabled={data.filterType !== '2'}
                       />
                       <DateTimePicker
                         id="dateTo"
@@ -256,14 +289,14 @@ const Filters = props => {
                         className="itemInput"
                         label="Data Final"
                         inputVariant="outlined"
-                        value={dateFilter.dateTo}
+                        value={data.dateTo}
                         onChange={value => handleDateChange(value, 'dateTo')}
                         format="DD/MM/YYYY HH:mm"
                         helperText={
-                          dateFilter.invalidPeriod ? 'Período inválido' : ''
+                          data.invalidPeriod ? 'Período inválido' : ''
                         }
-                        error={dateFilter.invalidPeriod}
-                        disabled={filterType !== '2'}
+                        error={data.invalidPeriod}
+                        disabled={data.filterType !== '2'}
                       />
                     </MuiPickersUtilsProvider>
                   </div>
@@ -271,7 +304,7 @@ const Filters = props => {
               </div>
             </Grid>
           </Grid>
-          <WFooter {...props} isValid={isFilterValid} />
+          <WFooter {...props} isValid={data.isFilterValid} />
         </form>
       </Grid>
     </Grid>
