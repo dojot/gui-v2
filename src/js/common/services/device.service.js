@@ -24,8 +24,9 @@ query getDevices($page: PageInput, $filter: FilterDeviceInput) {
 `;
 
 export const parseHistoryQuery = filter => {
+  const { isRealTime, ...restFilter } = filter;
   const variables = {
-    filter,
+    filter: restFilter,
   };
   return {
     query: GQL_WIDGET_HISTORIC,
