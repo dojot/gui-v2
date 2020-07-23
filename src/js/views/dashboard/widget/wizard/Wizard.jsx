@@ -14,6 +14,7 @@ import {
   Summary,
   Filters,
 } from 'Components/Steps';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
@@ -54,18 +55,6 @@ const Wizard = ({
     activeStep: 0,
   };
 
-  const { createLineWidget } = useLine(
-    addWidget,
-    addWidgetConfig,
-    addWidgetSaga,
-  );
-  const { createAreaWidget } = useArea(
-    addWidget,
-    addWidgetConfig,
-    addWidgetSaga,
-  );
-  const { createBarWidget } = useBar(addWidget, addWidgetConfig, addWidgetSaga);
-
   const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
   const {
     paginatorData,
@@ -103,6 +92,43 @@ const Wizard = ({
       setCurrentPage(1);
     },
     [setCurrentPage],
+  );
+
+  const generateScheme = useCallback(state => {
+    const { lastN, operationType, dateFrom, dateTo, isRealTime } = state.filter;
+
+    return DeviceService.parseHistoryQuery({
+      devices: _.values(
+        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
+          deviceID: key,
+          attrs: value.map(val => val.label),
+        })),
+      ),
+      dateFrom,
+      dateTo,
+      operationType,
+      lastN,
+      isRealTime,
+    });
+  }, []);
+
+  const { createLineWidget } = useLine(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    generateScheme,
+  );
+  const { createAreaWidget } = useArea(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    generateScheme,
+  );
+  const { createBarWidget } = useBar(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    generateScheme,
   );
 
   const createNewWidget = useCallback(

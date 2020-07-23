@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 
-import _ from 'lodash';
-import { Device as DeviceService } from 'Services';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig, addWidgetSaga) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   const { line: lineID } = __CONFIG__;
 
   const generateLineConfig = useCallback(state => {
@@ -23,24 +21,6 @@ export default (addWidget, addWidgetConfig, addWidgetSaga) => {
     }));
 
     return { line, meta };
-  }, []);
-
-  const generateScheme = useCallback(state => {
-    const { lastN, operationType, dateFrom, dateTo, isRealTime } = state.filter;
-
-    return DeviceService.parseHistoryQuery({
-      devices: _.values(
-        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
-          deviceID: key,
-          attrs: value.map(val => val.label),
-        })),
-      ),
-      dateFrom,
-      dateTo,
-      operationType,
-      lastN,
-      isRealTime,
-    });
   }, []);
 
   const createLineWidget = useCallback(

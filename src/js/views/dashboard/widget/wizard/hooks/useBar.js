@@ -1,10 +1,8 @@
 import { useCallback } from 'react';
 
-import _ from 'lodash';
-import { Device as DeviceService } from 'Services';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig, addWidgetSaga) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   const { bar: barID } = __CONFIG__;
 
   const generateBarConfig = useCallback(state => {
@@ -22,18 +20,6 @@ export default (addWidget, addWidgetConfig, addWidgetSaga) => {
     }));
 
     return { bar, meta };
-  }, []);
-
-  const generateScheme = useCallback(state => {
-    return DeviceService.parseHistoryQuery({
-      devices: _.values(
-        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
-          deviceID: key,
-          attrs: value.map(val => val.label),
-        })),
-      ),
-      lastN: 15,
-    });
   }, []);
 
   const createBarWidget = useCallback(
