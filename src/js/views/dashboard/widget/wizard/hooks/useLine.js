@@ -37,7 +37,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga) => {
       ),
       dateFrom,
       dateTo,
-      operationType: String(operationType),
+      operationType,
       lastN,
       isRealTime,
     });

@@ -48,10 +48,13 @@ const Filters = props => {
         dateTo,
       } = data;
 
+      const tempLastN = fixedValue || dynamicValue;
+      const lastN = tempLastN ? Number(tempLastN) : 0;
+
       const values = {
         isRealTime,
         operationType,
-        lastN: fixedValue || dynamicValue,
+        lastN,
         dateFrom: dateFrom ? formatToISO(dateFrom.toDate()) : '',
         dateTo: dateTo ? formatToISO(dateTo.toDate()) : '',
       };
@@ -67,13 +70,13 @@ const Filters = props => {
     [handleNavigate, data],
   );
 
-  const handleFilterType = useCallback(event => {
+  const handleChangeFilterType = useCallback(event => {
     const { value } = event.target;
 
     setData(state => ({
       ...state,
       filterType: value,
-      operationType: value === '0' ? value : '',
+      operationType: value === '0' ? value : -1,
     }));
   }, []);
 
@@ -194,7 +197,7 @@ const Filters = props => {
                   <div className="row">
                     <Radio
                       checked={data.filterType === '0'}
-                      onChange={handleFilterType}
+                      onChange={handleChangeFilterType}
                       value="0"
                       name="filterType"
                       inputProps={{ 'aria-label': '0' }}
@@ -219,7 +222,7 @@ const Filters = props => {
                   <div className="row">
                     <Radio
                       checked={data.filterType === '1'}
-                      onChange={handleFilterType}
+                      onChange={handleChangeFilterType}
                       value="1"
                       name="filterType"
                       inputProps={{ 'aria-label': '1' }}
@@ -263,7 +266,7 @@ const Filters = props => {
                   <div className="row">
                     <Radio
                       checked={data.filterType === '2'}
-                      onChange={handleFilterType}
+                      onChange={handleChangeFilterType}
                       value="2"
                       name="filterType"
                       inputProps={{ 'aria-label': '2' }}

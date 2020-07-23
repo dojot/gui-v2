@@ -31,7 +31,7 @@ export const parseHistoryQuery = filter => {
   return {
     query: GQL_WIDGET_HISTORIC,
     variables: JSON.stringify(variables),
-    isRealTime: filter.isRealTime,
+    isRealTime,
   };
 };
 
