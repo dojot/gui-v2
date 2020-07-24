@@ -27,6 +27,8 @@ export const useStyles = makeStyles(theme => ({
   },
   childActions: {
     marginLeft: 'auto',
+    display: 'flex',
+    flexWrap: 'wrap',
   },
   toolbar: {
     display: 'flex',

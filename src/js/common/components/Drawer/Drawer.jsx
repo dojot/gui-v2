@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
 import Drawer from '@material-ui/core/Drawer';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -17,16 +17,13 @@ const DrawerComponent = props => {
 
   const { isOpen, primaryItems, secondaryItems, handleChange } = props;
 
-  const activeRoute = useCallback(
-    prop => {
-      if (props.location.pathname.indexOf(prop.path) > -1) {
-        handleChange(prop.label);
-        return true;
-      }
-      return false;
-    },
-    [handleChange],
-  );
+  const activeRoute = prop => {
+    if (props.location.pathname.indexOf(prop.path) > -1) {
+      handleChange(prop.label);
+      return true;
+    }
+    return false;
+  };
 
   return (
     <Drawer
