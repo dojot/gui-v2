@@ -181,7 +181,7 @@ const AttributesForm = props => {
             }}
           />
         </Grid>
-        <List className={classes.root}>
+        <List className={classes.listContainer}>
           {!paginatorData.pageData.length ? (
             <ListItem className={classes.notFound}>
               <ListItemText primary="Nenhum atributo encontrado para o filtro informado" />

@@ -169,143 +169,137 @@ const Filters = props => {
 
   return (
     <Grid container direction="column" className={classes.root}>
-      <Grid item className="top">
+      <Grid item>
         <h2>Recuperar registros por:</h2>
         <Divider />
       </Grid>
 
-      <Grid item className="bottom">
+      <Grid item>
         <form onSubmit={e => handleSubmit(e)}>
-          <Grid container direction="row">
-            <Grid item className="left">
-              <div className="realTimeSwitch">
-                <h2>Tempo Real</h2>
-                <Switch
-                  checked={data.isRealTime}
-                  onChange={handleChangeRealTime}
-                  color="primary"
-                />
+          <Grid item className="left">
+            <div className="realTimeSwitch">
+              <h2>Tempo Real</h2>
+              <Switch
+                checked={data.isRealTime}
+                onChange={handleChangeRealTime}
+                color="primary"
+              />
+            </div>
+          </Grid>
+          <Grid item className="right">
+            <div className="container">
+              <div className="title">
+                <h2>Histórico</h2>
               </div>
-            </Grid>
-            <Grid item className="right">
-              <div className="container">
-                <div className="title">
-                  <h2>Histórico</h2>
+              <div className="rows">
+                {/* Linha 01 */}
+                <div className="row">
+                  <Radio
+                    checked={data.filterType === '0'}
+                    onChange={handleChangeFilterType}
+                    value="0"
+                    name="filterType"
+                    inputProps={{ 'aria-label': '0' }}
+                    color="primary"
+                  />
+                  <div className="itemLabel">Últimos</div>
+                  <FormControl variant="outlined" className="itemInput">
+                    <InputLabel htmlFor="component-outlined">
+                      Nº Registros
+                    </InputLabel>
+                    <OutlinedInput
+                      id="lastRegs"
+                      value={data.fixedValue}
+                      onChange={handleChangeFixedValue}
+                      label="Nº Registros"
+                      disabled={data.filterType !== '0'}
+                    />
+                  </FormControl>
                 </div>
-                <div className="rows">
-                  {/* Linha 01 */}
-                  <div className="row">
-                    <Radio
-                      checked={data.filterType === '0'}
-                      onChange={handleChangeFilterType}
-                      value="0"
-                      name="filterType"
-                      inputProps={{ 'aria-label': '0' }}
-                      color="primary"
-                    />
-                    <div className="itemLabel">Últimos</div>
-                    <FormControl variant="outlined" className="itemInput">
-                      <InputLabel htmlFor="component-outlined">
-                        Nº Registros
-                      </InputLabel>
-                      <OutlinedInput
-                        id="lastRegs"
-                        value={data.fixedValue}
-                        onChange={handleChangeFixedValue}
-                        label="Nº Registros"
-                        disabled={data.filterType !== '0'}
-                      />
-                    </FormControl>
-                  </div>
 
-                  {/* Linha 02 */}
-                  <div className="row">
-                    <Radio
-                      checked={data.filterType === '1'}
-                      onChange={handleChangeFilterType}
-                      value="1"
-                      name="filterType"
-                      inputProps={{ 'aria-label': '1' }}
-                      color="primary"
+                {/* Linha 02 */}
+                <div className="row">
+                  <Radio
+                    checked={data.filterType === '1'}
+                    onChange={handleChangeFilterType}
+                    value="1"
+                    name="filterType"
+                    inputProps={{ 'aria-label': '1' }}
+                    color="primary"
+                  />
+                  <FormControl variant="outlined" className="itemSelect">
+                    <InputLabel id="lastDynamicsOptionLabel">Ordem</InputLabel>
+                    <Select
+                      labelId="lastDynamicsOptionLabel"
+                      id="lastDynamicsOption"
+                      placeholder="Selecione uma opção"
+                      value={data.dynamicType}
+                      onChange={handleChangeDynamicOptions}
+                      label="Age"
+                      disabled={data.filterType !== '1'}
+                    >
+                      <MenuItem value={0}>
+                        <em>&nbsp;</em>
+                      </MenuItem>
+                      <MenuItem value={1}>Últimos minutos</MenuItem>
+                      <MenuItem value={2}>Últimos horas</MenuItem>
+                      <MenuItem value={3}>Últimos dias</MenuItem>
+                      <MenuItem value={4}>Últimos meses</MenuItem>
+                    </Select>
+                  </FormControl>
+                  <FormControl variant="outlined" className="itemInput">
+                    <InputLabel htmlFor="lastDynamicsValue">Valor</InputLabel>
+                    <OutlinedInput
+                      id="lastDynamicsValue"
+                      value={data.dynamicValue}
+                      onChange={handleChangeDynamicValue}
+                      label="Nº Registros"
+                      disabled={data.filterType !== '1'}
                     />
-                    <FormControl variant="outlined" className="itemSelect">
-                      <InputLabel id="lastDynamicsOptionLabel">
-                        Ordem
-                      </InputLabel>
-                      <Select
-                        labelId="lastDynamicsOptionLabel"
-                        id="lastDynamicsOption"
-                        placeholder="Selecione uma opção"
-                        value={data.dynamicType}
-                        onChange={handleChangeDynamicOptions}
-                        label="Age"
-                        disabled={data.filterType !== '1'}
-                      >
-                        <MenuItem value={0}>
-                          <em>&nbsp;</em>
-                        </MenuItem>
-                        <MenuItem value={1}>Últimos minutos</MenuItem>
-                        <MenuItem value={2}>Últimos horas</MenuItem>
-                        <MenuItem value={3}>Últimos dias</MenuItem>
-                        <MenuItem value={4}>Últimos meses</MenuItem>
-                      </Select>
-                    </FormControl>
-                    <FormControl variant="outlined" className="itemInput">
-                      <InputLabel htmlFor="lastDynamicsValue">Valor</InputLabel>
-                      <OutlinedInput
-                        id="lastDynamicsValue"
-                        value={data.dynamicValue}
-                        onChange={handleChangeDynamicValue}
-                        label="Nº Registros"
-                        disabled={data.filterType !== '1'}
-                      />
-                    </FormControl>
-                  </div>
+                  </FormControl>
+                </div>
 
-                  {/* Linha 03 */}
-                  <div className="row">
-                    <Radio
-                      checked={data.filterType === '2'}
-                      onChange={handleChangeFilterType}
-                      value="2"
-                      name="filterType"
-                      inputProps={{ 'aria-label': '2' }}
-                      color="primary"
+                {/* Linha 03 */}
+                <div className="row">
+                  <Radio
+                    checked={data.filterType === '2'}
+                    onChange={handleChangeFilterType}
+                    value="2"
+                    name="filterType"
+                    inputProps={{ 'aria-label': '2' }}
+                    color="primary"
+                  />
+                  <MuiPickersUtilsProvider utils={MomentUtils} locale="pt-br">
+                    <DateTimePicker
+                      id="dateFrom"
+                      name="dateFrom"
+                      className="itemInput"
+                      label="Data Inicial"
+                      inputVariant="outlined"
+                      value={data.dateFrom}
+                      onChange={value => handleDateChange(value, 'dateFrom')}
+                      format="DD/MM/YYYY HH:mm"
+                      helperText={data.invalidPeriod ? ' ' : ''}
+                      error={data.invalidPeriod}
+                      disabled={data.filterType !== '2'}
                     />
-                    <MuiPickersUtilsProvider utils={MomentUtils} locale="pt-br">
-                      <DateTimePicker
-                        id="dateFrom"
-                        name="dateFrom"
-                        className="itemInput"
-                        label="Data Inicial"
-                        inputVariant="outlined"
-                        value={data.dateFrom}
-                        onChange={value => handleDateChange(value, 'dateFrom')}
-                        format="DD/MM/YYYY HH:mm"
-                        helperText={data.invalidPeriod ? ' ' : ''}
-                        error={data.invalidPeriod}
-                        disabled={data.filterType !== '2'}
-                      />
-                      <DateTimePicker
-                        id="dateTo"
-                        name="dateTo"
-                        className="itemInput"
-                        label="Data Final"
-                        inputVariant="outlined"
-                        value={data.dateTo}
-                        onChange={value => handleDateChange(value, 'dateTo')}
-                        format="DD/MM/YYYY HH:mm"
-                        helperText={
-                          data.invalidPeriod ? 'Período inválido' : ''
-                        }
-                        error={data.invalidPeriod}
-                        disabled={data.filterType !== '2'}
-                      />
-                    </MuiPickersUtilsProvider>
-                  </div>
+                    <DateTimePicker
+                      id="dateTo"
+                      name="dateTo"
+                      className="itemInput"
+                      label="Data Final"
+                      inputVariant="outlined"
+                      value={data.dateTo}
+                      onChange={value => handleDateChange(value, 'dateTo')}
+                      format="DD/MM/YYYY HH:mm"
+                      helperText={data.invalidPeriod ? 'Período inválido' : ''}
+                      error={data.invalidPeriod}
+                      disabled={data.filterType !== '2'}
+                    />
+                  </MuiPickersUtilsProvider>
                 </div>
               </div>
-            </Grid>
+            </div>
           </Grid>
           <WFooter {...props} isValid={data.isFilterValid} />
         </form>

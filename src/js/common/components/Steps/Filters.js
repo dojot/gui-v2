@@ -3,18 +3,26 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
-    marginTop: 50,
-    padding: '0 80px',
+    marginTop: 20,
+    padding: '0 40px',
 
-    '& .top': {},
-    '& .bottom': {
+    '& form': {
+      display: 'flex',
+      justifyContent: 'center',
+      alignItems: 'center',
+      flexWrap: 'wrap',
+
       '& .left': {
-        flex: '1 1 300px',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
+        flex: '1 1 auto',
 
         '& .realTimeSwitch': {
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+
           '& h2': {
             display: 'inline-block',
           },
@@ -22,15 +30,28 @@ export const useStyles = makeStyles(() => ({
       },
 
       '& .right': {
-        flex: '1 1 auto',
+        display: 'flex',
+        justifyContent: 'center',
+        flex: '2 1 auto',
 
         '& .container': {
           display: 'flex',
           flexDirection: 'row',
           alignItems: 'center',
+          paddingRight: 20,
+
+          '@media only screen and (max-width: 1024px)': {
+            flexDirection: 'column',
+          },
 
           '& .title': {
             paddingRight: 100,
+
+            '@media only screen and (max-width: 1024px)': {
+              width: '100%',
+              textAlign: 'center',
+              padding: '0px',
+            },
           },
 
           '& .rows': {
@@ -39,6 +60,10 @@ export const useStyles = makeStyles(() => ({
             justifyContent: 'center',
             alignItems: 'center',
             paddingTop: 60,
+
+            '@media only screen and (max-width: 1024px)': {
+              paddingTop: 20,
+            },
 
             '& .row': {
               display: 'flex',
