@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(theme => ({
   root: {
     width: '100%',
-    padding: '0 20px',
     backgroundColor: theme.palette.background.default,
     position: 'relative',
     zIndex: 999,
@@ -12,6 +11,9 @@ export const useStyles = makeStyles(theme => ({
     width: '100%',
     padding: '0 20px',
     margin: '20px auto',
+  },
+  listContainer: {
+    padding: '0 20px',
   },
   notFound: {
     width: '100%',

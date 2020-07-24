@@ -1,13 +1,6 @@
-import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
 import _ from 'lodash';
-
-const maxPush = (arr, value, max) => {
-  if (arr.length >= max) {
-    arr.splice(0, arr.length - max + 1);
-  }
-  return arr.concat(value);
-};
+import { createAction, handleActions } from 'redux-actions';
 
 const START_POLLING = 'app/dashboard/START_POLLING';
 const STOP_POLLING = 'app/dashboard/STOP_POLLING';

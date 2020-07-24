@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  useCallback,
-  useEffect,
-  useReducer,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useReducer, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
@@ -18,7 +12,9 @@ import {
   General,
   InitialStateGeneral as general,
   Summary,
+  Filters,
 } from 'Components/Steps';
+import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
@@ -41,7 +37,7 @@ const Wizard = ({
   isMenuOpen,
 }) => {
   const classes = useStyles();
-  const steps = ['Geral', 'Dispositivos', 'Atributos', 'Resumo'];
+  const steps = ['Geral', 'Dispositivos', 'Atributos', 'Filtros', 'Resumo'];
   const {
     line: wizardLineType,
     area: wizardAreaType,
@@ -55,20 +51,9 @@ const Wizard = ({
     general,
     devices: [],
     attributes: [],
+    filter: {},
     activeStep: 0,
   };
-
-  const { createLineWidget } = useLine(
-    addWidget,
-    addWidgetConfig,
-    addWidgetSaga,
-  );
-  const { createAreaWidget } = useArea(
-    addWidget,
-    addWidgetConfig,
-    addWidgetSaga,
-  );
-  const { createBarWidget } = useBar(addWidget, addWidgetConfig, addWidgetSaga);
 
   const [searchDeviceTerm, setSearchDeviceTerm] = useState('');
   const {
@@ -107,6 +92,43 @@ const Wizard = ({
       setCurrentPage(1);
     },
     [setCurrentPage],
+  );
+
+  const generateScheme = useCallback(state => {
+    const { lastN, operationType, dateFrom, dateTo, isRealTime } = state.filter;
+
+    return DeviceService.parseHistoryQuery({
+      devices: _.values(
+        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
+          deviceID: key,
+          attrs: value.map(val => val.label),
+        })),
+      ),
+      dateFrom,
+      dateTo,
+      operationType,
+      lastN,
+      isRealTime,
+    });
+  }, []);
+
+  const { createLineWidget } = useLine(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    generateScheme,
+  );
+  const { createAreaWidget } = useArea(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    generateScheme,
+  );
+  const { createBarWidget } = useBar(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    generateScheme,
   );
 
   const createNewWidget = useCallback(
@@ -212,6 +234,14 @@ const Wizard = ({
             />
           );
         case 3:
+          return (
+            <Filters
+              handleNavigate={dispatch}
+              steps={steps}
+              activeStep={stepIndex}
+            />
+          );
+        case 4:
           return (
             <Summary
               initialState={{
