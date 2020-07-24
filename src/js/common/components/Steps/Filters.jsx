@@ -210,6 +210,7 @@ const Filters = props => {
                     <OutlinedInput
                       id="lastRegs"
                       value={data.fixedValue}
+                      type="number"
                       onChange={handleChangeFixedValue}
                       label="Nº Registros"
                       disabled={data.filterType !== '0'}
@@ -251,6 +252,7 @@ const Filters = props => {
                     <InputLabel htmlFor="lastDynamicsValue">Valor</InputLabel>
                     <OutlinedInput
                       id="lastDynamicsValue"
+                      type="number"
                       value={data.dynamicValue}
                       onChange={handleChangeDynamicValue}
                       label="Nº Registros"
