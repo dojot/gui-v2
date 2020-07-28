@@ -84,20 +84,40 @@ const AttributesForm = props => {
     setPageSize,
   } = usePaginator('client');
 
-  const [initialAttributes] = useState(() => {
-    const list = [];
-    initialValues.forEach(device => {
-      const deviceAttributes = device.attrs.map(attr => ({
+  const sortList = useCallback((list, fieldCompare) => {
+    const orderedList = [...list];
+    orderedList.sort((item1, item2) => {
+      if (item1[fieldCompare] < item2[fieldCompare]) {
+        return -1;
+      }
+      if (item1[fieldCompare] > item2[fieldCompare]) {
+        return 1;
+      }
+      return 0;
+    });
+    return orderedList;
+  }, []);
+
+  const getInitialAttributes = useCallback(() => {
+    const attributes = [];
+    const orderedDevices = sortList(initialValues, 'label');
+
+    orderedDevices.forEach(device => {
+      const orderedAttrs = sortList(device.attrs, 'label');
+
+      const deviceAttributes = orderedAttrs.map(attr => ({
         deviceId: device.id,
         deviceLabel: device.label,
         attributeId: `${device.id}${attr.label}`,
         attributeLabel: attr.label,
         attributeValueType: attr.valueType,
       }));
-      deviceAttributes.forEach(attr => list.push(attr));
+      deviceAttributes.forEach(attr => attributes.push(attr));
     });
-    return list;
-  });
+    return attributes;
+  }, [initialValues, sortList]);
+
+  const [initialAttributes] = useState(() => getInitialAttributes());
 
   useEffect(() => {
     setCurrentPage(1);
