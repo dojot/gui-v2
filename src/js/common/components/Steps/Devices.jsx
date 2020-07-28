@@ -78,6 +78,15 @@ const Devices = props => {
     [handleClick, selectedDevices],
   );
 
+  const renderItem = useCallback((label, id) => {
+    return (
+      <Fragment>
+        <span className="listTitle">{label}</span>
+        <span className="listId">{`( ${id} )`}</span>
+      </Fragment>
+    );
+  }, []);
+
   return (
     <form onSubmit={e => handleSubmit(e)}>
       <Grid container justify="center">
@@ -124,7 +133,10 @@ const Devices = props => {
                         color="primary"
                       />
                     </ListItemIcon>
-                    <ListItemText id={labelId} primary={`[${id}] ${label}`} />
+                    <ListItemText
+                      id={labelId}
+                      primary={renderItem(label, id)}
+                    />
                   </ListItem>
                   <Divider />
                 </Fragment>
