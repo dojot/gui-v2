@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import Drawer from '@material-ui/core/Drawer';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
@@ -15,11 +15,14 @@ import { useStyles } from './Drawer';
 const DrawerComponent = props => {
   const classes = useStyles();
 
-  const { isOpen, primaryItems, secondaryItems } = props;
+  const { isOpen, primaryItems, secondaryItems, location } = props;
 
-  const activeRoute = prop => {
-    return props.location.pathname.indexOf(prop.path) > -1;
-  };
+  const activeRoute = useCallback(
+    prop => {
+      return location.pathname.indexOf(prop.path) > -1;
+    },
+    [location.pathname],
+  );
 
   return (
     <Drawer
