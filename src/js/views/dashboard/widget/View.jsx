@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-import ViewContainer from '../../ViewContainer';
+import ViewContainer from '../../StateComponents/ViewContainer';
 import { AreaChartCard } from './areaChart';
 import { BarChartCard } from './barChart';
 import { BubbleChartCard } from './bubbleChart';

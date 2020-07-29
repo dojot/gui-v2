@@ -10,7 +10,7 @@ import { actions as exampleActions } from 'Redux/example';
 import { ExampleWithError } from 'Components/Example';
 import { ErrorBoundary } from 'Components/Utilities';
 import LazyLoading from 'Components/LazyLoading';
-import ViewContainer from '../ViewContainer';
+import ViewContainer from '../StateComponents/ViewContainer';
 
 // This is lazy loading example
 const LazyExample = LazyLoading(() => import('Components/Example/Example'));

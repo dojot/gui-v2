@@ -15,17 +15,13 @@ import { useStyles } from './Drawer';
 const DrawerComponent = props => {
   const classes = useStyles();
 
-  const { isOpen, primaryItems, secondaryItems, handleChange } = props;
+  const { isOpen, primaryItems, secondaryItems, location } = props;
 
   const activeRoute = useCallback(
     prop => {
-      if (props.location.pathname.indexOf(prop.path) > -1) {
-        handleChange(prop.label);
-        return true;
-      }
-      return false;
+      return location.pathname.indexOf(prop.path) > -1;
     },
-    [handleChange],
+    [location.pathname],
   );
 
   return (
@@ -63,12 +59,7 @@ const DrawerComponent = props => {
       </MenuList>
       <MenuList className={classes.bottomList}>
         {secondaryItems.map(item => (
-          <Link
-            to={item.path}
-            className={classes.menuLink}
-            key={item.label}
-            onClick={() => handleChange(item.label)}
-          >
+          <Link to={item.path} className={classes.menuLink} key={item.label}>
             <MenuItem
               selected={activeRoute(item)}
               classes={{ selected: classes.selected }}
@@ -88,14 +79,12 @@ const DrawerComponent = props => {
 DrawerComponent.defaultProps = {
   secondaryItems: [],
   isOpen: true,
-  handleChange: () => {},
 };
 
 DrawerComponent.propTypes = {
   primaryItems: PropTypes.array.isRequired,
   secondaryItems: PropTypes.array,
   isOpen: PropTypes.bool,
-  handleChange: PropTypes.func,
 };
 
 export default withRouter(DrawerComponent);

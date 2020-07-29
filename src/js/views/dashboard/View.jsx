@@ -1,6 +1,6 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, Fragment } from 'react';
 
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -19,7 +19,7 @@ import {
   dashboardSaga,
 } from 'Selectors/dashboardSelector';
 
-import ViewContainer from '../ViewContainer';
+import ViewContainer from '../StateComponents/ViewContainer';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
@@ -155,7 +155,7 @@ const Dashboard = props => {
 
   const getHeaderContent = useCallback(() => {
     return (
-      <div>
+      <Fragment>
         <DevelopmentContainer>
           <Button
             style={{ marginLeft: 10 }}
@@ -188,7 +188,7 @@ const Dashboard = props => {
         >
           Adicionar
         </Button>
-      </div>
+      </Fragment>
     );
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
 

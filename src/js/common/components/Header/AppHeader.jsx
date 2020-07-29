@@ -62,7 +62,10 @@ AppHeader.propTypes = {
   title: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
   isOpen: PropTypes.bool.isRequired,
-  children: PropTypes.element,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]),
 };
 
 export default AppHeader;

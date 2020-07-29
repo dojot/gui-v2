@@ -58,7 +58,6 @@ type History {
 
 "Historical reading from an attribute#"
 type HistoryAttr {
-  deviceID: String!
   label: String!
   timestamp: String!
   value: String!
@@ -100,8 +99,8 @@ type Query {
   "Finds device information by id"
   getDeviceById(deviceId: String!): Device
   "Returns historical data about devices' attributes chosen in the input"
-  getDeviceHistory(filter: HistoryInput!): [HistoryAttr]
-  "Returns historical data about devices' attributes chosen in the input"
+  getDeviceHistory(filter: HistoryInput!): [History]
+  "Returns historical data in the format used by the Dashboard"
   getDeviceHistoryForDashboard(filter: HistoryInput!): String
   "Returns a list of devices that can be divided in pages, and the information about how many pages there are in total, along with which page is being shown"
   getDevices(filter: FilterDeviceInput, page: PageInput): DeviceListPage
@@ -154,18 +153,28 @@ input FilterDeviceInput {
 "Parameters to identify from which device and which attributes to retrieve historical data from#"
 input HistoryDeviceInput {
   "attributes which readings are to be retrieved#"
-  attrs: [String]!
+  attrs: [String]
   "device selected#"
   deviceID: String!
 }
 
-"Parameters to query historical device data#"
+"""
+
+Parameters to query historical device data#
+operationType: 0 => get last N records#
+operationType: 1 => get last minutes#
+operationType: 2 => get last hours#
+operationType: 3 => get last days#
+operationType: 4 => get last months#
+lastN will be used to obtain the values of minutes, hours, days and months when the operationType is non-zero#
+"""
 input HistoryInput {
   dateFrom: String
   dateTo: String
   "list of devices which attributes will be retrieved#"
   devices: [HistoryDeviceInput]!
   lastN: Int
+  operationType: Int
 }
 
 "Determines which page to show and how many items#"

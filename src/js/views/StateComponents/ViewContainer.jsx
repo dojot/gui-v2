@@ -1,9 +1,12 @@
+import React, { Fragment } from 'react';
+
 import { AppHeader } from 'Components/Header';
 import PropTypes from 'prop-types';
-import React, { Fragment } from 'react';
 import { connect } from 'react-redux';
 import { actions as layoutActions } from 'Redux/base';
 import { menuSelector } from 'Selectors/baseSelector';
+
+import { UserInfo } from './UserInfo';
 
 const ViewContainer = props => {
   const {
@@ -22,8 +25,8 @@ const ViewContainer = props => {
         title={headerTitle}
       >
         {headerContent && headerContent()}
+        <UserInfo />
       </AppHeader>
-
       {children}
     </Fragment>
   );
@@ -38,7 +41,10 @@ ViewContainer.defaultProps = {
 ViewContainer.propTypes = {
   headerTitle: PropTypes.string.isRequired,
   headerContent: PropTypes.func,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 const mapStateToProps = state => ({

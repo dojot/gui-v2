@@ -3,6 +3,7 @@ export const isAuthenticated = () => localStorage.getItem('TOKEN_KEY') !== null;
 export const getToken = () => localStorage.getItem('TOKEN_KEY');
 
 export const login = token => {
+  // eslint-disable-next-line no-unused-vars
   const [generalInfo, userInfo, check] = token.split('.');
   const { profile, service, username } = JSON.parse(atob(userInfo));
   localStorage.setItem('USER_PROFILE', profile);
