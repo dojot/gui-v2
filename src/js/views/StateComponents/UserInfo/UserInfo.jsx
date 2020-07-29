@@ -12,8 +12,7 @@ import Popper from '@material-ui/core/Popper';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { getUserInformation } from 'Utils';
 
-// eslint-disable-next-line import/extensions
-import { useStyles } from './UserInfo.js';
+import { useStyles } from './style';
 
 export const UserInfo = () => {
   const classes = useStyles();

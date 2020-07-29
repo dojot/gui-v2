@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { actions as layoutActions } from 'Redux/base';
 import { menuSelector } from 'Selectors/baseSelector';
 
-import { UserInfo } from './UserInfo';
+import { UserInfo } from '..';
 
 const ViewContainer = props => {
   const {
@@ -36,6 +36,7 @@ ViewContainer.defaultProps = {
   headerContent: () => {
     return null;
   },
+  children: React.createElement('div'),
 };
 
 ViewContainer.propTypes = {
@@ -44,7 +45,7 @@ ViewContainer.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
-  ]).isRequired,
+  ]),
 };
 
 const mapStateToProps = state => ({
