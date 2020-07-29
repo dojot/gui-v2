@@ -22,7 +22,7 @@ export const UserInfo = () => {
   const [user, setUser] = useState({ userName: '', tenant: '', profile: '' });
   useEffect(() => {
     setUser(getUserInformation());
-  }, [getUserInformation, setUser]);
+  }, [setUser]);
 
   const handleToggle = useCallback(() => {
     setOpen(prevOpen => !prevOpen);

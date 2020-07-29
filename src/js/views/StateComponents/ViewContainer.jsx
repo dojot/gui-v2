@@ -41,7 +41,10 @@ ViewContainer.defaultProps = {
 ViewContainer.propTypes = {
   headerTitle: PropTypes.string.isRequired,
   headerContent: PropTypes.func,
-  children: PropTypes.element.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
 };
 
 const mapStateToProps = state => ({
