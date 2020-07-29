@@ -1,10 +1,11 @@
 // import PropTypes from 'prop-types'
 import React, { useCallback } from 'react';
+
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import { connect } from 'react-redux';
 
-import ViewContainer from '../../StateComponents/ViewContainer';
+import { ViewContainer } from '../../StateComponents';
 import { AreaChartCard } from './areaChart';
 import { BarChartCard } from './barChart';
 import { BubbleChartCard } from './bubbleChart';

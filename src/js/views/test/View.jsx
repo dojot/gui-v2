@@ -1,16 +1,15 @@
-import React, { Component, Fragment } from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
+import React, { Component } from 'react';
 
-// This is i18n and i10n
-import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
-
-import { exampleSelector } from 'Selectors/exampleSelector';
-import { actions as exampleActions } from 'Redux/example';
 import { ExampleWithError } from 'Components/Example';
-import { ErrorBoundary } from 'Components/Utilities';
 import LazyLoading from 'Components/LazyLoading';
-import ViewContainer from '../StateComponents/ViewContainer';
+import { ErrorBoundary } from 'Components/Utilities';
+import PropTypes from 'prop-types';
+import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
+import { connect } from 'react-redux';
+import { actions as exampleActions } from 'Redux/example';
+import { exampleSelector } from 'Selectors/exampleSelector';
+
+import { ViewContainer } from '../StateComponents';
 
 // This is lazy loading example
 const LazyExample = LazyLoading(() => import('Components/Example/Example'));
