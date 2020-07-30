@@ -23,21 +23,31 @@ const delay = duration => {
   });
 };
 
-const getRealTimeQueriesFromSchema = schema => {
-  return Object.keys(schema)
-    .filter(queryKey => schema[queryKey].isRealTime === true)
-    .map(key => ({
-      key,
-      query: schema[key],
-    }));
+const getQueriesFromSchema = schema => {
+  const realTimeQueries = [];
+  const staticQueries = [];
+
+  // eslint-disable-next-line no-restricted-syntax
+  for (const key in schema) {
+    if (schema[key].isRealTime) {
+      realTimeQueries.push({
+        key,
+        query: schema[key],
+      });
+    } else {
+      staticQueries.push({
+        key,
+        query: schema[key],
+      });
+    }
+  }
+  return { staticQueries, realTimeQueries };
 };
 
-function* pollData(schema) {
+function* pollData(queries, interval) {
   try {
-    const realTimeQueries = getRealTimeQueriesFromSchema(schema);
-
     // eslint-disable-next-line no-restricted-syntax
-    for (const realTimeQuery of realTimeQueries) {
+    for (const realTimeQuery of queries) {
       const {
         getDeviceHistoryForDashboard,
       } = yield Device.getDevicesHistoryParsed(realTimeQuery.query);
@@ -50,9 +60,7 @@ function* pollData(schema) {
         );
       }
     }
-    // TODO: MMake the timing adjustable.
-    // For now the timer is set to 15 seconds
-    yield call(delay, 15000);
+    yield call(delay, interval);
   } catch (error) {
     console.error(error);
     yield put(dashboardActions.errorPolling(error));
@@ -60,9 +68,16 @@ function* pollData(schema) {
 }
 
 function* pollDashboard({ payload }) {
+  const { staticQueries = [], realTimeQueries = [] } = getQueriesFromSchema(
+    payload,
+  );
+  yield call(pollData, staticQueries, 0);
+
   while (true) {
     const { end } = yield race({
-      poll: call(pollData, payload),
+      // TODO: Make the timing adjustable.
+      // For now the timer is set to 15 seconds
+      poll: call(pollData, realTimeQueries, 15000),
       end: take(dashboardConstants.STOP_POLLING),
     });
     if (end) {

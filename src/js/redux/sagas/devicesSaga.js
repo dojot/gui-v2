@@ -1,5 +1,6 @@
 import { put, fork, takeLatest } from 'redux-saga/effects';
 import { Device } from 'Services';
+
 import {
   constants as deviceConstants,
   actions as deviceActions,
