@@ -9,6 +9,7 @@
     "pizza": "4",
     "donut": "5",
     "bubble": "6",
+    "table": "7",
     "apiUrl": "http://localhost:8000/"
   }
 }
