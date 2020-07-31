@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 import { actions as exampleActions } from 'Redux/example';
 import { exampleSelector } from 'Selectors/exampleSelector';
 
-import { ViewContainer } from '../StateComponents';
+import { ViewContainer } from '../stateComponents';
 
 // This is lazy loading example
 const LazyExample = LazyLoading(() => import('Components/Example/Example'));

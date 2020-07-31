@@ -21,7 +21,7 @@ import { actions as dashboardActions } from 'Redux/dashboard';
 import { menuSelector } from 'Selectors/baseSelector';
 import { Device as DeviceService } from 'Services';
 
-import { ViewContainer } from '../../../StateComponents';
+import { ViewContainer } from '../../../stateComponents';
 import useArea from './hooks/useArea';
 import useBar from './hooks/useBar';
 import useLine from './hooks/useLine';

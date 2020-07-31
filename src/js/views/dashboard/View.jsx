@@ -19,7 +19,7 @@ import {
   dashboardSaga,
 } from 'Selectors/dashboardSelector';
 
-import { ViewContainer } from '../StateComponents';
+import { ViewContainer } from '../stateComponents';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
