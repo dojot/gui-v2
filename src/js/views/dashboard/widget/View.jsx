@@ -12,6 +12,7 @@ import { BubbleChartCard } from './bubbleChart';
 import { DonutChartCard } from './donutChart';
 import { LineChartCard } from './lineChart';
 import { PizzaChartCard } from './pizzaChart';
+import { TableCard } from './table';
 
 const useStyles = makeStyles(theme => {
   return {
@@ -24,7 +25,7 @@ const useStyles = makeStyles(theme => {
 const WidgetView = props => {
   const classes = useStyles();
   const { history } = props;
-  const { line, area, bar, pizza, donut, bubble } = __CONFIG__;
+  const { line, area, bar, pizza, donut, bubble, table } = __CONFIG__;
 
   const handleClick = useCallback(
     id => {
@@ -42,6 +43,7 @@ const WidgetView = props => {
         <DonutChartCard onClick={() => handleClick(donut)} />
         <BubbleChartCard onClick={() => handleClick(bubble)} />
         <BarChartCard onClick={() => handleClick(bar)} />
+        <TableCard onClick={() => handleClick(table)} />
       </Grid>
     </ViewContainer>
   );
