@@ -23,6 +23,7 @@ import { ViewContainer } from '../stateComponents';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
+import { TableWidget } from './widget/table';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
@@ -46,7 +47,7 @@ const Dashboard = props => {
     checkData,
   } = props;
 
-  const { bar, line, area } = __CONFIG__;
+  const { bar, line, area, table } = __CONFIG__;
 
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
@@ -142,6 +143,18 @@ const Dashboard = props => {
               />
             </div>
           );
+        case table:
+          return (
+            <div key={i}>
+              <TableWidget
+                id={i}
+                onDelete={onRemoveItem}
+                onPin={onPin}
+                data={data[i]}
+                config={configs[i]}
+              />
+            </div>
+          );
         default:
           return (
             <div key={i}>
@@ -150,7 +163,7 @@ const Dashboard = props => {
           );
       }
     },
-    [area, bar, configs, line, data, onPin, onRemoveItem],
+    [area, bar, configs, line, data, onPin, onRemoveItem, table],
   );
 
   const getHeaderContent = useCallback(() => {

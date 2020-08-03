@@ -9,10 +9,10 @@ import { usePaginator } from 'Components/Paginator';
 import {
   Attributes,
   Devices,
+  Filters,
   General,
   InitialStateGeneral as general,
   Summary,
-  Filters,
 } from 'Components/Steps';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -25,6 +25,7 @@ import { ViewContainer } from '../../../stateComponents';
 import useArea from './hooks/useArea';
 import useBar from './hooks/useBar';
 import useLine from './hooks/useLine';
+import useTable from './hooks/useTable';
 import useStyles from './Wizard';
 
 const Wizard = ({
@@ -45,6 +46,7 @@ const Wizard = ({
     pizza: wizardPizzaType,
     donut: wizardDonnutType,
     bubble: wizardBubbleType,
+    table: wizardTableType,
   } = __CONFIG__;
 
   const initialState = {
@@ -130,6 +132,12 @@ const Wizard = ({
     addWidgetSaga,
     generateScheme,
   );
+  const { createTableWidget } = useTable(
+    addWidget,
+    addWidgetConfig,
+    addWidgetSaga,
+    generateScheme,
+  );
 
   const createNewWidget = useCallback(
     data => {
@@ -143,18 +151,23 @@ const Wizard = ({
         case wizardBarType:
           createBarWidget(data);
           break;
+        case wizardTableType:
+          createTableWidget(data);
+          break;
         default:
           break;
       }
     },
     [
+      wizardType,
       wizardAreaType,
       wizardBarType,
       wizardLineType,
+      wizardTableType,
       createAreaWidget,
       createBarWidget,
       createLineWidget,
-      wizardType,
+      createTableWidget,
     ],
   );
 
