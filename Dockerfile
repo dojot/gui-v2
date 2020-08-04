@@ -2,6 +2,9 @@ FROM node:12.18.2 as basis
 
 WORKDIR /opt/app
 
+ARG DOJOT_VERSION=development
+ENV GUI_VERSION $DOJOT_VERSION
+
 COPY package.json .
 RUN yarn
 COPY . .

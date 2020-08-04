@@ -73,6 +73,7 @@ webpackConfig.plugins.push(
   // new webpack.HotModuleReplacementPlugin(),
   new webpack.DefinePlugin({
     __CONFIG__: JSON.stringify(config.get('app')),
+    GUI_VERSION: JSON.stringify('development'),
   }),
 );
 

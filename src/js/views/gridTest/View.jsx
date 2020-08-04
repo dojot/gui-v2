@@ -1,5 +1,7 @@
 import React from 'react';
 
+import { ViewContainer } from '../stateComponents';
+
 export default () => {
-  return <div />;
+  return <ViewContainer headerTitle="List test" />;
 };
