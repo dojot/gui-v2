@@ -9,7 +9,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import More from '@material-ui/icons/MoreVert';
-import { v4 as uuid } from 'uuid';
+
+import CustomizedTables from '../../../../common/components/Table/SimpleTable/SimpleTable';
 
 const useStyles = makeStyles(() => {
   return {
@@ -25,7 +26,7 @@ const useStyles = makeStyles(() => {
   };
 });
 
-const TableWidget = ({ id, data, config, title, onDelete, onPin, onEdit }) => {
+const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
@@ -47,30 +48,7 @@ const TableWidget = ({ id, data, config, title, onDelete, onPin, onEdit }) => {
         label: col.name || col.dataKey,
       }));
 
-      /* TODO utilizar o componente de tabela para exibição dos dados */
-      return (
-        <table>
-          <thead>
-            <tr>
-              {columns.map(col => (
-                <th key={col.label}>{col.label}</th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {data.map(row => {
-              const rowId = uuid();
-              return (
-                <tr key={rowId}>
-                  {columns.map(col => (
-                    <td key={`${rowId}_${col.dataKey}`}>{row[col.dataKey]}</td>
-                  ))}
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      );
+      return <CustomizedTables columns={columns} rows={data} />;
     }
     return null;
   }, [data, table]);
