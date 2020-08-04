@@ -131,6 +131,7 @@ if (config.get('optimization.analyzeMode') === true) {
 webpackConfig.plugins.push(
   new webpack.DefinePlugin({
     __CONFIG__: JSON.stringify(config.get('app')),
+    GUI_VERSION: JSON.stringify(process.env.GUI_VERSION),
   }),
   new webpack.LoaderOptionsPlugin({
     minimize: true,

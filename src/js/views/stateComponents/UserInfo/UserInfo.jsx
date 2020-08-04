@@ -45,6 +45,9 @@ export const UserInfo = () => {
     prevOpen.current = open;
   }, [open]);
 
+  // eslint-disable-next-line no-undef
+  const guiVersion = GUI_VERSION || 'undefined';
+
   return (
     <div className={classes.root}>
       <Fragment>
@@ -74,10 +77,7 @@ export const UserInfo = () => {
                 <ClickAwayListener onClickAway={handleClose}>
                   <List className={classes.list}>
                     <ListItem>
-                      <ListItemText
-                        primary="v0.5.0-alpha.4"
-                        secondary="Versão"
-                      />
+                      <ListItemText primary={guiVersion} secondary="Versão" />
                     </ListItem>
                     <Divider />
                     <ListItem>
