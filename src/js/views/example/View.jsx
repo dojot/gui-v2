@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
 // This is i18n and i10n
-
+import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 
 import LazyLoading from '../../common/components/LazyLoading';
 import { actions as exampleActions } from '../../redux/modules/example';
