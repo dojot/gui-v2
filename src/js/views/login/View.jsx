@@ -3,6 +3,7 @@ import React from 'react';
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import { Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
 import { Authentication } from 'Services';
 import { isAuthenticated } from 'Utils';
@@ -63,16 +64,17 @@ const LoginForm = ({
   handleSubmit,
 }) => {
   const classes = useStyles();
+  const { t } = useTranslation(['login', 'common']);
   return (
     <Grid container justify="center" className={classes.root}>
       <Card className={classes.grid}>
         <form onSubmit={handleSubmit} autoComplete="off">
           <Typography variant="h5" color="textPrimary">
-            LogIn
+            {t('login:login')}
           </Typography>
           <TextField
             id="user"
-            label="Usuario"
+            label={t('login:user')}
             variant="outlined"
             size="medium"
             margin="normal"
@@ -85,7 +87,7 @@ const LoginForm = ({
           />
           <TextField
             id="password"
-            label="Senha"
+            label={t('login:password')}
             type="password"
             autoComplete="current-password"
             variant="outlined"
@@ -106,7 +108,7 @@ const LoginForm = ({
             className={classes.margin}
             type="submit"
           >
-            Login
+            {t('common:cancel')}
           </Button>
         </form>
       </Card>

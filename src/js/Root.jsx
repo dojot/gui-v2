@@ -5,6 +5,7 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
+import './common/i18n/i18n';
 import theme from 'Themes';
 
 export default class Root extends React.PureComponent {
@@ -23,9 +24,7 @@ export default class Root extends React.PureComponent {
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
-    
-          <Provider store={store}>{this.content}</Provider>
-       
+        <Provider store={store}>{this.content}</Provider>
       </ThemeProvider>
     );
   }
