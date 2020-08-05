@@ -2,8 +2,6 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-// This is i18n and i10n
-import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
 
 import LazyLoading from '../../common/components/LazyLoading';
 import { actions as exampleActions } from '../../redux/modules/example';
@@ -42,35 +40,7 @@ class ExampleView extends Component {
       <Fragment>
         <LazyExample {...this.props} />
         <h2>This framework supports i18n and i10n out of the box.</h2>
-        <p>
-          <FormattedMessage
-            id="greetings.hello"
-            defaultMessage={'Hello {name}'}
-            values={{
-              name: <b>Visitor</b>,
-            }}
-          />
-        </p>
-        <p>
-          <FormattedMessage
-            id="hooray"
-            defaultMessage={`A locallized random number: {myArbitraryNumber, number} {myArbitraryNumber, plural,
-              one {item}
-              other {items}
-            }`}
-            values={{
-              myArbitraryNumber,
-            }}
-          />
-        </p>
-        <p>
-          The date is: &nbsp;
-          <FormattedDate value={currentTime} />
-        </p>
-        <p>
-          The time is: &nbsp;
-          <FormattedTime value={currentTime} />
-        </p>
+        
         <ErrorBoundary>
           <ExampleWithError {...this.props} />
         </ErrorBoundary>

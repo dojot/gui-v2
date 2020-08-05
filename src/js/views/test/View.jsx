@@ -4,7 +4,7 @@ import { ExampleWithError } from 'Components/Example';
 import LazyLoading from 'Components/LazyLoading';
 import { ErrorBoundary } from 'Components/Utilities';
 import PropTypes from 'prop-types';
-import { FormattedMessage, FormattedDate, FormattedTime } from 'react-intl';
+
 import { connect } from 'react-redux';
 import { actions as exampleActions } from 'Redux/example';
 import { exampleSelector } from 'Selectors/exampleSelector';
@@ -39,35 +39,7 @@ class ExampleView extends Component {
       <ViewContainer headerTitle="TODO Page">
         <LazyExample {...this.props} />
         <h2>This framework supports i18n and i10n out of the box.</h2>
-        <p>
-          <FormattedMessage
-            id="greetings.hello"
-            defaultMessage={'Hello {name}'}
-            values={{
-              name: <b>Visitor</b>,
-            }}
-          />
-        </p>
-        <p>
-          <FormattedMessage
-            id="hooray"
-            defaultMessage={`A locallized random number: {myArbitraryNumber, number} {myArbitraryNumber, plural,
-              one {item}
-              other {items}
-            }`}
-            values={{
-              myArbitraryNumber,
-            }}
-          />
-        </p>
-        <p>
-          The date is: &nbsp;
-          <FormattedDate value={currentTime} />
-        </p>
-        <p>
-          The time is: &nbsp;
-          <FormattedTime value={currentTime} />
-        </p>
+        
         <ErrorBoundary>
           <ExampleWithError {...this.props} />
         </ErrorBoundary>
