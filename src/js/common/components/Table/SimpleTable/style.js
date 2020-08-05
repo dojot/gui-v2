@@ -6,14 +6,12 @@ const useStyles = makeStyles(theme => {
       borderRadius: 5,
       height: '100%',
     },
-    table: {
-      minWidth: 700,
-    },
     head: {
       backgroundColor: theme.palette.table.head,
       color: theme.palette.common.white,
       fontSize: '1rem',
       fontWeight: 600,
+      userSelect: 'none',
     },
   };
 });
