@@ -9,6 +9,6 @@
     "donut": "5",
     "bubble": "6",
     "table": "7",
-    "apiUrl": "http://192.168.1.11:8000/"
+    "apiUrl": "http://localhost:8000/"
   }
 }
