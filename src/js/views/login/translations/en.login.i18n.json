@@ -1,5 +1,10 @@
 {
   "user": "User",
   "password": "Password",
-  "login": "Login"
+  "login": "Login",
+  "enter a username": "Enter a username",
+  "User is required": "User is required",
+  "5 characters minimum": "5 characters minimum",
+  "Type the password": "Type the password",
+  "Password is required": "Password is required"
 }
