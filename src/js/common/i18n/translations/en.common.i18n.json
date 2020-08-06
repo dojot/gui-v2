@@ -1,4 +1,7 @@
 {
   "ok": "OK",
-  "cancel": "Cancel"
+  "cancel": "Cancel",
+  "version": "Version",
+  "profile": "Profile",
+  "tenant": "Tenant"
 }

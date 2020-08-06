@@ -10,12 +10,14 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Paper from '@material-ui/core/Paper';
 import Popper from '@material-ui/core/Popper';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import { useTranslation } from 'react-i18next';
 import { getUserInformation } from 'Utils';
 
 import { useStyles } from './style';
 
 export const UserInfo = () => {
   const classes = useStyles();
+  const { t } = useTranslation(['common']);
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
   const [user, setUser] = useState({ userName: '', tenant: '', profile: '' });
@@ -77,14 +79,23 @@ export const UserInfo = () => {
                 <ClickAwayListener onClickAway={handleClose}>
                   <List className={classes.list}>
                     <ListItem>
-                      <ListItemText primary={guiVersion} secondary="Versão" />
+                      <ListItemText
+                        primary={guiVersion}
+                        secondary={t('common:version')}
+                      />
                     </ListItem>
                     <Divider />
                     <ListItem>
-                      <ListItemText primary={user.profile} secondary="Perfil" />
+                      <ListItemText
+                        primary={user.profile}
+                        secondary={t('common:profile')}
+                      />
                     </ListItem>
                     <ListItem>
-                      <ListItemText primary={user.tenant} secondary="Tenant" />
+                      <ListItemText
+                        primary={user.tenant}
+                        secondary={t('common:tenant')}
+                      />
                     </ListItem>
                   </List>
                 </ClickAwayListener>
