@@ -5,6 +5,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
 import Pagination from '@material-ui/lab/Pagination';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import { useStyles } from './styles';
 
@@ -22,7 +23,10 @@ const Paginator = props => {
     onPageChange,
     onPageSizeChange,
   } = props;
+
   const classes = useStyles();
+  const { t } = useTranslation(['paginator']);
+
   return (
     <Grid
       container
@@ -50,10 +54,10 @@ const Paginator = props => {
       >
         {rowsPerPage.map(rows => (
           <MenuItem value={rows} key={rows}>
-            {`${rows} registros por página`}
+            {`${rows} ${t('paginator:records per page')}`}
           </MenuItem>
         ))}
-        <MenuItem value={9999}>Todos os registros</MenuItem>
+        <MenuItem value={9999}>{t('paginator:all records')}</MenuItem>
       </Select>
     </Grid>
   );
