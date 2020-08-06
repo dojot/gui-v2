@@ -64,7 +64,7 @@ export const UserInfo = () => {
           onClick={handleToggle}
           startIcon={<AccountCircle />}
         >
-          {`Olá, ${user.userName}`}
+          {`${t('common:hello')}, ${user.userName}`}
         </Button>
         <Popper
           open={open}
