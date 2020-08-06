@@ -3,13 +3,23 @@ import { initReactI18next } from 'react-i18next';
 
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
-import commonEn from './translations/en.common.json';
-import commonPtBr from './translations/pt_br.common.json';
+import menuEn from '../menu/translations/en.menu.i18n.json';
+import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
+import commonEn from './translations/en.common.i18n.json';
+import commonPtBr from './translations/pt_br.common.i18n.json';
 
 const resources = {
   en: { login: loginEn, common: commonEn },
-  'en-US': { login: loginEn, common: commonEn },
-  'pt-BR': { login: loginPtBr, common: commonPtBr },
+  'en-US': {
+    login: loginEn,
+    menu: menuEn,
+    common: commonEn,
+  },
+  'pt-BR': {
+    login: loginPtBr,
+    menu: menuPtBr,
+    common: commonPtBr,
+  },
 };
 const lng = navigator.language || navigator.userLanguage;
 i18n.use(initReactI18next).init({
