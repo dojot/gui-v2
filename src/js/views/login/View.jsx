@@ -12,12 +12,12 @@ import * as Yup from 'yup';
 import useStyles from './style';
 
 const validationSchema = Yup.object({
-  user: Yup.string('Digite o nome de usuário')
-    .required('Usuário é Obrigatório')
-    .min(5, 'Mínimo de 5 caracteres'),
-  password: Yup.string('Digite a senha')
-    .required('Senha é obrigatório')
-    .min(5, 'Mínimo de 5 caracteres'),
+  user: Yup.string('login:enter a username')
+    .required('login:User is required')
+    .min(5, 'login:5 characters minimum'),
+  password: Yup.string('login:Type the password')
+    .required('login:Password is required')
+    .min(5, 'login:5 characters minimum'),
 });
 
 const LoginView = ({ location, history }) => {
@@ -65,6 +65,7 @@ const LoginForm = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation(['login', 'common']);
+
   return (
     <Grid container justify="center" className={classes.root}>
       <Card className={classes.grid}>
@@ -81,7 +82,7 @@ const LoginForm = ({
             value={values.user}
             onChange={handleChange}
             onBlur={handleBlur}
-            helperText={errors.user && touched.user && errors.user}
+            helperText={errors.user && touched.user && t(errors.user)}
             error={errors.user && touched.user}
             fullWidth
           />
@@ -96,7 +97,9 @@ const LoginForm = ({
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            helperText={errors.password && touched.password && errors.password}
+            helperText={
+              errors.password && touched.password && t(errors.password)
+            }
             error={errors.password && touched.password}
             margin="normal"
           />
@@ -108,7 +111,7 @@ const LoginForm = ({
             className={classes.margin}
             type="submit"
           >
-            {t('common:cancel')}
+            {t('login:login')}
           </Button>
         </form>
       </Card>
