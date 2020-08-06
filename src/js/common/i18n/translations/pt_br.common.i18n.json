@@ -4,5 +4,11 @@
   "hello": "Olá",
   "version": "Versão",
   "profile": "Perfil",
-  "tenant": "Tenant"
+  "tenant": "Tenant",
+  "hello": "Olá",
+  "start": "Iniciar",
+  "stop": "Parar",
+  "add": "Adicionar",
+  "next": "Avançar",
+  "back": "Voltar"
 }

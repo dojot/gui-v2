@@ -10,6 +10,7 @@ import { DevelopmentContainer } from 'Components/Containers';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import {
@@ -66,6 +67,8 @@ const Dashboard = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  const { t } = useTranslation(['dashboard', 'common']);
 
   const onLayoutChange = useCallback(
     newLayout => {
@@ -178,7 +181,7 @@ const Dashboard = props => {
             startIcon={<PlayIcon />}
             onClick={() => startPolling(sagaConfig)}
           >
-            Iniciar
+            {t('common:start')}
           </Button>
           <Button
             style={{ marginLeft: 10 }}
@@ -188,7 +191,7 @@ const Dashboard = props => {
             startIcon={<PauseIcon />}
             onClick={() => stopPolling()}
           >
-            Parar
+            {t('common:stop')}
           </Button>
         </DevelopmentContainer>
         <Button
@@ -199,7 +202,7 @@ const Dashboard = props => {
           startIcon={<AddIcon />}
           onClick={() => handleClick()}
         >
-          Adicionar
+          {t('common:add')}
         </Button>
       </Fragment>
     );
