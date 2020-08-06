@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { ViewContainer } from '../../stateComponents';
@@ -26,6 +27,7 @@ const WidgetView = props => {
   const classes = useStyles();
   const { history } = props;
   const { line, area, bar, pizza, donut, bubble, table } = __CONFIG__;
+  const { t } = useTranslation(['dashboard']);
 
   const handleClick = useCallback(
     id => {
@@ -35,7 +37,7 @@ const WidgetView = props => {
   );
 
   return (
-    <ViewContainer headerTitle="Widgets">
+    <ViewContainer headerTitle={t('dashboard:widget')}>
       <Grid container justify="flex-start" className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />

@@ -9,8 +9,8 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import More from '@material-ui/icons/MoreVert';
-
-import CustomizedTables from '../../../../common/components/Table/SimpleTable/SimpleTable';
+import CustomizedTables from 'Components/Table/SimpleTable/SimpleTable';
+import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(() => {
   return {
@@ -31,6 +31,8 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const { table } = config;
+
+  const { t } = useTranslation(['common']);
 
   const handleClickMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -74,13 +76,13 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
               onClose={handleClose}
             >
               <MenuItem onClick={() => handleClose()}>
-                <ListItemText primary="Editar" />
+                <ListItemText primary={t('common:edit')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onPin)}>
-                <ListItemText primary="Fixar" />
+                <ListItemText primary={t('common:pin')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onDelete)}>
-                <ListItemText primary="Excluir" />
+                <ListItemText primary={t('common:delete')} />
               </MenuItem>
             </Menu>
           </div>

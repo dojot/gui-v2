@@ -1,13 +1,16 @@
 import React from 'react';
+
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
-import IconButton from '@material-ui/core/IconButton';
-import More from '@material-ui/icons/MoreVert';
-import Menu from '@material-ui/core/Menu';
-import Fade from '@material-ui/core/Fade';
-import MenuItem from '@material-ui/core/MenuItem';
-import ListItemText from '@material-ui/core/ListItemText';
 import CardContent from '@material-ui/core/CardContent';
+import CardHeader from '@material-ui/core/CardHeader';
+import Fade from '@material-ui/core/Fade';
+import IconButton from '@material-ui/core/IconButton';
+import ListItemText from '@material-ui/core/ListItemText';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
+import { makeStyles } from '@material-ui/core/styles';
+import More from '@material-ui/icons/MoreVert';
+import { useTranslation } from 'react-i18next';
 import {
   Area,
   AreaChart,
@@ -19,7 +22,6 @@ import {
   YAxis,
 } from 'recharts';
 import { formatDate } from 'Utils';
-import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => {
   return {
@@ -40,6 +42,8 @@ export default ({ id, onDelete, onPin, data, config }) => {
 
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
+
+  const { t } = useTranslation(['common']);
 
   const handleClickMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -71,13 +75,13 @@ export default ({ id, onDelete, onPin, data, config }) => {
               TransitionComponent={Fade}
             >
               <MenuItem onClick={() => handleClose()}>
-                <ListItemText primary="Editar" />
+                <ListItemText primary={t('common:edit')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onPin)}>
-                <ListItemText primary="Fixar" />
+                <ListItemText primary={t('common:pin')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onDelete)}>
-                <ListItemText primary="Excluir" />
+                <ListItemText primary={t('common:delete')} />
               </MenuItem>
             </Menu>
           </div>

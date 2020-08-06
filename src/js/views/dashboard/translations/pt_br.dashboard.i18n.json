@@ -1,3 +1,37 @@
 {
+  "dashboard": "Dashboard",
+  "wizard": {
 
+  },
+  "widget": "Widget",
+  "card": {
+    "line": {
+      "title": "Gráfico de Linha",
+      "description": "Esse gráfico, por padrão, utiliza o tempo como medida da abscissa"
+    },
+    "area": {
+      "title": "Gráfico de Área",
+      "description": "Represents data through a populated area"
+    },
+    "bar": {
+      "title": "Gráfico de Barra",
+      "description": "Representa os dados por barras"
+    },
+    "table": {
+      "title": "Tabela",
+      "description": "Representa os dados por meio de uma estrutura tabular"
+    },
+    "bubble": {
+      "title": "Gráfico de Bolha",
+      "description": "Um gráfico de bolhas é uma variação de um gráfico de dispersão"
+    },
+    "pizza": {
+      "title": "Gráfico de Pizza",
+      "description": "Cada categoria estatística representada é proporcional às respectivas frequências"
+    },
+    "donut": {
+      "title": "Gráfico de Donut",
+      "description": "Alternativa ao Gráfico de Pizza"
+    }
+  }
 }

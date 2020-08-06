@@ -1,3 +1,37 @@
 {
+  "dashboard": "Dashboard",
+  "wizard": {
 
+  },
+  "widget": "Widget",
+  "card": {
+    "line": {
+      "title": "Line Chart",
+      "description": "This graph, by default, uses time as a measure of the abscissa"
+    },
+    "area": {
+      "title": "Area Chart",
+      "description": "Represents data through a populated area"
+    },
+    "bar": {
+      "title": "Bar Chart",
+      "description": "Represents data by bars"
+    },
+    "table": {
+      "title": "Table",
+      "description": "Represents data through a tabular structure"
+    },
+    "bubble": {
+      "title": "Bubble Chart",
+      "description": "A bubble graph is a variation of a scatter plotA bubble graph is a variation of a scatter plot"
+    },
+    "pizza": {
+      "title": "Pizza Chart",
+      "description": "Each statistical category represented is proportional to the respective frequencies"
+    },
+    "donut": {
+      "title": "Donut Chart",
+      "description": "Alternative to Pie Chart"
+    }
+  }
 }

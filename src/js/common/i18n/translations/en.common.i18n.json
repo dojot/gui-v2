@@ -10,5 +10,8 @@
   "stop": "Pause",
   "add": "Add",
   "next": "Next",
-  "Back": "Back"
+  "back": "Back",
+  "pin": "Pin",
+  "edit": "Edit",
+  "delete": "Delete"
 }

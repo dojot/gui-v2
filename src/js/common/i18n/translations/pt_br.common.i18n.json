@@ -10,5 +10,8 @@
   "stop": "Parar",
   "add": "Adicionar",
   "next": "Avançar",
-  "back": "Voltar"
+  "back": "Voltar",
+  "pin": "Fixar",
+  "edit": "Editar",
+  "delete": "Remover"
 }

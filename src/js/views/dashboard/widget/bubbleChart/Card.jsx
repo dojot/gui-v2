@@ -1,14 +1,16 @@
-import { ImageCard } from 'Components/Cards';
 import React from 'react';
-import Bubble from 'Assets/images/bubble.png';
 
-export default props => {
-  const { onClick } = props;
+import Bubble from 'Assets/images/bubble.png';
+import { ImageCard } from 'Components/Cards';
+import { useTranslation } from 'react-i18next';
+
+export default ({ onClick }) => {
+  const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title="Gráfico de Bolha"
+      title={t('dashboard:card.bubble.title')}
       image={Bubble}
-      description="Um gráfico de bolhas é uma variação de um gráfico de dispersão"
+      description={t('dashboard:card.bubble.description')}
       handleClick={() => onClick()}
     />
   );

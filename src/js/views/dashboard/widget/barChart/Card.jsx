@@ -1,14 +1,16 @@
-import { ImageCard } from 'Components/Cards';
 import React from 'react';
-import Bar from 'Assets/images/bar.png';
 
-export default props => {
-  const { onClick } = props;
+import Bar from 'Assets/images/bar.png';
+import { ImageCard } from 'Components/Cards';
+import { useTranslation } from 'react-i18next';
+
+export default ({ onClick }) => {
+  const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title="Gráfico de Barras"
+      title={t('dashboard:card.bar.title')}
       image={Bar}
-      description="Representa os dados por barras"
+      description={t('dashboard:card.bar.description')}
       handleClick={() => onClick()}
     />
   );

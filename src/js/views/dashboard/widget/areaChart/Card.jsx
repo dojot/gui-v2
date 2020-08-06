@@ -1,14 +1,16 @@
-import { ImageCard } from 'Components/Cards';
 import React from 'react';
-import Area from 'Assets/images/area.png';
 
-export default props => {
-  const { onClick } = props;
+import Area from 'Assets/images/area.png';
+import { ImageCard } from 'Components/Cards';
+import { useTranslation } from 'react-i18next';
+
+export default ({ onClick }) => {
+  const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title="Gráfico de Área"
+      title={t('dashboard:card.area.title')}
       image={Area}
-      description="Representa os dados por meio de uma área preenchida"
+      description={t('dashboard:card.area.description')}
       handleClick={() => onClick()}
     />
   );

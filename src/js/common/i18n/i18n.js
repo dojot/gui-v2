@@ -34,7 +34,7 @@ i18n.use(initReactI18next).init({
   defaultNS: 'common',
   lng,
   resources,
-  keySeparator: false,
+  keySeparator: '.',
   interpolation: {
     escapeValue: false,
   },
