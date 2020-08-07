@@ -5,10 +5,11 @@ import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import { WFooter } from 'Components/Footer';
 import { Formik } from 'formik';
+import { useTranslation } from 'react-i18next';
 
-import { useStyles } from './Summary';
+import { useStyles } from './style';
 
-const Summary = props => {
+const Index = props => {
   const { initialState, handleClick, ...otherProps } = props;
   const handleSubmit = values => {
     handleClick({ type: 'finish', payload: { values, key: 'general' } });
@@ -72,12 +73,13 @@ const SummaryForm = props => {
     general: { name, description },
     values,
   } = initialValues;
+  const { t } = useTranslation(['dashboard']);
   return (
     <form onSubmit={handleSubmit}>
       <Grid container direction="column" className={classes.root}>
         <Grid item className={classes.item}>
           <TitleBox desc={description} name={name} />
-          <AttributeBox name="Atributos" values={values} />
+          <AttributeBox name={t('summary.attributes')} values={values} />
         </Grid>
       </Grid>
       <WFooter {...props} />
@@ -85,6 +87,6 @@ const SummaryForm = props => {
   );
 };
 
-Summary.propTypes = {};
+Index.propTypes = {};
 
-export default Summary;
+export default Index;

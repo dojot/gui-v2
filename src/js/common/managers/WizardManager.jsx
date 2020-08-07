@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 
 import LazyLoading from 'Components/LazyLoading';
+import { useTranslation } from 'react-i18next';
 
 const Wizard = LazyLoading(() =>
   import('views/dashboard/widget/wizard/Wizard.jsx'),
@@ -8,7 +9,9 @@ const Wizard = LazyLoading(() =>
 
 const Manager = props => {
   const {
-    match: { params },
+    match: {
+      params: { id },
+    },
     history,
   } = props;
   const { line, area, bar, pizza, donut, bubble } = __CONFIG__;
@@ -18,28 +21,28 @@ const Manager = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const { t } = useTranslation(['dashboard']);
+
   const getTitle = useCallback(() => {
-    switch (params.id) {
+    switch (id) {
       case line:
-        return 'Gráfico de Linha';
+        return t(['line.title', 'Line Chart']);
       case area:
-        return 'Gráfico de Área';
+        return t(['area.title', 'Area Chart']);
       case bar:
-        return 'Gráfico de Barra';
+        return t(['bar.title', 'Bar Chart']);
       case pizza:
-        return 'Gráfico de Pizza';
+        return t(['pizza.title', 'Pizza Chart']);
       case donut:
-        return 'Gráfico de Donut';
+        return t(['donut.title', 'Donut Chart']);
       case bubble:
-        return 'Gráfico de Bolhas';
+        return t(['bubble.title', 'Bubble Chart']);
       default:
         return '';
     }
-  }, [area, bar, bubble, donut, line, params.id, pizza]);
+  }, [area, bar, bubble, donut, line, id, pizza]);
 
-  return (
-    <Wizard title={getTitle()} type={params.id} toDashboard={toDashboard} />
-  );
+  return <Wizard title={getTitle()} type={id} toDashboard={toDashboard} />;
 };
 
 export default Manager;

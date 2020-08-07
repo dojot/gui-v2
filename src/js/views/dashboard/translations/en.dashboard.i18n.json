@@ -1,37 +1,74 @@
 {
   "dashboard": "Dashboard",
-  "wizard": {
-
+  "steps": {
+    "general": "General",
+    "devices": "Devices",
+    "attributes": "Attributes",
+    "filters": "Filters",
+    "overview": "Overview"
   },
   "widget": "Widget",
-  "card": {
-    "line": {
-      "title": "Line Chart",
-      "description": "This graph, by default, uses time as a measure of the abscissa"
-    },
-    "area": {
-      "title": "Area Chart",
-      "description": "Represents data through a populated area"
-    },
-    "bar": {
-      "title": "Bar Chart",
-      "description": "Represents data by bars"
-    },
-    "table": {
-      "title": "Table",
-      "description": "Represents data through a tabular structure"
-    },
-    "bubble": {
-      "title": "Bubble Chart",
-      "description": "A bubble graph is a variation of a scatter plotA bubble graph is a variation of a scatter plot"
-    },
-    "pizza": {
-      "title": "Pizza Chart",
-      "description": "Each statistical category represented is proportional to the respective frequencies"
-    },
-    "donut": {
-      "title": "Donut Chart",
-      "description": "Alternative to Pie Chart"
-    }
+  "line": {
+    "title": "Line Chart",
+    "description": "This graph, by default, uses time as a measure of the abscissa"
+  },
+  "area": {
+    "title": "Area Chart",
+    "description": "Represents data through a populated area"
+  },
+  "bar": {
+    "title": "Bar Chart",
+    "description": "Represents data by bars"
+  },
+  "table": {
+    "title": "Table",
+    "description": "Represents data through a tabular structure"
+  },
+  "bubble": {
+    "title": "Bubble Chart",
+    "description": "A bubble graph is a variation of a scatter plotA bubble graph is a variation of a scatter plot"
+  },
+  "pizza": {
+    "title": "Pizza Chart",
+    "description": "Each statistical category represented is proportional to the respective frequencies"
+  },
+  "donut": {
+    "title": "Donut Chart",
+    "description": "Alternative to Pie Chart"
+  },
+  "attributes": {
+    "search": "Enter the device / attribute name",
+    "notFound": "No attributes found for the given filter",
+    "subtitle": "Subtitle",
+    "colorPicker": "Select color"
+  },
+  "devices": {
+    "search": "Enter the device name",
+    "notFound": "No devices found for the given filter"
+  },
+  "filters": {
+    "recover": "Recuperar registros por:",
+    "real time": "Real Time",
+    "historic": "Historic",
+    "last": "Last",
+    "records": "No. Records",
+    "order": "Order",
+    "select an option": "Select an option",
+    "last minutes": "Last minutes",
+    "last hours": "Last hours",
+    "last days": "Last days",
+    "last months": "Last months",
+    "value": "Value",
+    "initial date": "Initial Date",
+    "final date": "Final Date"
+  },
+  "general": {
+    "name": "Name",
+    "description": "Description",
+    "nameRequired": "Name is required",
+    "enterName": "Enter the name of the widget"
+  },
+  "summary": {
+    "attributes": "Attributes"
   }
 }

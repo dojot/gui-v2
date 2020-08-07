@@ -13,11 +13,12 @@ import Switch from '@material-ui/core/Switch';
 import { DateTimePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import { WFooter } from 'Components/Footer';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { formatToISO } from 'Utils';
 
-import { useStyles } from './Filters';
+import { useStyles } from './style';
 
-const Filters = props => {
+const Index = props => {
   const { handleNavigate } = props;
   const classes = useStyles();
   const defaultFixedValue = '15';
@@ -167,10 +168,12 @@ const Filters = props => {
     data.dateTo,
   ]);
 
+  const { t } = useTranslation(['dashboard']);
+
   return (
     <Grid container direction="column" className={classes.root}>
       <Grid item>
-        <h2>Recuperar registros por:</h2>
+        <h2>{t('filters.recover')}</h2>
         <Divider />
       </Grid>
 
@@ -178,7 +181,7 @@ const Filters = props => {
         <form onSubmit={e => handleSubmit(e)}>
           <Grid item className="left">
             <div className="realTimeSwitch">
-              <h2>Tempo Real</h2>
+              <h2>{t('filters.real time')}</h2>
               <Switch
                 checked={data.isRealTime}
                 onChange={handleChangeRealTime}
@@ -189,7 +192,7 @@ const Filters = props => {
           <Grid item className="right">
             <div className="container">
               <div className="title">
-                <h2>Histórico</h2>
+                <h2>{t('filters.historic')}</h2>
               </div>
               <div className="rows">
                 {/* Linha 01 */}
@@ -202,10 +205,10 @@ const Filters = props => {
                     inputProps={{ 'aria-label': '0' }}
                     color="primary"
                   />
-                  <div className="itemLabel">Últimos</div>
+                  <div className="itemLabel">{t('filters.last')}</div>
                   <FormControl variant="outlined" className="itemInput">
                     <InputLabel htmlFor="component-outlined">
-                      Nº Registros
+                      {t('filters.records')}
                     </InputLabel>
                     <OutlinedInput
                       id="lastRegs"
@@ -229,11 +232,13 @@ const Filters = props => {
                     color="primary"
                   />
                   <FormControl variant="outlined" className="itemSelect">
-                    <InputLabel id="lastDynamicsOptionLabel">Ordem</InputLabel>
+                    <InputLabel id="lastDynamicsOptionLabel">
+                      {t('filters.order')}
+                    </InputLabel>
                     <Select
                       labelId="lastDynamicsOptionLabel"
                       id="lastDynamicsOption"
-                      placeholder="Selecione uma opção"
+                      placeholder={t('filters.select an option')}
                       value={data.dynamicType}
                       onChange={handleChangeDynamicOptions}
                       label="Age"
@@ -242,14 +247,16 @@ const Filters = props => {
                       <MenuItem value={0}>
                         <em>&nbsp;</em>
                       </MenuItem>
-                      <MenuItem value={1}>Últimos minutos</MenuItem>
-                      <MenuItem value={2}>Últimos horas</MenuItem>
-                      <MenuItem value={3}>Últimos dias</MenuItem>
-                      <MenuItem value={4}>Últimos meses</MenuItem>
+                      <MenuItem value={1}>{t('filters.last minutes')}</MenuItem>
+                      <MenuItem value={2}>{t('filters.last hours')}</MenuItem>
+                      <MenuItem value={3}>{t('filters.last days')}</MenuItem>
+                      <MenuItem value={4}>{t('filters.last months')}</MenuItem>
                     </Select>
                   </FormControl>
                   <FormControl variant="outlined" className="itemInput">
-                    <InputLabel htmlFor="lastDynamicsValue">Valor</InputLabel>
+                    <InputLabel htmlFor="lastDynamicsValue">
+                      {t('filters.value')}
+                    </InputLabel>
                     <OutlinedInput
                       id="lastDynamicsValue"
                       type="number"
@@ -276,7 +283,7 @@ const Filters = props => {
                       id="dateFrom"
                       name="dateFrom"
                       className="itemInput"
-                      label="Data Inicial"
+                      label={t('filters.initial date')}
                       inputVariant="outlined"
                       value={data.dateFrom}
                       onChange={value => handleDateChange(value, 'dateFrom')}
@@ -289,12 +296,14 @@ const Filters = props => {
                       id="dateTo"
                       name="dateTo"
                       className="itemInput"
-                      label="Data Final"
+                      label={t('filters.final date')}
                       inputVariant="outlined"
                       value={data.dateTo}
                       onChange={value => handleDateChange(value, 'dateTo')}
                       format="DD/MM/YYYY HH:mm"
-                      helperText={data.invalidPeriod ? 'Período inválido' : ''}
+                      helperText={
+                        data.invalidPeriod ? t('filters.invalid interval') : ''
+                      }
                       error={data.invalidPeriod}
                       disabled={data.filterType !== '2'}
                     />
@@ -310,12 +319,12 @@ const Filters = props => {
   );
 };
 
-Filters.defaultProps = {};
+Index.defaultProps = {};
 
-Filters.propTypes = {
+Index.propTypes = {
   handleNavigate: PropTypes.func.isRequired,
   steps: PropTypes.array.isRequired,
   activeStep: PropTypes.number.isRequired,
 };
 
-export default Filters;
+export default Index;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Authentication } from 'Services';
+
 import { Redirect } from 'react-router-dom';
+import { Authentication } from 'Services';
 
 export default ({ location }) => {
   Authentication.logout();

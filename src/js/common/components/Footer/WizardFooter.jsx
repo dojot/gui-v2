@@ -3,13 +3,14 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import { useStyles } from './WizardFooter';
 
 const WFooter = props => {
   const classes = useStyles();
   const { isOpen, activeStep, steps, isValid } = props;
-
+  const { t } = useTranslation(['common']);
   return (
     <div
       className={clsx(classes.footer, {
@@ -25,7 +26,7 @@ const WFooter = props => {
         disabled={!isValid}
         disableElevation
       >
-        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+        {activeStep === steps.length - 1 ? t('Finish') : t('next')}
       </Button>
     </div>
   );

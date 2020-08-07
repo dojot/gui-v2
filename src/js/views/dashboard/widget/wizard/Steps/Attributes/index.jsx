@@ -25,10 +25,11 @@ import { Paginator, usePaginator } from 'Components/Paginator';
 import { Formik } from 'formik';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
+import { useTranslation } from 'react-i18next';
 import { useDebounce } from 'use-debounce';
 import * as Yup from 'yup';
 
-import { useStyles } from './Attributes';
+import { useStyles } from './style';
 
 const validationSchema = Yup.object({});
 
@@ -36,18 +37,24 @@ const useDidMountEffect = (func, deps) => {
   const didMount = useRef(false);
 
   useEffect(() => {
-    if (didMount.current) func();
-    else didMount.current = true;
+    if (didMount.current) {
+      func();
+    } else {
+      didMount.current = true;
+    }
   }, deps);
 };
 
-const Attributes = props => {
+const Index = props => {
   const { initialState, handleClick, ...otherProps } = props;
 
   const handleSubmit = values => {
     handleClick({
       type: 'next',
-      payload: { values: values.attributes, key: 'attributes' },
+      payload: {
+        values: values.attributes,
+        key: 'attributes',
+      },
     });
   };
 
@@ -179,8 +186,15 @@ const AttributesForm = props => {
     }
 
     setChecked(newChecked);
-    handleChange({ currentTarget: { name: 'attributes', value: newChecked } });
+    handleChange({
+      currentTarget: {
+        name: 'attributes',
+        value: newChecked,
+      },
+    });
   };
+
+  const { t } = useTranslation(['dashboard']);
 
   return (
     <form onSubmit={handleSubmit}>
@@ -188,7 +202,7 @@ const AttributesForm = props => {
         <Grid item className={classes.searchContainer}>
           <TextField
             variant="outlined"
-            placeholder="Digite o nome do dispositivo / atributo"
+            placeholder={t('attributes.search')}
             name="searchAttributes"
             onChange={handleSearchChange}
             fullWidth
@@ -204,7 +218,7 @@ const AttributesForm = props => {
         <List className={classes.listContainer}>
           {!paginatorData.pageData.length ? (
             <ListItem className={classes.notFound}>
-              <ListItemText primary="Nenhum atributo encontrado para o filtro informado" />
+              <ListItemText primary={t('attributes.notFound')} />
             </ListItem>
           ) : (
             paginatorData.pageData.map(item => {
@@ -227,7 +241,11 @@ const AttributesForm = props => {
                     label: attributeLabel,
                     valueType: attributeValueType,
                   }}
-                  meta={{ id: deviceId, label: deviceLabel, attributeId }}
+                  meta={{
+                    id: deviceId,
+                    label: deviceLabel,
+                    attributeId,
+                  }}
                   key={`${deviceId}${attributeLabel}`}
                   selected={!!isSelected}
                 />
@@ -303,6 +321,8 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
     });
   }, [isToggle]);
 
+  const { t } = useTranslation(['dashboard']);
+
   return (
     <Fragment key={attributeId}>
       <ListItem role={undefined} button onClick={() => setIsToggle(!isToggle)}>
@@ -322,7 +342,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
         <ListItemSecondaryAction className={classes.action}>
           <TextField
             id="outlined-search"
-            label="Legenda"
+            label={t('attributes.subtitle')}
             variant="outlined"
             margin="dense"
             value={description}
@@ -335,7 +355,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
             style={{ backgroundColor: color }}
             onClick={() => setIsOpen(!isOpen)}
           >
-            Selecionar cor
+            {t('attributes.colorPicker')}
           </Button>
           {isOpen ? (
             <div className={classes.picker}>
@@ -356,11 +376,11 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
   );
 };
 
-Attributes.defaultProps = {
+Index.defaultProps = {
   isOpen: false,
 };
 
-Attributes.propTypes = {
+Index.propTypes = {
   initialState: PropTypes.array.isRequired,
   handleClick: PropTypes.func.isRequired,
   activeStep: PropTypes.number.isRequired,
@@ -368,4 +388,4 @@ Attributes.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export default Attributes;
+export default Index;

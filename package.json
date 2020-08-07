@@ -85,11 +85,11 @@
     "shelljs": "^0.8.3",
     "style-loader": "^0.23.1",
     "url-loader": "^1.1.2",
-    "webpack": "^4.29.5",
+    "webpack": "^4.44.1",
     "webpack-bundle-analyzer": "^3.0.4",
     "webpack-cli": "^3.2.3",
-    "webpack-dashboard": "^3.0.0",
-    "webpack-dev-server": "^3.2.1",
+    "webpack-dashboard": "^3.2.0",
+    "webpack-dev-server": "^3.11.0",
     "webpack-s3-plugin": "^1.0.3"
   },
   "dependencies": {

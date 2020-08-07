@@ -1,37 +1,75 @@
 {
   "dashboard": "Dashboard",
-  "wizard": {
-
+  "steps": {
+    "general": "Geral",
+    "devices": "Dispositivos",
+    "attributes": "Atributos",
+    "filters": "Filtros",
+    "overview": "Resumo"
   },
   "widget": "Widget",
-  "card": {
-    "line": {
-      "title": "Gráfico de Linha",
-      "description": "Esse gráfico, por padrão, utiliza o tempo como medida da abscissa"
-    },
-    "area": {
-      "title": "Gráfico de Área",
-      "description": "Represents data through a populated area"
-    },
-    "bar": {
-      "title": "Gráfico de Barra",
-      "description": "Representa os dados por barras"
-    },
-    "table": {
-      "title": "Tabela",
-      "description": "Representa os dados por meio de uma estrutura tabular"
-    },
-    "bubble": {
-      "title": "Gráfico de Bolha",
-      "description": "Um gráfico de bolhas é uma variação de um gráfico de dispersão"
-    },
-    "pizza": {
-      "title": "Gráfico de Pizza",
-      "description": "Cada categoria estatística representada é proporcional às respectivas frequências"
-    },
-    "donut": {
-      "title": "Gráfico de Donut",
-      "description": "Alternativa ao Gráfico de Pizza"
-    }
+  "line": {
+    "title": "Gráfico de Linha",
+    "description": "Esse gráfico, por padrão, utiliza o tempo como medida da abscissa"
+  },
+  "area": {
+    "title": "Gráfico de Área",
+    "description": "Represents data through a populated area"
+  },
+  "bar": {
+    "title": "Gráfico de Barra",
+    "description": "Representa os dados por barras"
+  },
+  "table": {
+    "title": "Tabela",
+    "description": "Representa os dados por meio de uma estrutura tabular"
+  },
+  "bubble": {
+    "title": "Gráfico de Bolha",
+    "description": "Um gráfico de bolhas é uma variação de um gráfico de dispersão"
+  },
+  "pizza": {
+    "title": "Gráfico de Pizza",
+    "description": "Cada categoria estatística representada é proporcional às respectivas frequências"
+  },
+  "donut": {
+    "title": "Gráfico de Donut",
+    "description": "Alternativa ao Gráfico de Pizza"
+  },
+  "attributes": {
+    "search": "Digite o nome do dispositivo / atributo",
+    "notFound": "Nenhum atributo encontrado para o filtro informado",
+    "subtitle": "Legenda",
+    "colorPicker": "Selecionar cor"
+  },
+  "devices": {
+    "search": "Digite o nome do dispositivo",
+    "notFound": "Nenhum dispositivo encontrado para o filtro informado"
+  },
+  "filters": {
+    "recover": "Recuperar registros por:",
+    "real time": "Tempo Real",
+    "historic": "Histórico",
+    "last": "Últimos",
+    "records": "No. Records",
+    "order": "Ordem",
+    "select an option": "Selecione uma opção",
+    "last minutes": "Últimos minutos",
+    "last hours": "Últimos horas",
+    "last days": "Últimos dias",
+    "last months": "Últimos meses",
+    "value": "Valor",
+    "initial date": "Data Inicial",
+    "final date": "Data Final",
+    "invalid interval": "Período inválido"
+  },
+  "general": {
+    "name": "Nome",
+    "description": "Descrição",
+    "nameRequired": "Nome é obrigatório",
+    "enterName": "Insira o nome do widget"
+  },
+  "summary": {
+    "attributes": "Atributos"
   }
 }

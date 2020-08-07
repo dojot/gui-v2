@@ -5,7 +5,6 @@
   "version": "Version",
   "profile": "Profile",
   "tenant": "Tenant",
-  "hello": "Hello",
   "start": "Start",
   "stop": "Pause",
   "add": "Add",
@@ -13,5 +12,6 @@
   "back": "Back",
   "pin": "Pin",
   "edit": "Edit",
-  "delete": "Delete"
+  "delete": "Delete",
+  "finish": "Finalizar"
 }

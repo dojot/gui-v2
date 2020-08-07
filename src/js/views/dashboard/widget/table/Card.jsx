@@ -9,9 +9,9 @@ const Card = ({ onClick }) => {
   const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title={t('dashboard:card.table.title')}
+      title={t('dashboard:table.title')}
       image={Table}
-      description={t('dashboard:card.table.description')}
+      description={t('dashboard:table.description')}
       handleClick={() => onClick()}
     />
   );

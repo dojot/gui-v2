@@ -8,9 +8,9 @@ export default ({ onClick }) => {
   const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title={t('dashboard:card.line.title')}
+      title={t('dashboard:line.title')}
       image={Line}
-      description={t('dashboard:card.line.description')}
+      description={t('dashboard:line.description')}
       handleClick={() => onClick()}
     />
   );
