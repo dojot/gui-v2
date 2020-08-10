@@ -4,5 +4,14 @@
   "hello": "Hello",
   "version": "Version",
   "profile": "Profile",
-  "tenant": "Tenant"
+  "tenant": "Tenant",
+  "start": "Start",
+  "stop": "Pause",
+  "add": "Add",
+  "next": "Next",
+  "back": "Back",
+  "pin": "Pin",
+  "edit": "Edit",
+  "delete": "Delete",
+  "finish": "Finalizar"
 }

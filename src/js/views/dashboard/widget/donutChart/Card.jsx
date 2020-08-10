@@ -1,14 +1,16 @@
-import { ImageCard } from 'Components/Cards';
 import React from 'react';
-import Donut from 'Assets/images/donut.png';
 
-export default props => {
-  const { onClick } = props;
+import Donut from 'Assets/images/donut.png';
+import { ImageCard } from 'Components/Cards';
+import { useTranslation } from 'react-i18next';
+
+export default ({ onClick }) => {
+  const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title="Gráfico de Donut"
+      title={t('dashboard:donut.title')}
       image={Donut}
-      description="Alternativa ao Gráfico de Pizza"
+      description={t('dashboard:donut.description')}
       handleClick={() => onClick()}
     />
   );

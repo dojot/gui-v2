@@ -1,5 +1,6 @@
 {
   "env": "development",
+  "publicPath": "/",
   "app": {
     "description": "you can overwrite the default config",
     "hello": "You are in local development mode",
@@ -10,6 +11,6 @@
     "donut": "5",
     "bubble": "6",
     "table": "7",
-    "apiUrl": "http://localhost:8000/"
+    "apiUrl": "/"
   }
 }

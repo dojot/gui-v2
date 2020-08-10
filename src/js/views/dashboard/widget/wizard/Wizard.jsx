@@ -6,16 +6,9 @@ import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import Typography from '@material-ui/core/Typography';
 import { usePaginator } from 'Components/Paginator';
-import {
-  Attributes,
-  Devices,
-  Filters,
-  General,
-  InitialStateGeneral as general,
-  Summary,
-} from 'Components/Steps';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { menuSelector } from 'Selectors/baseSelector';
@@ -26,7 +19,15 @@ import useArea from './hooks/useArea';
 import useBar from './hooks/useBar';
 import useLine from './hooks/useLine';
 import useTable from './hooks/useTable';
-import useStyles from './Wizard';
+import {
+  Attributes,
+  Devices,
+  Filters,
+  General,
+  InitialStateGeneral as general,
+  Summary,
+} from './Steps';
+import useStyles from './style';
 
 const Wizard = ({
   type: wizardType,
@@ -38,13 +39,22 @@ const Wizard = ({
   isMenuOpen,
 }) => {
   const classes = useStyles();
-  const steps = ['Geral', 'Dispositivos', 'Atributos', 'Filtros', 'Resumo'];
+  const steps = [
+    'steps.general',
+    'steps.devices',
+    'steps.attributes',
+    'steps.filters',
+    'steps.overview',
+  ];
   const {
     line: wizardLineType,
     area: wizardAreaType,
     bar: wizardBarType,
+    // eslint-disable-next-line no-unused-vars
     pizza: wizardPizzaType,
-    donut: wizardDonnutType,
+    // eslint-disable-next-line no-unused-vars
+    donut: wizardDonutType,
+    // eslint-disable-next-line no-unused-vars
     bubble: wizardBubbleType,
     table: wizardTableType,
   } = __CONFIG__;
@@ -288,6 +298,8 @@ const Wizard = ({
     ],
   );
 
+  const { t } = useTranslation(['dashboard']);
+
   return (
     <ViewContainer headerTitle={title}>
       <div className={classes.root}>
@@ -298,7 +310,7 @@ const Wizard = ({
         >
           {steps.map(label => (
             <Step key={label}>
-              <StepLabel>{label}</StepLabel>
+              <StepLabel>{t([label, 'undefined'])}</StepLabel>
             </Step>
           ))}
         </Stepper>
@@ -312,7 +324,7 @@ const Wizard = ({
               <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
             </div>
           ) : (
-            getStepContent(activeStep, steps)
+            getStepContent(activeStep)
           )}
         </div>
       </div>

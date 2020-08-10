@@ -16,7 +16,7 @@ const useStyles = makeStyles(theme => {
       margin: 16,
     },
     rootCard: {
-      maxWidth: 240,
+      width: 240,
     },
     actions: {
       height: 273,

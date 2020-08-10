@@ -13,11 +13,12 @@ import SearchIcon from '@material-ui/icons/Search';
 import { WFooter } from 'Components/Footer';
 import { Paginator } from 'Components/Paginator';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { useDebounce } from 'use-debounce';
 
-import { useStyles } from './Devices';
+import { useStyles } from './style';
 
-const Devices = props => {
+const Index = props => {
   const {
     initialState,
     selectedValues,
@@ -87,13 +88,15 @@ const Devices = props => {
     );
   }, []);
 
+  const { t } = useTranslation(['dashboard']);
+
   return (
     <form onSubmit={e => handleSubmit(e)}>
       <Grid container justify="center">
         <Grid item className={classes.searchContainer}>
           <TextField
             variant="outlined"
-            placeholder="Digite o nome do dispositivo"
+            placeholder={t('devices.search')}
             name="searchDevices"
             onChange={handleChangeSearch}
             fullWidth
@@ -109,7 +112,7 @@ const Devices = props => {
         <List className={classes.root}>
           {!initialState.length ? (
             <ListItem className={classes.notFound}>
-              <ListItemText primary="Nenhum dispositivo encontrado para o filtro informado" />
+              <ListItemText primary={t('devices.notFound')} />
             </ListItem>
           ) : (
             initialState.map(value => {
@@ -164,7 +167,7 @@ const Devices = props => {
   );
 };
 
-Devices.defaultProps = {
+Index.defaultProps = {
   onFilter: () => {},
   usePagination: false,
   currentPage: 1,
@@ -175,7 +178,7 @@ Devices.defaultProps = {
   onPageSizeChange: () => {},
 };
 
-Devices.propTypes = {
+Index.propTypes = {
   initialState: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
@@ -201,4 +204,4 @@ Devices.propTypes = {
   onPageSizeChange: PropTypes.func,
 };
 
-export default Devices;
+export default Index;

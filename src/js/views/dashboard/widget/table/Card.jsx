@@ -3,14 +3,15 @@ import React from 'react';
 import Table from 'Assets/images/table.svg';
 import { ImageCard } from 'Components/Cards';
 import Proptypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
-const Card = props => {
-  const { onClick } = props;
+const Card = ({ onClick }) => {
+  const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title="Tabela"
+      title={t('dashboard:table.title')}
       image={Table}
-      description="Representa os dados por meio de uma estrutura tabular"
+      description={t('dashboard:table.description')}
       handleClick={() => onClick()}
     />
   );

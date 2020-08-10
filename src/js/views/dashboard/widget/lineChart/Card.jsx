@@ -1,14 +1,16 @@
-import { ImageCard } from 'Components/Cards';
-import Line from 'Assets/images/linha.png';
 import React from 'react';
 
-export default props => {
-  const { onClick } = props;
+import Line from 'Assets/images/linha.png';
+import { ImageCard } from 'Components/Cards';
+import { useTranslation } from 'react-i18next';
+
+export default ({ onClick }) => {
+  const { t } = useTranslation(['dashboard']);
   return (
     <ImageCard
-      title="Gráfico de Linhas"
+      title={t('dashboard:line.title')}
       image={Line}
-      description="Esse gráfico, por padrão, utiliza o tempo como medida da abscissa"
+      description={t('dashboard:line.description')}
       handleClick={() => onClick()}
     />
   );

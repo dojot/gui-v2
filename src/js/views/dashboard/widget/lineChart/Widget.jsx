@@ -9,6 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import More from '@material-ui/icons/MoreVert';
+import { useTranslation } from 'react-i18next';
 import {
   CartesianGrid,
   Legend,
@@ -35,10 +36,12 @@ const useStyles = makeStyles(() => {
   };
 });
 
-export default ({ id, data, config, title, onDelete, onPin, onEdit }) => {
+export default ({ id, data, config, onDelete, onPin, onEdit }) => {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
+
+  const { t } = useTranslation(['common']);
 
   const handleClickMenu = event => {
     setAnchorEl(event.currentTarget);
@@ -69,13 +72,13 @@ export default ({ id, data, config, title, onDelete, onPin, onEdit }) => {
               onClose={handleClose}
             >
               <MenuItem onClick={() => handleClose()}>
-                <ListItemText primary="Editar" />
+                <ListItemText primary={t('common:edit')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onPin)}>
-                <ListItemText primary="Fixar" />
+                <ListItemText primary={t('common:pin')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onDelete)}>
-                <ListItemText primary="Excluir" />
+                <ListItemText primary={t('common:delete')} />
               </MenuItem>
             </Menu>
           </div>

@@ -4,5 +4,14 @@
   "hello": "Olá",
   "version": "Versão",
   "profile": "Perfil",
-  "tenant": "Tenant"
+  "tenant": "Tenant",
+  "start": "Iniciar",
+  "stop": "Parar",
+  "add": "Adicionar",
+  "next": "Avançar",
+  "back": "Voltar",
+  "pin": "Fixar",
+  "edit": "Editar",
+  "delete": "Remover",
+  "finish": "Finish"
 }

@@ -1,19 +1,22 @@
 import React from 'react';
-import * as Yup from 'yup';
-import { Formik } from 'formik';
+
 import { TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import PropTypes from 'prop-types';
 import { WFooter } from 'Components/Footer';
-import { useStyles } from './General';
+import { Formik } from 'formik';
+import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+import * as Yup from 'yup';
+
+import { useStyles } from './style';
 
 export const Init = { name: '', description: '' };
 
 const validationSchema = Yup.object({
-  name: Yup.string('Nome do Widget').required('Nome é obrigatório'),
+  name: Yup.string('general.enterName').required('general.nameRequired'),
 });
 
-const General = props => {
+const Index = props => {
   const { initialState, handleClick, ...otherProps } = props;
   const handleSubmit = values => {
     handleClick({ type: 'next', payload: { values, key: 'general' } });
@@ -47,19 +50,19 @@ const GeneralForm = props => {
   } = props;
 
   const classes = useStyles();
-
+  const { t } = useTranslation(['dashboard']);
   return (
     <form onSubmit={handleSubmit}>
       <Grid container direction="column" className={classes.root}>
         <Grid item className={classes.item}>
           <TextField
             variant="outlined"
-            label="Nome do widget"
+            label={t('general.name')}
             name="name"
             value={values.name}
             onChange={handleChange}
             onBlur={handleBlur}
-            helperText={errors.name && touched.name && errors.name}
+            helperText={errors.name && touched.name && t(errors.name)}
             margin="normal"
             error={!!errors.name}
             fullWidth
@@ -68,7 +71,7 @@ const GeneralForm = props => {
         <Grid item className={classes.item}>
           <TextField
             variant="outlined"
-            label="Descrição"
+            label={t('general.description')}
             name="description"
             value={values.description}
             onChange={handleChange}
@@ -86,11 +89,11 @@ const GeneralForm = props => {
   );
 };
 
-General.defaultProps = {
+Index.defaultProps = {
   isOpen: false,
 };
 
-General.propTypes = {
+Index.propTypes = {
   initialState: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
@@ -101,4 +104,4 @@ General.propTypes = {
   isOpen: PropTypes.bool,
 };
 
-export default General;
+export default Index;
