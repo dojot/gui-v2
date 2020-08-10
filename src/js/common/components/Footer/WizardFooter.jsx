@@ -26,7 +26,7 @@ const WFooter = props => {
         disabled={!isValid}
         disableElevation
       >
-        {activeStep === steps.length - 1 ? t('Finish') : t('next')}
+        {activeStep === steps.length - 1 ? t('finish') : t('next')}
       </Button>
     </div>
   );
