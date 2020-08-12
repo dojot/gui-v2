@@ -125,7 +125,7 @@ webpackConfig.plugins = webpackConfig.plugins.concat(htmlPlugins);
 webpackConfig.devtool = 'cheap-module-eval-source-map';
 
 webpackConfig.entry = [
-  'babel-polyfill',
+  '@babel/polyfill',
   `webpack-dev-server/client?http://${HOST}:${PORT}`,
   'webpack/hot/only-dev-server',
   `./${APP_ENTRY_POINT}`,

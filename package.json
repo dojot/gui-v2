@@ -10,7 +10,7 @@
     "build:stage:s3": "cross-env S3_DEPLOY=true NODE_ENV=stage node bin/commands.js build",
     "clean": "rimraf docroot",
     "test": "jest --no-cache",
-    "test:coverage": "yarn test -- --coverage",
+    "test:coverage": "yarn test --coverage",
     "lint": "node bin/commands.js lint"
   },
   "repository": {
@@ -25,25 +25,36 @@
     "node": ">=6.9.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.0.0",
+    "@babel/core": "^7.0.0",
+    "@babel/plugin-proposal-class-properties": "^7.0.0",
+    "@babel/plugin-proposal-decorators": "^7.0.0",
+    "@babel/plugin-proposal-do-expressions": "^7.0.0",
+    "@babel/plugin-proposal-export-default-from": "^7.0.0",
+    "@babel/plugin-proposal-export-namespace-from": "^7.0.0",
+    "@babel/plugin-proposal-function-bind": "^7.0.0",
+    "@babel/plugin-proposal-function-sent": "^7.0.0",
+    "@babel/plugin-proposal-json-strings": "^7.0.0",
+    "@babel/plugin-proposal-logical-assignment-operators": "^7.0.0",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.0.0",
+    "@babel/plugin-proposal-numeric-separator": "^7.0.0",
+    "@babel/plugin-proposal-optional-chaining": "^7.0.0",
+    "@babel/plugin-proposal-pipeline-operator": "^7.0.0",
+    "@babel/plugin-proposal-throw-expressions": "^7.0.0",
+    "@babel/plugin-syntax-dynamic-import": "^7.0.0",
+    "@babel/plugin-syntax-import-meta": "^7.0.0",
+    "@babel/plugin-transform-runtime": "^7.0.0",
+    "@babel/polyfill": "^7.0.0",
+    "@babel/preset-env": "^7.0.0",
+    "@babel/preset-flow": "^7.0.0",
+    "@babel/preset-react": "^7.0.0",
+    "@babel/register": "^7.0.0",
+    "@babel/runtime-corejs2": "^7.0.0",
     "assets-webpack-plugin": "^3.9.7",
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
+    "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
-    "babel-jest": "^23.4.0",
-    "babel-loader": "^7.1.5",
-    "babel-plugin-syntax-dynamic-import": "^6.18.0",
-    "babel-plugin-transform-decorators-legacy": "^1.3.4",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-plugin-typecheck": "^3.9.0",
-    "babel-polyfill": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
-    "babel-preset-flow": "^6.23.0",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-react-hmre": "^1.1.1",
-    "babel-preset-react-optimize": "^1.0.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "babel-register": "^6.26.0",
-    "babel-runtime": "^6.26.0",
+    "babel-jest": "^23.4.2",
+    "babel-loader": "^8.0.0",
     "browser-sync": "^2.26.3",
     "browser-sync-webpack-plugin": "^2.2.2",
     "case-sensitive-paths-webpack-plugin": "^2.2.0",
@@ -54,8 +65,8 @@
     "css-loader": "^2.1.0",
     "debug": "^4.1.1",
     "dotenv": "^6.2.0",
-    "enzyme": "^3.9.0",
-    "enzyme-adapter-react-16": "^1.9.1",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.3",
     "eslint": "^5.12.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^4.2.0",
@@ -71,7 +82,7 @@
     "husky": "^1.3.1",
     "identity-obj-proxy": "^3.0.0",
     "image-webpack-loader": "^4.6.0",
-    "jest-cli": "^23.4.1",
+    "jest-cli": "^26.3.0",
     "mini-css-extract-plugin": "^0.5.0",
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.5.0",
@@ -139,10 +150,22 @@
       "<rootDir>/__tests__/setup/",
       "<rootDir>/node_modules/"
     ],
-    "setupTestFrameworkScriptFile": "<rootDir>/__tests__/setup/jestTestSetup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/__tests__/setup/jestTestSetup.js"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
-      "\\.(css)$": "identity-obj-proxy"
+      "\\.(css)$": "identity-obj-proxy",
+      "^Sagas(.*)$": "<rootDir>/src/js/redux/sagas$1",
+      "^APIs(.*)$": "<rootDir>/src/js/common/api$1",
+      "^Assets(.*)$": "<rootDir>/src/assets$1",
+      "^Components(.*)$": "<rootDir>/src/js/common/components$1",
+      "^Redux(.*)$": "<rootDir>/src/js/redux/modules$1",
+      "^Selectors(.*)$": "<rootDir>/src/js/redux/selectors$1",
+      "^Services(.*)$": "<rootDir>/src/js/common/services$1",
+      "^Themes(.*)$": "<rootDir>/src/js/common/themes$1",
+      "^Types(.*)$": "<rootDir>/src/js/common/types$1",
+      "^Utils(.*)$": "<rootDir>/src/js/common/utils$1"
     },
     "setupFiles": [
       "raf/polyfill"
@@ -153,7 +176,11 @@
       "js",
       "json",
       "jsx"
-    ]
+    ],
+    "globals": {
+      "__CONFIG__": true,
+      "GUI_VERSION": true
+    }
   },
   "husky": {
     "hooks": {

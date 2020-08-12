@@ -1,5 +1,5 @@
 import { put } from 'redux-saga/effects'
-import { fetchExampleData } from '../../../src/js/redux/sagas/exampleSaga'
+import { fetchExampleData } from 'Sagas/exampleSaga'
 import { actions as exampleActions } from '../../../src/js/redux/modules/example'
 
 describe('redux.sagas.exampleSaga', () => {

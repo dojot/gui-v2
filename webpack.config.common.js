@@ -64,9 +64,8 @@ const COMMON_LOADERS = [
     options: {
       cacheDirectory: true,
       plugins: [
-        'transform-runtime',
-        'transform-decorators-legacy',
-        'syntax-dynamic-import'
+        '@babel/plugin-transform-runtime',
+        '@babel/plugin-syntax-dynamic-import'
       ],
     },
   },
