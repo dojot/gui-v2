@@ -78,7 +78,7 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
 webpackConfig.devtool = 'source-map';
 
 webpackConfig.entry = {
-  app: ['babel-polyfill', path.resolve(__dirname, APP_ENTRY_POINT)],
+  app: ['@babel/polyfill', path.resolve(__dirname, APP_ENTRY_POINT)],
 };
 
 if (IS_S3_DEPLOY) {

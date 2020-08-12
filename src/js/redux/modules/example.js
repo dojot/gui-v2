@@ -1,5 +1,5 @@
-import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
+import { createAction, handleActions } from 'redux-actions';
 
 import type { exampleType } from '../../common/types/example';
 

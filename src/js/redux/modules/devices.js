@@ -1,5 +1,5 @@
-import { createAction, handleActions } from 'redux-actions';
 import { Map } from 'immutable';
+import { createAction, handleActions } from 'redux-actions';
 
 const GET_DEVICES = 'app/devices/GET_DEVICES';
 const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';

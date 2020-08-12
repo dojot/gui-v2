@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 import { actions as layoutActions } from 'Redux/base';
 import { menuSelector } from 'Selectors/baseSelector';
 
-import { UserInfo } from '..';
+import { UserInfo } from '../UserInfo';
 
 const ViewContainer = props => {
   const {
