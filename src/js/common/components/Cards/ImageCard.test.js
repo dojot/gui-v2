@@ -12,7 +12,7 @@ describe('ImageCard', () => {
 
     it('should to able simple render ', ()=>{       
 
-        const { container, getByTestId, debug } = render(<ImageCard
+        const { container, getByTestId } = render(<ImageCard
             title={title}
             image={Bar}
             description={description}
