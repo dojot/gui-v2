@@ -25,6 +25,7 @@ const WFooter = props => {
         type="submit"
         disabled={!isValid}
         disableElevation
+        data-testid="wizard-button"
       >
         {activeStep === steps.length - 1 ? t('finish') : t('next')}
       </Button>
