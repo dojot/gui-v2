@@ -35,7 +35,7 @@ describe('ImageCard', () => {
             handleClick={mockedHandleClick}
           />);
 
-        // debug();
+       
         const cardAction = getByTestId('card-action');
         fireEvent.click(cardAction);
         expect(mockedHandleClick).toHaveBeenCalled();
