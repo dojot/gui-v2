@@ -18,7 +18,7 @@ describe('ImageCard', () => {
             description={description}
             handleClick={() => onClick()}
           />);
-        debug();
+      
         expect(container).toBeInTheDocument();
         expect(getByTestId('title').innerHTML).toEqual(title);
         expect(getByTestId('description').innerHTML).toEqual(description);
