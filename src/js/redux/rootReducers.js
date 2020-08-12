@@ -1,8 +1,9 @@
 import { combineReducers } from 'redux';
-import example from './modules/example';
+
 import base from './modules/base';
-import devices from './modules/devices';
 import dashboard from './modules/dashboard';
+import devices from './modules/devices';
+import example from './modules/example';
 
 export default combineReducers({
   example,

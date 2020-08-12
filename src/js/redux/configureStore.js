@@ -1,8 +1,8 @@
-import createSagaMiddleware from 'redux-saga';
 import { applyMiddleware, compose, createStore } from 'redux';
+import createSagaMiddleware from 'redux-saga';
 
-import sagas from './sagas';
 import rootReducer from './rootReducers';
+import sagas from './sagas';
 
 // Redux DevTools Extension for Chrome and Firefox
 const reduxDevTool = () => {
@@ -13,6 +13,7 @@ const reduxDevTool = () => {
 };
 
 // history is passed here, for this example, we don't use history
+// eslint-disable-next-line no-unused-vars
 export default function configureStore(initialState, history) {
   // eslint-disable-line no-unused-vars, max-len
   const sagaMiddleware = createSagaMiddleware();
