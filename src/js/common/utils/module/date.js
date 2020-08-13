@@ -5,5 +5,5 @@ export const formatDate = tickItem => {
 };
 
 export const formatToISO = date => {
-  return date ? moment(date).toISOString() : '';
+  return date ? moment(date).toISOString() : null;
 };
