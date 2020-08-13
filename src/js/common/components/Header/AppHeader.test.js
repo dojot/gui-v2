@@ -20,7 +20,7 @@ describe('AppHeader', () => {
     });
 
 
-    it('Should show the button', ()=>{       
+    it('should be able to click on open button', ()=>{       
 
         const { container, getByTestId } = render(<AppHeader
             isOpen = {isOpen}
@@ -30,6 +30,16 @@ describe('AppHeader', () => {
         expect(container).toBeInTheDocument();
         fireEvent.click(getByTestId('butonOpen'));
         expect(mockedHandleClick).toHaveBeenCalled();
+    });
+
+    it('should be able to click on close button', ()=>{       
+
+        const { container, getByTestId } = render(<AppHeader
+            isOpen = {isOpen}
+            title={title}
+            handleClick = {mockedHandleClick}
+        />);
+
         fireEvent.click(getByTestId('butonNotOpen'));
         expect(mockedHandleClick).toHaveBeenCalled();
     });
