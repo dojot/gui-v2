@@ -1,40 +1,41 @@
 /* eslint-disable no-undef */
 import React from 'react';
 
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect';
 
 import Loading from './Loading';
 
 describe('Loading Screen', () => {
   it('should be able to display the loading screen', () => {
-    const loading = shallow(
+    const { getByTestId } = render(
       <Loading isLoading timedOut={false} pastDelay error={false} />,
     );
-    expect(loading.find('#loading-spinner').exists()).toBeTruthy();
+    expect(getByTestId('loading-spinner')).toBeTruthy();
   });
   it('should be able to display the timeout error message', () => {
-    const loading = shallow(
+    const { getByTestId } = render(
       <Loading isLoading timedOut pastDelay={false} error={false} />,
     );
-    expect(loading.find('#loading-timeout').exists()).toBeTruthy();
+    expect(getByTestId('loading-timeout')).toBeTruthy();
   });
 
   it('should be able to display the error message', () => {
-    const loading = shallow(
+    const { getByTestId } = render(
       <Loading isLoading={false} timedOut={false} pastDelay={false} error />,
     );
-    expect(loading.find('#loading-error').exists()).toBeTruthy();
+    expect(getByTestId('loading-error')).toBeTruthy();
   });
 
   it('should return null when isLoading is true', () => {
-    const loading = shallow(
+    const { container } = render(
       <Loading isLoading timedOut={false} pastDelay={false} error={false} />,
     );
-    expect(loading.type()).toEqual(null);
+    expect(container.firstChild).toBeNull();
   });
 
   it('should return null when all properties are false', () => {
-    const loading = shallow(
+    const { container } = render(
       <Loading
         isLoading={false}
         timedOut={false}
@@ -42,6 +43,6 @@ describe('Loading Screen', () => {
         error={false}
       />,
     );
-    expect(loading.type()).toEqual(null);
+    expect(container.firstChild).toBeNull();
   });
 });
