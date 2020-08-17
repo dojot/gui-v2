@@ -28,6 +28,7 @@ const AppHeader = props => {
           aria-label="open drawer"
           onClick={() => handleClick(!isOpen)}
           edge="start"
+          data-testid="butonOpen"
           className={clsx(classes.menuButton, {
             [classes.hide]: isOpen,
           })}
@@ -39,6 +40,7 @@ const AppHeader = props => {
           aria-label="open drawer"
           onClick={() => handleClick(!isOpen)}
           edge="start"
+          data-testid="butonNotOpen"
           className={clsx(classes.menuButton, {
             [classes.hide]: !isOpen,
           })}
