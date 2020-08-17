@@ -8,31 +8,30 @@ describe('AppHeader', () => {
     const isOpen = false;
     const mockedHandleClick = jest.fn();
     const title = "Titulo";
-    it('should to able simple render ', ()=>{            
+    it('should to able simple render ', () => {
         const { container } = render(<AppHeader
-            isOpen = {isOpen}
+            isOpen={isOpen}
             title={title}
-            handleClick = {mockedHandleClick}
-          />);
+            handleClick={mockedHandleClick}
+        />);
         expect(container).toBeInTheDocument();
     });
 
-
-    it('should be able to click on open button', ()=>{
+    it('should be able to click on open button', () => {
         const { getByTestId } = render(<AppHeader
-            isOpen = {isOpen}
+            isOpen={isOpen}
             title={title}
-            handleClick = {mockedHandleClick}
+            handleClick={mockedHandleClick}
         />);
         fireEvent.click(getByTestId('butonOpen'));
         expect(mockedHandleClick).toHaveBeenCalled();
     });
 
-    it('should be able to click on close button', ()=>{       
+    it('should be able to click on close button', () => {
         const { getByTestId } = render(<AppHeader
-            isOpen = {isOpen}
+            isOpen={isOpen}
             title={title}
-            handleClick = {mockedHandleClick}
+            handleClick={mockedHandleClick}
         />);
         fireEvent.click(getByTestId('butonNotOpen'));
         expect(mockedHandleClick).toHaveBeenCalled();
