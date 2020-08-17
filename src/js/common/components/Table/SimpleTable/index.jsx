@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import useStyles from './style';
 
-const CustomizedTables = ({ columns, rows }) => {
+const SimpleTable = ({ columns, rows }) => {
   const { head, root } = useStyles();
 
   return (
@@ -30,7 +30,7 @@ const CustomizedTables = ({ columns, rows }) => {
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <TableRow key={`${row.label}_${uuidv4()}`}>
+            <TableRow key={`${row.timestamp}_${uuidv4()}`}>
               {columns.map(column => {
                 return (
                   <TableCell key={`${column.dataKey}_${uuidv4()}`}>
@@ -46,11 +46,11 @@ const CustomizedTables = ({ columns, rows }) => {
   );
 };
 
-CustomizedTables.defaultProps = {
+SimpleTable.defaultProps = {
   rows: [],
 };
 
-CustomizedTables.propTypes = {
+SimpleTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       dataKey: PropTypes.string.isRequired,
@@ -60,4 +60,4 @@ CustomizedTables.propTypes = {
   rows: PropTypes.array,
 };
 
-export default CustomizedTables;
+export default SimpleTable;

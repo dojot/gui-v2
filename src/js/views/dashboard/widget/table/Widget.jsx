@@ -9,7 +9,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import More from '@material-ui/icons/MoreVert';
-import CustomizedTables from 'Components/Table/SimpleTable/SimpleTable';
+import { SimpleTable } from 'Components/Table';
 import { useTranslation } from 'react-i18next';
 
 const useStyles = makeStyles(() => {
@@ -50,7 +50,7 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
         label: col.name || col.dataKey,
       }));
 
-      return <CustomizedTables columns={columns} rows={data} />;
+      return <SimpleTable columns={columns} rows={data} />;
     }
     return null;
   }, [data, table]);
