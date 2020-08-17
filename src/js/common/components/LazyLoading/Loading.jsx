@@ -11,15 +11,19 @@ class Loading extends PureComponent {
 
     if (isLoading) {
       if (timedOut) {
-        return <div>{errorMessage}</div>;
+        return <div data-testid="loading-timeout">{errorMessage}</div>;
       }
       if (pastDelay) {
-        return <div className={styles.loader}>Loading...</div>;
+        return (
+          <div data-testid="loading-spinner" className={styles.loader}>
+            Loading...
+          </div>
+        );
       }
       return null;
     }
     if (error) {
-      return <div>{errorMessage}</div>;
+      return <div data-testid="loading-error">{errorMessage}</div>;
     }
 
     return null;

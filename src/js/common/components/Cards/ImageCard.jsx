@@ -27,17 +27,18 @@ const ImageCard = props => {
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography 
-              gutterBottom variant="h5" 
-              component="h2" 
-              data-testid="title
-            ">
+            <Typography
+              gutterBottom
+              variant="h5"
+              component="h2"
+              data-testid="title"
+            >
               {title}
             </Typography>
-            <Typography 
-              variant="body2" 
-              color="textSecondary" 
-              component="p" 
+            <Typography
+              variant="body2"
+              color="textSecondary"
+              component="p"
               data-testid="description"
             >
               {description}
