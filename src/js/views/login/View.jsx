@@ -75,6 +75,7 @@ const LoginForm = ({
           </Typography>
           <TextField
             id="user"
+            inputProps={{ 'data-testid': 'userTest' }}
             label={t('login:user')}
             variant="outlined"
             size="medium"
@@ -85,9 +86,11 @@ const LoginForm = ({
             helperText={errors.user && touched.user && t(errors.user)}
             error={errors.user && touched.user}
             fullWidth
+            data-testid="user"
           />
           <TextField
             id="password"
+            inputProps={{ 'data-testid': 'passwordTest' }}
             label={t('login:password')}
             type="password"
             autoComplete="current-password"
@@ -102,6 +105,7 @@ const LoginForm = ({
             }
             error={errors.password && touched.password}
             margin="normal"
+            data-testid="password"
           />
           <Button
             variant="outlined"
@@ -110,6 +114,7 @@ const LoginForm = ({
             fullWidth
             className={classes.margin}
             type="submit"
+            data-testid="btnLogin"
           >
             {t('login:login')}
           </Button>
