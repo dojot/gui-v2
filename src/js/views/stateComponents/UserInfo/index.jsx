@@ -63,6 +63,7 @@ export const UserInfo = () => {
           className={classes.button}
           onClick={handleToggle}
           startIcon={<AccountCircle />}
+          data-testid="buttonMenu"
         >
           {`${t('common:hello')}, ${user.userName}`}
         </Button>
@@ -80,6 +81,7 @@ export const UserInfo = () => {
                   <List className={classes.list}>
                     <ListItem>
                       <ListItemText
+                        data-testid="version"
                         primary={guiVersion}
                         secondary={t('common:version')}
                       />
@@ -87,12 +89,14 @@ export const UserInfo = () => {
                     <Divider />
                     <ListItem>
                       <ListItemText
+                        data-testid="profile"
                         primary={user.profile}
                         secondary={t('common:profile')}
                       />
                     </ListItem>
                     <ListItem>
                       <ListItemText
+                        data-testid="tenant"
                         primary={user.tenant}
                         secondary={t('common:tenant')}
                       />

@@ -16,12 +16,19 @@ const initialProps = {
   onPageSizeChange: onPageSizeChangeMocked,
 };
 
-beforeEach(() => {
-  onPageChangeMocked.mockClear();
-  onPageSizeChangeMocked.mockClear();
-});
+jest.mock('react-i18next', () => ({
+  useTranslation: () => ({
+    t: key => key,
+  }),
+}));
 
 describe('Paginator', () => {
+  beforeEach(() => {
+    onPageChangeMocked.mockClear();
+    onPageSizeChangeMocked.mockClear();
+    jest.clearAllMocks();
+  });
+
   it('Simple render', () => {
     const { container } = render(<Paginator {...initialProps} />);
     expect(container.querySelector('.MuiPagination-root')).toBeInTheDocument();
