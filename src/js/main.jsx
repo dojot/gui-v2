@@ -1,11 +1,12 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import { fromJS } from 'immutable';
 
-import App from './routes';
-import Root from './Root';
-import configureStore from './redux/configureStore';
+import { fromJS } from 'immutable';
+import ReactDOM from 'react-dom';
+
 import { history } from './app-history';
+import configureStore from './redux/configureStore';
+import Root from './Root';
+import App from './routes';
 
 let initialState = {};
 
