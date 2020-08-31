@@ -1,15 +1,5 @@
 {
   "env": "production",
   "publicPath": "/v2/",
-  "assetPath": "assets",
-  "app": {
-    "line": "1",
-    "area": "2",
-    "bar": "3",
-    "pizza": "4",
-    "donut": "5",
-    "bubble": "6",
-    "table": "7",
-    "apiUrl": "/"
-  }
+  "assetPath": "assets"
 }

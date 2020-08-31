@@ -19,7 +19,7 @@ describe('date util tests', () => {
 
   it('should not be able to format date to HH:mm:ss format when an invalid date string is informed', () => {
     const formattedDate = dateUtil.formatDate(inputInvalidStringDate);
-    expect(formattedDate).toEqual('Invalid date');
+    expect(formattedDate).toEqual('-');
   });
 
   it('should be able to format to ISO when a valid date is informed', () => {

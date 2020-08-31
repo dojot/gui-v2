@@ -1,16 +1,4 @@
 {
   "env": "development",
-  "publicPath": "/",
-  "app": {
-    "description": "you can overwrite the default config",
-    "hello": "You are in local development mode",
-    "line": "1",
-    "area": "2",
-    "bar": "3",
-    "pizza": "4",
-    "donut": "5",
-    "bubble": "6",
-    "table": "7",
-    "apiUrl": "/"
-  }
+  "publicPath": "/"
 }

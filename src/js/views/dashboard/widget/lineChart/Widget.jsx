@@ -97,9 +97,13 @@ export default ({ id, data, config, onDelete, onPin, onEdit }) => {
               bottom: 5,
             }}
           >
-            <XAxis tickFormatter={formatDate} dataKey="timestamp" />
+            <XAxis
+              tickFormatter={formatDate}
+              dataKey="timestamp"
+              domain={['auto', 'auto']}
+            />
             <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
+            <CartesianGrid strokeDasharray="4 4" />
             <Tooltip />
             <Legend />
             {config.line.map(item => (
