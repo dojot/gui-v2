@@ -13,9 +13,9 @@ import '@testing-library/jest-dom/extend-expect';
 import SimpleTable from '.';
 
 const mockColumns = [
-  { dataKey: '5a709bspeed', label: 'velocidade' },
-  { dataKey: '5a709btemp', label: 'temperatura' },
-  { dataKey: '4f0e72hum', label: 'umidade' },
+  { dataKey: '5a709bspeed', name: 'velocidade' },
+  { dataKey: '5a709btemp', name: 'temperatura' },
+  { dataKey: '4f0e72hum', name: 'umidade' },
 ];
 const mockRows = [
   {
