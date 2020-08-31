@@ -1,10 +1,9 @@
 import moment from 'moment';
-import 'moment/locale/pt-br';
 
 export const formatDate = (tickItem, formatter = 'HH:mm:ss') =>
   moment(tickItem).isValid()
     ? moment(tickItem)
-        .locale('pt-br')
+        .local()
         .format(formatter)
     : '-';
 
