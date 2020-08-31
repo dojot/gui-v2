@@ -45,12 +45,7 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
 
   const renderTable = useCallback(() => {
     if (data && data.length) {
-      const columns = table.map(col => ({
-        dataKey: col.dataKey,
-        label: col.name || col.dataKey,
-      }));
-
-      return <SimpleTable columns={columns} rows={data} />;
+      return <SimpleTable columns={table} rows={data} hasTimestamp />;
     }
     return null;
   }, [data, table]);

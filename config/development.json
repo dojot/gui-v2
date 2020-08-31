@@ -1,8 +1,4 @@
 {
   "env": "development",
-  "publicPath": "/",
-  "app": {
-    "description": "you can overwrite the default config",
-    "hello": "You are in local development mode",
-  }
+  "publicPath": "/"
 }

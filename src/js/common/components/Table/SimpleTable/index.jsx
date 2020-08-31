@@ -6,34 +6,59 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import Tooltip from '@material-ui/core/Tooltip';
 import PropTypes from 'prop-types';
+import { formatDate } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import useStyles from './style';
 
-const SimpleTable = ({ columns, rows }) => {
+const SimpleTable = ({ columns, rows, hasTimestamp }) => {
   const { head, root } = useStyles();
 
   return (
     <TableContainer classes={{ root }}>
-      <Table stickyHeader aria-label="customized table">
+      <Table stickyHeader size="small" aria-label="customized table">
         <TableHead>
           <TableRow>
+            {hasTimestamp ? (
+              <TableCell key="timestamp" classes={{ head }}>
+                Timestamp
+              </TableCell>
+            ) : null}
+
             {columns.map(column => {
               return (
-                <TableCell key={column.dataKey} classes={{ head }}>
-                  {column.label}
-                </TableCell>
+                <Tooltip
+                  title={column.dataKey.substr(0, 6)}
+                  placement="top"
+                >
+                  <TableCell
+                    key={column.dataKey}
+                    classes={{ head }}
+                    align="center"
+                  >
+                    {column.name}
+                  </TableCell>
+                </Tooltip>
               );
             })}
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map(row => (
-            <TableRow key={`${row.timestamp}_${uuidv4()}`}>
+            <TableRow hover key={`${row.timestamp}_${uuidv4()}`}>
+              {hasTimestamp ? (
+                <TableCell key={`timestamp_${uuidv4()}`}>
+                  {formatDate(row.timestamp, 'DD/MM/YYYY HH:mm:ss')}
+                </TableCell>
+              ) : null}
               {columns.map(column => {
                 return (
-                  <TableCell key={`${column.dataKey}_${uuidv4()}`}>
+                  <TableCell
+                    key={`${column.dataKey}_${uuidv4()}`}
+                    align="center"
+                  >
                     {row[column.dataKey] || '-'}
                   </TableCell>
                 );
@@ -48,16 +73,18 @@ const SimpleTable = ({ columns, rows }) => {
 
 SimpleTable.defaultProps = {
   rows: [],
+  hasTimestamp: false,
 };
 
 SimpleTable.propTypes = {
   columns: PropTypes.arrayOf(
     PropTypes.shape({
       dataKey: PropTypes.string.isRequired,
-      label: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
     }),
   ).isRequired,
   rows: PropTypes.array,
+  hasTimestamp: PropTypes.bool,
 };
 
 export default SimpleTable;
