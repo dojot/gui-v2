@@ -4,7 +4,7 @@ const inputValidDate = new Date(2020, 0, 31, 16, 55, 0);
 const inputValidStringDate = '2020-01-31 16:55:00';
 const inputInvalidStringDate = '2020-00-31 16:55:00';
 const resultFormattedDate = '16:55:00';
-const resultISOFormatted = '2020-01-31T19:55:00.000Z';
+const resultISOFormatted = '2020-01-31T16:55:00.000Z';
 
 describe('date util tests', () => {
   it('should be able to format date to HH:mm:ss format when a date is informed', () => {
