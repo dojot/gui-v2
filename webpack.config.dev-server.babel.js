@@ -1,6 +1,6 @@
 import config from 'config';
-import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import webpack from 'webpack';
 import DashboardPlugin from 'webpack-dashboard/plugin';
 
 import webpackConfig, { JS_SOURCE } from './webpack.config.common';

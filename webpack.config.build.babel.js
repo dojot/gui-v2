@@ -1,12 +1,13 @@
-import config from 'config';
 import path from 'path';
-import webpack from 'webpack';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
+
 import SaveAssetsJson from 'assets-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import precss from 'precss';
-import postcssPresetEnv from 'postcss-preset-env';
 import AWS from 'aws-sdk';
+import config from 'config';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import postcssPresetEnv from 'postcss-preset-env';
+import precss from 'precss';
+import webpack from 'webpack';
 
 import webpackConfig, { JS_SOURCE } from './webpack.config.common';
 

@@ -18,7 +18,7 @@ const ViewContainer = props => {
   } = props;
 
   return (
-    <Fragment>
+    <>
       <AppHeader
         isOpen={isMenuOpen}
         handleClick={updateIsMenuOpen}
@@ -28,7 +28,7 @@ const ViewContainer = props => {
         <UserInfo />
       </AppHeader>
       {children}
-    </Fragment>
+    </>
   );
 };
 
