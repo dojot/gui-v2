@@ -8,6 +8,7 @@ import { Authentication } from 'Services';
 const Logout = ({ location, clearData }) => {
   useEffect(() => {
     clearData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   Authentication.logout();
