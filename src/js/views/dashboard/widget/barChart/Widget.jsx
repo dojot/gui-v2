@@ -105,7 +105,7 @@ export default ({ id, data, onDelete, onPin, config }) => {
             <Tooltip />
             <Legend />
             {config.bar.map(item => (
-              <Bar isAnimationActive={false} {...item} />
+              <Bar isAnimationActive={false} {...item} key={item.dataKey} />
             ))}
           </BarChart>
         </ResponsiveContainer>
