@@ -52,20 +52,20 @@ export default ({ id, data, config, onDelete, onPin, onEdit }) => {
     callback(id);
   };
   return (
-    <Card className={classes.card} variant="outlined">
+    <Card className={classes.card} variant='outlined'>
       <CardHeader
-        action={(
+        action={
           <div>
             <IconButton
-              aria-controls="fade-menu-1"
-              aria-haspopup="true"
-              aria-label="settings"
+              aria-controls='fade-menu-1'
+              aria-haspopup='true'
+              aria-label='settings'
               onClick={handleClickMenu}
             >
               <More />
             </IconButton>
             <Menu
-              id="fade-menu-1"
+              id='fade-menu-1'
               anchorEl={anchorEl}
               keepMounted
               open={open}
@@ -82,12 +82,12 @@ export default ({ id, data, config, onDelete, onPin, onEdit }) => {
               </MenuItem>
             </Menu>
           </div>
-        )}
+        }
         title={config.meta.title}
         subheader={config.meta.subTitle}
       />
       <CardContent className={classes.content}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width='100%' height='100%'>
           <LineChart
             data={data}
             margin={{
@@ -99,11 +99,11 @@ export default ({ id, data, config, onDelete, onPin, onEdit }) => {
           >
             <XAxis
               tickFormatter={formatDate}
-              dataKey="timestamp"
+              dataKey='timestamp'
               domain={['auto', 'auto']}
             />
             <YAxis />
-            <CartesianGrid strokeDasharray="4 4" />
+            <CartesianGrid strokeDasharray='4 4' />
             <Tooltip />
             <Legend />
             {config.line.map(item => (

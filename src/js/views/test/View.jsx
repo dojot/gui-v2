@@ -35,10 +35,10 @@ class ExampleView extends Component {
     // otherwise, it will use defaultMessage as fallback
 
     return (
-      <ViewContainer headerTitle="TODO Page">
+      <ViewContainer headerTitle='TODO Page'>
         <LazyExample {...this.props} />
         <h2>This framework supports i18n and i10n out of the box.</h2>
-        
+
         <ErrorBoundary>
           <ExampleWithError {...this.props} />
         </ErrorBoundary>

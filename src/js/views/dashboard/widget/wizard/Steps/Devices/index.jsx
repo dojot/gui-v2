@@ -82,8 +82,8 @@ const Index = props => {
   const renderItem = useCallback((label, id) => {
     return (
       <>
-        <span className="listTitle">{label}</span>
-        <span className="listId">{`( ${id} )`}</span>
+        <span className='listTitle'>{label}</span>
+        <span className='listId'>{`( ${id} )`}</span>
       </>
     );
   }, []);
@@ -92,17 +92,17 @@ const Index = props => {
 
   return (
     <form onSubmit={e => handleSubmit(e)}>
-      <Grid container justify="center">
+      <Grid container justify='center'>
         <Grid item className={classes.searchContainer}>
           <TextField
-            variant="outlined"
+            variant='outlined'
             placeholder={t('devices.search')}
-            name="searchDevices"
+            name='searchDevices'
             onChange={handleChangeSearch}
             fullWidth
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position='start'>
                   <SearchIcon />
                 </InputAdornment>
               ),
@@ -128,12 +128,12 @@ const Index = props => {
                   >
                     <ListItemIcon>
                       <Checkbox
-                        edge="start"
+                        edge='start'
                         checked={getSelectedDevice(id)}
                         tabIndex={-1}
                         disableRipple
                         inputProps={{ 'aria-labelledby': labelId }}
-                        color="primary"
+                        color='primary'
                       />
                     </ListItemIcon>
                     <ListItemText

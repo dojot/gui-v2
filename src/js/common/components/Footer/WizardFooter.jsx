@@ -20,12 +20,12 @@ const WFooter = props => {
     >
       <Button
         className={classes.button}
-        variant="contained"
-        color="primary"
-        type="submit"
+        variant='contained'
+        color='primary'
+        type='submit'
         disabled={!isValid}
         disableElevation
-        data-testid="wizard-button"
+        data-testid='wizard-button'
       >
         {activeStep === steps.length - 1 ? t('finish') : t('next')}
       </Button>

@@ -17,18 +17,18 @@ const AppHeader = props => {
 
   return (
     <AppBar
-      position="fixed"
+      position='fixed'
       className={clsx(classes.appBar, {
         [classes.appBarShift]: isOpen,
       })}
     >
       <Toolbar>
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
+          color='inherit'
+          aria-label='open drawer'
           onClick={() => handleClick(!isOpen)}
-          edge="start"
-          data-testid="butonOpen"
+          edge='start'
+          data-testid='butonOpen'
           className={clsx(classes.menuButton, {
             [classes.hide]: isOpen,
           })}
@@ -36,18 +36,18 @@ const AppHeader = props => {
           <MenuIcon />
         </IconButton>
         <IconButton
-          color="inherit"
-          aria-label="open drawer"
+          color='inherit'
+          aria-label='open drawer'
           onClick={() => handleClick(!isOpen)}
-          edge="start"
-          data-testid="butonNotOpen"
+          edge='start'
+          data-testid='butonNotOpen'
           className={clsx(classes.menuButton, {
             [classes.hide]: !isOpen,
           })}
         >
           <ChevronLeftIcon />
         </IconButton>
-        <Typography variant="h6" noWrap>
+        <Typography variant='h6' noWrap>
           {title}
         </Typography>
         <div className={classes.childActions}>{children}</div>

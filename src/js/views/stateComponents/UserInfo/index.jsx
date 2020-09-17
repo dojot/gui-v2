@@ -53,17 +53,17 @@ export const UserInfo = () => {
   return (
     <div className={classes.root}>
       <>
-        <Divider orientation="vertical" flexItem className={classes.divider} />
+        <Divider orientation='vertical' flexItem className={classes.divider} />
         <Button
           ref={anchorRef}
           aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup="true"
-          color="inherit"
-          size="small"
+          aria-haspopup='true'
+          color='inherit'
+          size='small'
           className={classes.button}
           onClick={handleToggle}
           startIcon={<AccountCircle />}
-          data-testid="buttonMenu"
+          data-testid='buttonMenu'
         >
           {`${t('common:hello')}, ${user.userName}`}
         </Button>
@@ -81,7 +81,7 @@ export const UserInfo = () => {
                   <List className={classes.list}>
                     <ListItem>
                       <ListItemText
-                        data-testid="version"
+                        data-testid='version'
                         primary={guiVersion}
                         secondary={t('common:version')}
                       />
@@ -89,14 +89,14 @@ export const UserInfo = () => {
                     <Divider />
                     <ListItem>
                       <ListItemText
-                        data-testid="profile"
+                        data-testid='profile'
                         primary={user.profile}
                         secondary={t('common:profile')}
                       />
                     </ListItem>
                     <ListItem>
                       <ListItemText
-                        data-testid="tenant"
+                        data-testid='tenant'
                         primary={user.tenant}
                         secondary={t('common:tenant')}
                       />

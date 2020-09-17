@@ -3,7 +3,6 @@ import React, { Component, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-
 import { ExampleWithError } from '../../common/components/Example';
 import LazyLoading from '../../common/components/LazyLoading';
 import { ErrorBoundary } from '../../common/components/Utilities';
@@ -41,7 +40,7 @@ class ExampleView extends Component {
       <>
         <LazyExample {...this.props} />
         <h2>This framework supports i18n and i10n out of the box.</h2>
-        
+
         <ErrorBoundary>
           <ExampleWithError {...this.props} />
         </ErrorBoundary>

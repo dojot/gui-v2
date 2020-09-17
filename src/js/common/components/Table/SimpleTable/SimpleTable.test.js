@@ -64,22 +64,10 @@ describe('Simple Table', () => {
   });
 
   it('should be able to display the value of row 1, column 1', () => {
-    expect(
-      wrapper
-        .find(TableBody)
-        .find(TableCell)
-        .at(0)
-        .text(),
-    ).toEqual('5');
+    expect(wrapper.find(TableBody).find(TableCell).at(0).text()).toEqual('5');
   });
 
   it('should be able to display the null value of row 1, column 2', () => {
-    expect(
-      wrapper
-        .find(TableBody)
-        .find(TableCell)
-        .at(1)
-        .text(),
-    ).toEqual('-');
+    expect(wrapper.find(TableBody).find(TableCell).at(1).text()).toEqual('-');
   });
 });
