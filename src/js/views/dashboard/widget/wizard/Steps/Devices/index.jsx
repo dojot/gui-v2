@@ -81,10 +81,10 @@ const Index = props => {
 
   const renderItem = useCallback((label, id) => {
     return (
-      <Fragment>
+      <>
         <span className="listTitle">{label}</span>
         <span className="listId">{`( ${id} )`}</span>
-      </Fragment>
+      </>
     );
   }, []);
 

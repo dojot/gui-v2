@@ -52,7 +52,7 @@ export const UserInfo = () => {
 
   return (
     <div className={classes.root}>
-      <Fragment>
+      <>
         <Divider orientation="vertical" flexItem className={classes.divider} />
         <Button
           ref={anchorRef}
@@ -107,7 +107,7 @@ export const UserInfo = () => {
             </Grow>
           )}
         </Popper>
-      </Fragment>
+      </>
     </div>
   );
 };

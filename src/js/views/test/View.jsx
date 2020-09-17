@@ -4,7 +4,6 @@ import { ExampleWithError } from 'Components/Example';
 import LazyLoading from 'Components/LazyLoading';
 import { ErrorBoundary } from 'Components/Utilities';
 import PropTypes from 'prop-types';
-
 import { connect } from 'react-redux';
 import { actions as exampleActions } from 'Redux/example';
 import { exampleSelector } from 'Selectors/exampleSelector';

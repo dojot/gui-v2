@@ -171,7 +171,7 @@ const Dashboard = props => {
 
   const getHeaderContent = useCallback(() => {
     return (
-      <Fragment>
+      <>
         <DevelopmentContainer>
           <Button
             style={{ marginLeft: 10 }}
@@ -204,7 +204,7 @@ const Dashboard = props => {
         >
           {t('common:add')}
         </Button>
-      </Fragment>
+      </>
     );
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
 
