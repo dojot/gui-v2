@@ -102,7 +102,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
           >
             <defs>
               {config.defsProps.map(item => (
-                <linearGradient {...item}>
+                <linearGradient {...item} key={item.id}>
                   <stop offset="5%" stopColor={item.color} stopOpacity={0.8} />
                   <stop offset="95%" stopColor={item.color} stopOpacity={0} />
                 </linearGradient>
@@ -114,7 +114,12 @@ export default ({ id, onDelete, onPin, data, config }) => {
             <Tooltip />
             <Legend />
             {config.areaProps.map(item => (
-              <Area connectNulls {...item} isAnimationActive={false} />
+              <Area
+                connectNulls
+                {...item}
+                isAnimationActive={false}
+                key={item.dataKey}
+              />
             ))}
           </AreaChart>
         </ResponsiveContainer>

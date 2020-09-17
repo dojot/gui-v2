@@ -20,6 +20,7 @@ const REMOVE_WIDGET_SAGA = 'app/dashboard/REMOVE_WIDGET_SAGA';
 const REMOVE_WIDGET_DATA = 'app/dashboard/REMOVE_WIDGET_DATA';
 const RESTORE_STATE = 'app/dashboard/RESTORE_STATE';
 const CHECK_STATE = 'app/dashboard/CHECK_STATE';
+const CLEAR_STATE = 'app/dashboard/CLEAR_STATE';
 
 export const constants = {
   START_POLLING,
@@ -40,6 +41,7 @@ export const constants = {
   REMOVE_WIDGET_DATA,
   RESTORE_STATE,
   CHECK_STATE,
+  CLEAR_STATE,
 };
 
 // ------------------------------------
@@ -75,6 +77,7 @@ export const initLayout = createAction(INIT_LAYOUT, layout => ({ layout }));
 
 export const restoreData = createAction(RESTORE_STATE, context => context);
 export const checkData = createAction(CHECK_STATE);
+export const clearData = createAction(CLEAR_STATE);
 
 export const actions = {
   startPolling,
@@ -95,6 +98,7 @@ export const actions = {
   removeWidgetData,
   restoreData,
   checkData,
+  clearData,
 };
 
 export const reducers = {
@@ -115,6 +119,13 @@ export const reducers = {
     state.update('layout', layout => _.reject(layout, { i: payload })),
   [INIT_LAYOUT]: (state, { payload }) => state.merge({ ...payload }),
   [RESTORE_STATE]: (state, { payload }) => state.merge({ ...payload }),
+  [CLEAR_STATE]: state =>
+    state.merge({
+      configs: {},
+      layout: [],
+      saga: {},
+      data: {},
+    }),
 };
 
 export const initialState = () =>
