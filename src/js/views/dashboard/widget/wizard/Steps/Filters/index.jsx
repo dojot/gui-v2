@@ -171,7 +171,7 @@ const Index = props => {
   const { t } = useTranslation(['dashboard']);
 
   return (
-    <Grid container direction="column" className={classes.root}>
+    <Grid container direction='column' className={classes.root}>
       <Grid item>
         <h2>{t('filters.recover')}</h2>
         <Divider />
@@ -179,69 +179,69 @@ const Index = props => {
 
       <Grid item>
         <form onSubmit={e => handleSubmit(e)}>
-          <Grid item className="left">
-            <div className="realTimeSwitch">
+          <Grid item className='left'>
+            <div className='realTimeSwitch'>
               <h2>{t('filters.real time')}</h2>
               <Switch
                 checked={data.isRealTime}
                 onChange={handleChangeRealTime}
-                color="primary"
+                color='primary'
               />
             </div>
           </Grid>
-          <Grid item className="right">
-            <div className="container">
-              <div className="title">
+          <Grid item className='right'>
+            <div className='container'>
+              <div className='title'>
                 <h2>{t('filters.historic')}</h2>
               </div>
-              <div className="rows">
+              <div className='rows'>
                 {/* Linha 01 */}
-                <div className="row">
+                <div className='row'>
                   <Radio
                     checked={data.filterType === '0'}
                     onChange={handleChangeFilterType}
-                    value="0"
-                    name="filterType"
+                    value='0'
+                    name='filterType'
                     inputProps={{ 'aria-label': '0' }}
-                    color="primary"
+                    color='primary'
                   />
-                  <div className="itemLabel">{t('filters.last')}</div>
-                  <FormControl variant="outlined" className="itemInput">
-                    <InputLabel htmlFor="component-outlined">
+                  <div className='itemLabel'>{t('filters.last')}</div>
+                  <FormControl variant='outlined' className='itemInput'>
+                    <InputLabel htmlFor='component-outlined'>
                       {t('filters.records')}
                     </InputLabel>
                     <OutlinedInput
-                      id="lastRegs"
+                      id='lastRegs'
                       value={data.fixedValue}
-                      type="number"
+                      type='number'
                       onChange={handleChangeFixedValue}
-                      label="Nº Registros"
+                      label='Nº Registros'
                       disabled={data.filterType !== '0'}
                     />
                   </FormControl>
                 </div>
 
                 {/* Linha 02 */}
-                <div className="row">
+                <div className='row'>
                   <Radio
                     checked={data.filterType === '1'}
                     onChange={handleChangeFilterType}
-                    value="1"
-                    name="filterType"
+                    value='1'
+                    name='filterType'
                     inputProps={{ 'aria-label': '1' }}
-                    color="primary"
+                    color='primary'
                   />
-                  <FormControl variant="outlined" className="itemSelect">
-                    <InputLabel id="lastDynamicsOptionLabel">
+                  <FormControl variant='outlined' className='itemSelect'>
+                    <InputLabel id='lastDynamicsOptionLabel'>
                       {t('filters.order')}
                     </InputLabel>
                     <Select
-                      labelId="lastDynamicsOptionLabel"
-                      id="lastDynamicsOption"
+                      labelId='lastDynamicsOptionLabel'
+                      id='lastDynamicsOption'
                       placeholder={t('filters.select an option')}
                       value={data.dynamicType}
                       onChange={handleChangeDynamicOptions}
-                      label="Age"
+                      label='Age'
                       disabled={data.filterType !== '1'}
                     >
                       <MenuItem value={0}>
@@ -253,54 +253,54 @@ const Index = props => {
                       <MenuItem value={4}>{t('filters.last months')}</MenuItem>
                     </Select>
                   </FormControl>
-                  <FormControl variant="outlined" className="itemInput">
-                    <InputLabel htmlFor="lastDynamicsValue">
+                  <FormControl variant='outlined' className='itemInput'>
+                    <InputLabel htmlFor='lastDynamicsValue'>
                       {t('filters.value')}
                     </InputLabel>
                     <OutlinedInput
-                      id="lastDynamicsValue"
-                      type="number"
+                      id='lastDynamicsValue'
+                      type='number'
                       value={data.dynamicValue}
                       onChange={handleChangeDynamicValue}
-                      label="Nº Registros"
+                      label='Nº Registros'
                       disabled={data.filterType !== '1'}
                     />
                   </FormControl>
                 </div>
 
                 {/* Linha 03 */}
-                <div className="row">
+                <div className='row'>
                   <Radio
                     checked={data.filterType === '2'}
                     onChange={handleChangeFilterType}
-                    value="2"
-                    name="filterType"
+                    value='2'
+                    name='filterType'
                     inputProps={{ 'aria-label': '2' }}
-                    color="primary"
+                    color='primary'
                   />
-                  <MuiPickersUtilsProvider utils={MomentUtils} locale="pt-br">
+                  <MuiPickersUtilsProvider utils={MomentUtils} locale='pt-br'>
                     <DateTimePicker
-                      id="dateFrom"
-                      name="dateFrom"
-                      className="itemInput"
+                      id='dateFrom'
+                      name='dateFrom'
+                      className='itemInput'
                       label={t('filters.initial date')}
-                      inputVariant="outlined"
+                      inputVariant='outlined'
                       value={data.dateFrom}
                       onChange={value => handleDateChange(value, 'dateFrom')}
-                      format="DD/MM/YYYY HH:mm"
+                      format='DD/MM/YYYY HH:mm'
                       helperText={data.invalidPeriod ? ' ' : ''}
                       error={data.invalidPeriod}
                       disabled={data.filterType !== '2'}
                     />
                     <DateTimePicker
-                      id="dateTo"
-                      name="dateTo"
-                      className="itemInput"
+                      id='dateTo'
+                      name='dateTo'
+                      className='itemInput'
                       label={t('filters.final date')}
-                      inputVariant="outlined"
+                      inputVariant='outlined'
                       value={data.dateTo}
                       onChange={value => handleDateChange(value, 'dateTo')}
-                      format="DD/MM/YYYY HH:mm"
+                      format='DD/MM/YYYY HH:mm'
                       helperText={
                         data.invalidPeriod ? t('filters.invalid interval') : ''
                       }

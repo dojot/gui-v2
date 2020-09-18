@@ -53,33 +53,33 @@ const GeneralForm = props => {
   const { t } = useTranslation(['dashboard']);
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container direction="column" className={classes.root}>
+      <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.item}>
           <TextField
-            variant="outlined"
+            variant='outlined'
             label={t('general.name')}
-            name="name"
+            name='name'
             value={values.name}
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={errors.name && touched.name && t(errors.name)}
-            margin="normal"
+            margin='normal'
             error={!!errors.name}
             fullWidth
           />
         </Grid>
         <Grid item className={classes.item}>
           <TextField
-            variant="outlined"
+            variant='outlined'
             label={t('general.description')}
-            name="description"
+            name='description'
             value={values.description}
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={
               errors.description && touched.description && errors.description
             }
-            margin="normal"
+            margin='normal'
             fullWidth
           />
         </Grid>

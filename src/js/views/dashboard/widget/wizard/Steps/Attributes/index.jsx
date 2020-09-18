@@ -198,17 +198,17 @@ const AttributesForm = props => {
 
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container direction="column" className={classes.root}>
+      <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.searchContainer}>
           <TextField
-            variant="outlined"
+            variant='outlined'
             placeholder={t('attributes.search')}
-            name="searchAttributes"
+            name='searchAttributes'
             onChange={handleSearchChange}
             fullWidth
             InputProps={{
               startAdornment: (
-                <InputAdornment position="start">
+                <InputAdornment position='start'>
                   <SearchIcon />
                 </InputAdornment>
               ),
@@ -328,28 +328,28 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
       <ListItem role={undefined} button onClick={() => setIsToggle(!isToggle)}>
         <ListItemIcon>
           <Checkbox
-            edge="start"
+            edge='start'
             checked={isToggle}
             tabIndex={-1}
             disableRipple
             inputProps={{ 'aria-labelledby': labelId }}
-            color="primary"
+            color='primary'
           />
         </ListItemIcon>
-        <Tooltip title={id} placement="bottom-start">
+        <Tooltip title={id} placement='bottom-start'>
           <ListItemText id={labelId} primary={`[${label}] ${value.label}`} />
         </Tooltip>
         <ListItemSecondaryAction className={classes.action}>
           <TextField
-            id="outlined-search"
+            id='outlined-search'
             label={t('attributes.subtitle')}
-            variant="outlined"
-            margin="dense"
+            variant='outlined'
+            margin='dense'
             value={description}
             onChange={event => setDescription(event.target.value)}
           />
           <Button
-            variant="outlined"
+            variant='outlined'
             startIcon={<CommentIcon />}
             className={classes.button}
             style={{ backgroundColor: color }}
@@ -360,7 +360,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
           {isOpen ? (
             <div className={classes.picker}>
               <GithubPicker
-                triangle="top-right"
+                triangle='top-right'
                 onChange={props => {
                   setColor(props.hex);
                   setIsOpen(!isOpen);

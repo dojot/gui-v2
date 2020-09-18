@@ -19,27 +19,27 @@ const ImageCard = props => {
         <CardActionArea
           className={classes.actions}
           onClick={() => handleClick()}
-          data-testid="card-action"
+          data-testid='card-action'
         >
           <CardMedia
             className={classes.media}
             image={image}
-            title="Contemplative Reptile"
+            title='Contemplative Reptile'
           />
           <CardContent>
             <Typography
               gutterBottom
-              variant="h5"
-              component="h2"
-              data-testid="title"
+              variant='h5'
+              component='h2'
+              data-testid='title'
             >
               {title}
             </Typography>
             <Typography
-              variant="body2"
-              color="textSecondary"
-              component="p"
-              data-testid="description"
+              variant='body2'
+              color='textSecondary'
+              component='p'
+              data-testid='description'
             >
               {description}
             </Typography>

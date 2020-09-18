@@ -76,7 +76,7 @@ const SummaryForm = props => {
   const { t } = useTranslation(['dashboard']);
   return (
     <form onSubmit={handleSubmit}>
-      <Grid container direction="column" className={classes.root}>
+      <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.item}>
           <TitleBox desc={description} name={name} />
           <AttributeBox name={t('summary.attributes')} values={values} />

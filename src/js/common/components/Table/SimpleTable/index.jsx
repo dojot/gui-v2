@@ -18,22 +18,22 @@ const SimpleTable = ({ columns, rows, hasTimestamp }) => {
 
   return (
     <TableContainer classes={{ root }}>
-      <Table stickyHeader size="small" aria-label="customized table">
+      <Table stickyHeader size='small' aria-label='customized table'>
         <TableHead>
-          <TableRow key="header">
+          <TableRow key='header'>
             {hasTimestamp ? (
-              <TableCell key="timestamp" classes={{ head }}>
+              <TableCell key='timestamp' classes={{ head }}>
                 Timestamp
               </TableCell>
             ) : null}
 
             {columns.map(column => {
               return (
-                <Tooltip title={column.dataKey.substr(0, 6)} placement="top">
+                <Tooltip title={column.dataKey.substr(0, 6)} placement='top'>
                   <TableCell
                     key={column.dataKey}
                     classes={{ head }}
-                    align="center"
+                    align='center'
                   >
                     {column.name}
                   </TableCell>
@@ -54,7 +54,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp }) => {
                 return (
                   <TableCell
                     key={`${column.dataKey}_${uuidv4()}`}
-                    align="center"
+                    align='center'
                   >
                     {row[column.dataKey] || '-'}
                   </TableCell>

@@ -30,14 +30,14 @@ const Paginator = props => {
   return (
     <Grid
       container
-      direction="row"
-      justify="center"
-      alignItems="center"
+      direction='row'
+      justify='center'
+      alignItems='center'
       className={classes.root}
     >
       <Pagination
-        variant="outlined"
-        shape="rounded"
+        variant='outlined'
+        shape='rounded'
         count={totalPages}
         page={currentPage}
         hidePrevButton={hidePrevButton}

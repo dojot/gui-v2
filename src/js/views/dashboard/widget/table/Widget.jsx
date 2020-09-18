@@ -51,20 +51,20 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
   }, [data, table]);
 
   return (
-    <Card className={classes.card} variant="outlined">
+    <Card className={classes.card} variant='outlined'>
       <CardHeader
-        action={(
+        action={
           <div>
             <IconButton
-              aria-controls="fade-menu-1"
-              aria-haspopup="true"
-              aria-label="settings"
+              aria-controls='fade-menu-1'
+              aria-haspopup='true'
+              aria-label='settings'
               onClick={handleClickMenu}
             >
               <More />
             </IconButton>
             <Menu
-              id="fade-menu-1"
+              id='fade-menu-1'
               anchorEl={anchorEl}
               keepMounted
               open={open}
@@ -81,7 +81,7 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
               </MenuItem>
             </Menu>
           </div>
-        )}
+        }
         title={config.meta.title}
         subheader={config.meta.subTitle}
       />

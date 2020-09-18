@@ -175,9 +175,9 @@ const Dashboard = props => {
         <DevelopmentContainer>
           <Button
             style={{ marginLeft: 10 }}
-            size="small"
-            variant="outlined"
-            color="inherit"
+            size='small'
+            variant='outlined'
+            color='inherit'
             startIcon={<PlayIcon />}
             onClick={() => startPolling(sagaConfig)}
           >
@@ -185,9 +185,9 @@ const Dashboard = props => {
           </Button>
           <Button
             style={{ marginLeft: 10 }}
-            size="small"
-            variant="outlined"
-            color="inherit"
+            size='small'
+            variant='outlined'
+            color='inherit'
             startIcon={<PauseIcon />}
             onClick={() => stopPolling()}
           >
@@ -196,9 +196,9 @@ const Dashboard = props => {
         </DevelopmentContainer>
         <Button
           style={{ marginLeft: 10 }}
-          size="small"
-          variant="outlined"
-          color="inherit"
+          size='small'
+          variant='outlined'
+          color='inherit'
           startIcon={<AddIcon />}
           onClick={() => handleClick()}
         >
@@ -220,7 +220,7 @@ const Dashboard = props => {
         layouts={{ lg: layout }}
         onLayoutChange={onLayoutChange}
         measureBeforeMount={false}
-        compactType="vertical"
+        compactType='vertical'
         verticalCompact
         preventCollision={false}
       >

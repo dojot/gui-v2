@@ -26,7 +26,7 @@ const DrawerComponent = props => {
 
   return (
     <Drawer
-      variant="permanent"
+      variant='permanent'
       className={clsx(classes.drawer, {
         [classes.drawerOpen]: isOpen,
         [classes.drawerClose]: !isOpen,
@@ -40,7 +40,7 @@ const DrawerComponent = props => {
       }}
     >
       <div className={classes.toolbar}>
-        <img src={logo} alt="dojot logo" />
+        <img src={logo} alt='dojot logo' />
       </div>
       <MenuList disablePadding>
         {primaryItems.map(item => (
