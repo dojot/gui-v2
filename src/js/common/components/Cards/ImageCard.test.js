@@ -16,7 +16,7 @@ describe('ImageCard', () => {
         title={title}
         image={Bar}
         description={description}
-        handleClick={() => onClick()}
+        handleClick={() => {}}
       />,
     );
 
