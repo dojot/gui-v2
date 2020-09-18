@@ -1,19 +1,19 @@
 import * as dateUtil from './date';
 
-const inputValidDate = new Date(2020, 0, 31, 16, 55, 0);
-const inputValidStringDate = '2020-01-31 16:55:00';
+const inputValidDate = new Date(Date.UTC(2020, 0, 31, 16, 55, 0));
+const inputValidStringDate = '2020-01-31 16:55:00-0000';
 const inputInvalidStringDate = '2020-00-31 16:55:00';
 const resultFormattedDate = '16:55:00';
-const resultISOFormatted = '2020-01-31T19:55:00.000Z';
+const resultISOFormatted = '2020-01-31T16:55:00.000Z';
 
 describe('date util tests', () => {
   it('should be able to format date to HH:mm:ss format when a date is informed', () => {
-    const formattedDate = dateUtil.formatDate(inputValidDate);
+    const formattedDate = dateUtil.formatDate(inputValidDate, 'HH:mm:ss');
     expect(formattedDate).toEqual(resultFormattedDate);
   });
 
   it('should be able to format date to HH:mm:ss format when a valida date string is informed', () => {
-    const formattedDate = dateUtil.formatDate(inputValidStringDate);
+    const formattedDate = dateUtil.formatDate(inputValidStringDate, 'HH:mm:ss');
     expect(formattedDate).toEqual(resultFormattedDate);
   });
 
