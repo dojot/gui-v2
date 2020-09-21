@@ -38,7 +38,7 @@ const WidgetView = props => {
 
   return (
     <ViewContainer headerTitle={t('dashboard:widget')}>
-      <Grid container justify="flex-start" className={classes.root}>
+      <Grid container justify='flex-start' className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />
         <PizzaChartCard onClick={() => handleClick(pizza)} />

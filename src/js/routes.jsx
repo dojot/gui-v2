@@ -21,32 +21,32 @@ const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
   <Switch>
-    <Route exact path="/" component={redirectToDashboard} />
-    <Route path="/login" component={LogIn} />
-    <Route path="/logout" component={LogOut} />
-    <Route path="/help" component={ExampleRouteHandler} />
+    <Route exact path='/' component={redirectToDashboard} />
+    <Route path='/login' component={LogIn} />
+    <Route path='/logout' component={LogOut} />
+    <Route path='/help' component={ExampleRouteHandler} />
     <PrivateRoute
-      path="/dashboard/widget/wizard/:id"
+      path='/dashboard/widget/wizard/:id'
       component={WizardManager}
       attrs={props}
     />
-    <PrivateRoute path="/dashboard/widget" component={Widget} attrs={props} />
-    <PrivateRoute path="/dashboard" component={Dashboard} attrs={props} />
-    <PrivateRoute path="/devices" component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path='/dashboard/widget' component={Widget} attrs={props} />
+    <PrivateRoute path='/dashboard' component={Dashboard} attrs={props} />
+    <PrivateRoute path='/devices' component={TestRouteHandler} attrs={props} />
     <PrivateRoute
-      path="/templates"
+      path='/templates'
       component={TestRouteHandler}
       attrs={props}
     />
-    <PrivateRoute path="/flow" component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path='/flow' component={TestRouteHandler} attrs={props} />
     <PrivateRoute
-      path="/notification"
+      path='/notification'
       component={TestRouteHandler}
       attrs={props}
     />
-    <PrivateRoute path="/users" component={TestRouteHandler} attrs={props} />
-    <PrivateRoute path="/profiles" component={GridTest} attrs={props} />
-    <Route path="*" component={ExampleRouteHandler} attrs={props} />
+    <PrivateRoute path='/users' component={TestRouteHandler} attrs={props} />
+    <PrivateRoute path='/profiles' component={GridTest} attrs={props} />
+    <Route path='*' component={ExampleRouteHandler} attrs={props} />
   </Switch>
 );
 

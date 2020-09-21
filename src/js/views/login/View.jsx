@@ -67,35 +67,35 @@ const LoginForm = ({
   const { t } = useTranslation(['login', 'common']);
 
   return (
-    <Grid container justify="center" className={classes.root}>
+    <Grid container justify='center' className={classes.root}>
       <Card className={classes.grid}>
-        <form onSubmit={handleSubmit} autoComplete="off">
-          <Typography variant="h5" color="textPrimary">
+        <form onSubmit={handleSubmit} autoComplete='off'>
+          <Typography variant='h5' color='textPrimary'>
             {t('login:login')}
           </Typography>
           <TextField
-            id="user"
+            id='user'
             inputProps={{ 'data-testid': 'userTest' }}
             label={t('login:user')}
-            variant="outlined"
-            size="medium"
-            margin="normal"
+            variant='outlined'
+            size='medium'
+            margin='normal'
             value={values.user}
             onChange={handleChange}
             onBlur={handleBlur}
             helperText={errors.user && touched.user && t(errors.user)}
             error={errors.user && touched.user}
             fullWidth
-            data-testid="user"
+            data-testid='user'
           />
           <TextField
-            id="password"
+            id='password'
             inputProps={{ 'data-testid': 'passwordTest' }}
             label={t('login:password')}
-            type="password"
-            autoComplete="current-password"
-            variant="outlined"
-            size="medium"
+            type='password'
+            autoComplete='current-password'
+            variant='outlined'
+            size='medium'
             fullWidth
             value={values.password}
             onChange={handleChange}
@@ -104,17 +104,17 @@ const LoginForm = ({
               errors.password && touched.password && t(errors.password)
             }
             error={errors.password && touched.password}
-            margin="normal"
-            data-testid="password"
+            margin='normal'
+            data-testid='password'
           />
           <Button
-            variant="outlined"
-            color="secondary"
-            size="medium"
+            variant='outlined'
+            color='secondary'
+            size='medium'
             fullWidth
             className={classes.margin}
-            type="submit"
-            data-testid="btnLogin"
+            type='submit'
+            data-testid='btnLogin'
           >
             {t('login:login')}
           </Button>

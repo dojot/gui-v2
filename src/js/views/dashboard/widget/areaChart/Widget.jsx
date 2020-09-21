@@ -54,20 +54,20 @@ export default ({ id, onDelete, onPin, data, config }) => {
     callback(id);
   };
   return (
-    <Card className={classes.card} variant="outlined">
+    <Card className={classes.card} variant='outlined'>
       <CardHeader
-        action={(
+        action={
           <div>
             <IconButton
-              aria-controls="fade-menu-2"
-              aria-haspopup="true"
-              aria-label="settings"
+              aria-controls='fade-menu-2'
+              aria-haspopup='true'
+              aria-label='settings'
               onClick={handleClickMenu}
             >
               <More />
             </IconButton>
             <Menu
-              id="fade-menu-2"
+              id='fade-menu-2'
               anchorEl={anchorEl}
               keepMounted
               open={open}
@@ -85,12 +85,12 @@ export default ({ id, onDelete, onPin, data, config }) => {
               </MenuItem>
             </Menu>
           </div>
-        )}
+        }
         title={config.meta.title}
         subheader={config.meta.subTitle}
       />
       <CardContent className={classes.content}>
-        <ResponsiveContainer width="100%" height="100%">
+        <ResponsiveContainer width='100%' height='100%'>
           <AreaChart
             data={data}
             margin={{
@@ -103,14 +103,14 @@ export default ({ id, onDelete, onPin, data, config }) => {
             <defs>
               {config.defsProps.map(item => (
                 <linearGradient {...item} key={item.id}>
-                  <stop offset="5%" stopColor={item.color} stopOpacity={0.8} />
-                  <stop offset="95%" stopColor={item.color} stopOpacity={0} />
+                  <stop offset='5%' stopColor={item.color} stopOpacity={0.8} />
+                  <stop offset='95%' stopColor={item.color} stopOpacity={0} />
                 </linearGradient>
               ))}
             </defs>
-            <XAxis tickFormatter={formatDate} dataKey="timestamp" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis tickFormatter={formatDate} dataKey='timestamp' />
+            <YAxis domain={['auto', 'auto']} />
+            <CartesianGrid strokeDasharray='3 3' />
             <Tooltip />
             <Legend />
             {config.areaProps.map(item => (
