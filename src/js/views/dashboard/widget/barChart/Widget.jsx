@@ -21,7 +21,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { formatDate } from 'Utils';
+import { formatDate, formatNumber } from 'Utils';
 
 const useStyles = makeStyles(() => {
   return {
@@ -95,13 +95,13 @@ export default ({ id, data, onDelete, onPin, config }) => {
             margin={{
               top: 5,
               right: 0,
-              left: 10,
+              left: 0,
               bottom: 15,
             }}
           >
             <CartesianGrid strokeDasharray='3 3' />
             <XAxis tickFormatter={formatDate} dataKey='timestamp' />
-            <YAxis domain={['auto', 'auto']} />
+            <YAxis domain={['auto', 'auto']} tickFormatter={formatNumber} />
             <Tooltip />
             <Legend />
             {config.bar.map(item => (

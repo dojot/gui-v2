@@ -20,7 +20,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { formatDate } from 'Utils';
+import { formatDate, formatNumber } from 'Utils';
 
 const useStyles = makeStyles(() => {
   return {
@@ -93,7 +93,7 @@ export default ({ id, data, config, onDelete, onPin, onEdit }) => {
             margin={{
               top: 5,
               right: 10,
-              left: 10,
+              left: 0,
               bottom: 5,
             }}
           >
@@ -102,7 +102,7 @@ export default ({ id, data, config, onDelete, onPin, onEdit }) => {
               dataKey='timestamp'
               domain={['auto', 'auto']}
             />
-            <YAxis domain={['auto', 'auto']} />
+            <YAxis domain={['auto', 'auto']} tickFormatter={formatNumber} />
             <CartesianGrid strokeDasharray='4 4' />
             <Tooltip />
             <Legend />
