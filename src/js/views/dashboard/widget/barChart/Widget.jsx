@@ -10,6 +10,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import More from '@material-ui/icons/MoreVert';
+import numeral from 'numeral';
 import { useTranslation } from 'react-i18next';
 import {
   Bar,
@@ -21,7 +22,7 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { formatDate } from 'Utils';
+import { formatDate, formatNumber } from 'Utils';
 
 const useStyles = makeStyles(() => {
   return {
@@ -95,13 +96,13 @@ export default ({ id, data, onDelete, onPin, config }) => {
             margin={{
               top: 5,
               right: 0,
-              left: 10,
+              left: 0,
               bottom: 15,
             }}
           >
             <CartesianGrid strokeDasharray='3 3' />
             <XAxis tickFormatter={formatDate} dataKey='timestamp' />
-            <YAxis domain={['auto', 'auto']} />
+            <YAxis domain={['auto', 'auto']} tickFormatter={formatNumber} />
             <Tooltip />
             <Legend />
             {config.bar.map(item => (
