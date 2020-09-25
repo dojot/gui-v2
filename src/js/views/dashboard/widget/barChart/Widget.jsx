@@ -10,7 +10,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import { makeStyles } from '@material-ui/core/styles';
 import More from '@material-ui/icons/MoreVert';
-import numeral from 'numeral';
 import { useTranslation } from 'react-i18next';
 import {
   Bar,
