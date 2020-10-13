@@ -1,4 +1,5 @@
-# GUI-v2 [![DeepScan grade](https://deepscan.io/api/teams/2690/projects/14212/branches/258416/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=2690&pid=14212&bid=258416) [![CodeFactor](https://www.codefactor.io/repository/github/dojot/gui-v2/badge)](https://www.codefactor.io/repository/github/dojot/gui-v2) [![codecov](https://codecov.io/gh/dojot/gui-v2/branch/development/graph/badge.svg)](https://codecov.io/gh/dojot/gui-v2) [![Docker badge ](https://img.shields.io/docker/pulls/dojot/gui-v2.svg)](https://hub.docker.com/r/dojot/gui-v2/) [![License badge](https://img.shields.io/badge/license-GPL-blue.svg)](https://opensource.org/licenses/GPL-3.0)
+GUI Builder
+=====================================
 
 This project provides a builder to create GUIs based on DOJOT's guidelines.
 
@@ -29,15 +30,4 @@ The build is minified and the filenames include the hashes.<br>
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-## Dojot Documentation
-
-Check the documentation for more information:
-
-- [Latest dojot platform documentation](https://dojotdocs.readthedocs.io/en/latest)
-
-## Issues and help
-
-If you found a problem or need help, leave an issue in the main
-[dojot repository](https://github.com/dojot/dojot) and we will help you!
 
