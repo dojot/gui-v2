@@ -1,5 +1,4 @@
-GUI Builder
-=====================================
+# GUI-v2 [![DeepScan grade](https://deepscan.io/api/teams/2690/projects/14212/branches/258416/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=2690&pid=14212&bid=258416) [![CodeFactor](https://www.codefactor.io/repository/github/dojot/gui-v2/badge)](https://www.codefactor.io/repository/github/dojot/gui-v2) [![codecov](https://codecov.io/gh/dojot/gui-v2/branch/development/graph/badge.svg)](https://codecov.io/gh/dojot/gui-v2) [![Docker badge ](https://img.shields.io/docker/pulls/dojot/gui-v2.svg)](https://hub.docker.com/r/dojot/gui-v2/) [![License badge](https://img.shields.io/badge/license-GPL-blue.svg)](https://opensource.org/licenses/GPL-3.0)
 
 This project provides a builder to create GUIs based on DOJOT's guidelines.
 
