@@ -31,11 +31,12 @@ jobs:
         yarn run build
         yarn run lint
         yarn run test:coverage
+        
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
         # Keep in mind that secrets are not available in forks of repositories, that's the reason we use an open token
-        token: 823c24db-def0-4adc-8459-8e451c247f49
+        token: 197f3a1d-9951-44f1-99ce-51e4cdca464c
         # Created when 'npm test' was executed
         file: test/unit/coverage/lcov.info # create when run npm test
         # Flags allow you to isolate coverage reports for different tests
