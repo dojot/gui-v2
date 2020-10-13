@@ -60,7 +60,9 @@ jobs:
         echo ::set-output name=owner::$OWNER
     - name: Checkout
       uses: actions/checkout@v1
-
+    - name: Get release version
+      id: get_version
+      run: echo ::set-env name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
     - name: Build and Push
       uses: elgohr/Publish-Docker-Github-Action@2.16
       with:
@@ -68,6 +70,6 @@ jobs:
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
         # Label with the built image's commit
-        buildoptions: " --label 'commit_sha'='${{ github.sha }}' "
+        buildoptions: " --label 'commit_sha'='${{ github.sha }}' --build-arg DOJOT_VERSION=${{ env.RELEASE_VERSION }}"
         # Whether tag will be based in the branch name or in the tag name
         tag_names: true
