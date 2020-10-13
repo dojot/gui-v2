@@ -30,7 +30,7 @@ jobs:
         yarn install
         yarn run build
         yarn run lint
-        yarn run test:coverage      
+        yarn run test:coverage
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:
