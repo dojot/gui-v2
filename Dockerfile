@@ -2,7 +2,7 @@ FROM node:12.18.2 as basis
 
 WORKDIR /opt/app
 
-ARG DOJOT_VERSION=development
+ARG DOJOT_VERSION=undefined
 ENV GUI_VERSION $DOJOT_VERSION
 
 COPY package.json .
