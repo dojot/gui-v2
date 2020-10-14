@@ -43,34 +43,38 @@ const DrawerComponent = props => {
         <img src={logo} alt='dojot logo' />
       </div>
       <MenuList disablePadding>
-        {primaryItems.map(item => (
-          <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem
-              selected={activeRoute(item)}
-              classes={{ selected: classes.selected }}
-            >
-              <ListItemIcon>
-                <item.icon />
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </MenuItem>
-          </Link>
-        ))}
+        {primaryItems.map(item =>
+          item.visible ? (
+            <Link to={item.path} className={classes.menuLink} key={item.label}>
+              <MenuItem
+                selected={activeRoute(item)}
+                classes={{ selected: classes.selected }}
+              >
+                <ListItemIcon>
+                  <item.icon />
+                </ListItemIcon>
+                <ListItemText primary={item.label} />
+              </MenuItem>
+            </Link>
+          ) : null,
+        )}
       </MenuList>
       <MenuList className={classes.bottomList}>
-        {secondaryItems.map(item => (
-          <Link to={item.path} className={classes.menuLink} key={item.label}>
-            <MenuItem
-              selected={activeRoute(item)}
-              classes={{ selected: classes.selected }}
-            >
-              <ListItemIcon>
-                <item.icon />
-              </ListItemIcon>
-              <ListItemText primary={item.label} />
-            </MenuItem>
-          </Link>
-        ))}
+        {secondaryItems.map(item =>
+          item.visible ? (
+            <Link to={item.path} className={classes.menuLink} key={item.label}>
+              <MenuItem
+                selected={activeRoute(item)}
+                classes={{ selected: classes.selected }}
+              >
+                <ListItemIcon>
+                  <item.icon />
+                </ListItemIcon>
+                <ListItemText primary={item.label} />
+              </MenuItem>
+            </Link>
+          ) : null,
+        )}
       </MenuList>
     </Drawer>
   );
