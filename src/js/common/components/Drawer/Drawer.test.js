@@ -17,11 +17,13 @@ const initialProps = {
   isOpen: false,
   primaryItems: [
     {
+      visible: true,
       label: 'Dispositivos',
       path: '/devices',
       icon: DevicesOther,
     },
     {
+      visible: true,
       label: 'Modelos',
       path: '/templates',
       icon: FilterNone,
@@ -29,11 +31,13 @@ const initialProps = {
   ],
   secondaryItems: [
     {
+      visible: true,
       label: 'Ajuda',
       path: '/help',
       icon: HelpOutline,
     },
     {
+      visible: true,
       label: 'Sair',
       path: '/logout',
       icon: ExitToApp,
