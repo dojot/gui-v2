@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
-import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
+import Card from '@material-ui/core/Card';
 import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
@@ -112,13 +112,11 @@ const LoginForm = ({
             margin='normal'
             data-testid='password'
           />
-          {hasError &&
-            <Alert
-              severity="error"
-              size='medium'
-              margin='normal'
-            >{t('login:Error')}</Alert>
-          }
+          {hasError && (
+            <Alert severity='error' size='medium' margin='normal'>
+              {t('login:Error')}
+            </Alert>
+          )}
           <Button
             variant='outlined'
             color='secondary'
