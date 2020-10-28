@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
+import Box from '@material-ui/core/Box';
+import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
@@ -21,6 +23,7 @@ const validationSchema = Yup.object({
 });
 
 const LoginView = ({ location, history }) => {
+  let hasError = false;
   const handleSubmit = async ({ user, password }) => {
     try {
       await Authentication.login({
@@ -31,6 +34,7 @@ const LoginView = ({ location, history }) => {
     } catch (e) {
       // TODO: Handle the exception more appropriately
       console.error(e.message);
+      hasError = true;
     }
   };
   const initialState = {
@@ -50,7 +54,7 @@ const LoginView = ({ location, history }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {formikProps => <LoginForm {...formikProps} />}
+      {formikProps => <LoginForm {...formikProps} hasError={hasError} />}
     </Formik>
   );
 };
@@ -62,6 +66,7 @@ const LoginForm = ({
   handleChange,
   handleBlur,
   handleSubmit,
+  hasError,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation(['login', 'common']);
@@ -107,6 +112,13 @@ const LoginForm = ({
             margin='normal'
             data-testid='password'
           />
+          {hasError &&
+            <Alert
+              severity="error"
+              size='medium'
+              margin='normal'
+            >{t('login:Error')}</Alert>
+          }
           <Button
             variant='outlined'
             color='secondary'
