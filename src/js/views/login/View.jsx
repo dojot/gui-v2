@@ -111,13 +111,11 @@ const LoginForm = ({
             margin='normal'
             data-testid='password'
           />
-          {hasError &&
-            <Alert
-              severity="error"
-              size='medium'
-              margin='normal'
-            >{t('login:Error')}</Alert>
-          }
+          {hasError && (
+            <Alert severity='error' size='medium' margin='normal'>
+              {t('login:Error')}
+            </Alert>
+          )}
           <Button
             variant='outlined'
             color='secondary'
