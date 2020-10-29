@@ -35,7 +35,7 @@ const LoginView = ({ location, history }) => {
       // TODO: Handle the exception more appropriately
       console.error(e.message);
       hasError = true;
-      (e.message.indexOf('404') ? msgError = 'networkError' : msgError = 'loginError');
+      msgError = (e.message.indexOf('404') !== -1 ? 'networkError' : 'loginError');
     }
   };
   const initialState = {
@@ -72,6 +72,8 @@ const LoginForm = ({
 }) => {
   const classes = useStyles();
   const { t } = useTranslation(['login', 'common']);
+
+  console.log(msgError);
 
   return (
     <Grid container justify='center' className={classes.root}>
