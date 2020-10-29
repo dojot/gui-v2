@@ -35,7 +35,9 @@ const LoginView = ({ location, history }) => {
       // TODO: Handle the exception more appropriately
       console.error(e.message);
       hasError = true;
-      (e.message.indexOf('404') ? msgError = 'networkError' : msgError = 'loginError');
+      e.message.indexOf('404')
+        ? (msgError = 'networkError')
+        : (msgError = 'loginError');
     }
   };
   const initialState = {
@@ -55,7 +57,9 @@ const LoginView = ({ location, history }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {formikProps => <LoginForm {...formikProps} hasError={hasError} msgError={msgError} />}
+      {formikProps => (
+        <LoginForm {...formikProps} hasError={hasError} msgError={msgError} />
+      )}
     </Formik>
   );
 };
