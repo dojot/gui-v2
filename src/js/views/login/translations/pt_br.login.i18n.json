@@ -7,5 +7,6 @@
   "5 characters minimum": "Mínimo de 5 caracteres",
   "Type the password": "Digite a senha",
   "Password is required": "Senha é obrigatório",
-  "Error": "Login ou senha inválidos"
+  "loginError": "Erro ao tentar fazer o login",
+  "networkError": "Sem conexão com o servidor."
 }

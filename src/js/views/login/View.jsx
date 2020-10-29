@@ -23,6 +23,7 @@ const validationSchema = Yup.object({
 
 const LoginView = ({ location, history }) => {
   let hasError = false;
+  let msgError = '';
   const handleSubmit = async ({ user, password }) => {
     try {
       await Authentication.login({
@@ -34,6 +35,7 @@ const LoginView = ({ location, history }) => {
       // TODO: Handle the exception more appropriately
       console.error(e.message);
       hasError = true;
+      (e.message.indexOf('404') ? msgError = 'networkError' : msgError = 'loginError');
     }
   };
   const initialState = {
@@ -53,7 +55,7 @@ const LoginView = ({ location, history }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {formikProps => <LoginForm {...formikProps} hasError={hasError} />}
+      {formikProps => <LoginForm {...formikProps} hasError={hasError} msgError={msgError} />}
     </Formik>
   );
 };
@@ -66,6 +68,7 @@ const LoginForm = ({
   handleBlur,
   handleSubmit,
   hasError,
+  msgError,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation(['login', 'common']);
@@ -113,7 +116,7 @@ const LoginForm = ({
           />
           {hasError && (
             <Alert severity='error' size='medium' margin='normal'>
-              {t('login:Error')}
+              {t(`login:${msgError}`)}
             </Alert>
           )}
           <Button

@@ -7,5 +7,6 @@
   "5 characters minimum": "5 characters minimum",
   "Type the password": "Type the password",
   "Password is required": "Password is required",
-  "Error": "Login or password invalid"
+  "loginError": "Error trying to login",
+  "networkError": "No connection to server."
 }
