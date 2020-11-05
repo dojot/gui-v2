@@ -16,6 +16,20 @@ import useStyles from './style';
 const SimpleTable = ({ columns, rows, hasTimestamp }) => {
   const { head, root } = useStyles();
 
+  const ValueFormatter = ({ row, column }) => {
+    if (!row[column.dataKey]) {
+      return '-';
+    }
+    if (typeof row[column.dataKey] === 'object') {
+      return (
+        <pre style={{ textAlign: 'left' }}>
+          {JSON.stringify(row[column.dataKey], undefined, 2)}
+        </pre>
+      );
+    }
+    return row[column.dataKey];
+  };
+
   return (
     <TableContainer classes={{ root }}>
       <Table stickyHeader size='small' aria-label='customized table'>
@@ -56,7 +70,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp }) => {
                     key={`${column.dataKey}_${uuidv4()}`}
                     align='center'
                   >
-                    {row[column.dataKey] || '-'}
+                    <ValueFormatter row={row} column={column} />
                   </TableCell>
                 );
               })}
