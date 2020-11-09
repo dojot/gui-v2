@@ -5,6 +5,10 @@ const useStyles = makeStyles(theme => {
     root: {
       borderRadius: 5,
       height: '100%',
+      overflowY: 'hidden',
+      '&:hover': {
+        overflowY: 'auto',
+      },
     },
     lines: {
       padding: '14px 5px',
@@ -15,7 +19,7 @@ const useStyles = makeStyles(theme => {
       lineHeight: '24px',
       textTransform: 'none',
       color: theme.palette.primary.dark,
-      backgroundColor: theme.palette.table.head,
+      backgroundColor: theme.palette.background.paper,
       userSelect: 'none',
     },
   };

@@ -4,7 +4,7 @@ import { render, fireEvent } from '@testing-library/react';
 import Bar from 'Assets/images/bar.png';
 import '@testing-library/jest-dom/extend-expect';
 
-import ImageCard from './ImageCard.jsx';
+import Index from './ImageCard.jsx';
 
 describe('ImageCard', () => {
   const title = 'Gráfico de Barras';
@@ -12,7 +12,7 @@ describe('ImageCard', () => {
 
   it('should to able simple render ', () => {
     const { container, getByTestId } = render(
-      <ImageCard
+      <Index
         title={title}
         image={Bar}
         description={description}
@@ -29,7 +29,7 @@ describe('ImageCard', () => {
     const mockedHandleClick = jest.fn();
 
     const { getByTestId } = render(
-      <ImageCard
+      <Index
         title={title}
         image={Bar}
         description={description}
