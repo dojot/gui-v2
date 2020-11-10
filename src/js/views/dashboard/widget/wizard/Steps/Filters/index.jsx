@@ -121,7 +121,7 @@ const Index = props => {
 
   const handleChangeFixedValue = useCallback(event => {
     const { value } = event.target;
-    setData(state => ({ ...state, fixedValue: value }));
+    setData(state => ({ ...state, fixedValue: value.replace(/\D/gim, '') }));
   }, []);
 
   const handleChangeDynamicValue = useCallback(event => {
