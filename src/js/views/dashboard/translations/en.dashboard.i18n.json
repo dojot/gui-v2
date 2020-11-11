@@ -36,6 +36,10 @@
     "title": "Donut Chart",
     "description": "Alternative to Pie Chart"
   },
+  "map": {
+    "title": "Map",
+    "description": "Graphs the location of the device"
+  },
   "attributes": {
     "search": "Enter the device / attribute name",
     "notFound": "No attributes found for the given filter",

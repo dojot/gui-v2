@@ -14,8 +14,9 @@ import { DonutChartCard } from './donutChart';
 import { LineChartCard } from './lineChart';
 import { PizzaChartCard } from './pizzaChart';
 import { TableCard } from './table';
+import { MapCard } from './map';
 
-const useStyles = makeStyles(theme => {
+const useStyles = makeStyles(() => {
   return {
     root: {
       flexGrow: 1,
@@ -26,7 +27,7 @@ const useStyles = makeStyles(theme => {
 const WidgetView = props => {
   const classes = useStyles();
   const { history } = props;
-  const { line, area, bar, pizza, donut, bubble, table } = __CONFIG__;
+  const { line, area, bar, pizza, donut, bubble, table, map } = __CONFIG__;
   const { t } = useTranslation(['dashboard']);
 
   const handleClick = useCallback(
@@ -46,6 +47,7 @@ const WidgetView = props => {
         <BubbleChartCard onClick={() => handleClick(bubble)} />
         <BarChartCard onClick={() => handleClick(bar)} />
         <TableCard onClick={() => handleClick(table)} />
+        <MapCard onClick={() => handleClick(map)} />
       </Grid>
     </ViewContainer>
   );

@@ -33,6 +33,7 @@
     "donut": "5",
     "bubble": "6",
     "table": "7",
+    "map": "8",
     "apiUrl": "/"
   }
 }

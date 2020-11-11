@@ -36,6 +36,10 @@
     "title": "Gráfico de Donut",
     "description": "Alternativa ao Gráfico de Pizza"
   },
+  "map": {
+    "title": "Mapa",
+    "description": "Representa graficamente a localização do dispositivo"
+  },
   "attributes": {
     "search": "Digite o nome do dispositivo / atributo",
     "notFound": "Nenhum atributo encontrado para o filtro informado",
