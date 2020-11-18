@@ -1,8 +1,11 @@
 import React from 'react';
 
-import { render, fireEvent } from '@testing-library/react';
+import Alert from '@material-ui/lab/Alert';
+import { render, fireEvent, act } from '@testing-library/react';
+import * as api from 'APIs/index';
+import { mount } from 'enzyme';
 
-import Login from './View';
+import Login, { LoginForm } from './View';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -10,8 +13,46 @@ jest.mock('react-i18next', () => ({
   }),
 }));
 
+const updateFormikField = async (nativeFieldWrapper, targetName, value) => {
+  await act(async () => {
+    nativeFieldWrapper.simulate('change', {
+      target: { name: targetName, value },
+    });
+  });
+  await act(async () => {
+    nativeFieldWrapper.simulate('blur', { target: { name: targetName } });
+  });
+};
+
+const submitFormikForm = async nativeFormWrapper => {
+  await act(async () => {
+    nativeFormWrapper.simulate('submit', { preventDefault: () => {} });
+  });
+};
+
 describe('Login', () => {
   const password = 'ps';
+
+  it('shoud be able to simple render error', async () => {
+    jest.spyOn(api, 'unprotectedAPI').mockImplementationOnce(() => ({
+      login: null,
+    }));
+
+    const wrapper = mount(<Login />);
+
+    const userField = wrapper.find('input[name="user"]').first();
+    await updateFormikField(userField, 'user', 'user123456');
+
+    const passwordField = wrapper.find('input[name="password"]').first();
+    await updateFormikField(passwordField, 'password', 'password123456');
+
+    const htmlForm = wrapper.find('form');
+
+    await submitFormikForm(htmlForm);
+    wrapper.update();
+    expect(wrapper.find(LoginForm).find(Alert)).toHaveLength(1);
+  });
+
   it('shoud be able to simple render', () => {
     const { container } = render(<Login />);
     expect(container).toBeInTheDocument();

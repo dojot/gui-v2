@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
@@ -22,8 +22,8 @@ const validationSchema = Yup.object({
 });
 
 const LoginView = ({ location, history }) => {
-  let hasError = false;
-  let msgError = '';
+  const [hasError, setHasError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const handleSubmit = async ({ user, password }) => {
     try {
       await Authentication.login({
@@ -31,12 +31,12 @@ const LoginView = ({ location, history }) => {
         password,
       });
       history.push('/dashboard');
-    } catch (e) {
+    } catch ({ message }) {
       // TODO: Handle the exception more appropriately
-      console.error(e.message);
-      hasError = true;
-      msgError =
-        e.message.indexOf('404') !== -1 ? 'networkError' : 'loginError';
+      console.error(message);
+      setHasError(true);
+      setMsgError(
+        e.message.indexOf('404') !== -1 ? 'networkError' : 'loginError');
     }
   };
   const initialState = {
@@ -63,7 +63,7 @@ const LoginView = ({ location, history }) => {
   );
 };
 
-const LoginForm = ({
+export const LoginForm = ({
   values,
   touched,
   errors,
@@ -76,8 +76,6 @@ const LoginForm = ({
   const classes = useStyles();
   const { t } = useTranslation(['login', 'common']);
 
-  console.log(msgError);
-
   return (
     <Grid container justify='center' className={classes.root}>
       <Card className={classes.grid}>
@@ -87,6 +85,7 @@ const LoginForm = ({
           </Typography>
           <TextField
             id='user'
+            name='user'
             inputProps={{ 'data-testid': 'userTest' }}
             label={t('login:user')}
             variant='outlined'
@@ -102,6 +101,7 @@ const LoginForm = ({
           />
           <TextField
             id='password'
+            name='password'
             inputProps={{ 'data-testid': 'passwordTest' }}
             label={t('login:password')}
             type='password'
