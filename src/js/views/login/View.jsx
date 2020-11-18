@@ -36,7 +36,8 @@ const LoginView = ({ location, history }) => {
       console.error(message);
       setHasError(true);
       setMsgError(
-        e.message.indexOf('404') !== -1 ? 'networkError' : 'loginError');
+        e.message.indexOf('404') !== -1 ? 'networkError' : 'loginError',
+      );
     }
   };
   const initialState = {
