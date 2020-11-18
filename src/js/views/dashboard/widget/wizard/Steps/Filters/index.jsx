@@ -126,7 +126,7 @@ const Index = props => {
 
   const handleChangeDynamicValue = useCallback(event => {
     const { value } = event.target;
-    setData(state => ({ ...state, dynamicValue: (value.replace(/\D/gim,'')) }));
+    setData(state => ({ ...state, dynamicValue: value.replace(/\D/gim, '') }));
   }, []);
 
   useEffect(() => {
