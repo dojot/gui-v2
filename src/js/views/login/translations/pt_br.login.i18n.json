@@ -6,5 +6,7 @@
   "User is required": "Usuário é Obrigatório",
   "5 characters minimum": "Mínimo de 5 caracteres",
   "Type the password": "Digite a senha",
-  "Password is required": "Senha é obrigatório"
+  "Password is required": "Senha é obrigatório",
+  "loginError": "Erro ao tentar fazer o login",
+  "networkError": "Sem conexão com o servidor."
 }

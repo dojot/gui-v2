@@ -6,5 +6,7 @@
   "User is required": "User is required",
   "5 characters minimum": "5 characters minimum",
   "Type the password": "Type the password",
-  "Password is required": "Password is required"
+  "Password is required": "Password is required",
+  "loginError": "Error trying to login",
+  "networkError": "No connection to server."
 }

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Grid, TextField, Button, Typography } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
+import Alert from '@material-ui/lab/Alert';
 import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
 import { Redirect } from 'react-router-dom';
@@ -21,6 +22,8 @@ const validationSchema = Yup.object({
 });
 
 const LoginView = ({ location, history }) => {
+  const [hasError, setHasError] = useState(false);
+  const [msgError, setMsgError] = useState('');
   const handleSubmit = async ({ user, password }) => {
     try {
       await Authentication.login({
@@ -28,9 +31,13 @@ const LoginView = ({ location, history }) => {
         password,
       });
       history.push('/dashboard');
-    } catch (e) {
+    } catch ({ message }) {
       // TODO: Handle the exception more appropriately
-      console.error(e.message);
+      console.error(message);
+      setHasError(true);
+      setMsgError(
+        message.indexOf('404') !== -1 ? 'networkError' : 'loginError',
+      );
     }
   };
   const initialState = {
@@ -50,18 +57,22 @@ const LoginView = ({ location, history }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {formikProps => <LoginForm {...formikProps} />}
+      {formikProps => (
+        <LoginForm {...formikProps} hasError={hasError} msgError={msgError} />
+      )}
     </Formik>
   );
 };
 
-const LoginForm = ({
+export const LoginForm = ({
   values,
   touched,
   errors,
   handleChange,
   handleBlur,
   handleSubmit,
+  hasError,
+  msgError,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation(['login', 'common']);
@@ -75,6 +86,7 @@ const LoginForm = ({
           </Typography>
           <TextField
             id='user'
+            name='user'
             inputProps={{ 'data-testid': 'userTest' }}
             label={t('login:user')}
             variant='outlined'
@@ -90,6 +102,7 @@ const LoginForm = ({
           />
           <TextField
             id='password'
+            name='password'
             inputProps={{ 'data-testid': 'passwordTest' }}
             label={t('login:password')}
             type='password'
@@ -107,6 +120,11 @@ const LoginForm = ({
             margin='normal'
             data-testid='password'
           />
+          {hasError && (
+            <Alert severity='error' size='medium' margin='normal'>
+              {t(`login:${msgError}`)}
+            </Alert>
+          )}
           <Button
             variant='outlined'
             color='secondary'
