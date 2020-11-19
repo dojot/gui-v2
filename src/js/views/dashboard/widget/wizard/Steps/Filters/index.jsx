@@ -121,7 +121,7 @@ const Index = props => {
 
   const handleChangeFixedValue = useCallback(event => {
     const { value } = event.target;
-    setData(state => ({ ...state, fixedValue: value }));
+    setData(state => ({ ...state, fixedValue: value.replace(/\D/gim, '') }));
   }, []);
 
   const handleChangeDynamicValue = useCallback(event => {
@@ -264,6 +264,7 @@ const Index = props => {
                       onChange={handleChangeDynamicValue}
                       label='Nº Registros'
                       disabled={data.filterType !== '1'}
+                      inputProps={{ min: 0, max: 9999, step: 1 }}
                     />
                   </FormControl>
                 </div>
