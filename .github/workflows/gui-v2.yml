@@ -58,9 +58,15 @@ jobs:
         echo ::set-output name=owner::$OWNER
     - name: Checkout
       uses: actions/checkout@v1
-    - name: Get release version
-      id: get_version
-      run: echo ::save-state name=RELEASE_VERSION::$(echo ${GITHUB_REF:10})
+    - name: Version Doc
+      id: version_doc
+      env:
+          GITHUB_REF: ${{ github.ref }}
+          GITHUB_SHA: ${{ github.sha }}
+      run: |
+          export RELEASE_VERSION=$(sh .github/workflows/translate_version.sh)
+          echo Documentation Version $RELEASE_VERSION
+          echo ::set-output name=version::$RELEASE_VERSION
     - name: Build and Push
       uses: elgohr/Publish-Docker-Github-Action@master
       with:
