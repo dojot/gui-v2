@@ -42,7 +42,6 @@ jobs:
         name: gui-v2
                
   docker-hub:
-    #needs: unit-tests
     # Path to help identify each job in the status checks
     name:  Build and Publish image to DockerHUb
     runs-on: ubuntu-latest
