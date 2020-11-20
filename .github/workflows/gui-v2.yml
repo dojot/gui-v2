@@ -65,7 +65,7 @@ jobs:
           GITHUB_SHA: ${{ github.sha }}
       run: |
           export RELEASE_VERSION=$(sh .github/workflows/translate_version.sh)
-          echo Documentation Version $RELEASE_VERSION
+          echo Version $RELEASE_VERSION
           echo ::set-output name=version::$RELEASE_VERSION
     - name: Build and Push
       uses: elgohr/Publish-Docker-Github-Action@master
