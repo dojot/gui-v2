@@ -6,6 +6,14 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: theme.palette.background.default,
     position: 'relative',
     zIndex: 999,
+    '& .listTitle': {
+      fontWeight: '500',
+    },
+    '& .listId': {
+      fontSize: '0.8rem',
+      color: '#9A9A9A',
+      marginLeft: '1rem',
+    },
   },
   searchContainer: {
     width: '100%',

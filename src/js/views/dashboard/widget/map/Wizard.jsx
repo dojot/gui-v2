@@ -1,10 +1,8 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react';
 
-import Button from '@material-ui/core/Button';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
-import Typography from '@material-ui/core/Typography';
 import { usePaginator } from 'Components/Paginator';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
@@ -15,22 +13,20 @@ import { menuSelector } from 'Selectors/baseSelector';
 import { Device as DeviceService } from 'Services';
 
 import { ViewContainer } from '../../../stateComponents';
-import useArea from './hooks/useArea';
-import useBar from './hooks/useBar';
-import useLine from './hooks/useLine';
-import useTable from './hooks/useTable';
+import { useMap } from '../wizard/hooks';
 import {
   Attributes,
   Devices,
-  GeneralFilter,
+  MapFilter,
   General,
   InitialStateGeneral as general,
   Summary,
-} from './Steps';
-import useStyles from './style';
+} from '../wizard/Steps';
+import useStyles from '../wizard/style';
+
+const acceptedTypes = ['GEO'];
 
 const Wizard = ({
-  type: wizardType,
   title,
   toDashboard,
   addWidget,
@@ -46,12 +42,6 @@ const Wizard = ({
     'steps.filters',
     'steps.overview',
   ];
-  const {
-    line: wizardLineType,
-    area: wizardAreaType,
-    bar: wizardBarType,
-    table: wizardTableType,
-  } = __CONFIG__;
 
   const initialState = {
     general,
@@ -100,9 +90,20 @@ const Wizard = ({
     [setCurrentPage],
   );
 
-  const generateScheme = useCallback(state => {
-    const { lastN, operationType, dateFrom, dateTo, isRealTime } = state.filter;
+  const parseGeo = value => {
+    const [lat, long] = value.split(',');
+    return [parseFloat(lat), parseFloat(long)];
+  };
 
+  const generateScheme = useCallback(state => {
+    const { isRealTime } = state.filter;
+    const staticAttributes = {};
+    state.attributes.staticValues.forEach(item => {
+      staticAttributes[item.attributeID] = {
+        value: item.staticValue ? parseGeo(item.staticValue) : [0, 0],
+        timestamp: 0,
+      };
+    });
     return DeviceService.parseHistoryQuery({
       devices: _.values(
         _.mapValues(
@@ -115,33 +116,16 @@ const Wizard = ({
           },
         ),
       ),
-      dateFrom,
-      dateTo,
-      operationType,
-      lastN,
+      staticAttributes,
+      dateFrom: '',
+      dateTo: '',
+      operationType: 5,
+      lastN: 1,
       isRealTime,
     });
   }, []);
 
-  const { createLineWidget } = useLine(
-    addWidget,
-    addWidgetConfig,
-    addWidgetSaga,
-    generateScheme,
-  );
-  const { createAreaWidget } = useArea(
-    addWidget,
-    addWidgetConfig,
-    addWidgetSaga,
-    generateScheme,
-  );
-  const { createBarWidget } = useBar(
-    addWidget,
-    addWidgetConfig,
-    addWidgetSaga,
-    generateScheme,
-  );
-  const { createTableWidget } = useTable(
+  const { createMapWidget } = useMap(
     addWidget,
     addWidgetConfig,
     addWidgetSaga,
@@ -150,34 +134,9 @@ const Wizard = ({
 
   const createNewWidget = useCallback(
     data => {
-      switch (wizardType) {
-        case wizardLineType:
-          createLineWidget(data);
-          break;
-        case wizardAreaType:
-          createAreaWidget(data);
-          break;
-        case wizardBarType:
-          createBarWidget(data);
-          break;
-        case wizardTableType:
-          createTableWidget(data);
-          break;
-        default:
-          break;
-      }
+      createMapWidget(data);
     },
-    [
-      wizardType,
-      wizardAreaType,
-      wizardBarType,
-      wizardLineType,
-      wizardTableType,
-      createAreaWidget,
-      createBarWidget,
-      createLineWidget,
-      createTableWidget,
-    ],
+    [createMapWidget],
   );
 
   const memoizedReducer = useCallback(
@@ -207,10 +166,6 @@ const Wizard = ({
 
   const [state, dispatch] = useReducer(memoizedReducer, initialState);
   const { activeStep } = state;
-
-  const handleReset = useCallback(() => {
-    dispatch({ type: 'reset' });
-  }, []);
 
   const getStepContent = useCallback(
     stepIndex => {
@@ -253,11 +208,12 @@ const Wizard = ({
               steps={steps}
               activeStep={stepIndex}
               isOpen={isMenuOpen}
+              acceptedTypes={acceptedTypes}
             />
           );
         case 3:
           return (
-            <GeneralFilter
+            <MapFilter
               handleNavigate={dispatch}
               steps={steps}
               activeStep={stepIndex}
@@ -313,26 +269,13 @@ const Wizard = ({
             </Step>
           ))}
         </Stepper>
-        <div>
-          {activeStep === steps.length ? (
-            <div>
-              <Typography className={classes.instructions}>
-                All steps completed
-              </Typography>
-              <Button onClick={handleReset}>Reset</Button>
-              <Button onClick={() => dispatch({ type: 'back' })}>Back</Button>
-            </div>
-          ) : (
-            getStepContent(activeStep)
-          )}
-        </div>
+        {getStepContent(activeStep)}
       </div>
     </ViewContainer>
   );
 };
 
 Wizard.propTypes = {
-  type: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   toDashboard: PropTypes.func.isRequired,
 };

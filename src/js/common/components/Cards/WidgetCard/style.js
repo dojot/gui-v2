@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-const useStyles = makeStyles(() => {
+const useStyles = makeStyles(theme => {
   return {
     card: {
       height: '100%',
@@ -8,6 +8,9 @@ const useStyles = makeStyles(() => {
       display: 'flex',
       flexWrap: 'wrap',
       flexDirection: 'column',
+      '&:active': {
+        boxShadow: theme.shadows[6],
+      },
     },
     header: {
       padding: '12px 16px 10px 16px',
@@ -25,13 +28,13 @@ const useStyles = makeStyles(() => {
       marginTop: -3,
     },
     cardContent: {
-      padding: '10px 16px',
+      padding: '0 8px',
       minHeight: 30,
       width: '100%',
       position: 'relative',
       flex: 1,
       '&:last-child': {
-        paddingBottom: 16,
+        paddingBottom: 8,
       },
     },
     iconButtonSmall: {

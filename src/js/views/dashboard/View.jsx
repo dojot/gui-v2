@@ -1,6 +1,6 @@
 import 'react-grid-layout/css/styles.css';
 import 'react-resizable/css/styles.css';
-import React, { useCallback, useEffect, Fragment } from 'react';
+import React, { useCallback, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
@@ -24,6 +24,7 @@ import { ViewContainer } from '../stateComponents';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
+import { MapWidget } from './widget/map';
 import { TableWidget } from './widget/table';
 
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
@@ -48,7 +49,7 @@ const Dashboard = props => {
     checkData,
   } = props;
 
-  const { bar, line, area, table } = __CONFIG__;
+  const { bar, line, area, table, map } = __CONFIG__;
 
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
@@ -158,6 +159,18 @@ const Dashboard = props => {
               />
             </div>
           );
+        case map:
+          return (
+            <div key={i}>
+              <MapWidget
+                id={i}
+                onDelete={onRemoveItem}
+                onPin={onPin}
+                data={data[i]}
+                config={configs[i]}
+              />
+            </div>
+          );
         default:
           return (
             <div key={i}>
@@ -166,7 +179,7 @@ const Dashboard = props => {
           );
       }
     },
-    [area, bar, configs, line, data, onPin, onRemoveItem, table],
+    [area, bar, configs, line, data, onPin, onRemoveItem, table, map],
   );
 
   const getHeaderContent = useCallback(() => {
@@ -223,6 +236,7 @@ const Dashboard = props => {
         compactType='vertical'
         verticalCompact
         preventCollision={false}
+        draggableHandle='.MuiCardHeader-root'
       >
         {_.map(layout, element => createElement(element))}
       </ResponsiveReactGridLayout>

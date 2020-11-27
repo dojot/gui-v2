@@ -13,5 +13,6 @@
   "pin": "Pin",
   "edit": "Edit",
   "delete": "Delete",
-  "finish": "Finish"
+  "finish": "Finish",
+  "noData": "No Data"
 }

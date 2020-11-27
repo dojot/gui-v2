@@ -13,7 +13,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       subTitle: generalState.description || '',
     };
 
-    const areaProps = attributes.map(item => ({
+    const areaProps = attributes.dynamicValues.map(item => ({
       type: 'monotone',
       dataKey: item.attributeID,
       stroke: item.color,

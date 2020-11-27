@@ -13,7 +13,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       subTitle: generalState.description || '',
     };
 
-    const table = attributes.map(item => ({
+    const table = attributes.dynamicValues.map(item => ({
       dataKey: `${item.deviceID}${item.label}`,
       name: item.description || item.label,
     }));

@@ -3,9 +3,9 @@ import { useCallback } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
 export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
-  const { line: lineID } = __CONFIG__;
+  const { map: mapID } = __CONFIG__;
 
-  const generateLineConfig = useCallback(state => {
+  const generateMapConfig = useCallback(state => {
     const { attributes, general: generalState } = state;
 
     const meta = {
@@ -13,19 +13,26 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       subTitle: generalState.description || '',
     };
 
-    const line = attributes.dynamicValues.map(item => ({
-      type: 'monotone',
+    const dynamicAttr = attributes.dynamicValues.map(item => ({
       dataKey: `${item.deviceID}${item.label}`,
-      stroke: item.color,
       name: item.description || item.label,
+      markerColor: item.color,
     }));
 
-    return { line, meta };
+    const staticAttr = attributes.staticValues.map(item => ({
+      dataKey: `${item.deviceID}${item.label}`,
+      name: item.description || item.label,
+      markerColor: item.color,
+    }));
+
+    const map = dynamicAttr.concat(staticAttr);
+
+    return { map, meta };
   }, []);
 
-  const createLineWidget = useCallback(
+  const createMapWidget = useCallback(
     attributes => {
-      const widgetId = `${lineID}/${uuidv4()}`;
+      const widgetId = `${mapID}/${uuidv4()}`;
 
       const newWidget = {
         i: widgetId,
@@ -40,18 +47,18 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       };
 
       addWidget(newWidget);
-      addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
+      addWidgetConfig({ [widgetId]: generateMapConfig(attributes) });
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
     },
     [
       addWidget,
       addWidgetConfig,
       addWidgetSaga,
-      lineID,
-      generateLineConfig,
+      mapID,
+      generateMapConfig,
       generateScheme,
     ],
   );
 
-  return { createLineWidget };
+  return { createMapWidget };
 };

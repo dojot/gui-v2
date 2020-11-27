@@ -45,14 +45,22 @@ const useDidMountEffect = (func, deps) => {
   }, deps);
 };
 
-const Index = props => {
-  const { initialState, handleClick, ...otherProps } = props;
-
+const Index = ({ initialState, handleClick, ...otherProps }) => {
   const handleSubmit = values => {
+    const staticValues = [];
+    const dynamicValues = [];
+    values.attributes.forEach(item => {
+      if (item.isDynamic) {
+        dynamicValues.push(item);
+      } else {
+        staticValues.push(item);
+      }
+    });
+
     handleClick({
       type: 'next',
       payload: {
-        values: values.attributes,
+        values: { dynamicValues, staticValues },
         key: 'attributes',
       },
     });
@@ -78,12 +86,11 @@ const Index = props => {
 
 const AttributesForm = props => {
   const classes = useStyles();
-  const { handleChange, handleSubmit, initialValues } = props;
+  const { handleChange, handleSubmit, initialValues, acceptedTypes } = props;
   const [checked, setChecked] = useState([]);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
-
   const {
     paginatorData,
     setPaginatorData,
@@ -112,13 +119,17 @@ const AttributesForm = props => {
     orderedDevices.forEach(device => {
       const orderedAttrs = sortList(device.attrs, 'label');
 
-      const deviceAttributes = orderedAttrs.map(attr => ({
-        deviceId: device.id,
-        deviceLabel: device.label,
-        attributeId: `${device.id}${attr.label}`,
-        attributeLabel: attr.label,
-        attributeValueType: attr.valueType,
-      }));
+      const deviceAttributes = orderedAttrs.map(
+        ({ isDynamic, staticValue, label, valueType }) => ({
+          isDynamic,
+          staticValue,
+          deviceId: device.id,
+          deviceLabel: device.label,
+          attributeId: `${device.id}${label}`,
+          attributeLabel: label,
+          attributeValueType: valueType,
+        }),
+      );
       deviceAttributes.forEach(attr => attributes.push(attr));
     });
     return attributes;
@@ -139,7 +150,6 @@ const AttributesForm = props => {
             item.attributeLabel.toLowerCase().includes(searchTermDebounced)
           );
         });
-
     setPaginatorData(filtered);
   }, [initialAttributes, searchTermDebounced, setPaginatorData]);
 
@@ -148,43 +158,24 @@ const AttributesForm = props => {
     setSearchTerm(value ? value.toLowerCase() : '');
   }, []);
 
-  const handleToggle = ({
-    attributeID,
-    deviceID,
-    deviceLabel,
-    color,
-    description,
-    label,
-    isToggle,
-  }) => {
+  const handleToggle = ({ isToggle, ...otherProps }) => {
     const currentIndex = checked
       .map(item => item.attributeID)
-      .indexOf(attributeID);
+      .indexOf(otherProps.attributeID);
     const newChecked = [...checked];
 
     if (currentIndex === -1) {
       newChecked.push({
-        label,
-        attributeID,
-        deviceID,
-        deviceLabel,
-        color,
-        description,
+        ...otherProps,
       });
     } else if (isToggle) {
       newChecked.splice(currentIndex, 1);
       newChecked.push({
-        label,
-        attributeID,
-        deviceID,
-        deviceLabel,
-        color,
-        description,
+        ...otherProps,
       });
     } else {
       newChecked.splice(currentIndex, 1);
     }
-
     setChecked(newChecked);
     handleChange({
       currentTarget: {
@@ -228,12 +219,12 @@ const AttributesForm = props => {
                 attributeId,
                 attributeLabel,
                 attributeValueType,
+                isDynamic,
+                staticValue,
               } = item;
-
               const isSelected = checked.find(
                 checkedItem => checkedItem.attributeID === attributeId,
               );
-
               return (
                 <ItemRow
                   handleToggle={handleToggle}
@@ -248,6 +239,9 @@ const AttributesForm = props => {
                   }}
                   key={`${deviceId}${attributeLabel}`}
                   selected={!!isSelected}
+                  acceptedTypes={acceptedTypes}
+                  isDynamic={isDynamic}
+                  staticValue={staticValue}
                 />
               );
             })
@@ -270,9 +264,16 @@ const AttributesForm = props => {
   );
 };
 
-const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
+const ItemRow = ({
+  value,
+  handleToggle,
+  meta,
+  selected = false,
+  acceptedTypes,
+  isDynamic,
+  staticValue,
+}) => {
   const { id, label, attributeId } = meta;
-
   const classes = useStyles();
   const labelId = `checkbox-list-label-${attributeId}`;
 
@@ -291,6 +292,8 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
         description,
         label: value.label,
         isToggle,
+        isDynamic,
+        staticValue,
       });
     }
   }, [color]);
@@ -305,6 +308,8 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
         description,
         label: value.label,
         isToggle,
+        isDynamic,
+        staticValue,
       });
     }
   }, [description]);
@@ -318,14 +323,37 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
       description,
       label: value.label,
       isToggle,
+      isDynamic,
+      staticValue,
     });
   }, [isToggle]);
+
+  const checkCompatibility = useCallback(
+    () => !acceptedTypes.includes(value.valueType),
+    [acceptedTypes, value],
+  );
+
+  const renderItem = useCallback(() => {
+    return (
+      <>
+        <span className='listTitle'>{`[${label}] ${value.label}`}</span>
+        <span className='listId'>{`( ${
+          isDynamic ? 'Dynamic' : 'Static'
+        } )`}</span>
+      </>
+    );
+  }, []);
 
   const { t } = useTranslation(['dashboard']);
 
   return (
     <Fragment key={attributeId}>
-      <ListItem role={undefined} button onClick={() => setIsToggle(!isToggle)}>
+      <ListItem
+        role={undefined}
+        button
+        onClick={() => setIsToggle(!isToggle)}
+        disabled={checkCompatibility()}
+      >
         <ListItemIcon>
           <Checkbox
             edge='start'
@@ -337,7 +365,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
           />
         </ListItemIcon>
         <Tooltip title={id} placement='bottom-start'>
-          <ListItemText id={labelId} primary={`[${label}] ${value.label}`} />
+          <ListItemText id={labelId} primary={renderItem()} />
         </Tooltip>
         <ListItemSecondaryAction className={classes.action}>
           <TextField
@@ -347,6 +375,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
             margin='dense'
             value={description}
             onChange={event => setDescription(event.target.value)}
+            disabled={checkCompatibility()}
           />
           <Button
             variant='outlined'
@@ -354,6 +383,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
             className={classes.button}
             style={{ backgroundColor: color }}
             onClick={() => setIsOpen(!isOpen)}
+            disabled={checkCompatibility()}
           >
             {t('attributes.colorPicker')}
           </Button>
@@ -378,6 +408,7 @@ const ItemRow = ({ value, handleToggle, meta, selected = false }) => {
 
 Index.defaultProps = {
   isOpen: false,
+  acceptedTypes: ['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED'],
 };
 
 Index.propTypes = {
@@ -386,6 +417,7 @@ Index.propTypes = {
   activeStep: PropTypes.number.isRequired,
   steps: PropTypes.array.isRequired,
   isOpen: PropTypes.bool,
+  acceptedTypes: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default Index;
