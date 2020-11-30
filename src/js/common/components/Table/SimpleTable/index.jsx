@@ -28,13 +28,12 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
   const [rws, setRws] = useState([]);
 
   useEffect(() => {
-    console.log('useEffect:rows');
     // premanipulation to handle date sorting
     const r1 = rows.map(row => {
       return { ...row, ts: new Date(row.timestamp).getTime() };
     });
     setRws(r1);
-  }, []);
+  }, [rows]);
 
   const changeSorting = index => {
     const obj = { field: index, order: sortField.order * -1 };
@@ -55,7 +54,6 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
     return row[column.dataKey];
   };
 
-  console.log('Reload');
   const sortedArray = rws;
   sortedArray.sort((a, b) => {
     return compareAll(a[sortField.field], b[sortField.field], sortField.order);
@@ -64,8 +62,8 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
   return (
     <TableContainer classes={{ root }}>
       <Table stickyHeader size='small' aria-label='customized table'>
-        <TableHead>
-          <TableRow key='header'>
+        <TableHead key='theader'>
+          <TableRow key='headerrow'>
             {withRank ? (
               <TableCell key='rank' classes={{ head }}>
                 #
@@ -107,7 +105,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
                         <Icn
                           currentSortField={sortField.field}
                           field={column.dataKey}
-                          sortOrder={sortField.order}
+                          order={sortField.order}
                         />
                       }
                     >
@@ -134,8 +132,8 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
 
               {hasTimestamp ? (
                 <TableCell
-                  classes={{ body: lines }}
                   key={`timestamp_${uuidv4()}`}
+                  classes={{ body: lines }}
                 >
                   {formatDate(row.timestamp, 'DD/MM/YYYY HH:mm:ss')}
                 </TableCell>
