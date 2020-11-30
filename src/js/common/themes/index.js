@@ -24,7 +24,7 @@ const theme = createMuiTheme({
       login: '#dadde0',
     },
     table: {
-      head: '#79b6ff',
+      head: '#FFFFFF',
     },
   },
 
