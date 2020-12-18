@@ -216,7 +216,7 @@ const Index = props => {
                       type='number'
                       onChange={handleChangeFixedValue}
                       label='Nº Registros'
-                      inputProps={{ min: 0, max: 9999, step: 1 }}
+                      inputProps={{ min: 1, max: 9999, step: 1 }}
                       disabled={data.filterType !== '0'}
                     />
                   </FormControl>
@@ -265,7 +265,7 @@ const Index = props => {
                       onChange={handleChangeDynamicValue}
                       label='Nº Registros'
                       disabled={data.filterType !== '1'}
-                      inputProps={{ min: 0, max: 9999, step: 1 }}
+                      inputProps={{ min: 1, max: 9999, step: 1 }}
                     />
                   </FormControl>
                 </div>
