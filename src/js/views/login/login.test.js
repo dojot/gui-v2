@@ -54,7 +54,6 @@ describe('Login', () => {
     expect(wrapper.find(LoginForm).find(Alert)).toHaveLength(1);
   });
 
-
   it('shoud be able to simple render Network error', async () => {
     jest.spyOn(Authentication, 'login').mockImplementationOnce(() => {
       throw new Error('404');
@@ -73,10 +72,10 @@ describe('Login', () => {
     await submitFormikForm(htmlForm);
 
     wrapper.update();
-    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).
-    toEqual("login:networkError");
+    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual(
+      'login:networkError',
+    );
   });
-
 
   it('shoud be able to simple render Login Error', async () => {
     jest.spyOn(Authentication, 'login').mockImplementationOnce(() => {
@@ -96,10 +95,10 @@ describe('Login', () => {
     await submitFormikForm(htmlForm);
 
     wrapper.update();
-    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).
-    toEqual("login:loginError");
+    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual(
+      'login:loginError',
+    );
   });
-
 
   it('shoud be able to simple render', () => {
     const { container } = render(<Login />);
