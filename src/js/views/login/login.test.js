@@ -100,7 +100,6 @@ describe('Login', () => {
     );
   });
 
-
   it('shoud be able to simple render', () => {
     const { container } = render(<Login />);
     expect(container).toBeInTheDocument();
