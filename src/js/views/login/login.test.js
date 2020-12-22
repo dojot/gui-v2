@@ -4,6 +4,7 @@ import Alert from '@material-ui/lab/Alert';
 import { render, fireEvent, act } from '@testing-library/react';
 import * as api from 'APIs/index';
 import { mount } from 'enzyme';
+import { Authentication } from 'Services';
 
 import Login, { LoginForm } from './View';
 
@@ -52,6 +53,53 @@ describe('Login', () => {
     wrapper.update();
     expect(wrapper.find(LoginForm).find(Alert)).toHaveLength(1);
   });
+
+
+  it('shoud be able to simple render Network error', async () => {
+    jest.spyOn(Authentication, 'login').mockImplementationOnce(() => {
+      throw new Error('404');
+    });
+
+    const wrapper = mount(<Login />);
+
+    const userField = wrapper.find('input[name="user"]').first();
+    await updateFormikField(userField, 'user', 'user123456');
+
+    const passwordField = wrapper.find('input[name="password"]').first();
+    await updateFormikField(passwordField, 'password', 'password123456');
+
+    const htmlForm = wrapper.find('form');
+
+    await submitFormikForm(htmlForm);
+
+    wrapper.update();
+    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).
+    toEqual("login:networkError");
+  });
+
+
+  it('shoud be able to simple render Login Error', async () => {
+    jest.spyOn(Authentication, 'login').mockImplementationOnce(() => {
+      throw new Error('Erro ao efetuar login');
+    });
+
+    const wrapper = mount(<Login />);
+
+    const userField = wrapper.find('input[name="user"]').first();
+    await updateFormikField(userField, 'user', 'user123456');
+
+    const passwordField = wrapper.find('input[name="password"]').first();
+    await updateFormikField(passwordField, 'password', 'password123456');
+
+    const htmlForm = wrapper.find('form');
+
+    await submitFormikForm(htmlForm);
+
+    wrapper.update();
+    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).
+    toEqual("login:loginError");
+  });
+
 
   it('shoud be able to simple render', () => {
     const { container } = render(<Login />);
