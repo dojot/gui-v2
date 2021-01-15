@@ -32,8 +32,6 @@ const LoginView = ({ location, history }) => {
       });
       history.push('/dashboard');
     } catch ({ message }) {
-      // TODO: Handle the exception more appropriately
-      console.error(message);
       setHasError(true);
       setMsgError(
         message.indexOf('404') !== -1 ? 'networkError' : 'loginError',
