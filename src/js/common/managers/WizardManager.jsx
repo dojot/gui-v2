@@ -3,8 +3,17 @@ import React, { useCallback } from 'react';
 import LazyLoading from 'Components/LazyLoading';
 import { useTranslation } from 'react-i18next';
 
-const Wizard = LazyLoading(() =>
-  import('views/dashboard/widget/wizard/Wizard.jsx'),
+const AreaWizard = LazyLoading(() =>
+  import('views/dashboard/widget/areaChart/wizard'),
+);
+const BarWizard = LazyLoading(() =>
+  import('views/dashboard/widget/barChart/wizard'),
+);
+const TableWizard = LazyLoading(() =>
+  import('views/dashboard/widget/table/wizard'),
+);
+const LineWizard = LazyLoading(() =>
+  import('views/dashboard/widget/lineChart/wizard'),
 );
 const MapWizard = LazyLoading(() =>
   import('views/dashboard/widget/map/Wizard'),
@@ -26,53 +35,41 @@ const Manager = props => {
 
   const { t } = useTranslation(['dashboard']);
 
-  const getWizard = useCallback(() => {
+  const getTitle = useCallback(() => {
     switch (id) {
       case line:
-        return (
-          <Wizard
-            title={t(['line.title', 'Line Chart'])}
-            type={id}
-            toDashboard={toDashboard}
-          />
-        );
+        return t(['line.title', 'Line Chart']);
       case area:
-        return (
-          <Wizard
-            title={t(['area.title', 'Area Chart'])}
-            type={id}
-            toDashboard={toDashboard}
-          />
-        );
+        return t(['area.title', 'Area Chart']);
       case bar:
-        return (
-          <Wizard
-            title={t(['bar.title', 'Bar Chart'])}
-            type={id}
-            toDashboard={toDashboard}
-          />
-        );
-      case table:
-        return (
-          <Wizard
-            title={t(['table.title', 'Table'])}
-            type={id}
-            toDashboard={toDashboard}
-          />
-        );
+        return t(['bar.title', 'Bar Chart']);
       case map:
-        return (
-          <MapWizard
-            title={t(['map.title', 'Mapa'])}
-            toDashboard={toDashboard}
-          />
-        );
+        return t(['map.title', 'Mapa']);
+      case table:
+        return t(['table.title', 'Table Chart']);
       default:
         return '';
     }
   }, [area, bar, line, map, id, t, toDashboard]);
 
-  return getWizard();
+  switch (id) {
+    case area:
+      return <AreaWizard title={getTitle()} toDashboard={toDashboard} />;
+    case line:
+      return <LineWizard title={getTitle()} toDashboard={toDashboard} />;
+    case bar:
+      return <BarWizard title={getTitle()} toDashboard={toDashboard} />;
+    // case pizza:
+    //   return <WizardTest title={getTitle()} toDashboard={toDashboard} />;
+    // case donut:
+    //   return <WizardTest title={getTitle()} toDashboard={toDashboard} />;
+    // case bubble:
+    //   return <WizardTest title={getTitle()} toDashboard={toDashboard} />;
+    case table:
+      return <TableWizard title={getTitle()} toDashboard={toDashboard} />;
+    default:
+      return <div />;
+  }
 };
 
 export default Manager;

@@ -1,13 +1,6 @@
-import React, {
-  Fragment,
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -20,74 +13,20 @@ import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import CommentIcon from '@material-ui/icons/ColorLens';
 import SearchIcon from '@material-ui/icons/Search';
-import { WFooter } from 'Components/Footer';
 import { Paginator, usePaginator } from 'Components/Paginator';
-import { Formik } from 'formik';
-import PropTypes from 'prop-types';
+import { TextField as FormTextField } from 'mui-rff';
 import { GithubPicker } from 'react-color';
+import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { useDebounce } from 'use-debounce';
-import * as Yup from 'yup';
+import { object2Array } from 'Utils';
 
+import Wizard from '../../wizard';
 import { useStyles } from './style';
 
-const validationSchema = Yup.object({});
-
-const useDidMountEffect = (func, deps) => {
-  const didMount = useRef(false);
-
-  useEffect(() => {
-    if (didMount.current) {
-      func();
-    } else {
-      didMount.current = true;
-    }
-  }, deps);
-};
-
-const Index = ({ initialState, handleClick, ...otherProps }) => {
-  const handleSubmit = values => {
-    const staticValues = [];
-    const dynamicValues = [];
-    values.attributes.forEach(item => {
-      if (item.isDynamic) {
-        dynamicValues.push(item);
-      } else {
-        staticValues.push(item);
-      }
-    });
-
-    handleClick({
-      type: 'next',
-      payload: {
-        values: { dynamicValues, staticValues },
-        key: 'attributes',
-      },
-    });
-  };
-
-  const handleBack = () => {
-    handleClick({ type: 'back' });
-  };
-
-  return (
-    <Formik
-      initialValues={initialState}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-      enableReinitialize
-    >
-      {formikProps => (
-        <AttributesForm {...formikProps} {...otherProps} onBack={handleBack} />
-      )}
-    </Formik>
-  );
-};
-
-const AttributesForm = props => {
+const Index = props => {
   const classes = useStyles();
-  const { handleChange, handleSubmit, initialValues, acceptedTypes } = props;
-  const [checked, setChecked] = useState([]);
+  const { t } = useTranslation(['dashboard']);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
@@ -99,7 +38,7 @@ const AttributesForm = props => {
   } = usePaginator('client');
 
   const sortList = useCallback((list, fieldCompare) => {
-    const orderedList = [...list];
+    const orderedList = object2Array(list);
     orderedList.sort((item1, item2) => {
       if (item1[fieldCompare] < item2[fieldCompare]) {
         return -1;
@@ -114,26 +53,23 @@ const AttributesForm = props => {
 
   const getInitialAttributes = useCallback(() => {
     const attributes = [];
-    const orderedDevices = sortList(initialValues, 'label');
+    const orderedDevices = sortList(props.values.devices, 'label');
 
     orderedDevices.forEach(device => {
       const orderedAttrs = sortList(device.attrs, 'label');
 
-      const deviceAttributes = orderedAttrs.map(
-        ({ isDynamic, staticValue, label, valueType }) => ({
-          isDynamic,
-          staticValue,
-          deviceId: device.id,
-          deviceLabel: device.label,
-          attributeId: `${device.id}${label}`,
-          attributeLabel: label,
-          attributeValueType: valueType,
-        }),
-      );
+      const deviceAttributes = orderedAttrs.map(attr => ({
+        deviceId: device.id,
+        deviceLabel: device.label,
+        attributeId: `${device.id}${attr.label}`,
+        attributeLabel: attr.label,
+        attributeValueType: attr.valueType,
+        isDynamic: attr.isDynamic,
+      }));
       deviceAttributes.forEach(attr => attributes.push(attr));
     });
     return attributes;
-  }, [initialValues, sortList]);
+  }, [props.values.devices, sortList]);
 
   const [initialAttributes] = useState(() => getInitialAttributes());
 
@@ -158,37 +94,8 @@ const AttributesForm = props => {
     setSearchTerm(value ? value.toLowerCase() : '');
   }, []);
 
-  const handleToggle = ({ isToggle, ...otherProps }) => {
-    const currentIndex = checked
-      .map(item => item.attributeID)
-      .indexOf(otherProps.attributeID);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push({
-        ...otherProps,
-      });
-    } else if (isToggle) {
-      newChecked.splice(currentIndex, 1);
-      newChecked.push({
-        ...otherProps,
-      });
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-    setChecked(newChecked);
-    handleChange({
-      currentTarget: {
-        name: 'attributes',
-        value: newChecked,
-      },
-    });
-  };
-
-  const { t } = useTranslation(['dashboard']);
-
   return (
-    <form onSubmit={handleSubmit}>
+    <Wizard.Page validate={props.validate}>
       <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.searchContainer}>
           <TextField
@@ -220,14 +127,10 @@ const AttributesForm = props => {
                 attributeLabel,
                 attributeValueType,
                 isDynamic,
-                staticValue,
               } = item;
-              const isSelected = checked.find(
-                checkedItem => checkedItem.attributeID === attributeId,
-              );
+
               return (
                 <ItemRow
-                  handleToggle={handleToggle}
                   value={{
                     label: attributeLabel,
                     valueType: attributeValueType,
@@ -238,10 +141,8 @@ const AttributesForm = props => {
                     attributeId,
                   }}
                   key={`${deviceId}${attributeLabel}`}
-                  selected={!!isSelected}
                   acceptedTypes={acceptedTypes}
                   isDynamic={isDynamic}
-                  staticValue={staticValue}
                 />
               );
             })
@@ -259,74 +160,37 @@ const AttributesForm = props => {
           />
         </Grid>
       </Grid>
-      <WFooter {...props} isValid={!!checked.length} />
-    </form>
+    </Wizard.Page>
   );
 };
 
-const ItemRow = ({
-  value,
-  handleToggle,
-  meta,
-  selected = false,
-  acceptedTypes,
-  isDynamic,
-  staticValue,
-}) => {
+const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
   const { id, label, attributeId } = meta;
   const classes = useStyles();
   const labelId = `checkbox-list-label-${attributeId}`;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isToggle, setIsToggle] = useState(selected);
   const [color, setColor] = useState('#FAFAFA');
-  const [description, setDescription] = useState('');
+  const [isDisabled, setIsDisabled] = useState(true);
 
-  useDidMountEffect(() => {
-    if (isToggle) {
-      handleToggle({
-        deviceID: id,
-        attributeID: `${attributeId}`,
-        deviceLabel: label,
-        color,
-        description,
-        label: value.label,
-        isToggle,
-        isDynamic,
-        staticValue,
-      });
+  const { t } = useTranslation(['dashboard']);
+  const name = 'attributes';
+  const attributeItem = {
+    deviceID: id,
+    attributeID: `${attributeId}`,
+    deviceLabel: label,
+    color,
+    label: value.label,
+  };
+
+  const handleFormat = item => {
+    if (item) {
+      setIsDisabled(item.attributeID !== attributeId);
+      return item.attributeID === attributeId;
     }
-  }, [color]);
-
-  useDidMountEffect(() => {
-    if (isToggle) {
-      handleToggle({
-        deviceID: id,
-        attributeID: `${attributeId}`,
-        deviceLabel: label,
-        color,
-        description,
-        label: value.label,
-        isToggle,
-        isDynamic,
-        staticValue,
-      });
-    }
-  }, [description]);
-
-  useDidMountEffect(() => {
-    handleToggle({
-      deviceID: id,
-      attributeID: `${attributeId}`,
-      deviceLabel: label,
-      color,
-      description,
-      label: value.label,
-      isToggle,
-      isDynamic,
-      staticValue,
-    });
-  }, [isToggle]);
+    setIsDisabled(true);
+    return false;
+  };
 
   const checkCompatibility = useCallback(
     () => !acceptedTypes.includes(value.valueType),
@@ -344,38 +208,35 @@ const ItemRow = ({
     );
   }, [isDynamic, label, value.label]);
 
-  const { t } = useTranslation(['dashboard']);
-
   return (
     <Fragment key={attributeId}>
+      {/* <ListItem role={undefined} button onClick={() => setIsToggle(!isToggle)}> */}
       <ListItem
         role={undefined}
         button
-        onClick={() => setIsToggle(!isToggle)}
-        disabled={checkCompatibility()}
+        // disabled={checkCompatibility()}
       >
         <ListItemIcon>
-          <Checkbox
-            edge='start'
-            checked={isToggle}
-            tabIndex={-1}
-            disableRipple
-            inputProps={{ 'aria-labelledby': labelId }}
-            color='primary'
+          <Field
+            type='checkbox'
+            name={`${name}.${attributeId}`}
+            component='input'
+            format={handleFormat}
+            parse={item => (item ? attributeItem : null)}
           />
         </ListItemIcon>
         <Tooltip title={id} placement='bottom-start'>
           <ListItemText id={labelId} primary={renderItem()} />
         </Tooltip>
         <ListItemSecondaryAction className={classes.action}>
-          <TextField
-            id='outlined-search'
+          <FormTextField
             label={t('attributes.subtitle')}
+            name={`${name}.${attributeId}.description`}
             variant='outlined'
             margin='dense'
-            value={description}
-            onChange={event => setDescription(event.target.value)}
-            disabled={checkCompatibility()}
+            fullWidth={false}
+            disabled={isDisabled}
+            // disabled={checkCompatibility()}
           />
           <Button
             variant='outlined'
@@ -383,7 +244,8 @@ const ItemRow = ({
             className={classes.button}
             style={{ backgroundColor: color }}
             onClick={() => setIsOpen(!isOpen)}
-            disabled={checkCompatibility()}
+            disabled={isDisabled}
+            // disabled={checkCompatibility()}
           >
             {t('attributes.colorPicker')}
           </Button>
@@ -406,18 +268,18 @@ const ItemRow = ({
   );
 };
 
-Index.defaultProps = {
-  isOpen: false,
-  acceptedTypes: ['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED'],
-};
-
-Index.propTypes = {
-  initialState: PropTypes.array.isRequired,
-  handleClick: PropTypes.func.isRequired,
-  activeStep: PropTypes.number.isRequired,
-  steps: PropTypes.array.isRequired,
-  isOpen: PropTypes.bool,
-  acceptedTypes: PropTypes.arrayOf(PropTypes.string),
-};
+// Index.defaultProps = {
+//   isOpen: false,
+//   acceptedTypes: ['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED'],
+// };
+//
+// Index.propTypes = {
+//   initialState: PropTypes.array.isRequired,
+//   handleClick: PropTypes.func.isRequired,
+//   activeStep: PropTypes.number.isRequired,
+//   steps: PropTypes.array.isRequired,
+//   isOpen: PropTypes.bool,
+//   acceptedTypes: PropTypes.arrayOf(PropTypes.string),
+// };
 
 export default Index;

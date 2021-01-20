@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { object2Array } from 'Utils/module/array';
 import { v4 as uuidv4 } from 'uuid';
 
 export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
@@ -7,6 +8,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
 
   const generateTableConfig = useCallback(state => {
     const { attributes, general: generalState } = state;
+
+    const attributesList = object2Array(attributes);
 
     const meta = {
       title: generalState.name || '',

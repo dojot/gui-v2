@@ -1,32 +1,12 @@
-// import PropTypes from 'prop-types'
 import React from 'react';
 
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
-import { WFooter } from 'Components/Footer';
-import { Formik } from 'formik';
 import { useTranslation } from 'react-i18next';
+import { object2Array } from 'Utils';
 
+import Wizard from '../../wizard';
 import { useStyles } from './style';
-
-const Index = props => {
-  const { initialState, handleClick, ...otherProps } = props;
-  const handleSubmit = values => {
-    handleClick({ type: 'finish', payload: { values, key: 'general' } });
-  };
-
-  const handleBack = () => {
-    handleClick({ type: 'back' });
-  };
-
-  return (
-    <Formik initialValues={initialState} onSubmit={handleSubmit}>
-      {formikProps => (
-        <SummaryForm {...formikProps} {...otherProps} onBack={handleBack} />
-      )}
-    </Formik>
-  );
-};
 
 const TitleBox = ({ name, desc }) => {
   const classes = useStyles();
@@ -81,28 +61,28 @@ const AttributeBox = ({ name, values = [] }) => {
   );
 };
 
-const SummaryForm = props => {
-  const { initialValues, handleSubmit } = props;
-
+const Summary = ({ values }) => {
   const classes = useStyles();
+  const { t } = useTranslation(['dashboard']);
+
   const {
     general: { name, description },
-    values,
-  } = initialValues;
-  const { t } = useTranslation(['dashboard']);
+    attributes,
+  } = values;
+  const attributesList = object2Array(attributes);
   return (
-    <form onSubmit={handleSubmit}>
+    <Wizard.Page>
       <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.item}>
           <TitleBox desc={description} name={name} />
-          <AttributeBox name={t('summary.attributes')} values={values} />
+          <AttributeBox
+            name={t('summary.attributes')}
+            values={attributesList}
+          />
         </Grid>
       </Grid>
-      <WFooter {...props} />
-    </form>
+    </Wizard.Page>
   );
 };
 
-Index.propTypes = {};
-
-export default Index;
+export default Summary;

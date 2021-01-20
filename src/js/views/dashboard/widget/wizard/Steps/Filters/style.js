@@ -6,7 +6,7 @@ export const useStyles = makeStyles(() => ({
     marginTop: 20,
     padding: '0 40px',
 
-    '& form': {
+    '& .items': {
       display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
@@ -22,6 +22,10 @@ export const useStyles = makeStyles(() => ({
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
+
+          '& .MuiFormControlLabel-root': {
+            margin: 0,
+          },
 
           '& h2': {
             display: 'inline-block',
@@ -71,6 +75,10 @@ export const useStyles = makeStyles(() => ({
 
               '& + .row': {
                 marginTop: 60,
+              },
+
+              '& .MuiFormControlLabel-root': {
+                margin: 0,
               },
 
               '& .itemLabel': {

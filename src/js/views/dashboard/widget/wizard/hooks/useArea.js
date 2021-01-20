@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { object2Array } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
 export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
@@ -12,8 +13,9 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       title: generalState.name || '',
       subTitle: generalState.description || '',
     };
+    const attributesList = object2Array(attributes.dynamicValues);
 
-    const areaProps = attributes.dynamicValues.map(item => ({
+    const areaProps = attributesList.dynamicValues.map(item => ({
       type: 'monotone',
       dataKey: item.attributeID,
       stroke: item.color,
