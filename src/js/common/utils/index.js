@@ -8,3 +8,4 @@ export {
 export { formatDate, formatToISO } from './module/date';
 
 export { formatNumber } from './module/number';
+export { compareAll } from './module/compare';
