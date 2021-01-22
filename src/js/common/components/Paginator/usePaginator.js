@@ -6,7 +6,7 @@ export default (type = 'server') => {
     pageData: [],
     currentPage: 1,
     totalPages: 0,
-    pageSize: 5,
+    pageSize: 10,
     disabled: false,
   });
 

@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
+import { DevelopmentContainer } from 'Components/Containers';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
@@ -42,7 +43,7 @@ const Wizard = ({ initialValues, ...props }) => {
   const activePage = React.Children.toArray(children)[page];
   const isLastPage = page === React.Children.count(children) - 1;
   const classes = useStyles();
-  const { t } = useTranslation(['dashboard']);
+  const { t } = useTranslation(['common', 'dashboard']);
   return (
     <ViewContainer headerTitle={headerTitle}>
       <div className={classes.root}>
@@ -53,7 +54,7 @@ const Wizard = ({ initialValues, ...props }) => {
         >
           {steps.map(({ label, key }) => (
             <Step key={key}>
-              <StepLabel>{t([label, 'undefined'])}</StepLabel>
+              <StepLabel>{t([`dashboard:${label}`, 'undefined'])}</StepLabel>
             </Step>
           ))}
         </Stepper>
@@ -67,7 +68,7 @@ const Wizard = ({ initialValues, ...props }) => {
             <form onSubmit={handleSubmit}>
               {/* {activePage} */}
               {React.cloneElement(activePage, { values })}
-              <div className='buttons'>
+              <div className={classes.footer}>
                 {page > 0 && (
                   <Button
                     type='button'
@@ -76,7 +77,7 @@ const Wizard = ({ initialValues, ...props }) => {
                     disableElevation
                     onClick={previous}
                   >
-                    « Previous
+                    {t('back')}
                   </Button>
                 )}
                 {!isLastPage && (
@@ -86,7 +87,7 @@ const Wizard = ({ initialValues, ...props }) => {
                     variant='contained'
                     disableElevation
                   >
-                    Next »
+                    {t('next')}
                   </Button>
                 )}
                 {isLastPage && (
@@ -97,12 +98,13 @@ const Wizard = ({ initialValues, ...props }) => {
                     variant='contained'
                     disableElevation
                   >
-                    Submit
+                    {t('finish')}
                   </Button>
                 )}
               </div>
-
-              <pre>{JSON.stringify(values, 0, 2)}</pre>
+              <DevelopmentContainer>
+                <pre>{JSON.stringify(values, 0, 2)}</pre>
+              </DevelopmentContainer>
             </form>
           )}
         </Form>

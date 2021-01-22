@@ -15,4 +15,16 @@ export default makeStyles(theme => ({
   paper: {
     backgroundColor: 'inherit',
   },
+  footer: {
+    width: '100%',
+    padding: '10px 0',
+    position: 'fixed',
+    bottom: 0,
+    zIndex: 999,
+    backdropFilter: 'blur(4px)',
+
+    '& button': {
+      margin: '0 10px',
+    },
+  },
 }));

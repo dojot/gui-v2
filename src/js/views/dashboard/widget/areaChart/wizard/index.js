@@ -16,12 +16,11 @@ import Summary from '../../wizard/Steps/Summary';
 import Wizard from '../../wizard/wizard';
 
 const generalValidates = values => {
-  const errors = {};
-  if (!values.general.name) {
-    errors.name = 'Required';
-  }
-  if (!values.general.description) {
-    errors.description = 'Required';
+  const errors = { general: {} };
+  if (!values.general || !values.general.name) {
+    errors.general.name = 'Required';
+  } else if (values.general.name.length < 5) {
+    errors.general.name = 'Minimo de 5 caracteres';
   }
   return errors;
 };
@@ -91,36 +90,13 @@ const WizardPage = ({
     toDashboard();
   };
 
-  const initialStateTest = {
+  const initialState = {
     general: {
-      name: 'Teste',
-      description: 'Teste',
+      name: '',
+      description: '',
     },
-    devices: {
-      'chk-e5d299': {
-        id: 'e5d299',
-        label: 'CS Teste',
-        attrs: [
-          {
-            label: 'coordenada',
-            valueType: 'GEO',
-          },
-          {
-            label: 'timestamp',
-            valueType: 'STRING',
-          },
-        ],
-      },
-    },
-    attributes: {
-      e5d299coordenada: {
-        deviceID: 'e5d299',
-        attributeID: 'e5d299coordenada',
-        deviceLabel: 'CS Teste',
-        color: '#0041bb',
-        label: 'coordenada',
-      },
-    },
+    devices: {},
+    attributes: {},
     filters: {
       filterType: '0',
       dateTo: '',
@@ -131,15 +107,9 @@ const WizardPage = ({
       isRealTime: true,
     },
   };
-  // const initialState = {
-  //   general: {},
-  //   devices: {},
-  //   attributes: {},
-  //   filters: {},
-  // };
   return (
     <Wizard
-      initialValues={initialStateTest}
+      initialValues={initialState}
       onSubmit={handleSubmit}
       steps={stepsList}
       headerTitle={title}
