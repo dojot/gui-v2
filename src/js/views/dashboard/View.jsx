@@ -172,11 +172,7 @@ const Dashboard = props => {
             </div>
           );
         default:
-          return (
-            <div key={i}>
-              <AreaChartWidget id={i} onDelete={onRemoveItem} onPin={onPin} />
-            </div>
-          );
+          return <div key={i} />;
       }
     },
     [area, bar, configs, line, data, onPin, onRemoveItem, table, map],

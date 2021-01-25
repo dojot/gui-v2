@@ -12,7 +12,6 @@ import 'leaflet/dist/images/marker-shadow.png';
 
 export default ({ id, onDelete, onPin, data, config }) => {
   const mapRef = useRef();
-  console.log(data);
   const { clientHeight, clientWidth } = !mapRef.current
     ? { clientHeight: 0, clientWidth: 0 }
     : mapRef.current.container;
