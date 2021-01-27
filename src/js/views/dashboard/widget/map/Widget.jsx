@@ -29,6 +29,21 @@ export default ({ id, onDelete, onPin, data, config }) => {
     }
     return coordinates;
   }, []);
+
+  const GetToolTip = useCallback(
+    item => {
+      const label = data[item.dataKey]
+        ? data[item.dataKey].deviceLabel
+        : 'undefined';
+      return (
+        <Tooltip>
+          <span>{`${label}: ${item.name}`}</span>
+        </Tooltip>
+      );
+    },
+    [data],
+  );
+
   return (
     <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
       <Map
@@ -59,11 +74,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
                 }
                 icon={getMarkerColor(item.markerColor)}
               >
-                <Tooltip>
-                  <span>{`${data[item.dataKey].deviceLabel}: ${
-                    item.name
-                  }`}</span>
-                </Tooltip>
+                <GetToolTip {...item} />
               </Marker>
             );
           })}

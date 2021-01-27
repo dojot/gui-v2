@@ -22,7 +22,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       name: item.description || item.label,
     }));
 
-    const defsProps = attributes.map(item => ({
+    const defsProps = attributes.dynamicValues.map(item => ({
       id: `color${item.attributeID}`,
       x1: '0',
       y1: '0',
