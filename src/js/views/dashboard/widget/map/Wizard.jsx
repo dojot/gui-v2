@@ -63,12 +63,19 @@ const Wizard = ({
   useEffect(() => {
     setDisablePaginator(true);
     DeviceService.getDevicesList(
-      { number: paginatorData.currentPage, size: paginatorData.pageSize },
+      {
+        number: paginatorData.currentPage,
+        size: paginatorData.pageSize,
+      },
       { label: searchDeviceTerm },
     )
       .then(response => {
         const { devices, currentPage, totalPages } = response.getDevices;
-        setPaginatorData({ data: devices, currentPage, totalPages });
+        setPaginatorData({
+          data: devices,
+          currentPage,
+          totalPages,
+        });
       })
       .catch(error => {
         console.error(error); // TODO tratamento de erro da api
@@ -90,36 +97,34 @@ const Wizard = ({
     [setCurrentPage],
   );
 
-  const parseGeo = value => {
-    const [lat, long] = value.split(',');
-    return [parseFloat(lat), parseFloat(long)];
-  };
-
   const generateScheme = useCallback(state => {
     const { isRealTime } = state.filter;
-    const staticAttributes = {};
-    state.attributes.staticValues.forEach(item => {
-      staticAttributes[item.attributeID] = {
-        value: item.staticValue ? parseGeo(item.staticValue) : [0, 0],
-        timestamp: 0,
+    const dynamicAttrs = _.groupBy(state.attributes.dynamicValues, 'deviceID');
+    const staticAttrs = _.groupBy(state.attributes.staticValues, 'deviceID');
+    const devices = {};
+    Object.keys(dynamicAttrs).forEach(key => {
+      devices[key] = {
+        deviceID: key,
+        staticAttrs: [],
+        dynamicAttrs: dynamicAttrs[key].map(val => val.label),
       };
     });
+    Object.keys(staticAttrs).forEach(key => {
+      if (!devices[key]) {
+        devices[key] = {
+          deviceID: key,
+          staticAttrs: staticAttrs[key].map(val => val.label),
+          dynamicAttrs: [],
+        };
+      } else {
+        devices[key].staticAttrs = staticAttrs[key].map(val => val.label);
+      }
+    });
     return DeviceService.parseHistoryQuery({
-      devices: _.values(
-        _.mapValues(
-          _.groupBy(state.attributes.dynamicValues, 'deviceID'),
-          (value, key) => {
-            return {
-              deviceID: key,
-              attrs: value.map(val => val.label),
-            };
-          },
-        ),
-      ),
-      staticAttributes,
+      devices: Object.values(devices),
       dateFrom: '',
       dateTo: '',
-      operationType: 5,
+      operationType: 8,
       lastN: 1,
       isRealTime,
     });

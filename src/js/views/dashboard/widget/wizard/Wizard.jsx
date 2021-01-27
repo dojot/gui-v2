@@ -110,7 +110,7 @@ const Wizard = ({
           (value, key) => {
             return {
               deviceID: key,
-              attrs: value.map(val => val.label),
+              dynamicAttrs: value.map(val => val.label),
             };
           },
         ),

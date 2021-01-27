@@ -57,11 +57,12 @@ export default ({ id, onDelete, onPin, data, config }) => {
                 position={
                   data[item.dataKey] ? data[item.dataKey].value : [0, 0]
                 }
-                // position={[-22.817081, -47.069765]}
                 icon={getMarkerColor(item.markerColor)}
               >
                 <Tooltip>
-                  <span>{item.name}</span>
+                  <span>{`${data[item.dataKey].deviceLabel}: ${
+                    item.name
+                  }`}</span>
                 </Tooltip>
               </Marker>
             );

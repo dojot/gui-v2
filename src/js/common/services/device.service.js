@@ -26,7 +26,7 @@ query getDevices($page: PageInput, $filter: FilterDeviceInput) {
 `;
 
 export const parseHistoryQuery = filter => {
-  const { isRealTime, staticAttributes, ...restFilter } = filter;
+  const { isRealTime, ...restFilter } = filter;
   const variables = {
     filter: restFilter,
   };
@@ -34,7 +34,6 @@ export const parseHistoryQuery = filter => {
     query: GQL_WIDGET_HISTORIC,
     variables: JSON.stringify(variables),
     isRealTime,
-    staticAttributes,
   };
 };
 

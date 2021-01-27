@@ -44,25 +44,6 @@ const getQueriesFromSchema = schema => {
   return { staticQueries, realTimeQueries };
 };
 
-const mergeValues = (obj1, obj2) => {
-  const obj = {};
-  if (Array.isArray(obj1)) {
-    return obj1;
-  }
-  if (obj1) {
-    Object.entries(obj1).forEach(([key, value]) => {
-      obj[key] = value;
-    });
-  }
-
-  if (obj2) {
-    Object.entries(obj2).forEach(([key, value]) => {
-      obj[key] = value;
-    });
-  }
-  return obj;
-};
-
 function* pollData(queries, interval) {
   try {
     // eslint-disable-next-line no-restricted-syntax
@@ -73,10 +54,7 @@ function* pollData(queries, interval) {
       if (getDeviceHistoryForDashboard) {
         yield put(
           dashboardActions.updateValues({
-            [realTimeQuery.key]: mergeValues(
-              JSON.parse(getDeviceHistoryForDashboard),
-              realTimeQuery.query.staticAttributes,
-            ),
+            [realTimeQuery.key]: JSON.parse(getDeviceHistoryForDashboard),
           }),
         );
       }
