@@ -9,25 +9,9 @@ import useBar from '../../wizard/hooks/useBar';
 import Attributes from '../../wizard/Steps/Attributes';
 import Devices from '../../wizard/Steps/Devices';
 import Filters from '../../wizard/Steps/Filters';
-import General from '../../wizard/Steps/General';
+import General, { generalValidates } from '../../wizard/Steps/General';
 import Summary from '../../wizard/Steps/Summary';
 import Wizard from '../../wizard/wizard';
-
-const generalValidates = values => {
-  const errors = {};
-  if (!values.general.name) {
-    errors.name = 'Required';
-  }
-  if (!values.general.description) {
-    errors.description = 'Required';
-  }
-  return errors;
-};
-
-// const devicesValidates = values => {
-//   const errors = {};
-//   return errors;
-// };
 
 const stepsList = [
   { label: 'steps.general', key: uuidv4() },

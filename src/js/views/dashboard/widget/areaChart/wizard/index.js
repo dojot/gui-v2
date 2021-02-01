@@ -11,24 +11,9 @@ import useArea from '../../wizard/hooks/useArea';
 import Attributes from '../../wizard/Steps/Attributes';
 import Devices from '../../wizard/Steps/Devices';
 import Filters from '../../wizard/Steps/Filters';
-import General from '../../wizard/Steps/General';
+import General, { generalValidates } from '../../wizard/Steps/General';
 import Summary from '../../wizard/Steps/Summary';
 import Wizard from '../../wizard/wizard';
-
-const generalValidates = values => {
-  const errors = { general: {} };
-  if (!values.general || !values.general.name) {
-    errors.general.name = 'Required';
-  } else if (values.general.name.length < 5) {
-    errors.general.name = 'Minimo de 5 caracteres';
-  }
-  return errors;
-};
-
-// const devicesValidates = values => {
-//   const errors = {};
-//   return errors;
-// };
 
 const stepsList = [
   { label: 'steps.general', key: uuidv4() },

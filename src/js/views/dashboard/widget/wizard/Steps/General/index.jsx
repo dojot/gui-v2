@@ -34,4 +34,14 @@ const General = ({ validate, name }) => {
   );
 };
 
+export const generalValidates = values => {
+  const errors = { general: {} };
+  if (!values.general || !values.general.name) {
+    errors.general.name = 'Required';
+  } else if (values.general.name.length < 5) {
+    errors.general.name = 'Minimo de 5 caracteres';
+  }
+  return errors;
+};
+
 export default General;
