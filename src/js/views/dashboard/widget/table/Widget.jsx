@@ -13,7 +13,7 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
     return <NoData />;
   }, [data, table]);
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
+    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
       {renderTable()}
     </WidgetCard>
   );

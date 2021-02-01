@@ -30,3 +30,9 @@ export const dashboardConfig = state => ({
 export const dashboardSaga = state => ({
   sagaConfig: sagaSelector(state),
 });
+
+export const getWizardContext = createSelector(
+  dashboardDataSelector,
+  (_, id) => id,
+  (payload, id) => payload.get('wizardContext')[id],
+);

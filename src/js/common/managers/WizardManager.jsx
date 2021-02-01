@@ -3,26 +3,17 @@ import React, { useCallback } from 'react';
 import LazyLoading from 'Components/LazyLoading';
 import { useTranslation } from 'react-i18next';
 
-const AreaWizard = LazyLoading(() =>
-  import('views/dashboard/widget/areaChart/wizard'),
-);
-const BarWizard = LazyLoading(() =>
-  import('views/dashboard/widget/barChart/wizard'),
-);
-const TableWizard = LazyLoading(() =>
-  import('views/dashboard/widget/table/wizard'),
-);
-const LineWizard = LazyLoading(() =>
-  import('views/dashboard/widget/lineChart/wizard'),
-);
-const MapWizard = LazyLoading(() =>
-  import('views/dashboard/widget/map/wizard'),
-);
+const AreaWizard = LazyLoading(() => import('views/dashboard/widget/areaChart/wizard'));
+const BarWizard = LazyLoading(() => import('views/dashboard/widget/barChart/wizard'));
+const TableWizard = LazyLoading(() => import('views/dashboard/widget/table/wizard'));
+const LineWizard = LazyLoading(() => import('views/dashboard/widget/lineChart/wizard'));
+const MapWizard = LazyLoading(() => import('views/dashboard/widget/map/wizard/index'));
 
 const Manager = props => {
   const {
     match: {
       params: { id },
+      params,
     },
     history,
   } = props;
@@ -32,7 +23,6 @@ const Manager = props => {
     history.push('/dashboard');
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
   const { t } = useTranslation(['dashboard']);
 
   const getTitle = useCallback(() => {
@@ -53,16 +43,16 @@ const Manager = props => {
   }, [area, bar, line, map, id, t, toDashboard]);
 
   switch (id) {
-    case area:
-      return <AreaWizard title={getTitle()} toDashboard={toDashboard} />;
     case line:
-      return <LineWizard title={getTitle()} toDashboard={toDashboard} />;
+      return <LineWizard title={getTitle()} toDashboard={toDashboard} {...params} />;
+    case area:
+      return <AreaWizard title={getTitle()} toDashboard={toDashboard} {...params} />;
     case bar:
-      return <BarWizard title={getTitle()} toDashboard={toDashboard} />;
+      return <BarWizard title={getTitle()} toDashboard={toDashboard} {...params} />;
     case table:
-      return <TableWizard title={getTitle()} toDashboard={toDashboard} />;
+      return <TableWizard title={getTitle()} toDashboard={toDashboard} {...params} />;
     case map:
-      return <MapWizard title={getTitle()} toDashboard={toDashboard} />;
+      return <MapWizard title={getTitle()} toDashboard={toDashboard} {...params} />;
     default:
       return <div />;
   }

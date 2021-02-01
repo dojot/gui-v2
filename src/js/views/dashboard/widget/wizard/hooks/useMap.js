@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { object2Array } from 'Utils/module/array';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWizardState) => {
   const { map: mapID } = __CONFIG__;
 
   const generateMapConfig = useCallback(state => {
@@ -24,8 +24,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   }, []);
 
   const createMapWidget = useCallback(
-    attributes => {
-      const widgetId = `${mapID}/${uuidv4()}`;
+    (attributes, id) => {
+      const widgetId = id || `${mapID}/${uuidv4()}`;
 
       const newWidget = {
         i: widgetId,
@@ -39,18 +39,14 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
         moved: false,
       };
 
-      addWidget(newWidget);
+      if (!id) {
+        addWidget(newWidget);
+      }
       addWidgetConfig({ [widgetId]: generateMapConfig(attributes) });
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+      addWizardState({ [widgetId]: attributes });
     },
-    [
-      addWidget,
-      addWidgetConfig,
-      addWidgetSaga,
-      mapID,
-      generateMapConfig,
-      generateScheme,
-    ],
+    [addWidget, addWidgetConfig, addWidgetSaga, mapID, generateMapConfig, generateScheme],
   );
 
   return { createMapWidget };

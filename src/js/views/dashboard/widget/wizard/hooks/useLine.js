@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { object2Array } from 'Utils/module/array';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWizardState) => {
   const { line: lineID } = __CONFIG__;
 
   const generateLineConfig = useCallback(state => {
@@ -25,8 +25,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   }, []);
 
   const createLineWidget = useCallback(
-    attributes => {
-      const widgetId = `${lineID}/${uuidv4()}`;
+    (attributes, id) => {
+      const widgetId = id || `${lineID}/${uuidv4()}`;
 
       const newWidget = {
         i: widgetId,
@@ -40,18 +40,14 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
         moved: false,
       };
 
-      addWidget(newWidget);
+      if (!id) {
+        addWidget(newWidget);
+      }
       addWidgetConfig({ [widgetId]: generateLineConfig(attributes) });
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+      addWizardState({ [widgetId]: attributes });
     },
-    [
-      addWidget,
-      addWidgetConfig,
-      addWidgetSaga,
-      lineID,
-      generateLineConfig,
-      generateScheme,
-    ],
+    [addWidget, addWidgetConfig, addWidgetSaga, lineID, generateLineConfig, generateScheme],
   );
 
   return { createLineWidget };

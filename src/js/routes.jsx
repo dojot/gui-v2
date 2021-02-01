@@ -26,7 +26,7 @@ const Routes = props => (
     <Route path='/logout' component={LogOut} />
     <Route path='/help' component={ExampleRouteHandler} />
     <PrivateRoute
-      path='/dashboard/widget/wizard/:id'
+      path='/dashboard/widget/wizard/:id/:uuid?'
       component={WizardManager}
       attrs={props}
     />

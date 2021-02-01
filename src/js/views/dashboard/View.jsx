@@ -42,13 +42,10 @@ const Dashboard = props => {
     startPolling,
     history,
     changeLayout,
+    updateLayout,
     removeWidget,
-    removeWidgetConfig,
-    removeWidgetSaga,
-    removeWidgetData,
     checkData,
   } = props;
-
   const { bar, line, area, table, map } = __CONFIG__;
 
   const handleClick = useCallback(() => {
@@ -73,26 +70,9 @@ const Dashboard = props => {
 
   const onLayoutChange = useCallback(
     newLayout => {
-      changeLayout(newLayout, configs, sagaConfig);
+      changeLayout(newLayout);
     },
-    [changeLayout, configs, sagaConfig],
-  );
-
-  const onRemoveItem = useCallback(
-    i => {
-      removeWidget(i);
-      removeWidgetConfig(i);
-      removeWidgetSaga(i);
-      removeWidgetData(i);
-      stopPolling();
-    },
-    [
-      removeWidget,
-      removeWidgetConfig,
-      removeWidgetSaga,
-      removeWidgetData,
-      stopPolling,
-    ],
+    [changeLayout],
   );
 
   const onPin = useCallback(
@@ -101,10 +81,22 @@ const Dashboard = props => {
         const { static: iStatic, ...otherProps } = item;
         return item.i === i ? { static: !iStatic, ...otherProps } : item;
       });
-      changeLayout(newArr, configs, sagaConfig);
+      updateLayout(newArr);
     },
-    [layout, changeLayout, configs, sagaConfig],
+    [layout, updateLayout],
   );
+
+  const onRemoveItem = useCallback(
+    i => {
+      removeWidget(i);
+      stopPolling();
+    },
+    [removeWidget, stopPolling],
+  );
+
+  const onEdit = useCallback(widgetId => {
+    history.push(`/dashboard/widget/wizard/${widgetId}`);
+  }, []);
 
   const createElement = useCallback(
     element => {
@@ -118,6 +110,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
+                onEdit={onEdit}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -130,6 +123,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
+                onEdit={onEdit}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -142,6 +136,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
+                onEdit={onEdit}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -154,6 +149,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
+                onEdit={onEdit}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -166,6 +162,7 @@ const Dashboard = props => {
                 id={i}
                 onDelete={onRemoveItem}
                 onPin={onPin}
+                onEdit={onEdit}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -218,10 +215,7 @@ const Dashboard = props => {
   }, [handleClick, startPolling, stopPolling, sagaConfig]);
 
   return (
-    <ViewContainer
-      headerTitle={t('dashboard:dashboard')}
-      headerContent={getHeaderContent}
-    >
+    <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={getHeaderContent}>
       <ResponsiveReactGridLayout
         cols={cols}
         rowHeight={rowHeight}

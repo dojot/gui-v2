@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { object2Array } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWizardState) => {
   const { area: areaID } = __CONFIG__;
 
   const generateAreaConfig = useCallback(state => {
@@ -36,8 +36,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   }, []);
 
   const createAreaWidget = useCallback(
-    attributes => {
-      const widgetId = `${areaID}/${uuidv4()}`;
+    (attributes, id) => {
+      const widgetId = id || `${areaID}/${uuidv4()}`;
 
       const newWidget = {
         i: widgetId,
@@ -51,18 +51,14 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
         moved: false,
       };
 
-      addWidget(newWidget);
+      if (!id) {
+        addWidget(newWidget);
+      }
       addWidgetConfig({ [widgetId]: generateAreaConfig(attributes) });
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+      addWizardState({ [widgetId]: attributes });
     },
-    [
-      generateAreaConfig,
-      addWidget,
-      addWidgetSaga,
-      addWidgetConfig,
-      areaID,
-      generateScheme,
-    ],
+    [generateAreaConfig, addWidget, addWidgetSaga, addWidgetConfig, areaID, generateScheme],
   );
 
   return { createAreaWidget };

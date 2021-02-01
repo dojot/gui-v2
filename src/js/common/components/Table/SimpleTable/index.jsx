@@ -46,9 +46,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
     }
     if (typeof row[column.dataKey] === 'object') {
       return (
-        <pre style={{ textAlign: 'left' }}>
-          {JSON.stringify(row[column.dataKey], undefined, 2)}
-        </pre>
+        <pre style={{ textAlign: 'left' }}>{JSON.stringify(row[column.dataKey], undefined, 2)}</pre>
       );
     }
     return row[column.dataKey];
@@ -77,11 +75,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
                   classes={{ root: head }}
                   onClick={() => changeSorting('ts')}
                   endIcon={
-                    <Icn
-                      currentSortField={sortField.field}
-                      field='ts'
-                      order={sortField.order}
-                    />
+                    <Icn currentSortField={sortField.field} field='ts' order={sortField.order} />
                   }
                 >
                   Timestamp
@@ -90,12 +84,12 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
             ) : null}
             {columns.map(column => {
               return (
-                <Tooltip title={column.dataKey.substr(0, 6)} placement='top'>
-                  <TableCell
-                    key={column.dataKey}
-                    classes={{ head }}
-                    align='center'
-                  >
+                <Tooltip
+                  key={`t_${column.dataKey}`}
+                  title={column.dataKey.substr(0, 6)}
+                  placement='top'
+                >
+                  <TableCell key={column.dataKey} classes={{ head }} align='center'>
                     <Button
                       color='inherit'
                       size='small'
@@ -121,20 +115,13 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
           {sortedArray.map((row, index) => (
             <TableRow hover key={`${row.timestamp}_${uuidv4()}`}>
               {withRank ? (
-                <TableCell
-                  key={`rank_${uuidv4()}`}
-                  classes={{ body: lines }}
-                  align='center'
-                >
+                <TableCell key={`rank_${uuidv4()}`} classes={{ body: lines }} align='center'>
                   <b> {index + 1}</b>
                 </TableCell>
               ) : null}
 
               {hasTimestamp ? (
-                <TableCell
-                  key={`timestamp_${uuidv4()}`}
-                  classes={{ body: lines }}
-                >
+                <TableCell key={`timestamp_${uuidv4()}`} classes={{ body: lines }}>
                   {formatDate(row.timestamp, 'DD/MM/YYYY HH:mm:ss')}
                 </TableCell>
               ) : null}

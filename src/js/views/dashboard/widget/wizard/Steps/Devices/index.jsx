@@ -9,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
+import { FormCheckBox } from 'Components/Checkbox';
 import { Paginator, usePaginator } from 'Components/Paginator';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
@@ -112,15 +113,12 @@ const Devices = ({ validate, ...otherProps }) => {
                       <Field
                         type='checkbox'
                         name={`${otherProps.name}.chk-${id}`}
-                        component='input'
+                        component={FormCheckBox}
                         format={item => (item ? item.id === id : false)}
                         parse={item => (item ? value : null)}
                       />
                     </ListItemIcon>
-                    <ListItemText
-                      id={labelId}
-                      primary={renderItem(label, id)}
-                    />
+                    <ListItemText id={labelId} primary={renderItem(label, id)} />
                   </ListItem>
                   <Divider />
                 </Fragment>

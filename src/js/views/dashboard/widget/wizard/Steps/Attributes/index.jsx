@@ -1,7 +1,6 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
-import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -14,6 +13,7 @@ import TextField from '@material-ui/core/TextField';
 import Tooltip from '@material-ui/core/Tooltip';
 import CommentIcon from '@material-ui/icons/ColorLens';
 import SearchIcon from '@material-ui/icons/Search';
+import { FormCheckBox } from 'Components/Checkbox';
 import { Paginator, usePaginator } from 'Components/Paginator';
 import { TextField as FormTextField } from 'mui-rff';
 import PropTypes from 'prop-types';
@@ -32,12 +32,7 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
-  const {
-    paginatorData,
-    setPaginatorData,
-    setCurrentPage,
-    setPageSize,
-  } = usePaginator('client');
+  const { paginatorData, setPaginatorData, setCurrentPage, setPageSize } = usePaginator('client');
 
   const sortList = useCallback((list, fieldCompare) => {
     const orderedList = object2Array(list);
@@ -182,29 +177,7 @@ const ColorPickerAdapter = ({ input: { onChange, value }, changeColor }) => {
   );
 };
 
-const CheckAdapter = ({ input: { onChange, checked } }) => {
-  return (
-    <Checkbox
-      edge='start'
-      checked={checked}
-      tabIndex={-1}
-      disableRipple
-      onChange={onChange}
-      inputProps={{ 'aria-labelledby': 'asdf' }}
-      color='primary'
-    />
-  );
-};
-
-const ItemRow = ({
-  value,
-  meta,
-  attributes,
-  acceptedTypes,
-  staticSupported,
-  isDynamic,
-  name,
-}) => {
+const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDynamic, name }) => {
   const { id, label, attributeId } = meta;
   const classes = useStyles();
   const labelId = `checkbox-list-label-${attributeId}`;
@@ -265,10 +238,7 @@ const ItemRow = ({
   };
 
   const checkCompatibility = useCallback(
-    () =>
-      !acceptedTypes.includes(value.valueType) || isDynamic
-        ? !isDynamic
-        : !staticSupported,
+    () => !(acceptedTypes.includes(value.valueType) && (isDynamic || staticSupported)),
     [acceptedTypes, staticSupported, value],
   );
 
@@ -276,21 +246,19 @@ const ItemRow = ({
     return (
       <>
         <span className='listTitle'>{`[${label}] ${value.label}`}</span>
-        <span className='listId'>{`( ${
-          isDynamic ? 'Dynamic' : 'Static'
-        } )`}</span>
+        <span className='listId'>{`( ${isDynamic ? 'Dynamic' : 'Static'} )`}</span>
       </>
     );
   }, [isDynamic, label, value.label]);
 
   return (
     <Fragment key={attributeId}>
-      <ListItem role={undefined} button disabled={checkCompatibility()}>
+      <ListItem role={undefined} disabled={checkCompatibility()}>
         <ListItemIcon>
           <Field
             type='checkbox'
             name={`${name}.${attributeId}`}
-            component={CheckAdapter}
+            component={FormCheckBox}
             format={handleFormat}
             parse={item => (item ? attributeItem : null)}
           />
@@ -343,7 +311,9 @@ Index.defaultProps = {
 };
 
 Index.propTypes = {
-  acceptedTypes: PropTypes.arrayOf(PropTypes.string),
+  acceptedTypes: PropTypes.arrayOf(
+    PropTypes.oneOf(['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED']),
+  ),
   staticSupported: PropTypes.bool,
   name: PropTypes.string.isRequired,
 };

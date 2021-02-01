@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import 'leaflet/dist/images/marker-shadow.png';
 
-export default ({ id, onDelete, onPin, data, config }) => {
+export default ({ id, onDelete, onPin, data, config, onEdit }) => {
   const mapRef = useRef();
   const { clientHeight, clientWidth } = !mapRef.current
     ? { clientHeight: 0, clientWidth: 0 }
@@ -32,9 +32,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
 
   const GetToolTip = useCallback(
     item => {
-      const label = data[item.dataKey]
-        ? data[item.dataKey].deviceLabel
-        : 'undefined';
+      const label = data[item.dataKey] ? data[item.dataKey].deviceLabel : 'undefined';
       return (
         <Tooltip>
           <span>{`${label}: ${item.name}`}</span>
@@ -45,7 +43,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
   );
 
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
+    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
       <Map
         ref={mapRef}
         className='markercluster-map'
@@ -70,9 +68,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
             return _.isEmpty(data) ? null : (
               <Marker
                 key={item.dataKey}
-                position={
-                  data[item.dataKey] ? data[item.dataKey].value : [0, 0]
-                }
+                position={data[item.dataKey] ? data[item.dataKey].value : [0, 0]}
                 icon={getMarkerColor(item.markerColor)}
               >
                 <GetToolTip {...item} />

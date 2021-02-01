@@ -8,20 +8,20 @@ import {
   take,
   takeEvery,
   takeLatest,
+  select,
 } from 'redux-saga/effects';
 import { Configuration, Device } from 'Services';
 import { getUserInformation } from 'Utils';
 
-import {
-  actions as dashboardActions,
-  constants as dashboardConstants,
-} from '../modules/dashboard';
+import { actions as dashboardActions, constants as dashboardConstants } from '../modules/dashboard';
 
 const delay = duration => {
   return new Promise(resolve => {
     setTimeout(() => resolve(true), duration);
   });
 };
+
+const getStoreContent = (state, key) => state.dashboard.get(key);
 
 const getQueriesFromSchema = schema => {
   const realTimeQueries = [];
@@ -48,9 +48,10 @@ function* pollData(queries, interval) {
   try {
     // eslint-disable-next-line no-restricted-syntax
     for (const realTimeQuery of queries) {
-      const {
-        getDeviceHistoryForDashboard,
-      } = yield Device.getDevicesHistoryParsed(realTimeQuery.query);
+      const { getDeviceHistoryForDashboard } = yield Device.getDevicesHistoryParsed(
+        realTimeQuery.query,
+      );
+
       if (getDeviceHistoryForDashboard) {
         yield put(
           dashboardActions.updateValues({
@@ -67,9 +68,7 @@ function* pollData(queries, interval) {
 }
 
 function* pollDashboard({ payload }) {
-  const { staticQueries = [], realTimeQueries = [] } = getQueriesFromSchema(
-    payload,
-  );
+  const { staticQueries = [], realTimeQueries = [] } = getQueriesFromSchema(payload);
   yield call(pollData, staticQueries, 0);
 
   while (true) {
@@ -88,10 +87,7 @@ function* pollDashboard({ payload }) {
 function* checkData() {
   const { userName, tenant } = getUserInformation();
   try {
-    const { getConfig } = yield Configuration.getDashboardConfig(
-      userName,
-      tenant,
-    );
+    const { getConfig } = yield Configuration.getDashboardConfig(userName, tenant);
     const parserObject = JSON.parse(getConfig);
     if (!_.isEmpty(parserObject)) {
       yield put(dashboardActions.restoreData(parserObject));
@@ -101,16 +97,34 @@ function* checkData() {
   }
 }
 
-function* updateData({ payload: { layout, configs, saga } }) {
+function* updateData({ payload: { layout } }) {
   const { userName, tenant } = getUserInformation();
+
   try {
     const exportConfig = JSON.stringify({
       layout,
-      configs,
-      saga,
+      configs: yield select(store => getStoreContent(store, 'configs')),
+      saga: yield select(store => getStoreContent(store, 'saga')),
+      wizardContext: yield select(state => getStoreContent(state, 'wizardContext')),
     });
     yield Configuration.updateDashboardConfig(userName, tenant, exportConfig);
     yield put(dashboardActions.updateLayout(layout));
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+function* updateWizard({ payload: { state } }) {
+  const { userName, tenant } = getUserInformation();
+  const wizardContext = yield select(store => getStoreContent(store, 'wizardContext'));
+  try {
+    const exportConfig = JSON.stringify({
+      layout: yield select(store => getStoreContent(store, 'layout')),
+      configs: yield select(store => getStoreContent(store, 'configs')),
+      saga: yield select(store => getStoreContent(store, 'saga')),
+      wizardContext: { ...wizardContext, ...state },
+    });
+    yield Configuration.updateDashboardConfig(userName, tenant, exportConfig);
   } catch (e) {
     console.error(e);
   }
@@ -120,6 +134,7 @@ function* watchGetDashboard() {
   yield takeEvery(dashboardConstants.START_POLLING, pollDashboard);
   yield takeLatest(dashboardConstants.CHECK_STATE, checkData);
   yield takeLatest(dashboardConstants.CHANGE_LAYOUT, updateData);
+  yield takeLatest(dashboardConstants.ADD_WIZARD_STATE, updateWizard);
 }
 
 export const dashboardSaga = [fork(watchGetDashboard)];
