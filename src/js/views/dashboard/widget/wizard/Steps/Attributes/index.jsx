@@ -1,6 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import Button from '@material-ui/core/Button';
+import Checkbox from '@material-ui/core/Checkbox';
 import Divider from '@material-ui/core/Divider';
 import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
@@ -24,7 +25,7 @@ import { object2Array } from 'Utils';
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
-const Index = props => {
+const Index = ({ values, validate }) => {
   const classes = useStyles();
   const { t } = useTranslation(['dashboard']);
 
@@ -53,7 +54,7 @@ const Index = props => {
 
   const getInitialAttributes = useCallback(() => {
     const attributes = [];
-    const orderedDevices = sortList(props.values.devices, 'label');
+    const orderedDevices = sortList(values.devices, 'label');
 
     orderedDevices.forEach(device => {
       const orderedAttrs = sortList(device.attrs, 'label');
@@ -69,7 +70,7 @@ const Index = props => {
       deviceAttributes.forEach(attr => attributes.push(attr));
     });
     return attributes;
-  }, [props.values.devices, sortList]);
+  }, [values.devices, sortList]);
 
   const [initialAttributes] = useState(() => getInitialAttributes());
 
@@ -95,7 +96,7 @@ const Index = props => {
   }, []);
 
   return (
-    <Wizard.Page validate={props.validate}>
+    <Wizard.Page validate={validate}>
       <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.searchContainer}>
           <TextField
@@ -164,13 +165,43 @@ const Index = props => {
   );
 };
 
+const ColorPickerAdapter = ({ input: { onChange, value }, changeColor }) => {
+  return (
+    <GithubPicker
+      triangle='top-right'
+      onChange={props => {
+        changeColor(props);
+        onChange(props.hex);
+      }}
+      color={value}
+    />
+  );
+};
+
+const CheckAdapter = ({ input: { onChange, value } }) => {
+  return (
+    <Checkbox
+      edge='start'
+      checked={value}
+      tabIndex={-1}
+      disableRipple
+      onChange={onChange}
+      inputProps={{ 'aria-labelledby': 'asdf' }}
+      color='primary'
+    />
+  );
+};
+
 const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
   const { id, label, attributeId } = meta;
   const classes = useStyles();
   const labelId = `checkbox-list-label-${attributeId}`;
 
   const [isOpen, setIsOpen] = useState(false);
-  const [color, setColor] = useState('#FAFAFA');
+  const [color, setColor] = useState({
+    rgb: { r: 250, g: 250, b: 250 },
+    hex: '#FAFAFA',
+  });
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { t } = useTranslation(['dashboard']);
@@ -179,9 +210,29 @@ const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
     deviceID: id,
     attributeID: `${attributeId}`,
     deviceLabel: label,
-    color,
+    color: color.hex,
     label: value.label,
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      setIsOpen(false);
+    }
+  }, [color]);
+
+  useEffect(() => {
+    if (isDisabled) {
+      setColor({
+        rgb: { r: 250, g: 250, b: 250 },
+        hex: '#FAFAFA',
+      });
+    } else {
+      setColor({
+        rgb: { r: 0, g: 77, b: 207 },
+        hex: '#004dcf',
+      });
+    }
+  }, [isDisabled]);
 
   const handleFormat = item => {
     if (item) {
@@ -220,7 +271,7 @@ const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
           <Field
             type='checkbox'
             name={`${name}.${attributeId}`}
-            component='input'
+            component={CheckAdapter}
             format={handleFormat}
             parse={item => (item ? attributeItem : null)}
           />
@@ -242,7 +293,11 @@ const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
             variant='outlined'
             startIcon={<CommentIcon />}
             className={classes.button}
-            style={{ backgroundColor: color }}
+            style={{
+              '--red': color.rgb.r,
+              '--green': color.rgb.g,
+              '--blue': color.rgb.b,
+            }}
             onClick={() => setIsOpen(!isOpen)}
             disabled={isDisabled}
             // disabled={checkCompatibility()}
@@ -251,13 +306,10 @@ const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
           </Button>
           {isOpen ? (
             <div className={classes.picker}>
-              <GithubPicker
-                triangle='top-right'
-                onChange={props => {
-                  setColor(props.hex);
-                  setIsOpen(!isOpen);
-                }}
-                color={color}
+              <Field
+                name={`${name}.${attributeId}.color`}
+                component={ColorPickerAdapter}
+                changeColor={setColor}
               />
             </div>
           ) : null}

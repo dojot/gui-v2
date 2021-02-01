@@ -22,7 +22,7 @@ export const generateScheme = props => {
         _.groupBy(object2Array(props.attributes), 'deviceID'),
         (value, key) => ({
           deviceID: key,
-          attrs: value.map(val => val.label),
+          dynamicAttrs: value.map(val => val.label),
         }),
       ),
     ),
