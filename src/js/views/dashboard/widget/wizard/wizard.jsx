@@ -103,7 +103,7 @@ const Wizard = ({ initialValues, ...props }) => {
                 )}
               </div>
               <DevelopmentContainer>
-                <pre>{JSON.stringify(values, 0, 2)}</pre>
+                <pre>{JSON.stringify(values, null, 2)}</pre>
               </DevelopmentContainer>
             </form>
           )}
