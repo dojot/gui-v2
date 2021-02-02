@@ -215,7 +215,6 @@ const Filters = props => {
                       value={data.fixedValue}
                       type='number'
                       onChange={handleChangeFixedValue}
-                      label='Nº Registros'
                       label={t('filters.records')}
                       inputProps={{ min: 1, max: 9999, step: 1 }}
                       disabled={data.filterType !== '0'}

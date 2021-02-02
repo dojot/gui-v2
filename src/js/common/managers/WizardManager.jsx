@@ -70,7 +70,7 @@ const Manager = props => {
       default:
         return '';
     }
-  }, [area, bar, line, map, id]);
+  }, [area, bar, line, map, id, t, toDashboard]);
 
   return getWizard();
 };

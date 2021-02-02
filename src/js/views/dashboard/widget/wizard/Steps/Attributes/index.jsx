@@ -342,7 +342,7 @@ const ItemRow = ({
         } )`}</span>
       </>
     );
-  }, []);
+  }, [isDynamic, label, value.label]);
 
   const { t } = useTranslation(['dashboard']);
 

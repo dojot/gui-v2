@@ -69,6 +69,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
           {config.map.map(item => {
             return _.isEmpty(data) ? null : (
               <Marker
+                key={item.dataKey}
                 position={
                   data[item.dataKey] ? data[item.dataKey].value : [0, 0]
                 }

@@ -293,7 +293,6 @@ const Wizard = ({
       state.attributes,
       state.devices,
       state.general,
-      steps,
     ],
   );
 
