@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import { Device as DeviceService } from 'Services/index';
-import { object2Array } from 'Utils/module/array';
 import { formatToISO } from 'Utils';
+import { object2Array } from 'Utils/module/array';
 
 export const generateScheme = props => {
   const {
