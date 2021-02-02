@@ -53,7 +53,7 @@ const Devices = ({ validate, ...otherProps }) => {
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTermDebounced]);
+  }, [searchTermDebounced, setCurrentPage]);
 
   const handleChangeSearch = useCallback(e => {
     setSearchTerm(e.target.value);

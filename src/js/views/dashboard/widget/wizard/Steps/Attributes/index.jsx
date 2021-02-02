@@ -218,6 +218,7 @@ const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
     if (isOpen) {
       setIsOpen(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [color]);
 
   useEffect(() => {

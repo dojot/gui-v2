@@ -38,7 +38,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
 
   useEffect(() => {
     checkDatePeriod(dateFrom, dateTo);
-  }, [dateTo, dateFrom]);
+  }, [dateTo, dateFrom, checkDatePeriod]);
 
   return (
     <Wizard.Page validate={validate}>
