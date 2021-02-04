@@ -17,6 +17,8 @@ query getDevices($page: PageInput, $filter: FilterDeviceInput) {
       attrs{
         label
         valueType
+        isDynamic
+        staticValue
       }
     }
   }

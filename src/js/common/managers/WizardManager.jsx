@@ -6,6 +6,9 @@ import { useTranslation } from 'react-i18next';
 const Wizard = LazyLoading(() =>
   import('views/dashboard/widget/wizard/Wizard.jsx'),
 );
+const MapWizard = LazyLoading(() =>
+  import('views/dashboard/widget/map/Wizard'),
+);
 
 const Manager = props => {
   const {
@@ -14,7 +17,7 @@ const Manager = props => {
     },
     history,
   } = props;
-  const { line, area, bar, pizza, donut, bubble } = __CONFIG__;
+  const { line, area, bar, table, map } = __CONFIG__;
 
   const toDashboard = useCallback(() => {
     history.push('/dashboard');
@@ -23,26 +26,53 @@ const Manager = props => {
 
   const { t } = useTranslation(['dashboard']);
 
-  const getTitle = useCallback(() => {
+  const getWizard = useCallback(() => {
     switch (id) {
       case line:
-        return t(['line.title', 'Line Chart']);
+        return (
+          <Wizard
+            title={t(['line.title', 'Line Chart'])}
+            type={id}
+            toDashboard={toDashboard}
+          />
+        );
       case area:
-        return t(['area.title', 'Area Chart']);
+        return (
+          <Wizard
+            title={t(['area.title', 'Area Chart'])}
+            type={id}
+            toDashboard={toDashboard}
+          />
+        );
       case bar:
-        return t(['bar.title', 'Bar Chart']);
-      case pizza:
-        return t(['pizza.title', 'Pizza Chart']);
-      case donut:
-        return t(['donut.title', 'Donut Chart']);
-      case bubble:
-        return t(['bubble.title', 'Bubble Chart']);
+        return (
+          <Wizard
+            title={t(['bar.title', 'Bar Chart'])}
+            type={id}
+            toDashboard={toDashboard}
+          />
+        );
+      case table:
+        return (
+          <Wizard
+            title={t(['table.title', 'Table'])}
+            type={id}
+            toDashboard={toDashboard}
+          />
+        );
+      case map:
+        return (
+          <MapWizard
+            title={t(['map.title', 'Mapa'])}
+            toDashboard={toDashboard}
+          />
+        );
       default:
         return '';
     }
-  }, [area, bar, bubble, donut, line, id, pizza]);
+  }, [area, bar, line, map, id, t, toDashboard]);
 
-  return <Wizard title={getTitle()} type={id} toDashboard={toDashboard} />;
+  return getWizard();
 };
 
 export default Manager;

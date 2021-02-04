@@ -44,7 +44,23 @@ const AttributeBox = ({ name, values = [] }) => {
   return (
     <div className={classes.containerText}>
       <div className={classes.title}>{name}</div>
-      {values.map(item => {
+      {values.dynamicValues.map(item => {
+        const { label, deviceLabel, color, attributeID, description } = item;
+        return (
+          <div className={classes.colorContainer} key={attributeID}>
+            <div
+              className={classes.colorArea}
+              style={{ backgroundColor: color }}
+            />
+            <div className={classes.attrItem}>
+              {`${deviceLabel} - ${label} ${
+                description ? ` - (${description})` : ''
+              }`}
+            </div>
+          </div>
+        );
+      })}
+      {values.staticValues.map(item => {
         const { label, deviceLabel, color, attributeID, description } = item;
         return (
           <div className={classes.colorContainer} key={attributeID}>

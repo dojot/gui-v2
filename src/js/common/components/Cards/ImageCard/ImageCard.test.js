@@ -3,8 +3,7 @@ import React from 'react';
 import { render, fireEvent } from '@testing-library/react';
 import Bar from 'Assets/images/bar.png';
 import '@testing-library/jest-dom/extend-expect';
-
-import ImageCard from './ImageCard.jsx';
+import { ImageCard } from 'Components/Cards';
 
 describe('ImageCard', () => {
   const title = 'Gráfico de Barras';

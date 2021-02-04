@@ -22,7 +22,7 @@ import useTable from './hooks/useTable';
 import {
   Attributes,
   Devices,
-  Filters,
+  GeneralFilter,
   General,
   InitialStateGeneral as general,
   Summary,
@@ -50,12 +50,6 @@ const Wizard = ({
     line: wizardLineType,
     area: wizardAreaType,
     bar: wizardBarType,
-    // eslint-disable-next-line no-unused-vars
-    pizza: wizardPizzaType,
-    // eslint-disable-next-line no-unused-vars
-    donut: wizardDonutType,
-    // eslint-disable-next-line no-unused-vars
-    bubble: wizardBubbleType,
     table: wizardTableType,
   } = __CONFIG__;
 
@@ -111,10 +105,15 @@ const Wizard = ({
 
     return DeviceService.parseHistoryQuery({
       devices: _.values(
-        _.mapValues(_.groupBy(state.attributes, 'deviceID'), (value, key) => ({
-          deviceID: key,
-          attrs: value.map(val => val.label),
-        })),
+        _.mapValues(
+          _.groupBy(state.attributes.dynamicValues, 'deviceID'),
+          (value, key) => {
+            return {
+              deviceID: key,
+              dynamicAttrs: value.map(val => val.label),
+            };
+          },
+        ),
       ),
       dateFrom,
       dateTo,
@@ -258,7 +257,7 @@ const Wizard = ({
           );
         case 3:
           return (
-            <Filters
+            <GeneralFilter
               handleNavigate={dispatch}
               steps={steps}
               activeStep={stepIndex}
@@ -294,7 +293,6 @@ const Wizard = ({
       state.attributes,
       state.devices,
       state.general,
-      steps,
     ],
   );
 

@@ -13,7 +13,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       subTitle: generalState.description || '',
     };
 
-    const bar = attributes.map(item => ({
+    const bar = attributes.dynamicValues.map(item => ({
       dataKey: item.attributeID,
       fill: item.color,
       name: item.description || item.label,

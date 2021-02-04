@@ -51,7 +51,6 @@ function* pollData(queries, interval) {
       const {
         getDeviceHistoryForDashboard,
       } = yield Device.getDevicesHistoryParsed(realTimeQuery.query);
-
       if (getDeviceHistoryForDashboard) {
         yield put(
           dashboardActions.updateValues({

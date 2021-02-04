@@ -1,14 +1,15 @@
 // Requiring dependencies
 // ================================================================================
-import path from 'path';
-import webpack from 'webpack';
-import CaseSensitivePathsPlugin from 'case-sensitive-paths-webpack-plugin';
-import config from 'config';
+import path from "path";
+import webpack from "webpack";
+import CaseSensitivePathsPlugin from "case-sensitive-paths-webpack-plugin";
+import config from "config";
 
 // Please read the following link if
 // you have no idea how to use this feature
 // https://github.com/motdotla/dotenv
-require('dotenv').config({ silent: true });
+require("dotenv")
+  .config({ silent: true });
 
 // trace which loader is deprecated
 // feel free to remove that if you don't need this feature
@@ -16,167 +17,169 @@ process.traceDeprecation = false;
 
 // Environment variable injection
 // ================================================================================
-import packageJSON from './package.json'
-process.env.PACKAGE_VERSION = packageJSON.version
+import packageJSON from "./package.json";
+
+process.env.PACKAGE_VERSION = packageJSON.version;
 
 // Defining config variables
 // ================================================================================
 
-export const BUILD_PATH = path.join(__dirname, `docroot${config.get('publicPath')}`)
+export const BUILD_PATH = path.join(__dirname, `docroot${config.get("publicPath")}`);
 
 const COMMON_LOADERS = [
   {
     test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
     use: [
       {
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          hash: 'sha512',
-          digest: 'hex',
-          name: `${config.get('assetPath')}/[hash].[ext]`,
+          hash: "sha512",
+          digest: "hex",
+          name: `${config.get("assetPath")}/[name].[ext]`
         }
       },
       {
-        loader: 'image-webpack-loader',
+        loader: "image-webpack-loader",
         options: {
           query: {
             mozjpeg: {
-              progressive: true,
+              progressive: true
             },
             gifsicle: {
-              interlaced: true,
+              interlaced: true
             },
             optipng: {
-              optimizationLevel: 7,
+              optimizationLevel: 7
             },
             pngquant: {
-              quality: '65-90',
+              quality: "65-90",
               speed: 4
             }
-          },
+          }
         }
       }
-    ],
+    ]
   }, {
     test: /\.(js|jsx)?$/,
     exclude: /node_modules/,
-    loader: 'babel-loader',
+    loader: "babel-loader",
     options: {
       cacheDirectory: true,
       plugins: [
-        '@babel/plugin-transform-runtime',
-        '@babel/plugin-syntax-dynamic-import'
-      ],
-    },
+        "@babel/plugin-transform-runtime",
+        "@babel/plugin-syntax-dynamic-import"
+      ]
+    }
   },
   {
     test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
     use: [
       {
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 10000,
-          mimetype: 'application/font-woff',
-          name: `${config.get('assetPath')}/[name].[ext]`,
+          mimetype: "application/font-woff",
+          name: `${config.get("assetPath")}/[name].[ext]`
         }
       }
-    ],
+    ]
   },
   {
     test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
     use: [
       {
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 10000,
-          mimetype: 'application/font-woff',
-          name: `${config.get('assetPath')}/[name].[ext]`,
+          mimetype: "application/font-woff",
+          name: `${config.get("assetPath")}/[name].[ext]`
         }
       }
-    ],
+    ]
   },
   {
     test: /\.[ot]tf(\?v=\d+\.\d+\.\d+)?$/,
     use: [
       {
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 10000,
-          mimetype: 'application/octet-stream',
-          name: `${config.get('assetPath')}/[name].[ext]`,
+          mimetype: "application/octet-stream",
+          name: `${config.get("assetPath")}/[name].[ext]`
         }
       }
-    ],
+    ]
   },
   {
     test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
     use: [
       {
-        loader: 'url-loader',
+        loader: "url-loader",
         options: {
           limit: 10000,
-          mimetype: 'application/vnd.ms-fontobject',
-          name: `${config.get('assetPath')}/[name].[ext]`,
+          mimetype: "application/vnd.ms-fontobject",
+          name: `${config.get("assetPath")}/[name].[ext]`
         }
       }
-    ],
+    ]
   }
 ];
 
 // Export
 // ===============================================================================
-export const JS_SOURCE = config.get('jsSourcePath');
+export const JS_SOURCE = config.get("jsSourcePath");
 
 export default {
   output: {
-    path: path.join(__dirname, 'docroot'),
+    path: path.join(__dirname, "docroot")
   },
   performance: {
-    hints: process.env.NODE_ENV === 'production' ? "warning" : false
+    hints: process.env.NODE_ENV === "production" ? "warning" : false
   },
   optimization: {
-      splitChunks: {
-      chunks: 'all'
+    splitChunks: {
+      chunks: "all"
     }
   },
   resolve: {
-    extensions: ['.js', '.jsx', '.css'],
+    extensions: [".js", ".jsx", ".css"],
     modules: [
-      path.join(__dirname, 'src'),
-      path.join(__dirname, 'assets'),
+      path.join(__dirname, "src"),
+      path.join(__dirname, "assets"),
       path.join(__dirname, JS_SOURCE),
       "node_modules"
     ],
     alias: {
-      APIs: path.resolve(__dirname, 'src/js/common/api'),
-      Assets: path.resolve(__dirname, 'src/assets'),
-      Components: path.resolve(__dirname, 'src/js/common/components'),
-      Redux: path.resolve(__dirname, 'src/js/redux/modules'),
-      Sagas: path.resolve(__dirname, 'src/js/redux/sagas'),
-      Selectors: path.resolve(__dirname, 'src/js/redux/selectors'),
-      Services: path.resolve(__dirname, 'src/js/common/services'),
-      Themes: path.resolve(__dirname, 'src/js/common/themes'),
-      Types: path.resolve(__dirname, 'src/js/common/types'),
-      Utils: path.resolve(__dirname, 'src/js/common/utils'),
+      APIs: path.resolve(__dirname, "src/js/common/api"),
+      Assets: path.resolve(__dirname, "src/assets"),
+      Components: path.resolve(__dirname, "src/js/common/components"),
+      Redux: path.resolve(__dirname, "src/js/redux/modules"),
+      Sagas: path.resolve(__dirname, "src/js/redux/sagas"),
+      Selectors: path.resolve(__dirname, "src/js/redux/selectors"),
+      Services: path.resolve(__dirname, "src/js/common/services"),
+      Themes: path.resolve(__dirname, "src/js/common/themes"),
+      Types: path.resolve(__dirname, "src/js/common/types"),
+      Utils: path.resolve(__dirname, "src/js/common/utils"),
+      leaflet_css: path.resolve(__dirname, "/node_modules/leaflet/dist/leaflet.css")
     }
   },
   plugins: [
     new webpack.IgnorePlugin(/vertx/), // https://github.com/webpack/webpack/issues/353
-    new CaseSensitivePathsPlugin(),
+    new CaseSensitivePathsPlugin()
   ],
   module: {
-    rules: COMMON_LOADERS,
+    rules: COMMON_LOADERS
   },
   node: {
     console: true,
-    fs: 'empty',
-    net: 'empty',
-    tls: 'empty'
+    fs: "empty",
+    net: "empty",
+    tls: "empty"
   },
   externals: {
-    console:true,
-    fs:'{}',
-    tls:'{}',
-    net:'{}'
-  },
+    console: true,
+    fs: "{}",
+    tls: "{}",
+    net: "{}"
+  }
 };

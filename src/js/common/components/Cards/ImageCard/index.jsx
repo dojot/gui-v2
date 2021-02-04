@@ -8,11 +8,10 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import PropTypes from 'prop-types';
 
-import useStyles from './ImageCard';
+import useStyles from './style';
 
-const ImageCard = props => {
+const Index = ({ title, image, description, handleClick }) => {
   const classes = useStyles();
-  const { title, image, description, handleClick } = props;
   return (
     <Grid item classes={{ item: classes.item }}>
       <Card className={classes.rootCard}>
@@ -50,11 +49,11 @@ const ImageCard = props => {
   );
 };
 
-ImageCard.propTypes = {
+Index.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
 };
 
-export default ImageCard;
+export default Index;

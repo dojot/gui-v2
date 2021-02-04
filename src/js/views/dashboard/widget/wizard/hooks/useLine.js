@@ -13,7 +13,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       subTitle: generalState.description || '',
     };
 
-    const line = attributes.map(item => ({
+    const line = attributes.dynamicValues.map(item => ({
       type: 'monotone',
       dataKey: `${item.deviceID}${item.label}`,
       stroke: item.color,

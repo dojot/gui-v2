@@ -1,21 +1,20 @@
-// import PropTypes from 'prop-types'
 import React, { useCallback } from 'react';
 
+import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowBack from '@material-ui/icons/ArrowBack';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
 import { ViewContainer } from '../../stateComponents';
 import { AreaChartCard } from './areaChart';
 import { BarChartCard } from './barChart';
-import { BubbleChartCard } from './bubbleChart';
-import { DonutChartCard } from './donutChart';
 import { LineChartCard } from './lineChart';
-import { PizzaChartCard } from './pizzaChart';
+import { MapCard } from './map';
 import { TableCard } from './table';
 
-const useStyles = makeStyles(theme => {
+const useStyles = makeStyles(() => {
   return {
     root: {
       flexGrow: 1,
@@ -26,7 +25,7 @@ const useStyles = makeStyles(theme => {
 const WidgetView = props => {
   const classes = useStyles();
   const { history } = props;
-  const { line, area, bar, pizza, donut, bubble, table } = __CONFIG__;
+  const { line, area, bar, table, map } = __CONFIG__;
   const { t } = useTranslation(['dashboard']);
 
   const handleClick = useCallback(
@@ -36,16 +35,36 @@ const WidgetView = props => {
     [history],
   );
 
+  const handleBack = useCallback(() => {
+    history.push('/dashboard');
+  }, [history]);
+
+  const getHeaderContent = useCallback(() => {
+    return (
+      <Button
+        style={{ marginLeft: 10 }}
+        size='small'
+        variant='outlined'
+        color='inherit'
+        startIcon={<ArrowBack />}
+        onClick={() => handleBack()}
+      >
+        {t('common:back')}
+      </Button>
+    );
+  }, [handleClick]);
+
   return (
-    <ViewContainer headerTitle={t('dashboard:widget')}>
+    <ViewContainer
+      headerTitle={t('dashboard:widget')}
+      headerContent={getHeaderContent}
+    >
       <Grid container justify='flex-start' className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />
-        <PizzaChartCard onClick={() => handleClick(pizza)} />
-        <DonutChartCard onClick={() => handleClick(donut)} />
-        <BubbleChartCard onClick={() => handleClick(bubble)} />
         <BarChartCard onClick={() => handleClick(bar)} />
         <TableCard onClick={() => handleClick(table)} />
+        <MapCard onClick={() => handleClick(map)} />
       </Grid>
     </ViewContainer>
   );

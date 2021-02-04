@@ -13,5 +13,6 @@
   "pin": "Fixar",
   "edit": "Editar",
   "delete": "Remover",
-  "finish": "Finalizar"
+  "finish": "Finalizar",
+  "noData": "Sem Dados"
 }
