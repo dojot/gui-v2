@@ -20,7 +20,7 @@ import { GithubPicker } from 'react-color';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { useDebounce } from 'use-debounce';
-import { object2Array } from 'Utils';
+import { object2Array, hexToRgb } from 'Utils';
 
 import Wizard from '../../wizard';
 import { useStyles } from './style';
@@ -141,6 +141,7 @@ const Index = ({ values, validate }) => {
                     label: deviceLabel,
                     attributeId,
                   }}
+                  attributes={values.attributes}
                   key={`${deviceId}${attributeLabel}`}
                   acceptedTypes={acceptedTypes}
                   isDynamic={isDynamic}
@@ -192,16 +193,22 @@ const CheckAdapter = ({ input: { onChange, value } }) => {
   );
 };
 
-const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
+const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
   const { id, label, attributeId } = meta;
   const classes = useStyles();
   const labelId = `checkbox-list-label-${attributeId}`;
 
-  const [isOpen, setIsOpen] = useState(false);
-  const [color, setColor] = useState({
+  const colorBlue = {
+    rgb: { r: 0, g: 77, b: 207 },
+    hex: '#004dcf',
+  };
+  const colorBlueDisabled = {
     rgb: { r: 250, g: 250, b: 250 },
     hex: '#FAFAFA',
-  });
+  };
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [color, setColor] = useState(colorBlueDisabled);
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { t } = useTranslation(['dashboard']);
@@ -222,18 +229,19 @@ const ItemRow = ({ value, meta, acceptedTypes, isDynamic, }) => {
   }, [color]);
 
   useEffect(() => {
-    if (isDisabled) {
-      setColor({
-        rgb: { r: 250, g: 250, b: 250 },
-        hex: '#FAFAFA',
-      });
+    if (attributes[attributeId] && !isDisabled) {
+      if (attributes[attributeId].color === '#FAFAFA') {
+        setColor(colorBlue);
+      } else {
+        setColor({
+          rgb: hexToRgb(attributes[attributeId].color),
+          hex: attributes[attributeId].color,
+        });
+      }
     } else {
-      setColor({
-        rgb: { r: 0, g: 77, b: 207 },
-        hex: '#004dcf',
-      });
+      setColor(colorBlueDisabled);
     }
-  }, [isDisabled]);
+  }, [isDisabled, attributes, setColor]);
 
   const handleFormat = item => {
     if (item) {

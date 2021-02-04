@@ -42,17 +42,39 @@ const LineWizard = ({
 
   const initialStateTest = {
     general: {
-      name: '',
+      name: 'Teste',
       description: '',
     },
-    devices: {},
-    attributes: {},
+    devices: {
+      'chk-e5d299': {
+        id: 'e5d299',
+        label: 'CS Teste',
+        attrs: [
+          {
+            label: 'coordenada',
+            valueType: 'GEO',
+          },
+          {
+            label: 'timestamp',
+            valueType: 'STRING',
+          },
+        ],
+      },
+    },
+    attributes: {
+      e5d299coordenada: {
+        deviceID: 'e5d299',
+        attributeID: 'e5d299coordenada',
+        deviceLabel: 'CS Teste',
+        color: '#006b76',
+        label: 'coordenada',
+      },
+    },
     filters: {
       filterType: '0',
       dateTo: '',
       dateFrom: '',
       lastRegs: '15',
-      lastDynamicsOption: undefined,
       lastDynamicsValue: '15',
       isRealTime: true,
     },
