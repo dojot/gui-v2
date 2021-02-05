@@ -30,6 +30,7 @@ jobs:
         yarn install
         yarn run build
         yarn run lint
+        yarn run check-licenses
         yarn run test:coverage
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
@@ -40,7 +41,7 @@ jobs:
         flags: guiV2
         # Custom name for the upload
         name: gui-v2
-               
+
   docker-hub:
     # Path to help identify each job in the status checks
     name:  Build and Publish image to DockerHUb

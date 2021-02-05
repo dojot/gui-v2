@@ -1,6 +1,6 @@
 {
   "name": "gui-v2",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "GUI V2",
   "scripts": {
     "dev": "cross-env NODE_ENV=development DASHBOARD_PORT=9901 webpack-dashboard -p 9901 -c green -t dashboard -- node bin/commands.js dev",
@@ -11,7 +11,8 @@
     "clean": "rimraf docroot",
     "test": "TZ=UTC jest --no-cache",
     "test:coverage": "yarn test --coverage",
-    "lint": "node bin/commands.js lint"
+    "lint": "node bin/commands.js lint",
+    "check-licenses": "apache2-license-checker"
   },
   "repository": {
     "type": "git",
@@ -23,6 +24,13 @@
     "npm": ">=3.10.7",
     "node": ">=6.9.0"
   },
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0"
+    }
+  ],
   "devDependencies": {
     "@babel/cli": "^7.0.0",
     "@babel/core": "^7.0.0",
@@ -49,6 +57,7 @@
     "@babel/preset-react": "^7.0.0",
     "@babel/register": "^7.0.0",
     "@babel/runtime-corejs2": "^7.0.0",
+    "@bbc/apache2-license-checker": "^1.1.4",
     "assets-webpack-plugin": "^3.9.7",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.1.0",
@@ -112,6 +121,7 @@
     "@testing-library/jest-dom": "^5.11.1",
     "@testing-library/react": "^10.4.7",
     "axios": "^0.19.2",
+    "caniuse-lite": "^1.0.30001113",
     "clsx": "^1.1.0",
     "formik": "^2.1.4",
     "history": "^4.10.1",
@@ -187,7 +197,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm test"
+      "pre-push": "npm test && npm run check-licenses"
     }
   },
   "keywords": [
