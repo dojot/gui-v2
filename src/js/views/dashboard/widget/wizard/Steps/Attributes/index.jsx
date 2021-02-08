@@ -16,6 +16,7 @@ import CommentIcon from '@material-ui/icons/ColorLens';
 import SearchIcon from '@material-ui/icons/Search';
 import { Paginator, usePaginator } from 'Components/Paginator';
 import { TextField as FormTextField } from 'mui-rff';
+import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
@@ -25,7 +26,7 @@ import { object2Array, hexToRgb } from 'Utils';
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
-const Index = ({ values, validate }) => {
+const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
   const classes = useStyles();
   const { t } = useTranslation(['dashboard']);
 
@@ -144,7 +145,9 @@ const Index = ({ values, validate }) => {
                   attributes={values.attributes}
                   key={`${deviceId}${attributeLabel}`}
                   acceptedTypes={acceptedTypes}
+                  staticSupported={staticSupported}
                   isDynamic={isDynamic}
+                  name={name}
                 />
               );
             })
@@ -179,11 +182,11 @@ const ColorPickerAdapter = ({ input: { onChange, value }, changeColor }) => {
   );
 };
 
-const CheckAdapter = ({ input: { onChange, value } }) => {
+const CheckAdapter = ({ input: { onChange, checked } }) => {
   return (
     <Checkbox
       edge='start'
-      checked={value}
+      checked={checked}
       tabIndex={-1}
       disableRipple
       onChange={onChange}
@@ -193,7 +196,15 @@ const CheckAdapter = ({ input: { onChange, value } }) => {
   );
 };
 
-const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
+const ItemRow = ({
+  value,
+  meta,
+  attributes,
+  acceptedTypes,
+  staticSupported,
+  isDynamic,
+  name,
+}) => {
   const { id, label, attributeId } = meta;
   const classes = useStyles();
   const labelId = `checkbox-list-label-${attributeId}`;
@@ -212,13 +223,13 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
   const [isDisabled, setIsDisabled] = useState(true);
 
   const { t } = useTranslation(['dashboard']);
-  const name = 'attributes';
   const attributeItem = {
     deviceID: id,
     attributeID: `${attributeId}`,
     deviceLabel: label,
     color: color.hex,
     label: value.label,
+    isDynamic,
   };
 
   useEffect(() => {
@@ -253,8 +264,11 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
   };
 
   const checkCompatibility = useCallback(
-    () => !acceptedTypes.includes(value.valueType),
-    [acceptedTypes, value],
+    () =>
+      !acceptedTypes.includes(value.valueType) || isDynamic
+        ? !isDynamic
+        : !staticSupported,
+    [acceptedTypes, staticSupported, value],
   );
 
   const renderItem = useCallback(() => {
@@ -270,12 +284,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
 
   return (
     <Fragment key={attributeId}>
-      {/* <ListItem role={undefined} button onClick={() => setIsToggle(!isToggle)}> */}
-      <ListItem
-        role={undefined}
-        button
-        // disabled={checkCompatibility()}
-      >
+      <ListItem role={undefined} button disabled={checkCompatibility()}>
         <ListItemIcon>
           <Field
             type='checkbox'
@@ -295,8 +304,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
             variant='outlined'
             margin='dense'
             fullWidth={false}
-            disabled={isDisabled}
-            // disabled={checkCompatibility()}
+            disabled={isDisabled || checkCompatibility()}
           />
           <Button
             variant='outlined'
@@ -308,8 +316,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
               '--blue': color.rgb.b,
             }}
             onClick={() => setIsOpen(!isOpen)}
-            disabled={isDisabled}
-            // disabled={checkCompatibility()}
+            disabled={isDisabled || checkCompatibility()}
           >
             {t('attributes.colorPicker')}
           </Button>
@@ -329,18 +336,15 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, isDynamic, }) => {
   );
 };
 
-// Index.defaultProps = {
-//   isOpen: false,
-//   acceptedTypes: ['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED'],
-// };
-//
-// Index.propTypes = {
-//   initialState: PropTypes.array.isRequired,
-//   handleClick: PropTypes.func.isRequired,
-//   activeStep: PropTypes.number.isRequired,
-//   steps: PropTypes.array.isRequired,
-//   isOpen: PropTypes.bool,
-//   acceptedTypes: PropTypes.arrayOf(PropTypes.string),
-// };
+Index.defaultProps = {
+  acceptedTypes: ['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED'],
+  staticSupported: true,
+};
+
+Index.propTypes = {
+  acceptedTypes: PropTypes.arrayOf(PropTypes.string),
+  staticSupported: PropTypes.bool,
+  name: PropTypes.string.isRequired,
+};
 
 export default Index;

@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { object2Array } from 'Utils/module/array';
 import { v4 as uuidv4 } from 'uuid';
 
 export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
@@ -13,19 +14,11 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       subTitle: generalState.description || '',
     };
 
-    const dynamicAttr = attributes.dynamicValues.map(item => ({
+    const map = object2Array(attributes).map(item => ({
       dataKey: `${item.deviceID}${item.label}`,
       name: item.description || item.label,
       markerColor: item.color,
     }));
-
-    const staticAttr = attributes.staticValues.map(item => ({
-      dataKey: `${item.deviceID}${item.label}`,
-      name: item.description || item.label,
-      markerColor: item.color,
-    }));
-
-    const map = dynamicAttr.concat(staticAttr);
 
     return { map, meta };
   }, []);

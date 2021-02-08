@@ -9,14 +9,12 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   const generateBarConfig = useCallback(state => {
     const { attributes, general: generalState } = state;
 
-    const attributesList = object2Array(attributes);
-
     const meta = {
       title: generalState.name || '',
       subTitle: generalState.description || '',
     };
 
-    const bar = attributes.dynamicValues.map(item => ({
+    const bar = object2Array(attributes).map(item => ({
       dataKey: item.attributeID,
       fill: item.color,
       name: item.description || item.label,

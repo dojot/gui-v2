@@ -61,6 +61,7 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: 'black',
     float: 'left',
     margin: 4,
+    border: 'solid 1px rgb(0 0 0 / 12%)',
   },
   colorContainer: {
     float: 'left',

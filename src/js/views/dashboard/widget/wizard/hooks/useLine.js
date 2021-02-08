@@ -9,14 +9,12 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   const generateLineConfig = useCallback(state => {
     const { attributes, general: generalState } = state;
 
-    const attributesList = object2Array(attributes);
-
     const meta = {
       title: generalState.name || '',
       subTitle: generalState.description || '',
     };
 
-    const line = attributes.dynamicValues.map(item => ({
+    const line = object2Array(attributes).map(item => ({
       type: 'monotone',
       dataKey: `${item.deviceID}${item.label}`,
       stroke: item.color,

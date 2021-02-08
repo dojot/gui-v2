@@ -16,7 +16,7 @@ const LineWizard = LazyLoading(() =>
   import('views/dashboard/widget/lineChart/wizard'),
 );
 const MapWizard = LazyLoading(() =>
-  import('views/dashboard/widget/map/Wizard'),
+  import('views/dashboard/widget/map/wizard'),
 );
 
 const Manager = props => {
@@ -59,14 +59,10 @@ const Manager = props => {
       return <LineWizard title={getTitle()} toDashboard={toDashboard} />;
     case bar:
       return <BarWizard title={getTitle()} toDashboard={toDashboard} />;
-    // case pizza:
-    //   return <WizardTest title={getTitle()} toDashboard={toDashboard} />;
-    // case donut:
-    //   return <WizardTest title={getTitle()} toDashboard={toDashboard} />;
-    // case bubble:
-    //   return <WizardTest title={getTitle()} toDashboard={toDashboard} />;
     case table:
       return <TableWizard title={getTitle()} toDashboard={toDashboard} />;
+    case map:
+      return <MapWizard title={getTitle()} toDashboard={toDashboard} />;
     default:
       return <div />;
   }

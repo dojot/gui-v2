@@ -8,11 +8,14 @@ import { object2Array } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import useArea from '../../wizard/hooks/useArea';
-import Attributes from '../../wizard/Steps/Attributes';
-import Devices from '../../wizard/Steps/Devices';
-import Filters from '../../wizard/Steps/Filters';
-import General, { generalValidates } from '../../wizard/Steps/General';
-import Summary from '../../wizard/Steps/Summary';
+import {
+  Attributes,
+  Devices,
+  General,
+  Summary,
+  GeneralFilter as Filters,
+  generalValidates,
+} from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [
@@ -100,8 +103,8 @@ const WizardPage = ({
       headerTitle={title}
     >
       <General validate={generalValidates} name='general' />
-      <Devices name='devices' />
-      <Attributes name='devices' />
+      <Devices validate={null} name='devices' />
+      <Attributes validate={null} name='attributes' staticSupported={false} />
       <Filters validate={null} name='filters' />
       <Summary />
     </Wizard>

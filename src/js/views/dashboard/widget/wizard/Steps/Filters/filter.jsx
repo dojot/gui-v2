@@ -69,7 +69,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
                 <div className='row'>
                   <Radios
                     name={`${name}.filterType`}
-                    required
+                    // required
                     color='primary'
                     data={[{ value: '0' }]}
                   />
@@ -92,7 +92,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
                 <div className='row'>
                   <Radios
                     name={`${name}.filterType`}
-                    required
+                    // required
                     color='primary'
                     data={[{ value: '1' }]}
                   />
@@ -130,7 +130,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
                 <div className='row'>
                   <Radios
                     name={`${name}.filterType`}
-                    required
+                    // required
                     color='primary'
                     data={[{ value: '2' }]}
                   />

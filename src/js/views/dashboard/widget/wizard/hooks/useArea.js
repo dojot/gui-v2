@@ -13,9 +13,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       title: generalState.name || '',
       subTitle: generalState.description || '',
     };
-    const attributesList = object2Array(attributes.dynamicValues);
 
-    const areaProps = attributesList.dynamicValues.map(item => ({
+    const areaProps = object2Array(attributes).map(item => ({
       type: 'monotone',
       dataKey: item.attributeID,
       stroke: item.color,
@@ -24,7 +23,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       name: item.description || item.label,
     }));
 
-    const defsProps = attributes.dynamicValues.map(item => ({
+    const defsProps = attributes.map(item => ({
       id: `color${item.attributeID}`,
       x1: '0',
       y1: '0',

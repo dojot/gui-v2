@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
+import _ from 'lodash';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
+import { Device as DeviceService } from 'Services/index';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
-import useLine from '../../wizard/hooks/useLine';
+import { useMap } from '../../wizard/hooks';
 import {
   Attributes,
   Devices,
@@ -24,14 +26,14 @@ const stepsList = [
   { label: 'steps.overview', key: uuidv4() },
 ];
 
-const LineWizard = ({
+const MapWizard = ({
   title,
   toDashboard,
   addWidget,
   addWidgetConfig,
   addWidgetSaga,
 }) => {
-  const { createLineWidget } = useLine(
+  const { createMapWidget } = useMap(
     addWidget,
     addWidgetConfig,
     addWidgetSaga,
@@ -39,54 +41,19 @@ const LineWizard = ({
   );
 
   const handleSubmit = values => {
-    createLineWidget(values);
+    createMapWidget(values);
     toDashboard();
   };
 
   const initialStateTest = {
     general: {
-      name: 'Teste',
-      description: '',
+      name: 'Mapa Teste',
+      description: 'Um teste com o widget de mapa',
     },
-    devices: {
-      'chk-3b3365': {
-        id: '3b3365',
-        label: 'Local',
-        attrs: [
-          {
-            label: 'location',
-            valueType: 'GEO',
-            isDynamic: true,
-            staticValue: '',
-          },
-          {
-            label: 'coordenada',
-            valueType: 'GEO',
-            isDynamic: false,
-            staticValue: '-22.872659, -47.050415',
-          },
-        ],
-      },
-    },
-    attributes: {
-      '3b3365coordenada': {
-        deviceID: '3b3365',
-        attributeID: '3b3365coordenada',
-        deviceLabel: 'Local',
-        color: '#b80000',
-        label: 'coordenada',
-      },
-      '3b3365location': {
-        deviceID: '3b3365',
-        attributeID: '3b3365location',
-        deviceLabel: 'Local',
-        color: '#fef3bd',
-        label: 'location',
-      },
-    },
+    devices: {},
+    attributes: {},
     filters: {
-      operationType: 8,
-      filterType: '0',
+      filterType: '3',
       dateTo: '',
       dateFrom: '',
       lastRegs: '15',
@@ -104,7 +71,12 @@ const LineWizard = ({
     >
       <General validate={generalValidates} name='general' />
       <Devices validate={null} name='devices' />
-      <Attributes validate={null} name='attributes' staticSupported={false} />
+      <Attributes
+        validate={null}
+        name='attributes'
+        acceptedTypes={['GEO']}
+        staticSupported
+      />
       <Filters validate={null} name='filters' />
       <Summary />
     </Wizard>
@@ -115,4 +87,4 @@ const mapDispatchToProps = {
   ...dashboardActions,
 };
 
-export default connect(null, mapDispatchToProps)(LineWizard);
+export default connect(null, mapDispatchToProps)(MapWizard);
