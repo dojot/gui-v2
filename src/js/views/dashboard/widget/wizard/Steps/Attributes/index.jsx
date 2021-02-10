@@ -252,6 +252,7 @@ const ItemRow = ({
     } else {
       setColor(colorBlueDisabled);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisabled, attributes, setColor]);
 
   const handleFormat = item => {

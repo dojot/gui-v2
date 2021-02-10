@@ -10,5 +10,6 @@ export const hexToRgb = hex => {
 };
 
 export const rgbToHex = (r, g, b) => {
+  // eslint-disable-next-line no-bitwise
   return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
 };

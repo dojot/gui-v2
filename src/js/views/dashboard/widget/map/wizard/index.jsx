@@ -1,9 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import _ from 'lodash';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
-import { Device as DeviceService } from 'Services/index';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -47,8 +45,8 @@ const MapWizard = ({
 
   const initialStateTest = {
     general: {
-      name: 'Mapa Teste',
-      description: 'Um teste com o widget de mapa',
+      name: '',
+      description: '',
     },
     devices: {},
     attributes: {},

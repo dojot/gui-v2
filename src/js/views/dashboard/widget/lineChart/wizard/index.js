@@ -43,47 +43,13 @@ const LineWizard = ({
     toDashboard();
   };
 
-  const initialStateTest = {
+  const initialState = {
     general: {
-      name: 'Teste',
+      name: '',
       description: '',
     },
-    devices: {
-      'chk-3b3365': {
-        id: '3b3365',
-        label: 'Local',
-        attrs: [
-          {
-            label: 'location',
-            valueType: 'GEO',
-            isDynamic: true,
-            staticValue: '',
-          },
-          {
-            label: 'coordenada',
-            valueType: 'GEO',
-            isDynamic: false,
-            staticValue: '-22.872659, -47.050415',
-          },
-        ],
-      },
-    },
-    attributes: {
-      '3b3365coordenada': {
-        deviceID: '3b3365',
-        attributeID: '3b3365coordenada',
-        deviceLabel: 'Local',
-        color: '#b80000',
-        label: 'coordenada',
-      },
-      '3b3365location': {
-        deviceID: '3b3365',
-        attributeID: '3b3365location',
-        deviceLabel: 'Local',
-        color: '#fef3bd',
-        label: 'location',
-      },
-    },
+    devices: {},
+    attributes: {},
     filters: {
       operationType: 8,
       filterType: '0',
@@ -97,7 +63,7 @@ const LineWizard = ({
   };
   return (
     <Wizard
-      initialValues={initialStateTest}
+      initialValues={initialState}
       onSubmit={handleSubmit}
       steps={stepsList}
       headerTitle={title}

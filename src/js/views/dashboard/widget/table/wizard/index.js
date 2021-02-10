@@ -43,7 +43,7 @@ const TableWizard = ({
     toDashboard();
   };
 
-  const initialStateTest = {
+  const initialState = {
     general: {
       name: '',
       description: '',
@@ -62,7 +62,7 @@ const TableWizard = ({
   };
   return (
     <Wizard
-      initialValues={initialStateTest}
+      initialValues={initialState}
       onSubmit={handleSubmit}
       steps={stepsList}
       headerTitle={title}

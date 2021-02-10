@@ -64,10 +64,13 @@ const Wizard = ({ initialValues, ...props }) => {
           validate={validate}
           onSubmit={handleSubmit}
         >
-          {({ handleSubmit, submitting, values }) => (
-            <form onSubmit={handleSubmit}>
-              {/* {activePage} */}
-              {React.cloneElement(activePage, { values })}
+          {formProps => (
+            <form onSubmit={formProps.handleSubmit}>
+              {React.cloneElement(
+                activePage,
+                { values: formProps.values },
+                null,
+              )}
               <div className={classes.footer}>
                 {page > 0 && (
                   <Button
@@ -93,7 +96,7 @@ const Wizard = ({ initialValues, ...props }) => {
                 {isLastPage && (
                   <Button
                     type='submit'
-                    disabled={submitting}
+                    disabled={formProps.submitting}
                     color='primary'
                     variant='contained'
                     disableElevation
@@ -103,7 +106,7 @@ const Wizard = ({ initialValues, ...props }) => {
                 )}
               </div>
               <DevelopmentContainer>
-                <pre>{JSON.stringify(values, null, 2)}</pre>
+                <pre>{JSON.stringify(formProps.values, null, 2)}</pre>
               </DevelopmentContainer>
             </form>
           )}
