@@ -46,7 +46,15 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
       addWizardState({ [widgetId]: attributes });
     },
-    [addWidget, addWidgetConfig, addWidgetSaga, mapID, generateMapConfig, generateScheme],
+    [
+      addWidget,
+      addWidgetConfig,
+      addWidgetSaga,
+      mapID,
+      generateMapConfig,
+      generateScheme,
+      addWizardState,
+    ],
   );
 
   return { createMapWidget };

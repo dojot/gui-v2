@@ -47,7 +47,15 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
       addWizardState({ [widgetId]: attributes });
     },
-    [addWidget, addWidgetConfig, addWidgetSaga, lineID, generateLineConfig, generateScheme],
+    [
+      addWidget,
+      addWidgetConfig,
+      addWidgetSaga,
+      lineID,
+      generateLineConfig,
+      generateScheme,
+      addWizardState,
+    ],
   );
 
   return { createLineWidget };

@@ -58,7 +58,15 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
       addWizardState({ [widgetId]: attributes });
     },
-    [generateAreaConfig, addWidget, addWidgetSaga, addWidgetConfig, areaID, generateScheme],
+    [
+      generateAreaConfig,
+      addWidget,
+      addWidgetSaga,
+      addWidgetConfig,
+      areaID,
+      generateScheme,
+      addWizardState,
+    ],
   );
 
   return { createAreaWidget };

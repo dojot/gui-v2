@@ -94,9 +94,12 @@ const Dashboard = props => {
     [removeWidget, stopPolling],
   );
 
-  const onEdit = useCallback(widgetId => {
-    history.push(`/dashboard/widget/wizard/${widgetId}`);
-  }, []);
+  const onEdit = useCallback(
+    widgetId => {
+      history.push(`/dashboard/widget/wizard/${widgetId}`);
+    },
+    [history],
+  );
 
   const createElement = useCallback(
     element => {
@@ -172,7 +175,7 @@ const Dashboard = props => {
           return <div key={i} />;
       }
     },
-    [area, bar, configs, line, data, onPin, onRemoveItem, table, map],
+    [area, bar, configs, line, data, onPin, onRemoveItem, table, map, onEdit],
   );
 
   const getHeaderContent = useCallback(() => {

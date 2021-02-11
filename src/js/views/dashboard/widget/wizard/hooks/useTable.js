@@ -45,7 +45,15 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
       addWizardState({ [widgetId]: attributes });
     },
-    [addWidget, addWidgetConfig, addWidgetSaga, tableID, generateTableConfig, generateScheme],
+    [
+      addWidget,
+      addWidgetConfig,
+      addWidgetSaga,
+      tableID,
+      generateTableConfig,
+      generateScheme,
+      addWizardState,
+    ],
   );
 
   return { createTableWidget };

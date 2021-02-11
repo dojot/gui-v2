@@ -45,7 +45,15 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
       addWizardState({ [widgetId]: attributes });
     },
-    [addWidget, addWidgetConfig, addWidgetSaga, barID, generateBarConfig, generateScheme],
+    [
+      addWidget,
+      addWidgetConfig,
+      addWidgetSaga,
+      barID,
+      generateBarConfig,
+      generateScheme,
+      addWizardState,
+    ],
   );
 
   return { createBarWidget };
