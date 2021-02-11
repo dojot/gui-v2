@@ -14,5 +14,7 @@
   "edit": "Edit",
   "delete": "Delete",
   "finish": "Finish",
-  "noData": "No Data"
+  "noData": "No Data",
+  "required": "Required",
+  "min5characters": "Minimum 5 characters"
 }

@@ -1,5 +1,6 @@
 import { useCallback } from 'react';
 
+import { object2Array } from 'Utils/module/array';
 import { v4 as uuidv4 } from 'uuid';
 
 export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
@@ -13,7 +14,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       subTitle: generalState.description || '',
     };
 
-    const bar = attributes.dynamicValues.map(item => ({
+    const bar = object2Array(attributes).map(item => ({
       dataKey: item.attributeID,
       fill: item.color,
       name: item.description || item.label,

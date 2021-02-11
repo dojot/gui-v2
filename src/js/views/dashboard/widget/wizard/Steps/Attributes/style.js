@@ -38,6 +38,23 @@ export const useStyles = makeStyles(theme => ({
     marginTop: 8,
     marginBottom: 4,
     marginLeft: 100,
+    '--red': 250,
+    '--green': 250,
+    '--blue': 250,
+    '--r': 'calc(var(--red) * 0.2126)',
+    '--g': 'calc(var(--green) * 0.7152)',
+    '--b': 'calc(var(--blue) * 0.0722)',
+    '--sum': 'calc(var(--r) + var(--g) + var(--b))',
+    '--perceived-lightness': 'calc(var(--sum) / 255)',
+    backgroundColor: 'rgb(var(--red), var(--green), var(--blue))',
+    color: 'hsl(0, 0%, calc((var(--perceived-lightness) - 0.5) * -10000000%))',
+    border:
+      'solid 1px hsla(0, 0%, calc((var(--perceived-lightness) - 0.5) * -10000000%), 0.23)',
+
+    '&:hover': {
+      backgroundColor: 'rgba(var(--red), var(--green), var(--blue), 0.94)',
+      textDecoration: 'none',
+    },
   },
   picker: {
     position: 'absolute',

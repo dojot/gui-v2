@@ -14,5 +14,7 @@
   "edit": "Editar",
   "delete": "Remover",
   "finish": "Finalizar",
-  "noData": "Sem Dados"
+  "noData": "Sem Dados",
+  "required": "Obrigatório",
+  "min5characters": "Minimo de 5 caracteres"
 }

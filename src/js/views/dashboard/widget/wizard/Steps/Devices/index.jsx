@@ -1,8 +1,7 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
-import Checkbox from '@material-ui/core/Checkbox';
+import { Grid } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
-import Grid from '@material-ui/core/Grid';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -10,74 +9,59 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import SearchIcon from '@material-ui/icons/Search';
-import { WFooter } from 'Components/Footer';
-import { Paginator } from 'Components/Paginator';
-import PropTypes from 'prop-types';
+import { Paginator, usePaginator } from 'Components/Paginator';
+import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
+import { Device as DeviceService } from 'Services/index';
 import { useDebounce } from 'use-debounce';
 
+import Wizard from '../../wizard';
 import { useStyles } from './style';
 
-const Index = props => {
-  const {
-    initialState,
-    selectedValues,
-    onFilter,
-    usePagination,
-    onPageChange,
-    onPageSizeChange,
-    currentPage,
-    pageSize,
-    totalPages,
-    isLoading,
-    handleClick,
-  } = props;
-
-  const classes = useStyles();
-  const [selectedDevices, setSelectedDevices] = useState(selectedValues);
+const Devices = ({ validate, ...otherProps }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
+  const {
+    paginatorData,
+    setPaginatorData,
+    setCurrentPage,
+    setPageSize,
+    setDisablePaginator,
+  } = usePaginator();
 
   useEffect(() => {
-    onFilter(searchTermDebounced);
-  }, [searchTermDebounced, onFilter]);
+    setDisablePaginator(true);
+    DeviceService.getDevicesList(
+      { number: paginatorData.currentPage, size: paginatorData.pageSize },
+      { label: searchTermDebounced },
+    )
+      .then(response => {
+        const { devices, currentPage, totalPages } = response.getDevices;
+        setPaginatorData({ data: devices, currentPage, totalPages });
+      })
+      .catch(error => {
+        console.error(error); // TODO tratamento de erro da api
+        setDisablePaginator(false);
+      });
+  }, [
+    setDisablePaginator,
+    setPaginatorData,
+    paginatorData.currentPage,
+    paginatorData.pageSize,
+    searchTermDebounced,
+  ]);
 
-  const handleToggle = useCallback(
-    value => {
-      const currentDeviceIndex = selectedDevices
-        .map(item => item.id)
-        .indexOf(value.id);
-      const newSelectedDevices = [...selectedDevices];
-
-      if (currentDeviceIndex === -1) {
-        newSelectedDevices.push(value);
-      } else {
-        newSelectedDevices.splice(currentDeviceIndex, 1);
-      }
-      setSelectedDevices(newSelectedDevices);
-    },
-    [selectedDevices],
-  );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTermDebounced, setCurrentPage]);
 
   const handleChangeSearch = useCallback(e => {
     setSearchTerm(e.target.value);
   }, []);
 
-  const getSelectedDevice = useCallback(
-    id => selectedDevices.map(item => item.id).indexOf(id) !== -1,
-    [selectedDevices],
-  );
+  const classes = useStyles();
 
-  const handleSubmit = useCallback(
-    e => {
-      e.preventDefault();
-      handleClick({
-        type: 'next',
-        payload: { values: selectedDevices, key: 'devices' },
-      });
-    },
-    [handleClick, selectedDevices],
-  );
+  const { t } = useTranslation(['dashboard']);
 
   const renderItem = useCallback((label, id) => {
     return (
@@ -88,10 +72,8 @@ const Index = props => {
     );
   }, []);
 
-  const { t } = useTranslation(['dashboard']);
-
   return (
-    <form onSubmit={e => handleSubmit(e)}>
+    <Wizard.Page validate={validate}>
       <Grid container justify='center'>
         <Grid item className={classes.searchContainer}>
           <TextField
@@ -110,12 +92,12 @@ const Index = props => {
           />
         </Grid>
         <List className={classes.root}>
-          {!initialState.length ? (
+          {!paginatorData.pageData.length ? (
             <ListItem className={classes.notFound}>
               <ListItemText primary={t('devices.notFound')} />
             </ListItem>
           ) : (
-            initialState.map(value => {
+            paginatorData.pageData.map(value => {
               const { id, label } = value;
               const labelId = `checkbox-list-label-${id}`;
 
@@ -123,17 +105,16 @@ const Index = props => {
                 <Fragment key={value.id}>
                   <ListItem
                     role={undefined}
-                    button
-                    onClick={() => handleToggle(value)}
+                    // button
+                    // onClick={() => handleToggle(value)}
                   >
                     <ListItemIcon>
-                      <Checkbox
-                        edge='start'
-                        checked={getSelectedDevice(id)}
-                        tabIndex={-1}
-                        disableRipple
-                        inputProps={{ 'aria-labelledby': labelId }}
-                        color='primary'
+                      <Field
+                        type='checkbox'
+                        name={`${otherProps.name}.chk-${id}`}
+                        component='input'
+                        format={item => (item ? item.id === id : false)}
+                        parse={item => (item ? value : null)}
                       />
                     </ListItemIcon>
                     <ListItemText
@@ -147,61 +128,23 @@ const Index = props => {
             })
           )}
         </List>
-        {usePagination && initialState.length > 0 && (
+        {paginatorData.pageData.length > 0 && (
           <Grid item className={classes.paginationContainer}>
             <Paginator
-              totalPages={totalPages}
-              currentPage={currentPage}
-              pageSize={pageSize}
-              onPageChange={onPageChange}
-              onPageSizeChange={onPageSizeChange}
+              totalPages={paginatorData.totalPages}
+              currentPage={paginatorData.currentPage}
+              pageSize={paginatorData.pageSize}
+              onPageChange={(event, page) => setCurrentPage(page)}
+              onPageSizeChange={pageSize => setPageSize(pageSize)}
               showFirstButton
               showLastButton
-              disabled={isLoading}
+              disabled={paginatorData.disabled}
             />
           </Grid>
         )}
       </Grid>
-      <WFooter {...props} isValid={!!selectedDevices.length} />
-    </form>
+    </Wizard.Page>
   );
 };
 
-Index.defaultProps = {
-  onFilter: () => {},
-  usePagination: false,
-  currentPage: 1,
-  pageSize: 5,
-  totalPages: 1,
-  isLoading: false,
-  onPageChange: () => {},
-  onPageSizeChange: () => {},
-};
-
-Index.propTypes = {
-  initialState: PropTypes.arrayOf(
-    PropTypes.shape({
-      id: PropTypes.string,
-      label: PropTypes.string,
-      attrs: PropTypes.arrayOf(
-        PropTypes.shape({
-          label: PropTypes.string,
-          valueType: PropTypes.string,
-        }),
-      ),
-    }),
-  ).isRequired,
-  handleClick: PropTypes.func.isRequired,
-  activeStep: PropTypes.number.isRequired,
-  steps: PropTypes.array.isRequired,
-  onFilter: PropTypes.func,
-  usePagination: PropTypes.bool,
-  currentPage: PropTypes.number,
-  pageSize: PropTypes.number,
-  totalPages: PropTypes.number,
-  isLoading: PropTypes.bool,
-  onPageChange: PropTypes.func,
-  onPageSizeChange: PropTypes.func,
-};
-
-export default Index;
+export default Devices;

@@ -1,107 +1,56 @@
 import React from 'react';
 
-import { TextField } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import { WFooter } from 'Components/Footer';
-import { Formik } from 'formik';
-import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { TextField, makeValidate } from 'mui-rff';
+import { useTranslation, Translation } from 'react-i18next';
 import * as Yup from 'yup';
 
+import Wizard from '../../wizard';
 import { useStyles } from './style';
 
-export const Init = { name: '', description: '' };
-
-const validationSchema = Yup.object({
-  name: Yup.string('general.enterName').required('general.nameRequired'),
+const schema = Yup.object().shape({
+  general: Yup.object().shape({
+    name: Yup.string()
+      .required('common:required')
+      .min(5, 'common:min5characters'),
+  }),
 });
 
-const Index = props => {
-  const { initialState, handleClick, ...otherProps } = props;
-  const handleSubmit = values => {
-    handleClick({ type: 'next', payload: { values, key: 'general' } });
-  };
-
-  const handleBack = () => {
-    handleClick({ type: 'back' });
-  };
-
+export const generalValidates = makeValidate(schema, error => {
+  const { message } = error;
   return (
-    <Formik
-      initialValues={initialState}
-      validationSchema={validationSchema}
-      onSubmit={handleSubmit}
-    >
-      {formikProps => (
-        <GeneralForm {...formikProps} {...otherProps} onBack={handleBack} />
-      )}
-    </Formik>
+    <Translation key={`t_${message}`}>
+      {t => <span className='error'>{t(`${message}`)}</span>}
+    </Translation>
   );
-};
+});
 
-const GeneralForm = props => {
-  const {
-    values,
-    touched,
-    errors,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-  } = props;
-
+const General = ({ validate, name }) => {
   const classes = useStyles();
-  const { t } = useTranslation(['dashboard']);
+  const { t } = useTranslation(['dashboard', 'common']);
+
   return (
-    <form onSubmit={handleSubmit}>
+    <Wizard.Page validate={validate}>
       <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.item}>
           <TextField
-            variant='outlined'
             label={t('general.name')}
-            name='name'
-            value={values.name}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            helperText={errors.name && touched.name && t(errors.name)}
+            name={`${name}.name`}
+            variant='outlined'
             margin='normal'
-            error={!!errors.name}
-            fullWidth
           />
         </Grid>
         <Grid item className={classes.item}>
           <TextField
-            variant='outlined'
             label={t('general.description')}
-            name='description'
-            value={values.description}
-            onChange={handleChange}
-            onBlur={handleBlur}
-            helperText={
-              errors.description && touched.description && errors.description
-            }
+            name={`${name}.description`}
+            variant='outlined'
             margin='normal'
-            fullWidth
           />
         </Grid>
       </Grid>
-      <WFooter {...props} />
-    </form>
+    </Wizard.Page>
   );
 };
 
-Index.defaultProps = {
-  isOpen: false,
-};
-
-Index.propTypes = {
-  initialState: PropTypes.shape({
-    name: PropTypes.string,
-    description: PropTypes.string,
-  }).isRequired,
-  handleClick: PropTypes.func.isRequired,
-  activeStep: PropTypes.number.isRequired,
-  steps: PropTypes.array.isRequired,
-  isOpen: PropTypes.bool,
-};
-
-export default Index;
+export default General;
