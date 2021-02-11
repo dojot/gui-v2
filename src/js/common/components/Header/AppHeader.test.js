@@ -21,22 +21,14 @@ describe('AppHeader', () => {
   const title = 'Titulo';
   it('should to able simple render ', () => {
     const { container } = render(
-      <AppHeader
-        isOpen={isOpen}
-        title={title}
-        handleClick={mockedHandleClick}
-      />,
+      <AppHeader isOpen={isOpen} title={title} handleClick={mockedHandleClick} />,
     );
     expect(container).toBeInTheDocument();
   });
 
   it('should be able to click on open button', () => {
     const { getByTestId } = render(
-      <AppHeader
-        isOpen={isOpen}
-        title={title}
-        handleClick={mockedHandleClick}
-      />,
+      <AppHeader isOpen={isOpen} title={title} handleClick={mockedHandleClick} />,
     );
     fireEvent.click(getByTestId('butonOpen'));
     expect(mockedHandleClick).toHaveBeenCalled();
@@ -44,11 +36,7 @@ describe('AppHeader', () => {
 
   it('should be able to click on close button', () => {
     const { getByTestId } = render(
-      <AppHeader
-        isOpen={isOpen}
-        title={title}
-        handleClick={mockedHandleClick}
-      />,
+      <AppHeader isOpen={isOpen} title={title} handleClick={mockedHandleClick} />,
     );
     fireEvent.click(getByTestId('butonNotOpen'));
     expect(mockedHandleClick).toHaveBeenCalled();

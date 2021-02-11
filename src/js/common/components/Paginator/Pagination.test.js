@@ -51,13 +51,9 @@ describe('Paginator', () => {
     expect(onPageChangeMocked).not.toHaveBeenCalled();
   });
   it('should show first and last page button', () => {
-    const { container } = render(
-      <Paginator {...initialProps} showLastButton showFirstButton />,
-    );
+    const { container } = render(<Paginator {...initialProps} showLastButton showFirstButton />);
     const buttonsPage = container.querySelectorAll('.MuiPaginationItem-page');
-    const firstButton = container.querySelectorAll(
-      '.MuiPaginationItem-page',
-    )[0];
+    const firstButton = container.querySelectorAll('.MuiPaginationItem-page')[0];
     const lastButton = container.querySelectorAll('.MuiPaginationItem-page')[
       buttonsPage.length - 1
     ];
@@ -66,21 +62,14 @@ describe('Paginator', () => {
     expect(lastButton).toHaveAttribute('aria-label', 'Go to last page');
   });
   it('should hide previos and next page button', () => {
-    const { container } = render(
-      <Paginator {...initialProps} hidePrevButton hideNextButton />,
-    );
+    const { container } = render(<Paginator {...initialProps} hidePrevButton hideNextButton />);
     const buttonsPage = container.querySelectorAll('.MuiPaginationItem-page');
-    const firstButton = container.querySelectorAll(
-      '.MuiPaginationItem-page',
-    )[0];
+    const firstButton = container.querySelectorAll('.MuiPaginationItem-page')[0];
     const lastButton = container.querySelectorAll('.MuiPaginationItem-page')[
       buttonsPage.length - 1
     ];
 
-    expect(firstButton).not.toHaveAttribute(
-      'aria-label',
-      'Go to previous page',
-    );
+    expect(firstButton).not.toHaveAttribute('aria-label', 'Go to previous page');
     expect(lastButton).not.toHaveAttribute('aria-label', 'Go to next page');
   });
 });

@@ -48,8 +48,7 @@ export const useStyles = makeStyles(theme => ({
     '--perceived-lightness': 'calc(var(--sum) / 255)',
     backgroundColor: 'rgb(var(--red), var(--green), var(--blue))',
     color: 'hsl(0, 0%, calc((var(--perceived-lightness) - 0.5) * -10000000%))',
-    border:
-      'solid 1px hsla(0, 0%, calc((var(--perceived-lightness) - 0.5) * -10000000%), 0.23)',
+    border: 'solid 1px hsla(0, 0%, calc((var(--perceived-lightness) - 0.5) * -10000000%), 0.23)',
 
     '&:hover': {
       backgroundColor: 'rgba(var(--red), var(--green), var(--blue), 0.94)',

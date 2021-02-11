@@ -1,12 +1,7 @@
 /* eslint-disable no-undef */
 import React from 'react';
 
-import {
-  DevicesOther,
-  FilterNone,
-  ExitToApp,
-  HelpOutline,
-} from '@material-ui/icons';
+import { DevicesOther, FilterNone, ExitToApp, HelpOutline } from '@material-ui/icons';
 import { render } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 import { Router } from 'react-router-dom';
@@ -58,9 +53,7 @@ describe('DrawerComponent', () => {
     const itemsPrimaryGroupItens = groupItens[0].querySelectorAll('a');
     const itemsSecondaryGroupItens = groupItens[1].querySelectorAll('a');
 
-    expect(container.querySelector('.MuiDrawer-root').outerHTML).toContain(
-      'drawerClose',
-    );
+    expect(container.querySelector('.MuiDrawer-root').outerHTML).toContain('drawerClose');
     expect(groupItens.length).toBe(2);
     expect(itemsPrimaryGroupItens.length).toBe(2);
     expect(itemsSecondaryGroupItens.length).toBe(2);
@@ -124,9 +117,7 @@ describe('DrawerComponent', () => {
         <Drawer {...initialProps} isOpen />
       </Router>,
     );
-    expect(container.querySelector('.MuiDrawer-root').outerHTML).toContain(
-      'drawerOpen',
-    );
+    expect(container.querySelector('.MuiDrawer-root').outerHTML).toContain('drawerOpen');
   });
 
   it('should be able simple render with primary items only', () => {
@@ -163,16 +154,12 @@ describe('DrawerComponent', () => {
     expect(itemsPrimaryGroupItens[0].href).toContain('/devices');
     expect(itemsPrimaryGroupItens[1].href).toContain('/templates');
     expect(
-      itemsPrimaryGroupItens[0]
-        .querySelector('li')
-        .querySelectorAll('div')[1]
-        .querySelector('span').innerHTML,
+      itemsPrimaryGroupItens[0].querySelector('li').querySelectorAll('div')[1].querySelector('span')
+        .innerHTML,
     ).toBe('Dispositivos');
     expect(
-      itemsPrimaryGroupItens[1]
-        .querySelector('li')
-        .querySelectorAll('div')[1]
-        .querySelector('span').innerHTML,
+      itemsPrimaryGroupItens[1].querySelector('li').querySelectorAll('div')[1].querySelector('span')
+        .innerHTML,
     ).toBe('Modelos');
 
     // Secondary Items assertions

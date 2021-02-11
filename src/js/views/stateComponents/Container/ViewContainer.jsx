@@ -9,21 +9,11 @@ import { menuSelector } from 'Selectors/baseSelector';
 import { UserInfo } from '../UserInfo';
 
 const ViewContainer = props => {
-  const {
-    headerTitle,
-    headerContent,
-    updateIsMenuOpen,
-    isMenuOpen,
-    children,
-  } = props;
+  const { headerTitle, headerContent, updateIsMenuOpen, isMenuOpen, children } = props;
 
   return (
     <>
-      <AppHeader
-        isOpen={isMenuOpen}
-        handleClick={updateIsMenuOpen}
-        title={headerTitle}
-      >
+      <AppHeader isOpen={isMenuOpen} handleClick={updateIsMenuOpen} title={headerTitle}>
         {headerContent && headerContent()}
         <UserInfo />
       </AppHeader>
@@ -42,10 +32,7 @@ ViewContainer.defaultProps = {
 ViewContainer.propTypes = {
   headerTitle: PropTypes.string.isRequired,
   headerContent: PropTypes.func,
-  children: PropTypes.oneOfType([
-    PropTypes.arrayOf(PropTypes.node),
-    PropTypes.node,
-  ]),
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 
 const mapStateToProps = state => ({

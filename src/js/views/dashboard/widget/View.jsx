@@ -55,10 +55,7 @@ const WidgetView = props => {
   }, [handleClick]);
 
   return (
-    <ViewContainer
-      headerTitle={t('dashboard:widget')}
-      headerContent={getHeaderContent}
-    >
+    <ViewContainer headerTitle={t('dashboard:widget')} headerContent={getHeaderContent}>
       <Grid container justify='flex-start' className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />

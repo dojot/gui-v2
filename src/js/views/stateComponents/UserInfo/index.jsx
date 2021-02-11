@@ -67,13 +67,7 @@ export const UserInfo = () => {
         >
           {`${t('common:hello')}, ${user.userName}`}
         </Button>
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          role={undefined}
-          transition
-          disablePortal
-        >
+        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
           {({ TransitionProps }) => (
             <Grow {...TransitionProps}>
               <Paper>

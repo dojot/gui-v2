@@ -19,9 +19,7 @@ describe('WizardFooter', () => {
   });
 
   it('should be able to disable next button when invalid state', () => {
-    const { getByTestId } = render(
-      <WizardFooter {...initialProps} isValid={false} />,
-    );
+    const { getByTestId } = render(<WizardFooter {...initialProps} isValid={false} />);
     const wizardButton = getByTestId('wizard-button');
     expect(wizardButton).toHaveAttribute('disabled');
   });
@@ -32,9 +30,7 @@ describe('WizardFooter', () => {
   });
 
   it('should be able to display finish button label when last step', () => {
-    const { getByTestId } = render(
-      <WizardFooter {...initialProps} activeStep={2} />,
-    );
+    const { getByTestId } = render(<WizardFooter {...initialProps} activeStep={2} />);
     const wizardButton = getByTestId('wizard-button');
     expect(wizardButton.querySelector('span').innerHTML).toEqual('finish');
   });

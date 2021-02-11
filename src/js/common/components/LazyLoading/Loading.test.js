@@ -18,15 +18,11 @@ describe('Loading Screen', () => {
   });
 
   it('should be able to display the loading screen', () => {
-    const { getByTestId } = render(
-      <Loading isLoading timedOut={false} pastDelay error={false} />,
-    );
+    const { getByTestId } = render(<Loading isLoading timedOut={false} pastDelay error={false} />);
     expect(getByTestId('loading-spinner')).toBeTruthy();
   });
   it('should be able to display the timeout error message', () => {
-    const { getByTestId } = render(
-      <Loading isLoading timedOut pastDelay={false} error={false} />,
-    );
+    const { getByTestId } = render(<Loading isLoading timedOut pastDelay={false} error={false} />);
     expect(getByTestId('loading-timeout')).toBeTruthy();
   });
 
@@ -46,12 +42,7 @@ describe('Loading Screen', () => {
 
   it('should return null when all properties are false', () => {
     const { container } = render(
-      <Loading
-        isLoading={false}
-        timedOut={false}
-        pastDelay={false}
-        error={false}
-      />,
+      <Loading isLoading={false} timedOut={false} pastDelay={false} error={false} />,
     );
     expect(container.firstChild).toBeNull();
   });

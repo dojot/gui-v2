@@ -15,15 +15,11 @@ export default (type = 'server') => {
       const start = paginatorData.pageSize * (paginatorData.currentPage - 1);
 
       const end =
-        paginatorData.currentPage === 1
-          ? paginatorData.pageSize
-          : start + paginatorData.pageSize;
+        paginatorData.currentPage === 1 ? paginatorData.pageSize : start + paginatorData.pageSize;
 
       const paginatedData = paginatorData.data.slice(start, end);
 
-      const totalPages = Math.ceil(
-        paginatorData.data.length / paginatorData.pageSize,
-      );
+      const totalPages = Math.ceil(paginatorData.data.length / paginatorData.pageSize);
       setInternalPaginationData(state => ({
         ...state,
         pageData: paginatedData,
@@ -35,12 +31,7 @@ export default (type = 'server') => {
       ...state,
       pageData: paginatorData.data,
     }));
-  }, [
-    type,
-    paginatorData.currentPage,
-    paginatorData.pageSize,
-    paginatorData.data,
-  ]);
+  }, [type, paginatorData.currentPage, paginatorData.pageSize, paginatorData.data]);
 
   const setPaginatorData = useCallback(
     data => {

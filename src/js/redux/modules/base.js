@@ -14,15 +14,13 @@ export const constants = {
 // ------------------------------------
 // Actions
 // ------------------------------------
-export const updateIsMenuOpen = createAction(
-  UPDATE_MENU_STATE,
-  (isMenuOpen: boolean) => ({ isMenuOpen }),
-);
+export const updateIsMenuOpen = createAction(UPDATE_MENU_STATE, (isMenuOpen: boolean) => ({
+  isMenuOpen,
+}));
 
-export const updateHeaderTitle = createAction(
-  UPDATE_HEADER_TITLE,
-  (headerTitle: string) => ({ headerTitle }),
-);
+export const updateHeaderTitle = createAction(UPDATE_HEADER_TITLE, (headerTitle: string) => ({
+  headerTitle,
+}));
 
 export const actions = {
   updateIsMenuOpen,

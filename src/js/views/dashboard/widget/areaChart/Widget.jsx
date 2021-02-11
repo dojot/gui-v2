@@ -40,12 +40,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
           <Tooltip />
           <Legend />
           {config.areaProps.map(item => (
-            <Area
-              connectNulls
-              {...item}
-              isAnimationActive={false}
-              key={item.dataKey}
-            />
+            <Area connectNulls {...item} isAnimationActive={false} key={item.dataKey} />
           ))}
         </AreaChart>
       </ResponsiveContainer>

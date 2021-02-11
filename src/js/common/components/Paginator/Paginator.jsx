@@ -28,13 +28,7 @@ const Paginator = props => {
   const { t } = useTranslation(['paginator']);
 
   return (
-    <Grid
-      container
-      direction='row'
-      justify='center'
-      alignItems='center'
-      className={classes.root}
-    >
+    <Grid container direction='row' justify='center' alignItems='center' className={classes.root}>
       <Pagination
         variant='outlined'
         shape='rounded'

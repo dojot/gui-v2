@@ -53,15 +53,11 @@ describe('Simple Table', () => {
   );
 
   it('should be able to display a table with 4 rows', () => {
-    expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(
-      mockRows.length,
-    );
+    expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(mockRows.length);
   });
 
   it('should be able to display the header with 4 titles', () => {
-    expect(wrapper.find(TableHead).find(TableCell)).toHaveLength(
-      mockColumns.length + 1,
-    );
+    expect(wrapper.find(TableHead).find(TableCell)).toHaveLength(mockColumns.length + 1);
   });
 
   it('should be able to display the value of row 1, column 4', () => {
@@ -74,51 +70,27 @@ describe('Simple Table', () => {
 
   it('should be able sorting to asc and desc order the timestamp column', () => {
     act(() => {
-      wrapper
-        .find(TableHead)
-        .find(TableCell)
-        .at(0)
-        .find('button')
-        .simulate('click');
+      wrapper.find(TableHead).find(TableCell).at(0).find('button').simulate('click');
     });
     wrapper.update();
-    expect(wrapper.find(TableBody).find(TableCell).at(0).text()).toEqual(
-      '10/08/2020 17:45:41',
-    );
+    expect(wrapper.find(TableBody).find(TableCell).at(0).text()).toEqual('10/08/2020 17:45:41');
 
     act(() => {
-      wrapper
-        .find(TableHead)
-        .find(TableCell)
-        .at(0)
-        .find('button')
-        .simulate('click');
+      wrapper.find(TableHead).find(TableCell).at(0).find('button').simulate('click');
     });
     wrapper.update();
-    expect(wrapper.find(TableBody).find(TableCell).at(0).text()).toEqual(
-      '10/08/2020 17:46:26',
-    );
+    expect(wrapper.find(TableBody).find(TableCell).at(0).text()).toEqual('10/08/2020 17:46:26');
   });
 
   it('should be able sorting to asc and desc order the string column', () => {
     act(() => {
-      wrapper
-        .find(TableHead)
-        .find(TableCell)
-        .at(1)
-        .find('button')
-        .simulate('click');
+      wrapper.find(TableHead).find(TableCell).at(1).find('button').simulate('click');
     });
     wrapper.update();
     expect(wrapper.find(TableBody).find(TableCell).at(1).text()).toEqual('ç');
 
     act(() => {
-      wrapper
-        .find(TableHead)
-        .find(TableCell)
-        .at(1)
-        .find('button')
-        .simulate('click');
+      wrapper.find(TableHead).find(TableCell).at(1).find('button').simulate('click');
     });
     wrapper.update();
     expect(wrapper.find(TableBody).find(TableCell).at(1).text()).toEqual('Z');

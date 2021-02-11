@@ -26,22 +26,13 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
             bottom: 5,
           }}
         >
-          <XAxis
-            tickFormatter={formatDate}
-            dataKey='timestamp'
-            domain={['auto', 'auto']}
-          />
+          <XAxis tickFormatter={formatDate} dataKey='timestamp' domain={['auto', 'auto']} />
           <YAxis domain={['auto', 'auto']} tickFormatter={formatNumber} />
           <CartesianGrid strokeDasharray='4 4' />
           <Tooltip />
           <Legend />
           {config.line.map(item => (
-            <Line
-              connectNulls
-              isAnimationActive={false}
-              key={item.dataKey}
-              {...item}
-            />
+            <Line connectNulls isAnimationActive={false} key={item.dataKey} {...item} />
           ))}
         </LineChart>
       </ResponsiveContainer>
