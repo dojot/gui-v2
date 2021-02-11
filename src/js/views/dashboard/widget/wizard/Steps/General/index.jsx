@@ -1,15 +1,34 @@
 import React from 'react';
 
 import Grid from '@material-ui/core/Grid';
-import { TextField } from 'mui-rff';
-import { useTranslation } from 'react-i18next';
+import { TextField, makeValidate } from 'mui-rff';
+import { useTranslation, Translation } from 'react-i18next';
+import * as Yup from 'yup';
 
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
+const schema = Yup.object().shape({
+  general: Yup.object().shape({
+    name: Yup.string()
+      .required('common:required')
+      .min(5, 'common:min5characters'),
+  }),
+});
+
+export const generalValidates = makeValidate(schema, error => {
+  const { message } = error;
+  return (
+    <Translation key={`t_${message}`}>
+      {t => <span className='error'>{t(`${message}`)}</span>}
+    </Translation>
+  );
+});
+
 const General = ({ validate, name }) => {
   const classes = useStyles();
-  const { t } = useTranslation(['dashboard']);
+  const { t } = useTranslation(['dashboard', 'common']);
+
   return (
     <Wizard.Page validate={validate}>
       <Grid container direction='column' className={classes.root}>
@@ -32,16 +51,6 @@ const General = ({ validate, name }) => {
       </Grid>
     </Wizard.Page>
   );
-};
-
-export const generalValidates = values => {
-  const errors = { general: {} };
-  if (!values.general || !values.general.name) {
-    errors.general.name = 'Required';
-  } else if (values.general.name.length < 5) {
-    errors.general.name = 'Minimo de 5 caracteres';
-  }
-  return errors;
 };
 
 export default General;
