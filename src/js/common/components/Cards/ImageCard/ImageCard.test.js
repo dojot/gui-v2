@@ -11,12 +11,7 @@ describe('ImageCard', () => {
 
   it('should to able simple render ', () => {
     const { container, getByTestId } = render(
-      <ImageCard
-        title={title}
-        image={Bar}
-        description={description}
-        handleClick={() => {}}
-      />,
+      <ImageCard title={title} image={Bar} description={description} handleClick={() => {}} />,
     );
 
     expect(container).toBeInTheDocument();

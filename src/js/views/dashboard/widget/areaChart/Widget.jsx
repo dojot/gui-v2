@@ -13,9 +13,9 @@ import {
 } from 'recharts';
 import { formatDate, formatNumber } from 'Utils';
 
-export default ({ id, onDelete, onPin, data, config }) => {
+export default ({ id, onDelete, onPin, data, config, onEdit }) => {
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
+    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
       <ResponsiveContainer width='100%' height='100%'>
         <AreaChart
           data={data}
@@ -40,12 +40,7 @@ export default ({ id, onDelete, onPin, data, config }) => {
           <Tooltip />
           <Legend />
           {config.areaProps.map(item => (
-            <Area
-              connectNulls
-              {...item}
-              isAnimationActive={false}
-              key={item.dataKey}
-            />
+            <Area connectNulls {...item} isAnimationActive={false} key={item.dataKey} />
           ))}
         </AreaChart>
       </ResponsiveContainer>

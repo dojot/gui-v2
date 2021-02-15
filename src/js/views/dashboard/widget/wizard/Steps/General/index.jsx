@@ -10,9 +10,7 @@ import { useStyles } from './style';
 
 const schema = Yup.object().shape({
   general: Yup.object().shape({
-    name: Yup.string()
-      .required('common:required')
-      .min(5, 'common:min5characters'),
+    name: Yup.string().required('common:required').min(5, 'common:min5characters'),
   }),
 });
 

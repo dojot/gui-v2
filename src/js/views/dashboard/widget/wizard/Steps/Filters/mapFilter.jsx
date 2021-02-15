@@ -59,11 +59,7 @@ const MapFilters = props => {
           <Grid item className='left'>
             <div className='realTimeSwitch'>
               <h2>{t('filters.real time')}</h2>
-              <Switch
-                checked={data.isRealTime}
-                onChange={handleChangeRealTime}
-                color='primary'
-              />
+              <Switch checked={data.isRealTime} onChange={handleChangeRealTime} color='primary' />
             </div>
           </Grid>
           <WFooter {...props} isValid={data.isFilterValid} />

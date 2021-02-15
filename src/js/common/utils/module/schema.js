@@ -1,6 +1,6 @@
 import _ from 'lodash';
 import { Device as DeviceService } from 'Services/index';
-import { formatToISO } from 'Utils';
+import { formatToISO, object2Array } from 'Utils';
 
 export const generateScheme = props => {
   const {
@@ -14,7 +14,7 @@ export const generateScheme = props => {
   } = props.filters;
   let lastN;
   let operationType;
-  const attrs = _.groupBy(props.attributes, 'deviceID');
+  const attrs = _.groupBy(object2Array(props.attributes), 'deviceID');
   const devices = {};
 
   switch (filterType) {
@@ -36,12 +36,16 @@ export const generateScheme = props => {
       operationType = 99;
       break;
   }
+
   Object.keys(attrs).forEach(key => {
     const staticAttrs = [];
     const dynamicAttrs = [];
     attrs[key].forEach(attribute => {
-      if (attribute.isDynamic) dynamicAttrs.push(attribute.label);
-      else staticAttrs.push(attribute.label);
+      if (attribute.isDynamic) {
+        dynamicAttrs.push(attribute.label);
+      } else {
+        staticAttrs.push(attribute.label);
+      }
     });
     devices[key] = {
       deviceID: key,

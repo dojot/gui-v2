@@ -1,10 +1,9 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 
-import _ from 'lodash';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
-import { Device as DeviceService } from 'Services/index';
-import { object2Array } from 'Utils';
+import { getWizardContext } from 'Selectors/dashboardSelector';
+import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
 import useArea from '../../wizard/hooks/useArea';
@@ -13,7 +12,7 @@ import {
   Devices,
   General,
   Summary,
-  GeneralFilter as Filters,
+  Filters,
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
@@ -32,49 +31,23 @@ const WizardPage = ({
   addWidget,
   addWidgetConfig,
   addWidgetSaga,
+  addWizardState,
+  uuid,
+  id,
 }) => {
-  const generateScheme = useCallback(state => {
-    const {
-      filterType,
-      lastRegs,
-      lastDynamicsValue,
-      operationType,
-      dateFrom,
-      dateTo,
-      isRealTime,
-    } = state.filters;
-    const lastN =
-      filterType === 0
-        ? parseInt(lastRegs, 10)
-        : parseInt(lastDynamicsValue, 10);
-
-    return DeviceService.parseHistoryQuery({
-      devices: _.values(
-        _.mapValues(
-          _.groupBy(object2Array(state.attributes), 'deviceID'),
-          (value, key) => ({
-            deviceID: key,
-            attrs: value.map(val => val.label),
-          }),
-        ),
-      ),
-      dateFrom,
-      dateTo,
-      operationType,
-      lastN,
-      isRealTime,
-    });
-  }, []);
-
   const { createAreaWidget } = useArea(
     addWidget,
     addWidgetConfig,
     addWidgetSaga,
     generateScheme,
+    addWizardState,
   );
 
+  const widgetID = uuid ? `${id}/${uuid}` : null;
+  const initialStateRecovered = useSelector(state => getWizardContext(state, widgetID));
+
   const handleSubmit = values => {
-    createAreaWidget(values);
+    createAreaWidget(values, widgetID);
     toDashboard();
   };
 
@@ -97,14 +70,19 @@ const WizardPage = ({
   };
   return (
     <Wizard
-      initialValues={initialState}
+      initialValues={initialStateRecovered || initialState}
       onSubmit={handleSubmit}
       steps={stepsList}
       headerTitle={title}
     >
       <General validate={generalValidates} name='general' />
       <Devices validate={null} name='devices' />
-      <Attributes validate={null} name='attributes' staticSupported={false} />
+      <Attributes
+        validate={null}
+        name='attributes'
+        staticSupported={false}
+        acceptedTypes={['NUMBER']}
+      />
       <Filters validate={null} name='filters' />
       <Summary />
     </Wizard>

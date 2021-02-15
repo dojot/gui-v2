@@ -6,8 +6,7 @@ import sagas from './sagas';
 
 // Redux DevTools Extension for Chrome and Firefox
 const reduxDevTool = () => {
-  return typeof window === 'object' &&
-    typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
+  return typeof window === 'object' && typeof window.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
     ? window.__REDUX_DEVTOOLS_EXTENSION__()
     : f => f;
 };

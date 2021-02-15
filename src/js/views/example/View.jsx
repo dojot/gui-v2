@@ -10,9 +10,7 @@ import { actions as exampleActions } from '../../redux/modules/example';
 import { exampleSelector } from '../../redux/selectors/exampleSelector';
 
 // This is lazy loading example
-const LazyExample = LazyLoading(() =>
-  import('../../common/components/Example/Example'),
-);
+const LazyExample = LazyLoading(() => import('../../common/components/Example/Example'));
 
 class ExampleView extends Component {
   static propTypes = {

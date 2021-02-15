@@ -15,9 +15,7 @@ import webpackConfig, { JS_SOURCE } from './webpack.config.common';
 //  CONSTANT DECLARATION
 // ----------------------------------------------------------
 const IS_S3_DEPLOY = Boolean(process.env.S3_DEPLOY);
-const PUBLIC_PATH = IS_S3_DEPLOY
-  ? process.env.AWS_CDN_URL
-  : config.get('publicPath');
+const PUBLIC_PATH = IS_S3_DEPLOY ? process.env.AWS_CDN_URL : config.get('publicPath');
 const APP_ENTRY_POINT = `${JS_SOURCE}/main`;
 
 // webpack 4 mode

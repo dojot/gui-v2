@@ -1,10 +1,7 @@
 import { put, fork, takeLatest } from 'redux-saga/effects';
 import { Device } from 'Services';
 
-import {
-  constants as deviceConstants,
-  actions as deviceActions,
-} from '../modules/devices';
+import { constants as deviceConstants, actions as deviceActions } from '../modules/devices';
 
 export function* fetchExampleData(data) {
   try {

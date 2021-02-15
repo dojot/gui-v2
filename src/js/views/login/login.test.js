@@ -72,9 +72,7 @@ describe('Login', () => {
     await submitFormikForm(htmlForm);
 
     wrapper.update();
-    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual(
-      'login:networkError',
-    );
+    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual('login:networkError');
   });
 
   it('shoud be able to simple render Login Error', async () => {
@@ -95,9 +93,7 @@ describe('Login', () => {
     await submitFormikForm(htmlForm);
 
     wrapper.update();
-    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual(
-      'login:loginError',
-    );
+    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual('login:loginError');
   });
 
   it('shoud be able to simple render', () => {

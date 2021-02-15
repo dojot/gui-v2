@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
+import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -11,7 +12,7 @@ import {
   Devices,
   General,
   Summary,
-  GeneralFilter as Filters,
+  Filters,
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
@@ -30,16 +31,23 @@ const LineWizard = ({
   addWidget,
   addWidgetConfig,
   addWidgetSaga,
+  addWizardState,
+  uuid,
+  id,
 }) => {
   const { createLineWidget } = useLine(
     addWidget,
     addWidgetConfig,
     addWidgetSaga,
     generateScheme,
+    addWizardState,
   );
 
+  const widgetID = uuid ? `${id}/${uuid}` : null;
+  const initialStateRecovered = useSelector(state => getWizardContext(state, widgetID));
+
   const handleSubmit = values => {
-    createLineWidget(values);
+    createLineWidget(values, widgetID);
     toDashboard();
   };
 
@@ -63,14 +71,19 @@ const LineWizard = ({
   };
   return (
     <Wizard
-      initialValues={initialState}
+      initialValues={initialStateRecovered || initialState}
       onSubmit={handleSubmit}
       steps={stepsList}
       headerTitle={title}
     >
       <General validate={generalValidates} name='general' />
       <Devices validate={null} name='devices' />
-      <Attributes validate={null} name='attributes' staticSupported={false} />
+      <Attributes
+        validate={null}
+        name='attributes'
+        staticSupported={false}
+        acceptedTypes={['NUMBER']}
+      />
       <Filters validate={null} name='filters' />
       <Summary />
     </Wizard>

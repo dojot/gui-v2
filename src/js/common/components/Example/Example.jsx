@@ -51,10 +51,7 @@ class Example extends PureComponent {
             <span className={styles.emphasize}>Started</span>
           </h1>
           <p>If you see this screen, it means you are all setup \o/</p>
-          <p>
-            The following JSON are showing contents coming from Redux, Saga and
-            Config.
-          </p>
+          <p>The following JSON are showing contents coming from Redux, Saga and Config.</p>
           <pre>{JSON.stringify(result, undefined, 2)}</pre>
         </div>
       );

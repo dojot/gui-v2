@@ -10,12 +10,9 @@ export const devicesList = state => ({
   devices: resultSelector(state),
 });
 
-const paginationControlSelector = createSelector(
-  devicesDataSelector,
-  payload => {
-    return payload.get('paginationControl');
-  },
-);
+const paginationControlSelector = createSelector(devicesDataSelector, payload => {
+  return payload.get('paginationControl');
+});
 
 export const devicesListPaginationControl = state => ({
   paginationControl: paginationControlSelector(state),

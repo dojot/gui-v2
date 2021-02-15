@@ -33,8 +33,7 @@ class ErrorBoundary extends PureComponent {
     if (hasError) {
       return (
         <div style={style}>
-          Something is going wrong!! This error is caught by ErrorBoundary
-          feature in React 16 \o/
+          Something is going wrong!! This error is caught by ErrorBoundary feature in React 16 \o/
         </div>
       );
     }

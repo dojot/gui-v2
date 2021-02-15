@@ -33,9 +33,7 @@ const LoginView = ({ location, history }) => {
       history.push('/dashboard');
     } catch ({ message }) {
       setHasError(true);
-      setMsgError(
-        message.indexOf('404') !== -1 ? 'networkError' : 'loginError',
-      );
+      setMsgError(message.indexOf('404') !== -1 ? 'networkError' : 'loginError');
     }
   };
   const initialState = {
@@ -44,9 +42,7 @@ const LoginView = ({ location, history }) => {
   };
 
   if (isAuthenticated()) {
-    return (
-      <Redirect to={{ pathname: '/dashboard', state: { from: location } }} />
-    );
+    return <Redirect to={{ pathname: '/dashboard', state: { from: location } }} />;
   }
 
   return (
@@ -55,9 +51,7 @@ const LoginView = ({ location, history }) => {
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {formikProps => (
-        <LoginForm {...formikProps} hasError={hasError} msgError={msgError} />
-      )}
+      {formikProps => <LoginForm {...formikProps} hasError={hasError} msgError={msgError} />}
     </Formik>
   );
 };
@@ -111,9 +105,7 @@ export const LoginForm = ({
             value={values.password}
             onChange={handleChange}
             onBlur={handleBlur}
-            helperText={
-              errors.password && touched.password && t(errors.password)
-            }
+            helperText={errors.password && touched.password && t(errors.password)}
             error={errors.password && touched.password}
             margin='normal'
             data-testid='password'

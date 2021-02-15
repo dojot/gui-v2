@@ -47,11 +47,7 @@ const Wizard = ({ initialValues, ...props }) => {
   return (
     <ViewContainer headerTitle={headerTitle}>
       <div className={classes.root}>
-        <Stepper
-          classes={{ root: classes.paper }}
-          alternativeLabel
-          activeStep={page}
-        >
+        <Stepper classes={{ root: classes.paper }} alternativeLabel activeStep={page}>
           {steps.map(({ label, key }) => (
             <Step key={key}>
               <StepLabel>{t([`dashboard:${label}`, 'undefined'])}</StepLabel>
@@ -59,18 +55,10 @@ const Wizard = ({ initialValues, ...props }) => {
           ))}
         </Stepper>
 
-        <Form
-          initialValues={values}
-          validate={validate}
-          onSubmit={handleSubmit}
-        >
+        <Form initialValues={values} validate={validate} onSubmit={handleSubmit}>
           {formProps => (
             <form onSubmit={formProps.handleSubmit}>
-              {React.cloneElement(
-                activePage,
-                { values: formProps.values },
-                null,
-              )}
+              {React.cloneElement(activePage, { values: formProps.values }, null)}
               <div className={classes.footer}>
                 {page > 0 && (
                   <Button
@@ -84,12 +72,7 @@ const Wizard = ({ initialValues, ...props }) => {
                   </Button>
                 )}
                 {!isLastPage && (
-                  <Button
-                    type='submit'
-                    color='primary'
-                    variant='contained'
-                    disableElevation
-                  >
+                  <Button type='submit' color='primary' variant='contained' disableElevation>
                     {t('next')}
                   </Button>
                 )}

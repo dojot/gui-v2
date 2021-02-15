@@ -1,9 +1,6 @@
 import { put, fork, takeLatest } from 'redux-saga/effects';
 
-import {
-  constants as exampleConstants,
-  actions as exampleActions,
-} from '../modules/example';
+import { constants as exampleConstants, actions as exampleActions } from '../modules/example';
 
 export function* fetchExampleData() {
   // pretend there is an api call

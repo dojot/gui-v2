@@ -1,9 +1,9 @@
 import { useCallback } from 'react';
 
-import { object2Array } from 'Utils/module/array';
+import { object2Array } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWizardState) => {
   const { table: tableID } = __CONFIG__;
 
   const generateTableConfig = useCallback(state => {
@@ -23,8 +23,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   }, []);
 
   const createTableWidget = useCallback(
-    attributes => {
-      const widgetId = `${tableID}/${uuidv4()}`;
+    (attributes, id) => {
+      const widgetId = id || `${tableID}/${uuidv4()}`;
 
       const newWidget = {
         i: widgetId,
@@ -38,9 +38,12 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
         moved: false,
       };
 
-      addWidget(newWidget);
+      if (!id) {
+        addWidget(newWidget);
+      }
       addWidgetConfig({ [widgetId]: generateTableConfig(attributes) });
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+      addWizardState({ [widgetId]: attributes });
     },
     [
       addWidget,
@@ -49,6 +52,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       tableID,
       generateTableConfig,
       generateScheme,
+      addWizardState,
     ],
   );
 

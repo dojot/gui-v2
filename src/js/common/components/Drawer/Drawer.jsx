@@ -46,10 +46,7 @@ const DrawerComponent = props => {
         {primaryItems.map(item =>
           item.visible ? (
             <Link to={item.path} className={classes.menuLink} key={item.label}>
-              <MenuItem
-                selected={activeRoute(item)}
-                classes={{ selected: classes.selected }}
-              >
+              <MenuItem selected={activeRoute(item)} classes={{ selected: classes.selected }}>
                 <ListItemIcon>
                   <item.icon />
                 </ListItemIcon>
@@ -63,10 +60,7 @@ const DrawerComponent = props => {
         {secondaryItems.map(item =>
           item.visible ? (
             <Link to={item.path} className={classes.menuLink} key={item.label}>
-              <MenuItem
-                selected={activeRoute(item)}
-                classes={{ selected: classes.selected }}
-              >
+              <MenuItem selected={activeRoute(item)} classes={{ selected: classes.selected }}>
                 <ListItemIcon>
                   <item.icon />
                 </ListItemIcon>

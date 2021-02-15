@@ -3,7 +3,7 @@ import { useCallback } from 'react';
 import { object2Array } from 'Utils/module/array';
 import { v4 as uuidv4 } from 'uuid';
 
-export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
+export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWizardState) => {
   const { bar: barID } = __CONFIG__;
 
   const generateBarConfig = useCallback(state => {
@@ -24,8 +24,8 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
   }, []);
 
   const createBarWidget = useCallback(
-    attributes => {
-      const widgetId = `${barID}/${uuidv4()}`;
+    (attributes, id) => {
+      const widgetId = id || `${barID}/${uuidv4()}`;
       const newWidget = {
         i: widgetId,
         x: 0,
@@ -38,9 +38,12 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
         moved: false,
       };
 
-      addWidget(newWidget);
+      if (!id) {
+        addWidget(newWidget);
+      }
       addWidgetConfig({ [widgetId]: generateBarConfig(attributes) });
       addWidgetSaga({ [widgetId]: generateScheme(attributes) });
+      addWizardState({ [widgetId]: attributes });
     },
     [
       addWidget,
@@ -49,6 +52,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme) => {
       barID,
       generateBarConfig,
       generateScheme,
+      addWizardState,
     ],
   );
 

@@ -6,8 +6,7 @@ class Loading extends PureComponent {
   getMessage() {
     const { isLoading, timedOut, pastDelay, error } = this.props;
 
-    const errorMessage =
-      'We can&apos;t pull up information at this point, please try again.';
+    const errorMessage = 'We can&apos;t pull up information at this point, please try again.';
 
     if (isLoading) {
       if (timedOut) {

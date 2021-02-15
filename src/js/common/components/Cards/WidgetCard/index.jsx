@@ -13,7 +13,7 @@ import { useTranslation } from 'react-i18next';
 
 import useStyles from './style';
 
-export default ({ id, onDelete, onPin, config, children }) => {
+export default ({ id, onDelete, onPin, config, children, onEdit }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -52,7 +52,7 @@ export default ({ id, onDelete, onPin, config, children }) => {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={() => handleClose()}>
+              <MenuItem onClick={() => handleClose(onEdit)}>
                 <ListItemText primary={t('common:edit')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onPin)}>

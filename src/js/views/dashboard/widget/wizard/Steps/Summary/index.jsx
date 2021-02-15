@@ -28,14 +28,9 @@ const AttributeBox = ({ name, values = [] }) => {
         const { label, deviceLabel, color, attributeID, description } = item;
         return (
           <div className={classes.colorContainer} key={attributeID}>
-            <div
-              className={classes.colorArea}
-              style={{ backgroundColor: color }}
-            />
+            <div className={classes.colorArea} style={{ backgroundColor: color }} />
             <div className={classes.attrItem}>
-              {`${deviceLabel} - ${label} ${
-                description ? ` - (${description})` : ''
-              }`}
+              {`${deviceLabel} - ${label} ${description ? ` - (${description})` : ''}`}
             </div>
           </div>
         );
@@ -59,10 +54,7 @@ const Summary = ({ values }) => {
       <Grid container direction='column' className={classes.root}>
         <Grid item className={classes.item}>
           <TitleBox desc={description} name={name} />
-          <AttributeBox
-            name={t('summary.attributes')}
-            values={attributesList}
-          />
+          <AttributeBox name={t('summary.attributes')} values={attributesList} />
         </Grid>
       </Grid>
     </Wizard.Page>

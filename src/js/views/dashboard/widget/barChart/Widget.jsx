@@ -13,9 +13,9 @@ import {
 } from 'recharts';
 import { formatDate, formatNumber } from 'Utils';
 
-export default ({ id, onDelete, onPin, data, config }) => {
+export default ({ id, onDelete, onPin, data, config, onEdit }) => {
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config}>
+    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
       <ResponsiveContainer width='100%' height='100%'>
         <BarChart
           data={data}

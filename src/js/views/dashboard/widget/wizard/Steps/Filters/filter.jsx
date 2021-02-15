@@ -52,11 +52,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
           <Grid item className='left'>
             <div className='realTimeSwitch'>
               <h2>{t('filters.real time')}</h2>
-              <Switches
-                name={`${name}.isRealTime`}
-                color='primary'
-                data={{ value: false }}
-              />
+              <Switches name={`${name}.isRealTime`} color='primary' data={{ value: false }} />
             </div>
           </Grid>
           <Grid item className='right'>
@@ -154,9 +150,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
                       format='DD/MM/YYYY HH:mm'
                       minDate={otherProps.values[name].dateFrom}
                       minDateMessage='teste, 123, testando'
-                      helperText={
-                        data.invalidPeriod ? t('filters.invalid interval') : ''
-                      }
+                      helperText={data.invalidPeriod ? t('filters.invalid interval') : ''}
                       error={data.invalidPeriod}
                       dateFunsUtils={MomentUtils}
                       disabled={otherProps.values[name].filterType !== '2'}

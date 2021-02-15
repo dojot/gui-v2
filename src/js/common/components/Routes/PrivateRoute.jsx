@@ -14,9 +14,7 @@ export default ({ component: Component, attrs, ...rest }) => {
             <Component {...props} />
           </MainLayout>
         ) : (
-          <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
-          />
+          <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
         )
       }
     />

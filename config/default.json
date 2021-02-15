@@ -24,8 +24,6 @@
     }
   ],
   "app": {
-    "description": "config inside 'app' will be injected to your frontend code automatically",
-    "hello": "You are in local development mode",
     "line": "1",
     "area": "2",
     "bar": "3",

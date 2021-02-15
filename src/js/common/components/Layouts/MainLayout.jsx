@@ -30,11 +30,7 @@ export default ({ isMenuOpen, children }) => {
 
   return (
     <RootContainer>
-      <Drawer
-        isOpen={isMenuOpen}
-        primaryItems={primaryItems}
-        secondaryItems={secondaryItems}
-      />
+      <Drawer isOpen={isMenuOpen} primaryItems={primaryItems} secondaryItems={secondaryItems} />
       <ContentContainer>{children}</ContentContainer>
     </RootContainer>
   );
