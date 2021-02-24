@@ -30,6 +30,7 @@ export const generateScheme = props => {
       operationType = 99;
       break;
     case '3':
+      lastN = 1;
       operationType = 8;
       break;
     default:
@@ -54,12 +55,14 @@ export const generateScheme = props => {
     };
   });
 
-  return DeviceService.parseHistoryQuery({
-    devices: Object.values(devices),
-    dateFrom: formatToISO(dateFrom),
-    dateTo: formatToISO(dateTo),
-    operationType,
-    lastN,
+  return DeviceService.parseHistoryQuery(
+    {
+      devices: Object.values(devices),
+      dateFrom: formatToISO(dateFrom),
+      dateTo: formatToISO(dateTo),
+      lastN,
+    },
+    { sourceType: 0, operationType },
     isRealTime,
-  });
+  );
 };
