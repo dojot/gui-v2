@@ -15,6 +15,7 @@ import CommentIcon from '@material-ui/icons/ColorLens';
 import SearchIcon from '@material-ui/icons/Search';
 import { FormCheckBox } from 'Components/Checkbox';
 import { Paginator, usePaginator } from 'Components/Paginator';
+import _ from 'lodash';
 import { TextField as FormTextField } from 'mui-rff';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
@@ -50,7 +51,10 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
 
   const getInitialAttributes = useCallback(() => {
     const attributes = [];
-    const orderedDevices = sortList(values.devices, 'label');
+
+    const orderedDevices = _.isEmpty(values.templates)
+      ? sortList(values.devices, 'label')
+      : sortList(values.templates, 'label');
 
     orderedDevices.forEach(device => {
       const orderedAttrs = sortList(device.attrs, 'label');
@@ -66,7 +70,7 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
       deviceAttributes.forEach(attr => attributes.push(attr));
     });
     return attributes;
-  }, [values.devices, sortList]);
+  }, [values.devices, values.templates, sortList]);
 
   const [initialAttributes] = useState(() => getInitialAttributes());
 
@@ -78,11 +82,11 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
     const filtered = !searchTermDebounced
       ? initialAttributes
       : initialAttributes.filter(item => {
-        return (
-          item.deviceLabel.toLowerCase().includes(searchTermDebounced) ||
-          item.attributeLabel.toLowerCase().includes(searchTermDebounced)
-        );
-      });
+          return (
+            item.deviceLabel.toLowerCase().includes(searchTermDebounced) ||
+            item.attributeLabel.toLowerCase().includes(searchTermDebounced)
+          );
+        });
     setPaginatorData(filtered);
   }, [initialAttributes, searchTermDebounced, setPaginatorData]);
 
@@ -213,7 +217,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
   }, [color]);
 
   useEffect(() => {
-    if (attributes[attributeId] && !isDisabled) {
+    if (attributes && attributes[attributeId] && !isDisabled) {
       if (attributes[attributeId].color === '#FAFAFA') {
         setColor(colorBlue);
       } else {
@@ -261,7 +265,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
             component={FormCheckBox}
             format={handleFormat}
             disabled={checkCompatibility()}
-            parse={item => (item ? attributeItem : null)}
+            parse={item => (item ? attributeItem : undefined)}
           />
         </ListItemIcon>
         <Tooltip title={id} placement='bottom-start' disabled>

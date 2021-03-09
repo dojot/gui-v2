@@ -1,3 +1,4 @@
+import { origin } from 'Constants';
 import _ from 'lodash';
 import { Device as DeviceService } from 'Services/index';
 import { formatToISO, object2Array } from 'Utils';
@@ -16,6 +17,7 @@ export const generateScheme = props => {
   let operationType;
   const attrs = _.groupBy(object2Array(props.attributes), 'deviceID');
   const devices = {};
+  const templates = {};
 
   switch (filterType) {
     case '0':
@@ -48,21 +50,30 @@ export const generateScheme = props => {
         staticAttrs.push(attribute.label);
       }
     });
-    devices[key] = {
-      deviceID: key,
-      staticAttrs,
-      dynamicAttrs,
-    };
+    if (props.selector === origin.DEVICE) {
+      devices[key] = {
+        deviceID: key,
+        staticAttrs,
+        dynamicAttrs,
+      };
+    } else {
+      templates[key] = {
+        templateID: key,
+        staticAttrs,
+        dynamicAttrs,
+      };
+    }
   });
 
   return DeviceService.parseHistoryQuery(
     {
+      templates: Object.values(templates),
       devices: Object.values(devices),
       dateFrom: formatToISO(dateFrom),
       dateTo: formatToISO(dateTo),
       lastN,
     },
-    { sourceType: 0, operationType },
+    { sourceType: props.selector, operationType },
     isRealTime,
   );
 };

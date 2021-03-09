@@ -1,27 +1,21 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect } from 'react';
 
 import { Grid } from '@material-ui/core';
 import Divider from '@material-ui/core/Divider';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import TextField from '@material-ui/core/TextField';
-import SearchIcon from '@material-ui/icons/Search';
 import { FormCheckBox } from 'Components/Checkbox';
 import { Paginator, usePaginator } from 'Components/Paginator';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
-import { Device as DeviceService } from 'Services/index';
-import { useDebounce } from 'use-debounce';
+import { Template as TemplateService } from 'Services/index';
 
-import Wizard from '../../wizard';
+import Wizard from '../../../wizard';
 import { useStyles } from './style';
 
-const Devices = ({ validate, ...otherProps }) => {
-  const [searchTerm, setSearchTerm] = useState('');
-  const [searchTermDebounced] = useDebounce(searchTerm, 1000);
+const Templates = ({ validate, ...otherProps }) => {
   const {
     paginatorData,
     setPaginatorData,
@@ -32,33 +26,27 @@ const Devices = ({ validate, ...otherProps }) => {
 
   useEffect(() => {
     setDisablePaginator(true);
-    DeviceService.getDevicesList(
-      { number: paginatorData.currentPage, size: paginatorData.pageSize },
-      { label: searchTermDebounced },
-    )
+    TemplateService.getTemplatesList({
+      number: paginatorData.currentPage,
+      size: paginatorData.pageSize,
+    })
       .then(response => {
-        const { devices, currentPage, totalPages } = response.getDevices;
-        setPaginatorData({ data: devices, currentPage, totalPages });
+        const { templates, currentPage, totalPages } = response.getTemplates;
+        setPaginatorData({
+          data: templates,
+          currentPage,
+          totalPages,
+        });
       })
       .catch(error => {
         console.error(error); // TODO tratamento de erro da api
         setDisablePaginator(false);
       });
-  }, [
-    setDisablePaginator,
-    setPaginatorData,
-    paginatorData.currentPage,
-    paginatorData.pageSize,
-    searchTermDebounced,
-  ]);
+  }, [setDisablePaginator, setPaginatorData, paginatorData.currentPage, paginatorData.pageSize]);
 
   useEffect(() => {
     setCurrentPage(1);
-  }, [searchTermDebounced, setCurrentPage]);
-
-  const handleChangeSearch = useCallback(e => {
-    setSearchTerm(e.target.value);
-  }, []);
+  }, [setCurrentPage]);
 
   const classes = useStyles();
 
@@ -75,23 +63,7 @@ const Devices = ({ validate, ...otherProps }) => {
 
   return (
     <Wizard.Page validate={validate}>
-      <Grid container justify='center' style={{ display: 'block' }}>
-        <Grid item className={classes.searchContainer}>
-          <TextField
-            variant='outlined'
-            placeholder={t('devices.search')}
-            name='searchDevices'
-            onChange={handleChangeSearch}
-            fullWidth
-            InputProps={{
-              startAdornment: (
-                <InputAdornment position='start'>
-                  <SearchIcon />
-                </InputAdornment>
-              ),
-            }}
-          />
-        </Grid>
+      <Grid container justify='center'>
         <List className={classes.root}>
           {!paginatorData.pageData.length ? (
             <ListItem className={classes.notFound}>
@@ -104,18 +76,14 @@ const Devices = ({ validate, ...otherProps }) => {
 
               return (
                 <Fragment key={value.id}>
-                  <ListItem
-                    role={undefined}
-                    // button
-                    // onClick={() => handleToggle(value)}
-                  >
+                  <ListItem role={undefined}>
                     <ListItemIcon>
                       <Field
                         type='checkbox'
                         name={`${otherProps.name}.chk-${id}`}
                         component={FormCheckBox}
                         format={item => (item ? item.id === id : false)}
-                        parse={item => (item ? value : undefined)}
+                        parse={item => (item ? value : null)}
                       />
                     </ListItemIcon>
                     <ListItemText id={labelId} primary={renderItem(label, id)} />
@@ -145,4 +113,4 @@ const Devices = ({ validate, ...otherProps }) => {
   );
 };
 
-export default Devices;
+export default Templates;

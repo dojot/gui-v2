@@ -16,6 +16,7 @@ import {
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
+import { origin } from 'Constants';
 
 const stepsList = [
   { label: 'steps.general', key: uuidv4() },
@@ -56,7 +57,9 @@ const LineWizard = ({
       name: '',
       description: '',
     },
+    selector: origin.DEVICE,
     devices: {},
+    templates: {},
     attributes: {},
     filters: {
       operationType: 8,

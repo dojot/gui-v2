@@ -4,6 +4,9 @@ export default makeStyles(theme => ({
   root: {
     width: '100%',
     marginBottom: 50,
+    minHeight: 'calc(100% - 50px)',
+    display: 'flex',
+    flexDirection: 'column',
   },
   backButton: {
     marginRight: theme.spacing(1),
@@ -15,6 +18,10 @@ export default makeStyles(theme => ({
   paper: {
     backgroundColor: 'inherit',
   },
+  form: {
+    display: 'flex',
+    flex: 1,
+  },
   footer: {
     width: '100%',
     padding: '10px 0',
@@ -22,6 +29,7 @@ export default makeStyles(theme => ({
     bottom: 0,
     zIndex: 999,
     backdropFilter: 'blur(4px)',
+    marginLeft: -8,
 
     '& button': {
       margin: '0 10px',

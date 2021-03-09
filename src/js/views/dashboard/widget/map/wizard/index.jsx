@@ -1,20 +1,17 @@
 import React from 'react';
 
+import { origin } from 'Constants';
+import { makeValidate } from 'mui-rff';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
+import * as Yup from 'yup';
 
 import { useMap } from '../../wizard/hooks';
-import {
-  Attributes,
-  Devices,
-  General,
-  Summary,
-  MapFilters,
-  generalValidates,
-} from '../../wizard/Steps';
+import { Attributes, General, Summary, MapFilters, generalValidates } from '../../wizard/Steps';
+import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [
@@ -51,12 +48,30 @@ const MapWizard = ({
     toDashboard();
   };
 
+  // TODO: Put the schema in a better place
+  const schema = Yup.object().shape({
+    devices: Yup.object().when('selector', {
+      is: value => value === 0,
+      then: Yup.object().required(),
+      otherwise: Yup.object().default(null).nullable(),
+    }),
+    templates: Yup.object().when('selector', {
+      is: value => value === 1,
+      then: Yup.object().required(),
+      otherwise: Yup.object().default(null).nullable(),
+    }),
+  });
+
+  const selectorValidates = makeValidate(schema, error => {
+    return error.message;
+  });
+
   const initialState = {
     general: {
       name: '',
       description: '',
     },
-    devices: {},
+    selector: origin.DEVICE,
     attributes: {},
     filters: {
       filterType: '3',
@@ -76,7 +91,7 @@ const MapWizard = ({
       headerTitle={title}
     >
       <General validate={generalValidates} name='general' />
-      <Devices validate={null} name='devices' />
+      <Selector validate={selectorValidates} />
       <Attributes validate={null} name='attributes' acceptedTypes={['GEO']} />
       <MapFilters validate={null} name='filters' />
       <Summary />

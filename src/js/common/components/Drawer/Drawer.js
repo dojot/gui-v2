@@ -4,7 +4,6 @@ const drawerWidth = 215;
 
 export const useStyles = makeStyles(theme => ({
   drawer: {
-    zIndex: theme.zIndex.drawer + 1,
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
