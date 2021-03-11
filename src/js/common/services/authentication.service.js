@@ -1,5 +1,5 @@
 import { unprotectedAPI } from 'APIs';
-import { login as loginAction, logout as logoutAction } from 'Utils';
+import { isAuthenticated, login as loginAction, logout as logoutAction } from 'Utils';
 
 const GQL_USER_TOKEN = `
   mutation login($username: String, $passwd: String) {
@@ -30,6 +30,7 @@ export const login = async ({ user, password }) => {
     throw new Error('Erro ao efetuar login');
   }
   loginAction(response.login.jwt);
+  return isAuthenticated();
 };
 
 export const logout = () => {
