@@ -1,5 +1,8 @@
 import axios from 'axios';
+import { logout } from 'Utils';
 import { getToken } from 'Utils/module/auth';
+
+import { history } from '../../app-history';
 
 const { apiUrl } = __CONFIG__;
 
@@ -14,15 +17,25 @@ instance.interceptors.request.use(async config => {
   return config;
 });
 
-instance.interceptors.response.use(response => {
-  const {
-    data: { errors, data },
-  } = response;
-  if (errors) {
-    return Promise.reject(errors);
-  }
-  return data;
-});
+instance.interceptors.response.use(
+  response => {
+    const {
+      data: { errors, data },
+    } = response;
+    console.log(errors);
+    if (errors) {
+      return Promise.reject(errors);
+    }
+    return data;
+  },
+  error => {
+    if (error.response.status === 401) {
+      logout();
+      history.push('/login', null);
+    }
+    return Promise.reject(error);
+  },
+);
 
 export const protectAPI = query => {
   return instance.post('graphql?', query);
