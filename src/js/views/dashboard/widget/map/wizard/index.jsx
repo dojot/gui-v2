@@ -12,7 +12,7 @@ import {
   Devices,
   General,
   Summary,
-  Filters,
+  MapFilters,
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
@@ -78,7 +78,7 @@ const MapWizard = ({
       <General validate={generalValidates} name='general' />
       <Devices validate={null} name='devices' />
       <Attributes validate={null} name='attributes' acceptedTypes={['GEO']} />
-      <Filters validate={null} name='filters' />
+      <MapFilters validate={null} name='filters' />
       <Summary />
     </Wizard>
   );
