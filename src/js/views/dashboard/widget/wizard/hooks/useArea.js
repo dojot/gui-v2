@@ -23,7 +23,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
       name: item.description || item.label,
     }));
 
-    const defsProps = attributes.map(item => ({
+    const defsProps = object2Array(attributes).map(item => ({
       id: `color${item.attributeID}`,
       x1: '0',
       y1: '0',
