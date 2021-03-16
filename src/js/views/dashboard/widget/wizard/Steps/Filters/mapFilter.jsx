@@ -24,7 +24,7 @@ const MapFilters = ({ validate, name }) => {
           <Grid item className='left'>
             <div className='realTimeSwitch'>
               <h2>{t('filters.real time')}</h2>
-              <Switches name={`${name}.isRealTime`} color='primary' data={{ value: false }}/>
+              <Switches name={`${name}.isRealTime`} color='primary' data={{ value: false }} />
             </div>
           </Grid>
         </Grid>
