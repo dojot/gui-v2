@@ -29,7 +29,6 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
     }
     return coordinates;
   }, []);
-
   const GetToolTip = useCallback(
     item => {
       const label = data[item.dataKey] ? data[item.dataKey].deviceLabel : 'undefined';
