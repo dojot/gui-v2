@@ -188,7 +188,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
   };
   const colorBlueDisabled = {
     rgb: { r: 250, g: 250, b: 250 },
-    hex: '#FAFAFA',
+    hex: '#004dcf',
   };
 
   const [isOpen, setIsOpen] = useState(false);
@@ -260,10 +260,11 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
             name={`${name}.${attributeId}`}
             component={FormCheckBox}
             format={handleFormat}
+            disabled={checkCompatibility()}
             parse={item => (item ? attributeItem : null)}
           />
         </ListItemIcon>
-        <Tooltip title={id} placement='bottom-start'>
+        <Tooltip title={id} placement='bottom-start' disabled>
           <ListItemText id={labelId} primary={renderItem()} />
         </Tooltip>
         <ListItemSecondaryAction className={classes.action}>
