@@ -158,7 +158,7 @@
     "reselect": "^4.0.0",
     "use-debounce": "^3.4.3",
     "uuid": "^8.1.0",
-    "yup": "^0.28.1"
+    "yup": "^0.32.9"
   },
   "jest": {
     "testURL": "http://www.SomeAwesome.com",
