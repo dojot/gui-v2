@@ -78,11 +78,11 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
     const filtered = !searchTermDebounced
       ? initialAttributes
       : initialAttributes.filter(item => {
-          return (
-            item.deviceLabel.toLowerCase().includes(searchTermDebounced) ||
-            item.attributeLabel.toLowerCase().includes(searchTermDebounced)
-          );
-        });
+        return (
+          item.deviceLabel.toLowerCase().includes(searchTermDebounced) ||
+          item.attributeLabel.toLowerCase().includes(searchTermDebounced)
+        );
+      });
     setPaginatorData(filtered);
   }, [initialAttributes, searchTermDebounced, setPaginatorData]);
 

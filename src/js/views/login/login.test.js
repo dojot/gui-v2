@@ -6,7 +6,18 @@ import * as api from 'APIs/index';
 import { mount } from 'enzyme';
 import { Authentication } from 'Services';
 
-import Login, { LoginForm } from './View';
+import Login from './View';
+
+jest.mock('react-router-dom', () => {
+  return {
+    Redirect: jest.fn(options => {
+      return <div>{options.to.pathname}</div>;
+    }),
+  };
+});
+
+const DEFAULT_JWT =
+  'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJlNVV1Z1NleVIzcTVKM2ZJdGFtNFc5bWVZSkMzaUZSOCIsImlhdCI6MTYxNTQ5NTYwOCwiZXhwIjoxNjE1NDk2MDI4LCJwcm9maWxlIjoiYWRtaW4iLCJncm91cHMiOlsxXSwidXNlcmlkIjoyLCJqdGkiOiJlNzkwZTliMzcxYmRlOWJmZTFhZGUxMmNmNDU5NzI0MSIsInNlcnZpY2UiOiJhZG1pbiIsInVzZXJuYW1lIjoiY3BxZCJ9.cOZFIqPMydtaLX9gwxlR3WTmGbWkT18t2WsPaYpLu_g';
 
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
@@ -31,69 +42,46 @@ const submitFormikForm = async nativeFormWrapper => {
   });
 };
 
+const setUserAndSubmit = async (wrapper, user, pass) => {
+  const userField = wrapper.find('input[name="user"]');
+  await updateFormikField(userField, 'user', user);
+  const passwordField = wrapper.find('input[name="password"]');
+  await updateFormikField(passwordField, 'password', pass);
+  const htmlForm = wrapper.find('form');
+
+  await submitFormikForm(htmlForm);
+  wrapper.update();
+};
+
 describe('Login', () => {
-  const password = 'ps';
+  const DEFAULT_PASS = 'test';
+  const DEFAULT_USER = 'test';
 
-  it('shoud be able to simple render error', async () => {
-    jest.spyOn(api, 'unprotectedAPI').mockImplementationOnce(() => ({
-      login: null,
-    }));
-
+  it('shoud be show characters minimum message', async () => {
     const wrapper = mount(<Login />);
+    await setUserAndSubmit(wrapper, 'c', 'c');
+    const passwordField = wrapper.find('p[id="password-helper-text"]');
 
-    const userField = wrapper.find('input[name="user"]').first();
-    await updateFormikField(userField, 'user', 'user123456');
-
-    const passwordField = wrapper.find('input[name="password"]').first();
-    await updateFormikField(passwordField, 'password', 'password123456');
-
-    const htmlForm = wrapper.find('form');
-
-    await submitFormikForm(htmlForm);
-    wrapper.update();
-    expect(wrapper.find(LoginForm).find(Alert)).toHaveLength(1);
+    expect(passwordField.text()).toEqual('login:characters_minimum');
   });
 
   it('shoud be able to simple render Network error', async () => {
     jest.spyOn(Authentication, 'login').mockImplementationOnce(() => {
       throw new Error('404');
     });
-
     const wrapper = mount(<Login />);
-
-    const userField = wrapper.find('input[name="user"]').first();
-    await updateFormikField(userField, 'user', 'user123456');
-
-    const passwordField = wrapper.find('input[name="password"]').first();
-    await updateFormikField(passwordField, 'password', 'password123456');
-
-    const htmlForm = wrapper.find('form');
-
-    await submitFormikForm(htmlForm);
-
-    wrapper.update();
-    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual('login:networkError');
+    await setUserAndSubmit(wrapper, DEFAULT_USER, DEFAULT_PASS);
+    // console.log(wrapper.debug({ ignoreProps: false }));
+    expect(wrapper.find(Alert).at(0).text()).toEqual('login:network_error');
   });
 
   it('shoud be able to simple render Login Error', async () => {
     jest.spyOn(Authentication, 'login').mockImplementationOnce(() => {
       throw new Error('Erro ao efetuar login');
     });
-
     const wrapper = mount(<Login />);
-
-    const userField = wrapper.find('input[name="user"]').first();
-    await updateFormikField(userField, 'user', 'user123456');
-
-    const passwordField = wrapper.find('input[name="password"]').first();
-    await updateFormikField(passwordField, 'password', 'password123456');
-
-    const htmlForm = wrapper.find('form');
-
-    await submitFormikForm(htmlForm);
-
-    wrapper.update();
-    expect(wrapper.find(LoginForm).find(Alert).at(0).text()).toEqual('login:loginError');
+    await setUserAndSubmit(wrapper, DEFAULT_USER, DEFAULT_PASS);
+    expect(wrapper.find(Alert).at(0).text()).toEqual('login:login_error');
   });
 
   it('shoud be able to simple render', () => {
@@ -101,17 +89,33 @@ describe('Login', () => {
     expect(container).toBeInTheDocument();
   });
 
-  it('user field should return 1', () => {
+  it('user field should accepts data', () => {
     const { getByTestId } = render(<Login />);
-    fireEvent.change(getByTestId('userTest'), { target: { value: '1' } });
-    expect(getByTestId('userTest')).toHaveValue('1');
+    fireEvent.change(getByTestId('userTest'), {
+      target: { value: DEFAULT_USER },
+    });
+    expect(getByTestId('userTest')).toHaveValue(DEFAULT_USER);
   });
 
-  it('password field should return ps', () => {
+  it('password field should accepts password', () => {
     const { getByTestId } = render(<Login />);
     fireEvent.change(getByTestId('passwordTest'), {
-      target: { value: password },
+      target: { value: DEFAULT_PASS },
     });
-    expect(getByTestId('passwordTest')).toHaveValue('ps');
+    expect(getByTestId('passwordTest')).toHaveValue(DEFAULT_PASS);
+  });
+
+  it('should log in correctly', async () => {
+    jest.spyOn(api, 'unprotectedAPI').mockImplementationOnce(() => ({
+      login: {
+        jwt: DEFAULT_JWT,
+      },
+      user: { profile: 'test', user: DEFAULT_USER },
+    }));
+
+    const wrapper = mount(<Login />);
+    await setUserAndSubmit(wrapper, DEFAULT_USER, DEFAULT_PASS);
+    expect(wrapper.find('div').text()).toEqual('/dashboard');
+    wrapper.unmount();
   });
 });

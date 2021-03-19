@@ -13,12 +13,12 @@ import * as Yup from 'yup';
 import useStyles from './style';
 
 const validationSchema = Yup.object({
-  user: Yup.string('login:enter a username')
-    .required('login:User is required')
-    .min(5, 'login:5 characters minimum'),
-  password: Yup.string('login:Type the password')
-    .required('login:Password is required')
-    .min(5, 'login:5 characters minimum'),
+  user: Yup.string('login:enter_username')
+    .required('login:user_required')
+    .min(2, 'login:2 characters minimum'),
+  password: Yup.string('login:missing_password')
+    .required('login:password_required')
+    .min(2, 'login:characters_minimum'),
 });
 
 const LoginView = ({ location, history }) => {
@@ -33,7 +33,7 @@ const LoginView = ({ location, history }) => {
       history.push('/dashboard');
     } catch ({ message }) {
       setHasError(true);
-      setMsgError(message.indexOf('404') !== -1 ? 'networkError' : 'loginError');
+      setMsgError(message.indexOf('404') !== -1 ? 'network_error' : 'login_error');
     }
   };
   const initialState = {
@@ -124,7 +124,7 @@ export const LoginForm = ({
             type='submit'
             data-testid='btnLogin'
           >
-            {t('login:login')}
+            {t('login:do_login')}
           </Button>
         </form>
       </Card>
