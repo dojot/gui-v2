@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import './common/i18n/i18n';
-import theme from 'Themes';
+import theme from 'Themes/index';
 import 'fontsource-roboto';
 
 export default class Root extends React.PureComponent {

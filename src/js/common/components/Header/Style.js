@@ -4,7 +4,7 @@ const drawerWidth = 215;
 
 export const useStyles = makeStyles(theme => ({
   appBar: {
-    backgroundColor: theme.palette.primary,
+    backgroundColor: theme.palette.header,
     zIndex: theme.zIndex.drawer,
     boxShadow: 'none',
     width: `calc(100% - ${theme.spacing(8) + 1}px)`,

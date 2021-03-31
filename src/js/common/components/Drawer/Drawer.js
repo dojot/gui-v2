@@ -35,6 +35,7 @@ export const useStyles = makeStyles(theme => ({
   selected: {
     backgroundColor: 'rgba(13, 123, 191, 0.1)',
     borderLeft: '4px solid #4788DC',
+    color: theme.palette.text.primary,
   },
   toolbar: {
     display: 'flex',
