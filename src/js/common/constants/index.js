@@ -1,1 +1,1 @@
-export { origin } from './wizard';
+export { default as origin } from './wizard';

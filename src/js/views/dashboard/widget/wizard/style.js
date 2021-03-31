@@ -25,11 +25,11 @@ export default makeStyles(theme => ({
   footer: {
     width: '100%',
     padding: '10px 0',
-    position: 'fixed',
+    position: 'absolute',
     bottom: 0,
+    left: 0,
     zIndex: 999,
     backdropFilter: 'blur(4px)',
-    marginLeft: -8,
 
     '& button': {
       margin: '0 10px',

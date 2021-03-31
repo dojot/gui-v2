@@ -7,6 +7,7 @@ export const useStyles = makeStyles(theme => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    zIndex: theme.zIndex.drawer + 1,
   },
   drawerOpen: {
     width: drawerWidth,
@@ -16,7 +17,6 @@ export const useStyles = makeStyles(theme => ({
     }),
   },
   drawerClose: {
-    overflowX: 'hidden',
     width: theme.spacing(8) + 1,
     transition: theme.transitions.create(['width'], {
       easing: theme.transitions.easing.sharp,
