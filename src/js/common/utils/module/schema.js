@@ -50,15 +50,15 @@ export const generateScheme = props => {
         staticAttrs.push(attribute.label);
       }
     });
-    if (props.selector === origin.DEVICE) {
-      devices[key] = {
-        deviceID: key,
+    if (props.selector === origin.TEMPLATE) {
+      templates[key] = {
+        templateID: key,
         staticAttrs,
         dynamicAttrs,
       };
     } else {
-      templates[key] = {
-        templateID: key,
+      devices[key] = {
+        deviceID: key,
         staticAttrs,
         dynamicAttrs,
       };
