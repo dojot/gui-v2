@@ -42,7 +42,7 @@ const DrawerComponent = props => {
       <div className={classes.toolbar}>
         <img src={logo} alt='dojot logo' />
       </div>
-      <MenuList disablePadding color={'white'}>
+      <MenuList disablePadding color='white'>
         {primaryItems.map(item =>
           item.visible ? (
             <Link to={item.path} className={classes.menuLink} key={item.label}>

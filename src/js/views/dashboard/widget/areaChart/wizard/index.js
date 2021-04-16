@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { SOURCE, WIDGET } from 'Constants';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
@@ -16,7 +17,6 @@ import {
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
-import { SOURCE, WIDGET } from 'Constants';
 
 const stepsList = [
   { label: 'steps.general', key: uuidv4() },
