@@ -1,1 +1,1 @@
-export { default as origin } from './wizard';
+export { SOURCE, WIDGET, OPERATION } from './wizard';

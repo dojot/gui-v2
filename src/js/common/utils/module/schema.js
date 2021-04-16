@@ -1,4 +1,4 @@
-import { origin } from 'Constants';
+import { SOURCE, OPERATION } from 'Constants';
 import _ from 'lodash';
 import { Device as DeviceService } from 'Services/index';
 import { formatToISO, object2Array } from 'Utils';
@@ -20,20 +20,20 @@ export const generateScheme = props => {
   const templates = {};
 
   switch (filterType) {
-    case '0':
+    case OPERATION.LAST.N:
       lastN = parseInt(lastRegs, 10);
       operationType = parseInt(filterType, 10);
       break;
-    case '1':
+    case OPERATION.ORDER:
       lastN = parseInt(lastDynamicsValue, 10);
       operationType = parseInt(lastDynamicsOption, 10);
       break;
-    case '2':
+    case OPERATION.DATE:
       operationType = 99;
       break;
-    case '3':
+    case OPERATION.NO_OP:
       lastN = 1;
-      operationType = 8;
+      operationType = 0;
       break;
     default:
       operationType = 99;
@@ -50,7 +50,7 @@ export const generateScheme = props => {
         staticAttrs.push(attribute.label);
       }
     });
-    if (props.selector === origin.TEMPLATE) {
+    if (props.selector === SOURCE.TEMPLATE) {
       templates[key] = {
         templateID: key,
         staticAttrs,
@@ -73,7 +73,7 @@ export const generateScheme = props => {
       dateTo: formatToISO(dateTo),
       lastN,
     },
-    { sourceType: props.selector, operationType },
+    { sourceType: props.selector, operationType, widgetType: props.widgetType },
     isRealTime,
   );
 };

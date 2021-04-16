@@ -1,22 +1,19 @@
 import React from 'react';
 
+import { SOURCE, WIDGET } from 'Constants';
+import { makeValidate } from 'mui-rff';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
+import { menuSelector } from 'Selectors/baseSelector';
 import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
+import * as Yup from 'yup';
 
 import useTable from '../../wizard/hooks/useTable';
-import {
-  Attributes,
-  Devices,
-  General,
-  Summary,
-  Filters,
-  generalValidates,
-} from '../../wizard/Steps';
+import { Attributes, General, Summary, RealtimeFilter, generalValidates } from '../../wizard/Steps';
+import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
 import Wizard from '../../wizard/wizard';
-import { origin } from 'Constants';
 
 const stepsList = [
   { label: 'steps.general', key: uuidv4() },
@@ -35,6 +32,7 @@ const TableWizard = ({
   addWizardState,
   uuid,
   id,
+  isMenuOpen,
 }) => {
   const { createTableWidget } = useTable(
     addWidget,
@@ -52,24 +50,39 @@ const TableWizard = ({
     toDashboard();
   };
 
+  // TODO: Put the schema in a better place
+  const schema = Yup.object().shape({
+    devices: Yup.object().when('selector', {
+      is: value => value === 0,
+      then: Yup.object().required(),
+      otherwise: Yup.object().default(null).nullable(),
+    }),
+    templates: Yup.object().when('selector', {
+      is: value => value === 1,
+      then: Yup.object().required(),
+      otherwise: Yup.object().default(null).nullable(),
+    }),
+  });
+
+  const selectorValidates = makeValidate(schema, error => {
+    return error.message;
+  });
+
   const initialState = {
     general: {
       name: '',
       description: '',
     },
-    selector: origin.DEVICE,
+    selector: SOURCE.DEVICE,
     devices: {},
     templates: {},
     attributes: {},
     filters: {
-      filterType: '0',
-      dateTo: '',
-      dateFrom: '',
-      lastRegs: '15',
-      lastDynamicsOption: undefined,
-      lastDynamicsValue: '15',
+      filterType: '3',
+      lastRegs: '1',
       isRealTime: true,
     },
+    widgetType: WIDGET.TABLE,
   };
   return (
     <Wizard
@@ -77,16 +90,17 @@ const TableWizard = ({
       onSubmit={handleSubmit}
       steps={stepsList}
       headerTitle={title}
+      menuState={isMenuOpen}
     >
       <General validate={generalValidates} name='general' />
-      <Devices validate={null} name='devices' />
+      <Selector validate={selectorValidates} />
       <Attributes
         validate={null}
         name='attributes'
         staticSupported={false}
         acceptedTypes={['GEO', 'NUMBER', 'BOOLEAN', 'STRING']}
       />
-      <Filters validate={null} name='filters' />
+      <RealtimeFilter validate={null} name='filters' />
       <Summary />
     </Wizard>
   );
@@ -96,4 +110,8 @@ const mapDispatchToProps = {
   ...dashboardActions,
 };
 
-export default connect(null, mapDispatchToProps)(TableWizard);
+const mapStateToProps = state => ({
+  ...menuSelector(state),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TableWizard);

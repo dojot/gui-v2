@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { origin } from 'Constants';
+import { SOURCE } from 'Constants';
 import { object2Array } from 'Utils/module/array';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -16,7 +16,7 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
     };
 
     let map;
-    const isDevice = selector === origin.DEVICE;
+    const isDevice = selector === SOURCE.DEVICE;
     if (isDevice) {
       map = object2Array(attributes).map(item => ({
         dataKey: `${item.deviceID}${item.label}`,

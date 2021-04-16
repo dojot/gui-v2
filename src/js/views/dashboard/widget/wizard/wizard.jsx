@@ -4,6 +4,7 @@ import { Button } from '@material-ui/core';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
+import clsx from 'clsx';
 import { DevelopmentContainer } from 'Components/Containers';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
@@ -13,7 +14,7 @@ import { ViewContainer } from '../../../stateComponents';
 import useStyles from './style';
 
 const Wizard = ({ initialValues, ...props }) => {
-  const { steps, onSubmit, headerTitle, children } = props;
+  const { steps, onSubmit, headerTitle, children, menuState } = props;
   const [page, setPage] = useState(0);
   const [formValues, setValues] = useState(initialValues || {});
 
@@ -77,7 +78,12 @@ const Wizard = ({ initialValues, ...props }) => {
               className={classes.form}
             >
               {React.cloneElement(activePage, { values, form }, null)}
-              <div className={classes.footer}>
+              <div
+                className={clsx(classes.footer, {
+                  [classes.expanded]: menuState,
+                  [classes.collapsed]: !menuState,
+                })}
+              >
                 {page > 0 && (
                   <Button
                     type='button'

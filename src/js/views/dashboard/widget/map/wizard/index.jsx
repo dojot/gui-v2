@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { origin } from 'Constants';
+import { SOURCE, WIDGET } from 'Constants';
 import { makeValidate } from 'mui-rff';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
 import { useMap } from '../../wizard/hooks';
-import { Attributes, General, Summary, MapFilters, generalValidates } from '../../wizard/Steps';
+import { Attributes, General, Summary, RealtimeFilter, generalValidates } from '../../wizard/Steps';
 import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
 import Wizard from '../../wizard/wizard';
 
@@ -71,17 +71,14 @@ const MapWizard = ({
       name: '',
       description: '',
     },
-    selector: origin.DEVICE,
+    selector: SOURCE.DEVICE,
     attributes: {},
     filters: {
       filterType: '3',
-      dateTo: '',
-      dateFrom: '',
-      lastRegs: '15',
-      lastDynamicsOption: undefined,
-      lastDynamicsValue: '15',
+      lastRegs: '1',
       isRealTime: true,
     },
+    widgetType: WIDGET.MAP,
   };
   return (
     <Wizard
@@ -93,7 +90,7 @@ const MapWizard = ({
       <General validate={generalValidates} name='general' />
       <Selector validate={selectorValidates} />
       <Attributes validate={null} name='attributes' acceptedTypes={['GEO']} />
-      <MapFilters validate={null} name='filters' />
+      <RealtimeFilter validate={null} name='filters' />
       <Summary />
     </Wizard>
   );

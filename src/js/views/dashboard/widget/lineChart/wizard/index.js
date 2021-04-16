@@ -16,7 +16,7 @@ import {
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
-import { origin } from 'Constants';
+import { SOURCE, WIDGET } from 'Constants';
 
 const stepsList = [
   { label: 'steps.general', key: uuidv4() },
@@ -57,7 +57,7 @@ const LineWizard = ({
       name: '',
       description: '',
     },
-    selector: origin.DEVICE,
+    selector: SOURCE.DEVICE,
     devices: {},
     templates: {},
     attributes: {},
@@ -71,6 +71,7 @@ const LineWizard = ({
       lastDynamicsValue: '15',
       isRealTime: true,
     },
+    widgetType: WIDGET.LINE,
   };
   return (
     <Wizard
