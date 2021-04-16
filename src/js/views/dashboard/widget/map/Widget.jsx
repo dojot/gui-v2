@@ -60,12 +60,11 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
         );
       });
     } else {
-      Object.values(data).forEach((device, index) => {
+      Object.values(data).forEach(device => {
         const { templateKey, value = [0, 0], deviceLabel = '' } = device;
         markers.push(
           <Marker
-            {/* eslint-disable-next-line react/no-array-index-key */}
-            key={`${index}_${templateKey}`}
+            key={`${map[templateKey].name}_${deviceLabel}_${templateKey}`}
             position={value}
             icon={getMarkerColor(map[templateKey].markerColor)}
           >
