@@ -43,8 +43,6 @@ const a11yProps = index => {
 };
 
 const Selector = ({ validate, values, form }) => {
-  const { t } = useTranslation(['dashboard']);
-
   const tabItems = [
     <Tab label='Devices' {...a11yProps(0)} key='Devices' />,
     <Tab label='Templates' {...a11yProps(1)} key='Templates' />,

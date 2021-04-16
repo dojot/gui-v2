@@ -44,19 +44,6 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
     [data],
   );
 
-  // 344ac5location:
-  //   deviceLabel: "GPS - Carro 01"
-  // templateKey: "5location"
-  // timestamp: "2021-03-16T13:30:51.361Z"
-  // value: Array(2)
-  // 0: -22.876048
-  // 1: -47.050512
-
-  // 0:
-  // dataKey: "5location"
-  // markerColor: "#b80000"
-  // name: "location"
-
   const getMarkers = map => {
     if (_.isEmpty(data)) return null;
     const markers = [];
@@ -76,7 +63,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
       Object.values(data).forEach((device, index) => {
         markers.push(
           <Marker
-            key={`${index}_${device.templateKey}`}
+            key={`${index}_${device ? device.templateKey : '#undefined'}`}
             position={device ? device.value : [0, 0]}
             icon={getMarkerColor(map[device.templateKey].markerColor)}
           >

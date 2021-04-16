@@ -44,6 +44,7 @@ const Wizard = ({ initialValues, ...props }) => {
   const checkErrorsBeforeSubmit = (event, invalid, error, callback) => {
     if (invalid) {
       // TODO: Create mechanism to display form errors
+      console.error(error);
     }
     callback(event);
   };
