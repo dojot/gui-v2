@@ -6,7 +6,6 @@ import Tab from '@material-ui/core/Tab';
 import { FormTabs } from 'Components/Tabs';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
-import { useTranslation } from 'react-i18next';
 
 import Wizard from '../../../wizard';
 import Devices from '../../Devices/DevicesPageOnly';
@@ -27,6 +26,10 @@ const TabPanel = props => {
       {value === index && <Box p={3}>{children}</Box>}
     </div>
   );
+};
+
+TabPanel.defaultProps = {
+  children: React.createElement('div'),
 };
 
 TabPanel.propTypes = {

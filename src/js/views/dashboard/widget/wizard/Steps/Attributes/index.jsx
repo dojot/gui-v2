@@ -243,7 +243,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
 
   const checkCompatibility = useCallback(
     () => !(acceptedTypes.includes(value.valueType) && (isDynamic || staticSupported)),
-    [acceptedTypes, staticSupported, value],
+    [acceptedTypes, staticSupported, value, isDynamic],
   );
 
   const renderItem = useCallback(() => {

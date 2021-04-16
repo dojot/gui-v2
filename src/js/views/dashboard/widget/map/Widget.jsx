@@ -61,14 +61,16 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
       });
     } else {
       Object.values(data).forEach((device, index) => {
+        const { templateKey, value = [0, 0], deviceLabel = '' } = device;
         markers.push(
           <Marker
-            key={`${index}_${device ? device.templateKey : '#undefined'}`}
-            position={device ? device.value : [0, 0]}
-            icon={getMarkerColor(map[device.templateKey].markerColor)}
+            {/* eslint-disable-next-line react/no-array-index-key */}
+            key={`${index}_${templateKey}`}
+            position={value}
+            icon={getMarkerColor(map[templateKey].markerColor)}
           >
             <Tooltip>
-              <span>{`${device.deviceLabel}: ${map[device.templateKey].name}`}</span>
+              <span>{`${deviceLabel}: ${map[templateKey].name}`}</span>
             </Tooltip>
           </Marker>,
         );
