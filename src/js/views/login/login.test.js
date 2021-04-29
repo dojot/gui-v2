@@ -38,7 +38,7 @@ const updateFormikField = async (nativeFieldWrapper, targetName, value) => {
 
 const submitFormikForm = async nativeFormWrapper => {
   await act(async () => {
-    nativeFormWrapper.simulate('submit', { preventDefault: () => { } });
+    nativeFormWrapper.simulate('submit', { preventDefault: () => {} });
   });
 };
 

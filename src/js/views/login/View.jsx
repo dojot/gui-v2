@@ -26,12 +26,11 @@ const LoginView = ({ location, history }) => {
   const [msgError, setMsgError] = useState('');
   const handleSubmit = async ({ user, password }) => {
     try {
-      const isLogged = await Authentication.login({
+      await Authentication.login({
         user,
         password,
       });
-      // is this line below necessary?
-      if (isLogged) history.push('/dashboard');
+      history.push('/dashboard');
     } catch ({ message }) {
       setHasError(true);
       setMsgError(message.indexOf('404') !== -1 ? 'network_error' : 'login_error');
