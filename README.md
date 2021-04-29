@@ -40,3 +40,8 @@ Check the documentation for more information:
 If you found a problem or need help, leave an issue in the main
 [dojot repository](https://github.com/dojot/dojot) and we will help you!
 
+## License
+
+Dojot's GUI-v2 source code is released under Apache License 2.0.
+
+Check NOTICE and LICENSE files for more information.
