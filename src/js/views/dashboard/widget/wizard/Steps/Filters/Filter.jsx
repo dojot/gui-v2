@@ -149,7 +149,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
                       inputVariant='outlined'
                       format='DD/MM/YYYY HH:mm'
                       minDate={otherProps.values[name].dateFrom}
-                      minDateMessage='teste, 123, testando'
+                      minDateMessage=''
                       helperText={data.invalidPeriod ? t('filters.invalid interval') : ''}
                       error={data.invalidPeriod}
                       dateFunsUtils={MomentUtils}

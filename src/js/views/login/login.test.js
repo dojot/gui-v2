@@ -71,7 +71,6 @@ describe('Login', () => {
     });
     const wrapper = mount(<Login />);
     await setUserAndSubmit(wrapper, DEFAULT_USER, DEFAULT_PASS);
-    // console.log(wrapper.debug({ ignoreProps: false }));
     expect(wrapper.find(Alert).at(0).text()).toEqual('login:network_error');
   });
 

@@ -22,7 +22,6 @@ instance.interceptors.response.use(
     const {
       data: { errors, data },
     } = response;
-    console.log(errors);
     if (errors) {
       return Promise.reject(errors);
     }
