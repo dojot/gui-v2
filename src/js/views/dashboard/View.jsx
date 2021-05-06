@@ -242,10 +242,10 @@ Dashboard.defaultProps = {
   rowHeight: 30,
   cols: {
     lg: 12,
-    md: 10,
-    sm: 6,
-    xs: 4,
-    xxs: 2,
+    md: 12,
+    sm: 12,
+    xs: 12,
+    xxs: 12,
   },
 };
 
