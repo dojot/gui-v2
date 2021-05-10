@@ -56,10 +56,10 @@ const Selector = ({ validate, values, form }) => {
       <Grid container justify='flex-start'>
         <Field name='selector' component={props => FormTabs(props, tabItems, form)} />
         <TabPanel value={values.selector} index={0}>
-          <Devices validate={null} name='devices' />
+          <Devices validate={null} name='devices' form={form} />
         </TabPanel>
         <TabPanel value={values.selector} index={1}>
-          <Templates validate={null} name='templates' />
+          <Templates validate={null} name='templates' form={form} />
         </TabPanel>
       </Grid>
     </Wizard.Page>

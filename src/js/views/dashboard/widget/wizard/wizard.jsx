@@ -72,6 +72,14 @@ const Wizard = ({ initialValues, ...props }) => {
             clearField: ([name, value], state, { changeValue }) => {
               changeValue(state, name, () => value);
             },
+            clearAttributesByDevice: ([id, locale], state, { changeValue, getIn }) => {
+              const data = getIn(state, `formState.values.${locale}`);
+              const keysToBeDeleted = Object.keys(data).filter(v => v.startsWith(id));
+              keysToBeDeleted.forEach(e => {
+                delete data[e];
+              });
+              changeValue(state, locale, () => data);
+            },
           }}
           render={({ handleSubmit, submitting, values, form, invalid, errors }) => (
             <form
