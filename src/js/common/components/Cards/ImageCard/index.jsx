@@ -20,7 +20,7 @@ const Index = ({ title, image, description, handleClick }) => {
           onClick={() => handleClick()}
           data-testid='card-action'
         >
-          <CardMedia className={classes.media} image={image} title='Contemplative Reptile' />
+          <CardMedia className={classes.media} image={image} />
           <CardContent>
             <Typography gutterBottom variant='h5' component='h2' data-testid='title'>
               {title}
