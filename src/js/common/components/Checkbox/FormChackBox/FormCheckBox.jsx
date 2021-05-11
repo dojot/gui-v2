@@ -3,12 +3,12 @@ import React from 'react';
 import Checkbox from '@material-ui/core/Checkbox';
 import PropTypes from 'prop-types';
 
-export const FormCheckBox = ({ input: { onChange, checked }, disabled, optionalFunction }) => {
+export const FormCheckBox = ({ input: { onChange, checked }, disabled, callback }) => {
   const onChangeInternal = e => {
-    onChange(e);
     if (checked) {
-      optionalFunction();
+      callback();
     }
+    onChange(e);
   };
 
   return (
@@ -26,12 +26,12 @@ export const FormCheckBox = ({ input: { onChange, checked }, disabled, optionalF
 };
 
 FormCheckBox.defaultProps = {
-  optionalFunction: () => {},
+  callback: () => {},
   disabled: false,
 };
 
 FormCheckBox.propTypes = {
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool,
-  optionalFunction: PropTypes.func,
+  callback: PropTypes.func,
 };
