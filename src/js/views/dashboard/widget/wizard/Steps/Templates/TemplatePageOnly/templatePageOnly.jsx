@@ -90,6 +90,9 @@ const Templates = ({ validate, ...otherProps }) => {
                       component={FormCheckBox}
                       format={item => (item ? item.id === id : false)}
                       parse={item => (item ? value : undefined)}
+                      optionalFunction={() =>
+                        otherProps.form.mutators.clearAttributesByDevice(id, 'attributes')
+                      }
                     />
                   </ListItemIcon>
                   <ListItemText id={labelId} primary={renderItem(label, id)} />
