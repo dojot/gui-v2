@@ -57,6 +57,9 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
   };
 
   const ValueFormatter = ({ row, column }) => {
+    if (typeof row[column.dataKey] === 'boolean') {
+      return row[column.dataKey].toString();
+    }
     if (!row[column.dataKey]) {
       return '-';
     }
