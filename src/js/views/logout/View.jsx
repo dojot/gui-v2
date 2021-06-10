@@ -1,19 +1,17 @@
 import React, { useEffect } from 'react';
 
+import { URL } from 'Constants';
 import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
 import { actions as dashboardActions } from 'Redux/dashboard';
-import { Authentication } from 'Services';
 
 const Logout = ({ location, clearData }) => {
   useEffect(() => {
     clearData();
+    window.location.href = `${URL.LOGOUT}?return=/v2/#/welcome`;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  Authentication.logout();
-
-  return <Redirect to={{ pathname: '/login', state: { from: location } }} />;
+  return <div />;
 };
 
 const mapDispatchToProps = {

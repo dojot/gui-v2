@@ -1,28 +1,20 @@
-export const isAuthenticated = () => localStorage.getItem('TOKEN_KEY') !== null;
+export const isAuthenticated = () => sessionStorage.getItem('USER_NAME') !== null;
 
-export const getToken = () => localStorage.getItem('TOKEN_KEY');
-
-export const login = token => {
-  // eslint-disable-next-line no-unused-vars
-  const [generalInfo, userInfo, check] = token.split('.');
-  const { profile, service, username } = JSON.parse(atob(userInfo));
-  localStorage.setItem('USER_PROFILE', profile);
-  localStorage.setItem('USER_TENANT', service);
-  localStorage.setItem('USER_USER', username);
-  localStorage.setItem('TOKEN_KEY', token);
+export const setUserInformation = userInfo => {
+  const { tenant, username, profile } = userInfo;
+  sessionStorage.setItem('USER_PROFILE', profile);
+  sessionStorage.setItem('USER_TENANT', tenant);
+  sessionStorage.setItem('USER_NAME', username);
 };
 
-export const logout = () => {
-  localStorage.removeItem('USER_PROFILE');
-  localStorage.removeItem('USER_TENANT');
-  localStorage.removeItem('USER_USER');
-  localStorage.removeItem('TOKEN_KEY');
+export const clearUserInformation = () => {
+  sessionStorage.clear();
 };
 
 export const getUserInformation = () => {
   return {
-    userName: localStorage.getItem('USER_USER'),
-    tenant: localStorage.getItem('USER_TENANT'),
-    profile: localStorage.getItem('USER_PROFILE'),
+    userName: sessionStorage.getItem('USER_NAME'),
+    tenant: sessionStorage.getItem('USER_TENANT'),
+    profile: sessionStorage.getItem('USER_PROFILE'),
   };
 };

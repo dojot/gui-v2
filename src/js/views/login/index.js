@@ -1,1 +1,1 @@
-export { default } from './View';
+export { default as RedirectToLogin } from './loginRedirect/loginRedirect';

@@ -1,23 +1,14 @@
 import axios from 'axios';
-import { logout } from 'Utils';
-import { getToken } from 'Utils/module/auth';
-
-import { history } from '../../app-history';
+import { URL } from 'Constants';
+import { clearUserInformation } from 'Utils';
 
 const { apiUrl } = __CONFIG__;
 
-const instance = axios.create({ baseURL: apiUrl });
+const graphql = axios.create({ baseURL: apiUrl });
 
-instance.interceptors.request.use(async config => {
-  const token = getToken();
-  if (token) {
-    // eslint-disable-next-line no-param-reassign
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
+const rest = axios.create({ baseURL: apiUrl });
 
-instance.interceptors.response.use(
+graphql.interceptors.response.use(
   response => {
     const {
       data: { errors, data },
@@ -29,17 +20,30 @@ instance.interceptors.response.use(
   },
   error => {
     if (error.response.status === 401) {
-      logout();
-      history.push('/login', null);
+      clearUserInformation();
+      window.location.href = `${URL.LOGOUT}?return=/v2/#/welcome`;
+    }
+    return Promise.reject(error);
+  },
+);
+
+rest.interceptors.response.use(
+  response => {
+    return response.data;
+  },
+  error => {
+    if (error.response.status === 401) {
+      clearUserInformation();
+      window.location.href = `${URL.LOGOUT}?return=/v2/#/welcome`;
     }
     return Promise.reject(error);
   },
 );
 
 export const protectAPI = query => {
-  return instance.post('graphql?', query);
+  return graphql.post(URL.GQL, query, { withCredentials: true });
 };
 
-export const unprotectedAPI = query => {
-  return instance.post('graphql-auth/', query);
+export const restAPI = path => {
+  return rest.get(path, { withCredentials: true });
 };

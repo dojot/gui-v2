@@ -1,39 +1,13 @@
-import { unprotectedAPI } from 'APIs';
-import { isAuthenticated, login as loginAction, logout as logoutAction } from 'Utils';
+import { restAPI } from 'APIs';
+import { URL } from 'Constants';
+import { setUserInformation } from 'Utils/module/auth';
 
-const GQL_USER_TOKEN = `
-  mutation login($username: String, $passwd: String) {
-  login(username: $username , passwd: $passwd) {
-    jwt
-    user {
-      username
-      profile
-    }
+export const getUserData = async () => {
+  try {
+    const result = await restAPI(URL.USER_INFO);
+    const { tenant, username, urlAcc } = result;
+    setUserInformation({ tenant, username, profile: urlAcc });
+  } catch (e) {
+    throw new Error('ERROR');
   }
-}
-`;
-
-const getUserTokenQuery = (username, passwd) => {
-  const variables = {
-    username,
-    passwd,
-  };
-  return {
-    query: GQL_USER_TOKEN,
-    variables: JSON.stringify(variables),
-  };
-};
-
-export const login = async ({ user, password }) => {
-  const response = await unprotectedAPI(getUserTokenQuery(user, password));
-  if (!response.login) {
-    throw new Error('Erro ao efetuar login');
-  }
-  loginAction(response.login.jwt);
-  return isAuthenticated();
-};
-
-export const logout = () => {
-  // TODO: So far there is no treatment
-  logoutAction();
 };

@@ -1,7 +1,9 @@
 {
   "user": "User",
   "password": "Password",
+  "tenant": "Tenant",
   "login": "Login",
+  "welcome": "Welcome",
   "do_login": "Sign in",
   "enter_username": "Enter a username",
   "user_required": "User is required",

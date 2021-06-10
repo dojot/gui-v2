@@ -81,10 +81,10 @@ export const UserInfo = () => {
                       />
                     </ListItem>
                     <Divider />
-                    <ListItem>
+                    <ListItem button component='a' href={user.profile} target='_blank'>
                       <ListItemText
                         data-testid='profile'
-                        primary={user.profile}
+                        primary={user.userName}
                         secondary={t('common:profile')}
                       />
                     </ListItem>

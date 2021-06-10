@@ -1,4 +1,9 @@
-export { isAuthenticated, login, logout, getUserInformation } from './module/auth';
+export {
+  isAuthenticated,
+  clearUserInformation,
+  getUserInformation,
+  setUserInformation,
+} from './module/auth';
 export { formatDate, formatToISO } from './module/date';
 export { formatNumber } from './module/number';
 export { compareAll } from './module/compare';
