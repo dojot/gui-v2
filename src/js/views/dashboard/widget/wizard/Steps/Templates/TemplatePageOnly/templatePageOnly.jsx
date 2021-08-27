@@ -90,7 +90,7 @@ const Templates = ({ validate, ...otherProps }) => {
                       component={FormCheckBox}
                       format={item => (item ? item.id === id : false)}
                       parse={item => (item ? value : undefined)}
-                      optionalFunction={() =>
+                      callback={() =>
                         otherProps.form.mutators.clearAttributesByDevice(id, 'attributes')
                       }
                     />

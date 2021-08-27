@@ -116,6 +116,9 @@ const Devices = ({ validate, ...otherProps }) => {
                         component={FormCheckBox}
                         format={item => (item ? item.id === id : false)}
                         parse={item => (item ? value : undefined)}
+                        callback={() =>
+                          otherProps.form.mutators.clearAttributesByDevice(id, 'attributes')
+                        }
                       />
                     </ListItemIcon>
                     <ListItemText id={labelId} primary={renderItem(label, id)} />
