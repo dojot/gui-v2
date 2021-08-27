@@ -19,6 +19,7 @@ import {
   dashboardLayout,
   dashboardSaga,
 } from 'Selectors/dashboardSelector';
+import { widgetToCSV } from 'Utils/module/parsers';
 
 import { ViewContainer } from '../stateComponents';
 import { AreaChartWidget } from './widget/areaChart';
@@ -75,7 +76,7 @@ const Dashboard = props => {
     [changeLayout],
   );
 
-  const onPin = useCallback(
+  const handlePin = useCallback(
     i => {
       const newArr = _.map(layout, item => {
         const { static: iStatic, ...otherProps } = item;
@@ -86,7 +87,7 @@ const Dashboard = props => {
     [layout, updateLayout],
   );
 
-  const onRemoveItem = useCallback(
+  const handleRemoveItem = useCallback(
     i => {
       removeWidget(i);
       stopPolling();
@@ -94,11 +95,18 @@ const Dashboard = props => {
     [removeWidget, stopPolling],
   );
 
-  const onEdit = useCallback(
+  const handleEdit = useCallback(
     widgetId => {
       history.push(`/dashboard/widget/wizard/${widgetId}`);
     },
     [history],
+  );
+
+  const handleExport = useCallback(
+    widgetID => {
+      widgetToCSV(data[widgetID], configs[widgetID], widgetID);
+    },
+    [data],
   );
 
   const createElement = useCallback(
@@ -111,9 +119,10 @@ const Dashboard = props => {
             <div key={i}>
               <LineChartWidget
                 id={i}
-                onDelete={onRemoveItem}
-                onPin={onPin}
-                onEdit={onEdit}
+                onDelete={handleRemoveItem}
+                onPin={handlePin}
+                onEdit={handleEdit}
+                onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -124,9 +133,10 @@ const Dashboard = props => {
             <div key={i}>
               <AreaChartWidget
                 id={i}
-                onDelete={onRemoveItem}
-                onPin={onPin}
-                onEdit={onEdit}
+                onDelete={handleRemoveItem}
+                onPin={handlePin}
+                onEdit={handleEdit}
+                onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -137,9 +147,10 @@ const Dashboard = props => {
             <div key={i}>
               <BarChartWidget
                 id={i}
-                onDelete={onRemoveItem}
-                onPin={onPin}
-                onEdit={onEdit}
+                onDelete={handleRemoveItem}
+                onPin={handlePin}
+                onEdit={handleEdit}
+                onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -150,9 +161,10 @@ const Dashboard = props => {
             <div key={i}>
               <TableWidget
                 id={i}
-                onDelete={onRemoveItem}
-                onPin={onPin}
-                onEdit={onEdit}
+                onDelete={handleRemoveItem}
+                onPin={handlePin}
+                onEdit={handleEdit}
+                onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -163,9 +175,10 @@ const Dashboard = props => {
             <div key={i}>
               <MapWidget
                 id={i}
-                onDelete={onRemoveItem}
-                onPin={onPin}
-                onEdit={onEdit}
+                onDelete={handleRemoveItem}
+                onPin={handlePin}
+                onEdit={handleEdit}
+                onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
               />
@@ -175,7 +188,7 @@ const Dashboard = props => {
           return <div key={i} />;
       }
     },
-    [area, bar, configs, line, data, onPin, onRemoveItem, table, map, onEdit],
+    [area, bar, configs, line, data, handlePin, handleRemoveItem, table, map, handleEdit],
   );
 
   const getHeaderContent = useCallback(() => {

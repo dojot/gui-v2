@@ -3,8 +3,8 @@ import React, { useCallback } from 'react';
 import { WidgetCard, NoData } from 'Components/Cards';
 import { SimpleTable } from 'Components/Table';
 
-const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
-  const { table } = config;
+const TableWidget = ({ data, ...widgetProps }) => {
+  const { table } = widgetProps.config;
 
   const renderTable = useCallback(() => {
     if (data && data.length) {
@@ -12,11 +12,7 @@ const TableWidget = ({ id, data, config, onDelete, onPin, onEdit }) => {
     }
     return <NoData />;
   }, [data, table]);
-  return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
-      {renderTable()}
-    </WidgetCard>
-  );
+  return <WidgetCard {...widgetProps}>{renderTable()}</WidgetCard>;
 };
 
 export default TableWidget;

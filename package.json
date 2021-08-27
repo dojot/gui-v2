@@ -135,6 +135,7 @@
     "prop-types": "^15.7.2",
     "react": "^16.14.0",
     "react-color": "^2.19.3",
+    "react-csv-downloader": "^2.7.0",
     "react-dom": "^16.14.0",
     "react-final-form": "^6.5.3",
     "react-grid-layout": "^1.2.4",

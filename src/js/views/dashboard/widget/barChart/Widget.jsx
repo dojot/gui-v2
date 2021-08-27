@@ -13,9 +13,9 @@ import {
 } from 'recharts';
 import { formatDate, formatNumber } from 'Utils';
 
-export default ({ id, onDelete, onPin, data, config, onEdit }) => {
+export default ({ data, ...widgetProps }) => {
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
+    <WidgetCard {...widgetProps}>
       <ResponsiveContainer width='100%' height='100%'>
         <BarChart
           data={data}
@@ -31,7 +31,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
           <YAxis domain={['auto', 'auto']} tickFormatter={formatNumber} />
           <Tooltip />
           <Legend />
-          {config.bar.map(item => (
+          {widgetProps.config.bar.map(item => (
             <Bar isAnimationActive={false} {...item} key={item.dataKey} />
           ))}
         </BarChart>

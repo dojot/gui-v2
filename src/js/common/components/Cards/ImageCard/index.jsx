@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 
 import useStyles from './style';
 
-const Index = ({ title, image, description, handleClick }) => {
+const ImageCard = ({ title, image, description, handleClick }) => {
   const classes = useStyles();
   return (
     <Grid item classes={{ item: classes.item }}>
@@ -40,11 +40,11 @@ const Index = ({ title, image, description, handleClick }) => {
   );
 };
 
-Index.propTypes = {
+ImageCard.propTypes = {
   title: PropTypes.string.isRequired,
   image: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   handleClick: PropTypes.func.isRequired,
 };
 
-export default Index;
+export default ImageCard;

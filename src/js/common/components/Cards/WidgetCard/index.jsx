@@ -9,11 +9,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import More from '@material-ui/icons/MoreVert';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import useStyles from './style';
 
-export default ({ id, onDelete, onPin, config, children, onEdit }) => {
+const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -58,6 +59,9 @@ export default ({ id, onDelete, onPin, config, children, onEdit }) => {
               <MenuItem onClick={() => handleClose(onPin)}>
                 <ListItemText primary={t('common:pin')} />
               </MenuItem>
+              <MenuItem onClick={() => handleClose(onExport)}>
+                <ListItemText primary={t('common:export')} />
+              </MenuItem>
               <MenuItem onClick={() => handleClose(onDelete)}>
                 <ListItemText primary={t('common:delete')} />
               </MenuItem>
@@ -77,3 +81,20 @@ export default ({ id, onDelete, onPin, config, children, onEdit }) => {
     </Card>
   );
 };
+
+WidgetCard.propTypes = {
+  id: PropTypes.string.isRequired,
+  config: PropTypes.shape({
+    meta: PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      subTitle: PropTypes.string,
+    }),
+  }).isRequired,
+  children: PropTypes.node.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  onPin: PropTypes.func.isRequired,
+  onEdit: PropTypes.func.isRequired,
+  onExport: PropTypes.func.isRequired,
+};
+
+export default WidgetCard;
