@@ -22,13 +22,8 @@ import { useStyles } from './style';
 const Devices = ({ validate, ...otherProps }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
-  const {
-    paginatorData,
-    setPaginatorData,
-    setCurrentPage,
-    setPageSize,
-    setDisablePaginator,
-  } = usePaginator();
+  const { paginatorData, setPaginatorData, setCurrentPage, setPageSize, setDisablePaginator } =
+    usePaginator();
 
   useEffect(() => {
     setDisablePaginator(true);

@@ -16,13 +16,8 @@ import { Template as TemplateService } from 'Services/index';
 import { useStyles } from './style';
 
 const Templates = ({ validate, ...otherProps }) => {
-  const {
-    paginatorData,
-    setPaginatorData,
-    setCurrentPage,
-    setPageSize,
-    setDisablePaginator,
-  } = usePaginator();
+  const { paginatorData, setPaginatorData, setCurrentPage, setPageSize, setDisablePaginator } =
+    usePaginator();
 
   const [isLoading, setIsLoading] = useState(false);
 
