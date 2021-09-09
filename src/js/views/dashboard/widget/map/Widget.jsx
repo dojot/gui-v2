@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import 'react-leaflet-markercluster/dist/styles.min.css';
 import 'leaflet/dist/images/marker-shadow.png';
 
-export default ({ id, onDelete, onPin, data, config, onEdit }) => {
+export default ({ data, ...widgetProps }) => {
   const mapRef = useRef();
   const { clientHeight, clientWidth } = !mapRef.current
     ? {
@@ -47,7 +47,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
   const getMarkers = map => {
     if (_.isEmpty(data)) return null;
     const markers = [];
-    if (config.isDevice) {
+    if (widgetProps.config.isDevice) {
       map.forEach(item => {
         markers.push(
           <Marker
@@ -79,7 +79,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
   };
 
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
+    <WidgetCard {...widgetProps}>
       <Map
         ref={mapRef}
         className='markercluster-map'
@@ -99,7 +99,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
 
-        <MarkerClusterGroup>{getMarkers(config.map)}</MarkerClusterGroup>
+        <MarkerClusterGroup>{getMarkers(widgetProps.config.map)}</MarkerClusterGroup>
       </Map>
     </WidgetCard>
   );

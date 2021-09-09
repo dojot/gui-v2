@@ -13,9 +13,9 @@ import {
 } from 'recharts';
 import { formatDate, formatNumber } from 'Utils';
 
-export default ({ id, onDelete, onPin, data, config, onEdit }) => {
+export default ({ data, ...widgetProps }) => {
   return (
-    <WidgetCard id={id} onDelete={onDelete} onPin={onPin} config={config} onEdit={onEdit}>
+    <WidgetCard {...widgetProps}>
       <ResponsiveContainer width='100%' height='100%'>
         <AreaChart
           data={data}
@@ -27,7 +27,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
           }}
         >
           <defs>
-            {config.defsProps.map(item => (
+            {widgetProps.config.defsProps.map(item => (
               <linearGradient {...item} key={item.id}>
                 <stop offset='5%' stopColor={item.color} stopOpacity={0.8} />
                 <stop offset='95%' stopColor={item.color} stopOpacity={0} />
@@ -39,7 +39,7 @@ export default ({ id, onDelete, onPin, data, config, onEdit }) => {
           <CartesianGrid strokeDasharray='3 3' />
           <Tooltip />
           <Legend />
-          {config.areaProps.map(item => (
+          {widgetProps.config.areaProps.map(item => (
             <Area connectNulls {...item} isAnimationActive={false} key={item.dataKey} />
           ))}
         </AreaChart>

@@ -1,214 +1,40 @@
 # This file was generated based on ".graphqlconfig". Do not edit manually.
 
 schema {
-  query: Query
-  mutation: Mutation
+  query: LoginRootQuery
+  mutation: LoginMutation
 }
 
-"Necessary data about and attribute of a device#"
-type Attr {
-  isDynamic: Boolean!
-  label: String!
-  staticValue: String
-  valueType: ValueType!
+"Object with token and infos about the user"
+type Login {
+  "JWT token"
+  jwt: String
+  user: User
 }
 
-type Attributes {
-  "Timestamp of create date"
-  created: String
-  "Attribute ID"
-  id: Int
-  "Attribute Label"
-  label: String
-  "List of Metadatas associate to Attribute"
-  metadata: [Metadata]
-  "Value when type is Static"
-  static_value: String
-  "Primary key of a template"
-  template_id: String
-  "Can be static, dynamic, etc."
-  type: String
-  "Can be String, Integer, Float, Geo, etc."
-  value_type: String
+type LoginMutation {
+  "Login in to the dojot and response with infos about user and theirs permissions. "
+  login(passwd: String, username: String): Login
 }
 
-"JSON that defines a dashboard's configuration retrieved from database and parsed as string"
-type Config {
-  config: String!
+"Not used yet"
+type LoginRootQuery {
+  none: String
 }
 
-"Necessary informations about device#"
-type Device {
-  attrs: [Attr]
-  id: String!
-  label: String!
+"Permission - Subject with theirs actions"
+type PermissionResponse {
+  "List actions of a subject"
+  actions: [String]
+  "Subject"
+  subject: String
 }
 
-"A paginated list of Devices.#"
-type DeviceListPage {
-  currentPage: Int!
-  devices: [Device]
-  totalPages: Int!
-}
-
-"Historical reading from device#"
-type History {
-  attrs: [HistoryAttr]
-  deviceID: String!
-  label: String!
-}
-
-"Historical reading from an attribute#"
-type HistoryAttr {
-  label: String!
-  timestamp: String!
-  value: String!
-  valueType: ValueType!
-}
-
-type MapStringToString {
-  "key"
-  key: String
-  "value"
-  value: String
-}
-
-type Metadata {
-  "Timestamp of create date"
-  created: String
-  "Metadata ID"
-  id: Int
-  "Metadata Label"
-  label: String
-  "Meta Value"
-  static_value: String
-  "Can be define by user. Like a unit"
-  type: String
-  "Timestamp of update date"
-  updated: String
-  "Can be String, Integer, Float, Geo, etc."
-  value_type: String
-}
-
-type Mutation {
-  "Updates existing information on database, or creates an entry if it doesn't exist. Returns success message if it works or error message if fails."
-  updateConfig(config: String!, tenant: String!, user: String): String
-}
-
-type Query {
-  "Retrieves dashboard configuration by user. Returns the information if successful or error message if it occurs."
-  getConfig(tenant: String!, user: String): String
-  "Finds device information by id"
-  getDeviceById(deviceId: String!): Device
-  "Returns historical data in the format used by the Dashboard"
-  getDeviceHistoryForDashboard(configs: ConfigsInput, filter: HistoryInput!): String
-  """
-
-  Returns a list of devices that can be divided in pages, and the information about how many pages there are in total, along with which page is being shown.
-  @param sortBy: set sortBy to ordenate list (default 'label')
-  """
-  getDevices(filter: FilterDeviceInput, page: PageInput, sortBy: String): DeviceListPage
-  "Returns a list of templates"
-  getTemplates(page: PageInput): TemplatesListPage
-  "Get a template by Id"
-  template(id: Int!): Template
-  """
-
-  Checks if templates has Image Firmware and return a array with objects key-value, where key is a id template and value is a boolean.
-  The value is true if the template has image firmware.
-  """
-  templatesHasImageFirmware(templatesId: [Int]!): [MapStringToString]
-}
-
-type Template {
-  "List of Attributes"
-  attrs: [Attributes]
-  "List of Configuration Attributes"
-  config_attrs: [Attributes]
-  "Timestamp of create date"
-  created: String
-  "List of Data Attributes"
-  data_attrs: [Attributes]
-  "Template ID"
-  id: Int
-  "List of Image Attributes (Firmware)"
-  img_attrs: [Attributes]
-  "Template Label"
-  label: String!
-}
-
-type TemplateList {
-  attrs: [Attr]
-  id: String!
-  label: String!
-}
-
-type TemplatesListPage {
-  currentPage: Int!
-  templates: [TemplateList]
-  totalPages: Int!
-}
-
-"Value types used by the platform#"
-enum ValueType {
-  BOOLEAN
-  GEO
-  NUMBER
-  STRING
-  UNDEFINED
-}
-
-"A stringified JSON that defines a dashboard's configuration"
-input ConfigInput {
-  config: String!
-}
-
-input ConfigsInput {
-  "operationType corresponds to 0 (the last N histories, Number of most current values), 1 (minutes, the last N minutes), 2 (hours, the last N hours), 3 (days, the last N days), 4 (months, the last N months), 7 (to get devices by template)"
-  operationType: Int
-  "corresponds to 0 (DEVICE) and 1 (TEMPLATE)"
-  sourceType: Int
-}
-
-"Return only devices that are named accordingly (prefix or suffix match)#"
-input FilterDeviceInput {
-  label: String
-}
-
-"Parameters to identify from which device and which attributes to retrieve historical data from#"
-input HistoryDeviceInput {
-  "device selected#"
-  deviceID: String!
-  "attributes which readings are to be retrieved#"
-  dynamicAttrs: [String]
-  staticAttrs: [String]
-}
-
-"Parameters to query historical device data#"
-input HistoryInput {
-  dateFrom: String
-  dateTo: String
-  "list of devices which attributes will be retrieved#"
-  devices: [HistoryDeviceInput]!
-  "lastN will be used to obtain the values from the lastN of most current values, minutes, hours, days and months according to option operationType"
-  lastN: Int
-  templates: [HistoryTemplateInput]
-}
-
-"Parameters to identify from which template and which attributes to retrieve historical data from#"
-input HistoryTemplateInput {
-  "attributes which readings are to be retrieved#"
-  dynamicAttrs: [String]
-  "static attributes which readings are to be retrieved#"
-  staticAttrs: [String]
-  "template selected#"
-  templateID: String!
-}
-
-"Determines which page to show and how many items#"
-input PageInput {
-  "set the page number to be accessed (default 20) #"
-  number: Int
-  "set the number of elements to be shown in a page (default 1) #"
-  size: Int
+"Infos about user"
+type User {
+  id: String
+  permissions: [PermissionResponse]
+  profile: String
+  service: String
+  username: String
 }
