@@ -106,7 +106,7 @@ const Dashboard = props => {
     widgetID => {
       widgetToCSV(data[widgetID], configs[widgetID], widgetID);
     },
-    [data],
+    [data, configs],
   );
 
   const createElement = useCallback(
@@ -188,7 +188,19 @@ const Dashboard = props => {
           return <div key={i} />;
       }
     },
-    [area, bar, configs, line, data, handlePin, handleRemoveItem, table, map, handleEdit],
+    [
+      area,
+      bar,
+      configs,
+      line,
+      data,
+      handlePin,
+      handleRemoveItem,
+      table,
+      map,
+      handleEdit,
+      handleExport,
+    ],
   );
 
   const getHeaderContent = useCallback(() => {
