@@ -23,13 +23,8 @@ const Devices = ({ validate, ...otherProps }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);
   const [isLoading, setIsLoading] = useState(false);
-  const {
-    paginatorData,
-    setPaginatorData,
-    setCurrentPage,
-    setPageSize,
-    setDisablePaginator,
-  } = usePaginator();
+  const { paginatorData, setPaginatorData, setCurrentPage, setPageSize, setDisablePaginator } =
+    usePaginator();
 
   useEffect(() => {
     setDisablePaginator(true);
@@ -121,7 +116,7 @@ const Devices = ({ validate, ...otherProps }) => {
                       component={FormCheckBox}
                       format={item => (item ? item.id === id : false)}
                       parse={item => (item ? value : undefined)}
-                      optionalFunction={() =>
+                      callback={() =>
                         otherProps.form.mutators.clearAttributesByDevice(id, 'attributes')
                       }
                     />
