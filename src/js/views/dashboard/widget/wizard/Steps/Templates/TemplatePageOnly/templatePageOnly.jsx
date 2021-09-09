@@ -16,13 +16,8 @@ import { Template as TemplateService } from 'Services/index';
 import { useStyles } from './style';
 
 const Templates = ({ validate, ...otherProps }) => {
-  const {
-    paginatorData,
-    setPaginatorData,
-    setCurrentPage,
-    setPageSize,
-    setDisablePaginator,
-  } = usePaginator();
+  const { paginatorData, setPaginatorData, setCurrentPage, setPageSize, setDisablePaginator } =
+    usePaginator();
 
   const [isLoading, setIsLoading] = useState(false);
 
@@ -90,7 +85,7 @@ const Templates = ({ validate, ...otherProps }) => {
                       component={FormCheckBox}
                       format={item => (item ? item.id === id : false)}
                       parse={item => (item ? value : undefined)}
-                      optionalFunction={() =>
+                      callback={() =>
                         otherProps.form.mutators.clearAttributesByDevice(id, 'attributes')
                       }
                     />

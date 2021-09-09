@@ -22,6 +22,7 @@ export const FormTabs = (props, children, form) => {
         form.mutators.clearField('templates', undefined);
         break;
     }
+    form.mutators.clearField('attributes', undefined);
     onChange(newValue);
   };
   return (
