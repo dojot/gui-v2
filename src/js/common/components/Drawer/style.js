@@ -29,6 +29,9 @@ export const useStyles = makeStyles(theme => ({
       '0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
     overflow: 'hidden',
   },
+  menuList: {
+    overflowY: 'auto',
+  },
   menuLink: {
     textDecoration: 'none',
     color: theme.palette.text.secondary,
@@ -40,7 +43,9 @@ export const useStyles = makeStyles(theme => ({
   menuClosedItem: {
     borderRadius: '100%',
     height: '43px',
+    minHeight: '43px',
     width: '43px',
+    minWidth: '43px',
     margin: 'auto',
     padding: '0 10.5px',
   },

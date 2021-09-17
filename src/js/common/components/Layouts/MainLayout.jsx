@@ -17,7 +17,7 @@ export default ({ isMenuOpen, children }) => {
 
   return (
     <RootContainer>
-      <Drawer isOpen={isMenuOpen} primaryItems={translatedMenuItems} />
+      <Drawer isOpen={isMenuOpen} menuItems={translatedMenuItems} />
       <ContentContainer>{children}</ContentContainer>
     </RootContainer>
   );

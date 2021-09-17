@@ -10,21 +10,21 @@ import {
 
 export const MENU_ITEMS = [
   {
-    visible: false,
+    visible: true,
     i18n: 'devices',
     label: 'Dispositivos',
     path: '/devices',
     icon: DevicesOther,
   },
   {
-    visible: false,
+    visible: true,
     i18n: 'templates',
     label: 'Modelos',
     path: '/templates',
     icon: FilterNone,
   },
   {
-    visible: false,
+    visible: true,
     i18n: 'flows',
     label: 'Fluxos',
     path: '/flow',
@@ -37,14 +37,14 @@ export const MENU_ITEMS = [
     icon: NotificationImportant,
   },
   {
-    visible: false,
+    visible: true,
     i18n: 'users',
     label: 'Usuários',
     path: '/users',
     icon: People,
   },
   {
-    visible: false,
+    visible: true,
     i18n: 'profiles',
     label: 'Perfis',
     path: '/profiles',

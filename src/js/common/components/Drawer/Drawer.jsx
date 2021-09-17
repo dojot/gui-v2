@@ -9,7 +9,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { useStyles } from './style';
 
 const DrawerComponent = props => {
-  const { isOpen, primaryItems, location } = props;
+  const { isOpen, menuItems, location } = props;
   const classes = useStyles();
 
   const getActiveRoute = path => {
@@ -35,13 +35,13 @@ const DrawerComponent = props => {
         <img
           className={isOpen ? classes.logo : classes.logoSmall}
           draggable={false}
-          src={logo}
           alt='Dojot logo'
+          src={logo}
         />
       </div>
 
-      <MenuList disablePadding>
-        {primaryItems.map(item => {
+      <MenuList className={classes.menuList} disablePadding>
+        {menuItems.map(item => {
           if (!item.visible) return null;
 
           const isSelected = getActiveRoute(item.path);
@@ -73,7 +73,7 @@ DrawerComponent.defaultProps = {
 };
 
 DrawerComponent.propTypes = {
-  primaryItems: PropTypes.array.isRequired,
+  menuItems: PropTypes.array.isRequired,
   isOpen: PropTypes.bool,
 };
 

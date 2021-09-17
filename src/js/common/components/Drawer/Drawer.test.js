@@ -9,7 +9,7 @@ import { Drawer } from '.';
 
 const initialProps = {
   isOpen: false,
-  primaryItems: [
+  menuItems: [
     {
       visible: true,
       label: 'Dispositivos',
@@ -90,7 +90,7 @@ describe('DrawerComponent', () => {
     expect(container.querySelector('.MuiDrawer-root').outerHTML).toContain('drawerOpen');
   });
 
-  it('should be able to render menu items from primary and secondary items', () => {
+  it('should be able to render all menu items', () => {
     const history = createMemoryHistory();
 
     const { container } = render(
