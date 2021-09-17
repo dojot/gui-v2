@@ -3,6 +3,8 @@ import { initReactI18next } from 'react-i18next';
 
 import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.json';
 import dashboardPtBr from '../../views/dashboard/translations/pt_br.dashboard.i18n.json';
+import homeEn from '../../views/home/translations/en.home.i18n.json';
+import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
@@ -19,6 +21,7 @@ const resources = {
     common: commonEn,
     paginator: paginatorEn,
     dashboard: dashboardEn,
+    home: homeEn,
   },
   pt: {
     login: loginPtBr,
@@ -26,6 +29,7 @@ const resources = {
     common: commonPtBr,
     paginator: paginatorPtBr,
     dashboard: dashboardPtBr,
+    home: homePtBr,
   },
 };
 const lng = navigator.language || navigator.userLanguage;
