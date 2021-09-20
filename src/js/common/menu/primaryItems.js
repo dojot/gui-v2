@@ -10,7 +10,7 @@ import {
 
 export default [
   {
-    visible: false,
+    visible: true,
     i18n: 'devices',
     label: 'Dispositivos',
     path: '/devices',
