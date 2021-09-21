@@ -21,24 +21,28 @@ const mockColumns = [
 const mockRows = [
   {
     timestamp: '2020-08-10T17:46:26',
+    deviceLabel: 'Local',
     '5a709bletters': 'j',
     '5a709btemp': null,
     '4f0e72hum': '50',
   },
   {
     timestamp: '2020-08-10T17:46:11',
+    deviceLabel: 'Local',
     '5a709bletters': 'ç',
     '5a709btemp': '15',
     '4f0e72hum': '43',
   },
   {
     timestamp: '2020-08-10T17:45:56',
+    deviceLabel: 'Local',
     '5a709bletters': 'd',
     '5a709btemp': '17',
     '4f0e72hum': '40',
   },
   {
     timestamp: '2020-08-10T17:45:41',
+    deviceLabel: 'Local',
     '5a709bletters': 'Z',
     '5a709btemp': '21',
     '4f0e72hum': '39',
@@ -56,8 +60,8 @@ describe('Simple Table', () => {
     expect(wrapper.find(TableBody).find(TableRow)).toHaveLength(mockRows.length);
   });
 
-  it('should be able to display the header with 4 titles', () => {
-    expect(wrapper.find(TableHead).find(TableCell)).toHaveLength(mockColumns.length + 1);
+  it('should be able to display the header with 5 titles', () => {
+    expect(wrapper.find(TableHead).find(TableCell)).toHaveLength(mockColumns.length + 2);
   });
 
   it('should be able to display the value of row 1, column 4', () => {
@@ -70,16 +74,16 @@ describe('Simple Table', () => {
 
   it('should be able sorting to asc and desc order the timestamp column', () => {
     act(() => {
-      wrapper.find(TableHead).find(TableCell).at(0).find('button').simulate('click');
+      wrapper.find(TableHead).find(TableCell).at(4).find('button').simulate('click');
     });
     wrapper.update();
-    expect(wrapper.find(TableBody).find(TableCell).at(0).text()).toEqual('10/08/2020 17:45:41');
+    expect(wrapper.find(TableBody).find(TableCell).at(4).text()).toEqual('10/08/2020 17:45:41');
 
     act(() => {
-      wrapper.find(TableHead).find(TableCell).at(0).find('button').simulate('click');
+      wrapper.find(TableHead).find(TableCell).at(4).find('button').simulate('click');
     });
     wrapper.update();
-    expect(wrapper.find(TableBody).find(TableCell).at(0).text()).toEqual('10/08/2020 17:46:26');
+    expect(wrapper.find(TableBody).find(TableCell).at(4).text()).toEqual('10/08/2020 17:46:26');
   });
 
   it('should be able sorting to asc and desc order the string column', () => {

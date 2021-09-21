@@ -75,7 +75,7 @@ const Devices = ({ validate, ...otherProps }) => {
 
   return (
     <Wizard.Page validate={validate}>
-      <Grid container justify='center'>
+      <Grid container justify='center' style={{ display: 'block' }}>
         <Grid item className={classes.searchContainer}>
           <TextField
             variant='outlined'
@@ -115,7 +115,7 @@ const Devices = ({ validate, ...otherProps }) => {
                         name={`${otherProps.name}.chk-${id}`}
                         component={FormCheckBox}
                         format={item => (item ? item.id === id : false)}
-                        parse={item => (item ? value : null)}
+                        parse={item => (item ? value : undefined)}
                       />
                     </ListItemIcon>
                     <ListItemText id={labelId} primary={renderItem(label, id)} />

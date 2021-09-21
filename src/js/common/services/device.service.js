@@ -1,8 +1,8 @@
 import { protectAPI } from 'APIs';
 
 const GQL_WIDGET_HISTORIC = `
-query getDeviceHistory($filter: HistoryInput!) {
-  getDeviceHistoryForDashboard(filter: $filter)
+query getDeviceHistory($filter: HistoryInput!, $configs: ConfigsInput) {
+  getDeviceHistoryForDashboard(filter: $filter, configs: $configs)
 }
 `;
 
@@ -25,10 +25,10 @@ query getDevices($page: PageInput, $filter: FilterDeviceInput) {
 }
 `;
 
-export const parseHistoryQuery = filter => {
-  const { isRealTime, ...restFilter } = filter;
+export const parseHistoryQuery = (filter, configs, isRealTime) => {
   const variables = {
-    filter: restFilter,
+    filter,
+    configs,
   };
   return {
     query: GQL_WIDGET_HISTORIC,

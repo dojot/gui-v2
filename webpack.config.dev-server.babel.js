@@ -112,8 +112,9 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
       options: {
         sourceMap: true,
         importLoaders: 1,
-        modules: true,
-        localIdentName: '[local]',
+        modules: {
+          localIdentName: '[local]',
+        },
       },
     },
   ],

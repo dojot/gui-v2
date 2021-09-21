@@ -7,7 +7,6 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Tooltip from '@material-ui/core/Tooltip';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';
 import ArrowDropUpIcon from '@material-ui/icons/ArrowDropUp';
 import PropTypes from 'prop-types';
@@ -20,6 +19,23 @@ const Icn = ({ order, field, currentSortField }) => {
   if (currentSortField !== field) return null;
   if (order === -1) return <ArrowDropUpIcon fontSize='small' />;
   return <ArrowDropDownIcon fontSize='small' />;
+};
+
+const SortButton = ({ changeSorting, column, sortField }) => {
+  const { head } = useStyles();
+  const { dataKey, name } = column;
+  const { field, order } = sortField;
+  return (
+    <Button
+      color='inherit'
+      size='small'
+      classes={{ root: head }}
+      onClick={() => changeSorting(dataKey)}
+      endIcon={<Icn currentSortField={field} field={dataKey} order={order} />}
+    >
+      {name}
+    </Button>
+  );
 };
 
 const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
@@ -41,6 +57,9 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
   };
 
   const ValueFormatter = ({ row, column }) => {
+    if (typeof row[column.dataKey] === 'boolean') {
+      return row[column.dataKey].toString();
+    }
     if (!row[column.dataKey]) {
       return '-';
     }
@@ -62,53 +81,34 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
       <Table stickyHeader size='small' aria-label='customized table'>
         <TableHead key='theader'>
           <TableRow key='headerrow'>
+            <TableCell key='rank' classes={{ head }}>
+              <SortButton
+                changeSorting={changeSorting}
+                column={{ dataKey: 'deviceLabel', name: 'Nome' }}
+                sortField={sortField}
+              />
+            </TableCell>
             {withRank ? (
               <TableCell key='rank' classes={{ head }}>
                 #
               </TableCell>
             ) : null}
-            {hasTimestamp ? (
-              <TableCell key='timestamp' classes={{ head }}>
-                <Button
-                  color='inherit'
-                  size='small'
-                  classes={{ root: head }}
-                  onClick={() => changeSorting('ts')}
-                  endIcon={
-                    <Icn currentSortField={sortField.field} field='ts' order={sortField.order} />
-                  }
-                >
-                  Timestamp
-                </Button>
-              </TableCell>
-            ) : null}
             {columns.map(column => {
               return (
-                <Tooltip
-                  key={`t_${column.dataKey}`}
-                  title={column.dataKey.substr(0, 6)}
-                  placement='top'
-                >
-                  <TableCell key={column.dataKey} classes={{ head }} align='center'>
-                    <Button
-                      color='inherit'
-                      size='small'
-                      classes={{ root: head }}
-                      onClick={() => changeSorting(column.dataKey)}
-                      endIcon={
-                        <Icn
-                          currentSortField={sortField.field}
-                          field={column.dataKey}
-                          order={sortField.order}
-                        />
-                      }
-                    >
-                      {column.name}
-                    </Button>
-                  </TableCell>
-                </Tooltip>
+                <TableCell key={column.dataKey} classes={{ head }} align='center'>
+                  <SortButton changeSorting={changeSorting} column={column} sortField={sortField} />
+                </TableCell>
               );
             })}
+            {hasTimestamp ? (
+              <TableCell key='timestamp' classes={{ head }} align='right'>
+                <SortButton
+                  changeSorting={changeSorting}
+                  column={{ dataKey: 'ts', name: 'Atualizado às' }}
+                  sortField={sortField}
+                />
+              </TableCell>
+            ) : null}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -119,12 +119,9 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
                   <b> {index + 1}</b>
                 </TableCell>
               ) : null}
-
-              {hasTimestamp ? (
-                <TableCell key={`timestamp_${uuidv4()}`} classes={{ body: lines }}>
-                  {formatDate(row.timestamp, 'DD/MM/YYYY HH:mm:ss')}
-                </TableCell>
-              ) : null}
+              <TableCell key={`rank_${uuidv4()}`} classes={{ body: lines }} align='left'>
+                {row.deviceLabel}
+              </TableCell>
               {columns.map(column => {
                 return (
                   <TableCell
@@ -136,6 +133,11 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
                   </TableCell>
                 );
               })}
+              {hasTimestamp ? (
+                <TableCell key={`timestamp_${uuidv4()}`} classes={{ body: lines }} align='right'>
+                  {formatDate(row.timestamp, 'DD/MM/YYYY HH:mm:ss')}
+                </TableCell>
+              ) : null}
             </TableRow>
           ))}
         </TableBody>

@@ -7,7 +7,9 @@ schema {
 
 "Necessary data about and attribute of a device#"
 type Attr {
+  isDynamic: Boolean!
   label: String!
+  staticValue: String
   valueType: ValueType!
 }
 
@@ -22,7 +24,7 @@ type Attributes {
   metadata: [Metadata]
   "Value when type is Static"
   static_value: String
-  "Primary key of a template "
+  "Primary key of a template"
   template_id: String
   "Can be static, dynamic, etc."
   type: String
@@ -76,7 +78,7 @@ type Metadata {
   created: String
   "Metadata ID"
   id: Int
-  "Metadata Label "
+  "Metadata Label"
   label: String
   "Meta Value"
   static_value: String
@@ -98,12 +100,16 @@ type Query {
   getConfig(tenant: String!, user: String): String
   "Finds device information by id"
   getDeviceById(deviceId: String!): Device
-  "Returns historical data about devices' attributes chosen in the input"
-  getDeviceHistory(filter: HistoryInput!): [History]
   "Returns historical data in the format used by the Dashboard"
-  getDeviceHistoryForDashboard(filter: HistoryInput!): String
-  "Returns a list of devices that can be divided in pages, and the information about how many pages there are in total, along with which page is being shown"
-  getDevices(filter: FilterDeviceInput, page: PageInput): DeviceListPage
+  getDeviceHistoryForDashboard(configs: ConfigsInput, filter: HistoryInput!): String
+  """
+
+  Returns a list of devices that can be divided in pages, and the information about how many pages there are in total, along with which page is being shown.
+  @param sortBy: set sortBy to ordenate list (default 'label')
+  """
+  getDevices(filter: FilterDeviceInput, page: PageInput, sortBy: String): DeviceListPage
+  "Returns a list of templates"
+  getTemplates(page: PageInput): TemplatesListPage
   "Get a template by Id"
   template(id: Int!): Template
   """
@@ -131,6 +137,18 @@ type Template {
   label: String!
 }
 
+type TemplateList {
+  attrs: [Attr]
+  id: String!
+  label: String!
+}
+
+type TemplatesListPage {
+  currentPage: Int!
+  templates: [TemplateList]
+  totalPages: Int!
+}
+
 "Value types used by the platform#"
 enum ValueType {
   BOOLEAN
@@ -145,6 +163,13 @@ input ConfigInput {
   config: String!
 }
 
+input ConfigsInput {
+  "operationType corresponds to 0 (the last N histories, Number of most current values), 1 (minutes, the last N minutes), 2 (hours, the last N hours), 3 (days, the last N days), 4 (months, the last N months), 7 (to get devices by template)"
+  operationType: Int
+  "corresponds to 0 (DEVICE) and 1 (TEMPLATE)"
+  sourceType: Int
+}
+
 "Return only devices that are named accordingly (prefix or suffix match)#"
 input FilterDeviceInput {
   label: String
@@ -152,29 +177,32 @@ input FilterDeviceInput {
 
 "Parameters to identify from which device and which attributes to retrieve historical data from#"
 input HistoryDeviceInput {
-  "attributes which readings are to be retrieved#"
-  attrs: [String]
   "device selected#"
   deviceID: String!
+  "attributes which readings are to be retrieved#"
+  dynamicAttrs: [String]
+  staticAttrs: [String]
 }
 
-"""
-
-Parameters to query historical device data#
-operationType: 0 => get last N records#
-operationType: 1 => get last minutes#
-operationType: 2 => get last hours#
-operationType: 3 => get last days#
-operationType: 4 => get last months#
-lastN will be used to obtain the values of minutes, hours, days and months when the operationType is non-zero#
-"""
+"Parameters to query historical device data#"
 input HistoryInput {
   dateFrom: String
   dateTo: String
   "list of devices which attributes will be retrieved#"
   devices: [HistoryDeviceInput]!
+  "lastN will be used to obtain the values from the lastN of most current values, minutes, hours, days and months according to option operationType"
   lastN: Int
-  operationType: Int
+  templates: [HistoryTemplateInput]
+}
+
+"Parameters to identify from which template and which attributes to retrieve historical data from#"
+input HistoryTemplateInput {
+  "attributes which readings are to be retrieved#"
+  dynamicAttrs: [String]
+  "static attributes which readings are to be retrieved#"
+  staticAttrs: [String]
+  "template selected#"
+  templateID: String!
 }
 
 "Determines which page to show and how many items#"
