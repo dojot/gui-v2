@@ -13,7 +13,7 @@ const SearchBar = ({ viewMode, handleChangeViewMode }) => {
   const classes = useStyles();
 
   return (
-    <Box className={classes.container} paddingY={1} paddingX={2} margin={0}>
+    <Box className={classes.searchContainer} paddingY={1} paddingX={2} margin={0}>
       <div className={classes.leftSide}>
         <IconButton
           color={viewMode === VIEW_MODE.TABLE ? 'primary' : 'default'}

@@ -1,4 +1,16 @@
 {
   "title": "Dispositivos",
-  "searchInputPh": "Pesquisar Dispositivo"
+  "searchInputPh": "Pesquisar Dispositivo",
+  "totalOfDevices": "Total de Itens: {{count}}",
+  "hasCertificateTooltip": "Possui Certificado",
+  "noCertificateTooltip": "Nenhum Certificado Associado",
+  "favoriteTooltip": "Favoritar Dispositivo",
+  "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
+  "labelRowsPerPage": "Itens por página:",
+  "detailsModalTitle": "Detalhamento do Dispositivo ({{name}})",
+  "lastUpdate": {
+    "date": "Data",
+    "key": "Key",
+    "value": "Value"
+  }
 }
