@@ -27,6 +27,7 @@ const theme = createMuiTheme({
     table: {
       head: '#FFFFFF',
     },
+    favorite: '#F1B44C',
   },
 
   overrides: {

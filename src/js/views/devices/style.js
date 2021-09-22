@@ -15,7 +15,7 @@ export default makeStyles(theme => ({
   },
   searchTextField: {
     marginLeft: theme.spacing(1),
-    maxWidth: '400px',
+    width: '400px',
   },
   searchInput: {
     borderRadius: '100px',
