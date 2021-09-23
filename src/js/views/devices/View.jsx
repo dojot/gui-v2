@@ -14,15 +14,63 @@ import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 import useStyles from './style';
 
+const FAKE_DEVICES = [
+  {
+    id: '1',
+    name: 'Dispositivo 1',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrs: [{}, {}],
+    certificate: {},
+    favorite: true,
+  },
+  {
+    id: '2',
+    name: 'Dispositivo 2',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrs: [{}, {}],
+    certificate: {},
+  },
+  {
+    id: '3',
+    name: 'Dispositivo 3',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrs: [{}, {}],
+    certificate: {},
+    favorite: true,
+  },
+  {
+    id: '4',
+    name: 'Dispositivo 4',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrs: [{}, {}],
+    certificate: {},
+    favorite: true,
+  },
+  {
+    id: '5',
+    name: 'Dispositivo 5',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrs: [{}, {}],
+    certificate: {},
+  },
+  {
+    id: '6',
+    name: 'Dispositivo 6',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrs: [{}, {}],
+    certificate: {},
+  },
+];
+
 const Devices = () => {
   const { t } = useTranslation('devices');
   const history = useHistory();
   const classes = useStyles();
 
-  const [devices] = useState([1, 2, 3, 4, 5, 6]);
+  const [devices] = useState(FAKE_DEVICES);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [viewMode, setViewMode] = useState(VIEW_MODE.CARD);
+  const [viewMode, setViewMode] = useState(VIEW_MODE.TABLE);
   const [clickedDevice, setClickedDevice] = useState(null);
   const [selectedDevices, setSelectedDevices] = useState([]);
   const [isShowingMassActions, setIsShowingMassActions] = useState(false);
@@ -52,19 +100,15 @@ const Devices = () => {
     console.log('Delete All');
   };
 
-  const handleSelectDevice = device => {
-    setSelectedDevices(currentSelectedDevices => {
-      const selectedDevicesClone = [...currentSelectedDevices, device];
-      const selectedDevicesSet = new Set(selectedDevicesClone);
-      return Array.from(selectedDevicesSet);
-    });
+  const handleFavoriteDevice = () => {
+    console.log('Favorite Device');
   };
 
   return (
     <ViewContainer headerTitle={t('devices:title')}>
       <DeviceDetailsModal
         isOpen={!!clickedDevice}
-        deviceDetails={clickedDevice}
+        deviceDetails={clickedDevice || {}}
         handleHideDetailsModal={handleHideDetailsModal}
       />
 
@@ -82,12 +126,21 @@ const Devices = () => {
         <Box className={classes.content}>
           {viewMode === VIEW_MODE.TABLE ? (
             <DataTable
+              page={page}
               devices={devices}
+              rowsPerPage={rowsPerPage}
+              selectedDevices={selectedDevices}
               handleClickDevice={setClickedDevice}
-              handleSelectDevice={handleSelectDevice}
+              handleSelectDevice={setSelectedDevices}
+              handleFavoriteDevice={handleFavoriteDevice}
             />
           ) : (
-            <Cards devices={devices} handleClickDevice={setClickedDevice} />
+            <Cards
+              page={page}
+              devices={devices}
+              rowsPerPage={rowsPerPage}
+              handleClickDevice={setClickedDevice}
+            />
           )}
         </Box>
 

@@ -41,7 +41,7 @@ const DeviceDetailsModal = ({ isOpen, deviceDetails, handleHideDetailsModal }) =
   return (
     <Dialog open={isOpen} onClose={handleHideDetailsModal} maxWidth='lg' fullWidth>
       <Box className={classes.detailsModalTitle} padding={2}>
-        <Typography variant='h6'>{t('detailsModalTitle', { name: deviceDetails })}</Typography>
+        <Typography variant='h6'>{t('detailsModalTitle', { name: deviceDetails.name })}</Typography>
         <IconButton onClick={handleHideDetailsModal} size='small'>
           <Close />
         </IconButton>
@@ -128,7 +128,7 @@ DeviceDetailsModal.propTypes = {
 
 DeviceDetailsModal.defaultProps = {
   isOpen: false,
-  deviceDetails: null,
+  deviceDetails: {},
   handleHideDetailsModal: null,
 };
 

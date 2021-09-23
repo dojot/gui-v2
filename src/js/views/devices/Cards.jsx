@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 
 import { Box, Grid, IconButton, Menu, MenuItem, Tooltip, Typography } from '@material-ui/core';
-import { Check, Close, Delete, DevicesOther, Edit, Star } from '@material-ui/icons';
+import {
+  Check,
+  Close,
+  Delete,
+  DevicesOther,
+  Edit,
+  Star,
+  StarBorderOutlined,
+} from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -47,7 +55,7 @@ const Cards = ({ devices, handleClickDevice }) => {
 
       <Grid spacing={2} container>
         {devices.map(device => {
-          const hasCertificate = device % 2 === 0;
+          const hasCertificate = !!device.certificate;
 
           const handleSeeDeviceDetails = () => {
             handleClickDevice(device);
@@ -66,18 +74,26 @@ const Cards = ({ devices, handleClickDevice }) => {
           };
 
           return (
-            <Grid key={device} xs={12} sm={6} md={4} xl={3} item>
+            <Grid key={device.id} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
                 className={classes.deviceCard}
-                headerTitle='Device Name'
+                headerTitle={device.name}
                 headerIcon={<DevicesOther />}
                 onClick={handleSeeDeviceDetails}
                 onOptionsClick={handleShowOptionsMenu}
                 footer={
                   <>
-                    <Tooltip title={t('favoriteTooltip')} placement='top' arrow>
+                    <Tooltip
+                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                      placement='top'
+                      arrow
+                    >
                       <IconButton onClick={handleFavoriteDevice} size='small'>
-                        <Star style={{ color: '#F1B44C' }} />
+                        {device.favorite ? (
+                          <Star style={{ color: '#F1B44C' }} />
+                        ) : (
+                          <StarBorderOutlined />
+                        )}
                       </IconButton>
                     </Tooltip>
 
@@ -96,13 +112,13 @@ const Cards = ({ devices, handleClickDevice }) => {
                 }
               >
                 <Box marginBottom={1}>
-                  <Typography variant='body2'>5</Typography>
-                  <Typography variant='body2'>Certificados</Typography>
+                  <Typography variant='body2'>{device.attrs?.length || 0}</Typography>
+                  <Typography variant='body2'>{t('cardData.properties')}</Typography>
                 </Box>
 
                 <Box>
-                  <Typography variant='body2'>02/03/2021</Typography>
-                  <Typography variant='body2'>Última Atualização</Typography>
+                  <Typography variant='body2'>{device.lastUpdate}</Typography>
+                  <Typography variant='body2'>{t('cardData.lastUpdate')}</Typography>
                 </Box>
               </DataCard>
             </Grid>

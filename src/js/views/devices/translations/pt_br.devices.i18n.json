@@ -5,16 +5,30 @@
   "hasCertificateTooltip": "Possui Certificado",
   "noCertificateTooltip": "Nenhum Certificado Associado",
   "favoriteTooltip": "Favoritar Dispositivo",
+  "removeFromFavoriteTooltip": "Remover dos Favoritos",
   "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
   "labelRowsPerPage": "Itens por página:",
   "detailsModalTitle": "Detalhamento do Dispositivo ({{name}})",
   "massActions": "Ações em massa:",
   "createCertificates": "Criar certificados",
-  "numberOfSelectedDevices": "{{count}} Linhas Selecionadas",
+  "numberOfSelectedDevices": "{{count}} Linha Selecionada",
+  "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
   "delete": "Excluir",
   "lastUpdate": {
     "date": "Data",
     "key": "Key",
     "value": "Value"
+  },
+  "dataTableHead": {
+    "id": "ID",
+    "name": "Nome",
+    "numberOfProperties": "Nº de Propriedades",
+    "lastUpdate": "Última Atualização",
+    "certificate": "Tem Certificado",
+    "actions": "Ações"
+  },
+  "cardData": {
+    "properties": "Propriedades",
+    "lastUpdate": "Última Atualização"
   }
 }

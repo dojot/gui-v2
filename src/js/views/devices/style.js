@@ -93,4 +93,11 @@ export default makeStyles(theme => ({
   massActionsCloseButton: {
     color: theme.palette.background.default,
   },
+
+  tableHead: {
+    background: theme.palette.background.devices,
+  },
+  clickableCell: {
+    cursor: 'pointer',
+  },
 }));
