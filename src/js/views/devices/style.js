@@ -79,4 +79,18 @@ export default makeStyles(theme => ({
   tableCellSecondary: {
     color: theme.palette.text.secondary,
   },
+
+  massActionsContainer: {
+    background: theme.palette.primary.main,
+  },
+  massActionsLabel: {
+    color: theme.palette.background.default,
+  },
+  massActionsButton: {
+    color: theme.palette.text.primary,
+    background: theme.palette.background.default,
+  },
+  massActionsCloseButton: {
+    color: theme.palette.background.default,
+  },
 }));

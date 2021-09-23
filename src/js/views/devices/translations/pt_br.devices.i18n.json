@@ -8,6 +8,9 @@
   "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
   "labelRowsPerPage": "Itens por página:",
   "detailsModalTitle": "Detalhamento do Dispositivo ({{name}})",
+  "massActions": "Ações em massa:",
+  "createCertificates": "Criar certificados",
+  "delete": "Excluir",
   "lastUpdate": {
     "date": "Data",
     "key": "Key",
