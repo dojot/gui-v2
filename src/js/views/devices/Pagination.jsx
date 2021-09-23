@@ -11,6 +11,7 @@ const Pagination = ({
   rowsPerPage,
   totalOfDevices,
   handleChangePage,
+  numberOfSelectedDevices,
   handleChangeRowsPerPage,
 }) => {
   const { t } = useTranslation('devices');
@@ -19,6 +20,10 @@ const Pagination = ({
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
       <Typography>{t('totalOfDevices', { count: totalOfDevices })}</Typography>
+
+      {!!numberOfSelectedDevices && (
+        <Typography>{t('numberOfSelectedDevices', { count: numberOfSelectedDevices })}</Typography>
+      )}
 
       <TablePagination
         page={page}
@@ -41,6 +46,7 @@ Pagination.propTypes = {
   rowsPerPage: PropTypes.number,
   totalOfDevices: PropTypes.number,
   handleChangePage: PropTypes.func,
+  numberOfSelectedDevices: PropTypes.number,
   handleChangeRowsPerPage: PropTypes.func,
 };
 
@@ -49,6 +55,7 @@ Pagination.defaultProps = {
   rowsPerPage: 0,
   totalOfDevices: 0,
   handleChangePage: null,
+  numberOfSelectedDevices: 0,
   handleChangeRowsPerPage: null,
 };
 

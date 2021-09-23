@@ -10,6 +10,7 @@
   "detailsModalTitle": "Detalhamento do Dispositivo ({{name}})",
   "massActions": "Ações em massa:",
   "createCertificates": "Criar certificados",
+  "numberOfSelectedDevices": "{{count}} Linhas Selecionadas",
   "delete": "Excluir",
   "lastUpdate": {
     "date": "Data",

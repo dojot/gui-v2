@@ -23,7 +23,8 @@ const Devices = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [viewMode, setViewMode] = useState(VIEW_MODE.CARD);
-  const [selectedDevice, setSelectedDevice] = useState(null);
+  const [clickedDevice, setClickedDevice] = useState(null);
+  const [selectedDevices, setSelectedDevices] = useState([]);
   const [isShowingMassActions, setIsShowingMassActions] = useState(false);
 
   const handleChangePage = (_, newPage) => {
@@ -36,7 +37,7 @@ const Devices = () => {
   };
 
   const handleHideDetailsModal = () => {
-    setSelectedDevice(null);
+    setClickedDevice(null);
   };
 
   const handleHideMassActions = () => {
@@ -51,11 +52,19 @@ const Devices = () => {
     console.log('Delete All');
   };
 
+  const handleSelectDevice = device => {
+    setSelectedDevices(currentSelectedDevices => {
+      const selectedDevicesClone = [...currentSelectedDevices, device];
+      const selectedDevicesSet = new Set(selectedDevicesClone);
+      return Array.from(selectedDevicesSet);
+    });
+  };
+
   return (
     <ViewContainer headerTitle={t('devices:title')}>
       <DeviceDetailsModal
-        isOpen={!!selectedDevice}
-        deviceDetails={selectedDevice}
+        isOpen={!!clickedDevice}
+        deviceDetails={clickedDevice}
         handleHideDetailsModal={handleHideDetailsModal}
       />
 
@@ -72,9 +81,13 @@ const Devices = () => {
 
         <Box className={classes.content}>
           {viewMode === VIEW_MODE.TABLE ? (
-            <DataTable devices={devices} handleSelectDevice={setSelectedDevice} />
+            <DataTable
+              devices={devices}
+              handleClickDevice={setClickedDevice}
+              handleSelectDevice={handleSelectDevice}
+            />
           ) : (
-            <Cards devices={devices} handleSelectDevice={setSelectedDevice} />
+            <Cards devices={devices} handleClickDevice={setClickedDevice} />
           )}
         </Box>
 
@@ -82,6 +95,7 @@ const Devices = () => {
           page={page}
           rowsPerPage={rowsPerPage}
           totalOfDevices={devices.length}
+          numberOfSelectedDevices={selectedDevices.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
         />

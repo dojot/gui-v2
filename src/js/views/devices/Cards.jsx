@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import DataCard from '../../common/components/Cards/DataCard';
 import useStyles from './style';
 
-const Cards = ({ devices, handleSelectDevice }) => {
+const Cards = ({ devices, handleClickDevice }) => {
   const { t } = useTranslation(['devices', 'common']);
   const classes = useStyles();
 
@@ -50,7 +50,7 @@ const Cards = ({ devices, handleSelectDevice }) => {
           const hasCertificate = device % 2 === 0;
 
           const handleSeeDeviceDetails = () => {
-            handleSelectDevice(device);
+            handleClickDevice(device);
           };
 
           const handleFavoriteDevice = e => {
@@ -115,12 +115,12 @@ const Cards = ({ devices, handleSelectDevice }) => {
 
 Cards.propTypes = {
   devices: PropTypes.array,
-  handleSelectDevice: PropTypes.func,
+  handleClickDevice: PropTypes.func,
 };
 
 Cards.defaultProps = {
   devices: [],
-  handleSelectDevice: null,
+  handleClickDevice: null,
 };
 
 export default Cards;
