@@ -4,9 +4,9 @@ import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
+import { VIEW_MODE } from '../../common/constants';
 import { ViewContainer } from '../stateComponents';
 import Cards from './Cards';
-import { VIEW_MODE } from './constants';
 import DataTable from './DataTable';
 import DeviceDetailsModal from './DeviceDetailsModal';
 import MassActions from './MassActions';

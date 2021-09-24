@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
-import { VIEW_MODE } from './constants';
+import { VIEW_MODE } from '../../common/constants';
 import useStyles from './style';
 
 const SearchBar = ({ viewMode, handleChangeViewMode }) => {

@@ -15,20 +15,21 @@ import { Check, Close, MoreHoriz, Star, StarBorderOutlined } from '@material-ui/
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { DATA_ORDER } from '../../common/constants';
 import DataTableHead from './DataTableHead';
 import useStyles from './style';
 
-function descendingComparator(a, b, orderBy) {
+const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) return -1;
   if (b[orderBy] > a[orderBy]) return 1;
   return 0;
-}
+};
 
-function getComparator(order, orderBy) {
-  return order === 'desc'
+const getComparator = (order, orderBy) => {
+  return order === DATA_ORDER.DESC
     ? (a, b) => descendingComparator(a, b, orderBy)
     : (a, b) => -descendingComparator(a, b, orderBy);
-}
+};
 
 const DataTable = ({
   page,
@@ -42,8 +43,8 @@ const DataTable = ({
   const { t } = useTranslation('devices');
   const classes = useStyles();
 
-  const [order, setOrder] = useState('asc');
-  const [orderBy, setOrderBy] = useState('calories');
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
+  const [orderBy, setOrderBy] = useState('');
 
   const headCells = useMemo(
     () => [
@@ -77,8 +78,8 @@ const DataTable = ({
   );
 
   const handleRequestSort = (_, property) => {
-    const isAsc = orderBy === property && order === 'asc';
-    setOrder(isAsc ? 'desc' : 'asc');
+    const isAsc = orderBy === property && order === DATA_ORDER.ASC;
+    setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
     setOrderBy(property);
   };
 
@@ -129,9 +130,8 @@ const DataTable = ({
 
           <TableBody>
             {devices
-              .slice()
-              .sort(getComparator(order, orderBy))
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .sort(getComparator(order, orderBy))
               .map(device => {
                 const isSelected = selectedDevices.indexOf(device.id) !== -1;
 
@@ -200,7 +200,11 @@ const DataTable = ({
                         placement='right'
                         arrow
                       >
-                        {device.hasCertificate ? <Check /> : <Close />}
+                        {device.hasCertificate ? (
+                          <Check color='primary' />
+                        ) : (
+                          <Close color='error' />
+                        )}
                       </Tooltip>
                     </TableCell>
 
