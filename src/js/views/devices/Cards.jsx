@@ -55,8 +55,6 @@ const Cards = ({ devices, handleClickDevice }) => {
 
       <Grid spacing={2} container>
         {devices.map(device => {
-          const hasCertificate = !!device.certificate;
-
           const handleSeeDeviceDetails = () => {
             handleClickDevice(device);
           };
@@ -98,13 +96,19 @@ const Cards = ({ devices, handleClickDevice }) => {
                     </Tooltip>
 
                     <Tooltip
-                      title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
+                      title={t(
+                        device.hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip',
+                      )}
                       placement='right'
                       arrow
                     >
                       <div>
                         <IconButton size='small' disabled>
-                          {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
+                          {device.hasCertificate ? (
+                            <Check color='primary' />
+                          ) : (
+                            <Close color='error' />
+                          )}
                         </IconButton>
                       </div>
                     </Tooltip>
@@ -112,7 +116,7 @@ const Cards = ({ devices, handleClickDevice }) => {
                 }
               >
                 <Box marginBottom={1}>
-                  <Typography variant='body2'>{device.attrs?.length || 0}</Typography>
+                  <Typography variant='body2'>{device.attrsLength}</Typography>
                   <Typography variant='body2'>{t('cardData.properties')}</Typography>
                 </Box>
 

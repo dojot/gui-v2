@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, Box, Typography, Button, IconButton } from '@material-ui/core';
-import { VerifiedUser, Close, Delete } from '@material-ui/icons';
+import { VerifiedUser, Close, Delete, Star } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -11,8 +11,9 @@ const MassActions = ({
   handleHideMassActions,
   handleDeleteAllDevices,
   handleCreateCertificates,
+  handleFavoriteAllDevices,
 }) => {
-  const { t } = useTranslation('devices');
+  const { t } = useTranslation(['devices', 'common']);
   const classes = useStyles();
 
   return (
@@ -20,6 +21,17 @@ const MassActions = ({
       <Grid container spacing={2} alignItems='center'>
         <Grid item xs='auto'>
           <Typography className={classes.massActionsLabel}>{t('massActions')}</Typography>
+        </Grid>
+
+        <Grid item xs='auto'>
+          <Button
+            className={classes.massActionsButton}
+            onClick={handleFavoriteAllDevices}
+            startIcon={<Star />}
+            variant='contained'
+          >
+            {t('favorite')}
+          </Button>
         </Grid>
 
         <Grid item xs='auto'>
@@ -40,7 +52,7 @@ const MassActions = ({
             startIcon={<Delete />}
             variant='contained'
           >
-            {t('delete')}
+            {t('common:exclude')}
           </Button>
         </Grid>
 
@@ -62,12 +74,14 @@ MassActions.propTypes = {
   handleHideMassActions: PropTypes.func,
   handleDeleteAllDevices: PropTypes.func,
   handleCreateCertificates: PropTypes.func,
+  handleFavoriteAllDevices: PropTypes.func,
 };
 
 MassActions.defaultProps = {
   handleHideMassActions: null,
   handleDeleteAllDevices: null,
   handleCreateCertificates: null,
+  handleFavoriteAllDevices: null,
 };
 
 export default MassActions;

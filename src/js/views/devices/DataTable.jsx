@@ -56,20 +56,21 @@ const DataTable = ({
         label: t('dataTableHead.name'),
       },
       {
-        id: 'numberOfProperties',
-        label: t('dataTableHead.numberOfProperties'),
+        id: 'attrsLength',
+        label: t('dataTableHead.attrsLength'),
       },
       {
         id: 'lastUpdate',
         label: t('dataTableHead.lastUpdate'),
       },
       {
-        id: 'certificate',
-        label: t('dataTableHead.certificate'),
+        id: 'hasCertificate',
+        label: t('dataTableHead.hasCertificate'),
       },
       {
         id: 'actions',
         label: t('dataTableHead.actions'),
+        disableOrderBy: true,
       },
     ],
     [t],
@@ -133,7 +134,6 @@ const DataTable = ({
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .map(device => {
                 const isSelected = selectedDevices.indexOf(device.id) !== -1;
-                const hasCertificate = !!device.certificate;
 
                 const handleClickInThisDevice = () => {
                   handleClickDevice(device);
@@ -189,16 +189,18 @@ const DataTable = ({
 
                     <TableCell className={classes.clickableCell}>{device.id}</TableCell>
                     <TableCell className={classes.clickableCell}>{device.name}</TableCell>
-                    <TableCell className={classes.clickableCell}>{device.attrs?.length}</TableCell>
+                    <TableCell className={classes.clickableCell}>{device.attrsLength}</TableCell>
                     <TableCell className={classes.clickableCell}>{device.lastUpdate}</TableCell>
 
-                    <TableCell>
+                    <TableCell className={classes.clickableCell}>
                       <Tooltip
-                        title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
+                        title={t(
+                          device.hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip',
+                        )}
                         placement='right'
                         arrow
                       >
-                        {hasCertificate ? <Check /> : <Close />}
+                        {device.hasCertificate ? <Check /> : <Close />}
                       </Tooltip>
                     </TableCell>
 

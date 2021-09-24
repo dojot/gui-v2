@@ -19,46 +19,46 @@ const FAKE_DEVICES = [
     id: '1',
     name: 'Dispositivo 1',
     lastUpdate: '02/03/2020 15:33:33',
-    attrs: [{}, {}],
-    certificate: {},
+    attrsLength: 1,
+    hasCertificate: true,
     favorite: true,
   },
   {
     id: '2',
     name: 'Dispositivo 2',
     lastUpdate: '02/03/2020 15:33:33',
-    attrs: [{}, {}],
-    certificate: {},
+    attrsLength: 2,
+    hasCertificate: false,
   },
   {
     id: '3',
     name: 'Dispositivo 3',
     lastUpdate: '02/03/2020 15:33:33',
-    attrs: [{}, {}],
-    certificate: {},
+    attrsLength: 3,
+    hasCertificate: true,
     favorite: true,
   },
   {
     id: '4',
     name: 'Dispositivo 4',
     lastUpdate: '02/03/2020 15:33:33',
-    attrs: [{}, {}],
-    certificate: {},
+    attrsLength: 4,
+    hasCertificate: false,
     favorite: true,
   },
   {
     id: '5',
     name: 'Dispositivo 5',
     lastUpdate: '02/03/2020 15:33:33',
-    attrs: [{}, {}],
-    certificate: {},
+    attrsLength: 5,
+    hasCertificate: true,
   },
   {
     id: '6',
     name: 'Dispositivo 6',
     lastUpdate: '02/03/2020 15:33:33',
-    attrs: [{}, {}],
-    certificate: {},
+    attrsLength: 6,
+    hasCertificate: true,
   },
 ];
 
@@ -67,13 +67,12 @@ const Devices = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const [devices] = useState(FAKE_DEVICES);
   const [page, setPage] = useState(0);
+  const [devices] = useState(FAKE_DEVICES);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [viewMode, setViewMode] = useState(VIEW_MODE.TABLE);
   const [clickedDevice, setClickedDevice] = useState(null);
+  const [viewMode, setViewMode] = useState(VIEW_MODE.TABLE);
   const [selectedDevices, setSelectedDevices] = useState([]);
-  const [isShowingMassActions, setIsShowingMassActions] = useState(false);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -89,7 +88,7 @@ const Devices = () => {
   };
 
   const handleHideMassActions = () => {
-    setIsShowingMassActions(false);
+    setSelectedDevices([]);
   };
 
   const handleCreateCertificates = () => {
@@ -104,6 +103,10 @@ const Devices = () => {
     console.log('Favorite Device');
   };
 
+  const handleFavoriteAllDevices = () => {
+    console.log('Favorite Device');
+  };
+
   return (
     <ViewContainer headerTitle={t('devices:title')}>
       <DeviceDetailsModal
@@ -115,11 +118,12 @@ const Devices = () => {
       <Box className={classes.container}>
         <SearchBar handleChangeViewMode={setViewMode} viewMode={viewMode} />
 
-        {isShowingMassActions && (
+        {selectedDevices.length > 0 && (
           <MassActions
             handleHideMassActions={handleHideMassActions}
             handleDeleteAllDevices={handleDeleteAllDevices}
             handleCreateCertificates={handleCreateCertificates}
+            handleFavoriteAllDevices={handleFavoriteAllDevices}
           />
         )}
 

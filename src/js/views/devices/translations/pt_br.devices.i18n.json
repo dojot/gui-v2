@@ -11,9 +11,9 @@
   "detailsModalTitle": "Detalhamento do Dispositivo ({{name}})",
   "massActions": "Ações em massa:",
   "createCertificates": "Criar certificados",
+  "favorite": "Adicionar aos Favoritos",
   "numberOfSelectedDevices": "{{count}} Linha Selecionada",
   "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
-  "delete": "Excluir",
   "lastUpdate": {
     "date": "Data",
     "key": "Key",
@@ -22,9 +22,9 @@
   "dataTableHead": {
     "id": "ID",
     "name": "Nome",
-    "numberOfProperties": "Nº de Propriedades",
+    "attrsLength": "Nº de Propriedades",
     "lastUpdate": "Última Atualização",
-    "certificate": "Tem Certificado",
+    "hasCertificate": "Tem Certificado",
     "actions": "Ações"
   },
   "cardData": {

@@ -42,6 +42,8 @@ const DataTableHead = ({
             >
               <TableSortLabel
                 active={isOrderingByThisCell}
+                disabled={headCell.disableOrderBy}
+                hideSortIcon={headCell.disableOrderBy}
                 onClick={createSortHandler(headCell.id)}
                 direction={isOrderingByThisCell ? order : 'asc'}
               >
@@ -62,6 +64,7 @@ DataTableHead.propTypes = {
       id: PropTypes.string,
       label: PropTypes.string,
       align: PropTypes.oneOf(['left', 'center', 'right', 'justify', 'inherit']),
+      disableOrderBy: PropTypes.bool,
     }),
   ).isRequired,
   numSelected: PropTypes.number.isRequired,
