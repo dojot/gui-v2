@@ -10,6 +10,7 @@ import Cards from './Cards';
 import DataTable from './DataTable';
 import DeviceDetailsModal from './DeviceDetailsModal';
 import DeviceOptionsMenu from './DeviceOptionsMenu';
+import EmptyDeviceList from './EmptyDeviceList';
 import MassActions from './MassActions';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
@@ -187,7 +188,7 @@ const Devices = () => {
         )}
 
         <Box className={classes.content}>
-          {viewMode === VIEW_MODE.TABLE ? (
+          {viewMode === VIEW_MODE.TABLE && devices.length > 0 && (
             <DataTable
               page={page}
               devices={devices}
@@ -198,7 +199,9 @@ const Devices = () => {
               handleFavoriteDevice={handleFavoriteDevice}
               handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
             />
-          ) : (
+          )}
+
+          {viewMode === VIEW_MODE.CARD && devices.length > 0 && (
             <Cards
               page={page}
               devices={devices}
@@ -207,6 +210,8 @@ const Devices = () => {
               handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
             />
           )}
+
+          {devices.length === 0 && <EmptyDeviceList />}
         </Box>
 
         <Pagination

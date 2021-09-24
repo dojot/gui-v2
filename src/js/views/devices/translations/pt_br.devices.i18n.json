@@ -14,6 +14,8 @@
   "favorite": "Adicionar aos Favoritos",
   "numberOfSelectedDevices": "{{count}} Linha Selecionada",
   "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
+  "emptyListMessage": "Nenhum Dispositivo Encontrado",
+  "createNewDevice": "Criar Novo Dispositivo",
   "lastUpdate": {
     "date": "Data",
     "key": "Key",
