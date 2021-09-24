@@ -4,7 +4,7 @@
   "totalOfDevices": "Total de Itens: {{count}}",
   "hasCertificateTooltip": "Possui Certificado",
   "noCertificateTooltip": "Nenhum Certificado Associado",
-  "favoriteTooltip": "Favoritar Dispositivo",
+  "favoriteTooltip": "Adicionar aos Favoritos",
   "removeFromFavoriteTooltip": "Remover dos Favoritos",
   "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
   "labelRowsPerPage": "Itens por página:",

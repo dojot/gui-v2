@@ -30,8 +30,8 @@ const Pagination = ({
         component='div'
         count={totalOfDevices}
         rowsPerPage={rowsPerPage}
-        onPageChange={handleChangePage}
-        onRowsPerPageChange={handleChangeRowsPerPage}
+        onChangePage={handleChangePage}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
         labelRowsPerPage={t('labelRowsPerPage')}
         labelDisplayedRows={({ from, to, count }) => {
           return t('labelDisplayedRows', { from, to, count });

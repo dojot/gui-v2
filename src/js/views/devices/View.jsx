@@ -60,6 +60,41 @@ const FAKE_DEVICES = [
     attrsLength: 6,
     hasCertificate: true,
   },
+  {
+    id: '7',
+    name: 'Dispositivo 7',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrsLength: 7,
+    hasCertificate: true,
+  },
+  {
+    id: '8',
+    name: 'Dispositivo 8',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrsLength: 8,
+    hasCertificate: true,
+  },
+  {
+    id: '9',
+    name: 'Dispositivo 9',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrsLength: 9,
+    hasCertificate: true,
+  },
+  {
+    id: '10',
+    name: 'Dispositivo 10',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrsLength: 10,
+    hasCertificate: true,
+  },
+  {
+    id: '11',
+    name: 'Dispositivo 11',
+    lastUpdate: '02/03/2020 15:33:33',
+    attrsLength: 11,
+    hasCertificate: true,
+  },
 ];
 
 const Devices = () => {
