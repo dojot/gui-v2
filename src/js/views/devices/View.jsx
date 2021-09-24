@@ -9,6 +9,7 @@ import { ViewContainer } from '../stateComponents';
 import Cards from './Cards';
 import DataTable from './DataTable';
 import DeviceDetailsModal from './DeviceDetailsModal';
+import DeviceOptionsMenu from './DeviceOptionsMenu';
 import MassActions from './MassActions';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
@@ -108,6 +109,7 @@ const Devices = () => {
   const [clickedDevice, setClickedDevice] = useState(null);
   const [viewMode, setViewMode] = useState(VIEW_MODE.TABLE);
   const [selectedDevices, setSelectedDevices] = useState([]);
+  const [deviceOptionsMenu, setDeviceOptionsMenu] = useState(null);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -126,6 +128,10 @@ const Devices = () => {
     setSelectedDevices([]);
   };
 
+  const handleFavoriteAllDevices = () => {
+    console.log('Favorite All Devices');
+  };
+
   const handleCreateCertificates = () => {
     history.push('/certificates');
   };
@@ -138,8 +144,18 @@ const Devices = () => {
     console.log('Favorite Device');
   };
 
-  const handleFavoriteAllDevices = () => {
-    console.log('Favorite Device');
+  const handleHideOptionsMenu = () => {
+    setDeviceOptionsMenu(null);
+  };
+
+  const handleEditDevice = () => {
+    console.log(deviceOptionsMenu.device);
+    handleHideOptionsMenu();
+  };
+
+  const handleDeleteDevice = () => {
+    console.log(deviceOptionsMenu.device);
+    handleHideOptionsMenu();
   };
 
   return (
@@ -148,6 +164,14 @@ const Devices = () => {
         isOpen={!!clickedDevice}
         deviceDetails={clickedDevice || {}}
         handleHideDetailsModal={handleHideDetailsModal}
+      />
+
+      <DeviceOptionsMenu
+        isShowingMenu={!!deviceOptionsMenu}
+        anchorElement={deviceOptionsMenu?.anchorElement}
+        handleEditDevice={handleEditDevice}
+        handleDeleteDevice={handleDeleteDevice}
+        handleHideOptionsMenu={handleHideOptionsMenu}
       />
 
       <Box className={classes.container}>
@@ -172,6 +196,7 @@ const Devices = () => {
               handleClickDevice={setClickedDevice}
               handleSelectDevice={setSelectedDevices}
               handleFavoriteDevice={handleFavoriteDevice}
+              handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
             />
           ) : (
             <Cards
@@ -179,6 +204,7 @@ const Devices = () => {
               devices={devices}
               rowsPerPage={rowsPerPage}
               handleClickDevice={setClickedDevice}
+              handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
             />
           )}
         </Box>

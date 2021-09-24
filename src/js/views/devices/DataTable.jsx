@@ -39,6 +39,7 @@ const DataTable = ({
   handleClickDevice,
   handleSelectDevice,
   handleFavoriteDevice,
+  handleSetDeviceOptionsMenu,
 }) => {
   const { t } = useTranslation('devices');
   const classes = useStyles();
@@ -113,6 +114,10 @@ const DataTable = ({
     handleSelectDevice(newSelected);
   };
 
+  const handleStopPropagation = e => {
+    e.stopPropagation();
+  };
+
   return (
     <Paper elevation={0}>
       <TableContainer>
@@ -139,18 +144,19 @@ const DataTable = ({
                   handleClickDevice(device);
                 };
 
-                const handleStopPropagation = e => {
-                  e.stopPropagation();
-                };
-
                 const handleSelectThisRow = () => {
                   handleSelectRow(device.id);
                 };
 
-                const handleShowOptions = () => {};
-
                 const handleFavoriteThisDevice = () => {
                   handleFavoriteDevice();
+                };
+
+                const handleShowOptionsMenu = e => {
+                  handleSetDeviceOptionsMenu({
+                    anchorElement: e.target,
+                    device,
+                  });
                 };
 
                 return (
@@ -209,7 +215,7 @@ const DataTable = ({
                     </TableCell>
 
                     <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={handleShowOptions}>
+                      <IconButton onClick={handleShowOptionsMenu}>
                         <MoreHoriz />
                       </IconButton>
                     </TableCell>
@@ -228,6 +234,7 @@ DataTable.propTypes = {
   handleClickDevice: PropTypes.func,
   handleSelectDevice: PropTypes.func,
   handleFavoriteDevice: PropTypes.func,
+  handleSetDeviceOptionsMenu: PropTypes.func,
 };
 
 DataTable.defaultProps = {
@@ -235,6 +242,7 @@ DataTable.defaultProps = {
   handleClickDevice: null,
   handleSelectDevice: null,
   handleFavoriteDevice: null,
+  handleSetDeviceOptionsMenu: null,
 };
 
 export default DataTable;
