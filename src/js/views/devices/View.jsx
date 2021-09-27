@@ -163,6 +163,10 @@ const Devices = () => {
     handleHideOptionsMenu();
   };
 
+  const handleSearchDevice = search => {
+    console.log(search);
+  };
+
   return (
     <ViewContainer headerTitle={t('devices:title')}>
       <DeviceDetailsModal
@@ -180,7 +184,11 @@ const Devices = () => {
       />
 
       <Box className={classes.container}>
-        <SearchBar handleChangeViewMode={setViewMode} viewMode={viewMode} />
+        <SearchBar
+          viewMode={viewMode}
+          handleChangeViewMode={setViewMode}
+          handleSearchDevice={handleSearchDevice}
+        />
 
         {selectedDevices.length > 0 && (
           <MassActions

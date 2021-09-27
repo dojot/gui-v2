@@ -1,21 +1,51 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
-import { Box, IconButton, InputAdornment, TextField } from '@material-ui/core';
-import { ViewModule, List, Search, Add } from '@material-ui/icons';
+import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@material-ui/core';
+import { ViewModule, List, Search, Add, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
 import { VIEW_MODE } from '../../common/constants';
+import { useDebounce } from '../../common/hooks';
 import useStyles from './style';
 
-const SearchBar = ({ viewMode, handleChangeViewMode }) => {
+const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
   const { t } = useTranslation('devices');
   const history = useHistory();
   const classes = useStyles();
 
+  const searchInputRef = useRef(null);
+
+  const [isTyping, setIsTyping] = useState(false);
+  const [isShowingClearButton, setIsShowingClearButton] = useState(false);
+
+  const handleDebouce = useDebounce({
+    delay: 1000,
+    startCallback() {
+      setIsTyping(true);
+    },
+    stopCallback(search) {
+      setIsTyping(false);
+      handleSearchDevice(search);
+    },
+  });
+
   const handleCreateDevice = () => {
     history.push('/create-device');
+  };
+
+  const handleClearSearch = () => {
+    handleSearchDevice('');
+    setIsShowingClearButton(false);
+    if (searchInputRef.current) {
+      searchInputRef.current.value = '';
+    }
+  };
+
+  const handleChangeSearchText = e => {
+    handleDebouce(e.target.value);
+    setIsShowingClearButton(!!e.target.value);
   };
 
   return (
@@ -36,17 +66,26 @@ const SearchBar = ({ viewMode, handleChangeViewMode }) => {
         </IconButton>
 
         <TextField
+          inputRef={searchInputRef}
           className={classes.searchTextField}
           size='small'
           variant='outlined'
           placeholder={t('searchInputPh')}
+          onChange={handleChangeSearchText}
           InputProps={{
             className: classes.searchInput,
             startAdornment: (
               <InputAdornment position='start'>
-                <Search />
+                {isTyping ? <CircularProgress size={24} /> : <Search />}
               </InputAdornment>
             ),
+            endAdornment: isShowingClearButton ? (
+              <InputAdornment position='end'>
+                <IconButton onClick={handleClearSearch} size='small'>
+                  <Close />
+                </IconButton>
+              </InputAdornment>
+            ) : null,
           }}
         />
       </Box>
@@ -65,11 +104,13 @@ const SearchBar = ({ viewMode, handleChangeViewMode }) => {
 
 SearchBar.propTypes = {
   viewMode: PropTypes.oneOf(Object.values(VIEW_MODE)),
+  handleSearchDevice: PropTypes.func,
   handleChangeViewMode: PropTypes.func,
 };
 
 SearchBar.defaultProps = {
   viewMode: VIEW_MODE.TABLE,
+  handleSearchDevice: null,
   handleChangeViewMode: null,
 };
 
