@@ -10,6 +10,7 @@ import Cards from './Cards';
 import DataTable from './DataTable';
 import DeviceDetailsModal from './DeviceDetailsModal';
 import DeviceOptionsMenu from './DeviceOptionsMenu';
+import DevicesLoading from './DevicesLoading';
 import EmptyDeviceList from './EmptyDeviceList';
 import MassActions from './MassActions';
 import Pagination from './Pagination';
@@ -106,6 +107,7 @@ const Devices = () => {
 
   const [page, setPage] = useState(0);
   const [devices] = useState(FAKE_DEVICES);
+  const [isLoadingDevices] = useState(false);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [clickedDevice, setClickedDevice] = useState(null);
   const [viewMode, setViewMode] = useState(VIEW_MODE.TABLE);
@@ -130,6 +132,7 @@ const Devices = () => {
   };
 
   const handleFavoriteAllDevices = () => {
+    handleHideMassActions();
     console.log('Favorite All Devices');
   };
 
@@ -138,6 +141,7 @@ const Devices = () => {
   };
 
   const handleDeleteAllDevices = () => {
+    handleHideMassActions();
     console.log('Delete All');
   };
 
@@ -188,30 +192,36 @@ const Devices = () => {
         )}
 
         <Box className={classes.content}>
-          {viewMode === VIEW_MODE.TABLE && devices.length > 0 && (
-            <DataTable
-              page={page}
-              devices={devices}
-              rowsPerPage={rowsPerPage}
-              selectedDevices={selectedDevices}
-              handleClickDevice={setClickedDevice}
-              handleSelectDevice={setSelectedDevices}
-              handleFavoriteDevice={handleFavoriteDevice}
-              handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
-            />
-          )}
+          {isLoadingDevices ? (
+            <DevicesLoading />
+          ) : (
+            <>
+              {viewMode === VIEW_MODE.TABLE && devices.length > 0 && (
+                <DataTable
+                  page={page}
+                  devices={devices}
+                  rowsPerPage={rowsPerPage}
+                  selectedDevices={selectedDevices}
+                  handleClickDevice={setClickedDevice}
+                  handleSelectDevice={setSelectedDevices}
+                  handleFavoriteDevice={handleFavoriteDevice}
+                  handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
+                />
+              )}
 
-          {viewMode === VIEW_MODE.CARD && devices.length > 0 && (
-            <Cards
-              page={page}
-              devices={devices}
-              rowsPerPage={rowsPerPage}
-              handleClickDevice={setClickedDevice}
-              handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
-            />
-          )}
+              {viewMode === VIEW_MODE.CARD && devices.length > 0 && (
+                <Cards
+                  page={page}
+                  devices={devices}
+                  rowsPerPage={rowsPerPage}
+                  handleClickDevice={setClickedDevice}
+                  handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
+                />
+              )}
 
-          {devices.length === 0 && <EmptyDeviceList />}
+              {devices.length === 0 && <EmptyDeviceList />}
+            </>
+          )}
         </Box>
 
         <Pagination
