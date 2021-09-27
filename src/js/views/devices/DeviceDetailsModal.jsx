@@ -51,16 +51,16 @@ const DeviceDetailsModal = ({ isOpen, deviceDetails, handleHideDetailsModal }) =
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6} md={3}>
             <List className={classes.dataGroup} disablePadding>
-              <ListItem disablePadding divider>
+              <ListItem divider>
                 <ListItemIcon className={classes.dataGroupTitleIcon}>
                   <FilterNone fontSize='small' style={{ color: '#F1B44C' }} />
                 </ListItemIcon>
                 <ListItemText>Modelos</ListItemText>
               </ListItem>
-              <ListItem disablePadding divider>
+              <ListItem divider>
                 <ListItemText secondary='Modelo' />
               </ListItem>
-              <ListItem disablePadding divider>
+              <ListItem divider>
                 <ListItemText secondary='Modelo' />
               </ListItem>
             </List>
@@ -68,16 +68,16 @@ const DeviceDetailsModal = ({ isOpen, deviceDetails, handleHideDetailsModal }) =
 
           <Grid item xs={12} sm={6} md={3}>
             <List className={classes.dataGroup} disablePadding>
-              <ListItem disablePadding divider>
+              <ListItem divider>
                 <ListItemIcon className={classes.dataGroupTitleIcon}>
                   <Label fontSize='small' style={{ color: '#50a5f1' }} />
                 </ListItemIcon>
                 <ListItemText>Atributos Estáticos</ListItemText>
               </ListItem>
-              <ListItem disablePadding divider>
+              <ListItem divider>
                 <ListItemText primary='Primary' secondary='Secondary' />
               </ListItem>
-              <ListItem disablePadding divider>
+              <ListItem divider>
                 <ListItemText primary='Primary' secondary='Secondary' />
               </ListItem>
             </List>
@@ -85,7 +85,7 @@ const DeviceDetailsModal = ({ isOpen, deviceDetails, handleHideDetailsModal }) =
 
           <Grid item xs={12} sm={12} md={6}>
             <List className={classes.dataGroup} disablePadding>
-              <ListItem disablePadding divider>
+              <ListItem divider>
                 <ListItemIcon className={classes.dataGroupTitleIcon}>
                   <History fontSize='small' style={{ color: '#f46a6a' }} />
                 </ListItemIcon>
