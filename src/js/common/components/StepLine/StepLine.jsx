@@ -16,8 +16,13 @@ const StepLine = props => {
 };
 
 StepLine.propTypes = {
-  active: PropTypes.bool.isRequired,
-  completed: PropTypes.bool.isRequired,
+  active: PropTypes.bool,
+  completed: PropTypes.bool,
+};
+
+StepLine.defaultProps = {
+  active: false,
+  completed: false,
 };
 
 export default StepLine;

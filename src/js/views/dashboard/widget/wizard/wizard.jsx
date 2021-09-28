@@ -5,14 +5,14 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
 import { DevelopmentContainer } from 'Components/Containers';
+import { StepIcon } from 'Components/StepIcon';
+import { StepLine } from 'Components/StepLine';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
 import { ViewContainer } from '../../../stateComponents';
-import StepIcon from './StepIcon/StepIcon';
-import StepLine from './StepLine/StepLine';
 import useStyles from './style';
 
 const Wizard = ({ initialValues, ...props }) => {
