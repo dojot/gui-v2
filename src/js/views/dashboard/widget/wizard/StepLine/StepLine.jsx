@@ -1,5 +1,7 @@
 import React from 'react';
 
+import PropTypes from 'prop-types';
+
 import useStyles from './style';
 
 const StepLine = props => {
@@ -11,6 +13,11 @@ const StepLine = props => {
       <div />
     </div>
   );
+};
+
+StepLine.propTypes = {
+  active: PropTypes.bool.isRequired,
+  completed: PropTypes.bool.isRequired,
 };
 
 export default StepLine;
