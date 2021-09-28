@@ -8,7 +8,7 @@
   "removeFromFavoriteTooltip": "Remover dos Favoritos",
   "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
   "labelRowsPerPage": "Itens por página:",
-  "detailsModalTitle": "Detalhamento do Dispositivo ({{name}})",
+  "detailsModalTitle": "Detalhamento do Dispositivo ({{label}})",
   "massActions": "Ações em massa:",
   "createCertificates": "Criar certificados",
   "favorite": "Adicionar aos Favoritos",
@@ -23,7 +23,7 @@
   },
   "dataTableHead": {
     "id": "ID",
-    "name": "Nome",
+    "label": "Nome",
     "attrsLength": "Nº de Propriedades",
     "lastUpdate": "Última Atualização",
     "hasCertificate": "Tem Certificado",

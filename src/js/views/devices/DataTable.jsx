@@ -54,8 +54,8 @@ const DataTable = ({
         label: t('dataTableHead.id'),
       },
       {
-        id: 'name',
-        label: t('dataTableHead.name'),
+        id: 'label',
+        label: t('dataTableHead.label'),
       },
       {
         id: 'attrsLength',
@@ -149,7 +149,7 @@ const DataTable = ({
                 };
 
                 const handleFavoriteThisDevice = () => {
-                  handleFavoriteDevice();
+                  handleFavoriteDevice(device);
                 };
 
                 const handleShowOptionsMenu = e => {
@@ -161,7 +161,7 @@ const DataTable = ({
 
                 return (
                   <TableRow
-                    key={device.name}
+                    key={device.label}
                     tabIndex={-1}
                     role='checkbox'
                     selected={isSelected}
@@ -194,7 +194,7 @@ const DataTable = ({
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>{device.id}</TableCell>
-                    <TableCell className={classes.clickableCell}>{device.name}</TableCell>
+                    <TableCell className={classes.clickableCell}>{device.label}</TableCell>
                     <TableCell className={classes.clickableCell}>{device.attrsLength}</TableCell>
                     <TableCell className={classes.clickableCell}>{device.lastUpdate}</TableCell>
 

@@ -8,7 +8,14 @@ import { useTranslation } from 'react-i18next';
 import DataCard from '../../common/components/Cards/DataCard';
 import useStyles from './style';
 
-const Cards = ({ page, devices, rowsPerPage, handleClickDevice, handleSetDeviceOptionsMenu }) => {
+const Cards = ({
+  page,
+  devices,
+  rowsPerPage,
+  handleClickDevice,
+  handleFavoriteDevice,
+  handleSetDeviceOptionsMenu,
+}) => {
   const { t } = useTranslation(['devices', 'common']);
   const classes = useStyles();
 
@@ -20,8 +27,9 @@ const Cards = ({ page, devices, rowsPerPage, handleClickDevice, handleSetDeviceO
             handleClickDevice(device);
           };
 
-          const handleFavoriteDevice = e => {
+          const handleFavoriteThisDevice = e => {
             e.stopPropagation();
+            handleFavoriteDevice(device);
           };
 
           const handleShowOptionsMenu = e => {
@@ -36,7 +44,7 @@ const Cards = ({ page, devices, rowsPerPage, handleClickDevice, handleSetDeviceO
             <Grid key={device.id} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
                 className={classes.deviceCard}
-                headerTitle={device.name}
+                headerTitle={device.label}
                 headerIcon={<DevicesOther />}
                 onClick={handleSeeDeviceDetails}
                 onOptionsClick={handleShowOptionsMenu}
@@ -47,7 +55,7 @@ const Cards = ({ page, devices, rowsPerPage, handleClickDevice, handleSetDeviceO
                       placement='top'
                       arrow
                     >
-                      <IconButton onClick={handleFavoriteDevice} size='small'>
+                      <IconButton onClick={handleFavoriteThisDevice} size='small'>
                         {device.favorite ? (
                           <Star style={{ color: '#F1B44C' }} />
                         ) : (
@@ -76,15 +84,19 @@ const Cards = ({ page, devices, rowsPerPage, handleClickDevice, handleSetDeviceO
                   </>
                 }
               >
-                <Box marginBottom={1}>
-                  <Typography variant='body2'>{device.attrsLength}</Typography>
-                  <Typography variant='body2'>{t('cardData.properties')}</Typography>
-                </Box>
+                {device.attrsLength >= 0 && (
+                  <Box marginBottom={1}>
+                    <Typography variant='body2'>{device.attrsLength}</Typography>
+                    <Typography variant='body2'>{t('cardData.properties')}</Typography>
+                  </Box>
+                )}
 
-                <Box>
-                  <Typography variant='body2'>{device.lastUpdate}</Typography>
-                  <Typography variant='body2'>{t('cardData.lastUpdate')}</Typography>
-                </Box>
+                {!!device.lastUpdate && (
+                  <Box>
+                    <Typography variant='body2'>{device.lastUpdate}</Typography>
+                    <Typography variant='body2'>{t('cardData.lastUpdate')}</Typography>
+                  </Box>
+                )}
               </DataCard>
             </Grid>
           );
@@ -99,6 +111,7 @@ Cards.propTypes = {
   devices: PropTypes.array,
   rowsPerPage: PropTypes.number,
   handleClickDevice: PropTypes.func,
+  handleFavoriteDevice: PropTypes.func,
   handleSetDeviceOptionsMenu: PropTypes.func,
 };
 
@@ -107,6 +120,7 @@ Cards.defaultProps = {
   devices: [],
   rowsPerPage: 0,
   handleClickDevice: null,
+  handleFavoriteDevice: null,
   handleSetDeviceOptionsMenu: null,
 };
 
