@@ -9,17 +9,8 @@
     "__CONFIG__": true,
     "__ENV__": true
   },
-  "extends": [
-    "airbnb",
-    "prettier",
-    "prettier/react"
-  ],
-  "plugins": [
-    "flowtype",
-    "react",
-    "react-hooks",
-    "prettier"
-  ],
+  "extends": ["airbnb", "prettier", "prettier/react"],
+  "plugins": ["flowtype", "react", "react-hooks", "prettier"],
   "parser": "babel-eslint",
   "parserOptions": {
     "parser": "babel-eslint",
@@ -43,10 +34,7 @@
     "react/prop-types": 0,
     "react/jsx-filename-extension": 0,
     "react/jsx-props-no-spreading": "off",
-    "comma-dangle": [
-      2,
-      "always-multiline"
-    ],
+    "comma-dangle": [2, "always-multiline"],
     // "arrow-parens": [
     //   "warn",
     //   "always"
@@ -54,24 +42,19 @@
     "jsx-a11y/anchor-is-valid": [
       "error",
       {
-        "components": [
-          "Link"
-        ],
-        "specialLink": [
-          "to",
-          "hrefLeft",
-          "hrefRight"
-        ],
-        "aspects": [
-          "noHref",
-          "invalidHref",
-          "preferButton"
-        ]
+        "components": ["Link"],
+        "specialLink": ["to", "hrefLeft", "hrefRight"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
       }
     ],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
-    "prettier/prettier": "error",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
     "import/order": [
       "error",
       {
