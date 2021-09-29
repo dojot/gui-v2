@@ -3,6 +3,8 @@ import React from 'react';
 import { Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
+import { DATA_ORDER } from '../../constants';
+
 const DataTableHead = ({
   className,
   onSelectAllClick,
@@ -12,6 +14,8 @@ const DataTableHead = ({
   rowCount,
   onRequestSort,
   cells,
+  startExtraCells,
+  endExtraCells,
 }) => {
   const createSortHandler = property => event => {
     onRequestSort(event, property);
@@ -29,7 +33,7 @@ const DataTableHead = ({
           />
         </TableCell>
 
-        <TableCell />
+        {startExtraCells}
 
         {cells.map(headCell => {
           const isOrderingByThisCell = orderBy === headCell.id;
@@ -45,13 +49,15 @@ const DataTableHead = ({
                 disabled={headCell.disableOrderBy}
                 hideSortIcon={headCell.disableOrderBy}
                 onClick={createSortHandler(headCell.id)}
-                direction={isOrderingByThisCell ? order : 'asc'}
+                direction={isOrderingByThisCell ? order : DATA_ORDER.ASC}
               >
                 {headCell.label}
               </TableSortLabel>
             </TableCell>
           );
         })}
+
+        {endExtraCells}
       </TableRow>
     </TableHead>
   );
@@ -70,13 +76,17 @@ DataTableHead.propTypes = {
   numSelected: PropTypes.number.isRequired,
   onRequestSort: PropTypes.func.isRequired,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  order: PropTypes.oneOf(Object.values(DATA_ORDER)).isRequired,
   orderBy: PropTypes.string.isRequired,
   rowCount: PropTypes.number.isRequired,
+  startExtraCells: PropTypes.node,
+  endExtraCells: PropTypes.node,
 };
 
 DataTableHead.defaultProps = {
   className: '',
+  startExtraCells: null,
+  endExtraCells: null,
 };
 
 export default DataTableHead;

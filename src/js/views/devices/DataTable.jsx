@@ -15,8 +15,8 @@ import { Check, Close, MoreHoriz, Star, StarBorderOutlined } from '@material-ui/
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { DataTableHead } from '../../common/components/DataTable';
 import { DATA_ORDER } from '../../common/constants';
-import DataTableHead from './DataTableHead';
 import useStyles from './style';
 
 const descendingComparator = (a, b, orderBy) => {
@@ -128,6 +128,7 @@ const DataTable = ({
             orderBy={orderBy}
             cells={headCells}
             rowCount={devices.length}
+            startExtraCells={<TableCell />}
             numSelected={selectedDevices.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
