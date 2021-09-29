@@ -5,7 +5,8 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
-import { VIEW_MODE } from '../../common/constants';
+import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { usePersistentState } from '../../common/hooks';
 import { actions as deviceActions } from '../../redux/modules/devices';
 import {
   loadingDevicesSelector,
@@ -37,8 +38,12 @@ const Devices = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
+  const [viewMode, setViewMode] = usePersistentState({
+    defaultValue: VIEW_MODE.TABLE,
+    key: DEVICES_PAGE_KEYS.VIEW_MODE,
+  });
+
   const [clickedDevice, setClickedDevice] = useState(null);
-  const [viewMode, setViewMode] = useState(VIEW_MODE.TABLE);
   const [selectedDevices, setSelectedDevices] = useState([]);
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   const [deviceOptionsMenu, setDeviceOptionsMenu] = useState(null);
@@ -115,6 +120,10 @@ const Devices = () => {
       }),
     );
   }, [dispatch, page, rowsPerPage]);
+
+  useEffect(() => {
+    if (viewMode) setSelectedDevices([]);
+  }, [viewMode]);
 
   return (
     <ViewContainer headerTitle={t('devices:title')}>
