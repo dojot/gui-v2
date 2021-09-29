@@ -15,9 +15,9 @@ import { Check, Close, MoreHoriz, Star, StarBorderOutlined } from '@material-ui/
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { DataTableHead } from '../../common/components/DataTable';
-import { DATA_ORDER } from '../../common/constants';
-import useStyles from './style';
+import { DataTableHead } from '../../../common/components/DataTable';
+import { DATA_ORDER } from '../../../common/constants';
+import { useDataTableStyles } from './style';
 
 const descendingComparator = (a, b, orderBy) => {
   if (b[orderBy] < a[orderBy]) return -1;
@@ -42,7 +42,7 @@ const DataTable = ({
   handleSetDeviceOptionsMenu,
 }) => {
   const { t } = useTranslation('devices');
-  const classes = useStyles();
+  const classes = useDataTableStyles();
 
   const [order, setOrder] = useState(DATA_ORDER.ASC);
   const [orderBy, setOrderBy] = useState('');

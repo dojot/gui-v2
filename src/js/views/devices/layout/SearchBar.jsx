@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
-import { VIEW_MODE } from '../../common/constants';
-import { useDebounce } from '../../common/hooks';
-import useStyles from './style';
+import { VIEW_MODE } from '../../../common/constants';
+import { useDebounce } from '../../../common/hooks';
+import { useSearchBarStyles } from './style';
 
 const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
   const { t } = useTranslation('devices');
+  const classes = useSearchBarStyles();
   const history = useHistory();
-  const classes = useStyles();
 
   const searchInputRef = useRef(null);
 

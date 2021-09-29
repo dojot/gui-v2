@@ -20,7 +20,7 @@ import { Close, FilterNone, Label, History } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import useStyles from './style';
+import { useDetailsModalStyles } from './style';
 
 const fakeRows = [
   { date: '02/03/2021 15:22:15', key: 'testing_1', value: 'Testing' },
@@ -36,7 +36,7 @@ const fakeRows = [
 
 const DeviceDetailsModal = ({ isOpen, deviceDetails, handleHideDetailsModal }) => {
   const { t } = useTranslation('devices');
-  const classes = useStyles();
+  const classes = useDetailsModalStyles();
 
   return (
     <Dialog open={isOpen} onClose={handleHideDetailsModal} maxWidth='lg' fullWidth>

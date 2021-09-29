@@ -14,15 +14,15 @@ import {
   devicesWithAttrLengthSelector,
 } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
-import Cards from './Cards';
-import DataTable from './DataTable';
-import DeviceDetailsModal from './DeviceDetailsModal';
-import DeviceOptionsMenu from './DeviceOptionsMenu';
-import DevicesLoading from './DevicesLoading';
-import EmptyDeviceList from './EmptyDeviceList';
-import MassActions from './MassActions';
-import Pagination from './Pagination';
-import SearchBar from './SearchBar';
+import Cards from './layout/Cards';
+import DataTable from './layout/DataTable';
+import DeviceDetailsModal from './layout/DeviceDetailsModal';
+import DeviceOptionsMenu from './layout/DeviceOptionsMenu';
+import DevicesLoading from './layout/DevicesLoading';
+import EmptyDeviceList from './layout/EmptyDeviceList';
+import MassActions from './layout/MassActions';
+import Pagination from './layout/Pagination';
+import SearchBar from './layout/SearchBar';
 import useStyles from './style';
 
 const Devices = () => {

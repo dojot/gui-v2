@@ -5,7 +5,7 @@ import { VerifiedUser, Close, Delete, Star } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import useStyles from './style';
+import { useMassActionsStyles } from './style';
 
 const MassActions = ({
   handleHideMassActions,
@@ -14,7 +14,7 @@ const MassActions = ({
   handleFavoriteAllDevices,
 }) => {
   const { t } = useTranslation(['devices', 'common']);
-  const classes = useStyles();
+  const classes = useMassActionsStyles();
 
   return (
     <Box className={classes.massActionsContainer} paddingX={2} paddingY={1}>

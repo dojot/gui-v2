@@ -5,7 +5,7 @@ import { Delete, Edit } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import useStyles from './style';
+import { useDeviceOptionsStyles } from './style';
 
 const DeviceOptionsMenu = ({
   isShowingMenu,
@@ -15,7 +15,7 @@ const DeviceOptionsMenu = ({
   handleHideOptionsMenu,
 }) => {
   const { t } = useTranslation(['devices', 'common']);
-  const classes = useStyles();
+  const classes = useDeviceOptionsStyles();
 
   return (
     <Menu

@@ -5,8 +5,8 @@ import { Check, Close, DevicesOther, Star, StarBorderOutlined } from '@material-
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import DataCard from '../../common/components/Cards/DataCard';
-import useStyles from './style';
+import DataCard from '../../../common/components/Cards/DataCard';
+import { useCardsStyles } from './style';
 
 const Cards = ({
   page,
@@ -17,7 +17,7 @@ const Cards = ({
   handleSetDeviceOptionsMenu,
 }) => {
   const { t } = useTranslation(['devices', 'common']);
-  const classes = useStyles();
+  const classes = useCardsStyles();
 
   return (
     <Box padding={2}>

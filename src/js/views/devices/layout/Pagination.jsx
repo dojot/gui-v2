@@ -4,7 +4,7 @@ import { Box, TablePagination, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import useStyles from './style';
+import { usePaginationStyles } from './style';
 
 const Pagination = ({
   page,
@@ -15,7 +15,7 @@ const Pagination = ({
   handleChangeRowsPerPage,
 }) => {
   const { t } = useTranslation('devices');
-  const classes = useStyles();
+  const classes = usePaginationStyles();
 
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
