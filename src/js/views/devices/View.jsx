@@ -70,25 +70,23 @@ const Devices = () => {
     setSelectedDevices([]);
   };
 
-  const handleFavoriteAllDevices = () => {
+  const handleFavoriteMultipleDevices = () => {
     handleHideMassActions();
-    const deviceIdArray = selectedDevices.map(({ id }) => id);
-    dispatch(deviceActions.favoriteAllDevices({ deviceIdArray }));
+    dispatch(deviceActions.favoriteMultipleDevices({ deviceIdArray: selectedDevices }));
   };
 
   const handleCreateCertificates = () => {
     history.push('/certificates');
   };
 
-  const handleDeleteAllDevices = () => {
+  const handleDeleteMultipleDevices = () => {
     handleHideMassActions();
-    const deviceIdArray = selectedDevices.map(({ id }) => id);
-    dispatch(deviceActions.deleteAllDevices({ deviceIdArray }));
+    dispatch(deviceActions.deleteMultipleDevices({ deviceIdArray: selectedDevices }));
   };
 
   const handleFavoriteDevice = device => {
     const deviceId = device.id;
-    dispatch(deviceActions.deleteDevice({ deviceId }));
+    dispatch(deviceActions.favoriteDevice({ deviceId }));
   };
 
   const handleHideOptionsMenu = () => {
@@ -152,9 +150,9 @@ const Devices = () => {
         {selectedDevices.length > 0 && (
           <MassActions
             handleHideMassActions={handleHideMassActions}
-            handleDeleteAllDevices={handleDeleteAllDevices}
             handleCreateCertificates={handleCreateCertificates}
-            handleFavoriteAllDevices={handleFavoriteAllDevices}
+            handleDeleteMultipleDevices={handleDeleteMultipleDevices}
+            handleFavoriteMultipleDevices={handleFavoriteMultipleDevices}
           />
         )}
 

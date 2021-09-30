@@ -2,6 +2,7 @@
 
 import { put, fork, takeLatest, select } from 'redux-saga/effects';
 import { Device } from 'Services';
+import { getUserInformation } from 'Utils';
 
 import { constants, actions } from '../modules/devices';
 import { devicesSelector } from '../selectors/devicesSelector';
@@ -31,10 +32,10 @@ export function* handleDeleteDevice(action) {
   }
 }
 
-export function* handleDeleteAllDevices(action) {
+export function* handleDeleteMultipleDevices(action) {
   try {
     const { deviceIdArray } = action.payload;
-    yield Device.deleteAllDevices(deviceIdArray);
+    yield Device.deleteMultipleDevices(deviceIdArray);
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => !deviceIdArray.includes(id));
     yield put(actions.updateDevices({ devices: notDeletedDevices }));
@@ -46,7 +47,8 @@ export function* handleDeleteAllDevices(action) {
 export function* handleFavoriteDevice(action) {
   try {
     const { deviceId } = action.payload;
-    yield Device.favoriteDevice(deviceId);
+    const { userName, tenant } = getUserInformation();
+    yield Device.favoriteDevice({ deviceId, user: userName, tenant });
     const devices = yield select(devicesSelector);
     const newDevices = devices.map(device => {
       if (device.id === deviceId) return { ...device, favorite: true };
@@ -58,10 +60,11 @@ export function* handleFavoriteDevice(action) {
   }
 }
 
-export function* handleFavoriteAllDevices(action) {
+export function* handleFavoriteMultipleDevices(action) {
   try {
     const { deviceIdArray } = action.payload;
-    yield Device.favoriteAllDevices(deviceIdArray);
+    const { userName, tenant } = getUserInformation();
+    yield Device.favoriteMultipleDevices({ deviceIdArray, user: userName, tenant });
     const devices = yield select(devicesSelector);
     const newDevices = devices.map(device => {
       if (deviceIdArray.includes(device.id)) return { ...device, favorite: true };
@@ -81,22 +84,22 @@ function* watchDeleteDevice() {
   yield takeLatest(constants.DELETE_DEVICE, handleDeleteDevice);
 }
 
-function* watchDeleteAllDevices() {
-  yield takeLatest(constants.DELETE_ALL_DEVICES, handleDeleteAllDevices);
+function* watchDeleteMultipleDevices() {
+  yield takeLatest(constants.DELETE_ALL_DEVICES, handleDeleteMultipleDevices);
 }
 
 function* watchFavoriteDevice() {
   yield takeLatest(constants.FAVORITE_DEVICE, handleFavoriteDevice);
 }
 
-function* watchFavoriteAllDevices() {
-  yield takeLatest(constants.FAVORITE_ALL_DEVICES, handleFavoriteAllDevices);
+function* watchFavoriteMultipleDevices() {
+  yield takeLatest(constants.FAVORITE_MULTIPLE_DEVICES, handleFavoriteMultipleDevices);
 }
 
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchDeleteDevice),
-  fork(watchDeleteAllDevices),
+  fork(watchDeleteMultipleDevices),
   fork(watchFavoriteDevice),
-  fork(watchFavoriteAllDevices),
+  fork(watchFavoriteMultipleDevices),
 ];

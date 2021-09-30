@@ -6,7 +6,7 @@ const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';
 const LOADING = 'app/devices/LOADING';
 const FAVORITE_DEVICE = 'app/devices/FAVORITE_DEVICE';
 const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
-const FAVORITE_ALL_DEVICES = 'app/devices/FAVORITE_ALL_DEVICES';
+const FAVORITE_MULTIPLE_DEVICES = 'app/devices/FAVORITE_MULTIPLE_DEVICES';
 const DELETE_ALL_DEVICES = 'app/devices/DELETE_ALL_DEVICES';
 
 export const constants = {
@@ -15,7 +15,7 @@ export const constants = {
   LOADING,
   FAVORITE_DEVICE,
   DELETE_DEVICE,
-  FAVORITE_ALL_DEVICES,
+  FAVORITE_MULTIPLE_DEVICES,
   DELETE_ALL_DEVICES,
 };
 
@@ -44,11 +44,11 @@ export const deleteDevice = createAction(DELETE_DEVICE, payload => ({
   deviceId: payload.deviceId,
 }));
 
-export const favoriteAllDevices = createAction(FAVORITE_ALL_DEVICES, payload => ({
+export const favoriteMultipleDevices = createAction(FAVORITE_MULTIPLE_DEVICES, payload => ({
   deviceIdArray: payload.deviceIdArray,
 }));
 
-export const deleteAllDevices = createAction(DELETE_ALL_DEVICES, payload => ({
+export const deleteMultipleDevices = createAction(DELETE_ALL_DEVICES, payload => ({
   deviceIdArray: payload.deviceIdArray,
 }));
 
@@ -58,8 +58,8 @@ export const actions = {
   setLoadingDevices,
   favoriteDevice,
   deleteDevice,
-  favoriteAllDevices,
-  deleteAllDevices,
+  favoriteMultipleDevices,
+  deleteMultipleDevices,
 };
 
 export const reducers = {

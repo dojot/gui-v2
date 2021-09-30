@@ -10,6 +10,8 @@ export const getDevicesList = (page, filter) => {
           devices {
             id
             label
+            updated
+            created
             attrs{
               label
               valueType
@@ -30,8 +32,10 @@ export const getDevicesList = (page, filter) => {
 export const deleteDevice = deviceId => {
   return protectAPI({
     query: `
-      mutation deleteDevice($deviceId: String) {
-        deleteDevice(deviceId: $deviceId)
+      mutation deleteDevice($deviceId: String!) {
+        deleteDevice(deviceId: $deviceId) {
+          id
+        }
       }
     `,
     variables: JSON.stringify({
@@ -40,11 +44,13 @@ export const deleteDevice = deviceId => {
   });
 };
 
-export const deleteAllDevices = deviceIdArray => {
+export const deleteMultipleDevices = deviceIdArray => {
   return protectAPI({
     query: `
-      mutation deleteAllDevices($deviceIdArray: [String]) {
-        deleteAllDevices(deviceIdArray: $deviceIdArray)
+      mutation deleteMultipleDevices($deviceIdArray: [String]!) {
+        deleteMultipleDevices(deviceIdArray: $deviceIdArray) {
+          id
+        }
       }
     `,
     variables: JSON.stringify({
@@ -53,28 +59,32 @@ export const deleteAllDevices = deviceIdArray => {
   });
 };
 
-export const favoriteDevice = deviceId => {
+export const favoriteDevice = ({ deviceId, user, tenant }) => {
   return protectAPI({
     query: `
-      mutation favoriteDevice($deviceId: String) {
-        favoriteDevice(deviceId: $deviceId)
+      mutation favoriteDevice($deviceId: String!, $user: String, $tenant: String!) {
+        favoriteDevice(deviceId: $deviceId, user: $user, tenant: $tenant)
       }
     `,
     variables: JSON.stringify({
       deviceId,
+      user,
+      tenant,
     }),
   });
 };
 
-export const favoriteAllDevices = deviceIdArray => {
+export const favoriteMultipleDevices = ({ deviceIdArray, user, tenant }) => {
   return protectAPI({
     query: `
-      mutation favoriteAllDevices($deviceIdArray: [String]) {
-        favoriteAllDevices(deviceIdArray: $deviceIdArray)
+      mutation favoriteMultipleDevices($deviceIdArray: [String]!, $user: String, $tenant: String!) {
+        favoriteMultipleDevices(deviceIdArray: $deviceIdArray, user: $user, tenant: $tenant)
       }
     `,
     variables: JSON.stringify({
       deviceIdArray,
+      user,
+      tenant,
     }),
   });
 };

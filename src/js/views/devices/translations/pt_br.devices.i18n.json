@@ -25,12 +25,12 @@
     "id": "ID",
     "label": "Nome",
     "attrsLength": "Nº de Propriedades",
-    "lastUpdate": "Última Atualização",
+    "updated": "Última Atualização",
     "hasCertificate": "Tem Certificado",
     "actions": "Ações"
   },
   "cardData": {
     "properties": "Propriedades",
-    "lastUpdate": "Última Atualização"
+    "updated": "Última Atualização"
   }
 }

@@ -9,9 +9,9 @@ import { useMassActionsStyles } from './style';
 
 const MassActions = ({
   handleHideMassActions,
-  handleDeleteAllDevices,
   handleCreateCertificates,
-  handleFavoriteAllDevices,
+  handleDeleteMultipleDevices,
+  handleFavoriteMultipleDevices,
 }) => {
   const { t } = useTranslation(['devices', 'common']);
   const classes = useMassActionsStyles();
@@ -26,7 +26,7 @@ const MassActions = ({
         <Grid item xs='auto'>
           <Button
             className={classes.massActionsButton}
-            onClick={handleFavoriteAllDevices}
+            onClick={handleFavoriteMultipleDevices}
             startIcon={<Star />}
             variant='contained'
           >
@@ -48,7 +48,7 @@ const MassActions = ({
         <Grid item xs='auto'>
           <Button
             className={classes.massActionsButton}
-            onClick={handleDeleteAllDevices}
+            onClick={handleDeleteMultipleDevices}
             startIcon={<Delete />}
             variant='contained'
           >
@@ -72,16 +72,16 @@ const MassActions = ({
 
 MassActions.propTypes = {
   handleHideMassActions: PropTypes.func,
-  handleDeleteAllDevices: PropTypes.func,
   handleCreateCertificates: PropTypes.func,
-  handleFavoriteAllDevices: PropTypes.func,
+  handleDeleteMultipleDevices: PropTypes.func,
+  handleFavoriteMultipleDevices: PropTypes.func,
 };
 
 MassActions.defaultProps = {
   handleHideMassActions: null,
-  handleDeleteAllDevices: null,
   handleCreateCertificates: null,
-  handleFavoriteAllDevices: null,
+  handleDeleteMultipleDevices: null,
+  handleFavoriteMultipleDevices: null,
 };
 
 export default MassActions;

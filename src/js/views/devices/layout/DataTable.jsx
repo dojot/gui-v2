@@ -12,6 +12,7 @@ import {
   Tooltip,
 } from '@material-ui/core';
 import { Check, Close, MoreHoriz, Star, StarBorderOutlined } from '@material-ui/icons';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -62,8 +63,8 @@ const DataTable = ({
         label: t('dataTableHead.attrsLength'),
       },
       {
-        id: 'lastUpdate',
-        label: t('dataTableHead.lastUpdate'),
+        id: 'updated',
+        label: t('dataTableHead.updated'),
       },
       {
         id: 'hasCertificate',
@@ -197,7 +198,9 @@ const DataTable = ({
                     <TableCell className={classes.clickableCell}>{device.id}</TableCell>
                     <TableCell className={classes.clickableCell}>{device.label}</TableCell>
                     <TableCell className={classes.clickableCell}>{device.attrsLength}</TableCell>
-                    <TableCell className={classes.clickableCell}>{device.lastUpdate}</TableCell>
+                    <TableCell className={classes.clickableCell}>
+                      {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
+                    </TableCell>
 
                     <TableCell className={classes.clickableCell}>
                       <Tooltip

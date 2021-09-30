@@ -43,7 +43,7 @@ DataCard.propTypes = {
   footer: PropTypes.node,
   children: PropTypes.node,
   headerIcon: PropTypes.node,
-  headerTitle: PropTypes.string,
+  headerTitle: PropTypes.node,
   onClick: PropTypes.func,
   onOptionsClick: PropTypes.func,
 };
