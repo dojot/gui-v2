@@ -5,8 +5,6 @@ import AWS from 'aws-sdk';
 import config from 'config';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import postcssPresetEnv from 'postcss-preset-env';
-import precss from 'precss';
 import webpack from 'webpack';
 
 import webpackConfig, { JS_SOURCE } from './webpack.config.common';
@@ -65,10 +63,11 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
     {
       loader: 'css-loader',
       options: {
+        modules: {
+          localIdentName: '[local]',
+        },
         sourceMap: true,
         importLoaders: 1,
-        modules: true,
-        localIdentName: '[local]',
       },
     },
   ],

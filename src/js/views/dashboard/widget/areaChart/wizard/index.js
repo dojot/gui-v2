@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { SOURCE, WIDGET } from 'Constants';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
@@ -56,7 +57,9 @@ const WizardPage = ({
       name: '',
       description: '',
     },
+    selector: SOURCE.DEVICE,
     devices: {},
+    templates: {},
     attributes: {},
     filters: {
       filterType: '0',
@@ -67,6 +70,7 @@ const WizardPage = ({
       lastDynamicsValue: '15',
       isRealTime: true,
     },
+    widgetType: WIDGET.AREA,
   };
   return (
     <Wizard

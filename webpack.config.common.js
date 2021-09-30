@@ -153,6 +153,7 @@ export default {
       APIs: path.resolve(__dirname, "src/js/common/api"),
       Assets: path.resolve(__dirname, "src/assets"),
       Components: path.resolve(__dirname, "src/js/common/components"),
+      Constants: path.resolve(__dirname, "src/js/common/constants"),
       Redux: path.resolve(__dirname, "src/js/redux/modules"),
       Sagas: path.resolve(__dirname, "src/js/redux/sagas"),
       Selectors: path.resolve(__dirname, "src/js/redux/selectors"),

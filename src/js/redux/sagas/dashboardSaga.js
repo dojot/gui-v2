@@ -64,6 +64,7 @@ function* pollData(queries, interval) {
   } catch (error) {
     console.error(error);
     yield put(dashboardActions.errorPolling(error));
+    yield put(dashboardActions.stopPolling());
   }
 }
 

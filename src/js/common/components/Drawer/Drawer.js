@@ -4,10 +4,10 @@ const drawerWidth = 215;
 
 export const useStyles = makeStyles(theme => ({
   drawer: {
-    zIndex: theme.zIndex.drawer + 1,
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: 'nowrap',
+    zIndex: theme.zIndex.drawer + 1,
   },
   drawerOpen: {
     width: drawerWidth,
@@ -17,7 +17,6 @@ export const useStyles = makeStyles(theme => ({
     }),
   },
   drawerClose: {
-    overflowX: 'hidden',
     width: theme.spacing(8) + 1,
     transition: theme.transitions.create(['width'], {
       easing: theme.transitions.easing.sharp,
@@ -36,6 +35,7 @@ export const useStyles = makeStyles(theme => ({
   selected: {
     backgroundColor: 'rgba(13, 123, 191, 0.1)',
     borderLeft: '4px solid #4788DC',
+    color: theme.palette.text.primary,
   },
   toolbar: {
     display: 'flex',

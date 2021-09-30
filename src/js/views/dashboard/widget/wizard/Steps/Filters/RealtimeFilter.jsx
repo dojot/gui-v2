@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
-const MapFilters = ({ validate, name }) => {
+const RealtimeFilter = ({ validate, name }) => {
   const classes = useStyles();
   const { t } = useTranslation(['dashboard']);
 
@@ -33,4 +33,4 @@ const MapFilters = ({ validate, name }) => {
   );
 };
 
-export default MapFilters;
+export default RealtimeFilter;
