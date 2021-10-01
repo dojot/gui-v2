@@ -1,36 +1,23 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useMemo } from 'react';
 
 import { ContentContainer, RootContainer } from 'Components/Containers';
 import { Drawer } from 'Components/Drawer';
 import { useTranslation } from 'react-i18next';
 
-import { helper, primary } from '../../menu';
+import { MENU_ITEMS } from '../../menu';
 
 export default ({ isMenuOpen, children }) => {
-  const [primaryItems, setPrimaryItems] = useState([]);
-  const [secondaryItems, setSecondarytems] = useState([]);
+  const { t } = useTranslation('menu');
 
-  const { t } = useTranslation(['menu']);
-
-  const translate = useCallback(
-    items => {
-      return items.map(item => ({
-        ...item,
-        label: t(`menu:${item.i18n}`),
-      }));
-    },
-    [t],
-  );
-
-  useEffect(() => {
-    setPrimaryItems(translate(primary));
-    setSecondarytems(translate(helper));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  const translatedMenuItems = useMemo(() => {
+    return MENU_ITEMS.map(item => {
+      return { ...item, label: t(item.i18n) };
+    });
+  }, [t]);
 
   return (
     <RootContainer>
-      <Drawer isOpen={isMenuOpen} primaryItems={primaryItems} secondaryItems={secondaryItems} />
+      <Drawer isOpen={isMenuOpen} menuItems={translatedMenuItems} />
       <ContentContainer>{children}</ContentContainer>
     </RootContainer>
   );

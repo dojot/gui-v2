@@ -9,7 +9,7 @@ import {
   SupervisedUserCircle,
 } from '@material-ui/icons';
 
-export default [
+export const MENU_ITEMS = [
   {
     visible: false,
     i18n: 'devices',
