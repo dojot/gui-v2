@@ -24,29 +24,32 @@ const Home = () => {
     CREATE_DEVICE: {
       icon: <DevicesOther style={{ color: '#34C38F' }} fontSize='large' />,
       translationKey: 'createDevice',
+      route: '/create-device',
     },
     CREATE_DASHBOARD: {
       icon: <Dashboard style={{ color: '#5B73E8' }} fontSize='large' />,
       translationKey: 'createDashboard',
-      action() {
-        history.push('/dashboard');
-      },
+      route: '/dashboard',
     },
     CREATE_MODEL: {
       icon: <FilterNone style={{ color: '#F1B44C' }} fontSize='large' />,
       translationKey: 'createModel',
+      route: '/create-model',
     },
     CREATE_CERTIFICATE: {
       icon: <VerifiedUser style={{ color: '#F46A6A' }} fontSize='large' />,
       translationKey: 'createCertificate',
+      route: '/create-certificate',
     },
     IMPORT_EXPORT: {
       icon: <ImportExport style={{ color: '#50A5F1' }} fontSize='large' />,
       translationKey: 'importExport',
+      route: '/import-export',
     },
     DEVICE_TEST: {
       icon: <Star style={{ color: '#F1B44C' }} fontSize='large' />,
       translationKey: 'deviceTest',
+      route: '/device-test',
     },
   };
 
@@ -55,9 +58,13 @@ const Home = () => {
       <Box sx={{ flexGrow: 1 }} padding={2}>
         <Grid container wrap spacing={4}>
           {Object.entries(HOME_CARDS).map(([key, card]) => {
+            const handleNavigate = () => {
+              if (card.route) history.push(card.route);
+            };
+
             return (
               <Grid key={key} xs={12} sm={6} md={3} item>
-                <Card className={classes.card} onClick={card.action}>
+                <Card className={classes.card} onClick={handleNavigate}>
                   <CardActionArea style={{ height: '100%' }}>
                     <CardContent className={classes.cardContent}>
                       {card.icon}
