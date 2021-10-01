@@ -14,7 +14,7 @@ export const usePersistentState = ({ key, defaultValue, isJson = false }) => {
     const data = localStorage.getItem(key);
     if (!data) return defaultValue;
     if (isJson) return JSON.parse(data) || defaultValue;
-    return data || defaultValue;
+    return data;
   });
 
   const handleRestoreDefault = useCallback(() => {
