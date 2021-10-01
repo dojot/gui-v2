@@ -51,7 +51,7 @@ export function* handleFavoriteDevice(action) {
     yield Device.favoriteDevice({ deviceId, user: userName, tenant });
     const devices = yield select(devicesSelector);
     const newDevices = devices.map(device => {
-      if (device.id === deviceId) return { ...device, favorite: true };
+      if (device.id === deviceId) return { ...device, favorite: !device.favorite };
       return device;
     });
     yield put(actions.updateDevices({ devices: newDevices }));
@@ -67,7 +67,7 @@ export function* handleFavoriteMultipleDevices(action) {
     yield Device.favoriteMultipleDevices({ deviceIdArray, user: userName, tenant });
     const devices = yield select(devicesSelector);
     const newDevices = devices.map(device => {
-      if (deviceIdArray.includes(device.id)) return { ...device, favorite: true };
+      if (deviceIdArray.includes(device.id)) return { ...device, favorite: !device.favorite };
       return device;
     });
     yield put(actions.updateDevices({ devices: newDevices }));
