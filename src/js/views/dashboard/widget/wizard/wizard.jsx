@@ -4,19 +4,26 @@ import { Button } from '@material-ui/core';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Stepper from '@material-ui/core/Stepper';
-import clsx from 'clsx';
 import { DevelopmentContainer } from 'Components/Containers';
+import { StepIcon } from 'Components/StepIcon';
+import { StepLine } from 'Components/StepLine';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
 
 import { ViewContainer } from '../../../stateComponents';
 import useStyles from './style';
 
 const Wizard = ({ initialValues, ...props }) => {
-  const { steps, onSubmit, headerTitle, children, menuState } = props;
+  const { steps, onSubmit, headerTitle, children } = props;
   const [page, setPage] = useState(0);
   const [formValues, setValues] = useState(initialValues || {});
+  const history = useHistory();
+
+  const cancel = () => {
+    history.goBack();
+  };
 
   const next = value => {
     setPage(Math.min(page + 1, children.length - 1));
@@ -56,10 +63,12 @@ const Wizard = ({ initialValues, ...props }) => {
   return (
     <ViewContainer headerTitle={headerTitle}>
       <div className={classes.root}>
-        <Stepper classes={{ root: classes.paper }} alternativeLabel activeStep={page}>
+        <Stepper activeStep={page} orientation='vertical' connector={<StepLine />}>
           {steps.map(({ label, key }) => (
             <Step key={key}>
-              <StepLabel>{t([`dashboard:${label}`, 'undefined'])}</StepLabel>
+              <StepLabel StepIconComponent={StepIcon}>
+                {t([`dashboard:${label}`, 'undefined'])}
+              </StepLabel>
             </Step>
           ))}
         </Stepper>
@@ -86,44 +95,55 @@ const Wizard = ({ initialValues, ...props }) => {
               onSubmit={event => checkErrorsBeforeSubmit(event, invalid, errors, handleSubmit)}
               className={classes.form}
             >
-              {React.cloneElement(activePage, { values, form }, null)}
-              <div
-                className={clsx(classes.footer, {
-                  [classes.expanded]: menuState,
-                  [classes.collapsed]: !menuState,
-                })}
-              >
-                {page > 0 && (
-                  <Button
-                    type='button'
-                    color='primary'
-                    variant='contained'
-                    disableElevation
-                    onClick={previous}
-                  >
-                    {t('back')}
-                  </Button>
-                )}
-                {!isLastPage && (
-                  <Button type='submit' color='primary' variant='contained' disableElevation>
-                    {t('next')}
-                  </Button>
-                )}
-                {isLastPage && (
-                  <Button
-                    type='submit'
-                    disabled={submitting}
-                    color='primary'
-                    variant='contained'
-                    disableElevation
-                  >
-                    {t('finish')}
-                  </Button>
-                )}
+              <div className={classes.formContent}>
+                {React.cloneElement(activePage, { values, form }, null)}
+
+                <DevelopmentContainer>
+                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                </DevelopmentContainer>
               </div>
-              <DevelopmentContainer>
-                <pre>{JSON.stringify(values, null, 2)}</pre>
-              </DevelopmentContainer>
+
+              <div className={classes.footer}>
+                <Button
+                  type='button'
+                  color='primary'
+                  variant='text'
+                  disableElevation
+                  onClick={cancel}
+                >
+                  {t('cancel')}
+                </Button>
+
+                <div>
+                  {page > 0 && (
+                    <Button
+                      type='button'
+                      color='primary'
+                      variant='outlined'
+                      disableElevation
+                      onClick={previous}
+                    >
+                      {t('back')}
+                    </Button>
+                  )}
+                  {!isLastPage && (
+                    <Button type='submit' color='primary' variant='contained' disableElevation>
+                      {t('next')}
+                    </Button>
+                  )}
+                  {isLastPage && (
+                    <Button
+                      type='submit'
+                      disabled={submitting}
+                      color='primary'
+                      variant='contained'
+                      disableElevation
+                    >
+                      {t('finish')}
+                    </Button>
+                  )}
+                </div>
+              </div>
             </form>
           )}
         />
