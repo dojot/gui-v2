@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import useStyles from './style';
 
 const DataCard = ({
-  style,
   className,
   footer,
   children,
@@ -19,7 +18,7 @@ const DataCard = ({
   const classes = useStyles();
 
   return (
-    <Card style={style} className={className} onClick={onClick}>
+    <Card className={className} onClick={onClick}>
       <CardHeader
         className={classes.header}
         title={headerTitle}
@@ -38,7 +37,6 @@ const DataCard = ({
 };
 
 DataCard.propTypes = {
-  style: PropTypes.object,
   className: PropTypes.string,
   footer: PropTypes.node,
   children: PropTypes.node,
@@ -49,7 +47,6 @@ DataCard.propTypes = {
 };
 
 DataCard.defaultProps = {
-  style: null,
   className: '',
   footer: null,
   children: null,
