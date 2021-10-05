@@ -1,0 +1,9 @@
+{
+  "title": "Home",
+  "createDevice": "Create Device",
+  "createDashboard": "Create Dashboard",
+  "createModel": "Create Model",
+  "createCertificate": "Create Certificate",
+  "importExport": "Import/Export",
+  "deviceTest": "Device Test"
+}

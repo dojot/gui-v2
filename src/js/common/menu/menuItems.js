@@ -3,6 +3,7 @@ import {
   DeviceHub,
   DevicesOther,
   FilterNone,
+  Home,
   NotificationImportant,
   People,
   SupervisedUserCircle,
@@ -49,6 +50,13 @@ export const MENU_ITEMS = [
     label: 'Perfis',
     path: '/profiles',
     icon: SupervisedUserCircle,
+  },
+  {
+    visible: true,
+    i18n: 'home',
+    label: 'home',
+    path: '/home',
+    icon: Home,
   },
   {
     visible: true,
