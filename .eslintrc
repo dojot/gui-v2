@@ -6,6 +6,7 @@
     "jest": true
   },
   "globals": {
+    "GUI_VERSION": true,
     "__CONFIG__": true,
     "__ENV__": true
   },
