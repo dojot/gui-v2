@@ -20,7 +20,7 @@ const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
   const [isTyping, setIsTyping] = useState(false);
   const [isShowingClearButton, setIsShowingClearButton] = useState(false);
 
-  const handleDebouce = useDebounce({
+  const handleDebounce = useDebounce({
     delay: 1000,
     startCallback() {
       setIsTyping(true);
@@ -44,7 +44,7 @@ const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
   };
 
   const handleChangeSearchText = e => {
-    handleDebouce(e.target.value);
+    handleDebounce(e.target.value);
     setIsShowingClearButton(!!e.target.value);
   };
 
