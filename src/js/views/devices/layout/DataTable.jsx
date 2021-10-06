@@ -175,10 +175,10 @@ const DataTable = ({
                         arrow
                       >
                         <Checkbox
-                          color='primary'
-                          checkedIcon={<Star />}
+                          color='primaryText'
                           checked={device.favorite}
                           icon={<StarBorderOutlined />}
+                          checkedIcon={<Star style={{ color: '#F1B44C' }} />}
                           onChange={handleFavoriteThisDevice}
                         />
                       </Tooltip>
