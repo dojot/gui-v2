@@ -28,7 +28,7 @@ export const useStyles = makeStyles(theme => ({
     margin: '0 15px',
   },
   button: {
-    textTransform: 'capitalize',
+    textTransform: 'initial',
   },
   paper: {},
 }));
