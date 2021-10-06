@@ -18,19 +18,8 @@ import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
+import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
-
-const descendingComparator = (a, b, orderBy) => {
-  if (b[orderBy] < a[orderBy]) return -1;
-  if (b[orderBy] > a[orderBy]) return 1;
-  return 0;
-};
-
-const getComparator = (order, orderBy) => {
-  return order === DATA_ORDER.DESC
-    ? (a, b) => descendingComparator(a, b, orderBy)
-    : (a, b) => -descendingComparator(a, b, orderBy);
-};
 
 const DataTable = ({
   page,
@@ -138,7 +127,7 @@ const DataTable = ({
           <TableBody>
             {devices
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .sort(getComparator(order, orderBy))
+              .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
               .map(device => {
                 const isSelected = selectedDevices.indexOf(device.id) !== -1;
 
