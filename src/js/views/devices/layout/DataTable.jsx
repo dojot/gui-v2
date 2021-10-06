@@ -175,7 +175,7 @@ const DataTable = ({
                         arrow
                       >
                         <Checkbox
-                          color='primaryText'
+                          color='default'
                           checked={device.favorite}
                           icon={<StarBorderOutlined />}
                           checkedIcon={<Star style={{ color: '#F1B44C' }} />}

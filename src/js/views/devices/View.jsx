@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { AlertDialog } from '../../common/components/Dialogs';
 import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { usePersistentState } from '../../common/hooks';
 import { actions as deviceActions } from '../../redux/modules/devices';
@@ -48,6 +49,9 @@ const Devices = () => {
   const [isShowingDetails, setIsShowingDetails] = useState(false);
   const [deviceOptionsMenu, setDeviceOptionsMenu] = useState(null);
 
+  const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
+  const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
+
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
   };
@@ -71,8 +75,8 @@ const Devices = () => {
   };
 
   const handleFavoriteMultipleDevices = () => {
-    handleHideMassActions();
     dispatch(deviceActions.favoriteMultipleDevices({ deviceIdArray: selectedDevices }));
+    handleHideMassActions();
   };
 
   const handleCreateCertificates = () => {
@@ -80,8 +84,16 @@ const Devices = () => {
   };
 
   const handleDeleteMultipleDevices = () => {
-    handleHideMassActions();
+    setIsShowingMultipleDeleteAlert(true);
+  };
+
+  const handleConfirmMultipleDevicesDeletion = () => {
     dispatch(deviceActions.deleteMultipleDevices({ deviceIdArray: selectedDevices }));
+    handleHideMassActions();
+  };
+
+  const handleCloseMultipleDeviceDeletionAlert = () => {
+    setIsShowingMultipleDeleteAlert(false);
   };
 
   const handleFavoriteDevice = device => {
@@ -100,9 +112,20 @@ const Devices = () => {
   };
 
   const handleDeleteDevice = () => {
-    handleHideOptionsMenu();
+    setIsShowingDeleteAlert(true);
+  };
+
+  const handleConfirmDeviceDeletion = () => {
     const deviceId = deviceOptionsMenu.device.id;
     dispatch(deviceActions.deleteDevice({ deviceId }));
+    setSelectedDevices(currentSelectedDevices => {
+      return currentSelectedDevices.filter(id => id !== deviceId);
+    });
+  };
+
+  const handleCloseDeviceDeletionAlert = () => {
+    setIsShowingDeleteAlert(false);
+    handleHideOptionsMenu();
   };
 
   const handleSearchDevice = search => {
@@ -138,6 +161,26 @@ const Devices = () => {
         handleEditDevice={handleEditDevice}
         handleDeleteDevice={handleDeleteDevice}
         handleHideOptionsMenu={handleHideOptionsMenu}
+      />
+
+      <AlertDialog
+        isOpen={isShowingDeleteAlert}
+        title={t('deleteDeviceAlert.title')}
+        message={t('deleteDeviceAlert.message')}
+        handleConfirm={handleConfirmDeviceDeletion}
+        handleClose={handleCloseDeviceDeletionAlert}
+        cancelButtonText={t('deleteDeviceAlert.cancelButton')}
+        confirmButtonText={t('deleteDeviceAlert.confirmButton')}
+      />
+
+      <AlertDialog
+        isOpen={isShowingMultipleDeleteAlert}
+        title={t('deleteMultipleDeviceAlert.title')}
+        message={t('deleteMultipleDeviceAlert.message')}
+        handleConfirm={handleConfirmMultipleDevicesDeletion}
+        handleClose={handleCloseMultipleDeviceDeletionAlert}
+        cancelButtonText={t('deleteMultipleDeviceAlert.cancelButton')}
+        confirmButtonText={t('deleteMultipleDeviceAlert.confirmButton')}
       />
 
       <Box className={classes.container}>
