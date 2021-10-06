@@ -11,22 +11,25 @@ import {
   ListItemText,
   ListItemIcon,
   ClickAwayListener,
+  Switch,
 } from '@material-ui/core';
 import { ArrowDropDown, BookmarkBorder, ExitToApp, Lock } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
-import { getUserInformation } from 'Utils';
+import { getUserInformation, logout } from 'Utils';
 
 import { useStyles } from './style';
 
 export const UserInfo = () => {
-  const { t } = useTranslation(['common']);
+  const { t } = useTranslation(['userInfo']);
   const history = useHistory();
   const classes = useStyles();
 
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
+
+  const [isDarkModeActivated, setIsDarkModeActivated] = React.useState(false);
 
   const user = getUserInformation() || { userName: '', tenant: '', profile: '' };
 
@@ -44,7 +47,12 @@ export const UserInfo = () => {
   };
 
   const handleLogout = () => {
-    console.log('logout');
+    logout();
+    history.push('/');
+  };
+
+  const handleChangeDarkMode = e => {
+    setIsDarkModeActivated(e.target.checked);
   };
 
   const version = GUI_VERSION || t('notDefined');
@@ -98,17 +106,25 @@ export const UserInfo = () => {
                       <ListItemIcon className={classes.listItemIcon}>
                         <BookmarkBorder />
                       </ListItemIcon>
-                      <ListItemText>{t('tenant', { tenant: user.tenant })}</ListItemText>
+
+                      <ListItemText>{t('darkMode')}</ListItemText>
+
+                      <Switch
+                        className={classes.listItemSwitch}
+                        checked={isDarkModeActivated}
+                        onChange={handleChangeDarkMode}
+                        color='primary'
+                      />
                     </ListItem>
 
-                    <ListItem onClick={handleChangePassword}>
+                    <ListItem className={classes.clickableListItem} onClick={handleChangePassword}>
                       <ListItemIcon className={classes.listItemIcon}>
                         <Lock />
                       </ListItemIcon>
                       <ListItemText>{t('changePassword')}</ListItemText>
                     </ListItem>
 
-                    <ListItem onClick={handleLogout}>
+                    <ListItem className={classes.clickableListItem} onClick={handleLogout}>
                       <ListItemIcon className={classes.listItemIcon}>
                         <ExitToApp />
                       </ListItemIcon>
