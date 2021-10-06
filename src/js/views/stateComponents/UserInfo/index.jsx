@@ -70,7 +70,7 @@ export const UserInfo = () => {
           startIcon={<AccountCircle />}
           endIcon={<ArrowDropDown />}
           aria-haspopup='true'
-          data-testid='buttonMenu'
+          data-testid='menuButton'
           aria-controls={open ? 'menu-list-grow' : undefined}
         >
           {user.userName}
@@ -88,21 +88,21 @@ export const UserInfo = () => {
               <Paper className={classes.paper}>
                 <ClickAwayListener onClickAway={handleClose}>
                   <List className={classes.list}>
-                    <ListItem>
+                    <ListItem data-testid='tenant'>
                       <ListItemIcon className={classes.listItemIcon}>
                         <BookmarkBorder />
                       </ListItemIcon>
                       <ListItemText>{t('tenant', { tenant: user.tenant })}</ListItemText>
                     </ListItem>
 
-                    <ListItem>
+                    <ListItem data-testid='version'>
                       <ListItemIcon className={classes.listItemIcon}>
                         <BookmarkBorder />
                       </ListItemIcon>
                       <ListItemText>{t('version', { version })}</ListItemText>
                     </ListItem>
 
-                    <ListItem divider>
+                    <ListItem data-testid='darkMode' divider>
                       <ListItemIcon className={classes.listItemIcon}>
                         <BookmarkBorder />
                       </ListItemIcon>
@@ -117,14 +117,22 @@ export const UserInfo = () => {
                       />
                     </ListItem>
 
-                    <ListItem className={classes.clickableListItem} onClick={handleChangePassword}>
+                    <ListItem
+                      data-testid='changePassword'
+                      className={classes.clickableListItem}
+                      onClick={handleChangePassword}
+                    >
                       <ListItemIcon className={classes.listItemIcon}>
                         <Lock />
                       </ListItemIcon>
                       <ListItemText>{t('changePassword')}</ListItemText>
                     </ListItem>
 
-                    <ListItem className={classes.clickableListItem} onClick={handleLogout}>
+                    <ListItem
+                      data-testid='logout'
+                      className={classes.clickableListItem}
+                      onClick={handleLogout}
+                    >
                       <ListItemIcon className={classes.listItemIcon}>
                         <ExitToApp />
                       </ListItemIcon>
