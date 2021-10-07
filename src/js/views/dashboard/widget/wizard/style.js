@@ -4,9 +4,9 @@ export default makeStyles(theme => ({
   root: {
     width: '100%',
     marginBottom: 50,
-    minHeight: 'calc(100% - 50px)',
+    minHeight: '100%',
     display: 'flex',
-    flexDirection: 'column',
+    flexDirection: 'row',
   },
   backButton: {
     marginRight: theme.spacing(1),
@@ -21,16 +21,16 @@ export default makeStyles(theme => ({
   form: {
     display: 'flex',
     flex: 1,
+    flexDirection: 'column',
+  },
+  formContent: {
+    display: 'flex',
+    flex: 1,
   },
   footer: {
-    width: '100%',
+    display: 'flex',
+    justifyContent: 'space-between',
     padding: '10px 0',
-    position: 'fixed',
-    bottom: 0,
-    left: 0,
-    zIndex: 999,
-    backdropFilter: 'blur(4px)',
-    backgroundColor: 'rgb(250 250 250 / 30%)',
 
     '& button': {
       margin: '0 10px',

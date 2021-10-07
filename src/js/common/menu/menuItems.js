@@ -3,19 +3,13 @@ import {
   DeviceHub,
   DevicesOther,
   FilterNone,
+  Home,
   NotificationImportant,
   People,
   SupervisedUserCircle,
 } from '@material-ui/icons';
 
 export const MENU_ITEMS = [
-  {
-    visible: true,
-    i18n: 'devices',
-    label: 'Dispositivos',
-    path: '/devices',
-    icon: DevicesOther,
-  },
   {
     visible: false,
     i18n: 'templates',
@@ -52,9 +46,23 @@ export const MENU_ITEMS = [
   },
   {
     visible: true,
+    i18n: 'home',
+    label: 'home',
+    path: '/home',
+    icon: Home,
+  },
+  {
+    visible: true,
     i18n: 'dashboard',
     label: 'Dashboard',
     path: '/dashboard',
     icon: Dashboard,
+  },
+  {
+    visible: true,
+    i18n: 'devices',
+    label: 'Dispositivos',
+    path: '/devices',
+    icon: DevicesOther,
   },
 ];

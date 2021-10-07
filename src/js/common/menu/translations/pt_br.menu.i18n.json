@@ -5,5 +5,8 @@
   "notifications": "Notificações",
   "users": "Usuários",
   "profiles": "Perfis",
-  "dashboard": "Dashboard"
+  "dashboard": "Dashboard",
+  "home": "Home",
+  "help": "Ajuda",
+  "exit": "Sair"
 }

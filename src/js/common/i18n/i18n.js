@@ -5,6 +5,8 @@ import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.js
 import dashboardPtBr from '../../views/dashboard/translations/pt_br.dashboard.i18n.json';
 import devicesEn from '../../views/devices/translations/en.devices.i18n.json';
 import devicesPtBr from '../../views/devices/translations/pt_br.devices.i18n.json';
+import homeEn from '../../views/home/translations/en.home.i18n.json';
+import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
@@ -22,6 +24,7 @@ const resources = {
     paginator: paginatorEn,
     dashboard: dashboardEn,
     devices: devicesEn,
+    home: homeEn,
   },
   pt: {
     login: loginPtBr,
@@ -30,6 +33,7 @@ const resources = {
     paginator: paginatorPtBr,
     dashboard: dashboardPtBr,
     devices: devicesPtBr,
+    home: homePtBr,
   },
 };
 const lng = navigator.language || navigator.userLanguage;
