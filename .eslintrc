@@ -32,7 +32,8 @@
     "jsx-a11y/href-no-hash": 0,
     "import/prefer-default-export": 0,
     "react/prop-types": 0,
-    "react/jsx-filename-extension": 0,
+    "react/jsx-filename-extension": [0],
+    "import/extensions": "off",
     "react/jsx-props-no-spreading": "off",
     "comma-dangle": [2, "always-multiline"],
     // "arrow-parens": [
