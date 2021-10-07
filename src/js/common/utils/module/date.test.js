@@ -1,3 +1,5 @@
+import timezoneMock from 'timezone-mock';
+
 import * as dateUtil from './date';
 
 const inputValidDate = new Date(Date.UTC(2020, 0, 31, 16, 55, 0));
@@ -7,6 +9,14 @@ const resultFormattedDate = '16:55:00';
 const resultISOFormatted = '2020-01-31T16:55:00.000Z';
 
 describe('date util tests', () => {
+  beforeAll(() => {
+    timezoneMock.register('UTC');
+  });
+
+  afterAll(() => {
+    timezoneMock.unregister();
+  });
+
   it('should be able to format date to HH:mm:ss format when a date is informed', () => {
     const formattedDate = dateUtil.formatDate(inputValidDate, 'HH:mm:ss');
     expect(formattedDate).toEqual(resultFormattedDate);
