@@ -1,57 +1,90 @@
 import { protectAPI } from 'APIs';
 
-const GQL_WIDGET_HISTORIC = `
-query getDeviceHistory($filter: HistoryInput!, $configs: ConfigsInput) {
-  getDeviceHistoryForDashboard(filter: $filter, configs: $configs)
-}
-`;
-
-const GQL_DEVICES_LIST = `
-query getDevices($page: PageInput, $filter: FilterDeviceInput) {
-  getDevices(page: $page, filter: $filter) {
-    totalPages
-    currentPage
-    devices {
-      id
-      label
-      attrs{
-        label
-        valueType
-        isDynamic
-        staticValue
-      }
-    }
-  }
-}
-`;
-
-export const parseHistoryQuery = (filter, configs, isRealTime) => {
-  const variables = {
-    filter,
-    configs,
-  };
-  return {
-    query: GQL_WIDGET_HISTORIC,
-    variables: JSON.stringify(variables),
-    isRealTime,
-  };
-};
-
-const parseDevicesListQuery = (page, filter) => {
-  const variables = {
-    page,
-    filter,
-  };
-  return {
-    query: GQL_DEVICES_LIST,
-    variables: JSON.stringify(variables),
-  };
-};
-
 export const getDevicesList = (page, filter) => {
-  return protectAPI(parseDevicesListQuery(page, filter));
+  return protectAPI({
+    query: `
+      query getDevices($page: PageInput, $filter: FilterDeviceInput) {
+        getDevices(page: $page, filter: $filter) {
+          totalPages
+          currentPage
+          devices {
+            id
+            label
+            updated
+            created
+            attrs{
+              label
+              valueType
+              isDynamic
+              staticValue
+            }
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      page,
+      filter,
+    }),
+  });
 };
 
-export const getDevicesHistoryParsed = filter => {
-  return protectAPI(filter);
+export const deleteDevice = deviceId => {
+  return protectAPI({
+    query: `
+      mutation deleteDevice($deviceId: String!) {
+        deleteDevice(deviceId: $deviceId) {
+          id
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      deviceId,
+    }),
+  });
+};
+
+export const deleteMultipleDevices = deviceIdArray => {
+  return protectAPI({
+    query: `
+      mutation deleteMultipleDevices($deviceIdArray: [String]!) {
+        deleteMultipleDevices(deviceIdArray: $deviceIdArray) {
+          id
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      deviceIdArray,
+    }),
+  });
+};
+
+export const favoriteDevice = ({ deviceId, user, tenant }) => {
+  return protectAPI({
+    query: `
+      mutation favoriteDevice($deviceId: String!, $user: String, $tenant: String!) {
+        favoriteDevice(deviceId: $deviceId, user: $user, tenant: $tenant)
+      }
+    `,
+    variables: JSON.stringify({
+      deviceId,
+      user,
+      tenant,
+    }),
+  });
+};
+
+export const favoriteMultipleDevices = ({ deviceIdArray, user, tenant }) => {
+  return protectAPI({
+    query: `
+      mutation favoriteMultipleDevices($deviceIdArray: [String]!, $user: String, $tenant: String!) {
+        favoriteMultipleDevices(deviceIdArray: $deviceIdArray, user: $user, tenant: $tenant)
+      }
+    `,
+    variables: JSON.stringify({
+      deviceIdArray,
+      user,
+      tenant,
+    }),
+  });
 };

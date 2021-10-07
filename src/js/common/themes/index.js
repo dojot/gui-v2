@@ -22,10 +22,12 @@ const theme = createMuiTheme({
       default: '#FAFAFA',
       paper: '#FFF',
       login: '#dadde0',
+      devices: '#f2f2f2',
     },
     table: {
       head: '#FFFFFF',
     },
+    favorite: '#F1B44C',
   },
 
   overrides: {

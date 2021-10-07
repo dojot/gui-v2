@@ -12,13 +12,6 @@ import {
 export const MENU_ITEMS = [
   {
     visible: false,
-    i18n: 'devices',
-    label: 'Dispositivos',
-    path: '/devices',
-    icon: DevicesOther,
-  },
-  {
-    visible: false,
     i18n: 'templates',
     label: 'Modelos',
     path: '/templates',
@@ -64,5 +57,12 @@ export const MENU_ITEMS = [
     label: 'Dashboard',
     path: '/dashboard',
     icon: Dashboard,
+  },
+  {
+    visible: true,
+    i18n: 'devices',
+    label: 'Dispositivos',
+    path: '/devices',
+    icon: DevicesOther,
   },
 ];

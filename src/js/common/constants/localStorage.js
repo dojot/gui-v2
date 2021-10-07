@@ -1,0 +1,3 @@
+export const DEVICES_PAGE_KEYS = {
+  VIEW_MODE: '@DOJOT/DEVICES_PAGE_VIEW_MODE',
+};

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useStyles = makeStyles(theme => ({
+export const useStyles = makeStyles(() => ({
   root: {
     display: 'flex',
     flex: 1,
@@ -8,7 +8,6 @@ export const useStyles = makeStyles(theme => ({
   content: {
     marginTop: 64,
     flexGrow: 1,
-    padding: theme.spacing(1),
     width: '50%',
     position: 'relative',
   },

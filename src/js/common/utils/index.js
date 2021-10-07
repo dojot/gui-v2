@@ -5,3 +5,4 @@ export { compareAll } from './module/compare';
 export { object2Array } from './module/array';
 export { generateScheme } from './module/schema';
 export { hexToRgb, rgbToHex } from './module/converters';
+export { descendingComparator, getComparator } from './module/comparators';
