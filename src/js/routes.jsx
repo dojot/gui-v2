@@ -18,6 +18,7 @@ const LogOut = LazyLoading(() => import('views/logout'));
 const LogIn = LazyLoading(() => import('views/login'));
 const Devices = LazyLoading(() => import('views/devices'));
 const Templates = LazyLoading(() => import('views/templates'));
+const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
 const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
@@ -36,6 +37,7 @@ const Routes = props => (
     <PrivateRoute path='/home' component={Home} attrs={props} />
     <PrivateRoute path='/devices' component={Devices} attrs={props} />
     <PrivateRoute path='/templates' component={Templates} attrs={props} exact />
+    <PrivateRoute path='/templates/new' component={CreateTemplate} attrs={props} />
     <PrivateRoute path='/flow' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/notification' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/users' component={TestRouteHandler} attrs={props} />
