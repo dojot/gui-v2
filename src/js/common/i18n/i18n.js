@@ -9,6 +9,8 @@ import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
+import templatesEn from '../../views/templates/translations/en.templates.i18n.json';
+import templatesPtBr from '../../views/templates/translations/pt_br.templates.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
@@ -25,6 +27,7 @@ const resources = {
     dashboard: dashboardEn,
     devices: devicesEn,
     home: homeEn,
+    templates: templatesEn,
   },
   pt: {
     login: loginPtBr,
@@ -34,9 +37,12 @@ const resources = {
     dashboard: dashboardPtBr,
     devices: devicesPtBr,
     home: homePtBr,
+    templates: templatesPtBr,
   },
 };
+
 const lng = navigator.language || navigator.userLanguage;
+
 i18n.use(initReactI18next).init({
   ns: ['login', 'menu', 'common', 'dashboard'],
   defaultNS: 'common',
