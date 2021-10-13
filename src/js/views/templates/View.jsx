@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { usePersistentState } from '../../common/hooks';
+import { actions as templateActions } from '../../redux/modules/templates';
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
@@ -65,7 +66,7 @@ const Templates = () => {
   };
 
   const handleConfirmMultipleTemplatesDeletion = () => {
-    dispatch({ type: 'DELETE_MULTIPLE', payload: selectedTemplates });
+    dispatch(templateActions.deleteMultipleTemplates({ templateIdArray: selectedTemplates }));
     handleHideMassActions();
   };
 
@@ -89,7 +90,7 @@ const Templates = () => {
 
   const handleConfirmTemplateDeletion = () => {
     const templateId = templateOptionsMenu.template.id;
-    dispatch({ type: 'DELETE_SINGLE', payload: templateId });
+    dispatch(templateActions.deleteTemplate({ templateId }));
     setSelectedTemplates(currentSelectedTemplates => {
       return currentSelectedTemplates.filter(id => id !== templateId);
     });
@@ -101,19 +102,18 @@ const Templates = () => {
   };
 
   const handleSearchTemplate = search => {
-    dispatch({ type: 'SEARCH', payload: search });
+    dispatch(templateActions.getTemplates({ filter: { label: search } }));
   };
 
   useEffect(() => {
-    dispatch({
-      type: 'SEARCH',
-      payload: {
+    dispatch(
+      templateActions.getTemplates({
         page: {
           number: page,
           size: rowsPerPage,
         },
-      },
-    });
+      }),
+    );
   }, [dispatch, page, rowsPerPage]);
 
   useEffect(() => {
