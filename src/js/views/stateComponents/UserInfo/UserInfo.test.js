@@ -29,18 +29,22 @@ describe('UserInfo', () => {
 
   it('should be able to open menu when button menu is clicked', () => {
     const { getByTestId } = render(<UserInfo />);
-    const buttonMenu = getByTestId('buttonMenu');
+    const menuButton = getByTestId('menuButton');
 
     act(() => {
-      fireEvent.click(buttonMenu);
+      fireEvent.click(menuButton);
     });
 
-    const version = getByTestId('version');
-    const profile = getByTestId('profile');
     const tenant = getByTestId('tenant');
+    const version = getByTestId('version');
+    const darkMode = getByTestId('darkMode');
+    const changePassword = getByTestId('changePassword');
+    const logout = getByTestId('logout');
 
-    expect(version).toBeInTheDocument();
-    expect(profile).toBeInTheDocument();
     expect(tenant).toBeInTheDocument();
+    expect(version).toBeInTheDocument();
+    expect(darkMode).toBeInTheDocument();
+    expect(changePassword).toBeInTheDocument();
+    expect(logout).toBeInTheDocument();
   });
 });

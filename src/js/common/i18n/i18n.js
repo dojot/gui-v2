@@ -9,6 +9,8 @@ import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
+import userInfoEn from '../../views/stateComponents/UserInfo/translations/en_us.userInfo.i18n.json';
+import userInfoBr from '../../views/stateComponents/UserInfo/translations/pt_br.userInfo.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
 import templateTableEn from '../components/TemplateTable/translations/en.templateTable.i18n.json';
@@ -28,6 +30,7 @@ const resources = {
     devices: devicesEn,
     home: homeEn,
     templateTable: templateTableEn,
+    userInfo: userInfoEn,
   },
   pt: {
     login: loginPtBr,
@@ -38,6 +41,7 @@ const resources = {
     devices: devicesPtBr,
     home: homePtBr,
     templateTable: templateTablePtBr,
+    userInfo: userInfoBr,
   },
 };
 const lng = navigator.language || navigator.userLanguage;
