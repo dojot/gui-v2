@@ -18,5 +18,6 @@
   "finish": "Finalizar",
   "noData": "Sem Dados",
   "required": "Obrigatório",
-  "min5characters": "Minimo de 5 caracteres"
+  "min5characters": "Minimo de 5 caracteres",
+  "save": "Salvar"
 }

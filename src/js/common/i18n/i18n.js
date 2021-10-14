@@ -15,6 +15,8 @@ import templatesEn from '../../views/templates/translations/en.templates.i18n.js
 import templatesPtBr from '../../views/templates/translations/pt_br.templates.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
+import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
+import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
@@ -31,6 +33,7 @@ const resources = {
     home: homeEn,
     templates: templatesEn,
     createTemplate: createTemplateEn,
+    templateCreation: templateCreationEn,
   },
   pt: {
     login: loginPtBr,
@@ -42,6 +45,7 @@ const resources = {
     home: homePtBr,
     templates: templatesPtBr,
     createTemplate: createTemplatePtBr,
+    templateCreation: templateCreationPtBr,
   },
 };
 
