@@ -68,7 +68,7 @@ const CreateTemplate = () => {
 
   return (
     <ViewContainer headerTitle={t('title')}>
-      <Box className={classes.container} padding={2}>
+      <Box className={classes.container} padding={4}>
         <Box className={classes.content}>
           <TemplateCreation
             className={classes.templateCreation}
@@ -80,7 +80,7 @@ const CreateTemplate = () => {
             handleUpdateAttr={handleUpdateAttr}
           />
 
-          <Box className={classes.actions} paddingY={2}>
+          <Box className={classes.actions} paddingTop={4}>
             <Button size='large' variant='text' onClick={handleCancelTemplateCreation}>
               {t('common:cancel')}
             </Button>
