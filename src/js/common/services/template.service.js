@@ -55,3 +55,19 @@ export const deleteMultipleTemplates = templateIdArray => {
     }),
   });
 };
+
+export const createTemplate = template => {
+  return protectAPI({
+    query: `
+      mutation createTemplate($name: [String]!, $attrs: Attrs) {
+        createTemplate(name: $name, attrs: $attrs) {
+          id
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      name: template.name,
+      attrs: template.attrs,
+    }),
+  });
+};

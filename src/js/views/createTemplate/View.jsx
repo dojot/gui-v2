@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { TemplateCreation } from '../../common/components/WizardForms';
+import { actions as templateActions } from '../../redux/modules/templates';
 import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
 
@@ -63,7 +64,12 @@ const CreateTemplate = () => {
       return attrClone;
     });
 
-    dispatch({ type: 'SAVE', payload: attrsWithoutId });
+    dispatch(
+      templateActions.createTemplate({
+        name: templateName,
+        attrs: attrsWithoutId,
+      }),
+    );
   };
 
   return (

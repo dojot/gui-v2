@@ -6,6 +6,7 @@ const GET_TEMPLATES = 'app/templates/GET_TEMPLATES';
 const UPDATE_TEMPLATES = 'app/templates/UPDATE_TEMPLATES';
 const DELETE_TEMPLATE = 'app/templates/DELETE_TEMPLATE';
 const DELETE_ALL_TEMPLATES = 'app/templates/DELETE_ALL_TEMPLATES';
+const CREATE_TEMPLATE = 'app/templates/CREATE_TEMPLATE';
 
 export const constants = {
   LOADING,
@@ -13,6 +14,7 @@ export const constants = {
   UPDATE_TEMPLATES,
   DELETE_TEMPLATE,
   DELETE_ALL_TEMPLATES,
+  CREATE_TEMPLATE,
 };
 
 export const getTemplates = createAction(GET_TEMPLATES, payload => ({
@@ -40,12 +42,18 @@ export const deleteMultipleTemplates = createAction(DELETE_ALL_TEMPLATES, payloa
   templateIdArray: payload.templateIdArray,
 }));
 
+export const createTemplate = createAction(CREATE_TEMPLATE, payload => ({
+  name: payload.templateName,
+  attrs: payload.attrs,
+}));
+
 export const actions = {
   getTemplates,
   updateTemplates,
   setLoadingTemplates,
   deleteTemplate,
   deleteMultipleTemplates,
+  createTemplate,
 };
 
 export const reducers = {
