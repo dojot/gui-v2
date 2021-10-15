@@ -9,28 +9,26 @@ import { usePaginationStyles } from './style';
 const Pagination = ({
   page,
   rowsPerPage,
-  totalOfTemplates,
-  numberOfSelectedTemplates,
+  totalOfAttrs,
+  numberOfSelectedAttrs,
   handleChangePage,
   handleChangeRowsPerPage,
 }) => {
-  const { t } = useTranslation('templates');
+  const { t } = useTranslation('templateAttrs');
   const classes = usePaginationStyles();
 
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
-      <Typography>{t('totalOfTemplates', { count: totalOfTemplates })}</Typography>
+      <Typography>{t('totalOfAttrs', { count: totalOfAttrs })}</Typography>
 
-      {!!numberOfSelectedTemplates && (
-        <Typography>
-          {t('numberOfSelectedTemplates', { count: numberOfSelectedTemplates })}
-        </Typography>
+      {!!numberOfSelectedAttrs && (
+        <Typography>{t('numberOfSelectedAttrs', { count: numberOfSelectedAttrs })}</Typography>
       )}
 
       <TablePagination
         page={page}
         component='div'
-        count={totalOfTemplates}
+        count={totalOfAttrs}
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
@@ -46,14 +44,14 @@ const Pagination = ({
 Pagination.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  totalOfTemplates: PropTypes.number,
-  numberOfSelectedTemplates: PropTypes.number.isRequired,
+  totalOfAttrs: PropTypes.number,
+  numberOfSelectedAttrs: PropTypes.number.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
 };
 
 Pagination.defaultProps = {
-  totalOfTemplates: 0,
+  totalOfAttrs: 0,
 };
 
 export default Pagination;

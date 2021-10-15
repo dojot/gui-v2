@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useSearchBarStyles = makeStyles(theme => ({
   searchContainer: {
-    background: theme.palette.background.templates,
+    background: theme.palette.grey[100],
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',

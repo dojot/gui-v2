@@ -31,23 +31,23 @@ export const useSearchBarStyles = makeStyles(theme => ({
 }));
 
 export const useCardsStyles = makeStyles(theme => ({
-  deviceCard: {
+  templateCard: {
     cursor: 'pointer',
     transition: 'background 0.1s ease-in-out',
     '&:hover': {
       background: theme.palette.action.hover,
     },
   },
-  deviceCardIcon: {
+  templateCardIcon: {
     fontSize: '40px',
   },
-  deviceCardTitle: {
+  templateCardTitle: {
     fontSize: '16px',
     fontWeight: 'bold',
   },
 }));
 
-export const useDeviceOptionsStyles = makeStyles(theme => ({
+export const useOptionsMenuStyles = makeStyles(theme => ({
   menuItem: {
     display: 'flex',
     alignItems: 'center',
@@ -107,7 +107,7 @@ export const useMassActionsStyles = makeStyles(theme => ({
 
 export const useDataTableStyles = makeStyles(theme => ({
   tableHead: {
-    background: theme.palette.background.devices,
+    background: theme.palette.background.templates,
   },
   clickableCell: {
     cursor: 'pointer',

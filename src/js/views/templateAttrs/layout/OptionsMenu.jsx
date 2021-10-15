@@ -10,12 +10,11 @@ import { useOptionsMenuStyles } from './style';
 const OptionsMenu = ({
   isShowingMenu,
   anchorElement,
-  handleEditTemplate,
-  handleDeleteTemplate,
+  handleEditAttr,
+  handleDeleteAttr,
   handleHideOptionsMenu,
-  handleDuplicateTemplate,
 }) => {
-  const { t } = useTranslation(['templates', 'common']);
+  const { t } = useTranslation(['templateAttrs', 'common']);
   const classes = useOptionsMenuStyles();
 
   return (
@@ -25,17 +24,12 @@ const OptionsMenu = ({
       anchorEl={anchorElement}
       onClose={handleHideOptionsMenu}
     >
-      <MenuItem className={classes.menuItem} onClick={handleEditTemplate}>
+      <MenuItem className={classes.menuItem} onClick={handleEditAttr}>
         <Edit />
         <span className={classes.menuItemText}>{t('common:edit')}</span>
       </MenuItem>
 
-      <MenuItem className={classes.menuItem} onClick={handleDuplicateTemplate}>
-        <Edit />
-        <span className={classes.menuItemText}>{t('common:duplicate')}</span>
-      </MenuItem>
-
-      <MenuItem className={classes.menuItem} onClick={handleDeleteTemplate}>
+      <MenuItem className={classes.menuItem} onClick={handleDeleteAttr}>
         <Delete />
         <span className={classes.menuItemText}>{t('common:exclude')}</span>
       </MenuItem>
@@ -46,10 +40,9 @@ const OptionsMenu = ({
 OptionsMenu.propTypes = {
   isShowingMenu: PropTypes.bool.isRequired,
   anchorElement: PropTypes.object,
-  handleEditTemplate: PropTypes.func.isRequired,
-  handleDeleteTemplate: PropTypes.func.isRequired,
+  handleEditAttr: PropTypes.func.isRequired,
+  handleDeleteAttr: PropTypes.func.isRequired,
   handleHideOptionsMenu: PropTypes.func.isRequired,
-  handleDuplicateTemplate: PropTypes.func.isRequired,
 };
 
 OptionsMenu.defaultProps = {

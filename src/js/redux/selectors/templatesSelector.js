@@ -5,7 +5,7 @@ export const templatesSelector = createSelector(
   map => map.get('templates'),
 );
 
-export const loadingDevicesSelector = createSelector(
+export const loadingTemplatesSelector = createSelector(
   state => state.templates,
   map => map.get('loading'),
 );

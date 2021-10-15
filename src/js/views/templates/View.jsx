@@ -9,6 +9,11 @@ import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { usePersistentState } from '../../common/hooks';
 import { actions as templateActions } from '../../redux/modules/templates';
+import {
+  templatesSelector,
+  loadingTemplatesSelector,
+  paginationControlSelector,
+} from '../../redux/selectors/templatesSelector';
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
@@ -26,9 +31,9 @@ const Templates = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const templates = useSelector(() => []);
-  const isLoadingTemplates = useSelector(() => false);
-  const { totalPages } = useSelector(() => ({ totalPages: 0 }));
+  const templates = useSelector(templatesSelector);
+  const isLoadingTemplates = useSelector(loadingTemplatesSelector);
+  const { totalPages } = useSelector(paginationControlSelector);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
