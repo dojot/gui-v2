@@ -113,3 +113,18 @@ export const useDataTableStyles = makeStyles(theme => ({
     cursor: 'pointer',
   },
 }));
+
+export const useAttrManagementModalStyles = makeStyles(theme => ({
+  selectLabel: {
+    padding: theme.spacing(0, 2),
+  },
+  actions: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    margin: '0 -8px',
+    '& > *': {
+      margin: '0 8px',
+    },
+  },
+}));

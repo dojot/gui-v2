@@ -4,16 +4,14 @@ import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@m
 import { ViewModule, List, Search, Add, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
 
 import { VIEW_MODE } from '../../../common/constants';
 import { useDebounce } from '../../../common/hooks';
 import { useSearchBarStyles } from './style';
 
-const SearchBar = ({ viewMode, handleSearchAttr, handleChangeViewMode }) => {
+const SearchBar = ({ viewMode, handleSearchAttr, handleCreateAttr, handleChangeViewMode }) => {
   const { t } = useTranslation('templateAttrs');
   const classes = useSearchBarStyles();
-  const history = useHistory();
 
   const searchInputRef = useRef(null);
 
@@ -30,10 +28,6 @@ const SearchBar = ({ viewMode, handleSearchAttr, handleChangeViewMode }) => {
       handleSearchAttr(search);
     },
   });
-
-  const handleCreateAttr = () => {
-    history.push('/templates/new');
-  };
 
   const handleClearSearch = () => {
     handleSearchAttr('');
@@ -105,6 +99,7 @@ const SearchBar = ({ viewMode, handleSearchAttr, handleChangeViewMode }) => {
 SearchBar.propTypes = {
   viewMode: PropTypes.oneOf(Object.values(VIEW_MODE)).isRequired,
   handleSearchAttr: PropTypes.func.isRequired,
+  handleCreateAttr: PropTypes.func.isRequired,
   handleChangeViewMode: PropTypes.func.isRequired,
 };
 

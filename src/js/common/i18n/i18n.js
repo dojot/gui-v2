@@ -21,7 +21,9 @@ import templateCreationEn from '../components/WizardForms/TemplateCreation/trans
 import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
+import attrsEn from './translations/en.attrs.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
+import attrsPtBr from './translations/pt_br.attrs.i18n.json';
 import commonPtBr from './translations/pt_br.common.i18n.json';
 
 const resources = {
@@ -37,6 +39,7 @@ const resources = {
     createTemplate: createTemplateEn,
     templateCreation: templateCreationEn,
     templateAttrs: templateAttrsEn,
+    attrs: attrsEn,
   },
   pt: {
     login: loginPtBr,
@@ -50,6 +53,7 @@ const resources = {
     createTemplate: createTemplatePtBr,
     templateCreation: templateCreationPtBr,
     templateAttrs: templateAttrsPtBr,
+    attrs: attrsPtBr,
   },
 };
 

@@ -3,24 +3,5 @@
   "subtitle": "Dica: Aproveite para criar um modelo que possa ser reutilizado em outros dispositivos.",
   "templateNamePh": "Nome do Modelo",
   "createAttrButton": "Criar Atributo",
-  "noAttr": "Nenhum atributo foi criado",
-  "attrTable": {
-    "attrName": "Nome do Atributo",
-    "attrType": "Tipo do Atributo",
-    "attrValueType": "Tipo do Valor",
-    "attrValue": "Valor"
-  },
-  "attrType": {
-    "dynamic": "Valor Dinâmico",
-    "static": "Valor Estático",
-    "actuator": "Atuador"
-  },
-  "attrValueType": {
-    "bool": "Booleano",
-    "geo_point": "Geo",
-    "float": "Float",
-    "integer": "Inteiro",
-    "string": "Texto",
-    "object": "Objeto"
-  }
+  "noAttr": "Nenhum atributo foi criado"
 }

@@ -45,10 +45,24 @@ export function* handleDeleteMultipleAttrs(action) {
 
 export function* handleCreateAttr(action) {
   try {
-    const { templateId, ...attrData } = action.payload;
-    const { createAttr } = yield TemplateAttr.createAttr(templateId, attrData);
+    const { templateId, attr } = action.payload;
+    const { createAttr } = yield TemplateAttr.createAttr(templateId, attr);
     const attrs = yield select(attrsSelector);
     yield put(actions.updateAttrs({ attrs: [...attrs, createAttr] }));
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
+export function* handleEditAttr(action) {
+  try {
+    const { templateId, attr } = action.payload;
+    const { editAttr } = yield TemplateAttr.editAttr(templateId, attr);
+    const attrs = yield select(attrsSelector);
+    const attrIndex = attrs.findIndex(({ id }) => id === attr.id);
+    const attrsClone = [...attrs];
+    attrsClone.splice(attrIndex, 1, editAttr);
+    yield put(actions.updateAttrs({ attrs: attrsClone }));
   } catch (e) {
     console.log(e.message);
   }
@@ -70,9 +84,14 @@ function* watchCreateAttr() {
   yield takeLatest(constants.CREATE_ATTR, handleCreateAttr);
 }
 
+function* watchEditAttr() {
+  yield takeLatest(constants.EDIT_ATTR, handleEditAttr);
+}
+
 export const templateAttrsSaga = [
   fork(watchGetAttrs),
   fork(watchDeleteAttr),
   fork(watchDeleteMultipleAttrs),
   fork(watchCreateAttr),
+  fork(watchEditAttr),
 ];

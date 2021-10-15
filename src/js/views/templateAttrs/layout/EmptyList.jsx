@@ -2,16 +2,11 @@ import React from 'react';
 
 import { Box, Button, Grid, Typography } from '@material-ui/core';
 import { Add, LocalOffer } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router';
 
-const EmptyList = () => {
+const EmptyList = ({ handleCreateAttr }) => {
   const { t } = useTranslation('templateAttrs');
-  const history = useHistory();
-
-  const handleCreateAttr = () => {
-    history.push('/templates/attr/new');
-  };
 
   return (
     <Box style={{ height: '100%' }} padding={2}>
@@ -34,6 +29,10 @@ const EmptyList = () => {
       </Grid>
     </Box>
   );
+};
+
+EmptyList.propTypes = {
+  handleCreateAttr: PropTypes.func.isRequired,
 };
 
 export default EmptyList;

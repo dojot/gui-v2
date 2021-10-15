@@ -7,6 +7,7 @@ const UPDATE_ATTRS = 'app/templateAttrs/UPDATE_ATTRS';
 const DELETE_ATTR = 'app/templateAttrs/DELETE_ATTR';
 const DELETE_ALL_ATTRS = 'app/templateAttrs/DELETE_ALL_ATTRS';
 const CREATE_ATTR = 'app/templateAttrs/CREATE_ATTR';
+const EDIT_ATTR = 'app/templateAttrs/EDIT_ATTR';
 
 export const constants = {
   LOADING,
@@ -15,13 +16,8 @@ export const constants = {
   DELETE_ATTR,
   DELETE_ALL_ATTRS,
   CREATE_ATTR,
+  EDIT_ATTR,
 };
-
-export const getAttrs = createAction(GET_ATTRS, payload => ({
-  templateId: payload.templateId,
-  page: payload.page,
-  filter: payload.filter,
-}));
 
 export const updateAttrs = createAction(UPDATE_ATTRS, payload => ({
   attrs: payload.attrs,
@@ -33,6 +29,12 @@ export const updateAttrs = createAction(UPDATE_ATTRS, payload => ({
 
 export const setLoadingAttrs = createAction(LOADING, payload => ({
   loading: payload,
+}));
+
+export const getAttrs = createAction(GET_ATTRS, payload => ({
+  templateId: payload.templateId,
+  page: payload.page,
+  filter: payload.filter,
 }));
 
 export const deleteAttr = createAction(DELETE_ATTR, payload => ({
@@ -47,10 +49,12 @@ export const deleteMultipleAttrs = createAction(DELETE_ALL_ATTRS, payload => ({
 
 export const createAttr = createAction(CREATE_ATTR, payload => ({
   templateId: payload.templateId,
-  name: payload.name,
-  type: payload.type,
-  valueType: payload.valueType,
-  value: payload.value,
+  attr: payload.attr,
+}));
+
+export const editAttr = createAction(EDIT_ATTR, payload => ({
+  templateId: payload.templateId,
+  attr: payload.attr,
 }));
 
 export const actions = {
@@ -60,6 +64,7 @@ export const actions = {
   deleteAttr,
   deleteMultipleAttrs,
   createAttr,
+  editAttr,
 };
 
 export const reducers = {

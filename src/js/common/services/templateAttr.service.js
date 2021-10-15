@@ -23,7 +23,7 @@ export const getAttrList = page => {
   });
 };
 
-export const deleteAttr = templateId => {
+export const deleteAttr = (templateId, attrId) => {
   return protectAPI({
     query: `
       mutation deleteAttr($templateId: String!, $attrId: String!) {
@@ -34,11 +34,12 @@ export const deleteAttr = templateId => {
     `,
     variables: JSON.stringify({
       templateId,
+      attrId,
     }),
   });
 };
 
-export const deleteMultipleAttrs = templateIdArray => {
+export const deleteMultipleAttrs = (templateId, attrIdArray) => {
   return protectAPI({
     query: `
       mutation deleteMultipleAttrs($templateId: String!, $attrIdArray: [String]!) {
@@ -48,12 +49,13 @@ export const deleteMultipleAttrs = templateIdArray => {
       }
     `,
     variables: JSON.stringify({
-      templateIdArray,
+      templateId,
+      attrIdArray,
     }),
   });
 };
 
-export const createAttr = template => {
+export const createAttr = (templateId, attr) => {
   return protectAPI({
     query: `
       mutation createAttr($templateId: String!, $attr: Attr) {
@@ -63,8 +65,24 @@ export const createAttr = template => {
       }
     `,
     variables: JSON.stringify({
-      name: template.name,
-      attrs: template.attrs,
+      templateId,
+      attr,
+    }),
+  });
+};
+
+export const editAttr = (templateId, attr) => {
+  return protectAPI({
+    query: `
+      mutation createAttr($templateId: String!, $attr: Attr) {
+        createAttr(templateId: $templateId, attr: $attr) {
+          id
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      templateId,
+      attr,
     }),
   });
 };

@@ -28,5 +28,9 @@
     "message": "Tem certeza que deseja excluir todos os atributos selecionados?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "attrManagement": {
+    "newAttr": "Criar Novo Atributo",
+    "editAttr": "Editar Atributo"
   }
 }

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, useParams } from 'react-router';
+import { useParams } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATE_ATTRIBUTES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
@@ -15,6 +15,7 @@ import {
   paginationControlSelector,
 } from '../../redux/selectors/templateAttrsSelector';
 import { ViewContainer } from '../stateComponents';
+import AttrManagementModal from './layout/AttrManagementModal';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
 import EmptyList from './layout/EmptyList';
@@ -29,7 +30,6 @@ const TemplateAttrs = () => {
   const { t } = useTranslation('templateAttrs');
   const { templateId } = useParams();
   const dispatch = useDispatch();
-  const history = useHistory();
   const classes = useStyles();
 
   const attrs = useSelector(attrsSelector);
@@ -46,6 +46,8 @@ const TemplateAttrs = () => {
 
   const [selectedAttrs, setSelectedAttrs] = useState([]);
   const [attrOptionsMenu, setAttrOptionsMenu] = useState(null);
+
+  const [isShowingAttrManagementModal, setIsShowingAttrManagementModal] = useState(false);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
@@ -81,9 +83,7 @@ const TemplateAttrs = () => {
   };
 
   const handleEditAttr = () => {
-    handleHideOptionsMenu();
-    const attrId = attrOptionsMenu.attr.id;
-    history.push(`/attrs/edit/${attrId}`);
+    setIsShowingAttrManagementModal(true);
   };
 
   const handleDeleteAttr = () => {
@@ -101,6 +101,25 @@ const TemplateAttrs = () => {
   const handleCloseAttrDeletionAlert = () => {
     setIsShowingDeleteAlert(false);
     handleHideOptionsMenu();
+  };
+
+  const handleShowAttrManagementModal = () => {
+    setIsShowingAttrManagementModal(true);
+  };
+
+  const handleHideAttrManagementModal = () => {
+    setIsShowingAttrManagementModal(false);
+    handleHideOptionsMenu();
+  };
+
+  const handleSaveAttr = newAttrData => {
+    handleHideAttrManagementModal();
+    const isEditingAttr = !!attrOptionsMenu?.attr;
+    if (isEditingAttr) {
+      dispatch(attrActions.editAttr({ templateId, attr: newAttrData }));
+    } else {
+      dispatch(attrActions.createAttr({ templateId, attr: newAttrData }));
+    }
   };
 
   const handleSearchAttr = search => {
@@ -153,11 +172,19 @@ const TemplateAttrs = () => {
         confirmButtonText={t('deleteMultipleAttrAlert.confirmButton')}
       />
 
+      <AttrManagementModal
+        attrToEdit={attrOptionsMenu?.attr}
+        isOpen={isShowingAttrManagementModal}
+        handleSaveAttr={handleSaveAttr}
+        handleHideModal={handleHideAttrManagementModal}
+      />
+
       <Box className={classes.container}>
         <SearchBar
           viewMode={viewMode}
           handleChangeViewMode={setViewMode}
           handleSearchAttr={handleSearchAttr}
+          handleCreateAttr={handleShowAttrManagementModal}
         />
 
         {selectedAttrs.length > 0 && (
@@ -192,7 +219,7 @@ const TemplateAttrs = () => {
                 />
               )}
 
-              {attrs.length === 0 && <EmptyList />}
+              {attrs.length === 0 && <EmptyList handleCreateAttr={handleShowAttrManagementModal} />}
             </>
           )}
         </Box>

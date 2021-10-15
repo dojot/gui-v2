@@ -19,6 +19,7 @@ import { Close, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { TEMPLATE_ATTR_TYPES, TEMPLATE_ATTR_VALUE_TYPES } from '../../../constants';
 import { useStyles } from './style';
 
 const TemplateCreation = ({
@@ -30,7 +31,7 @@ const TemplateCreation = ({
   handleDeleteAttr,
   handleUpdateAttr,
 }) => {
-  const { t } = useTranslation('templateCreation');
+  const { t } = useTranslation(['templateCreation', 'attrs']);
   const classes = useStyles();
 
   const handleClearTemplateName = () => {
@@ -83,19 +84,19 @@ const TemplateCreation = ({
           <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell>
-                <strong>{t('attrTable.attrName')}</strong>
+                <strong>{t('attrs:attrLabel.attrName')}</strong>
               </TableCell>
 
               <TableCell>
-                <strong>{t('attrTable.attrType')}</strong>
+                <strong>{t('attrs:attrLabel.attrType')}</strong>
               </TableCell>
 
               <TableCell>
-                <strong>{t('attrTable.attrValueType')}</strong>
+                <strong>{t('attrs:attrLabel.attrValueType')}</strong>
               </TableCell>
 
               <TableCell>
-                <strong>{t('attrTable.attrValue')}</strong>
+                <strong>{t('attrs:attrLabel.attrValue')}</strong>
               </TableCell>
 
               <TableCell />
@@ -128,7 +129,7 @@ const TemplateCreation = ({
                       size='small'
                       defaultValue={name}
                       variant='outlined'
-                      placeholder={t('attrTable.attrName')}
+                      placeholder={t('attrs:attrLabel.attrName')}
                       onBlur={e => handleUpdateName(e.target.value)}
                     />
                   </TableCell>
@@ -141,9 +142,13 @@ const TemplateCreation = ({
                       onChange={e => handleUpdateType(e.target.value)}
                       autoWidth
                     >
-                      <MenuItem value='dynamic'>{t('attrType.dynamic')}</MenuItem>
-                      <MenuItem value='static'>{t('attrType.static')}</MenuItem>
-                      <MenuItem value='actuator'>{t('attrType.actuator')}</MenuItem>
+                      {Object.values(TEMPLATE_ATTR_TYPES).map(attrType => {
+                        return (
+                          <MenuItem key={attrType.value} value={attrType.value}>
+                            {t(attrType.translation)}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </TableCell>
 
@@ -155,12 +160,13 @@ const TemplateCreation = ({
                       onChange={e => handleUpdateValueType(e.target.value)}
                       autoWidth
                     >
-                      <MenuItem value='bool'>{t('attrValueType.bool')}</MenuItem>
-                      <MenuItem value='geo:point'>{t('attrValueType.geo_point')}</MenuItem>
-                      <MenuItem value='float'>{t('attrValueType.float')}</MenuItem>
-                      <MenuItem value='integer'>{t('attrValueType.integer')}</MenuItem>
-                      <MenuItem value='string'>{t('attrValueType.string')}</MenuItem>
-                      <MenuItem value='object'>{t('attrValueType.object')}</MenuItem>
+                      {Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(attrValueType => {
+                        return (
+                          <MenuItem key={attrValueType.value} value={attrValueType.value}>
+                            {t(attrValueType.translation)}
+                          </MenuItem>
+                        );
+                      })}
                     </Select>
                   </TableCell>
 
@@ -170,7 +176,7 @@ const TemplateCreation = ({
                       size='small'
                       defaultValue={value}
                       variant='outlined'
-                      placeholder={t('attrTable.attrValue')}
+                      placeholder={t('attrs:attrLabel.attrValue')}
                       onBlur={e => handleUpdateValue(e.target.value)}
                     />
                   </TableCell>

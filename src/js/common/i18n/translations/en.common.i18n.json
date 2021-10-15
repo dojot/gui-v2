@@ -20,5 +20,6 @@
   "required": "Required",
   "min5characters": "Minimum 5 characters",
   "save": "Salvar",
-  "duplicate": "Duplicate"
+  "duplicate": "Duplicate",
+  "none": "Nenhum"
 }
