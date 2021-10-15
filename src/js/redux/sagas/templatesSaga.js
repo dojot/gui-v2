@@ -21,10 +21,10 @@ export function* handleGetTemplates(action) {
 
 export function* handleDeleteTemplate(action) {
   try {
-    const { deviceId } = action.payload;
-    yield Template.deleteTemplate(deviceId);
+    const { templateId } = action.payload;
+    yield Template.deleteTemplate(templateId);
     const templates = yield select(templatesSelector);
-    const notDeletedTemplates = templates.filter(({ id }) => id !== deviceId);
+    const notDeletedTemplates = templates.filter(({ id }) => id !== templateId);
     yield put(actions.updateTemplates({ templates: notDeletedTemplates }));
   } catch (e) {
     console.log(e.message);
@@ -33,10 +33,10 @@ export function* handleDeleteTemplate(action) {
 
 export function* handleDeleteMultipleTemplates(action) {
   try {
-    const { deviceIdArray } = action.payload;
-    yield Template.deleteMultipleTemplates(deviceIdArray);
+    const { templateIdArray } = action.payload;
+    yield Template.deleteMultipleTemplates(templateIdArray);
     const templates = yield select(templatesSelector);
-    const notDeletedTemplates = templates.filter(({ id }) => !deviceIdArray.includes(id));
+    const notDeletedTemplates = templates.filter(({ id }) => !templateIdArray.includes(id));
     yield put(actions.updateTemplates({ templates: notDeletedTemplates }));
   } catch (e) {
     console.log(e.message);
@@ -54,25 +54,41 @@ export function* handleCreateTemplate(action) {
   }
 }
 
+export function* handleDuplicateTemplate(action) {
+  try {
+    const { templateId } = action.payload;
+    const { duplicateTemplate } = yield Template.duplicateTemplate(templateId);
+    const templates = yield select(templatesSelector);
+    yield put(actions.updateTemplates({ templates: [...templates, duplicateTemplate] }));
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
 function* watchGetTemplates() {
-  yield takeLatest(constants.GET_DEVICES, handleGetTemplates);
+  yield takeLatest(constants.GET_TEMPLATES, handleGetTemplates);
 }
 
 function* watchDeleteTemplate() {
-  yield takeLatest(constants.DELETE_DEVICE, handleDeleteTemplate);
+  yield takeLatest(constants.DELETE_TEMPLATE, handleDeleteTemplate);
 }
 
 function* watchDeleteMultipleTemplates() {
-  yield takeLatest(constants.DELETE_ALL_DEVICES, handleDeleteMultipleTemplates);
+  yield takeLatest(constants.DELETE_ALL_TEMPLATES, handleDeleteMultipleTemplates);
 }
 
 function* watchCreateTemplate() {
-  yield takeLatest(constants.CREATE_TEMPLATE, handleDeleteMultipleTemplates);
+  yield takeLatest(constants.CREATE_TEMPLATE, handleCreateTemplate);
 }
 
-export const deviceSaga = [
+function* watchDuplicateTemplate() {
+  yield takeLatest(constants.DUPLICATE_TEMPLATE, handleDuplicateTemplate);
+}
+
+export const templateSaga = [
   fork(watchGetTemplates),
   fork(watchDeleteTemplate),
   fork(watchDeleteMultipleTemplates),
   fork(watchCreateTemplate),
+  fork(watchDuplicateTemplate),
 ];

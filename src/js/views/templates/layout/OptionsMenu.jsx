@@ -13,6 +13,7 @@ const OptionsMenu = ({
   handleEditTemplate,
   handleDeleteTemplate,
   handleHideOptionsMenu,
+  handleDuplicateTemplate,
 }) => {
   const { t } = useTranslation(['templates', 'common']);
   const classes = useOptionsMenuStyles();
@@ -29,6 +30,11 @@ const OptionsMenu = ({
         <span className={classes.menuItemText}>{t('common:edit')}</span>
       </MenuItem>
 
+      <MenuItem className={classes.menuItem} onClick={handleDuplicateTemplate}>
+        <Edit />
+        <span className={classes.menuItemText}>{t('common:duplicate')}</span>
+      </MenuItem>
+
       <MenuItem className={classes.menuItem} onClick={handleDeleteTemplate}>
         <Delete />
         <span className={classes.menuItemText}>{t('common:exclude')}</span>
@@ -43,6 +49,7 @@ OptionsMenu.propTypes = {
   handleEditTemplate: PropTypes.func.isRequired,
   handleDeleteTemplate: PropTypes.func.isRequired,
   handleHideOptionsMenu: PropTypes.func.isRequired,
+  handleDuplicateTemplate: PropTypes.func.isRequired,
 };
 
 export default OptionsMenu;

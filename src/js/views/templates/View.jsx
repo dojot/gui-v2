@@ -88,6 +88,11 @@ const Templates = () => {
     setIsShowingDeleteAlert(true);
   };
 
+  const handleDuplicateTemplate = () => {
+    const templateId = templateOptionsMenu.template.id;
+    dispatch(templateActions.duplicateTemplate({ templateId }));
+  };
+
   const handleConfirmTemplateDeletion = () => {
     const templateId = templateOptionsMenu.template.id;
     dispatch(templateActions.deleteTemplate({ templateId }));
@@ -128,6 +133,7 @@ const Templates = () => {
         handleEditTemplate={handleEditTemplate}
         handleDeleteTemplate={handleDeleteTemplate}
         handleHideOptionsMenu={handleHideOptionsMenu}
+        handleDuplicateTemplate={handleDuplicateTemplate}
       />
 
       <AlertDialog

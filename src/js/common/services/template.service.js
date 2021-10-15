@@ -71,3 +71,18 @@ export const createTemplate = template => {
     }),
   });
 };
+
+export const duplicateTemplate = templateId => {
+  return protectAPI({
+    query: `
+      mutation duplicateTemplate($templateId: String!) {
+        duplicateTemplate(templateId: $templateId) {
+          id
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      templateId,
+    }),
+  });
+};
