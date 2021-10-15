@@ -66,12 +66,6 @@ export const usePaginationStyles = makeStyles(() => ({
 }));
 
 export const useDetailsModalStyles = makeStyles(theme => ({
-  detailsModalTitle: {
-    borderBottom: `1px solid ${theme.palette.grey[100]}`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   dataGroup: {
     background: '#f2f2f2',
     border: `1px solid ${theme.palette.divider}`,

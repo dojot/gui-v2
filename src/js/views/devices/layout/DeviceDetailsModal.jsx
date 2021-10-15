@@ -2,8 +2,6 @@ import React from 'react';
 
 import {
   Dialog,
-  IconButton,
-  Typography,
   Box,
   Grid,
   List,
@@ -16,10 +14,11 @@ import {
   TableRow,
   TableBody,
 } from '@material-ui/core';
-import { Close, FilterNone, Label, History } from '@material-ui/icons';
+import { FilterNone, Label, History } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { DialogHeader } from '../../../common/components/Dialogs';
 import { useDetailsModalStyles } from './style';
 
 const fakeRows = [
@@ -40,14 +39,10 @@ const DeviceDetailsModal = ({ isOpen, deviceDetails, handleHideDetailsModal }) =
 
   return (
     <Dialog open={isOpen} onClose={handleHideDetailsModal} maxWidth='lg' fullWidth>
-      <Box className={classes.detailsModalTitle} padding={2}>
-        <Typography variant='h6'>
-          {t('detailsModalTitle', { label: deviceDetails.label })}
-        </Typography>
-        <IconButton onClick={handleHideDetailsModal} size='small'>
-          <Close />
-        </IconButton>
-      </Box>
+      <DialogHeader
+        title={t('detailsModalTitle', { label: deviceDetails.label })}
+        handleHideDialog={handleHideDetailsModal}
+      />
 
       <Box padding={2}>
         <Grid container spacing={2}>
