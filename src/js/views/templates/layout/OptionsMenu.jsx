@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Menu, MenuItem } from '@material-ui/core';
-import { Delete, Edit } from '@material-ui/icons';
+import { Delete, Edit, FileCopy } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -31,7 +31,7 @@ const OptionsMenu = ({
       </MenuItem>
 
       <MenuItem className={classes.menuItem} onClick={handleDuplicateTemplate}>
-        <Edit />
+        <FileCopy />
         <span className={classes.menuItemText}>{t('common:duplicate')}</span>
       </MenuItem>
 

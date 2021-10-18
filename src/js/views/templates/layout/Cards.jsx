@@ -37,12 +37,12 @@ const Cards = ({
           return (
             <Grid key={template.id} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
-                className={classes.templateCard}
+                className={classes.card}
                 onClick={handleSeeTemplateDetails}
                 onOptionsClick={handleShowOptionsMenu}
-                headerIcon={<FilterNone className={classes.templateCardIcon} />}
+                headerIcon={<FilterNone className={classes.cardIcon} />}
                 headerTitle={
-                  <Typography className={classes.templateCardTitle}>{template.label}</Typography>
+                  <Typography className={classes.cardTitle}>{template.label}</Typography>
                 }
               >
                 {template.attrsLength >= 0 && (
@@ -57,7 +57,7 @@ const Cards = ({
                 {!!template.devicesLength && (
                   <Box>
                     <Typography variant='body2'>
-                      <strong>template.devicesLength</strong>
+                      <strong>{template.devicesLength}</strong>
                     </Typography>
                     <Typography variant='body2'>{t('cardData.devicesLength')}</Typography>
                   </Box>

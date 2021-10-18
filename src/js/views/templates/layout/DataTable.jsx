@@ -45,7 +45,7 @@ const DataTable = ({
         label: t('dataTableHead.label'),
       },
       {
-        id: 'templatesLength',
+        id: 'devicesLength',
         label: t('dataTableHead.devicesLength'),
       },
       {
@@ -111,7 +111,6 @@ const DataTable = ({
             orderBy={orderBy}
             cells={headCells}
             rowCount={templates.length}
-            startExtraCells={<TableCell />}
             numSelected={selectedTemplates.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}

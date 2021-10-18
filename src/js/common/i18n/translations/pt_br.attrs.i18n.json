@@ -16,6 +16,7 @@
     "float": "Float",
     "integer": "Inteiro",
     "string": "Texto",
-    "object": "Objeto"
+    "object": "Objeto",
+    "json": "JSON"
   }
 }

@@ -15,7 +15,11 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from '../../../common/components/DataTable';
-import { DATA_ORDER } from '../../../common/constants';
+import {
+  DATA_ORDER,
+  TEMPLATE_ATTR_TYPES,
+  TEMPLATE_ATTR_VALUE_TYPES,
+} from '../../../common/constants';
 import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
@@ -50,6 +54,10 @@ const DataTable = ({
       {
         id: 'valueType',
         label: t('attrData.valueType'),
+      },
+      {
+        id: 'value',
+        label: t('attrData.value'),
       },
       {
         id: 'actions',
@@ -110,7 +118,6 @@ const DataTable = ({
             orderBy={orderBy}
             cells={headCells}
             rowCount={attrs.length}
-            startExtraCells={<TableCell />}
             numSelected={selectedAttrs.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
@@ -122,6 +129,12 @@ const DataTable = ({
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
               .map(attr => {
                 const isSelected = selectedAttrs.indexOf(attr.id) !== -1;
+
+                const typeConstantKey = attr.type?.replace(/:/g, '_').toUpperCase() || '';
+                const typeText = TEMPLATE_ATTR_TYPES[typeConstantKey]?.translation;
+
+                const valueTypeConstantKey = attr.valueType?.replace(/:/g, '_').toUpperCase() || '';
+                const valueTypeText = TEMPLATE_ATTR_VALUE_TYPES[valueTypeConstantKey]?.translation;
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(attr.id);
@@ -148,9 +161,13 @@ const DataTable = ({
 
                     <TableCell className={classes.clickableCell}>{attr.label}</TableCell>
 
-                    <TableCell className={classes.clickableCell}>{attr.type}</TableCell>
+                    <TableCell className={classes.clickableCell}>
+                      {typeText ? t(typeText) : attr.type}
+                    </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{attr.valueType}</TableCell>
+                    <TableCell className={classes.clickableCell}>
+                      {valueTypeText ? t(valueTypeText) : attr.valueType}
+                    </TableCell>
 
                     <TableCell className={classes.clickableCell}>{attr.value}</TableCell>
 

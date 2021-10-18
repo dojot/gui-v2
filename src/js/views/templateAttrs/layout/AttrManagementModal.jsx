@@ -44,23 +44,26 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
     }
   };
 
+  const handleClearState = () => {
+    setName('');
+    setType('');
+    setValueType('');
+    setValue('');
+    setSaveButtonTouched(false);
+  };
+
   useEffect(() => {
     if (isOpen && attrToEdit) {
-      setName(attrToEdit.name || '');
+      setName(attrToEdit.label || '');
       setType(attrToEdit.type || '');
-      setValueType(attrToEdit.valuetype || '');
+      setValueType(attrToEdit.valueType || '');
       setValue(attrToEdit.value || '');
     }
   }, [attrToEdit, isOpen]);
 
   useEffect(() => {
-    return () => {
-      setName('');
-      setType('');
-      setValueType('');
-      setValue('');
-    };
-  }, []);
+    if (!isOpen) setTimeout(handleClearState, 100);
+  }, [isOpen]);
 
   return (
     <Dialog open={isOpen} onClose={handleHideModal} maxWidth='md' fullWidth>
@@ -84,7 +87,7 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
 
         <Box marginBottom={2}>
           <FormControl fullWidth>
-            <InputLabel variant='outlined' id='attrTypeLabel'>
+            <InputLabel variant='outlined' id='attrTypeLabel' error={saveButtonTouched && !type}>
               {`${t('attrs:attrLabel.attrType')} *`}
             </InputLabel>
 
@@ -110,7 +113,11 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
 
         <Box marginBottom={2}>
           <FormControl fullWidth>
-            <InputLabel variant='outlined' id='attrValueTypeLabel'>
+            <InputLabel
+              variant='outlined'
+              id='attrValueTypeLabel'
+              error={saveButtonTouched && !valueType}
+            >
               {`${t('attrs:attrLabel.attrValueType')} *`}
             </InputLabel>
 
