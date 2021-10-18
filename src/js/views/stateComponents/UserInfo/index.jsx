@@ -1,99 +1,142 @@
-import React, { Fragment, useState, useEffect, useCallback } from 'react';
+import React from 'react';
 
-import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Divider from '@material-ui/core/Divider';
-import Grow from '@material-ui/core/Grow';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
+import {
+  Grow,
+  List,
+  Paper,
+  Button,
+  Popper,
+  Divider,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+  ClickAwayListener,
+  Switch,
+} from '@material-ui/core';
+import { ArrowDropDown, BookmarkBorder, ExitToApp, Lock } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
-import { getUserInformation } from 'Utils';
+import { useHistory } from 'react-router';
+import { getUserInformation, logout } from 'Utils';
 
 import { useStyles } from './style';
 
 export const UserInfo = () => {
+  const { t } = useTranslation(['userInfo']);
+  const history = useHistory();
   const classes = useStyles();
-  const { t } = useTranslation(['common']);
+
   const [open, setOpen] = React.useState(false);
   const anchorRef = React.useRef(null);
-  const [user, setUser] = useState({ userName: '', tenant: '', profile: '' });
-  useEffect(() => {
-    setUser(getUserInformation());
-  }, [setUser]);
 
-  const handleToggle = useCallback(() => {
+  const [isDarkModeActivated, setIsDarkModeActivated] = React.useState(false);
+
+  const user = getUserInformation() || { userName: '', tenant: '', profile: '' };
+
+  const handleToggle = () => {
     setOpen(prevOpen => !prevOpen);
-  }, [setOpen]);
+  };
 
-  const handleClose = useCallback(
-    event => {
-      if (anchorRef.current && anchorRef.current.contains(event.target)) {
-        return;
-      }
-      setOpen(false);
-    },
-    [setOpen, anchorRef],
-  );
+  const handleClose = event => {
+    if (anchorRef.current?.contains(event.target)) return;
+    setOpen(false);
+  };
 
-  const prevOpen = React.useRef(open);
-  useEffect(() => {
-    if (prevOpen.current === true && open === false) {
-      anchorRef.current.focus();
-    }
-    prevOpen.current = open;
-  }, [open]);
+  const handleChangePassword = () => {
+    history.push('/change-password');
+  };
 
-  // eslint-disable-next-line no-undef
-  const guiVersion = GUI_VERSION || 'undefined';
+  const handleLogout = () => {
+    logout();
+    history.push('/');
+  };
+
+  const handleChangeDarkMode = e => {
+    setIsDarkModeActivated(e.target.checked);
+  };
+
+  const version = GUI_VERSION || t('notDefined');
 
   return (
     <div className={classes.root}>
       <>
         <Divider orientation='vertical' flexItem className={classes.divider} />
+
         <Button
           ref={anchorRef}
-          aria-controls={open ? 'menu-list-grow' : undefined}
-          aria-haspopup='true'
-          color='inherit'
-          size='small'
           className={classes.button}
+          color='inherit'
           onClick={handleToggle}
           startIcon={<AccountCircle />}
-          data-testid='buttonMenu'
+          endIcon={<ArrowDropDown />}
+          aria-haspopup='true'
+          data-testid='menuButton'
+          aria-controls={open ? 'menu-list-grow' : undefined}
         >
-          {`${t('common:hello')}, ${user.userName}`}
+          {user.userName}
         </Button>
-        <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
+
+        <Popper
+          open={open}
+          anchorEl={anchorRef.current}
+          placement='bottom-end'
+          transition
+          disablePortal
+        >
           {({ TransitionProps }) => (
             <Grow {...TransitionProps}>
-              <Paper>
+              <Paper className={classes.paper}>
                 <ClickAwayListener onClickAway={handleClose}>
                   <List className={classes.list}>
-                    <ListItem>
-                      <ListItemText
-                        data-testid='version'
-                        primary={guiVersion}
-                        secondary={t('common:version')}
+                    <ListItem data-testid='tenant'>
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <BookmarkBorder />
+                      </ListItemIcon>
+                      <ListItemText>{t('tenant', { tenant: user.tenant })}</ListItemText>
+                    </ListItem>
+
+                    <ListItem data-testid='version'>
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <BookmarkBorder />
+                      </ListItemIcon>
+                      <ListItemText>{t('version', { version })}</ListItemText>
+                    </ListItem>
+
+                    <ListItem data-testid='darkMode' divider>
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <BookmarkBorder />
+                      </ListItemIcon>
+
+                      <ListItemText>{t('darkMode')}</ListItemText>
+
+                      <Switch
+                        className={classes.listItemSwitch}
+                        checked={isDarkModeActivated}
+                        onChange={handleChangeDarkMode}
+                        color='primary'
                       />
                     </ListItem>
-                    <Divider />
-                    <ListItem>
-                      <ListItemText
-                        data-testid='profile'
-                        primary={user.profile}
-                        secondary={t('common:profile')}
-                      />
+
+                    <ListItem
+                      data-testid='changePassword'
+                      className={classes.clickableListItem}
+                      onClick={handleChangePassword}
+                    >
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <Lock />
+                      </ListItemIcon>
+                      <ListItemText>{t('changePassword')}</ListItemText>
                     </ListItem>
-                    <ListItem>
-                      <ListItemText
-                        data-testid='tenant'
-                        primary={user.tenant}
-                        secondary={t('common:tenant')}
-                      />
+
+                    <ListItem
+                      data-testid='logout'
+                      className={classes.clickableListItem}
+                      onClick={handleLogout}
+                    >
+                      <ListItemIcon className={classes.listItemIcon}>
+                        <ExitToApp />
+                      </ListItemIcon>
+                      <ListItemText>{t('logout')}</ListItemText>
                     </ListItem>
                   </List>
                 </ClickAwayListener>

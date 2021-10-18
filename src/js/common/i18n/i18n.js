@@ -11,6 +11,8 @@ import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
+import userInfoEn from '../../views/stateComponents/UserInfo/translations/en_us.userInfo.i18n.json';
+import userInfoBr from '../../views/stateComponents/UserInfo/translations/pt_br.userInfo.i18n.json';
 import templateAttrsEn from '../../views/templateAttrs/translations/en.templateAttrs.i18n.json';
 import templateAttrsPtBr from '../../views/templateAttrs/translations/pt_br.templateAttrs.i18n.json';
 import templatesEn from '../../views/templates/translations/en.templates.i18n.json';
@@ -40,6 +42,7 @@ const resources = {
     templateCreation: templateCreationEn,
     templateAttrs: templateAttrsEn,
     attrs: attrsEn,
+    userInfo: userInfoEn,
   },
   pt: {
     login: loginPtBr,
@@ -54,6 +57,7 @@ const resources = {
     templateCreation: templateCreationPtBr,
     templateAttrs: templateAttrsPtBr,
     attrs: attrsPtBr,
+    userInfo: userInfoBr,
   },
 };
 

@@ -1,0 +1,7 @@
+{
+  "tenant": "Tenant: {{tenant}}",
+  "version": "Version: {{version}}",
+  "darkMode": "Dark Mode",
+  "changePassword": "Change Password",
+  "logout": "Logout"
+}
