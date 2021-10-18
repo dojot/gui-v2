@@ -114,10 +114,7 @@ export const useDataTableStyles = makeStyles(theme => ({
   },
 }));
 
-export const useAttrManagementModalStyles = makeStyles(theme => ({
-  selectLabel: {
-    padding: theme.spacing(0, 2),
-  },
+export const useAttrManagementModalStyles = makeStyles(() => ({
   actions: {
     display: 'flex',
     alignItems: 'center',

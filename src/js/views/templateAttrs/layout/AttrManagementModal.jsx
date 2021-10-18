@@ -80,7 +80,7 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
 
         <Box marginBottom={2}>
           <FormControl fullWidth>
-            <InputLabel className={classes.selectLabel} id='attrTypeLabel'>
+            <InputLabel variant='outlined' id='attrTypeLabel'>
               {t('attrs:attrLabel.attrType')}
             </InputLabel>
 
@@ -105,7 +105,7 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
 
         <Box marginBottom={2}>
           <FormControl fullWidth>
-            <InputLabel className={classes.selectLabel} id='attrValueTypeLabel'>
+            <InputLabel variant='outlined' id='attrValueTypeLabel'>
               {t('attrs:attrLabel.attrValueType')}
             </InputLabel>
 
