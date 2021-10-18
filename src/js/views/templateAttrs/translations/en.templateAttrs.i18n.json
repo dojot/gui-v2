@@ -1,1 +1,36 @@
-{}
+{
+  "title": "Templates / {{templateLabel}}",
+  "searchInputPh": "Search Attribute",
+  "totalOfAttrs": "Total of Items: {{count}}",
+  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+  "labelRowsPerPage": "Items per page:",
+  "massActions": "Mass Actions:",
+  "numberOfSelectedAttrs": "{{count}} Line Selected",
+  "numberOfSelectedAttrs_plural": "{{count}} Lines Selected",
+  "emptyListMessage": "No Attribute Found",
+  "createNewAttr": "Create new Attribute",
+  "attrData": {
+    "id": "ID",
+    "label": "Name",
+    "type": "Attribute Type",
+    "valueType": "Value Type",
+    "value": "Value",
+    "actions": "Actions"
+  },
+  "deleteAttrAlert": {
+    "title": "Delete Template Attribute",
+    "message": "Are you sure you want to delete this template attribute?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "deleteMultipleAttrAlert": {
+    "title": "Delete Selected Attributes",
+    "message": "Are you sure you want to delete all selected attributes?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "attrManagement": {
+    "newAttr": "Create New Attribute",
+    "editAttr": "Edit Attribute"
+  }
+}

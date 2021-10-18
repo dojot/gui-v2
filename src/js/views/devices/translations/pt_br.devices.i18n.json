@@ -10,7 +10,7 @@
   "labelRowsPerPage": "Itens por página:",
   "detailsModalTitle": "Detalhamento do Dispositivo ({{label}})",
   "massActions": "Ações em massa:",
-  "createCertificates": "Criar certificados",
+  "createCertificates": "Criar Certificados",
   "favorite": "Adicionar aos Favoritos",
   "numberOfSelectedDevices": "{{count}} Linha Selecionada",
   "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
