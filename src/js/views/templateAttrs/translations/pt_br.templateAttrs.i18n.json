@@ -1,5 +1,5 @@
 {
-  "title": "Modelos / {{templateLabel}}",
+  "title": "Modelos / {{template}}",
   "searchInputPh": "Pesquisar Atributo",
   "totalOfAttrs": "Total de Itens: {{count}}",
   "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",

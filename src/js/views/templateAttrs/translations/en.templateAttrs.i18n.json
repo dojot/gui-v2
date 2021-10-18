@@ -1,5 +1,5 @@
 {
-  "title": "Templates / {{templateLabel}}",
+  "title": "Templates / {{template}}",
   "searchInputPh": "Search Attribute",
   "totalOfAttrs": "Total of Items: {{count}}",
   "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",

@@ -32,6 +32,7 @@ const TemplateAttrs = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
+  const template = useSelector(() => ({})); // TODO: Create and use a selector
   const attrs = useSelector(attrsSelector);
   const isLoadingAttrs = useSelector(loadingDevicesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
@@ -142,8 +143,10 @@ const TemplateAttrs = () => {
     if (viewMode) setSelectedAttrs([]);
   }, [viewMode]);
 
+  // TODO: Create an useEffect to fetch the template data (or only the label)
+
   return (
-    <ViewContainer headerTitle={t('title', { templateLabel: 'TEMPLATE LABEL' })}>
+    <ViewContainer headerTitle={t('title', { template: template.label || templateId })}>
       <OptionsMenu
         isShowingMenu={!!attrOptionsMenu}
         anchorElement={attrOptionsMenu?.anchorElement}
