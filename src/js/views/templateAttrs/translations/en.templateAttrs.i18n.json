@@ -31,6 +31,7 @@
   },
   "attrManagement": {
     "newAttr": "Create New Attribute",
-    "editAttr": "Edit Attribute"
+    "editAttr": "Edit Attribute",
+    "errorMessage": "Fill the required fields to save!"
   }
 }

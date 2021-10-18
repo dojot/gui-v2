@@ -9,6 +9,7 @@ import {
   Button,
   FormControl,
   InputLabel,
+  Typography,
 } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -25,12 +26,14 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
   const [type, setType] = useState('');
   const [valueType, setValueType] = useState('');
   const [value, setValue] = useState('');
+  const [saveButtonTouched, setSaveButtonTouched] = useState(false);
 
   const handleValidateAttr = () => {
     return !!name.trim() && !!type && !!valueType;
   };
 
   const handleValidateAndSave = () => {
+    setSaveButtonTouched(true);
     if (handleValidateAttr()) {
       handleSaveAttr({
         name,
@@ -43,10 +46,10 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
 
   useEffect(() => {
     if (isOpen && attrToEdit) {
-      setName(attrToEdit.name);
-      setType(attrToEdit.type);
-      setValueType(attrToEdit.valuetype);
-      setValue(attrToEdit.value);
+      setName(attrToEdit.name || '');
+      setType(attrToEdit.type || '');
+      setValueType(attrToEdit.valuetype || '');
+      setValue(attrToEdit.value || '');
     }
   }, [attrToEdit, isOpen]);
 
@@ -62,7 +65,7 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
   return (
     <Dialog open={isOpen} onClose={handleHideModal} maxWidth='md' fullWidth>
       <DialogHeader
-        title={t(attrToEdit ? 'attrManagement.newAttr' : 'attrManagement.editATtr')}
+        title={t(attrToEdit ? 'attrManagement.editAttr' : 'attrManagement.newAttr')}
         handleHideDialog={handleHideModal}
       />
 
@@ -72,7 +75,8 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
             <TextField
               value={name}
               variant='outlined'
-              label={t('attrs:attrLabel.attrName')}
+              error={saveButtonTouched && !name.trim()}
+              label={`${t('attrs:attrLabel.attrName')} *`}
               onChange={e => setName(e.target.value)}
             />
           </FormControl>
@@ -81,7 +85,7 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
         <Box marginBottom={2}>
           <FormControl fullWidth>
             <InputLabel variant='outlined' id='attrTypeLabel'>
-              {t('attrs:attrLabel.attrType')}
+              {`${t('attrs:attrLabel.attrType')} *`}
             </InputLabel>
 
             <Select
@@ -89,7 +93,8 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
               fullWidth
               variant='outlined'
               labelId='attrTypeLabel'
-              label={t('attrs:attrLabel.attrType')}
+              error={saveButtonTouched && !type}
+              label={`${t('attrs:attrLabel.attrType')} *`}
               onChange={e => setType(e.target.value)}
             >
               {Object.values(TEMPLATE_ATTR_TYPES).map(attrType => {
@@ -106,14 +111,15 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
         <Box marginBottom={2}>
           <FormControl fullWidth>
             <InputLabel variant='outlined' id='attrValueTypeLabel'>
-              {t('attrs:attrLabel.attrValueType')}
+              {`${t('attrs:attrLabel.attrValueType')} *`}
             </InputLabel>
 
             <Select
               value={valueType}
               variant='outlined'
               labelId='attrValueTypeLabel'
-              label={t('attrs:attrLabel.attrValueType')}
+              error={saveButtonTouched && !valueType}
+              label={`${t('attrs:attrLabel.attrValueType')} *`}
               onChange={e => setValueType(e.target.value)}
             >
               {Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(attrValueType => {
@@ -138,6 +144,12 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
           </FormControl>
         </Box>
 
+        {saveButtonTouched && !handleValidateAttr() && (
+          <Box marginBottom={2}>
+            <Typography className={classes.error}>{t('attrManagement.errorMessage')}</Typography>
+          </Box>
+        )}
+
         <Box className={classes.actions}>
           <Button variant='text' size='large' onClick={handleHideModal}>
             {t('common:cancel')}
@@ -160,7 +172,7 @@ AttrManagementModal.propTypes = {
 };
 
 AttrManagementModal.defaultProps = {
-  attrToEdit: {},
+  attrToEdit: null,
 };
 
 export default AttrManagementModal;

@@ -114,7 +114,10 @@ export const useDataTableStyles = makeStyles(theme => ({
   },
 }));
 
-export const useAttrManagementModalStyles = makeStyles(() => ({
+export const useAttrManagementModalStyles = makeStyles(theme => ({
+  error: {
+    color: theme.palette.error.main,
+  },
   actions: {
     display: 'flex',
     alignItems: 'center',
