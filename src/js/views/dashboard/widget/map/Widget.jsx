@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef } from 'react';
 
+import { IMAGERY_MODE } from 'common/constants';
 import { WidgetCard } from 'Components/Cards';
 import { getMarkerColor } from 'Components/MapMarkers';
 import _ from 'lodash';
@@ -95,7 +96,7 @@ export default ({ data, ...widgetProps }) => {
         }}
       >
         <TileLayer
-          url='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png'
+          url={IMAGERY_MODE.LIGHT}
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
 

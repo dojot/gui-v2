@@ -10,8 +10,6 @@ export const getDevicesList = (page, filter) => {
           devices {
             id
             label
-            updated
-            created
             attrs{
               label
               valueType
@@ -87,4 +85,8 @@ export const favoriteMultipleDevices = ({ deviceIdArray, user, tenant }) => {
       tenant,
     }),
   });
+};
+
+export const getDevicesHistoryParsed = filter => {
+  return protectAPI(filter);
 };

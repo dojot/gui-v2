@@ -1,0 +1,14 @@
+{
+  "newTemplate": "New Template",
+  "templateName": "Template Name",
+  "template": "Template",
+  "attributesNumber": "Nº of Attribute",
+  "saveTemplate": "Save Template",
+  "cancelTemplate": "Cancel",
+  "attributeName": "Attribute Name",
+  "attributeType": "Attribute Type",
+  "valueType": "Value Type",
+  "creatAttribute": "Create Attribute",
+  "attributeEmpty": "There are no attributes created",
+  "templateEmpty": "There is no template created"
+}
