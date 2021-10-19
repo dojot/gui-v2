@@ -9,6 +9,16 @@ import DataCard from '../../../common/components/Cards/DataCard';
 import { TEMPLATE_ATTR_TYPES, TEMPLATE_ATTR_VALUE_TYPES } from '../../../common/constants';
 import { useCardsStyles } from './style';
 
+const ATTR_TYPE_TRANSLATIONS = {};
+Object.values(TEMPLATE_ATTR_TYPES).forEach(({ value, translation }) => {
+  ATTR_TYPE_TRANSLATIONS[value] = translation;
+});
+
+const ATTR_VALUE_TYPE_TRANSLATIONS = {};
+Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
+  ATTR_VALUE_TYPE_TRANSLATIONS[value] = translation;
+});
+
 const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
   const { t } = useTranslation(['templateAttrs', 'common']);
   const classes = useCardsStyles();
@@ -17,11 +27,10 @@ const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
     <Box padding={2}>
       <Grid spacing={2} container alignItems='stretch'>
         {attrs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(attr => {
-          const typeConstantKey = attr.type?.replace(/:/g, '_').toUpperCase() || '';
-          const typeText = TEMPLATE_ATTR_TYPES[typeConstantKey]?.translation;
+          const attrTypeTranslation = ATTR_TYPE_TRANSLATIONS[attr.type] || attr.type;
 
-          const valueTypeConstantKey = attr.valueType?.replace(/:/g, '_').toUpperCase() || '';
-          const valueTypeText = TEMPLATE_ATTR_VALUE_TYPES[valueTypeConstantKey]?.translation;
+          const valueTypeTranslation =
+            ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType] || attr.valueType;
 
           const handleShowOptionsMenu = e => {
             e.stopPropagation();
@@ -43,7 +52,7 @@ const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
                   <Box marginBottom={1}>
                     <Typography variant='body2'>{t('attrData.type')}</Typography>
                     <Typography variant='body2'>
-                      <strong>{typeText ? t(typeText) : attr.type}</strong>
+                      <strong>{t(attrTypeTranslation)}</strong>
                     </Typography>
                   </Box>
                 )}
@@ -52,7 +61,7 @@ const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
                   <Box marginBottom={1}>
                     <Typography variant='body2'>{t('attrData.valueType')}</Typography>
                     <Typography variant='body2'>
-                      <strong>{valueTypeText ? t(valueTypeText) : attr.valueType}</strong>
+                      <strong>{t(valueTypeTranslation)}</strong>
                     </Typography>
                   </Box>
                 )}

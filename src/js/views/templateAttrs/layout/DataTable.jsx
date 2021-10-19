@@ -23,6 +23,16 @@ import {
 import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
+const ATTR_TYPE_TRANSLATIONS = {};
+Object.values(TEMPLATE_ATTR_TYPES).forEach(({ value, translation }) => {
+  ATTR_TYPE_TRANSLATIONS[value] = translation;
+});
+
+const ATTR_VALUE_TYPE_TRANSLATIONS = {};
+Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
+  ATTR_VALUE_TYPE_TRANSLATIONS[value] = translation;
+});
+
 const DataTable = ({
   page,
   attrs,
@@ -130,11 +140,10 @@ const DataTable = ({
               .map(attr => {
                 const isSelected = selectedAttrs.indexOf(attr.id) !== -1;
 
-                const typeConstantKey = attr.type?.replace(/:/g, '_').toUpperCase() || '';
-                const typeText = TEMPLATE_ATTR_TYPES[typeConstantKey]?.translation;
+                const attrTypeTranslation = ATTR_TYPE_TRANSLATIONS[attr.type] || attr.type;
 
-                const valueTypeConstantKey = attr.valueType?.replace(/:/g, '_').toUpperCase() || '';
-                const valueTypeText = TEMPLATE_ATTR_VALUE_TYPES[valueTypeConstantKey]?.translation;
+                const valueTypeTranslation =
+                  ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType] || attr.valueType;
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(attr.id);
@@ -162,11 +171,11 @@ const DataTable = ({
                     <TableCell className={classes.clickableCell}>{attr.label}</TableCell>
 
                     <TableCell className={classes.clickableCell}>
-                      {typeText ? t(typeText) : attr.type}
+                      {t(attrTypeTranslation)}
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>
-                      {valueTypeText ? t(valueTypeText) : attr.valueType}
+                      {t(valueTypeTranslation)}
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>{attr.value}</TableCell>

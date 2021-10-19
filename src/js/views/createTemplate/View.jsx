@@ -20,12 +20,12 @@ const CreateTemplate = () => {
   const [attrs, setAttrs] = useState([]);
 
   const canSaveTemplate = useMemo(() => {
-    const haveALlRequiredData = attrs.every(attr => {
+    const haveAllRequiredData = attrs.every(attr => {
       const { name, type, valueType } = attr;
       return !!name.trim() && !!type && !!valueType;
     });
 
-    return !!templateName.trim() && haveALlRequiredData;
+    return !!templateName.trim() && haveAllRequiredData;
   }, [attrs, templateName]);
 
   const handleCreateAttr = () => {
