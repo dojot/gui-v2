@@ -1,0 +1,14 @@
+{
+  "newTemplate": "Novo Modelo",
+  "templateName": "Nome do Modelo",
+  "template": "Modelo",
+  "attributesNumber": "Nº de Atributos",
+  "saveTemplate": "Salvar Modelo",
+  "cancelTemplate": "Cancelar",
+  "attributeName": "Nome do Atributo",
+  "attributeType": "Tipo do Atributo",
+  "valueType": "Tipo do Valor",
+  "creatAttribute": "Criar Atributo",
+  "attributeEmpty": "Não existem atributos criados",
+  "templateEmpty": "Não há nehnum modelo criado"
+}

@@ -55,6 +55,7 @@ const theme = createMuiTheme({
     },
     background: {
       default: '#22252F',
+      shade: { 500: '#343747' },
       paper: '#2B2E3B',
       login: '#22252F',
     },
