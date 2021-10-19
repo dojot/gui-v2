@@ -1,0 +1,9 @@
+{
+  "title": "Novo Dispositivo",
+  "stepper": {
+    "templates": "Modelos",
+    "attrs": "Atributos",
+    "certificates": "Certificados",
+    "summary": "Resumo"
+  }
+}

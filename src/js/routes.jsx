@@ -17,6 +17,7 @@ const WizardManager = LazyLoading(() => import('./common/managers/WizardManager'
 const LogOut = LazyLoading(() => import('views/logout'));
 const LogIn = LazyLoading(() => import('views/login'));
 const Devices = LazyLoading(() => import('views/devices'));
+const CreateDevice = LazyLoading(() => import('views/createDevice'));
 const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
@@ -33,7 +34,8 @@ const Routes = props => (
     <PrivateRoute path='/dashboard/widget' component={Widget} attrs={props} />
     <PrivateRoute path='/dashboard' component={Dashboard} attrs={props} />
     <PrivateRoute path='/home' component={Home} attrs={props} />
-    <PrivateRoute path='/devices' component={Devices} attrs={props} />
+    <PrivateRoute path='/devices' component={Devices} attrs={props} exact />
+    <PrivateRoute path='/devices/new' component={CreateDevice} attrs={props} exact />
     <PrivateRoute path='/templates' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/flow' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/notification' component={TestRouteHandler} attrs={props} />

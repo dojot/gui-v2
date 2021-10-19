@@ -1,6 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import createDeviceEn from '../../views/createDevice/translations/en.createDevice.i18n.json';
+import createDevicePtBr from '../../views/createDevice/translations/pt_br.createDevice.i18n.json';
 import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.json';
 import dashboardPtBr from '../../views/dashboard/translations/pt_br.dashboard.i18n.json';
 import devicesEn from '../../views/devices/translations/en.devices.i18n.json';
@@ -31,6 +33,7 @@ const resources = {
     home: homeEn,
     templateTable: templateTableEn,
     userInfo: userInfoEn,
+    createDevice: createDeviceEn,
   },
   pt: {
     login: loginPtBr,
@@ -42,6 +45,7 @@ const resources = {
     home: homePtBr,
     templateTable: templateTablePtBr,
     userInfo: userInfoBr,
+    createDevice: createDevicePtBr,
   },
 };
 const lng = navigator.language || navigator.userLanguage;
