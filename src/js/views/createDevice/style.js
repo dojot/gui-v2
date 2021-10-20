@@ -13,4 +13,17 @@ export default makeStyles(theme => ({
     height: '100%',
     background: theme.palette.background.default,
   },
+  step: {
+    display: 'flex',
+    flexDirection: 'column',
+    height: '100%',
+  },
+  stepContent: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    maxWidth: '1268px',
+    width: '100%',
+    margin: '0 auto',
+  },
 }));

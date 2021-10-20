@@ -5,5 +5,8 @@
     "attrs": "Atributos",
     "certificates": "Certificados",
     "summary": "Resumo"
+  },
+  "templatesStep": {
+    "hint": "Para começar, selecione na lista ou crie um modelo para o seu dispositivo!"
   }
 }

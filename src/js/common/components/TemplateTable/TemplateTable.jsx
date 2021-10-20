@@ -66,6 +66,7 @@ const TemplateTable = ({ templates, handleFilterTemplates }) => {
             </TableCell>
           }
         />
+
         <TableBody>
           {templates.map(template => {
             return (
@@ -78,6 +79,7 @@ const TemplateTable = ({ templates, handleFilterTemplates }) => {
               </TableRow>
             );
           })}
+
           {templates.length === 0 && (
             <TableRow>
               <TableCell align='center' colSpan={4} className={classes.tableBodyEmpty}>
