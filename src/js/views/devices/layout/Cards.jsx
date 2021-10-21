@@ -46,13 +46,11 @@ const Cards = ({
           return (
             <Grid key={device.id} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
-                className={classes.deviceCard}
+                className={classes.card}
                 onClick={handleSeeDeviceDetails}
                 onOptionsClick={handleShowOptionsMenu}
-                headerIcon={<DevicesOther className={classes.deviceCardIcon} />}
-                headerTitle={
-                  <Typography className={classes.deviceCardTitle}>{device.label}</Typography>
-                }
+                headerIcon={<DevicesOther className={classes.cardIcon} />}
+                headerTitle={<Typography className={classes.cardTitle}>{device.label}</Typography>}
                 footer={
                   <>
                     <Tooltip

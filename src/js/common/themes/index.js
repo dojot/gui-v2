@@ -23,7 +23,6 @@ const theme = createMuiTheme({
       shade: { 500: '#f2f2f2' },
       paper: '#FFF',
       login: '#dadde0',
-      devices: '#f2f2f2',
     },
     table: {
       head: '#FFFFFF',

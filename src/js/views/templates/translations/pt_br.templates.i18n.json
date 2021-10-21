@@ -1,0 +1,35 @@
+{
+  "title": "Modelos",
+  "searchInputPh": "Pesquisar Modelo",
+  "totalOfTemplates": "Total de Itens: {{count}}",
+  "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
+  "labelRowsPerPage": "Itens por página:",
+  "massActions": "Ações em massa:",
+  "numberOfSelectedTemplates": "{{count}} Linha Selecionada",
+  "numberOfSelectedTemplates_plural": "{{count}} Linhas Selecionadas",
+  "emptyListMessage": "Nenhum Modelo Encontrado",
+  "createNewTemplate": "Criar Novo Modelo",
+  "dataTableHead": {
+    "id": "ID",
+    "label": "Nome",
+    "devicesLength": "Nº de Dispositivos",
+    "attrsLength": "Nº de Propriedades",
+    "actions": "Ações"
+  },
+  "cardData": {
+    "devicesLength": "Dispositivos",
+    "attrsLength": "Propriedades"
+  },
+  "deleteTemplateAlert": {
+    "title": "Excluir Modelo",
+    "message": "Tem certeza que deseja excluir este modelo?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "deleteMultipleTemplateAlert": {
+    "title": "Excluir Modelos Selecionados",
+    "message": "Tem certeza que deseja excluir todos os modelos selecionados?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  }
+}
