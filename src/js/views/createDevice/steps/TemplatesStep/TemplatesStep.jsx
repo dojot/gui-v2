@@ -9,12 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { TemplateCreation } from '../../../../common/components/WizardForms';
 import { useTemplateCreationState } from '../../../../common/hooks';
 import { actions as templateActions } from '../../../../redux/modules/templates';
-import ActionButtons from '../../layout/ActionButtons';
 import {
   templatesSelector,
   loadingTemplatesSelector,
   paginationControlSelector,
-} from '../../redux/selectors/templatesSelector';
+} from '../../../../redux/selectors/templatesSelector';
+import ActionButtons from '../../layout/ActionButtons';
 import { useTemplatesStepStyles } from './style';
 import TemplateCreationActions from './TemplateCreationActions';
 import TemplateTable from './TemplateTable';
