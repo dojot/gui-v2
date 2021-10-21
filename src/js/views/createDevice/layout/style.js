@@ -5,12 +5,19 @@ export const useActionButtonStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    margin: '0 -8px',
+    margin: '0 -16px',
     '& > *': {
-      margin: '0 8px',
+      margin: '0 16px',
     },
   },
   cancelButtonLeftAligned: {
     marginRight: 'auto',
+  },
+}));
+
+export const useDeviceWizardStepperStyles = makeStyles(theme => ({
+  stepper: {
+    height: '100%',
+    background: theme.palette.background.default,
   },
 }));

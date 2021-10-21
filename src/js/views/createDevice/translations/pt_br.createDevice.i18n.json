@@ -7,6 +7,10 @@
     "summary": "Resumo"
   },
   "templatesStep": {
-    "hint": "Para começar, selecione na lista ou crie um modelo para o seu dispositivo!"
+    "hint": "Para começar, selecione na lista ou crie um modelo para o seu dispositivo!",
+    "templateName": "Nome do Modelo",
+    "numberOfAttrs": "Nº de Atributos",
+    "emptyTemplateList": "Nenhum Modelo Encontrado",
+    "searchTemplatePh": "Digite para pesquisar um template..."
   }
 }

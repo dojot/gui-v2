@@ -1,26 +1,17 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
-import { Box, Grid, Step, StepLabel, Stepper } from '@material-ui/core';
-import { StepIcon } from 'Components/StepIcon';
-import { StepLine } from 'Components/StepLine';
+import { Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
 import { ViewContainer } from '../stateComponents';
-import AttrsStep from './steps/AttrsStep';
-import SecurityStep from './steps/SecurityStep';
-import SummaryStep from './steps/SummaryStep';
-import TemplatesStep from './steps/TemplatesStep';
+import { NUMBER_OF_STEPS } from './constants';
+import DeviceWizardStepper from './layout/DeviceWizardStepper';
+import { AttrsStep } from './steps/AttrsStep';
+import { SecurityStep } from './steps/SecurityStep';
+import { SummaryStep } from './steps/SummaryStep';
+import { TemplatesStep } from './steps/TemplatesStep';
 import useStyles from './style';
-
-const STEPS = [
-  { key: 'templates', translation: 'stepper.templates' },
-  { key: 'attrs', translation: 'stepper.attrs' },
-  { key: 'certificates', translation: 'stepper.certificates' },
-  { key: 'summary', translation: 'stepper.summary' },
-];
-
-const NUMBER_OF_STEPS = STEPS.length;
 
 const CreateDevice = () => {
   const { t } = useTranslation(['createDevice', 'common']);
@@ -28,6 +19,11 @@ const CreateDevice = () => {
   const classes = useStyles();
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [selectedTemplates, setSelectedTemplates] = useState({});
+
+  const numberOfSelectedTemplates = useMemo(() => {
+    return Object.keys(selectedTemplates).length;
+  }, [selectedTemplates]);
 
   const handleGoToNextStep = () => {
     setCurrentStep(step => Math.min(step + 1, NUMBER_OF_STEPS));
@@ -45,29 +41,19 @@ const CreateDevice = () => {
   return (
     <ViewContainer headerTitle={t('title')}>
       <Box className={classes.container}>
-        <Grid className={classes.content} alignItems='stretch' container>
-          <Grid item sm='auto'>
-            <Stepper
-              className={classes.stepper}
-              activeStep={currentStep}
-              orientation='vertical'
-              connector={<StepLine />}
-            >
-              {STEPS.map(step => {
-                return (
-                  <Step key={step.key}>
-                    <StepLabel StepIconComponent={StepIcon}>{t(step.translation)}</StepLabel>
-                  </Step>
-                );
-              })}
-            </Stepper>
+        <Grid className={classes.content} alignItems='stretch' wrap='nowrap' container>
+          <Grid item xs='auto'>
+            <DeviceWizardStepper currentStep={currentStep} />
           </Grid>
 
-          <Grid className={classes.step} sm={10} item>
+          <Grid className={classes.step} xs item>
             <Box className={classes.stepContent} paddingY={2}>
               {currentStep === 0 && (
                 <TemplatesStep
+                  selectedTemplates={selectedTemplates}
+                  numberOfSelectedTemplates={numberOfSelectedTemplates}
                   handleGoToNextStep={handleGoToNextStep}
+                  setSelectedTemplates={setSelectedTemplates}
                   handleCancelDeviceCreation={handleCancelDeviceCreation}
                 />
               )}
@@ -76,6 +62,7 @@ const CreateDevice = () => {
                 <AttrsStep
                   handleGoToNextStep={handleGoToNextStep}
                   handleGoToPreviousStep={handleGoToPreviousStep}
+                  handleCancelDeviceCreation={handleCancelDeviceCreation}
                 />
               )}
 
@@ -83,6 +70,7 @@ const CreateDevice = () => {
                 <SecurityStep
                   handleGoToNextStep={handleGoToNextStep}
                   handleGoToPreviousStep={handleGoToPreviousStep}
+                  handleCancelDeviceCreation={handleCancelDeviceCreation}
                 />
               )}
 
@@ -90,6 +78,7 @@ const CreateDevice = () => {
                 <SummaryStep
                   handleGoToNextStep={handleGoToNextStep}
                   handleGoToPreviousStep={handleGoToPreviousStep}
+                  handleCancelDeviceCreation={handleCancelDeviceCreation}
                 />
               )}
             </Box>

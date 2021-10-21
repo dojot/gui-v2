@@ -15,8 +15,6 @@ import userInfoEn from '../../views/stateComponents/UserInfo/translations/en_us.
 import userInfoBr from '../../views/stateComponents/UserInfo/translations/pt_br.userInfo.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
-import templateTableEn from '../components/TemplateTable/translations/en.templateTable.i18n.json';
-import templateTablePtBr from '../components/TemplateTable/translations/pt_br.templateTable.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
@@ -31,7 +29,6 @@ const resources = {
     dashboard: dashboardEn,
     devices: devicesEn,
     home: homeEn,
-    templateTable: templateTableEn,
     userInfo: userInfoEn,
     createDevice: createDeviceEn,
   },
@@ -43,7 +40,6 @@ const resources = {
     dashboard: dashboardPtBr,
     devices: devicesPtBr,
     home: homePtBr,
-    templateTable: templateTablePtBr,
     userInfo: userInfoBr,
     createDevice: createDevicePtBr,
   },

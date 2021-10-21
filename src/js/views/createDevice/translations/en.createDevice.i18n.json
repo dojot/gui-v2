@@ -1,3 +1,15 @@
 {
-  "title": "New Device"
+  "title": "New Device",
+  "stepper": {
+    "templates": "Templates",
+    "attrs": "Attributes",
+    "certificates": "Certificates",
+    "summary": "Summary"
+  },
+  "templatesStep": {
+    "hint": "To get started, select a template in the list below or create a new one!",
+    "templateName": "Template Name",
+    "numberOfAttrs": "Number Of Attributes",
+    "emptyTemplateList": "No Template Found"
+  }
 }

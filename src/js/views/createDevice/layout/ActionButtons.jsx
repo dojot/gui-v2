@@ -8,6 +8,9 @@ import { useActionButtonStyles } from './style';
 
 const ActionButtons = ({
   withBackButton,
+  isBackButtonDisabled,
+  isNextButtonDisabled,
+  isCancelButtonDisabled,
   handleClickBackButton,
   handleClickNextButton,
   handleClickCancelButton,
@@ -19,20 +22,33 @@ const ActionButtons = ({
     <Box className={classes.container}>
       <Button
         className={withBackButton ? classes.cancelButtonLeftAligned : null}
-        variant='text'
         size='large'
+        variant='text'
+        disabled={isCancelButtonDisabled}
         onClick={handleClickCancelButton}
       >
         {t('cancel')}
       </Button>
 
       {withBackButton && (
-        <Button variant='outlined' color='primary' size='large' onClick={handleClickBackButton}>
+        <Button
+          size='large'
+          color='primary'
+          variant='outlined'
+          disabled={isBackButtonDisabled}
+          onClick={handleClickBackButton}
+        >
           {t('back')}
         </Button>
       )}
 
-      <Button variant='contained' color='primary' size='large' onClick={handleClickNextButton}>
+      <Button
+        size='large'
+        color='primary'
+        variant='contained'
+        onClick={handleClickNextButton}
+        disabled={isNextButtonDisabled}
+      >
         {t('next')}
       </Button>
     </Box>
@@ -41,6 +57,9 @@ const ActionButtons = ({
 
 ActionButtons.propTypes = {
   withBackButton: PropTypes.bool,
+  isBackButtonDisabled: PropTypes.bool,
+  isNextButtonDisabled: PropTypes.bool,
+  isCancelButtonDisabled: PropTypes.bool,
   handleClickBackButton: PropTypes.func,
   handleClickNextButton: PropTypes.func,
   handleClickCancelButton: PropTypes.func,
@@ -48,6 +67,9 @@ ActionButtons.propTypes = {
 
 ActionButtons.defaultProps = {
   withBackButton: false,
+  isBackButtonDisabled: false,
+  isNextButtonDisabled: false,
+  isCancelButtonDisabled: false,
   handleClickBackButton: null,
   handleClickNextButton: null,
   handleClickCancelButton: null,

@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(theme => ({
+export default makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -8,10 +8,6 @@ export default makeStyles(theme => ({
   },
   content: {
     flex: 1,
-  },
-  stepper: {
-    height: '100%',
-    background: theme.palette.background.default,
   },
   step: {
     display: 'flex',
