@@ -1,3 +1,5 @@
+import confirmModalEN from 'Components/Modal/ConfirmationModal/translations/en.confirmation.modal.i18n.json';
+import confirmModalPtBr from 'Components/Modal/ConfirmationModal/translations/pt_br.confirmation.modal.i18n.json';
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
@@ -19,6 +21,7 @@ const resources = {
     common: commonEn,
     paginator: paginatorEn,
     dashboard: dashboardEn,
+    modal: confirmModalEN,
   },
   pt: {
     login: loginPtBr,
@@ -26,11 +29,12 @@ const resources = {
     common: commonPtBr,
     paginator: paginatorPtBr,
     dashboard: dashboardPtBr,
+    modal: confirmModalPtBr,
   },
 };
 const lng = navigator.language || navigator.userLanguage;
 i18n.use(initReactI18next).init({
-  ns: ['login', 'menu', 'common', 'dashboard'],
+  ns: ['login', 'menu', 'common', 'dashboard', 'modal'],
   defaultNS: 'common',
   lng,
   resources,

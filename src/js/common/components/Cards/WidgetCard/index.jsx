@@ -9,6 +9,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import More from '@material-ui/icons/MoreVert';
+import { ConfirmationModal } from 'Components/Modal';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -17,6 +18,7 @@ import useStyles from './style';
 const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport }) => {
   const classes = useStyles();
 
+  const [openModal, setOpenModal] = React.useState(false);
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
 
@@ -30,6 +32,12 @@ const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport })
     setAnchorEl(null);
     callback(id);
   };
+
+  const handleConfirm = () => {
+    setOpenModal(true);
+    setAnchorEl(null);
+  };
+
   return (
     <Card className={classes.card} variant='outlined'>
       <CardHeader
@@ -62,9 +70,14 @@ const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport })
               <MenuItem onClick={() => handleClose(onExport)}>
                 <ListItemText primary={t('common:export')} />
               </MenuItem>
-              <MenuItem onClick={() => handleClose(onDelete)}>
+              <MenuItem onClick={() => handleConfirm()}>
                 <ListItemText primary={t('common:delete')} />
               </MenuItem>
+              <ConfirmationModal
+                open={openModal}
+                onClose={setOpenModal}
+                callback={() => onDelete(id)}
+              />
             </Menu>
           </div>
         }
