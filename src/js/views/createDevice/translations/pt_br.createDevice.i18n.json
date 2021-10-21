@@ -11,6 +11,8 @@
     "templateName": "Nome do Modelo",
     "numberOfAttrs": "Nº de Atributos",
     "emptyTemplateList": "Nenhum Modelo Encontrado",
-    "searchTemplatePh": "Digite para pesquisar um template..."
+    "searchTemplatePh": "Digite para pesquisar um template...",
+    "discardNewTemplate": "Descartar Modelo",
+    "saveNewTemplate": "Salvar Modelo"
   }
 }

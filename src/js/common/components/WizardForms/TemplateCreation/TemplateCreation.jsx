@@ -30,6 +30,7 @@ const TemplateCreation = ({
   handleCreateAttr,
   handleDeleteAttr,
   handleUpdateAttr,
+  endExtraComponent,
 }) => {
   const { t } = useTranslation(['templateCreation', 'attrs']);
   const classes = useStyles();
@@ -198,6 +199,8 @@ const TemplateCreation = ({
           </Box>
         )}
       </Box>
+
+      {endExtraComponent}
     </Box>
   );
 };
@@ -206,6 +209,7 @@ TemplateCreation.propTypes = {
   className: PropTypes.string,
   attrs: PropTypes.array.isRequired,
   templateName: PropTypes.string.isRequired,
+  endExtraComponent: PropTypes.node,
   setTemplateName: PropTypes.func.isRequired,
   handleCreateAttr: PropTypes.func.isRequired,
   handleDeleteAttr: PropTypes.func.isRequired,
@@ -214,6 +218,7 @@ TemplateCreation.propTypes = {
 
 TemplateCreation.defaultProps = {
   className: '',
+  endExtraComponent: null,
 };
 
 export default TemplateCreation;

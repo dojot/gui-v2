@@ -26,9 +26,8 @@ const TemplateTable = ({
   templates,
   selectedTemplates,
   numberOfSelectedTemplates,
-  handleSelectTemplate,
+  setSelectedTemplates,
   handleSearchForTemplates,
-  handleSelectAllTemplates,
 }) => {
   const { t } = useTranslation('createDevice');
   const classes = useTemplateTableStyles();
@@ -75,6 +74,36 @@ const TemplateTable = ({
     const searchText = e.target.value;
     handleDebounce(searchText);
     setIsShowingClearButton(searchText);
+  };
+
+  const handleSelectTemplate = template => {
+    const isAlreadySelected = !!selectedTemplates[template.id];
+
+    if (isAlreadySelected) {
+      setSelectedTemplates(currentSelectedTemplates => {
+        const selectedTemplatesClone = { ...currentSelectedTemplates };
+        delete selectedTemplatesClone[template.id];
+        return selectedTemplatesClone;
+      });
+    } else {
+      setSelectedTemplates(currentSelectedTemplates => {
+        const selectedTemplatesClone = { ...currentSelectedTemplates };
+        selectedTemplatesClone[template.id] = template;
+        return selectedTemplatesClone;
+      });
+    }
+  };
+
+  const handleSelectAllTemplates = event => {
+    if (event.target.checked) {
+      const newSelectedTemplates = {};
+      templates.forEach(template => {
+        newSelectedTemplates[template.id] = template;
+      });
+      setSelectedTemplates(newSelectedTemplates);
+    } else {
+      setSelectedTemplates({});
+    }
   };
 
   return (
@@ -170,9 +199,8 @@ TemplateTable.propTypes = {
   templates: PropTypes.array.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   numberOfSelectedTemplates: PropTypes.object.isRequired,
-  handleSelectTemplate: PropTypes.func.isRequired,
+  setSelectedTemplates: PropTypes.func.isRequired,
   handleSearchForTemplates: PropTypes.func.isRequired,
-  handleSelectAllTemplates: PropTypes.func.isRequired,
 };
 
 export default TemplateTable;

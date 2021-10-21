@@ -34,6 +34,9 @@ export const useTemplatesStepStyles = makeStyles(theme => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  templateCreation: {
+    flex: 1,
+  },
 }));
 
 export const useTemplateTableStyles = makeStyles(theme => ({
@@ -59,5 +62,17 @@ export const useTemplateTableStyles = makeStyles(theme => ({
   },
   emptyListText: {
     fontStyle: 'italic',
+  },
+}));
+
+export const useTemplateCreationActionsStyles = makeStyles(() => ({
+  container: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    margin: '0 -1rem',
+    '& > *': {
+      margin: '1rem 1rem 0 1rem',
+    },
   },
 }));

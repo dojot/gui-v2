@@ -6,8 +6,12 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 
+import { TemplateCreation } from '../../../../common/components/WizardForms';
+import { useTemplateCreationState } from '../../../../common/hooks';
+import { actions as templateActions } from '../../../../redux/modules/templates';
 import ActionButtons from '../../layout/ActionButtons';
 import { useTemplatesStepStyles } from './style';
+import TemplateCreationActions from './TemplateCreationActions';
 import TemplateTable from './TemplateTable';
 
 const TemplatesStep = ({
@@ -35,42 +39,41 @@ const TemplatesStep = ({
 
   const [isCreatingTemplate, setIsCreatingTemplate] = useState(false);
 
+  const {
+    attrs,
+    templateName,
+    canSaveTemplate,
+    setTemplateName,
+    handleCreateAttr,
+    handleDeleteAttr,
+    handleUpdateAttr,
+    handleClearState,
+    getAttrsWithoutId,
+  } = useTemplateCreationState();
+
   const handleCreateNewTemplate = () => {
     setIsCreatingTemplate(true);
   };
 
   const handleSearchForTemplates = search => {
-    dispatch({ type: 'SEARCH', payload: search });
+    dispatch({ type: 'GET_TEMPLATES', payload: search });
   };
 
-  const handleSelectTemplate = template => {
-    const isAlreadySelected = !!selectedTemplates[template.id];
-
-    if (isAlreadySelected) {
-      setSelectedTemplates(currentSelectedTemplates => {
-        const selectedTemplatesClone = { ...currentSelectedTemplates };
-        delete selectedTemplatesClone[template.id];
-        return selectedTemplatesClone;
-      });
-    } else {
-      setSelectedTemplates(currentSelectedTemplates => {
-        const selectedTemplatesClone = { ...currentSelectedTemplates };
-        selectedTemplatesClone[template.id] = template;
-        return selectedTemplatesClone;
-      });
-    }
+  const handleDiscardNewTemplate = () => {
+    setIsCreatingTemplate(false);
+    handleClearState();
   };
 
-  const handleSelectAllTemplates = event => {
-    if (event.target.checked) {
-      const newSelectedTemplates = {};
-      templates.forEach(template => {
-        newSelectedTemplates[template.id] = template;
-      });
-      setSelectedTemplates(newSelectedTemplates);
-    } else {
-      setSelectedTemplates({});
-    }
+  const handleSaveNewTemplate = () => {
+    setIsCreatingTemplate(false);
+    handleClearState();
+
+    dispatch(
+      templateActions.createTemplate({
+        name: templateName,
+        attrs: getAttrsWithoutId(),
+      }),
+    );
   };
 
   return (
@@ -89,14 +92,30 @@ const TemplatesStep = ({
         </Box>
 
         <Box className={classes.stepComponent} marginBottom={2}>
-          {isCreatingTemplate ? null : (
+          {isCreatingTemplate ? (
+            <TemplateCreation
+              className={classes.templateCreation}
+              attrs={attrs}
+              templateName={templateName}
+              setTemplateName={setTemplateName}
+              handleCreateAttr={handleCreateAttr}
+              handleDeleteAttr={handleDeleteAttr}
+              handleUpdateAttr={handleUpdateAttr}
+              endExtraComponent={
+                <TemplateCreationActions
+                  canSaveNewTemplate={canSaveTemplate}
+                  handleSaveNewTemplate={handleSaveNewTemplate}
+                  handleDiscardNewTemplate={handleDiscardNewTemplate}
+                />
+              }
+            />
+          ) : (
             <TemplateTable
               templates={templates}
               selectedTemplates={selectedTemplates}
-              handleSelectTemplate={handleSelectTemplate}
               numberOfSelectedTemplates={numberOfSelectedTemplates}
+              setSelectedTemplates={setSelectedTemplates}
               handleSearchForTemplates={handleSearchForTemplates}
-              handleSelectAllTemplates={handleSelectAllTemplates}
             />
           )}
         </Box>
