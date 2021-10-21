@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, IconButton, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { TemplateCreation } from '../../../../common/components/WizardForms';
 import { useTemplateCreationState } from '../../../../common/hooks';
 import { actions as templateActions } from '../../../../redux/modules/templates';
 import ActionButtons from '../../layout/ActionButtons';
+import {
+  templatesSelector,
+  loadingTemplatesSelector,
+  paginationControlSelector,
+} from '../../redux/selectors/templatesSelector';
 import { useTemplatesStepStyles } from './style';
 import TemplateCreationActions from './TemplateCreationActions';
 import TemplateTable from './TemplateTable';
@@ -25,17 +30,15 @@ const TemplatesStep = ({
   const classes = useTemplatesStepStyles();
   const dispatch = useDispatch();
 
-  const templates = [
-    { id: 'abc1', label: 'Modelo 1', attrsLength: 1 },
-    { id: 'abc2', label: 'Modelo 2', attrsLength: 2 },
-    { id: 'abc3', label: 'Modelo 3', attrsLength: 3 },
-    { id: 'abc4', label: 'Modelo 4', attrsLength: 4 },
-    { id: 'abc5', label: 'Modelo 5', attrsLength: 5 },
-    { id: 'abc6', label: 'Modelo 6', attrsLength: 6 },
-    { id: 'abc7', label: 'Modelo 7', attrsLength: 7 },
-    { id: 'abc8', label: 'Modelo 8', attrsLength: 8 },
-    { id: 'abc9', label: 'Modelo 9', attrsLength: 9 },
-  ];
+  const templates = useSelector(templatesSelector);
+  const isLoadingTemplates = useSelector(loadingTemplatesSelector);
+  const { totalPages } = useSelector(paginationControlSelector);
+
+  const [page] = useState(0);
+  const [rowsPerPage] = useState(10);
+
+  // TODO: Create pagination and show loading
+  console.log(isLoadingTemplates, totalPages);
 
   const [isCreatingTemplate, setIsCreatingTemplate] = useState(false);
 
@@ -56,7 +59,7 @@ const TemplatesStep = ({
   };
 
   const handleSearchForTemplates = search => {
-    dispatch({ type: 'GET_TEMPLATES', payload: search });
+    dispatch(templateActions.getTemplates({ filter: { label: search } }));
   };
 
   const handleDiscardNewTemplate = () => {
@@ -75,6 +78,17 @@ const TemplatesStep = ({
       }),
     );
   };
+
+  useEffect(() => {
+    dispatch(
+      templateActions.getTemplates({
+        page: {
+          number: page,
+          size: rowsPerPage,
+        },
+      }),
+    );
+  }, [dispatch, page, rowsPerPage]);
 
   return (
     <Box className={classes.container}>
