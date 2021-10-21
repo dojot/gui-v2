@@ -1,4 +1,5 @@
-export { DEVICES_PAGE_KEYS } from './localStorage';
-export { SOURCE, WIDGET, OPERATION } from './wizard';
-export { DATA_ORDER, VIEW_MODE } from './dataVisualization';
-export { IMAGERY_MODE } from './mapImagery';
+export * from './localStorage';
+export * from './wizard';
+export * from './dataVisualization';
+export * from './templateAttrs';
+export * from './mapImagery';

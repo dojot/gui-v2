@@ -1,0 +1,37 @@
+{
+  "title": "Modelos / {{template}}",
+  "searchInputPh": "Pesquisar Atributo",
+  "totalOfAttrs": "Total de Itens: {{count}}",
+  "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
+  "labelRowsPerPage": "Itens por página:",
+  "massActions": "Ações em massa:",
+  "numberOfSelectedAttrs": "{{count}} Linha Selecionada",
+  "numberOfSelectedAttrs_plural": "{{count}} Linhas Selecionadas",
+  "emptyListMessage": "Nenhum Atributo Encontrado",
+  "createNewAttr": "Criar Novo Atributo",
+  "attrData": {
+    "id": "ID",
+    "label": "Nome",
+    "type": "Tipo de Atributo",
+    "valueType": "Tipo de Valor",
+    "value": "Valor",
+    "actions": "Ações"
+  },
+  "deleteAttrAlert": {
+    "title": "Excluir Atributo do Modelo",
+    "message": "Tem certeza que deseja excluir este atributo do modelo?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "deleteMultipleAttrAlert": {
+    "title": "Excluir Atributos Selecionados",
+    "message": "Tem certeza que deseja excluir todos os atributos selecionados?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "attrManagement": {
+    "newAttr": "Criar Novo Atributo",
+    "editAttr": "Editar Atributo",
+    "errorMessage": "Preencha os campos obrigatórios para salvar!"
+  }
+}

@@ -1,1 +1,48 @@
-{}
+{
+  "title": "Devices",
+  "searchInputPh": "Search Device",
+  "totalOfDevices": "Total of Items: {{count}}",
+  "hasCertificateTooltip": "Has Certificate",
+  "noCertificateTooltip": "No Associated Certificate",
+  "favoriteTooltip": "Add to Favorites",
+  "removeFromFavoriteTooltip": "Remove from Favorites",
+  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+  "labelRowsPerPage": "Items per page:",
+  "detailsModalTitle": "Device Details ({{label}})",
+  "massActions": "Mass Actions:",
+  "createCertificates": "Create Certificates",
+  "favorite": "Add to Favorites",
+  "numberOfSelectedDevices": "{{count}} Line Selected",
+  "numberOfSelectedDevices_plural": "{{count}} Lines Selected",
+  "emptyListMessage": "No Device Found",
+  "createNewDevice": "Create New Device",
+  "lastUpdate": {
+    "date": "Date",
+    "key": "Key",
+    "value": "Value"
+  },
+  "dataTableHead": {
+    "id": "ID",
+    "label": "Name",
+    "attrsLength": "Number of Properties",
+    "updated": "Last Update",
+    "hasCertificate": "Has Certificate",
+    "actions": "Actions"
+  },
+  "cardData": {
+    "properties": "Properties",
+    "updated": "Last Update"
+  },
+  "deleteDeviceAlert": {
+    "title": "Delete Device",
+    "message": "Are you sure you want to delete this device?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "deleteMultipleDeviceAlert": {
+    "title": "Delete Selected Devices",
+    "message": "Are you sure you want to delete all selected devices?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  }
+}

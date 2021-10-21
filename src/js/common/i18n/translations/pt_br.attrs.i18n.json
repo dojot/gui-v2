@@ -1,0 +1,22 @@
+{
+  "attrLabel": {
+    "attrName": "Nome do Atributo",
+    "attrType": "Tipo do Atributo",
+    "attrValueType": "Tipo do Valor",
+    "attrValue": "Valor"
+  },
+  "attrType": {
+    "dynamic": "Valor Dinâmico",
+    "static": "Valor Estático",
+    "actuator": "Atuador"
+  },
+  "attrValueType": {
+    "bool": "Booleano",
+    "geo_point": "Geo",
+    "float": "Float",
+    "integer": "Inteiro",
+    "string": "Texto",
+    "object": "Objeto",
+    "json": "JSON"
+  }
+}

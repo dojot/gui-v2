@@ -14,8 +14,12 @@
   "edit": "Edit",
   "export": "Export to CSV",
   "delete": "Delete",
+  "exclude": "Exclude",
   "finish": "Finish",
   "noData": "No Data",
   "required": "Required",
-  "min5characters": "Minimum 5 characters"
+  "min5characters": "Minimum 5 characters",
+  "save": "Save",
+  "duplicate": "Duplicate",
+  "none": "None"
 }

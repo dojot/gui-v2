@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useSearchBarStyles = makeStyles(theme => ({
   searchContainer: {
-    background: theme.palette.background.shade[500],
+    background: theme.palette.grey[100],
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -31,17 +31,17 @@ export const useSearchBarStyles = makeStyles(theme => ({
 }));
 
 export const useCardsStyles = makeStyles(theme => ({
-  deviceCard: {
+  card: {
     cursor: 'pointer',
     transition: 'background 0.1s ease-in-out',
     '&:hover': {
       background: theme.palette.action.hover,
     },
   },
-  deviceCardIcon: {
+  cardIcon: {
     fontSize: '40px',
   },
-  deviceCardTitle: {
+  cardTitle: {
     fontSize: '16px',
     fontWeight: 'bold',
   },
@@ -66,12 +66,6 @@ export const usePaginationStyles = makeStyles(() => ({
 }));
 
 export const useDetailsModalStyles = makeStyles(theme => ({
-  detailsModalTitle: {
-    borderBottom: `1px solid ${theme.palette.grey[100]}`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
   dataGroup: {
     background: '#f2f2f2',
     border: `1px solid ${theme.palette.divider}`,
@@ -107,7 +101,7 @@ export const useMassActionsStyles = makeStyles(theme => ({
 
 export const useDataTableStyles = makeStyles(theme => ({
   tableHead: {
-    background: theme.palette.background.shade[500],
+    background: theme.palette.grey[100],
   },
   clickableCell: {
     cursor: 'pointer',
