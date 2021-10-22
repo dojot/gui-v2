@@ -198,14 +198,16 @@ const TemplateTable = ({
           </TableBody>
         </Table>
 
-        <Pagination
-          page={page}
-          rowsPerPage={rowsPerPage}
-          totalOfTemplates={totalPages}
-          numberOfSelectedTemplates={numberOfSelectedTemplates}
-          handleChangePage={handleChangePage}
-          handleChangeRowsPerPage={handleChangeRowsPerPage}
-        />
+        {!!templates.length && (
+          <Pagination
+            page={page}
+            rowsPerPage={rowsPerPage}
+            totalOfTemplates={totalPages}
+            numberOfSelectedTemplates={numberOfSelectedTemplates}
+            handleChangePage={handleChangePage}
+            handleChangeRowsPerPage={handleChangeRowsPerPage}
+          />
+        )}
       </TableContainer>
 
       {templates.length === 0 && (
