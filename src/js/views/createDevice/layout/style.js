@@ -18,6 +18,7 @@ export const useActionButtonStyles = makeStyles(() => ({
 export const useDeviceWizardStepperStyles = makeStyles(theme => ({
   stepper: {
     height: '100%',
+    maxHeight: '100vh',
     background: theme.palette.background.default,
   },
 }));

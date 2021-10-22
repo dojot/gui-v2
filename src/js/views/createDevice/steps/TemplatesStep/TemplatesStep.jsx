@@ -32,7 +32,7 @@ const TemplatesStep = ({
 
   const templates = useSelector(templatesSelector);
   const isLoadingTemplates = useSelector(loadingTemplatesSelector);
-  const { totalPages } = useSelector(paginationControlSelector);
+  const { totalPages = 0 } = useSelector(paginationControlSelector);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

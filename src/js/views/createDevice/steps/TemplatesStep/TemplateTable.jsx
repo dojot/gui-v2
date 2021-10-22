@@ -228,7 +228,7 @@ TemplateTable.propTypes = {
   rowsPerPage: PropTypes.number.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   isLoadingTemplates: PropTypes.bool.isRequired,
-  numberOfSelectedTemplates: PropTypes.object.isRequired,
+  numberOfSelectedTemplates: PropTypes.number.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   setSelectedTemplates: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
