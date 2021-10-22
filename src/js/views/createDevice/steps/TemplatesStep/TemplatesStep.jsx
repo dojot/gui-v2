@@ -17,7 +17,7 @@ import {
 import ActionButtons from '../../layout/ActionButtons';
 import { useTemplatesStepStyles } from './style';
 import TemplateCreationActions from './TemplateCreationActions';
-import TemplateTable from './TemplateTable';
+import TemplatesTable from './TemplatesTable';
 
 const TemplatesStep = ({
   selectedTemplates,
@@ -130,7 +130,7 @@ const TemplatesStep = ({
               }
             />
           ) : (
-            <TemplateTable
+            <TemplatesTable
               page={page}
               templates={templates}
               totalPages={totalPages}

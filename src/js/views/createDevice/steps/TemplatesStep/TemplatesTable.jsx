@@ -21,9 +21,9 @@ import { useTranslation } from 'react-i18next';
 
 import { useDebounce } from '../../../../common/hooks';
 import Pagination from './Pagination';
-import { useTemplateTableStyles } from './style';
+import { useTemplatesTableStyles } from './style';
 
-const TemplateTable = ({
+const TemplateTables = ({
   page,
   templates,
   totalPages,
@@ -37,7 +37,7 @@ const TemplateTable = ({
   handleSearchForTemplates,
 }) => {
   const { t } = useTranslation('createDevice');
-  const classes = useTemplateTableStyles();
+  const classes = useTemplatesTableStyles();
 
   const searchInputRef = useRef(null);
 
@@ -221,7 +221,7 @@ const TemplateTable = ({
   );
 };
 
-TemplateTable.propTypes = {
+TemplateTables.propTypes = {
   page: PropTypes.number.isRequired,
   templates: PropTypes.array.isRequired,
   totalPages: PropTypes.number.isRequired,
@@ -235,4 +235,4 @@ TemplateTable.propTypes = {
   handleSearchForTemplates: PropTypes.func.isRequired,
 };
 
-export default TemplateTable;
+export default TemplateTables;

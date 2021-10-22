@@ -39,7 +39,7 @@ export const useTemplatesStepStyles = makeStyles(theme => ({
   },
 }));
 
-export const useTemplateTableStyles = makeStyles(theme => ({
+export const useTemplatesTableStyles = makeStyles(theme => ({
   tableHead: {
     background: theme.palette.background.shade[500],
   },
