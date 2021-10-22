@@ -34,11 +34,8 @@ const TemplatesStep = ({
   const isLoadingTemplates = useSelector(loadingTemplatesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
 
-  const [page] = useState(0);
-  const [rowsPerPage] = useState(10);
-
-  // TODO: Create pagination and show loading
-  console.log(isLoadingTemplates, totalPages);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [isCreatingTemplate, setIsCreatingTemplate] = useState(false);
 
@@ -53,6 +50,15 @@ const TemplatesStep = ({
     handleClearState,
     getAttrsWithoutId,
   } = useTemplateCreationState();
+
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
 
   const handleCreateNewTemplate = () => {
     setIsCreatingTemplate(true);
@@ -125,10 +131,16 @@ const TemplatesStep = ({
             />
           ) : (
             <TemplateTable
+              page={page}
               templates={templates}
+              totalPages={totalPages}
+              rowsPerPage={rowsPerPage}
               selectedTemplates={selectedTemplates}
+              isLoadingTemplates={isLoadingTemplates}
               numberOfSelectedTemplates={numberOfSelectedTemplates}
+              handleChangePage={handleChangePage}
               setSelectedTemplates={setSelectedTemplates}
+              handleChangeRowsPerPage={handleChangeRowsPerPage}
               handleSearchForTemplates={handleSearchForTemplates}
             />
           )}

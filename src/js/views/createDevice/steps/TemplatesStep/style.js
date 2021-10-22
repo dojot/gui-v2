@@ -63,6 +63,12 @@ export const useTemplateTableStyles = makeStyles(theme => ({
   emptyListText: {
     fontStyle: 'italic',
   },
+  loadingContainer: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));
 
 export const useTemplateCreationActionsStyles = makeStyles(() => ({
@@ -74,5 +80,13 @@ export const useTemplateCreationActionsStyles = makeStyles(() => ({
     '& > *': {
       margin: '1rem 1rem 0 1rem',
     },
+  },
+}));
+
+export const usePaginationStyles = makeStyles(() => ({
+  pagination: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 }));

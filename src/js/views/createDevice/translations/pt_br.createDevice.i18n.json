@@ -11,8 +11,13 @@
     "templateName": "Nome do Modelo",
     "numberOfAttrs": "Nº de Atributos",
     "emptyTemplateList": "Nenhum Modelo Encontrado",
-    "searchTemplatePh": "Digite para pesquisar um template...",
+    "searchTemplatePh": "Digite para pesquisar um modelo...",
     "discardNewTemplate": "Descartar Modelo",
-    "saveNewTemplate": "Salvar Modelo"
+    "saveNewTemplate": "Salvar Modelo",
+    "totalOfTemplates": "Total de Modelos: {{count}}",
+    "numberOfSelectedTemplates": "{{count}} Modelo Selecionado",
+    "numberOfSelectedTemplates_plural": "{{count}} Modelos Selecionados",
+    "labelRowsPerPage": "Itens por página:",
+    "labelDisplayedRows": "{{from}}-{{to}} de {{count}}"
   }
 }

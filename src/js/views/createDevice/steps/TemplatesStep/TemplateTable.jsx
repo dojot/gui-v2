@@ -20,13 +20,20 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { useDebounce } from '../../../../common/hooks';
+import Pagination from './Pagination';
 import { useTemplateTableStyles } from './style';
 
 const TemplateTable = ({
+  page,
   templates,
+  totalPages,
+  rowsPerPage,
   selectedTemplates,
+  isLoadingTemplates,
   numberOfSelectedTemplates,
+  handleChangePage,
   setSelectedTemplates,
+  handleChangeRowsPerPage,
   handleSearchForTemplates,
 }) => {
   const { t } = useTranslation('createDevice');
@@ -106,6 +113,14 @@ const TemplateTable = ({
     }
   };
 
+  if (isLoadingTemplates) {
+    return (
+      <Box className={classes.loadingContainer} padding={2}>
+        <CircularProgress size={24} />
+      </Box>
+    );
+  }
+
   return (
     <>
       <TableContainer>
@@ -147,7 +162,7 @@ const TemplateTable = ({
           />
 
           <TableBody>
-            {templates.map(template => {
+            {templates.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(template => {
               const isSelected = !!selectedTemplates[template.id];
 
               const handleSelectThisTemplate = () => {
@@ -182,6 +197,15 @@ const TemplateTable = ({
             })}
           </TableBody>
         </Table>
+
+        <Pagination
+          page={page}
+          rowsPerPage={rowsPerPage}
+          totalOfTemplates={totalPages}
+          numberOfSelectedTemplates={numberOfSelectedTemplates}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
+        />
       </TableContainer>
 
       {templates.length === 0 && (
@@ -196,10 +220,16 @@ const TemplateTable = ({
 };
 
 TemplateTable.propTypes = {
+  page: PropTypes.number.isRequired,
   templates: PropTypes.array.isRequired,
+  totalPages: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
+  isLoadingTemplates: PropTypes.bool.isRequired,
   numberOfSelectedTemplates: PropTypes.object.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
   setSelectedTemplates: PropTypes.func.isRequired,
+  handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleSearchForTemplates: PropTypes.func.isRequired,
 };
 
