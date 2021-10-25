@@ -1,0 +1,24 @@
+{
+  "security": "Security",
+  "headerTitle": "CA",
+  "searchInputPh": "Search CA",
+  "totalOfItems": "Total de itens",
+  "numberOfSelectedItems": "{{count}} Selected Row",
+  "numberOfSelectedItems_plural": "{{count}} Selected Rows",
+  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+  "labelRowsPerPage": "Items per page:",
+  "dataTableHead": {
+    "label": "NAME",
+    "validityPeriod": "VALIDITY PERIOD",
+    "linkedCertificate": "LINKED CERTIFICATE",
+    "status": "STATUS",
+    "actions": "ACTIONS"
+  },
+  "dataTableBody": {
+    "status": {
+      "valid": "Valid",
+      "expired": "Expired",
+      "to_expire": "To expire"
+    }
+  }
+}
