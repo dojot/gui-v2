@@ -50,6 +50,9 @@
     "search": "Digite o nome do dispositivo",
     "notFound": "Nenhum dispositivo encontrado para o filtro informado"
   },
+  "security": {
+
+  },
   "filters": {
     "recover": "Recuperar registros por:",
     "real time": "Tempo Real",

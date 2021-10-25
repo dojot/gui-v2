@@ -5,6 +5,7 @@ import { certificationAuthoritySaga } from './certificationAuthoritiesSaga';
 import { dashboardSaga } from './dashboardSaga';
 import { deviceSaga } from './devicesSaga';
 import { exampleSaga } from './exampleSaga';
+import { securitySaga } from './securitySaga';
 import { templateAttrsSaga } from './templateAttrsSaga';
 import { templateSaga } from './templatesSaga';
 
@@ -15,6 +16,7 @@ export default function* sagas() {
     ...dashboardSaga,
     ...templateSaga,
     ...templateAttrsSaga,
+    ...securitySaga,
     ...certificationAuthoritySaga,
     ...certificatesSaga,
   ]);

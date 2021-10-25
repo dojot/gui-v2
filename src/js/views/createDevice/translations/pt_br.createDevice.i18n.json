@@ -26,6 +26,16 @@
     "noDynamicAttrs": "Nenhum atributo dinâmico para exibir",
     "noActuatorAttrs": "Nenhum atributo atuador para exibir"
   },
+  "securityStep": {
+    "hint": "Nesta etapa você gera um certicado para tornar seu dispositivo mais seguro.",
+    "certificateName": "Certificado",
+    "creationTime":"Criação",
+    "expirationTime": "Expiração",
+    "emptyCertificateList": "Nenhum Certificado Encontrado",
+    "totalPages": "Total de Páginas: {{count}}",
+    "labelRowsPerPage": "Itens por página:",
+    "labelDisplayedRows": "{{from}}-{{to}} de {{count}}"
+  },
   "summaryStep": {
     "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",
     "hint": "Se notar que faltou alguma coisa é só voltar, corrigir e continuar!",

@@ -17,6 +17,7 @@ const DataTableHead = ({
   startExtraCells,
   endExtraCells,
   disableOrderBy,
+  disableCheckbox,
 }) => {
   const createSortHandler = property => event => {
     if (onRequestSort) onRequestSort(event, property);
@@ -25,13 +26,15 @@ const DataTableHead = ({
   return (
     <TableHead className={className}>
       <TableRow>
-        <TableCell>
-          <Checkbox
-            color='primary'
-            onChange={onSelectAllClick}
-            checked={rowCount > 0 && numSelected === rowCount}
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-          />
+        <TableCell padding='checkbox'>
+          {disableCheckbox ? undefined : (
+            <Checkbox
+              color='primary'
+              onChange={onSelectAllClick}
+              checked={rowCount > 0 && numSelected === rowCount}
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+            />
+          )}
         </TableCell>
 
         {startExtraCells}

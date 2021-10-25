@@ -27,6 +27,7 @@ const CreateDevice = () => {
   const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
 
   const [selectedTemplates, setSelectedTemplates] = useState({});
+  const [selectedCertificate, setSelectedCertificate] = useState({});
   const [staticAttrValues, setStaticAttrValues] = useState({});
   const [deviceName, setDeviceName] = useState('');
 
@@ -151,7 +152,10 @@ const CreateDevice = () => {
 
               {currentStep === 2 && (
                 <SecurityStep
+                  selectedCertificate={selectedCertificate}
+                  numberOfSelectedTemplates={numberOfSelectedTemplates}
                   handleGoToNextStep={handleGoToNextStep}
+                  setSelectedCertificate={setSelectedCertificate}
                   handleGoToPreviousStep={handleGoToPreviousStep}
                   handleCancelDeviceCreation={handleCancelDeviceCreation}
                 />
