@@ -32,7 +32,7 @@ const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
   });
 
   const handleCreateDevice = () => {
-    history.push('/create-device');
+    history.push('/devices/new');
   };
 
   const handleClearSearch = () => {

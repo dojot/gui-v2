@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React from 'react';
 
 import { Box, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { TemplateCreation } from '../../common/components/WizardForms';
+import { useTemplateCreationState } from '../../common/hooks';
 import { actions as templateActions } from '../../redux/modules/templates';
 import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
@@ -16,41 +17,16 @@ const CreateTemplate = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const [templateName, setTemplateName] = useState('');
-  const [attrs, setAttrs] = useState([]);
-
-  const canSaveTemplate = useMemo(() => {
-    const haveAllRequiredData = attrs.every(attr => {
-      const { name, type, valueType } = attr;
-      return !!name.trim() && !!type && !!valueType;
-    });
-
-    return !!templateName.trim() && haveAllRequiredData;
-  }, [attrs, templateName]);
-
-  const handleCreateAttr = () => {
-    const id = Date.now();
-    setAttrs(currentAttrs => [
-      ...currentAttrs,
-      { id, name: '', type: '', valueType: '', value: '' },
-    ]);
-  };
-
-  const handleDeleteAttr = index => {
-    setAttrs(currentAttrs => {
-      const attrsClone = [...currentAttrs];
-      attrsClone.splice(index, 1);
-      return attrsClone;
-    });
-  };
-
-  const handleUpdateAttr = (index, attrKey, attrValue) => {
-    setAttrs(currentAttrs => {
-      const attrsClone = [...currentAttrs];
-      attrsClone[index][attrKey] = attrValue;
-      return attrsClone;
-    });
-  };
+  const {
+    attrs,
+    templateName,
+    canSaveTemplate,
+    setTemplateName,
+    handleCreateAttr,
+    handleDeleteAttr,
+    handleUpdateAttr,
+    getAttrsWithoutId,
+  } = useTemplateCreationState();
 
   const handleCancelTemplateCreation = () => {
     if (history.length) history.goBack();
@@ -58,16 +34,10 @@ const CreateTemplate = () => {
   };
 
   const handleSaveTemplate = () => {
-    const attrsWithoutId = attrs.map(attr => {
-      const attrClone = { ...attr };
-      delete attrClone.id;
-      return attrClone;
-    });
-
     dispatch(
       templateActions.createTemplate({
         name: templateName,
-        attrs: attrsWithoutId,
+        attrs: getAttrsWithoutId(),
       }),
     );
   };

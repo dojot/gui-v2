@@ -1,6 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import createDeviceEn from '../../views/createDevice/translations/en.createDevice.i18n.json';
+import createDevicePtBr from '../../views/createDevice/translations/pt_br.createDevice.i18n.json';
 import createTemplateEn from '../../views/createTemplate/translations/en.createTemplate.i18n.json';
 import createTemplatePtBr from '../../views/createTemplate/translations/pt_br.createTemplate.i18n.json';
 import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.json';
@@ -19,8 +21,6 @@ import templatesEn from '../../views/templates/translations/en.templates.i18n.js
 import templatesPtBr from '../../views/templates/translations/pt_br.templates.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
-import templateTableEn from '../components/TemplateTable/translations/en.templateTable.i18n.json';
-import templateTablePtBr from '../components/TemplateTable/translations/pt_br.templateTable.i18n.json';
 import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
 import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
@@ -44,8 +44,8 @@ const resources = {
     templateCreation: templateCreationEn,
     templateAttrs: templateAttrsEn,
     attrs: attrsEn,
-    templateTable: templateTableEn,
     userInfo: userInfoEn,
+    createDevice: createDeviceEn,
   },
   pt: {
     login: loginPtBr,
@@ -60,8 +60,8 @@ const resources = {
     templateCreation: templateCreationPtBr,
     templateAttrs: templateAttrsPtBr,
     attrs: attrsPtBr,
-    templateTable: templateTablePtBr,
     userInfo: userInfoBr,
+    createDevice: createDevicePtBr,
   },
 };
 

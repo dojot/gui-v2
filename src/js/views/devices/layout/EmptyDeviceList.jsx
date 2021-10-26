@@ -10,7 +10,7 @@ const EmptyDeviceList = () => {
   const history = useHistory();
 
   const handleCreateDevice = () => {
-    history.push('/create-device');
+    history.push('/devices/new');
   };
 
   return (
