@@ -20,7 +20,7 @@ const Devices = LazyLoading(() => import('views/devices'));
 const Templates = LazyLoading(() => import('views/templates'));
 const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
 const TemplateAttrs = LazyLoading(() => import('views/templateAttrs'));
-const CertificationAuthorities = LazyLoading(() => import('views/safety/CertificationAuthorities'));
+const CertificationAuthorities = LazyLoading(() => import('views/security/CertificationAuthorities'));
 const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
