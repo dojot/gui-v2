@@ -20,7 +20,7 @@ const SummaryStep = ({
   const classes = useSummaryStepStyles();
 
   const handleClearDeviceName = () => {
-    setDeviceName();
+    setDeviceName('');
   };
 
   return (
@@ -44,6 +44,7 @@ const SummaryStep = ({
           <TextField
             className={classes.input}
             variant='outlined'
+            value={deviceName}
             label={t('summaryStep.deviceNamePh')}
             onChange={e => setDeviceName(e.target.value)}
             InputProps={{
@@ -65,9 +66,6 @@ const SummaryStep = ({
             </Typography>
           </Box>
 
-          <Typography>Modelo de Teste 1</Typography>
-          <Typography>Modelo de Teste 2</Typography>
-          <Typography>Modelo de Teste 3</Typography>
           {Object.values(selectedTemplates).map(template => {
             return <Typography key={template.id}>{template.label}</Typography>;
           })}
@@ -91,28 +89,28 @@ const SummaryStep = ({
           <Box className={classes.certificateData}>
             <Typography>{t('summaryStep.certificate')}</Typography>
             <Link href='https://www.google.com' download>
-              abc123
+              Link
             </Link>
           </Box>
 
           <Box className={classes.certificateData}>
             <Typography>{t('summaryStep.privateKey')}</Typography>
             <Link href='https://www.google.com' download>
-              abc123
+              Link
             </Link>
           </Box>
 
           <Box className={classes.certificateData}>
             <Typography>{t('summaryStep.publicKey')}</Typography>
             <Link href='https://www.google.com' download>
-              abc123
+              Link
             </Link>
           </Box>
 
           <Box className={classes.certificateData}>
             <Typography>{t('summaryStep.caCertificate')}</Typography>
             <Link href='https://www.google.com' download>
-              abc123
+              Link
             </Link>
           </Box>
         </Box>
