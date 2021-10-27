@@ -18,7 +18,7 @@ const CreateDevice = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const [currentStep, setCurrentStep] = useState(3);
+  const [currentStep, setCurrentStep] = useState(0);
   const [selectedTemplates, setSelectedTemplates] = useState({});
   const [deviceName, setDeviceName] = useState('');
 
