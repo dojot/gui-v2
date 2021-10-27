@@ -1,6 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import certificationAuthoritiesEn from '../../views/CertificationAuthorities/translations/en.security.i18n.json';
+import certificationAuthoritiesPtBr from '../../views/CertificationAuthorities/translations/pt_br.security.i18n.json';
+import createCertificationAuthorityEn from '../../views/createCertificationAuthority/translations/en.createCertificationAuthority.json';
+import createCertificationAuthorityPtBr from '../../views/createCertificationAuthority/translations/pt_br.createCertificationAuthority.json';
 import createTemplateEn from '../../views/createTemplate/translations/en.createTemplate.i18n.json';
 import createTemplatePtBr from '../../views/createTemplate/translations/pt_br.createTemplate.i18n.json';
 import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.json';
@@ -11,8 +15,6 @@ import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
-import certificationAuthoritiesEn from '../../views/safety/CertificationAuthorities/translations/en.security.i18n.json';
-import certificationAuthoritiesPtBr from '../../views/safety/CertificationAuthorities/translations/pt_br.security.i18n.json';
 import userInfoEn from '../../views/stateComponents/UserInfo/translations/en_us.userInfo.i18n.json';
 import userInfoBr from '../../views/stateComponents/UserInfo/translations/pt_br.userInfo.i18n.json';
 import templateAttrsEn from '../../views/templateAttrs/translations/en.templateAttrs.i18n.json';
@@ -49,6 +51,7 @@ const resources = {
     templateTable: templateTableEn,
     userInfo: userInfoEn,
     certificationAuthorities: certificationAuthoritiesEn,
+    createCertificationAuthority: createCertificationAuthorityEn,
   },
   pt: {
     login: loginPtBr,
@@ -66,6 +69,7 @@ const resources = {
     templateTable: templateTablePtBr,
     userInfo: userInfoBr,
     certificationAuthorities: certificationAuthoritiesPtBr,
+    createCertificationAuthority: createCertificationAuthorityPtBr,
   },
 };
 
