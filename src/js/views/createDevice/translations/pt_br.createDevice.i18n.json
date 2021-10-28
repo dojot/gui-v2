@@ -8,16 +8,8 @@
   },
   "templatesStep": {
     "hint": "Para começar, selecione na lista ou crie um modelo para o seu dispositivo!",
-    "templateName": "Nome do Modelo",
-    "numberOfAttrs": "Nº de Atributos",
-    "emptyTemplateList": "Nenhum Modelo Encontrado",
-    "searchTemplatePh": "Digite para pesquisar um modelo...",
     "discardNewTemplate": "Descartar Modelo",
     "saveNewTemplate": "Salvar Modelo",
-    "totalOfTemplates": "Total de Modelos: {{count}}",
-    "numberOfSelectedTemplates": "{{count}} Modelo Selecionado",
-    "numberOfSelectedTemplates_plural": "{{count}} Modelos Selecionados",
-    "labelRowsPerPage": "Itens por página:",
-    "labelDisplayedRows": "{{from}}-{{to}} de {{count}}"
+    "emptyTemplateList": "Nenhum Modelo Encontrado"
   }
 }

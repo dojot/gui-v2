@@ -8,16 +8,8 @@
   },
   "templatesStep": {
     "hint": "To get started, select a template in the list below or create a new one!",
-    "templateName": "Template Name",
-    "numberOfAttrs": "Number Of Attributes",
-    "emptyTemplateList": "No Template Found",
-    "searchTemplatePh": "Type to search a template...",
     "discardNewTemplate": "Discard Template",
     "saveNewTemplate": "Save Template",
-    "totalOfTemplates": "Total of Templates: {{count}}",
-    "numberOfSelectedTemplates": "{{count}} Selected Template",
-    "numberOfSelectedTemplates_plural": "{{count}} Selected Templates",
-    "labelRowsPerPage": "Items per Page:",
-    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+    "emptyTemplateList": "No Template Found"
   }
 }
