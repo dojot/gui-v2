@@ -23,6 +23,7 @@ const CreateDevice = () => {
 
   const [selectedTemplates, setSelectedTemplates] = useState({});
   const [staticAttrValues, setStaticAttrValues] = useState({});
+  const [deviceName, setDeviceName] = useState('');
 
   const { staticAttrs, dynamicAttrs, actuatorAttrs } = useMemo(() => {
     const staticAttrsArray = [];
@@ -111,6 +112,9 @@ const CreateDevice = () => {
 
               {currentStep === 3 && (
                 <SummaryStep
+                  deviceName={deviceName}
+                  selectedTemplates={selectedTemplates}
+                  setDeviceName={setDeviceName}
                   handleGoToNextStep={handleGoToNextStep}
                   handleGoToPreviousStep={handleGoToPreviousStep}
                   handleCancelDeviceCreation={handleCancelDeviceCreation}
