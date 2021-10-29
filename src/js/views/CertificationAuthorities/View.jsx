@@ -70,7 +70,7 @@ const CertificationAuthorities = () => {
   };
 
   const handleConfirmCaDeletion = () => {
-    const authorityId = certificationAuthorityOptionsMenu.device.id;
+    const authorityId = certificationAuthorityOptionsMenu.certificationAuthority.id;
     dispatch(certificationAuthoritiesActions.deleteDevice({ authorityId }));
     setSelectedAuthorities(currentSelectedDevices => {
       return currentSelectedDevices.filter(id => id !== authorityId);

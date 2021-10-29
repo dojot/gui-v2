@@ -27,10 +27,10 @@ const Cards = ({ page, certificationAuthorities, rowsPerPage, handleSetCaOptions
             return (
               <Grid key={certificationAuthority.id} xs={12} sm={6} md={4} xl={3} item>
                 <DataCard
-                  className={classes.deviceCard}
-                  headerIcon={<VerifiedUserOutlined className={classes.deviceCardIcon} />}
+                  className={classes.certificationAuthorityCard}
+                  headerIcon={<VerifiedUserOutlined className={classes.certificationAuthorityCardIcon} />}
                   headerTitle={
-                    <Typography className={classes.deviceCardTitle}>
+                    <Typography className={classes.certificationAuthorityCardTitle}>
                       {certificationAuthority.name}
                     </Typography>
                   }

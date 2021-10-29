@@ -8,7 +8,7 @@ import { useTranslation } from 'react-i18next';
 import { useMassActionsStyles } from './style';
 
 const MassActions = ({ handleHideMassActions, handleDeleteMultipleDevices }) => {
-  const { t } = useTranslation(['devices', 'common']);
+  const { t } = useTranslation(['certificationAuthoritys', 'common']);
   const classes = useMassActionsStyles();
 
   return (
