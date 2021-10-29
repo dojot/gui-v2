@@ -108,7 +108,7 @@ const Devices = () => {
   const handleEditDevice = () => {
     handleHideOptionsMenu();
     const deviceId = deviceOptionsMenu.device.id;
-    history.push(`/create-device/${deviceId}`);
+    history.push(`/devices/edit/${deviceId}`);
   };
 
   const handleDeleteDevice = () => {
