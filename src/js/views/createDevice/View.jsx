@@ -20,6 +20,7 @@ const CreateDevice = () => {
 
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedTemplates, setSelectedTemplates] = useState({});
+  const [deviceName, setDeviceName] = useState('');
 
   const numberOfSelectedTemplates = useMemo(() => {
     return Object.keys(selectedTemplates).length;
@@ -76,6 +77,9 @@ const CreateDevice = () => {
 
               {currentStep === 3 && (
                 <SummaryStep
+                  deviceName={deviceName}
+                  selectedTemplates={selectedTemplates}
+                  setDeviceName={setDeviceName}
                   handleGoToNextStep={handleGoToNextStep}
                   handleGoToPreviousStep={handleGoToPreviousStep}
                   handleCancelDeviceCreation={handleCancelDeviceCreation}
