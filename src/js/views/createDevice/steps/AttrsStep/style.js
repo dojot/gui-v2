@@ -31,7 +31,7 @@ export const useAttrsStepStyles = makeStyles(theme => ({
   },
 }));
 
-export const useAttrDataList = makeStyles(theme => ({
+export const useAttrDataListStyles = makeStyles(theme => ({
   container: {
     border: `1px solid ${theme.palette.grey[300]}`,
     background: theme.palette.grey[100],

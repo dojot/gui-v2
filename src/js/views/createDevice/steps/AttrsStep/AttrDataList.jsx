@@ -12,7 +12,7 @@ import {
 import { ChevronRight } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-import { useAttrDataList } from './style';
+import { useAttrDataListStyles } from './style';
 
 const AttrDataList = ({
   title,
@@ -22,7 +22,7 @@ const AttrDataList = ({
   isCaptionHighlighted,
   handleToggleContent,
 }) => {
-  const classes = useAttrDataList({ isContentVisible });
+  const classes = useAttrDataListStyles({ isContentVisible });
 
   return (
     <List className={classes.container}>
