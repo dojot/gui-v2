@@ -16,9 +16,10 @@ const DataTableHead = ({
   cells,
   startExtraCells,
   endExtraCells,
+  disableOrderBy,
 }) => {
   const createSortHandler = property => event => {
-    onRequestSort(event, property);
+    if (onRequestSort) onRequestSort(event, property);
   };
 
   return (
@@ -46,8 +47,8 @@ const DataTableHead = ({
             >
               <TableSortLabel
                 active={isOrderingByThisCell}
-                disabled={headCell.disableOrderBy}
-                hideSortIcon={headCell.disableOrderBy}
+                disabled={disableOrderBy || headCell.disableOrderBy}
+                hideSortIcon={disableOrderBy || headCell.disableOrderBy}
                 onClick={createSortHandler(headCell.id)}
                 direction={isOrderingByThisCell ? order : DATA_ORDER.ASC}
               >
@@ -74,19 +75,24 @@ DataTableHead.propTypes = {
     }),
   ).isRequired,
   numSelected: PropTypes.number.isRequired,
-  onRequestSort: PropTypes.func.isRequired,
+  onRequestSort: PropTypes.func,
   onSelectAllClick: PropTypes.func.isRequired,
-  order: PropTypes.oneOf(Object.values(DATA_ORDER)).isRequired,
-  orderBy: PropTypes.string.isRequired,
+  order: PropTypes.oneOf(Object.values(DATA_ORDER)),
+  orderBy: PropTypes.string,
   rowCount: PropTypes.number.isRequired,
   startExtraCells: PropTypes.node,
   endExtraCells: PropTypes.node,
+  disableOrderBy: PropTypes.bool,
 };
 
 DataTableHead.defaultProps = {
   className: '',
+  onRequestSort: null,
+  order: DATA_ORDER.ASC,
+  orderBy: '',
   startExtraCells: null,
   endExtraCells: null,
+  disableOrderBy: false,
 };
 
 export default DataTableHead;

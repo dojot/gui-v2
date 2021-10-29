@@ -1,0 +1,36 @@
+{
+  "title": "New Device",
+  "stepper": {
+    "templates": "Templates",
+    "attrs": "Attributes",
+    "certificates": "Certificates",
+    "summary": "Summary"
+  },
+  "templatesStep": {
+    "hint": "To get started, select a template in the list below or create a new one!",
+    "templateName": "Template Name",
+    "numberOfAttrs": "Number Of Attributes",
+    "emptyTemplateList": "No Template Found",
+    "searchTemplatePh": "Type to search a template...",
+    "discardNewTemplate": "Discard Template",
+    "saveNewTemplate": "Save Template",
+    "totalOfTemplates": "Total of Templates: {{count}}",
+    "numberOfSelectedTemplates": "{{count}} Selected Template",
+    "numberOfSelectedTemplates_plural": "{{count}} Selected Templates",
+    "labelRowsPerPage": "Items per Page:",
+    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+  },
+  "summaryStep": {
+    "title": "Review the templates, certificates and the name your device",
+    "hint": "If you notice that something is missing, just go back, correct and continue!",
+    "deviceNameHint": "We're almost there, finally, give your device a name!",
+    "deviceNamePh": "Device Name",
+    "templatesListTitle": "Selected Templates",
+    "certificateAndKeysTitle": "Certificate and Keys",
+    "certificateAndKeysHint": "(IMPORTANT: the keys will not be stored, so it is necessary to download them)",
+    "certificate": "Certificate",
+    "privateKey": "Private Key",
+    "publicKey": "Public Key (Optional)",
+    "caCertificate": "CA Certificate"
+  }
+}
