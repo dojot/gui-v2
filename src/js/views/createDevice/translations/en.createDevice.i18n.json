@@ -11,5 +11,30 @@
     "discardNewTemplate": "Discard Template",
     "saveNewTemplate": "Save Template",
     "emptyTemplateList": "No Template Found"
+  },
+  "attrsStep": {
+    "hint": "Now you can set static attribute values for your device!",
+    "staticAttrs": "Static Attributes ({{count}})",
+    "dynamicAttrs": "Dynamic Attributes ({{count}})",
+    "actuators": "Actuators ({{count}})",
+    "editable": "(Editable)",
+    "nonEditable": "(Not Editable)",
+    "templateName": "Template Name",
+    "noStaticAttrs": "No static attribute to show",
+    "noDynamicAttrs": "No dynamic attribute to show",
+    "noActuatorAttrs": "No actuator attribute to show"
+  },
+  "summaryStep": {
+    "title": "Review the templates, certificates and the name your device",
+    "hint": "If you notice that something is missing, just go back, correct and continue!",
+    "deviceNameHint": "We're almost there, finally, give your device a name!",
+    "deviceNamePh": "Device Name",
+    "templatesListTitle": "Selected Templates",
+    "certificateAndKeysTitle": "Certificate and Keys",
+    "certificateAndKeysHint": "(IMPORTANT: the keys will not be stored, so it is necessary to download them)",
+    "certificate": "Certificate",
+    "privateKey": "Private Key",
+    "publicKey": "Public Key (Optional)",
+    "caCertificate": "CA Certificate"
   }
 }
