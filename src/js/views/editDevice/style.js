@@ -14,6 +14,12 @@ export const useEditDeviceStyles = makeStyles(() => ({
     display: 'flex',
     flexDirection: 'column',
   },
+  loadingContainer: {
+    height: '100%',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   form: {
     flex: '1',
   },
@@ -29,12 +35,12 @@ export const useEditDeviceStyles = makeStyles(() => ({
   input: {
     width: '100%',
   },
-  emptyList: {
+  templatesTablePlaceholder: {
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  emptyListText: {
+  templatesTablePlaceholderText: {
     fontStyle: 'italic',
   },
 }));

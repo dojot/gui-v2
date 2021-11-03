@@ -1,14 +1,24 @@
 import React, { useState, useEffect, useMemo } from 'react';
 
-import { Box, Button, IconButton, InputAdornment, TextField, Typography } from '@material-ui/core';
+import {
+  Box,
+  Button,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Typography,
+} from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 
 import { TemplatesTable } from '../../common/components/TemplatesTable';
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
+import { actions as deviceActions } from '../../redux/modules/devices';
 import { actions as templateActions } from '../../redux/modules/templates';
+import { firstDeviceSelector, loadingDevicesSelector } from '../../redux/selectors/devicesSelector';
 import {
   loadingTemplatesSelector,
   paginationControlSelector,
@@ -21,11 +31,13 @@ import { useEditDeviceStyles } from './style';
 const EditDevice = () => {
   const { t } = useTranslation(['editDevice', 'common']);
   const classes = useEditDeviceStyles();
+  const { deviceId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const deviceData = useSelector(() => null);
   const templates = useSelector(templatesSelector);
+  const deviceData = useSelector(firstDeviceSelector);
+  const isLoadingDeviceData = useSelector(loadingDevicesSelector);
   const isLoadingTemplates = useSelector(loadingTemplatesSelector);
   const { totalPages = 0 } = useSelector(paginationControlSelector);
 
@@ -43,7 +55,6 @@ const EditDevice = () => {
 
   const attrs = useMemo(() => {
     const allAttrs = [];
-
     Object.values(selectedTemplates).forEach(template => {
       template.attrs.forEach(attr => {
         const attrClone = { ...attr };
@@ -55,9 +66,17 @@ const EditDevice = () => {
         }
       });
     });
-
     return allAttrs;
   }, [selectedTemplates]);
+
+  const canSaveChanges = useMemo(() => {
+    return (
+      !isLoadingDeviceData &&
+      !isLoadingTemplates &&
+      numberOfSelectedTemplates > 0 &&
+      !!deviceName.trim()
+    );
+  }, [deviceName, isLoadingDeviceData, isLoadingTemplates, numberOfSelectedTemplates]);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -80,7 +99,7 @@ const EditDevice = () => {
     dispatch(templateActions.getTemplates({ filter: { label: search } }));
   };
 
-  const handleCancelDeviceEdition = () => {
+  const handleGoBack = () => {
     if (history.length) history.goBack();
     else history.push('/devices');
   };
@@ -94,7 +113,22 @@ const EditDevice = () => {
   };
 
   const handleEditDevice = () => {
-    dispatch({ type: 'EDIT', payload: {} });
+    const attrsToSave = attrs.map(attr => {
+      const attrValue = staticAttrValues[attr.id];
+      if (attrValue) return { ...attr, value: attrValue };
+      return attr;
+    });
+
+    dispatch(
+      deviceActions.editDevice({
+        deviceId,
+        label: deviceName,
+        templates: Object.values(selectedTemplates),
+        attrs: attrsToSave,
+      }),
+    );
+
+    handleGoBack();
   };
 
   useEffect(() => {
@@ -103,7 +137,7 @@ const EditDevice = () => {
 
       setSelectedTemplates(() => {
         const templatesObject = {};
-        deviceData?.templates.forEach(template => {
+        deviceData?.templates?.forEach(template => {
           templatesObject[template.id] = template;
         });
         return templatesObject;
@@ -111,10 +145,12 @@ const EditDevice = () => {
 
       setStaticAttrValues(() => {
         const staticAttrsObject = {};
-        deviceData?.attrs.forEach(attr => {
-          if (attr.type === TEMPLATE_ATTR_TYPES.STATIC && attr.value) {
-            staticAttrsObject[attr.id] = attr.value;
-          }
+        deviceData.templates?.forEach(template => {
+          template.attrs?.forEach(attr => {
+            if (attr.type === TEMPLATE_ATTR_TYPES.STATIC && attr.value) {
+              staticAttrsObject[attr.id] = attr.value;
+            }
+          });
         });
         return staticAttrsObject;
       });
@@ -122,8 +158,29 @@ const EditDevice = () => {
   }, [deviceData, dispatch]);
 
   useEffect(() => {
-    dispatch({ type: 'GET_DEVICE_DATA', payload: {} });
-  }, [dispatch]);
+    dispatch(deviceActions.getDevices({ filter: { id: deviceId } }));
+  }, [deviceId, dispatch]);
+
+  useEffect(() => {
+    dispatch(
+      templateActions.getTemplates({
+        page: {
+          number: page,
+          size: rowsPerPage,
+        },
+      }),
+    );
+  }, [dispatch, page, rowsPerPage]);
+
+  if (isLoadingDeviceData) {
+    return (
+      <ViewContainer headerTitle={t('title')}>
+        <Box className={classes.loadingContainer} padding={4}>
+          <CircularProgress />
+        </Box>
+      </ViewContainer>
+    );
+  }
 
   return (
     <ViewContainer headerTitle={t('title')}>
@@ -164,10 +221,16 @@ const EditDevice = () => {
               />
 
               {!isLoadingTemplates && templates.length === 0 && (
-                <Box className={classes.emptyList} marginY={3}>
-                  <Typography className={classes.emptyListText}>
+                <Box className={classes.templatesTablePlaceholder} marginY={3}>
+                  <Typography className={classes.templatesTablePlaceholderText}>
                     {t('emptyTemplateList')}
                   </Typography>
+                </Box>
+              )}
+
+              {isLoadingTemplates && (
+                <Box className={classes.templatesTablePlaceholder} marginY={3}>
+                  <CircularProgress size={24} />
                 </Box>
               )}
             </Box>
@@ -184,11 +247,17 @@ const EditDevice = () => {
           </Box>
 
           <Box className={classes.actions} paddingTop={4}>
-            <Button size='large' variant='text' onClick={handleCancelDeviceEdition}>
+            <Button size='large' variant='text' onClick={handleGoBack}>
               {t('common:cancel')}
             </Button>
 
-            <Button size='large' color='primary' variant='contained' onClick={handleEditDevice}>
+            <Button
+              size='large'
+              color='primary'
+              variant='contained'
+              disabled={!canSaveChanges}
+              onClick={handleEditDevice}
+            >
               {t('common:edit')}
             </Button>
           </Box>

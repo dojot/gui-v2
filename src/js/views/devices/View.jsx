@@ -147,6 +147,12 @@ const Devices = () => {
     if (viewMode) setSelectedDevices([]);
   }, [viewMode]);
 
+  useEffect(() => {
+    return () => {
+      dispatch(deviceActions.updateDevices({ devices: [] }));
+    };
+  }, [dispatch]);
+
   return (
     <ViewContainer headerTitle={t('devices:title')}>
       <DeviceDetailsModal
