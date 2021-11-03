@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { TemplatesTable } from '../../common/components/TemplatesTable';
+import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
 import { actions as templateActions } from '../../redux/modules/templates';
 import {
   loadingTemplatesSelector,
@@ -14,13 +15,14 @@ import {
   templatesSelector,
 } from '../../redux/selectors/templatesSelector';
 import { ViewContainer } from '../stateComponents';
-import useStyles from './style';
+import AttrsTable from './AttrsTable';
+import { useEditDeviceStyles } from './style';
 
 const EditDevice = () => {
   const { t } = useTranslation(['editDevice', 'common']);
+  const classes = useEditDeviceStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const classes = useStyles();
 
   const deviceData = useSelector(() => null);
   const templates = useSelector(templatesSelector);
@@ -29,15 +31,32 @@ const EditDevice = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [isShowingAttrs, setIsShowingAttrs] = useState(true);
 
   const [deviceName, setDeviceName] = useState('');
   const [selectedTemplates, setSelectedTemplates] = useState({});
   const [staticAttrValues, setStaticAttrValues] = useState({});
 
-  console.log(staticAttrValues); // TODO
-
   const numberOfSelectedTemplates = useMemo(() => {
     return Object.keys(selectedTemplates).length;
+  }, [selectedTemplates]);
+
+  const attrs = useMemo(() => {
+    const allAttrs = [];
+
+    Object.values(selectedTemplates).forEach(template => {
+      template.attrs.forEach(attr => {
+        const attrClone = { ...attr };
+        attrClone.templateLabel = template.label;
+        if (attrClone.type === TEMPLATE_ATTR_TYPES.STATIC) {
+          allAttrs.unshift(attrClone); // Static attrs comes first
+        } else {
+          allAttrs.push(attrClone);
+        }
+      });
+    });
+
+    return allAttrs;
   }, [selectedTemplates]);
 
   const handleChangePage = (_, newPage) => {
@@ -47,6 +66,10 @@ const EditDevice = () => {
   const handleChangeRowsPerPage = event => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const handleToggleAttrs = () => {
+    setIsShowingAttrs(isShowing => !isShowing);
   };
 
   const handleClearDeviceName = () => {
@@ -62,6 +85,14 @@ const EditDevice = () => {
     else history.push('/devices');
   };
 
+  const handleSetAttrValue = (attrId, value) => {
+    setStaticAttrValues(currentAttrValues => {
+      const attrValuesClone = { ...currentAttrValues };
+      attrValuesClone[attrId] = value;
+      return attrValuesClone;
+    });
+  };
+
   const handleEditDevice = () => {
     dispatch({ type: 'EDIT', payload: {} });
   };
@@ -69,8 +100,24 @@ const EditDevice = () => {
   useEffect(() => {
     if (deviceData) {
       setDeviceName(deviceData.label);
-      setSelectedTemplates(deviceData.templates);
-      setStaticAttrValues({}); // TODO
+
+      setSelectedTemplates(() => {
+        const templatesObject = {};
+        deviceData?.templates.forEach(template => {
+          templatesObject[template.id] = template;
+        });
+        return templatesObject;
+      });
+
+      setStaticAttrValues(() => {
+        const staticAttrsObject = {};
+        deviceData?.attrs.forEach(attr => {
+          if (attr.type === TEMPLATE_ATTR_TYPES.STATIC && attr.value) {
+            staticAttrsObject[attr.id] = attr.value;
+          }
+        });
+        return staticAttrsObject;
+      });
     }
   }, [deviceData, dispatch]);
 
@@ -83,7 +130,7 @@ const EditDevice = () => {
       <Box className={classes.container} padding={4}>
         <Box className={classes.content}>
           <Box className={classes.form}>
-            <Box marginBottom={2}>
+            <Box marginBottom={4}>
               <TextField
                 className={classes.input}
                 variant='outlined'
@@ -102,7 +149,7 @@ const EditDevice = () => {
               />
             </Box>
 
-            <Box marginBottom={2}>
+            <Box marginBottom={4}>
               <TemplatesTable
                 page={page}
                 templates={templates}
@@ -123,6 +170,16 @@ const EditDevice = () => {
                   </Typography>
                 </Box>
               )}
+            </Box>
+
+            <Box>
+              <AttrsTable
+                attrs={attrs}
+                isShowingAttrs={isShowingAttrs}
+                staticAttrValues={staticAttrValues}
+                handleToggleAttrs={handleToggleAttrs}
+                handleSetAttrValue={handleSetAttrValue}
+              />
             </Box>
           </Box>
 

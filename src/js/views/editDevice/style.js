@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export default makeStyles(() => ({
+export const useEditDeviceStyles = makeStyles(() => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -30,12 +30,29 @@ export default makeStyles(() => ({
     width: '100%',
   },
   emptyList: {
-    flex: 1,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
   emptyListText: {
     fontStyle: 'italic',
+  },
+}));
+
+export const useAttrsTableStyles = makeStyles(theme => ({
+  tableHead: {
+    textTransform: 'uppercase',
+    background: theme.palette.grey[200],
+  },
+  tableBody: {
+    '& > tr:last-child td': {
+      borderBottom: 'none',
+    },
+    '& > tr': {
+      height: '4rem',
+    },
+  },
+  input: {
+    width: '100%',
   },
 }));

@@ -1,5 +1,9 @@
 {
   "title": "Editar Dispositivo",
   "deviceNamePh": "Nome do Dispositivo",
-  "emptyTemplateList": "Nenhum Template Encontrado"
+  "emptyTemplateList": "Nenhum Template Encontrado",
+  "templateName": "Nome do Modelo",
+  "attrsTableTitle": "Atributos do Dispositivo",
+  "attrsTableCaption": "(Os atributos estáticos são editáveis)",
+  "noAttrs": "Nenhum Atributo para Exibir"
 }

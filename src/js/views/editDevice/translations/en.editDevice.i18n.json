@@ -1,3 +1,9 @@
 {
-  "title": "Edit Device"
+  "title": "Edit Device",
+  "deviceNamePh": "Device Name",
+  "emptyTemplateList": "No Template Found",
+  "templateName": "Template Name",
+  "attrsTableTitle": "Device Attrs",
+  "attrsTableCaption": "(The static attrs are editable)",
+  "noAttrs": "No Attr to Show"
 }
