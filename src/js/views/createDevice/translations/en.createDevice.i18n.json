@@ -20,6 +20,18 @@
     "labelRowsPerPage": "Items per Page:",
     "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
   },
+  "attrsStep": {
+    "hint": "Now you can set static attribute values for your device!",
+    "staticAttrs": "Static Attributes ({{count}})",
+    "dynamicAttrs": "Dynamic Attributes ({{count}})",
+    "actuators": "Actuators ({{count}})",
+    "editable": "(Editable)",
+    "nonEditable": "(Not Editable)",
+    "templateName": "Template Name",
+    "noStaticAttrs": "No static attribute to show",
+    "noDynamicAttrs": "No dynamic attribute to show",
+    "noActuatorAttrs": "No actuator attribute to show"
+  },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",
     "hint": "If you notice that something is missing, just go back, correct and continue!",

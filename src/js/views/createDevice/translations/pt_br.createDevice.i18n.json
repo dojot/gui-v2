@@ -20,6 +20,18 @@
     "labelRowsPerPage": "Itens por página:",
     "labelDisplayedRows": "{{from}}-{{to}} de {{count}}"
   },
+  "attrsStep": {
+    "hint": "Agora você pode definir os valores dos atributos estáticos para o seu dispositivo!",
+    "staticAttrs": "Atributos Estáticos ({{count}})",
+    "dynamicAttrs": "Atributos Dinâmicos ({{count}})",
+    "actuators": "Atuadores ({{count}})",
+    "editable": "(Editável)",
+    "nonEditable": "(Não Editável)",
+    "templateName": "Nome do Modelo",
+    "noStaticAttrs": "Nenhum atributo estático para exibir",
+    "noDynamicAttrs": "Nenhum atributo dinâmico para exibir",
+    "noActuatorAttrs": "Nenhum atributo atuador para exibir"
+  },
   "summaryStep": {
     "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",
     "hint": "Se notar que faltou alguma coisa é só voltar, corrigir e continuar!",

@@ -4,6 +4,7 @@ import { Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
+import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
 import { ViewContainer } from '../stateComponents';
 import { NUMBER_OF_STEPS } from './constants';
 import DeviceWizardStepper from './layout/DeviceWizardStepper';
@@ -19,8 +20,37 @@ const CreateDevice = () => {
   const classes = useStyles();
 
   const [currentStep, setCurrentStep] = useState(0);
+
   const [selectedTemplates, setSelectedTemplates] = useState({});
+  const [staticAttrValues, setStaticAttrValues] = useState({});
   const [deviceName, setDeviceName] = useState('');
+
+  const { staticAttrs, dynamicAttrs, actuatorAttrs } = useMemo(() => {
+    const staticAttrsArray = [];
+    const dynamicAttrsArray = [];
+    const actuatorAttrsArray = [];
+
+    Object.values(selectedTemplates).forEach(template => {
+      template.attrs.forEach(attr => {
+        const attrClone = { ...attr };
+        attrClone.templateLabel = template.label;
+
+        if (attrClone.type === TEMPLATE_ATTR_TYPES.STATIC.value) {
+          staticAttrsArray.push(attrClone);
+        } else if (attrClone.type === TEMPLATE_ATTR_TYPES.DYNAMIC.value) {
+          dynamicAttrsArray.push(attrClone);
+        } else if (attrClone.type === TEMPLATE_ATTR_TYPES.ACTUATOR.value) {
+          actuatorAttrsArray.push(attrClone);
+        }
+      });
+    });
+
+    return {
+      staticAttrs: staticAttrsArray,
+      dynamicAttrs: dynamicAttrsArray,
+      actuatorAttrs: actuatorAttrsArray,
+    };
+  }, [selectedTemplates]);
 
   const numberOfSelectedTemplates = useMemo(() => {
     return Object.keys(selectedTemplates).length;
@@ -61,7 +91,12 @@ const CreateDevice = () => {
 
               {currentStep === 1 && (
                 <AttrsStep
+                  staticAttrs={staticAttrs}
+                  dynamicAttrs={dynamicAttrs}
+                  actuatorAttrs={actuatorAttrs}
+                  staticAttrValues={staticAttrValues}
                   handleGoToNextStep={handleGoToNextStep}
+                  setStaticAttrValues={setStaticAttrValues}
                   handleGoToPreviousStep={handleGoToPreviousStep}
                   handleCancelDeviceCreation={handleCancelDeviceCreation}
                 />
