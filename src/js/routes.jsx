@@ -17,6 +17,7 @@ const WizardManager = LazyLoading(() => import('./common/managers/WizardManager'
 const LogOut = LazyLoading(() => import('views/logout'));
 const LogIn = LazyLoading(() => import('views/login'));
 const Devices = LazyLoading(() => import('views/devices'));
+const DeviceDetails = LazyLoading(() => import('views/deviceDetails'));
 const CreateDevice = LazyLoading(() => import('views/createDevice'));
 const Templates = LazyLoading(() => import('views/templates'));
 const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
@@ -39,6 +40,7 @@ const Routes = props => (
     <PrivateRoute path='/home' component={Home} attrs={props} />
     <PrivateRoute path='/devices' component={Devices} attrs={props} exact />
     <PrivateRoute path='/devices/new' component={CreateDevice} attrs={props} exact />
+    <PrivateRoute path='/devices/:deviceId' component={DeviceDetails} attrs={props} exact />
     <PrivateRoute path='/templates' component={Templates} attrs={props} exact />
     <PrivateRoute path='/templates/new' component={CreateTemplate} attrs={props} exact />
     <PrivateRoute path='/templates/:templateId' component={TemplateAttrs} attrs={props} exact />

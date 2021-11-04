@@ -7,6 +7,8 @@ import createTemplateEn from '../../views/createTemplate/translations/en.createT
 import createTemplatePtBr from '../../views/createTemplate/translations/pt_br.createTemplate.i18n.json';
 import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.json';
 import dashboardPtBr from '../../views/dashboard/translations/pt_br.dashboard.i18n.json';
+import deviceDetailsEn from '../../views/deviceDetails/translations/en.deviceDetails.i18n.json';
+import deviceDetailsPtBr from '../../views/deviceDetails/translations/pt_br.deviceDetails.i18n.json';
 import devicesEn from '../../views/devices/translations/en.devices.i18n.json';
 import devicesPtBr from '../../views/devices/translations/pt_br.devices.i18n.json';
 import homeEn from '../../views/home/translations/en.home.i18n.json';
@@ -46,6 +48,7 @@ const resources = {
     attrs: attrsEn,
     userInfo: userInfoEn,
     createDevice: createDeviceEn,
+    deviceDetails: deviceDetailsEn,
   },
   pt: {
     login: loginPtBr,
@@ -62,6 +65,7 @@ const resources = {
     attrs: attrsPtBr,
     userInfo: userInfoBr,
     createDevice: createDevicePtBr,
+    deviceDetails: deviceDetailsPtBr,
   },
 };
 

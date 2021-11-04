@@ -8,7 +8,6 @@
   "removeFromFavoriteTooltip": "Remover dos Favoritos",
   "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
   "labelRowsPerPage": "Itens por página:",
-  "detailsModalTitle": "Detalhamento do Dispositivo ({{label}})",
   "massActions": "Ações em massa:",
   "createCertificates": "Criar Certificados",
   "favorite": "Adicionar aos Favoritos",
@@ -16,11 +15,6 @@
   "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
   "emptyListMessage": "Nenhum Dispositivo Encontrado",
   "createNewDevice": "Criar Novo Dispositivo",
-  "lastUpdate": {
-    "date": "Data",
-    "key": "Chave",
-    "value": "Valor"
-  },
   "dataTableHead": {
     "id": "ID",
     "label": "Nome",
