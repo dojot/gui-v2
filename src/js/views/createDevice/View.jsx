@@ -86,7 +86,7 @@ const CreateDevice = () => {
         cancelButtonText={t('common:no')}
         autoFocusConfirmationButton={false}
         title={t('cancelDeviceCreationTitle')}
-        confirmButtonText={t('common:yesSure')}
+        confirmButtonText={t('common:yesImSure')}
         message={t('cancelDeviceCreationMessage')}
         handleConfirm={handleGoBack}
         handleClose={handleHideCancelModal}
