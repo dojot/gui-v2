@@ -21,6 +21,8 @@ import templatesEn from '../../views/templates/translations/en.templates.i18n.js
 import templatesPtBr from '../../views/templates/translations/pt_br.templates.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
+import deviceIntegrationModalEn from '../components/TutorialModals/DeviceIntegrationModal/translations/en.deviceIntegrationModal.i18n.json';
+import deviceIntegrationModalPtBr from '../components/TutorialModals/DeviceIntegrationModal/translations/pt_br.deviceIntegrationModal.i18n.json';
 import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
 import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
@@ -46,6 +48,7 @@ const resources = {
     attrs: attrsEn,
     userInfo: userInfoEn,
     createDevice: createDeviceEn,
+    deviceIntegrationModal: deviceIntegrationModalEn,
   },
   pt: {
     login: loginPtBr,
@@ -62,6 +65,7 @@ const resources = {
     attrs: attrsPtBr,
     userInfo: userInfoBr,
     createDevice: createDevicePtBr,
+    deviceIntegrationModal: deviceIntegrationModalPtBr,
   },
 };
 
