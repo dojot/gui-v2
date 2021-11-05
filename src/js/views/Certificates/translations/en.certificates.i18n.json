@@ -1,0 +1,30 @@
+{
+  "title": "Certificates",
+  "numberOfSelectedCertificates": "{{count}} Line Selected",
+  "numberOfSelectedCertificates_plural": "{{count}} Lines Selected",
+  "totalOfCertificates": "Total of Items: {{count}}",
+  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+  "labelRowsPerPage": "Items per page:",
+  "associateToDevice": "Associate to a device",
+  "disassociateDevice": "Disassociate device",
+  "changeAssociation": "Change association",
+  "AssociateToDeviceModalTitle": "Devices",
+  "dataTableHead": {
+    "label": "Name",
+    "validityPeriod": "Validity Period",
+    "certificateId": "Certificate Id",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "dataTableBody": {
+    "notAssociated": "Not associated"
+  },
+  "associateDeviceModal": {
+    "table": {
+      "id": "Id",
+      "devices": "Devices",
+      "lastUpdate": "Last update"
+    },
+    "associate": "Associar"
+  }
+}
