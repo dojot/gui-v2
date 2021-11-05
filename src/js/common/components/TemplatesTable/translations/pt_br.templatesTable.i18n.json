@@ -1,0 +1,10 @@
+{
+  "templateName": "Nome do Modelo",
+  "numberOfAttrs": "Nº de Atributos",
+  "searchTemplatePh": "Digite para pesquisar um modelo...",
+  "totalOfTemplates": "Total de Modelos: {{count}}",
+  "numberOfSelectedTemplates": "{{count}} Modelo Selecionado",
+  "numberOfSelectedTemplates_plural": "{{count}} Modelos Selecionados",
+  "labelRowsPerPage": "Itens por página:",
+  "labelDisplayedRows": "{{from}}-{{to}} de {{count}}"
+}

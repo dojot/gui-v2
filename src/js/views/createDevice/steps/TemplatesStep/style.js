@@ -39,20 +39,12 @@ export const useTemplatesStepStyles = makeStyles(theme => ({
   },
 }));
 
-export const useTemplatesTableStyles = makeStyles(theme => ({
-  tableHead: {
-    background: theme.palette.background.shade[500],
-  },
-  searchTextField: {
-    marginLeft: theme.spacing(1),
-    width: '100%',
-  },
-  searchInput: {
-    borderRadius: '50px',
-    background: theme.palette.background.paper,
-  },
-  clickableCell: {
-    cursor: 'pointer',
+export const useTemplatesTableStyles = makeStyles(() => ({
+  loadingContainer: {
+    flex: 1,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   emptyList: {
     flex: 1,
@@ -62,12 +54,6 @@ export const useTemplatesTableStyles = makeStyles(theme => ({
   },
   emptyListText: {
     fontStyle: 'italic',
-  },
-  loadingContainer: {
-    flex: 1,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
 }));
 
@@ -80,13 +66,5 @@ export const useTemplateCreationActionsStyles = makeStyles(() => ({
     '& > *': {
       margin: '1rem 1rem 0 1rem',
     },
-  },
-}));
-
-export const usePaginationStyles = makeStyles(() => ({
-  pagination: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
   },
 }));

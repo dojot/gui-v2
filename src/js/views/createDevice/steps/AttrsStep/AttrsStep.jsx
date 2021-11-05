@@ -13,12 +13,12 @@ import {
   IconButton,
 } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
+import { CollapsibleList } from 'Components/CollapsibleList';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { useAttrTranslation } from '../../../../common/hooks';
 import ActionButtons from '../../layout/ActionButtons';
-import AttrDataList from './AttrDataList';
 import { useAttrsStepStyles } from './style';
 
 const AttrsStep = ({
@@ -67,7 +67,7 @@ const AttrsStep = ({
           <Typography>{t('attrsStep.hint')}</Typography>
         </Box>
 
-        <AttrDataList
+        <CollapsibleList
           title={t('attrsStep.staticAttrs', { count: staticAttrs.length })}
           isContentVisible={isShowingStaticAttrs}
           caption={t('attrsStep.editable')}
@@ -110,9 +110,7 @@ const AttrsStep = ({
                 return (
                   <TableRow key={id}>
                     <TableCell>{templateLabel}</TableCell>
-
                     <TableCell>{label}</TableCell>
-
                     <TableCell>{getAttrValueTypeTranslation(valueType)}</TableCell>
 
                     <TableCell>
@@ -147,9 +145,9 @@ const AttrsStep = ({
               )}
             </TableBody>
           </Table>
-        </AttrDataList>
+        </CollapsibleList>
 
-        <AttrDataList
+        <CollapsibleList
           title={t('attrsStep.dynamicAttrs', { count: dynamicAttrs.length })}
           isContentVisible={isShowingDynamicAttrs}
           caption={t('attrsStep.nonEditable')}
@@ -177,9 +175,7 @@ const AttrsStep = ({
                 return (
                   <TableRow key={id}>
                     <TableCell>{templateLabel}</TableCell>
-
                     <TableCell>{label}</TableCell>
-
                     <TableCell>{getAttrValueTypeTranslation(valueType)}</TableCell>
                   </TableRow>
                 );
@@ -194,9 +190,9 @@ const AttrsStep = ({
               )}
             </TableBody>
           </Table>
-        </AttrDataList>
+        </CollapsibleList>
 
-        <AttrDataList
+        <CollapsibleList
           title={t('attrsStep.actuators', { count: actuatorAttrs.length })}
           isContentVisible={isShowingActuators}
           caption={t('attrsStep.nonEditable')}
@@ -224,9 +220,7 @@ const AttrsStep = ({
                 return (
                   <TableRow key={id}>
                     <TableCell>{templateLabel}</TableCell>
-
                     <TableCell>{label}</TableCell>
-
                     <TableCell>{getAttrValueTypeTranslation(valueType)}</TableCell>
                   </TableRow>
                 );
@@ -241,7 +235,7 @@ const AttrsStep = ({
               )}
             </TableBody>
           </Table>
-        </AttrDataList>
+        </CollapsibleList>
       </Box>
 
       <ActionButtons

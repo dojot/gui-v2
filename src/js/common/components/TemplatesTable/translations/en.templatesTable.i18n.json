@@ -1,0 +1,10 @@
+{
+  "templateName": "Template Name",
+  "numberOfAttrs": "Number Of Attributes",
+  "searchTemplatePh": "Type to search a template...",
+  "totalOfTemplates": "Total of Templates: {{count}}",
+  "numberOfSelectedTemplates": "{{count}} Selected Template",
+  "numberOfSelectedTemplates_plural": "{{count}} Selected Templates",
+  "labelRowsPerPage": "Items per Page:",
+  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+}
