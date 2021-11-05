@@ -1,6 +1,8 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import certificatesEn from '../../views/Certificates/translations/en.certificates.i18n.json';
+import certificatesPtBr from '../../views/Certificates/translations/pt_br.certificates.i18n.json';
 import createDeviceEn from '../../views/createDevice/translations/en.createDevice.i18n.json';
 import createDevicePtBr from '../../views/createDevice/translations/pt_br.createDevice.i18n.json';
 import createTemplateEn from '../../views/createTemplate/translations/en.createTemplate.i18n.json';
@@ -46,6 +48,7 @@ const resources = {
     attrs: attrsEn,
     userInfo: userInfoEn,
     createDevice: createDeviceEn,
+    certificates: certificatesEn,
   },
   pt: {
     login: loginPtBr,
@@ -62,6 +65,7 @@ const resources = {
     attrs: attrsPtBr,
     userInfo: userInfoBr,
     createDevice: createDevicePtBr,
+    certificates: certificatesPtBr,
   },
 };
 
