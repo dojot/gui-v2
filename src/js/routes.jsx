@@ -21,6 +21,7 @@ const CreateDevice = LazyLoading(() => import('views/createDevice'));
 const Templates = LazyLoading(() => import('views/templates'));
 const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
 const TemplateAttrs = LazyLoading(() => import('views/templateAttrs'));
+const Certificates = LazyLoading(() => import('views/Certificates'));
 const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
@@ -46,6 +47,7 @@ const Routes = props => (
     <PrivateRoute path='/notification' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/users' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/profiles' component={GridTest} attrs={props} />
+    <PrivateRoute path='/certificates' component={Certificates} attrs={props} exact />
     <Route path='*' component={ExampleRouteHandler} attrs={props} />
   </Switch>
 );
