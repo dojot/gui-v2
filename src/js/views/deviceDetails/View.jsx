@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Box,
+  CircularProgress,
   Grid,
   List,
   ListItem,
@@ -12,31 +13,65 @@ import {
   TableCell,
   TableHead,
   TableRow,
+  Typography,
 } from '@material-ui/core';
-import { FilterNone, History, Label } from '@material-ui/icons';
+import { DevicesOther, FilterNone, History, Label } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router';
 
+import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
+import { useAttrTranslation } from '../../common/hooks';
+import { actions as deviceActions } from '../../redux/modules/devices';
 import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
 
-const fakeRows = [
-  { date: '02/03/2021 15:22:15', key: 'testing_1', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_2', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_3', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_4', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_5', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_6', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_7', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_8', value: 'Testing' },
-  { date: '02/03/2021 15:22:15', key: 'testing_9', value: 'Testing' },
-];
-
 const DeviceDetails = () => {
   const { t } = useTranslation('deviceDetails');
+  const { deviceId } = useParams();
+  const dispatch = useDispatch();
   const classes = useStyles();
 
+  const { getAttrValueTypeTranslation } = useAttrTranslation();
+
+  const deviceData = useSelector(() => ({}));
+  const isLoadingDevice = useSelector(() => false);
+
+  useEffect(() => {
+    dispatch(
+      deviceActions.getDevices({
+        filter: {
+          id: deviceId,
+        },
+      }),
+    );
+  }, [deviceId, dispatch]);
+
+  if (isLoadingDevice) {
+    return (
+      <ViewContainer headerTitle={t('titleWithoutName')}>
+        <Box className={classes.containerCentered} padding={3}>
+          <CircularProgress />
+        </Box>
+      </ViewContainer>
+    );
+  }
+
+  if (!deviceData) {
+    return (
+      <ViewContainer headerTitle={t('titleWithoutName')}>
+        <Box className={classes.containerCentered} padding={3}>
+          <Box marginBottom={2}>
+            <DevicesOther size='large' />
+          </Box>
+          <Typography className={classes.noDataText}>{t('noDeviceDataToShow')}</Typography>
+        </Box>
+      </ViewContainer>
+    );
+  }
+
   return (
-    <ViewContainer headerTitle={t('title')}>
+    <ViewContainer headerTitle={t('title', { name: deviceData.label })}>
       <Box className={classes.container} padding={3}>
         <Box className={classes.content}>
           <Grid container spacing={2}>
@@ -46,14 +81,16 @@ const DeviceDetails = () => {
                   <ListItemIcon className={classes.dataGroupTitleIcon}>
                     <FilterNone fontSize='small' style={{ color: '#F1B44C' }} />
                   </ListItemIcon>
-                  <ListItemText>Modelos</ListItemText>
+                  <ListItemText>{t('sectionTitles.templates')}</ListItemText>
                 </ListItem>
-                <ListItem divider>
-                  <ListItemText secondary='Modelo' />
-                </ListItem>
-                <ListItem divider>
-                  <ListItemText secondary='Modelo' />
-                </ListItem>
+
+                {deviceData.templates?.map(template => {
+                  return (
+                    <ListItem key={template.id} divider>
+                      <ListItemText primary={template.label} />
+                    </ListItem>
+                  );
+                })}
               </List>
 
               <List className={classes.dataGroup} disablePadding>
@@ -61,14 +98,22 @@ const DeviceDetails = () => {
                   <ListItemIcon className={classes.dataGroupTitleIcon}>
                     <Label fontSize='small' style={{ color: '#50a5f1' }} />
                   </ListItemIcon>
-                  <ListItemText>Atributos Estáticos</ListItemText>
+                  <ListItemText>{t('sectionTitles.staticAttrs')}</ListItemText>
                 </ListItem>
-                <ListItem divider>
-                  <ListItemText primary='Primary' secondary='Secondary' />
-                </ListItem>
-                <ListItem divider>
-                  <ListItemText primary='Primary' secondary='Secondary' />
-                </ListItem>
+
+                {deviceData.attrs?.map(attr => {
+                  if (attr.type !== TEMPLATE_ATTR_TYPES.STATIC) return null;
+
+                  return (
+                    <ListItem key={attr.id} divider>
+                      <ListItemText primary={attr.label} secondary={attr.value} />
+                      <ListItemText
+                        className={classes.dataGroupItemTextRight}
+                        secondary={getAttrValueTypeTranslation(attr.type)}
+                      />
+                    </ListItem>
+                  );
+                })}
               </List>
             </Grid>
 
@@ -78,31 +123,32 @@ const DeviceDetails = () => {
                   <ListItemIcon className={classes.dataGroupTitleIcon}>
                     <History fontSize='small' style={{ color: '#f46a6a' }} />
                   </ListItemIcon>
-                  <ListItemText>Última Atualização Recebida</ListItemText>
+                  <ListItemText>{t('sectionTitles.lastUpdate')}</ListItemText>
                 </ListItem>
 
                 <Table sx={{ minWidth: 650 }} aria-label='simple table'>
                   <TableHead>
                     <TableRow>
                       <TableCell className={classes.tableCellBold}>
-                        {t('lastUpdate.date')}
+                        {t('lastUpdateTable.date')}
                       </TableCell>
-                      <TableCell className={classes.tableCellBold}>{t('lastUpdate.key')}</TableCell>
+
                       <TableCell className={classes.tableCellBold}>
-                        {t('lastUpdate.value')}
+                        {t('lastUpdateTable.key')}
+                      </TableCell>
+
+                      <TableCell className={classes.tableCellBold}>
+                        {t('lastUpdateTable.value')}
                       </TableCell>
                     </TableRow>
                   </TableHead>
 
                   <TableBody>
-                    {fakeRows.map(row => (
-                      <TableRow
-                        key={row.key}
-                        sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                      >
-                        <TableCell className={classes.tableCellSecondary}>{row.date}</TableCell>
-                        <TableCell className={classes.tableCellSecondary}>{row.key}</TableCell>
-                        <TableCell className={classes.tableCellSecondary}>{row.value}</TableCell>
+                    {deviceData.lastUpdate?.map(row => (
+                      <TableRow key={row.key} className={classes.tableRow}>
+                        <TableCell>{row.date}</TableCell>
+                        <TableCell>{row.key}</TableCell>
+                        <TableCell>{row.value}</TableCell>
                       </TableRow>
                     ))}
                   </TableBody>

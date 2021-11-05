@@ -9,6 +9,17 @@ export default makeStyles(theme => ({
   content: {
     flex: 1,
   },
+  containerCentered: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
+  noDataText: {
+    fontStyle: 'italic',
+    color: theme.palette.text.secondary,
+  },
   dataGroup: {
     background: '#f2f2f2',
     border: `1px solid ${theme.palette.divider}`,
@@ -19,10 +30,16 @@ export default makeStyles(theme => ({
     minWidth: 'auto',
     marginRight: theme.spacing(2),
   },
+  dataGroupItemTextRight: {
+    textAlign: 'right',
+  },
+  tableRow: {
+    '&:last-child td, &:last-child th': {
+      border: 'none',
+    },
+  },
   tableCellBold: {
     fontWeight: 'bold',
-  },
-  tableCellSecondary: {
-    color: theme.palette.text.secondary,
+    textTransform: 'uppercase',
   },
 }));
