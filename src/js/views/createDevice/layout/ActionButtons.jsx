@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useActionButtonStyles } from './style';
 
 const ActionButtons = ({
+  isLastStep,
   withBackButton,
   isBackButtonDisabled,
   isNextButtonDisabled,
@@ -49,13 +50,14 @@ const ActionButtons = ({
         onClick={handleClickNextButton}
         disabled={isNextButtonDisabled}
       >
-        {t('next')}
+        {t(isLastStep ? 'finish' : 'next')}
       </Button>
     </Box>
   );
 };
 
 ActionButtons.propTypes = {
+  isLastStep: PropTypes.bool,
   withBackButton: PropTypes.bool,
   isBackButtonDisabled: PropTypes.bool,
   isNextButtonDisabled: PropTypes.bool,
@@ -66,6 +68,7 @@ ActionButtons.propTypes = {
 };
 
 ActionButtons.defaultProps = {
+  isLastStep: false,
   withBackButton: false,
   isBackButtonDisabled: false,
   isNextButtonDisabled: false,

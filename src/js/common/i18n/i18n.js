@@ -9,6 +9,8 @@ import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.js
 import dashboardPtBr from '../../views/dashboard/translations/pt_br.dashboard.i18n.json';
 import devicesEn from '../../views/devices/translations/en.devices.i18n.json';
 import devicesPtBr from '../../views/devices/translations/pt_br.devices.i18n.json';
+import editDeviceEn from '../../views/editDevice/translations/en.editDevice.i18n.json';
+import editDevicePtBr from '../../views/editDevice/translations/pt_br.editDevice.i18n.json';
 import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
@@ -21,6 +23,8 @@ import templatesEn from '../../views/templates/translations/en.templates.i18n.js
 import templatesPtBr from '../../views/templates/translations/pt_br.templates.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
+import templatesTableEn from '../components/TemplatesTable/translations/en.templatesTable.i18n.json';
+import templatesTablePtBr from '../components/TemplatesTable/translations/pt_br.templatesTable.i18n.json';
 import deviceIntegrationModalEn from '../components/TutorialModals/DeviceIntegrationModal/translations/en.deviceIntegrationModal.i18n.json';
 import deviceIntegrationModalPtBr from '../components/TutorialModals/DeviceIntegrationModal/translations/pt_br.deviceIntegrationModal.i18n.json';
 import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
@@ -49,6 +53,8 @@ const resources = {
     userInfo: userInfoEn,
     createDevice: createDeviceEn,
     deviceIntegrationModal: deviceIntegrationModalEn,
+    editDevice: editDeviceEn,
+    templatesTable: templatesTableEn,
   },
   pt: {
     login: loginPtBr,
@@ -66,6 +72,8 @@ const resources = {
     userInfo: userInfoBr,
     createDevice: createDevicePtBr,
     deviceIntegrationModal: deviceIntegrationModalPtBr,
+    editDevice: editDevicePtBr,
+    templatesTable: templatesTablePtBr,
   },
 };
 

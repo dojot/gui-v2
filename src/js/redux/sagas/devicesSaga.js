@@ -76,6 +76,28 @@ export function* handleFavoriteMultipleDevices(action) {
   }
 }
 
+export function* handleEditDevice(action) {
+  try {
+    const { deviceId, label, templates, attrs } = action.payload;
+
+    const { editDevice } = yield Device.editDevice({
+      deviceId,
+      label,
+      templates,
+      attrs,
+    });
+
+    const devices = yield select(devicesSelector);
+    const newDevices = devices.map(device => {
+      if (deviceId === device.id) return { ...device, ...editDevice };
+      return device;
+    });
+    yield put(actions.updateDevices({ devices: newDevices }));
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
 function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
@@ -96,10 +118,15 @@ function* watchFavoriteMultipleDevices() {
   yield takeLatest(constants.FAVORITE_MULTIPLE_DEVICES, handleFavoriteMultipleDevices);
 }
 
+function* watchEditDevice() {
+  yield takeLatest(constants.EDIT_DEVICE, handleEditDevice);
+}
+
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchDeleteDevice),
   fork(watchDeleteMultipleDevices),
   fork(watchFavoriteDevice),
   fork(watchFavoriteMultipleDevices),
+  fork(watchEditDevice),
 ];

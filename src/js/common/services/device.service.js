@@ -87,6 +87,22 @@ export const favoriteMultipleDevices = ({ deviceIdArray, user, tenant }) => {
   });
 };
 
+export const editDevice = ({ deviceId, label, templates, attrs }) => {
+  return protectAPI({
+    query: `
+      mutation editDevice($deviceId: String!, $label: String!, $templates: [Template]!, $attrs: [Attr]) {
+        editDevice(deviceId: $deviceId, label: $label, templates: $templates, attrs: $attrs)
+      }
+    `,
+    variables: JSON.stringify({
+      deviceId,
+      label,
+      templates,
+      attrs,
+    }),
+  });
+};
+
 export const getDevicesHistoryParsed = filter => {
   return protectAPI(filter);
 };
