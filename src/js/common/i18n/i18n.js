@@ -1,6 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import certificationAuthoritiesEn from '../../views/CertificationAuthorities/translations/en.security.i18n.json';
+import certificationAuthoritiesPtBr from '../../views/CertificationAuthorities/translations/pt_br.security.i18n.json';
+import createCertificationAuthorityEn from '../../views/createCertificationAuthority/translations/en.createCertificationAuthority.json';
+import createCertificationAuthorityPtBr from '../../views/createCertificationAuthority/translations/pt_br.createCertificationAuthority.json';
 import createDeviceEn from '../../views/createDevice/translations/en.createDevice.i18n.json';
 import createDevicePtBr from '../../views/createDevice/translations/pt_br.createDevice.i18n.json';
 import createTemplateEn from '../../views/createTemplate/translations/en.createTemplate.i18n.json';
@@ -49,6 +53,8 @@ const resources = {
     templateAttrs: templateAttrsEn,
     attrs: attrsEn,
     userInfo: userInfoEn,
+    certificationAuthorities: certificationAuthoritiesEn,
+    createCertificationAuthority: createCertificationAuthorityEn,
     createDevice: createDeviceEn,
     editDevice: editDeviceEn,
     templatesTable: templatesTableEn,
@@ -67,6 +73,8 @@ const resources = {
     templateAttrs: templateAttrsPtBr,
     attrs: attrsPtBr,
     userInfo: userInfoBr,
+    certificationAuthorities: certificationAuthoritiesPtBr,
+    createCertificationAuthority: createCertificationAuthorityPtBr,
     createDevice: createDevicePtBr,
     editDevice: editDevicePtBr,
     templatesTable: templatesTablePtBr,

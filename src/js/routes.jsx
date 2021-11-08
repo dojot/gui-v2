@@ -21,6 +21,10 @@ const CreateDevice = LazyLoading(() => import('views/createDevice'));
 const Templates = LazyLoading(() => import('views/templates'));
 const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
 const TemplateAttrs = LazyLoading(() => import('views/templateAttrs'));
+const CertificationAuthorities = LazyLoading(() => import('views/CertificationAuthorities'));
+const CreateCertificationAuthority = LazyLoading(() =>
+  import('views/createCertificationAuthority'),
+);
 const EditDevice = LazyLoading(() => import('views/editDevice'));
 const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
@@ -48,6 +52,18 @@ const Routes = props => (
     <PrivateRoute path='/notification' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/users' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/profiles' component={GridTest} attrs={props} />
+    <PrivateRoute
+      path='/certification-authorities'
+      component={CertificationAuthorities}
+      attrs={props}
+      exact
+    />
+    <PrivateRoute
+      path='/certification-authorities/new'
+      component={CreateCertificationAuthority}
+      attrs={props}
+      exact
+    />
     <Route path='*' component={ExampleRouteHandler} attrs={props} />
   </Switch>
 );

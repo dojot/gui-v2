@@ -1,0 +1,39 @@
+{
+    "security": "Security",
+    "headerTitle": "New CA",
+    "createCa": "Create CA",
+    "searchInputPh": "Search CA",
+    "totalOfItems": "Total of Items",
+    "numberOfSelectedItems": "{{count}} Selected Row",
+    "numberOfSelectedItems_plural": "{{count}} Selected Rows",
+    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+    "labelRowsPerPage": "Items per page:",
+    "emptyListMessage": "No CA Found",
+    "dataTableHead": {
+      "label": "Name",
+      "validityPeriod": "Validity Period",
+      "linkedCertificate": "Linked Certificate",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "dataTableBody": {
+      "status": {
+        "valid": "Valid",
+        "expired": "Expired",
+        "to_expire": "To expire"
+      }
+    },
+    "deleteMultipleCaAlert": {
+      "title": "Delete Selected CA's",
+      "message": "Are you sure you want to delete all selected CA's?",
+      "cancelButton": "Cancel",
+      "confirmButton": "Delete"
+    },
+    "deleteCaAlert": {
+      "title": "Delete CA",
+      "message": "Are you sure you want to delete this CA?",
+      "cancelButton": "Cancel",
+      "confirmButton": "Delete"
+    }
+  }
+  
