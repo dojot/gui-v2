@@ -21,10 +21,14 @@ const CreateDevice = LazyLoading(() => import('views/createDevice'));
 const Templates = LazyLoading(() => import('views/templates'));
 const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
 const TemplateAttrs = LazyLoading(() => import('views/templateAttrs'));
+<<<<<<< HEAD
 const CertificationAuthorities = LazyLoading(() => import('views/CertificationAuthorities'));
 const CreateCertificationAuthority = LazyLoading(() =>
   import('views/createCertificationAuthority'),
 );
+=======
+const EditDevice = LazyLoading(() => import('views/editDevice'));
+>>>>>>> 41790aebadd045c466e8f3857b99ce2b7d84115d
 const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
@@ -41,6 +45,7 @@ const Routes = props => (
     <PrivateRoute path='/dashboard/widget' component={Widget} attrs={props} />
     <PrivateRoute path='/dashboard' component={Dashboard} attrs={props} />
     <PrivateRoute path='/home' component={Home} attrs={props} />
+    <PrivateRoute path='/devices/edit/:deviceId' component={EditDevice} attrs={props} />
     <PrivateRoute path='/devices' component={Devices} attrs={props} exact />
     <PrivateRoute path='/devices/new' component={CreateDevice} attrs={props} exact />
     <PrivateRoute path='/templates' component={Templates} attrs={props} exact />

@@ -117,10 +117,11 @@ const SummaryStep = ({
       </Box>
 
       <ActionButtons
-        isNextButtonDisabled={false}
+        isNextButtonDisabled={!deviceName.trim()}
         handleClickNextButton={handleGoToNextStep}
         handleClickBackButton={handleGoToPreviousStep}
         handleClickCancelButton={handleCancelDeviceCreation}
+        isLastStep
         withBackButton
       />
     </Box>

@@ -14,16 +14,16 @@ const Pagination = ({
   numberOfSelectedTemplates,
   handleChangeRowsPerPage,
 }) => {
-  const { t } = useTranslation('createDevice');
+  const { t } = useTranslation('templatesTable');
   const classes = usePaginationStyles();
 
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
-      <Typography>{t('templatesStep.totalOfTemplates', { count: totalOfTemplates })}</Typography>
+      <Typography>{t('totalOfTemplates', { count: totalOfTemplates })}</Typography>
 
       {!!numberOfSelectedTemplates && (
         <Typography>
-          {t('templatesStep.numberOfSelectedTemplates', { count: numberOfSelectedTemplates })}
+          {t('numberOfSelectedTemplates', { count: numberOfSelectedTemplates })}
         </Typography>
       )}
 
@@ -34,9 +34,9 @@ const Pagination = ({
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
-        labelRowsPerPage={t('templatesStep.labelRowsPerPage')}
+        labelRowsPerPage={t('labelRowsPerPage')}
         labelDisplayedRows={({ from, to, count }) => {
-          return t('templatesStep.labelDisplayedRows', { from, to, count });
+          return t('labelDisplayedRows', { from, to, count });
         }}
       />
     </Box>
