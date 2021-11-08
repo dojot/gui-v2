@@ -21,14 +21,11 @@ const CreateDevice = LazyLoading(() => import('views/createDevice'));
 const Templates = LazyLoading(() => import('views/templates'));
 const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
 const TemplateAttrs = LazyLoading(() => import('views/templateAttrs'));
-<<<<<<< HEAD
 const CertificationAuthorities = LazyLoading(() => import('views/CertificationAuthorities'));
 const CreateCertificationAuthority = LazyLoading(() =>
   import('views/createCertificationAuthority'),
 );
-=======
 const EditDevice = LazyLoading(() => import('views/editDevice'));
->>>>>>> 41790aebadd045c466e8f3857b99ce2b7d84115d
 const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
 
 const Routes = props => (
