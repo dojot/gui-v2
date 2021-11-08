@@ -101,7 +101,7 @@ const Devices = () => {
   const handleEditDevice = () => {
     handleHideOptionsMenu();
     const deviceId = deviceOptionsMenu.device.id;
-    history.push(`/create-device/${deviceId}`);
+    history.push(`/devices/edit/${deviceId}`);
   };
 
   const handleDeleteDevice = () => {
@@ -139,6 +139,12 @@ const Devices = () => {
   useEffect(() => {
     if (viewMode) setSelectedDevices([]);
   }, [viewMode]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(deviceActions.updateDevices({ devices: [] }));
+    };
+  }, [dispatch]);
 
   return (
     <ViewContainer headerTitle={t('devices:title')}>

@@ -1,6 +1,10 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
+import certificationAuthoritiesEn from '../../views/CertificationAuthorities/translations/en.security.i18n.json';
+import certificationAuthoritiesPtBr from '../../views/CertificationAuthorities/translations/pt_br.security.i18n.json';
+import createCertificationAuthorityEn from '../../views/createCertificationAuthority/translations/en.createCertificationAuthority.json';
+import createCertificationAuthorityPtBr from '../../views/createCertificationAuthority/translations/pt_br.createCertificationAuthority.json';
 import createDeviceEn from '../../views/createDevice/translations/en.createDevice.i18n.json';
 import createDevicePtBr from '../../views/createDevice/translations/pt_br.createDevice.i18n.json';
 import createTemplateEn from '../../views/createTemplate/translations/en.createTemplate.i18n.json';
@@ -11,6 +15,8 @@ import deviceDetailsEn from '../../views/deviceDetails/translations/en.deviceDet
 import deviceDetailsPtBr from '../../views/deviceDetails/translations/pt_br.deviceDetails.i18n.json';
 import devicesEn from '../../views/devices/translations/en.devices.i18n.json';
 import devicesPtBr from '../../views/devices/translations/pt_br.devices.i18n.json';
+import editDeviceEn from '../../views/editDevice/translations/en.editDevice.i18n.json';
+import editDevicePtBr from '../../views/editDevice/translations/pt_br.editDevice.i18n.json';
 import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
@@ -23,6 +29,8 @@ import templatesEn from '../../views/templates/translations/en.templates.i18n.js
 import templatesPtBr from '../../views/templates/translations/pt_br.templates.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
+import templatesTableEn from '../components/TemplatesTable/translations/en.templatesTable.i18n.json';
+import templatesTablePtBr from '../components/TemplatesTable/translations/pt_br.templatesTable.i18n.json';
 import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
 import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
@@ -47,8 +55,12 @@ const resources = {
     templateAttrs: templateAttrsEn,
     attrs: attrsEn,
     userInfo: userInfoEn,
+    certificationAuthorities: certificationAuthoritiesEn,
+    createCertificationAuthority: createCertificationAuthorityEn,
     createDevice: createDeviceEn,
     deviceDetails: deviceDetailsEn,
+    editDevice: editDeviceEn,
+    templatesTable: templatesTableEn,
   },
   pt: {
     login: loginPtBr,
@@ -64,8 +76,12 @@ const resources = {
     templateAttrs: templateAttrsPtBr,
     attrs: attrsPtBr,
     userInfo: userInfoBr,
+    certificationAuthorities: certificationAuthoritiesPtBr,
+    createCertificationAuthority: createCertificationAuthorityPtBr,
     createDevice: createDevicePtBr,
     deviceDetails: deviceDetailsPtBr,
+    editDevice: editDevicePtBr,
+    templatesTable: templatesTablePtBr,
   },
 };
 

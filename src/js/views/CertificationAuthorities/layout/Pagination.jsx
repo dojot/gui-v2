@@ -9,34 +9,34 @@ import { usePaginationStyles } from './style';
 const Pagination = ({
   page,
   rowsPerPage,
-  totalOfTemplates,
+  totalOfCertificationAuthorities,
   handleChangePage,
-  numberOfSelectedTemplates,
+  numberOfSelectedCertificationAuthorities,
   handleChangeRowsPerPage,
 }) => {
-  const { t } = useTranslation('createDevice');
+  const { t } = useTranslation('certificationAuthorities');
   const classes = usePaginationStyles();
 
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
-      <Typography>{t('templatesStep.totalOfTemplates', { count: totalOfTemplates })}</Typography>
+      <Typography>{t('totalOfItems', { count: totalOfCertificationAuthorities })}</Typography>
 
-      {!!numberOfSelectedTemplates && (
+      {!!numberOfSelectedCertificationAuthorities && (
         <Typography>
-          {t('templatesStep.numberOfSelectedTemplates', { count: numberOfSelectedTemplates })}
+          {t('numberOfSelectedItems', { count: numberOfSelectedCertificationAuthorities })}
         </Typography>
       )}
 
       <TablePagination
         page={page}
         component='div'
-        count={totalOfTemplates}
+        count={totalOfCertificationAuthorities}
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}
         onChangeRowsPerPage={handleChangeRowsPerPage}
-        labelRowsPerPage={t('templatesStep.labelRowsPerPage')}
+        labelRowsPerPage={t('labelRowsPerPage')}
         labelDisplayedRows={({ from, to, count }) => {
-          return t('templatesStep.labelDisplayedRows', { from, to, count });
+          return t('labelDisplayedRows', { from, to, count });
         }}
       />
     </Box>
@@ -46,18 +46,18 @@ const Pagination = ({
 Pagination.propTypes = {
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
-  totalOfTemplates: PropTypes.number,
+  totalOfCertificationAuthorities: PropTypes.number,
   handleChangePage: PropTypes.func,
-  numberOfSelectedTemplates: PropTypes.number,
+  numberOfSelectedCertificationAuthorities: PropTypes.number,
   handleChangeRowsPerPage: PropTypes.func,
 };
 
 Pagination.defaultProps = {
   page: 0,
   rowsPerPage: 0,
-  totalOfTemplates: 0,
+  totalOfCertificationAuthorities: 0,
   handleChangePage: null,
-  numberOfSelectedTemplates: 0,
+  numberOfSelectedCertificationAuthorities: 0,
   handleChangeRowsPerPage: null,
 };
 

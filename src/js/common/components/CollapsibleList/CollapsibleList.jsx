@@ -12,9 +12,9 @@ import {
 import { ChevronRight } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-import { useAttrDataListStyles } from './style';
+import useStyles from './style';
 
-const AttrDataList = ({
+const CollapsibleList = ({
   title,
   caption,
   children,
@@ -22,7 +22,7 @@ const AttrDataList = ({
   isCaptionHighlighted,
   handleToggleContent,
 }) => {
-  const classes = useAttrDataListStyles({ isContentVisible });
+  const classes = useStyles({ isContentVisible });
 
   return (
     <List className={classes.container}>
@@ -57,7 +57,7 @@ const AttrDataList = ({
   );
 };
 
-AttrDataList.propTypes = {
+CollapsibleList.propTypes = {
   title: PropTypes.string.isRequired,
   caption: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
@@ -66,8 +66,8 @@ AttrDataList.propTypes = {
   handleToggleContent: PropTypes.func.isRequired,
 };
 
-AttrDataList.defaultProps = {
+CollapsibleList.defaultProps = {
   isCaptionHighlighted: false,
 };
 
-export default AttrDataList;
+export default CollapsibleList;

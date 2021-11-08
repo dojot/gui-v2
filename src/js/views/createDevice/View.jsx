@@ -4,6 +4,7 @@ import { Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
+import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
 import { ViewContainer } from '../stateComponents';
 import { NUMBER_OF_STEPS } from './constants';
@@ -20,6 +21,7 @@ const CreateDevice = () => {
   const classes = useStyles();
 
   const [currentStep, setCurrentStep] = useState(0);
+  const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
 
   const [selectedTemplates, setSelectedTemplates] = useState({});
   const [staticAttrValues, setStaticAttrValues] = useState({});
@@ -65,12 +67,31 @@ const CreateDevice = () => {
   };
 
   const handleCancelDeviceCreation = () => {
+    setIsShowingCancelModal(true);
+  };
+
+  const handleHideCancelModal = () => {
+    setIsShowingCancelModal(false);
+  };
+
+  const handleGoBack = () => {
     if (history.length) history.goBack();
     else history.push('/devices');
   };
 
   return (
     <ViewContainer headerTitle={t('title')}>
+      <AlertDialog
+        isOpen={isShowingCancelModal}
+        cancelButtonText={t('common:no')}
+        autoFocusConfirmationButton={false}
+        title={t('cancelDeviceCreationTitle')}
+        confirmButtonText={t('common:yesImSure')}
+        message={t('cancelDeviceCreationMessage')}
+        handleConfirm={handleGoBack}
+        handleClose={handleHideCancelModal}
+      />
+
       <Box className={classes.container}>
         <Grid className={classes.content} alignItems='stretch' wrap='nowrap' container>
           <Grid item xs='auto'>
