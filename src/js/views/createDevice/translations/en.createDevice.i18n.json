@@ -1,5 +1,7 @@
 {
   "title": "New Device",
+  "cancelDeviceCreationTitle": "Cancel Device Creation",
+  "cancelDeviceCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
   "stepper": {
     "templates": "Templates",
     "attrs": "Attributes",
@@ -8,17 +10,21 @@
   },
   "templatesStep": {
     "hint": "To get started, select a template in the list below or create a new one!",
-    "templateName": "Template Name",
-    "numberOfAttrs": "Number Of Attributes",
-    "emptyTemplateList": "No Template Found",
-    "searchTemplatePh": "Type to search a template...",
     "discardNewTemplate": "Discard Template",
     "saveNewTemplate": "Save Template",
-    "totalOfTemplates": "Total of Templates: {{count}}",
-    "numberOfSelectedTemplates": "{{count}} Selected Template",
-    "numberOfSelectedTemplates_plural": "{{count}} Selected Templates",
-    "labelRowsPerPage": "Items per Page:",
-    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+    "emptyTemplateList": "No Template Found"
+  },
+  "attrsStep": {
+    "hint": "Now you can set static attribute values for your device!",
+    "staticAttrs": "Static Attributes ({{count}})",
+    "dynamicAttrs": "Dynamic Attributes ({{count}})",
+    "actuators": "Actuators ({{count}})",
+    "editable": "(Editable)",
+    "nonEditable": "(Not Editable)",
+    "templateName": "Template Name",
+    "noStaticAttrs": "No static attribute to show",
+    "noDynamicAttrs": "No dynamic attribute to show",
+    "noActuatorAttrs": "No actuator attribute to show"
   },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",

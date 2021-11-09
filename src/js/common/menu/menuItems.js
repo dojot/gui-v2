@@ -68,6 +68,13 @@ export const MENU_ITEMS = [
   },
   {
     visible: true,
+    i18n: 'security',
+    label: 'Segurança',
+    path: '/certification-authorities',
+    icon: VerifiedUser,
+  },
+  {
+    visible: true,
     i18n: 'certificates',
     label: 'Certificados',
     path: '/certificates',
