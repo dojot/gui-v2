@@ -7,6 +7,7 @@ import {
   NotificationImportant,
   People,
   SupervisedUserCircle,
+  VerifiedUser,
 } from '@material-ui/icons';
 
 export const MENU_ITEMS = [
@@ -64,5 +65,12 @@ export const MENU_ITEMS = [
     label: 'Modelos',
     path: '/templates',
     icon: FilterNone,
+  },
+  {
+    visible: true,
+    i18n: 'security',
+    label: 'Segurança',
+    path: '/certification-authorities',
+    icon: VerifiedUser,
   },
 ];
