@@ -29,6 +29,8 @@ import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
 import templatesTableEn from '../components/TemplatesTable/translations/en.templatesTable.i18n.json';
 import templatesTablePtBr from '../components/TemplatesTable/translations/pt_br.templatesTable.i18n.json';
+import deviceIntegrationModalEn from '../components/TutorialModals/DeviceIntegrationModal/translations/en.deviceIntegrationModal.i18n.json';
+import deviceIntegrationModalPtBr from '../components/TutorialModals/DeviceIntegrationModal/translations/pt_br.deviceIntegrationModal.i18n.json';
 import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
 import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
 import menuEn from '../menu/translations/en.menu.i18n.json';
@@ -56,6 +58,7 @@ const resources = {
     certificationAuthorities: certificationAuthoritiesEn,
     createCertificationAuthority: createCertificationAuthorityEn,
     createDevice: createDeviceEn,
+    deviceIntegrationModal: deviceIntegrationModalEn,
     editDevice: editDeviceEn,
     templatesTable: templatesTableEn,
   },
@@ -76,6 +79,7 @@ const resources = {
     certificationAuthorities: certificationAuthoritiesPtBr,
     createCertificationAuthority: createCertificationAuthorityPtBr,
     createDevice: createDevicePtBr,
+    deviceIntegrationModal: deviceIntegrationModalPtBr,
     editDevice: editDevicePtBr,
     templatesTable: templatesTablePtBr,
   },
