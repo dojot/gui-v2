@@ -16,9 +16,13 @@ import { useHistory, useParams } from 'react-router';
 
 import { TemplatesTable } from '../../common/components/TemplatesTable';
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
-import { actions as deviceActions } from '../../redux/modules/devices';
+import { useIsLoading } from '../../common/hooks';
+import {
+  actions as deviceActions,
+  constants as deviceConstants,
+} from '../../redux/modules/devices';
 import { actions as templateActions } from '../../redux/modules/templates';
-import { firstDeviceSelector, loadingDevicesSelector } from '../../redux/selectors/devicesSelector';
+import { firstDeviceSelector } from '../../redux/selectors/devicesSelector';
 import {
   loadingTemplatesSelector,
   paginationControlSelector,
@@ -37,9 +41,10 @@ const EditDevice = () => {
 
   const templates = useSelector(templatesSelector);
   const deviceData = useSelector(firstDeviceSelector);
-  const isLoadingDeviceData = useSelector(loadingDevicesSelector);
   const isLoadingTemplates = useSelector(loadingTemplatesSelector);
   const { totalPages = 0 } = useSelector(paginationControlSelector);
+
+  const isLoadingDeviceData = useIsLoading(deviceConstants.GET_DEVICES);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

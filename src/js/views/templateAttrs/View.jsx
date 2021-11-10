@@ -11,8 +11,8 @@ import { usePersistentState } from '../../common/hooks';
 import { actions as attrActions } from '../../redux/modules/templateAttrs';
 import {
   attrsSelector,
-  loadingDevicesSelector,
   paginationControlSelector,
+  loadingTemplateAttrsSelector,
 } from '../../redux/selectors/templateAttrsSelector';
 import { ViewContainer } from '../stateComponents';
 import AttrManagementModal from './layout/AttrManagementModal';
@@ -34,8 +34,8 @@ const TemplateAttrs = () => {
 
   const template = useSelector(() => ({})); // TODO: Create and use a selector
   const attrs = useSelector(attrsSelector);
-  const isLoadingAttrs = useSelector(loadingDevicesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
+  const isLoadingAttrs = useSelector(loadingTemplateAttrsSelector);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

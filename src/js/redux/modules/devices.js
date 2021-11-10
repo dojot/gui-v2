@@ -3,7 +3,6 @@ import { createAction, handleActions } from 'redux-actions';
 
 const GET_DEVICES = 'app/devices/GET_DEVICES';
 const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';
-const LOADING = 'app/devices/LOADING';
 const FAVORITE_DEVICE = 'app/devices/FAVORITE_DEVICE';
 const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
 const FAVORITE_MULTIPLE_DEVICES = 'app/devices/FAVORITE_MULTIPLE_DEVICES';
@@ -13,7 +12,6 @@ const EDIT_DEVICE = 'app/devices/EDIT_DEVICE';
 export const constants = {
   GET_DEVICES,
   UPDATE_DEVICES,
-  LOADING,
   FAVORITE_DEVICE,
   DELETE_DEVICE,
   FAVORITE_MULTIPLE_DEVICES,
@@ -32,10 +30,6 @@ export const updateDevices = createAction(UPDATE_DEVICES, payload => ({
     totalPages: payload.totalPages,
     currentPage: payload.currentPage,
   },
-}));
-
-export const setLoadingDevices = createAction(LOADING, payload => ({
-  loading: payload,
 }));
 
 export const favoriteDevice = createAction(FAVORITE_DEVICE, payload => ({
@@ -63,7 +57,6 @@ export const editDevice = createAction(EDIT_DEVICE, payload => ({
 export const actions = {
   getDevices,
   updateDevices,
-  setLoadingDevices,
   favoriteDevice,
   deleteDevice,
   favoriteMultipleDevices,
@@ -75,15 +68,11 @@ export const reducers = {
   [UPDATE_DEVICES]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
-  [LOADING]: (state, { payload }) => {
-    return state.merge({ ...payload });
-  },
 };
 
 export const initialState = () => {
   return Map({
     devices: [],
-    loading: false,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,
