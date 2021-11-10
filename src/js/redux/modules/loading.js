@@ -28,16 +28,16 @@ export const actions = {
 
 export const reducers = {
   [ADD_LOADING]: (state, { payload }) => {
-    return state.merge({ loading: { ...state.loading, ...payload } });
+    return state.mergeDeep({ loading: { ...payload } });
   },
   [REMOVE_LOADING]: (state, { payload }) => {
-    const newLoading = state.get('loading');
+    const newLoading = { ...state.get('loading') };
 
     payload.keys.forEach(key => {
       delete newLoading[key];
     });
 
-    return state.merge({ loading: newLoading });
+    return state.set('loading', newLoading);
   },
 };
 

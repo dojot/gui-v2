@@ -9,9 +9,9 @@ export const constants = {
   REMOVE_ERROR,
 };
 
-export const addError = createAction(ADD_ERROR, ({ message }) => {
-  const timestamp = Date.now();
-  return { id: timestamp, message };
+export const addError = createAction(ADD_ERROR, ({ message, i18nMessage }) => {
+  const timestamp = Date.now().toString();
+  return { id: timestamp, message, i18nMessage };
 });
 
 export const removeError = createAction(REMOVE_ERROR, errorId => ({ errorId }));
@@ -23,12 +23,12 @@ export const actions = {
 
 export const reducers = {
   [ADD_ERROR]: (state, { payload }) => {
-    return state.merge({ errors: { ...state.errors, [payload.id]: payload } });
+    return state.mergeDeep({ errors: { [payload.id]: payload } });
   },
   [REMOVE_ERROR]: (state, { payload }) => {
-    const errors = state.get('errors');
+    const errors = { ...state.get('errors') };
     delete errors[payload.errorId];
-    return state.merge({ errors });
+    return state.set('errors', errors);
   },
 };
 

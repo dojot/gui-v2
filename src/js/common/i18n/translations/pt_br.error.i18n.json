@@ -1,0 +1,14 @@
+{
+  "errorModal": {
+    "title": "Ocorreu um erro",
+    "closeButton": "Ok"
+  },
+  "messages": {
+    "getDevices": "Não foi possível obter os dispositivos",
+    "deleteDevice": "Não foi possível excluir este dispositivo",
+    "deleteAllDevices": "Não foi possível excluir estes dispositivos",
+    "favoriteDevice": "Não foi possível favoritar este dispositivo",
+    "favoriteMultipleDevices": "Não foi possível estes dispositivos",
+    "editDevice": "Não foi possível editar este dispositivo"
+  }
+}
