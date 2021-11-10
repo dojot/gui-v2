@@ -19,9 +19,7 @@ export const addLoading = createAction(ADD_LOADING, (...keys) => {
   return loadingToAdd;
 });
 
-export const removeLoading = createAction(REMOVE_LOADING, (...keys) => ({
-  keys,
-}));
+export const removeLoading = createAction(REMOVE_LOADING, (...keys) => ({ keys }));
 
 export const actions = {
   addLoading,
@@ -30,13 +28,15 @@ export const actions = {
 
 export const reducers = {
   [ADD_LOADING]: (state, { payload }) => {
-    return state.merge({ loading: { ...payload } });
+    return state.merge({ loading: { ...state.loading, ...payload } });
   },
   [REMOVE_LOADING]: (state, { payload }) => {
-    const newLoading = {};
+    const newLoading = state.get('loading');
+
     payload.keys.forEach(key => {
       delete newLoading[key];
     });
+
     return state.merge({ loading: newLoading });
   },
 };
