@@ -144,6 +144,31 @@ export function* handleEditDevice(action) {
   }
 }
 
+export function* handleCreateDevice(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
+    const { label, templates, attrs, certificate } = action.payload;
+    const { createDevice } = yield Device.createDevice({
+      label,
+      templates,
+      attrs,
+      certificate,
+    });
+    const devices = yield select(devicesSelector);
+    const newDevices = [...devices, createDevice];
+    yield put(actions.updateDevices({ devices: newDevices }));
+  } catch (e) {
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'createDevice',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.CREATE_DEVICE));
+  }
+}
+
 function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
@@ -168,6 +193,10 @@ function* watchEditDevice() {
   yield takeLatest(constants.EDIT_DEVICE, handleEditDevice);
 }
 
+function* watchCreateDevice() {
+  yield takeLatest(constants.CREATE_DEVICE, handleCreateDevice);
+}
+
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchDeleteDevice),
@@ -175,4 +204,5 @@ export const deviceSaga = [
   fork(watchFavoriteDevice),
   fork(watchFavoriteMultipleDevices),
   fork(watchEditDevice),
+  fork(watchCreateDevice),
 ];

@@ -9,6 +9,7 @@
     "deleteAllDevices": "Não foi possível excluir estes dispositivos",
     "favoriteDevice": "Não foi possível favoritar este dispositivo",
     "favoriteMultipleDevices": "Não foi possível estes dispositivos",
-    "editDevice": "Não foi possível editar este dispositivo"
+    "editDevice": "Não foi possível editar este dispositivo",
+    "createDevice": "Não foi possível criar um dispositivo"
   }
 }

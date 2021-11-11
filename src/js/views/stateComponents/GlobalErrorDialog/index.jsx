@@ -13,8 +13,6 @@ const GlobalErrorModal = () => {
 
   const errors = useSelector(errorsSelector);
 
-  console.log(errors);
-
   return (
     <>
       {Object.values(errors).map(error => {

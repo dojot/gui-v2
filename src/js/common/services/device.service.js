@@ -103,6 +103,22 @@ export const editDevice = ({ deviceId, label, templates, attrs }) => {
   });
 };
 
+export const createDevice = ({ label, templates, attrs, certificate }) => {
+  return protectAPI({
+    query: `
+      mutation editDevice($label: String!, $templates: [Template]!, $attrs: [Attr], $certificate: Certificate) {
+        editDevice(label: $label, templates: $templates, attrs: $attrs, certificate: $certificate)
+      }
+    `,
+    variables: JSON.stringify({
+      label,
+      templates,
+      attrs,
+      certificate,
+    }),
+  });
+};
+
 export const getDevicesHistoryParsed = filter => {
   return protectAPI(filter);
 };

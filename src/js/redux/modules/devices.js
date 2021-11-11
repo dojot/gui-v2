@@ -8,6 +8,7 @@ const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
 const FAVORITE_MULTIPLE_DEVICES = 'app/devices/FAVORITE_MULTIPLE_DEVICES';
 const DELETE_ALL_DEVICES = 'app/devices/DELETE_ALL_DEVICES';
 const EDIT_DEVICE = 'app/devices/EDIT_DEVICE';
+const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
 
 export const constants = {
   GET_DEVICES,
@@ -17,6 +18,7 @@ export const constants = {
   FAVORITE_MULTIPLE_DEVICES,
   DELETE_ALL_DEVICES,
   EDIT_DEVICE,
+  CREATE_DEVICE,
 };
 
 export const getDevices = createAction(GET_DEVICES, payload => ({
@@ -54,6 +56,13 @@ export const editDevice = createAction(EDIT_DEVICE, payload => ({
   attrs: payload.attrs,
 }));
 
+export const createDevice = createAction(CREATE_DEVICE, payload => ({
+  label: payload.label,
+  templates: payload.templates,
+  attrs: payload.attrs,
+  certificate: payload.certificate,
+}));
+
 export const actions = {
   getDevices,
   updateDevices,
@@ -62,6 +71,7 @@ export const actions = {
   favoriteMultipleDevices,
   deleteMultipleDevices,
   editDevice,
+  createDevice,
 };
 
 export const reducers = {
