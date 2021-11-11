@@ -7,7 +7,7 @@ import { ErrorDialog } from '../../../common/components/Dialogs';
 import { actions } from '../../../redux/modules/errors';
 import { errorsSelector } from '../../../redux/selectors/errorsSelector';
 
-const GlobalErrorModal = () => {
+const GlobalErrorDialog = () => {
   const { t } = useTranslation('error');
   const dispatch = useDispatch();
 
@@ -37,4 +37,4 @@ const GlobalErrorModal = () => {
   );
 };
 
-export default GlobalErrorModal;
+export default GlobalErrorDialog;

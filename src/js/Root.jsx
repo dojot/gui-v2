@@ -7,7 +7,8 @@ import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
 import theme from 'Themes/index';
 
-import GlobalErrorModal from './views/stateComponents/GlobalErrorDialog';
+import GlobalErrorDialog from './views/stateComponents/GlobalErrorDialog';
+import GlobalSuccessToast from './views/stateComponents/GlobalSuccessToast';
 
 import './common/i18n/i18n';
 import 'fontsource-roboto';
@@ -19,7 +20,8 @@ const Root = ({ Routes, history, store }) => {
         <Router history={history}>
           <Routes />
           <CssBaseline />
-          <GlobalErrorModal />
+          <GlobalErrorDialog />
+          <GlobalSuccessToast />
         </Router>
       </Provider>
     </ThemeProvider>

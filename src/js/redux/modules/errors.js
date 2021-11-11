@@ -1,8 +1,8 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
-const ADD_ERROR = 'app/loading/ADD_ERROR';
-const REMOVE_ERROR = 'app/loading/REMOVE_ERROR';
+const ADD_ERROR = 'app/errors/ADD_ERROR';
+const REMOVE_ERROR = 'app/errors/REMOVE_ERROR';
 
 export const constants = {
   ADD_ERROR,
@@ -14,7 +14,7 @@ export const addError = createAction(ADD_ERROR, ({ message, i18nMessage }) => {
   return { id: timestamp, message, i18nMessage };
 });
 
-export const removeError = createAction(REMOVE_ERROR, errorId => ({ errorId }));
+export const removeError = createAction(REMOVE_ERROR, id => ({ id }));
 
 export const actions = {
   addError,
@@ -27,7 +27,7 @@ export const reducers = {
   },
   [REMOVE_ERROR]: (state, { payload }) => {
     const errors = { ...state.get('errors') };
-    delete errors[payload.errorId];
+    delete errors[payload.id];
     return state.set('errors', errors);
   },
 };

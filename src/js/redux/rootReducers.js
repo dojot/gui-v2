@@ -8,6 +8,7 @@ import {
   errors,
   example,
   loading,
+  success,
   templateAttrs,
   templates,
 } from './modules';
@@ -20,6 +21,7 @@ export default combineReducers({
   errors,
   example,
   loading,
+  success,
   templateAttrs,
   templates,
 });

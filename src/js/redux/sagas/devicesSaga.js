@@ -5,6 +5,7 @@ import { getUserInformation } from 'Utils';
 import { constants, actions } from '../modules/devices';
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
+import { actions as successActions } from '../modules/success';
 import { devicesSelector } from '../selectors/devicesSelector';
 
 export function* handleGetDevices(action) {
@@ -34,6 +35,7 @@ export function* handleDeleteDevice(action) {
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => id !== deviceId);
     yield put(actions.updateDevices({ devices: notDeletedDevices }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'deleteDevice' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -54,6 +56,7 @@ export function* handleDeleteMultipleDevices(action) {
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => !deviceIdArray.includes(id));
     yield put(actions.updateDevices({ devices: notDeletedDevices }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'deleteAllDevices' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -78,6 +81,7 @@ export function* handleFavoriteDevice(action) {
       return device;
     });
     yield put(actions.updateDevices({ devices: newDevices }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteDevice' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -104,6 +108,7 @@ export function* handleFavoriteMultipleDevices(action) {
       return device;
     });
     yield put(actions.updateDevices({ devices: newDevices }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteMultipleDevices' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -132,6 +137,7 @@ export function* handleEditDevice(action) {
       return device;
     });
     yield put(actions.updateDevices({ devices: newDevices }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'editDevice' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -157,6 +163,7 @@ export function* handleCreateDevice(action) {
     const devices = yield select(devicesSelector);
     const newDevices = [...devices, createDevice];
     yield put(actions.updateDevices({ devices: newDevices }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'createDevice' }));
   } catch (e) {
     yield put(
       errorActions.addError({
