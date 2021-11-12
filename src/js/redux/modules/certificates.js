@@ -14,6 +14,7 @@ export const constants = {
   LOADING,
   DELETE_CERTIFICATE,
   DELETE_ALL_CERTIFICATES,
+  DISASSOCIATE_DEVICE,
 };
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
