@@ -14,48 +14,19 @@ import {
   Button,
   Radio,
 } from '@material-ui/core';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
 
 import { DialogHeader } from '../../../common/components/Dialogs';
+import { devicesWithAttrLengthSelector } from '../../../redux/selectors/devicesSelector';
 import { useDetailsModalStyles } from './style';
 
-const fakeRows = [
-  {
-    id: '029485',
-    label: 'Device 01',
-    lastUpdate: '04/03/2021 08:11:43',
-  },
-  {
-    id: '345674',
-    label: 'Device 02',
-    lastUpdate: '04/03/2021 08:11:43',
-  },
-  {
-    id: '876454',
-    label: 'Device 03',
-    lastUpdate: '04/03/2021 08:11:43',
-  },
-  {
-    id: '275386',
-    label: 'Device 04',
-    lastUpdate: '04/03/2021 08:11:43',
-  },
-  {
-    id: '243578',
-    label: 'Device 05',
-    lastUpdate: '04/03/2021 08:11:43',
-  },
-  {
-    id: '958736',
-    label: 'Device 06',
-    lastUpdate: '04/03/2021 08:11:43',
-  },
-];
-
-const AssociateDevicesModal = ({ isOpen, handleHideDetailsModal }) => {
+const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) => {
   const { t } = useTranslation('certificates');
   const classes = useDetailsModalStyles();
+  const devices = useSelector(devicesWithAttrLengthSelector);
   const [selectedDevice, setSelectedDevice] = useState('');
 
   const handleChangeSelectedDevice = e => {
@@ -63,10 +34,10 @@ const AssociateDevicesModal = ({ isOpen, handleHideDetailsModal }) => {
   };
 
   return (
-    <Dialog open={isOpen} onClose={handleHideDetailsModal} maxWidth='lg' fullWidth>
+    <Dialog open={isOpen} onClose={handleHideDevicesToAssociateModal} maxWidth='lg' fullWidth>
       <DialogHeader
         title={t('AssociateToDeviceModalTitle')}
-        handleHideDialog={handleHideDetailsModal}
+        handleHideDialog={handleHideDevicesToAssociateModal}
       />
 
       <Box padding={2}>
@@ -89,7 +60,7 @@ const AssociateDevicesModal = ({ isOpen, handleHideDetailsModal }) => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {fakeRows.map(device => (
+                  {devices.map(device => (
                     <TableRow
                       key={device.key}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
@@ -104,7 +75,7 @@ const AssociateDevicesModal = ({ isOpen, handleHideDetailsModal }) => {
                       <TableCell className={classes.tableCellSecondary}>{device.id}</TableCell>
                       <TableCell className={classes.tableCellSecondary}>{device.label}</TableCell>
                       <TableCell className={classes.tableCellSecondary}>
-                        {device.lastUpdate}
+                        {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
                       </TableCell>
                     </TableRow>
                   ))}
@@ -116,7 +87,9 @@ const AssociateDevicesModal = ({ isOpen, handleHideDetailsModal }) => {
       </Box>
 
       <DialogActions>
-        <Button onClick={handleHideDetailsModal}>{t('associateDeviceModal.associate')}</Button>
+        <Button onClick={handleHideDevicesToAssociateModal}>
+          {t('associateDeviceModal.associate')}
+        </Button>
       </DialogActions>
     </Dialog>
   );
@@ -124,12 +97,12 @@ const AssociateDevicesModal = ({ isOpen, handleHideDetailsModal }) => {
 
 AssociateDevicesModal.propTypes = {
   isOpen: PropTypes.bool,
-  handleHideDetailsModal: PropTypes.func,
+  handleHideDevicesToAssociateModal: PropTypes.func,
 };
 
 AssociateDevicesModal.defaultProps = {
   isOpen: false,
-  handleHideDetailsModal: null,
+  handleHideDevicesToAssociateModal: null,
 };
 
 export default AssociateDevicesModal;
