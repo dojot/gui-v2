@@ -57,6 +57,25 @@ export const deleteMultipleCertificates = certificatesIdArray => {
   });
 };
 
+export const disassociateDevice = certificate => {
+  return protectAPI({
+    query: `
+      mutation disassociateDevice($certificate: [String]!) {
+        disassociateDevice(certificate: $certificate) {
+          id
+          label
+          validityPeriod
+          status
+          deviceId
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      certificate,
+    }),
+  });
+};
+
 export const getCertificatesHistoryParsed = filter => {
   return protectAPI(filter);
 };
