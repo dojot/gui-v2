@@ -14,6 +14,7 @@ const CertificateOptionsMenu = ({
   handleHideOptionsMenu,
   certificate,
   handleShowDevicesToAssociate,
+  handleDisassociateDevice,
 }) => {
   const { t } = useTranslation(['certificates', 'common']);
   const classes = useCertificateOptionsStyles();
@@ -28,13 +29,17 @@ const CertificateOptionsMenu = ({
       <MenuItem
         className={classes.menuItem}
         disabled={certificate?.deviceId !== null}
-        onClick={() => handleShowDevicesToAssociate(certificate)}
+        onClick={handleShowDevicesToAssociate}
       >
         <InsertLink />
         <span className={classes.menuItemText}>{t('certificates:associateToDevice')}</span>
       </MenuItem>
 
-      <MenuItem className={classes.menuItem} disabled={!certificate?.deviceId}>
+      <MenuItem
+        className={classes.menuItem}
+        disabled={!certificate?.deviceId}
+        onClick={handleDisassociateDevice}
+      >
         <LinkOff />
         <span className={classes.menuItemText}>{t('certificates:disassociateDevice')}</span>
       </MenuItem>
@@ -59,6 +64,7 @@ CertificateOptionsMenu.propTypes = {
   handleHideOptionsMenu: PropTypes.func,
   certificate: PropTypes.object,
   handleShowDevicesToAssociate: PropTypes.func,
+  handleDisassociateDevice: PropTypes.func,
 };
 
 CertificateOptionsMenu.defaultProps = {
@@ -68,6 +74,7 @@ CertificateOptionsMenu.defaultProps = {
   handleHideOptionsMenu: null,
   certificate: null,
   handleShowDevicesToAssociate: null,
+  handleDisassociateDevice: null,
 };
 
 export default CertificateOptionsMenu;
