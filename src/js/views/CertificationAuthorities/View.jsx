@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { AlertDialog } from '../../common/components/Dialogs';
-import { CA_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { CERTIFICATION_AUTHORITIES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { usePersistentState } from '../../common/hooks';
 import { actions as certificationAuthoritiesActions } from '../../redux/modules/certificationAuthorities';
 import {
@@ -39,7 +39,7 @@ const CertificationAuthorities = () => {
   const [certificationAuthorityOptionsMenu, setCertificationAuthorityOptionsMenu] = useState(null);
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
-    key: CA_PAGE_KEYS.VIEW_MODE,
+    key: CERTIFICATION_AUTHORITIES_PAGE_KEYS.VIEW_MODE,
   });
 
   const { t } = useTranslation('certificationAuthorities');

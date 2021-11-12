@@ -45,8 +45,8 @@ const DataTable = ({
         label: t('dataTableHead.validityPeriod'),
       },
       {
-        id: 'certificateId',
-        label: t('dataTableHead.certificateId'),
+        id: 'deviceId',
+        label: t('dataTableHead.deviceId'),
       },
       {
         id: 'status',

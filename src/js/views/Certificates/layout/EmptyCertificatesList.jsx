@@ -1,11 +1,11 @@
 import React from 'react';
 
 import { Box, Button, Grid, Typography } from '@material-ui/core';
-import { Add, CertificatesOther } from '@material-ui/icons';
+import { Add, VerifiedUserOutlined } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
-const EmptyCertificateList = () => {
+const EmptyCertificatesList = () => {
   const { t } = useTranslation('certificates');
   const history = useHistory();
 
@@ -22,7 +22,7 @@ const EmptyCertificateList = () => {
         justify='center'
         container
       >
-        <CertificatesOther fontSize='large' />
+        <VerifiedUserOutlined fontSize='large' />
 
         <Box paddingY={1}>
           <Typography variant='h6'>{t('emptyListMessage')}</Typography>
@@ -41,4 +41,4 @@ const EmptyCertificateList = () => {
   );
 };
 
-export default EmptyCertificateList;
+export default EmptyCertificatesList;

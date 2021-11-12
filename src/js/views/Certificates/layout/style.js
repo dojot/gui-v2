@@ -45,6 +45,10 @@ export const useCardsStyles = makeStyles(theme => ({
     fontSize: '16px',
     fontWeight: 'bold',
   },
+  deviceId: {
+    color: theme.palette.info.dark,
+    textDecoration: 'underline',
+  },
 }));
 
 export const useCertificateOptionsStyles = makeStyles(theme => ({
