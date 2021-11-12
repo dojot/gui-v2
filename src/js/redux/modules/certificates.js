@@ -6,6 +6,7 @@ const UPDATE_CERTIFICATES = 'app/certificates/UPDATE_CERTIFICATES';
 const LOADING = 'app/certificates/LOADING';
 const DELETE_CERTIFICATE = 'app/certificates/DELETE_CERTIFICATES';
 const DELETE_ALL_CERTIFICATES = 'app/certificates/DELETE_ALL_CERTIFICATES';
+const DISASSOCIATE_DEVICE = 'app/certificates/DISASSOCIATE_DEVICE';
 
 export const constants = {
   GET_CERTIFICATES,
@@ -40,12 +41,17 @@ export const deleteMultipleCertificates = createAction(DELETE_ALL_CERTIFICATES, 
   certificatesIdArray: payload.certificatesIdArray,
 }));
 
+export const disassociateDevice = createAction(DISASSOCIATE_DEVICE, payload => ({
+  certificate: payload.certificate,
+}));
+
 export const actions = {
   getCertificates,
   updateCertificates,
   setLoadingCertificates,
   deleteCertificate,
   deleteMultipleCertificates,
+  disassociateDevice,
 };
 
 export const reducers = {
