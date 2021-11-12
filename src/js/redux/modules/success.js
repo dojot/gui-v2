@@ -11,7 +11,7 @@ export const constants = {
 
 export const showSuccessToast = createAction(
   SHOW_SUCCESS_TOAST,
-  ({ i18nMessage, duration = 3000 }) => ({
+  ({ i18nMessage, duration = 5000 }) => ({
     isShowing: true,
     i18nMessage,
     duration,

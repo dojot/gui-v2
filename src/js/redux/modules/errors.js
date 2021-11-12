@@ -9,9 +9,9 @@ export const constants = {
   REMOVE_ERROR,
 };
 
-export const addError = createAction(ADD_ERROR, ({ message, i18nMessage }) => {
+export const addError = createAction(ADD_ERROR, ({ message, i18nMessage, duration = 5000 }) => {
   const timestamp = Date.now().toString();
-  return { id: timestamp, message, i18nMessage };
+  return { id: timestamp, message, i18nMessage, duration };
 });
 
 export const removeError = createAction(REMOVE_ERROR, id => ({ id }));
