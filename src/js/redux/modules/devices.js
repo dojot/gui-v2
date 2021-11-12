@@ -6,7 +6,7 @@ const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';
 const FAVORITE_DEVICE = 'app/devices/FAVORITE_DEVICE';
 const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
 const FAVORITE_MULTIPLE_DEVICES = 'app/devices/FAVORITE_MULTIPLE_DEVICES';
-const DELETE_ALL_DEVICES = 'app/devices/DELETE_ALL_DEVICES';
+const DELETE_MULTIPLE_DEVICES = 'app/devices/DELETE_MULTIPLE_DEVICES';
 const EDIT_DEVICE = 'app/devices/EDIT_DEVICE';
 const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
 
@@ -16,7 +16,7 @@ export const constants = {
   FAVORITE_DEVICE,
   DELETE_DEVICE,
   FAVORITE_MULTIPLE_DEVICES,
-  DELETE_ALL_DEVICES,
+  DELETE_MULTIPLE_DEVICES,
   EDIT_DEVICE,
   CREATE_DEVICE,
 };
@@ -46,7 +46,7 @@ export const favoriteMultipleDevices = createAction(FAVORITE_MULTIPLE_DEVICES, p
   deviceIdArray: payload.deviceIdArray,
 }));
 
-export const deleteMultipleDevices = createAction(DELETE_ALL_DEVICES, payload => ({
+export const deleteMultipleDevices = createAction(DELETE_MULTIPLE_DEVICES, payload => ({
   deviceIdArray: payload.deviceIdArray,
 }));
 

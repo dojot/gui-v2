@@ -2,7 +2,7 @@
   "closeToastText": "Close",
   "messages": {
     "deleteDevice": "Device deleted",
-    "deleteAllDevices": "All devices were deleted",
+    "deleteMultipleDevices": "All devices were deleted",
     "favoriteDevice": "Device added to favorites",
     "favoriteMultipleDevices": "All devices were added to favorites",
     "editDevice": "Device edited",

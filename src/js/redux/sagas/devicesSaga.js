@@ -50,22 +50,22 @@ export function* handleDeleteDevice(action) {
 
 export function* handleDeleteMultipleDevices(action) {
   try {
-    yield put(loadingActions.addLoading(constants.DELETE_ALL_DEVICES));
+    yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
     const { deviceIdArray } = action.payload;
     yield Device.deleteMultipleDevices(deviceIdArray);
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => !deviceIdArray.includes(id));
     yield put(actions.updateDevices({ devices: notDeletedDevices }));
-    yield put(successActions.showSuccessToast({ i18nMessage: 'deleteAllDevices' }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleDevices' }));
   } catch (e) {
     yield put(
       errorActions.addError({
         message: e.message,
-        i18nMessage: 'deleteAllDevices',
+        i18nMessage: 'deleteMultipleDevices',
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.DELETE_ALL_DEVICES));
+    yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_DEVICES));
   }
 }
 
@@ -185,7 +185,7 @@ function* watchDeleteDevice() {
 }
 
 function* watchDeleteMultipleDevices() {
-  yield takeLatest(constants.DELETE_ALL_DEVICES, handleDeleteMultipleDevices);
+  yield takeLatest(constants.DELETE_MULTIPLE_DEVICES, handleDeleteMultipleDevices);
 }
 
 function* watchFavoriteDevice() {
