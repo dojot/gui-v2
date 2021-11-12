@@ -100,6 +100,7 @@ const CreateDevice = () => {
         templates: Object.values(selectedTemplates),
         attrs: attrsToSave,
         certificate: {},
+        successCallback: handleGoBack,
       }),
     );
   };

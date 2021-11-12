@@ -54,6 +54,7 @@ export const editDevice = createAction(EDIT_DEVICE, payload => ({
   label: payload.label,
   templates: payload.templates,
   attrs: payload.attrs,
+  successCallback: payload.successCallback,
 }));
 
 export const createDevice = createAction(CREATE_DEVICE, payload => ({
@@ -61,6 +62,7 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
   templates: payload.templates,
   attrs: payload.attrs,
   certificate: payload.certificate,
+  successCallback: payload.successCallback,
 }));
 
 export const actions = {

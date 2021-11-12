@@ -1,4 +1,4 @@
-import { put, fork, takeLatest, select } from 'redux-saga/effects';
+import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { Device } from 'Services';
 import { getUserInformation } from 'Utils';
 
@@ -124,7 +124,7 @@ export function* handleFavoriteMultipleDevices(action) {
 export function* handleEditDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.EDIT_DEVICE));
-    const { deviceId, label, templates, attrs } = action.payload;
+    const { deviceId, label, templates, attrs, successCallback } = action.payload;
     const { editDevice } = yield Device.editDevice({
       deviceId,
       label,
@@ -138,6 +138,7 @@ export function* handleEditDevice(action) {
     });
     yield put(actions.updateDevices({ devices: newDevices }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'editDevice' }));
+    if (successCallback) yield call(successCallback);
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -153,7 +154,7 @@ export function* handleEditDevice(action) {
 export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
-    const { label, templates, attrs, certificate } = action.payload;
+    const { label, templates, attrs, certificate, successCallback } = action.payload;
     const { createDevice } = yield Device.createDevice({
       label,
       templates,
@@ -164,6 +165,7 @@ export function* handleCreateDevice(action) {
     const newDevices = [...devices, createDevice];
     yield put(actions.updateDevices({ devices: newDevices }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createDevice' }));
+    if (successCallback) yield call(successCallback);
   } catch (e) {
     yield put(
       errorActions.addError({

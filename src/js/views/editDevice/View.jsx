@@ -130,10 +130,9 @@ const EditDevice = () => {
         label: deviceName,
         templates: Object.values(selectedTemplates),
         attrs: attrsToSave,
+        successCallback: handleGoBack,
       }),
     );
-
-    handleGoBack();
   };
 
   useEffect(() => {
