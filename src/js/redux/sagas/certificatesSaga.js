@@ -53,6 +53,22 @@ export function* handleDeleteMultipleCertificates(action) {
   }
 }
 
+export function* handleDisassociateDevice(action) {
+  try {
+    const { certificate } = action.payload;
+    yield Certificates.disassociateDevice(certificate);
+
+    const certificates = yield select(certificatesSelector);
+    yield put(
+      actions.updateCertificates({
+        certificates,
+      }),
+    );
+  } catch (e) {
+    console.log(e.message);
+  }
+}
+
 function* watchGetCertificates() {
   yield takeLatest(constants.GET_CERTIFICATES, handleGetCertificates);
 }
@@ -65,8 +81,13 @@ function* watchDeleteMultipleCertificates() {
   yield takeLatest(constants.DELETE_ALL_CERTIFICATES, handleDeleteMultipleCertificates);
 }
 
+function* watchDisassociateDevice() {
+  yield takeLatest(constants.DISASSOCIATE_DEVICE, handleDisassociateDevice);
+}
+
 export const certificatesSaga = [
   fork(watchGetCertificates),
   fork(watchDeleteCertificate),
   fork(watchDeleteMultipleCertificates),
+  fork(watchDisassociateDevice),
 ];
