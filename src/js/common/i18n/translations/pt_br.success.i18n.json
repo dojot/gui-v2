@@ -3,7 +3,7 @@
   "messages": {
     "deleteDevice": "Dispositivo excluído",
     "deleteMultipleDevices": "Todos os dispositivos foram excluídos",
-    "favoriteDevice": "Dispositivo foi adicionado aos favoritos",
+    "favoriteDevice": "Dispositivo adicionado aos favoritos",
     "favoriteMultipleDevices": "Todos os dispositivos foram adicionados aos favoritos",
     "editDevice": "Dispositivo editado",
     "createDevice": "Dispositivo criado"
