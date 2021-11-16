@@ -53,6 +53,23 @@ export const useStyles = makeStyles(theme => ({
     backgroundColor: `${theme.palette.primary.main} !important`,
     color: 'white',
   },
+  subItem: {
+    borderRadius: '0 100px 100px 0',
+    margin: theme.spacing(0, 0, 0, 7),
+  },
+  closedSubItem: {
+    borderRadius: '100%',
+    height: '43px',
+    minHeight: '43px',
+    width: '43px',
+    minWidth: '43px',
+    margin: 'auto',
+    padding: '0 10.5px',
+  },
+  subItemSelected: {
+    backgroundColor: 'white !important',
+    color: theme.palette.primary.main,
+  },
   icon: {
     color: theme.palette.text.secondary,
   },
