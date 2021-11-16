@@ -1,0 +1,58 @@
+{
+  "title": "Certificates",
+  "numberOfSelectedCertificates": "{{count}} Line Selected",
+  "numberOfSelectedCertificates_plural": "{{count}} Lines Selected",
+  "totalOfCertificates": "Total of Items: {{count}}",
+  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+  "labelRowsPerPage": "Items per page:",
+  "associateToDevice": "Associate to a device",
+  "disassociateDevice": "Disassociate device",
+  "changeAssociation": "Change association",
+  "AssociateToDeviceModalTitle": "Devices",
+  "searchInputPh": "Search certificate",
+  "createNewCertificate": "Create New Certificate",
+  "emptyListMessage": "No Certificates found",
+  "massActions": "Mass actions:",
+  "hasAssociatedDeviceTooltip": "Has associated device",
+  "noAssociatedDeviceTooltip": "No associated device",
+  "lastUpdateTooltip": "Last update",
+  "dataTableHead": {
+    "label": "Name",
+    "validityPeriod": "Validity Period",
+    "deviceId": "Device Id",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "dataTableBody": {
+    "notAssociated": "Not associated"
+  },
+  "associateDeviceModal": {
+    "table": {
+      "id": "Id",
+      "devices": "Devices",
+      "lastUpdate": "Last update"
+    },
+    "associate": "Associate"
+  },
+  "deleteCertificateAlert": {
+    "title": "Delete Certificate",
+    "message": "Are you sure you want to delete this certificate?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "deleteMultipleCertificatesAlert": {
+    "title": "Delete Selected Certificates",
+    "message": "Are you sure you want to delete all selected certificates?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "disassociateDeviceAlert": {
+    "title": "Disassociate Device ({{deviceId}})",
+    "message": "Are you sure you want to disassociate ({{deviceId}}) of ({{certificateLabel}})?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Disassociate"
+  },
+  "cards": {
+    "deviceId": "Device Id"
+  }
+}
