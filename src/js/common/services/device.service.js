@@ -1,5 +1,28 @@
 import { protectAPI } from 'APIs';
 
+/**
+  Add these attrs below when Backstage is ready:
+
+  totalPages
+  currentPage
+  devices {
+    id
+    label
+    created
+    updated
+    certificate {
+      id
+      label
+    }
+    attrs {
+      id
+      label
+      type
+      valueType
+      value
+    }
+  }
+*/
 export const getDevicesList = (page, filter) => {
   return protectAPI({
     query: `
@@ -31,9 +54,7 @@ export const deleteDevice = deviceId => {
   return protectAPI({
     query: `
       mutation deleteDevice($deviceId: String!) {
-        deleteDevice(deviceId: $deviceId) {
-          id
-        }
+        deleteDevice(deviceId: $deviceId)
       }
     `,
     variables: JSON.stringify({
@@ -46,9 +67,7 @@ export const deleteMultipleDevices = deviceIdArray => {
   return protectAPI({
     query: `
       mutation deleteMultipleDevices($deviceIdArray: [String]!) {
-        deleteMultipleDevices(deviceIdArray: $deviceIdArray) {
-          id
-        }
+        deleteMultipleDevices(deviceIdArray: $deviceIdArray)
       }
     `,
     variables: JSON.stringify({
@@ -106,8 +125,8 @@ export const editDevice = ({ deviceId, label, templates, attrs }) => {
 export const createDevice = ({ label, templates, attrs, certificate }) => {
   return protectAPI({
     query: `
-      mutation editDevice($label: String!, $templates: [Template]!, $attrs: [Attr], $certificate: Certificate) {
-        editDevice(label: $label, templates: $templates, attrs: $attrs, certificate: $certificate)
+      mutation createDevice($label: String!, $templates: [Template]!, $attrs: [Attr], $certificate: Certificate) {
+        createDevice(label: $label, templates: $templates, attrs: $attrs, certificate: $certificate)
       }
     `,
     variables: JSON.stringify({

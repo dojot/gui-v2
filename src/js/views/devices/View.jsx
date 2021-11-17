@@ -11,7 +11,7 @@ import { useIsLoading, usePersistentState } from '../../common/hooks';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
 import {
   paginationControlSelector,
-  devicesWithAttrLengthSelector,
+  devicesForDataTableSelector,
 } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
@@ -31,7 +31,7 @@ const Devices = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const devices = useSelector(devicesWithAttrLengthSelector);
+  const devices = useSelector(devicesForDataTableSelector);
   const { totalPages } = useSelector(paginationControlSelector);
 
   const isLoadingDevices = useIsLoading(constants.GET_DEVICES);

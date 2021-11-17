@@ -125,18 +125,12 @@ export function* handleEditDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.EDIT_DEVICE));
     const { deviceId, label, templates, attrs, successCallback } = action.payload;
-    const { editDevice } = yield Device.editDevice({
+    yield Device.editDevice({
       deviceId,
       label,
       templates,
       attrs,
     });
-    const devices = yield select(devicesSelector);
-    const newDevices = devices.map(device => {
-      if (deviceId === device.id) return { ...device, ...editDevice };
-      return device;
-    });
-    yield put(actions.updateDevices({ devices: newDevices }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'editDevice' }));
     if (successCallback) yield call(successCallback);
   } catch (e) {
@@ -155,15 +149,12 @@ export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
     const { label, templates, attrs, certificate, successCallback } = action.payload;
-    const { createDevice } = yield Device.createDevice({
+    yield Device.createDevice({
       label,
       templates,
       attrs,
       certificate,
     });
-    const devices = yield select(devicesSelector);
-    const newDevices = [...devices, createDevice];
-    yield put(actions.updateDevices({ devices: newDevices }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createDevice' }));
     if (successCallback) yield call(successCallback);
   } catch (e) {
