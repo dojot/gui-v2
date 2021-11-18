@@ -1,5 +1,5 @@
 {
-  "title": "Certificates",
+  "headerTitle": "Certificates",
   "numberOfSelectedCertificates": "{{count}} Line Selected",
   "numberOfSelectedCertificates_plural": "{{count}} Lines Selected",
   "totalOfCertificates": "Total of Items: {{count}}",

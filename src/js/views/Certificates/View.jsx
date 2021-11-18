@@ -126,7 +126,7 @@ const Certificates = () => {
   };
 
   return (
-    <ViewContainer headerTitle='Certificados'>
+    <ViewContainer headerTitle={t('headerTitle')}>
       <AssociateDevicesModal
         isOpen={isShowingDevicesToAssociate}
         deviceDetails={clickedCertificate || {}}
@@ -230,7 +230,6 @@ const Certificates = () => {
           totalOfDevices={totalPages}
           numberOfSelectedCertificates={selectedCertificates.length}
           totalOfCertificates={certificates.length}
-          numberOfSelectedDevices={selectedCertificates.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
         />
