@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 
 import {
   Grow,
@@ -12,6 +12,7 @@ import {
   ListItemIcon,
   ClickAwayListener,
   Switch,
+  Box,
 } from '@material-ui/core';
 import { ArrowDropDown, BookmarkBorder, ExitToApp, Lock } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -19,27 +20,41 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { getUserInformation, logout } from 'Utils';
 
+import { AlertDialog } from '../../../common/components/Dialogs';
 import { useStyles } from './style';
 
+const DEFAULT_USER_DATA = { userName: '', tenant: '', profile: '' };
+
 export const UserInfo = () => {
-  const { t } = useTranslation(['userInfo']);
+  const { t } = useTranslation('userInfo');
   const history = useHistory();
   const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
-  const anchorRef = React.useRef(null);
+  const anchorRef = useRef(null);
 
-  const [isDarkModeActivated, setIsDarkModeActivated] = React.useState(false);
+  const [isShowingMenu, setIsShowingMenu] = useState(false);
+  const [isDarkModeActivated, setIsDarkModeActivated] = useState(false);
+  const [isShowingLogoutModal, setIsShowingLogoutModal] = useState(false);
 
-  const user = getUserInformation() || { userName: '', tenant: '', profile: '' };
+  const version = GUI_VERSION || t('notDefined');
+  const user = getUserInformation() || DEFAULT_USER_DATA;
 
-  const handleToggle = () => {
-    setOpen(prevOpen => !prevOpen);
+  const handleToggleMenu = () => {
+    setIsShowingMenu(isShowing => !isShowing);
   };
 
-  const handleClose = event => {
+  const handleHideMenu = event => {
     if (anchorRef.current?.contains(event.target)) return;
-    setOpen(false);
+    setIsShowingMenu(false);
+  };
+
+  const handleShowLogoutModal = () => {
+    setIsShowingLogoutModal(true);
+    setIsShowingMenu(false);
+  };
+
+  const handleHideLogoutModal = () => {
+    setIsShowingLogoutModal(false);
   };
 
   const handleChangePassword = () => {
@@ -55,96 +70,102 @@ export const UserInfo = () => {
     setIsDarkModeActivated(e.target.checked);
   };
 
-  const version = GUI_VERSION || t('notDefined');
-
   return (
-    <div className={classes.root}>
-      <>
-        <Divider orientation='vertical' flexItem className={classes.divider} />
+    <Box className={classes.root}>
+      <Divider orientation='vertical' flexItem className={classes.divider} />
 
-        <Button
-          ref={anchorRef}
-          className={classes.button}
-          color='inherit'
-          onClick={handleToggle}
-          startIcon={<AccountCircle />}
-          endIcon={<ArrowDropDown />}
-          aria-haspopup='true'
-          data-testid='menuButton'
-          aria-controls={open ? 'menu-list-grow' : undefined}
-        >
-          {user.userName}
-        </Button>
+      <AlertDialog
+        isOpen={isShowingLogoutModal}
+        title={t('logoutModal.title')}
+        message={t('logoutModal.message')}
+        cancelButtonText={t('logoutModal.cancelButton')}
+        confirmButtonText={t('logoutModal.confirmButton')}
+        handleConfirm={handleLogout}
+        handleClose={handleHideLogoutModal}
+      />
 
-        <Popper
-          open={open}
-          anchorEl={anchorRef.current}
-          placement='bottom-end'
-          transition
-          disablePortal
-        >
-          {({ TransitionProps }) => (
-            <Grow {...TransitionProps}>
-              <Paper className={classes.paper}>
-                <ClickAwayListener onClickAway={handleClose}>
-                  <List className={classes.list}>
-                    <ListItem data-testid='tenant'>
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <BookmarkBorder />
-                      </ListItemIcon>
-                      <ListItemText>{t('tenant', { tenant: user.tenant })}</ListItemText>
-                    </ListItem>
+      <Button
+        ref={anchorRef}
+        className={classes.button}
+        color='inherit'
+        aria-haspopup='true'
+        data-testid='menuButton'
+        onClick={handleToggleMenu}
+        endIcon={<ArrowDropDown />}
+        startIcon={<AccountCircle />}
+        aria-controls={isShowingMenu ? 'menu-list-grow' : undefined}
+      >
+        {user.userName}
+      </Button>
 
-                    <ListItem data-testid='version'>
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <BookmarkBorder />
-                      </ListItemIcon>
-                      <ListItemText>{t('version', { version })}</ListItemText>
-                    </ListItem>
+      <Popper
+        open={isShowingMenu}
+        anchorEl={anchorRef.current}
+        placement='bottom-end'
+        transition
+        disablePortal
+      >
+        {({ TransitionProps }) => (
+          <Grow {...TransitionProps}>
+            <Paper className={classes.paper}>
+              <ClickAwayListener onClickAway={handleHideMenu}>
+                <List className={classes.list}>
+                  <ListItem data-testid='tenant'>
+                    <ListItemIcon className={classes.listItemIcon}>
+                      <BookmarkBorder />
+                    </ListItemIcon>
+                    <ListItemText>{t('tenant', { tenant: user.tenant })}</ListItemText>
+                  </ListItem>
 
-                    <ListItem data-testid='darkMode' divider>
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <BookmarkBorder />
-                      </ListItemIcon>
+                  <ListItem data-testid='version'>
+                    <ListItemIcon className={classes.listItemIcon}>
+                      <BookmarkBorder />
+                    </ListItemIcon>
+                    <ListItemText>{t('version', { version })}</ListItemText>
+                  </ListItem>
 
-                      <ListItemText>{t('darkMode')}</ListItemText>
+                  <ListItem data-testid='darkMode' divider>
+                    <ListItemIcon className={classes.listItemIcon}>
+                      <BookmarkBorder />
+                    </ListItemIcon>
 
-                      <Switch
-                        className={classes.listItemSwitch}
-                        checked={isDarkModeActivated}
-                        onChange={handleChangeDarkMode}
-                        color='primary'
-                      />
-                    </ListItem>
+                    <ListItemText>{t('darkMode')}</ListItemText>
 
-                    <ListItem
-                      data-testid='changePassword'
-                      className={classes.clickableListItem}
-                      onClick={handleChangePassword}
-                    >
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <Lock />
-                      </ListItemIcon>
-                      <ListItemText>{t('changePassword')}</ListItemText>
-                    </ListItem>
+                    <Switch
+                      className={classes.listItemSwitch}
+                      checked={isDarkModeActivated}
+                      onChange={handleChangeDarkMode}
+                      color='primary'
+                    />
+                  </ListItem>
 
-                    <ListItem
-                      data-testid='logout'
-                      className={classes.clickableListItem}
-                      onClick={handleLogout}
-                    >
-                      <ListItemIcon className={classes.listItemIcon}>
-                        <ExitToApp />
-                      </ListItemIcon>
-                      <ListItemText>{t('logout')}</ListItemText>
-                    </ListItem>
-                  </List>
-                </ClickAwayListener>
-              </Paper>
-            </Grow>
-          )}
-        </Popper>
-      </>
-    </div>
+                  <ListItem
+                    data-testid='changePassword'
+                    className={classes.clickableListItem}
+                    onClick={handleChangePassword}
+                  >
+                    <ListItemIcon className={classes.listItemIcon}>
+                      <Lock />
+                    </ListItemIcon>
+                    <ListItemText>{t('changePassword')}</ListItemText>
+                  </ListItem>
+
+                  <ListItem
+                    data-testid='logout'
+                    className={classes.clickableListItem}
+                    onClick={handleShowLogoutModal}
+                  >
+                    <ListItemIcon className={classes.listItemIcon}>
+                      <ExitToApp />
+                    </ListItemIcon>
+                    <ListItemText>{t('logout')}</ListItemText>
+                  </ListItem>
+                </List>
+              </ClickAwayListener>
+            </Paper>
+          </Grow>
+        )}
+      </Popper>
+    </Box>
   );
 };
