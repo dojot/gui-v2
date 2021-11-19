@@ -68,10 +68,24 @@ export const MENU_ITEMS = [
   },
   {
     visible: true,
+    collapsible: true,
     i18n: 'security',
     label: 'Segurança',
-    path: '/certification-authorities',
     icon: VerifiedUser,
+    subItems: [
+      {
+        visible: true,
+        i18n: 'certificates',
+        label: 'Certificados',
+        path: '/certificates',
+      },
+      {
+        visible: true,
+        i18n: 'security',
+        label: 'CA',
+        path: '/certification-authorities',
+      },
+    ],
   },
   {
     visible: true,
