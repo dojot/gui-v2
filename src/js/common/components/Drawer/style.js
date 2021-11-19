@@ -54,8 +54,8 @@ export const useStyles = makeStyles(theme => ({
     color: 'white',
   },
   subItem: {
-    borderRadius: '0 100px 100px 0',
-    margin: theme.spacing(0, 0, 0, 7),
+    margin: theme.spacing(0, 0, 0, 0),
+    padding: theme.spacing(1, 0, 1, 7),
   },
   closedSubItem: {
     borderRadius: '100%',
