@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 
 import base from './modules/base';
+import certificates from './modules/certificates';
 import certificationAuthorities from './modules/certificationAuthorities';
 import dashboard from './modules/dashboard';
 import devices from './modules/devices';
@@ -13,6 +14,7 @@ export default combineReducers({
   base,
   devices,
   certificationAuthorities,
+  certificates,
   dashboard,
   templates,
   templateAttrs,
