@@ -1,5 +1,5 @@
 {
-  "title": "Certificados",
+  "headerTitle": "Certificados",
   "numberOfSelectedCertificates": "{{count}} Linha Selecionada",
   "numberOfSelectedCertificates_plural": "{{count}} Linhas Selecionadas",
   "totalOfCertificates": "Total de Itens: {{count}}",
