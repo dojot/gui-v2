@@ -1,0 +1,15 @@
+{
+  "title": "Device Details: {{name}}",
+  "titleWithoutName": "Device Details",
+  "noDeviceDataToShow": "Nothing to Show",
+  "sectionTitles": {
+    "templates": "Templates",
+    "staticAttrs": "Static Attrs",
+    "lastUpdate": "Last Update Received"
+  },
+  "lastUpdateTable": {
+    "date": "Date",
+    "key": "Key",
+    "value": "Value"
+  }
+}

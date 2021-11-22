@@ -17,7 +17,6 @@ import {
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
-import DeviceDetailsModal from './layout/DeviceDetailsModal';
 import DeviceOptionsMenu from './layout/DeviceOptionsMenu';
 import DevicesLoading from './layout/DevicesLoading';
 import EmptyDeviceList from './layout/EmptyDeviceList';
@@ -44,9 +43,7 @@ const Devices = () => {
     key: DEVICES_PAGE_KEYS.VIEW_MODE,
   });
 
-  const [clickedDevice, setClickedDevice] = useState(null);
   const [selectedDevices, setSelectedDevices] = useState([]);
-  const [isShowingDetails, setIsShowingDetails] = useState(false);
   const [deviceOptionsMenu, setDeviceOptionsMenu] = useState(null);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
@@ -61,13 +58,9 @@ const Devices = () => {
     setPage(0);
   };
 
-  const handleHideDetailsModal = () => {
-    setIsShowingDetails(false);
-  };
-
   const handleClickDevice = device => {
-    setClickedDevice(device);
-    setIsShowingDetails(true);
+    const deviceId = device.id;
+    history.push(`/devices/${deviceId}`);
   };
 
   const handleHideMassActions = () => {
@@ -155,12 +148,6 @@ const Devices = () => {
 
   return (
     <ViewContainer headerTitle={t('devices:title')}>
-      <DeviceDetailsModal
-        isOpen={isShowingDetails}
-        deviceDetails={clickedDevice || {}}
-        handleHideDetailsModal={handleHideDetailsModal}
-      />
-
       <DeviceOptionsMenu
         isShowingMenu={!!deviceOptionsMenu}
         anchorElement={deviceOptionsMenu?.anchorElement}

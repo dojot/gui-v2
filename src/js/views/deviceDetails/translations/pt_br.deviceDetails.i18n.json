@@ -1,0 +1,15 @@
+{
+  "title": "Detalhamento do Dispositivo: {{name}}",
+  "titleWithoutName": "Detalhamento do Dispositivo",
+  "noDeviceDataToShow": "Nenhuma Informação para Exibir",
+  "sectionTitles": {
+    "templates": "Modelos",
+    "staticAttrs": "Atributos Estáticos",
+    "lastUpdate": "Última Atualização Recebida"
+  },
+  "lastUpdateTable": {
+    "date": "Data",
+    "key": "Chave",
+    "value": "Valor"
+  }
+}

@@ -13,6 +13,8 @@ import createTemplateEn from '../../views/createTemplate/translations/en.createT
 import createTemplatePtBr from '../../views/createTemplate/translations/pt_br.createTemplate.i18n.json';
 import dashboardEn from '../../views/dashboard/translations/en.dashboard.i18n.json';
 import dashboardPtBr from '../../views/dashboard/translations/pt_br.dashboard.i18n.json';
+import deviceDetailsEn from '../../views/deviceDetails/translations/en.deviceDetails.i18n.json';
+import deviceDetailsPtBr from '../../views/deviceDetails/translations/pt_br.deviceDetails.i18n.json';
 import devicesEn from '../../views/devices/translations/en.devices.i18n.json';
 import devicesPtBr from '../../views/devices/translations/pt_br.devices.i18n.json';
 import editDeviceEn from '../../views/editDevice/translations/en.editDevice.i18n.json';
@@ -60,6 +62,7 @@ const resources = {
     certificationAuthorities: certificationAuthoritiesEn,
     createCertificationAuthority: createCertificationAuthorityEn,
     createDevice: createDeviceEn,
+    deviceDetails: deviceDetailsEn,
     certificates: certificatesEn,
     deviceIntegrationModal: deviceIntegrationModalEn,
     editDevice: editDeviceEn,
@@ -82,6 +85,7 @@ const resources = {
     certificationAuthorities: certificationAuthoritiesPtBr,
     createCertificationAuthority: createCertificationAuthorityPtBr,
     createDevice: createDevicePtBr,
+    deviceDetails: deviceDetailsPtBr,
     certificates: certificatesPtBr,
     deviceIntegrationModal: deviceIntegrationModalPtBr,
     editDevice: editDevicePtBr,

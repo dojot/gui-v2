@@ -65,24 +65,6 @@ export const usePaginationStyles = makeStyles(() => ({
   },
 }));
 
-export const useDetailsModalStyles = makeStyles(theme => ({
-  dataGroup: {
-    background: '#f2f2f2',
-    border: `1px solid ${theme.palette.divider}`,
-    borderBottom: 'none',
-  },
-  dataGroupTitleIcon: {
-    minWidth: 'auto',
-    marginRight: theme.spacing(2),
-  },
-  tableCellBold: {
-    fontWeight: 'bold',
-  },
-  tableCellSecondary: {
-    color: theme.palette.text.secondary,
-  },
-}));
-
 export const useMassActionsStyles = makeStyles(theme => ({
   massActionsContainer: {
     background: theme.palette.primary.main,
