@@ -7,12 +7,11 @@ import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
-import { usePersistentState } from '../../common/hooks';
-import { actions as deviceActions } from '../../redux/modules/devices';
+import { useIsLoading, usePersistentState } from '../../common/hooks';
+import { actions as deviceActions, constants } from '../../redux/modules/devices';
 import {
-  loadingDevicesSelector,
   paginationControlSelector,
-  devicesWithAttrLengthSelector,
+  devicesForDataTableSelector,
 } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
@@ -31,9 +30,10 @@ const Devices = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const devices = useSelector(devicesWithAttrLengthSelector);
-  const isLoadingDevices = useSelector(loadingDevicesSelector);
+  const devices = useSelector(devicesForDataTableSelector);
   const { totalPages } = useSelector(paginationControlSelector);
+
+  const isLoadingDevices = useIsLoading(constants.GET_DEVICES);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

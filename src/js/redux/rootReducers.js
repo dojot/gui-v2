@@ -1,21 +1,29 @@
 import { combineReducers } from 'redux';
 
-import base from './modules/base';
-import certificates from './modules/certificates';
-import certificationAuthorities from './modules/certificationAuthorities';
-import dashboard from './modules/dashboard';
-import devices from './modules/devices';
-import example from './modules/example';
-import templateAttrs from './modules/templateAttrs';
-import templates from './modules/templates';
+import {
+  base,
+  certificates,
+  certificationAuthorities,
+  dashboard,
+  devices,
+  errors,
+  example,
+  loading,
+  success,
+  templateAttrs,
+  templates,
+} from './modules';
 
 export default combineReducers({
-  example,
   base,
-  devices,
-  certificationAuthorities,
   certificates,
+  certificationAuthorities,
   dashboard,
-  templates,
+  devices,
+  errors,
+  example,
+  loading,
+  success,
   templateAttrs,
+  templates,
 });

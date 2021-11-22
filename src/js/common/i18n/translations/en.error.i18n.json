@@ -1,0 +1,15 @@
+{
+  "errorModal": {
+    "title": "An error ocurred",
+    "closeButton": "Ok"
+  },
+  "messages": {
+    "getDevices": "Could not get devices",
+    "deleteDevice": "Could not delete this device",
+    "deleteMultipleDevices": "Could not delete these devices",
+    "favoriteDevice": "Could not favorite this device",
+    "favoriteMultipleDevices": "Could not favorite these devices",
+    "editDevice": "Could not edit this device",
+    "createDevice": "Could not create a device"
+  }
+}

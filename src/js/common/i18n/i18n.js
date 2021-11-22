@@ -41,8 +41,12 @@ import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
 import attrsEn from './translations/en.attrs.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
+import errorEn from './translations/en.error.i18n.json';
+import successEn from './translations/en.success.i18n.json';
 import attrsPtBr from './translations/pt_br.attrs.i18n.json';
 import commonPtBr from './translations/pt_br.common.i18n.json';
+import errorPtBr from './translations/pt_br.error.i18n.json';
+import successPtBr from './translations/pt_br.success.i18n.json';
 
 const resources = {
   en: {
@@ -67,6 +71,8 @@ const resources = {
     deviceIntegrationModal: deviceIntegrationModalEn,
     editDevice: editDeviceEn,
     templatesTable: templatesTableEn,
+    error: errorEn,
+    success: successEn,
   },
   pt: {
     login: loginPtBr,
@@ -90,6 +96,8 @@ const resources = {
     deviceIntegrationModal: deviceIntegrationModalPtBr,
     editDevice: editDevicePtBr,
     templatesTable: templatesTablePtBr,
+    error: errorPtBr,
+    success: successPtBr,
   },
 };
 

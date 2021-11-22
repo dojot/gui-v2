@@ -12,7 +12,7 @@ const SummaryStep = ({
   deviceName,
   selectedTemplates,
   setDeviceName,
-  handleGoToNextStep,
+  handleCreateService,
   handleGoToPreviousStep,
   handleCancelDeviceCreation,
 }) => {
@@ -118,7 +118,7 @@ const SummaryStep = ({
 
       <ActionButtons
         isNextButtonDisabled={!deviceName.trim()}
-        handleClickNextButton={handleGoToNextStep}
+        handleClickNextButton={handleCreateService}
         handleClickBackButton={handleGoToPreviousStep}
         handleClickCancelButton={handleCancelDeviceCreation}
         isLastStep
@@ -132,7 +132,7 @@ SummaryStep.propTypes = {
   deviceName: PropTypes.string.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   setDeviceName: PropTypes.func.isRequired,
-  handleGoToNextStep: PropTypes.func.isRequired,
+  handleCreateService: PropTypes.func.isRequired,
   handleGoToPreviousStep: PropTypes.func.isRequired,
   handleCancelDeviceCreation: PropTypes.func.isRequired,
 };

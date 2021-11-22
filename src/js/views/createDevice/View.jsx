@@ -2,10 +2,12 @@ import React, { useMemo, useState } from 'react';
 
 import { Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
+import { actions } from '../../redux/modules/devices';
 import { ViewContainer } from '../stateComponents';
 import { NUMBER_OF_STEPS } from './constants';
 import DeviceWizardStepper from './layout/DeviceWizardStepper';
@@ -17,6 +19,7 @@ import useStyles from './style';
 
 const CreateDevice = () => {
   const { t } = useTranslation(['createDevice', 'common']);
+  const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
 
@@ -79,6 +82,29 @@ const CreateDevice = () => {
     else history.push('/devices');
   };
 
+  const handleCreateService = () => {
+    const selectedTemplatesAttrs = [];
+    Object.values(selectedTemplates).forEach(template => {
+      selectedTemplatesAttrs.push(template.attrs);
+    });
+
+    const attrsToSave = selectedTemplatesAttrs.map(attr => {
+      const attrValue = staticAttrValues[attr.id];
+      if (attrValue) return { ...attr, value: attrValue };
+      return attr;
+    });
+
+    dispatch(
+      actions.createDevice({
+        label: deviceName,
+        templates: Object.values(selectedTemplates),
+        attrs: attrsToSave,
+        certificate: {},
+        successCallback: handleGoBack,
+      }),
+    );
+  };
+
   return (
     <ViewContainer headerTitle={t('title')}>
       <AlertDialog
@@ -136,7 +162,7 @@ const CreateDevice = () => {
                   deviceName={deviceName}
                   selectedTemplates={selectedTemplates}
                   setDeviceName={setDeviceName}
-                  handleGoToNextStep={handleGoToNextStep}
+                  handleCreateService={handleCreateService}
                   handleGoToPreviousStep={handleGoToPreviousStep}
                   handleCancelDeviceCreation={handleCancelDeviceCreation}
                 />
