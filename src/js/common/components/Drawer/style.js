@@ -39,6 +39,7 @@ export const useStyles = makeStyles(theme => ({
   menuItem: {
     borderRadius: '0 100px 100px 0',
     margin: theme.spacing(0, 1, 0, 0),
+    color: theme.palette.text.secondary,
   },
   menuClosedItem: {
     borderRadius: '100%',
@@ -54,8 +55,8 @@ export const useStyles = makeStyles(theme => ({
     color: 'white',
   },
   subItem: {
-    borderRadius: '0 100px 100px 0',
-    margin: theme.spacing(0, 0, 0, 7),
+    margin: theme.spacing(0, 0, 0, 0),
+    paddingLeft: '72px',
   },
   closedSubItem: {
     borderRadius: '100%',

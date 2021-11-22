@@ -69,10 +69,7 @@ const DrawerComponent = props => {
                 <MenuItem
                   onClick={() => toggleCollapsibleItem(item.label)}
                   selected={isSelected}
-                  classes={{
-                    root: isOpen ? classes.menuItem : classes.menuClosedItem,
-                    selected: classes.selected,
-                  }}
+                  className={classes.menuItem}
                 >
                   <ListItemIcon>
                     <item.icon className={isSelected ? classes.iconSelected : classes.icon} />

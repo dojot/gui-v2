@@ -87,11 +87,4 @@ export const MENU_ITEMS = [
       },
     ],
   },
-  {
-    visible: true,
-    i18n: 'certificates',
-    label: 'Certificados',
-    path: '/certificates',
-    icon: VerifiedUser,
-  },
 ];
