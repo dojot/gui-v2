@@ -39,6 +39,7 @@ export const useStyles = makeStyles(theme => ({
   menuItem: {
     borderRadius: '0 100px 100px 0',
     margin: theme.spacing(0, 1, 0, 0),
+    color: theme.palette.text.secondary,
   },
   menuClosedItem: {
     borderRadius: '100%',
@@ -52,6 +53,23 @@ export const useStyles = makeStyles(theme => ({
   selected: {
     backgroundColor: `${theme.palette.primary.main} !important`,
     color: 'white',
+  },
+  subItem: {
+    margin: theme.spacing(0, 0, 0, 0),
+    paddingLeft: '72px',
+  },
+  closedSubItem: {
+    borderRadius: '100%',
+    height: '43px',
+    minHeight: '43px',
+    width: '43px',
+    minWidth: '43px',
+    margin: 'auto',
+    padding: '0 10.5px',
+  },
+  subItemSelected: {
+    backgroundColor: 'white !important',
+    color: theme.palette.primary.main,
   },
   icon: {
     color: theme.palette.text.secondary,

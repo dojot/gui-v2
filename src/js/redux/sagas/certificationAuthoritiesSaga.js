@@ -61,15 +61,18 @@ export function* handleDeleteMultipleCertificationAuthorities(action) {
 }
 
 function* watchGetCertificationAuthorities() {
-  yield takeLatest(constants.GET_DEVICES, handleGetCertificationAuthorities);
+  yield takeLatest(constants.GET_CERTIFICATION_AUTHORITIES, handleGetCertificationAuthorities);
 }
 
 function* watchDeleteCertificationAuthority() {
-  yield takeLatest(constants.DELETE_DEVICE, handleDeleteCertificationAuthority);
+  yield takeLatest(constants.DELETE_CERTIFICATION_AUTHORITY, handleDeleteCertificationAuthority);
 }
 
 function* watchDeleteMultipleCertificationAuthorities() {
-  yield takeLatest(constants.DELETE_ALL_DEVICES, handleDeleteMultipleCertificationAuthorities);
+  yield takeLatest(
+    constants.DELETE_ALL_CERTIFICATION_AUTHORITIES,
+    handleDeleteMultipleCertificationAuthorities,
+  );
 }
 
 export const certificationAuthoritySaga = [

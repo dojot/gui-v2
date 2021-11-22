@@ -1,0 +1,58 @@
+{
+  "headerTitle": "Certificados",
+  "numberOfSelectedCertificates": "{{count}} Linha Selecionada",
+  "numberOfSelectedCertificates_plural": "{{count}} Linhas Selecionadas",
+  "totalOfCertificates": "Total de Itens: {{count}}",
+  "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
+  "labelRowsPerPage": "Itens por página:",
+  "associateToDevice": "Associar a um dispositivo",
+  "disassociateDevice": "Desassociar dispositivo",
+  "changeAssociation": "Trocar associação",
+  "AssociateToDeviceModalTitle": "Dispositivos",
+  "searchInputPh": "Pesquisar certificado",
+  "createNewCertificate": "Criar Novo Certificado",
+  "emptyListMessage": "Nenhum Certificado Encontrado",
+  "massActions": "Ações em massa:",
+  "hasAssociatedDeviceTooltip": "Possui dispositivo associado",
+  "noAssociatedDeviceTooltip": "Não possui dispositivo associado",
+  "lastUpdateTooltip": "Última atualização",
+  "dataTableHead": {
+    "label": "Nome",
+    "validityPeriod": "Período de Validade",
+    "deviceId": "Id do Dispositivo",
+    "status": "Status",
+    "actions": "Ações"
+  },
+  "dataTableBody": {
+    "notAssociated": "Não associado"
+  },
+  "associateDeviceModal": {
+    "table": {
+      "id": "Id",
+      "devices": "Dispositivos",
+      "lastUpdate": "Última atualização"
+    },
+    "associate": "Associar"
+  },
+  "deleteCertificateAlert": {
+    "title": "Excluir Certificado",
+    "message": "Tem certeza que deseja excluir este certificado?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "deleteMultipleCertificatesAlert": {
+    "title": "Excluir Certificados Selecionados",
+    "message": "Tem certeza que deseja excluir todos os certificados selecionados?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "disassociateDeviceAlert": {
+    "title": "Desassociar Dispositivo ({{deviceId}})",
+    "message": "Tem certeza que deseja desassociar ({{deviceId}}) de ({{certificateLabel}})?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Desassociar"
+  },
+  "cards": {
+    "deviceId": "Id do Dispositivo"
+  }
+}
