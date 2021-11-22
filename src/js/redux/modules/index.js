@@ -6,5 +6,6 @@ export { default as loading } from './loading';
 export { default as success } from './success';
 export { default as dashboard } from './dashboard';
 export { default as templates } from './templates';
+export { default as certificates } from './certificates';
 export { default as templateAttrs } from './templateAttrs';
 export { default as certificationAuthorities } from './certificationAuthorities';
