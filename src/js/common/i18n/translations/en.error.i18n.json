@@ -10,6 +10,22 @@
     "favoriteDevice": "Could not favorite this device",
     "favoriteMultipleDevices": "Could not favorite these devices",
     "editDevice": "Could not edit this device",
-    "createDevice": "Could not create a device"
+    "createDevice": "Could not create a device",
+
+    "getTemplates": "Could not get templates",
+    "deleteTemplate": "Could not delete this template",
+    "deleteMultipleTemplates": "Could not delete these templates",
+    "createTemplate": "Could not create a template",
+    "duplicateTemplate": "Could not duplicate this template",
+
+    "getAttrs": "Could not get attributes",
+    "deleteAttr": "Could not delete this attribute",
+    "deleteMultipleAttrs": "Could not delete these attributes",
+    "createAttr": "Could not create a attribute",
+    "editAttr": "Could not edit this attribute",
+
+    "getCertificationAuthorities": "Could not get CAs",
+    "deleteCertificationAuthority": "Could not delete this CA",
+    "deleteMultipleCertificationAuthorities": "Could not delete these CAs"
   }
 }

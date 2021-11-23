@@ -1,8 +1,8 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
-const SHOW_SUCCESS_TOAST = 'app/success/SHOW_SUCCESS';
-const HIDE_SUCCESS_TOAST = 'app/success/HIDE_SUCCESS';
+const SHOW_SUCCESS_TOAST = 'app/success/SHOW_SUCCESS_TOAST';
+const HIDE_SUCCESS_TOAST = 'app/success/HIDE_SUCCESS_TOAST';
 
 export const constants = {
   SHOW_SUCCESS: SHOW_SUCCESS_TOAST,

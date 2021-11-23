@@ -10,6 +10,22 @@
     "favoriteDevice": "Não foi possível favoritar este dispositivo",
     "favoriteMultipleDevices": "Não foi possível favoritar estes dispositivos",
     "editDevice": "Não foi possível editar este dispositivo",
-    "createDevice": "Não foi possível criar um dispositivo"
+    "createDevice": "Não foi possível criar um dispositivo",
+
+    "getTemplates": "Não foi possível obter os modelos",
+    "deleteTemplate": "Não foi possível excluir este modelo",
+    "deleteMultipleTemplates": "Não foi possível excluir estes modelos",
+    "createTemplate": "Não foi possível criar o modelo",
+    "duplicateTemplate": "Não foi possível duplicar este modelo",
+
+    "getAttrs": "Não foi possível obter os atributos",
+    "deleteAttr": "Não foi possível excluir este atributo",
+    "deleteMultipleAttrs": "Não foi possível excluir estes atributos",
+    "createAttr": "Não foi possível criar um atributo",
+    "editAttr": "Não foi possível editar este atributo",
+
+    "getCertificationAuthorities": "Não foi possível obter as CAs",
+    "deleteCertificationAuthority": "Não foi possível excluir esta CA",
+    "deleteMultipleCertificationAuthorities": "Não foi possível excluir estas CAs"
   }
 }

@@ -6,12 +6,14 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
-import { usePersistentState } from '../../common/hooks';
-import { actions as certificatesActions } from '../../redux/modules/certificates';
+import { useIsLoading, usePersistentState } from '../../common/hooks';
+import {
+  actions as certificatesActions,
+  constants as certificatesConstants,
+} from '../../redux/modules/certificates';
 import {
   certificatesSelector,
   paginationControlSelector,
-  loadingCertificatesSelector,
 } from '../../redux/selectors/certificatesSelector';
 import { ViewContainer } from '../stateComponents';
 import AssociateDevicesModal from './layout/AssociateDevicesModal';
@@ -30,7 +32,7 @@ const Certificates = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const certificates = useSelector(certificatesSelector);
-  const isLoadingCertificates = useSelector(loadingCertificatesSelector);
+  const isLoadingCertificates = useIsLoading(certificatesConstants.GET_CERTIFICATES);
   const { totalPages } = useSelector(paginationControlSelector);
   const [certificatesOptionsMenu, setCertificatesOptionsMenu] = useState(null);
   const [isShowingDevicesToAssociate, setIsShowingDevicesToAssociate] = useState(false);

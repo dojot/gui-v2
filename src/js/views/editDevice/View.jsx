@@ -21,10 +21,12 @@ import {
   actions as deviceActions,
   constants as deviceConstants,
 } from '../../redux/modules/devices';
-import { actions as templateActions } from '../../redux/modules/templates';
+import {
+  actions as templateActions,
+  constants as templateConstants,
+} from '../../redux/modules/templates';
 import { firstDeviceSelector } from '../../redux/selectors/devicesSelector';
 import {
-  loadingTemplatesSelector,
   paginationControlSelector,
   templatesSelector,
 } from '../../redux/selectors/templatesSelector';
@@ -41,10 +43,10 @@ const EditDevice = () => {
 
   const templates = useSelector(templatesSelector);
   const deviceData = useSelector(firstDeviceSelector);
-  const isLoadingTemplates = useSelector(loadingTemplatesSelector);
   const { totalPages = 0 } = useSelector(paginationControlSelector);
 
   const isLoadingDeviceData = useIsLoading(deviceConstants.GET_DEVICES);
+  const isLoadingTemplates = useIsLoading(templateConstants.GET_TEMPLATES);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

@@ -7,11 +7,10 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TemplateCreation } from '../../../../common/components/WizardForms';
-import { useTemplateCreationState } from '../../../../common/hooks';
-import { actions as templateActions } from '../../../../redux/modules/templates';
+import { useIsLoading, useTemplateCreationState } from '../../../../common/hooks';
+import { actions as templateActions, constants } from '../../../../redux/modules/templates';
 import {
   templatesSelector,
-  loadingTemplatesSelector,
   paginationControlSelector,
 } from '../../../../redux/selectors/templatesSelector';
 import ActionButtons from '../../layout/ActionButtons';
@@ -31,8 +30,9 @@ const TemplatesStep = ({
   const dispatch = useDispatch();
 
   const templates = useSelector(templatesSelector);
-  const isLoadingTemplates = useSelector(loadingTemplatesSelector);
   const { totalPages = 0 } = useSelector(paginationControlSelector);
+
+  const isLoadingTemplates = useIsLoading(constants.GET_TEMPLATES);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
