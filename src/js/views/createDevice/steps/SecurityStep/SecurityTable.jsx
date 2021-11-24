@@ -14,6 +14,7 @@ import {
 import { DataTableHead } from 'Components/DataTable';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { formatDate } from 'Utils';
 
 import Pagination from './Pagination';
 import { useSecurityTableStyles } from './style';
@@ -71,6 +72,7 @@ const SecurityTable = ({
             rowCount={certificates.length}
             disableCheckbox
             disableOrderBy
+            startExtraCells={<TableCell />}
           />
 
           <TableBody>
@@ -93,10 +95,12 @@ const SecurityTable = ({
                     />
                   </TableCell>
 
-                  <TableCell className={classes.clickableCell}>Nome do Certificado</TableCell>
-                  <TableCell className={classes.clickableCell}>23/09/2020 14:24</TableCell>
+                  <TableCell className={classes.clickableCell}>{cert.id}</TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    {formatDate(cert.creation, 'DD/MM/YYYY HH:mm:ss')}
+                  </TableCell>
                   <TableCell className={classes.clickableCell} colSpan='2'>
-                    23/09/2020 14:24
+                    {formatDate(cert.expiration, 'DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
                 </TableRow>
               );
