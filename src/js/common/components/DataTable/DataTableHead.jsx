@@ -1,9 +1,8 @@
 import React from 'react';
 
 import { Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
+import { DATA_ORDER } from 'Constants';
 import PropTypes from 'prop-types';
-
-import { DATA_ORDER } from '../../constants';
 
 const DataTableHead = ({
   className,
@@ -17,6 +16,7 @@ const DataTableHead = ({
   startExtraCells,
   endExtraCells,
   disableOrderBy,
+  disableCheckbox,
 }) => {
   const createSortHandler = property => event => {
     if (onRequestSort) onRequestSort(event, property);
@@ -25,14 +25,16 @@ const DataTableHead = ({
   return (
     <TableHead className={className}>
       <TableRow>
-        <TableCell>
-          <Checkbox
-            color='primary'
-            onChange={onSelectAllClick}
-            checked={rowCount > 0 && numSelected === rowCount}
-            indeterminate={numSelected > 0 && numSelected < rowCount}
-          />
-        </TableCell>
+        {disableCheckbox ? undefined : (
+          <TableCell padding='checkbox'>
+            <Checkbox
+              color='primary'
+              onChange={onSelectAllClick}
+              checked={rowCount > 0 && numSelected === rowCount}
+              indeterminate={numSelected > 0 && numSelected < rowCount}
+            />
+          </TableCell>
+        )}
 
         {startExtraCells}
 

@@ -26,6 +26,16 @@
     "noDynamicAttrs": "No dynamic attribute to show",
     "noActuatorAttrs": "No actuator attribute to show"
   },
+  "securityStep": {
+    "hint": "In this step you generate a certificate to make your device more secure.",
+    "certificateName": "Certificate",
+    "creationTime":"Creation",
+    "expirationTime": "Expire",
+    "emptyCertificateList": "No Certificate Found",
+    "totalPages": "Total Pages: {{count}}",
+    "labelRowsPerPage": "Items per Page:",
+    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+  },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",
     "hint": "If you notice that something is missing, just go back, correct and continue!",

@@ -14,6 +14,7 @@ import {
   General,
   Summary,
   Filters,
+  Security,
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
@@ -81,6 +82,7 @@ const LineWizard = ({
       headerTitle={title}
     >
       <General validate={generalValidates} name='general' />
+      <Security validate={null} name='security' />
       <Devices validate={null} name='devices' />
       <Attributes
         validate={null}
