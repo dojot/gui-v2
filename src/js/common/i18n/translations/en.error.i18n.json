@@ -5,6 +5,7 @@
   },
   "messages": {
     "getDevices": "Could not get devices",
+    "getDeviceById": "Could not get the device data",
     "deleteDevice": "Could not delete this device",
     "deleteMultipleDevices": "Could not delete these devices",
     "favoriteDevice": "Could not favorite this device",

@@ -21,8 +21,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
-import { useAttrTranslation } from '../../common/hooks';
-import { actions as deviceActions } from '../../redux/modules/devices';
+import { useAttrTranslation, useIsLoading } from '../../common/hooks';
+import {
+  actions as deviceActions,
+  constants as deviceConstants,
+} from '../../redux/modules/devices';
+import { deviceDataSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
 
@@ -34,17 +38,14 @@ const DeviceDetails = () => {
 
   const { getAttrValueTypeTranslation } = useAttrTranslation();
 
-  const deviceData = useSelector(() => ({}));
-  const isLoadingDevice = useSelector(() => false);
+  const deviceData = useSelector(deviceDataSelector);
+  const isLoadingDevice = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
 
   useEffect(() => {
-    dispatch(
-      deviceActions.getDevices({
-        filter: {
-          id: deviceId,
-        },
-      }),
-    );
+    dispatch(deviceActions.getDeviceById({ deviceId }));
+    return () => {
+      dispatch(deviceActions.updateDevices({ deviceData: null }));
+    };
   }, [deviceId, dispatch]);
 
   if (isLoadingDevice) {

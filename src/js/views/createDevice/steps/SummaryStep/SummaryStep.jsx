@@ -10,6 +10,7 @@ import { useSummaryStepStyles } from './style';
 
 const SummaryStep = ({
   deviceName,
+  isCreatingDevice,
   selectedTemplates,
   setDeviceName,
   handleCreateService,
@@ -117,7 +118,9 @@ const SummaryStep = ({
       </Box>
 
       <ActionButtons
-        isNextButtonDisabled={!deviceName.trim()}
+        isBackButtonDisabled={isCreatingDevice}
+        isCancelButtonDisabled={isCreatingDevice}
+        isNextButtonDisabled={isCreatingDevice || !deviceName.trim()}
         handleClickNextButton={handleCreateService}
         handleClickBackButton={handleGoToPreviousStep}
         handleClickCancelButton={handleCancelDeviceCreation}
@@ -130,6 +133,7 @@ const SummaryStep = ({
 
 SummaryStep.propTypes = {
   deviceName: PropTypes.string.isRequired,
+  isCreatingDevice: PropTypes.bool.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   setDeviceName: PropTypes.func.isRequired,
   handleCreateService: PropTypes.func.isRequired,

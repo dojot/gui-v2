@@ -10,9 +10,7 @@ import DataCard from '../../../common/components/Cards/DataCard';
 import { useCardsStyles } from './style';
 
 const Cards = ({
-  page,
   devices,
-  rowsPerPage,
   handleClickDevice,
   handleFavoriteDevice,
   handleSetDeviceOptionsMenu,
@@ -23,7 +21,7 @@ const Cards = ({
   return (
     <Box padding={2}>
       <Grid spacing={2} container>
-        {devices.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(device => {
+        {devices.map(device => {
           const lastUpdate = device.updated || device.created;
 
           const handleSeeDeviceDetails = () => {
@@ -114,18 +112,14 @@ const Cards = ({
 };
 
 Cards.propTypes = {
-  page: PropTypes.number,
   devices: PropTypes.array,
-  rowsPerPage: PropTypes.number,
   handleClickDevice: PropTypes.func,
   handleFavoriteDevice: PropTypes.func,
   handleSetDeviceOptionsMenu: PropTypes.func,
 };
 
 Cards.defaultProps = {
-  page: 0,
   devices: [],
-  rowsPerPage: 0,
   handleClickDevice: null,
   handleFavoriteDevice: null,
   handleSetDeviceOptionsMenu: null,

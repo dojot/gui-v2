@@ -11,6 +11,7 @@ import {
   TableRow,
   CircularProgress,
   IconButton,
+  Box,
 } from '@material-ui/core';
 import { Close, Search } from '@material-ui/icons';
 import { DataTableHead } from 'Components/DataTable';
@@ -132,7 +133,13 @@ const TemplatesTable = ({
                   className: classes.searchInput,
                   startAdornment: (
                     <InputAdornment position='start'>
-                      {isTyping ? <CircularProgress size={16} /> : <Search />}
+                      {isTyping ? (
+                        <Box marginRight={1} paddingTop={0.5}>
+                          <CircularProgress size={16} />
+                        </Box>
+                      ) : (
+                        <Search />
+                      )}
                     </InputAdornment>
                   ),
                   endAdornment: isShowingClearButton ? (
@@ -190,7 +197,7 @@ const TemplatesTable = ({
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfTemplates={totalPages}
+          totalOfTemplates={totalPages * rowsPerPage} // TODO: This value should come from API
           numberOfSelectedTemplates={numberOfSelectedTemplates}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}

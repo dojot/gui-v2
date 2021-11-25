@@ -129,7 +129,7 @@ const Devices = () => {
     dispatch(
       deviceActions.getDevices({
         page: {
-          number: page,
+          number: page + 1, // TODO: Should be zero based pagination
           size: rowsPerPage,
         },
       }),
@@ -229,7 +229,7 @@ const Devices = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfDevices={totalPages}
+          totalOfDevices={totalPages * rowsPerPage} // TODO: This value should come from API
           numberOfSelectedDevices={selectedDevices.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}

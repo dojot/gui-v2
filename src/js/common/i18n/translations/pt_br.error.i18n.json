@@ -5,6 +5,7 @@
   },
   "messages": {
     "getDevices": "Não foi possível obter os dispositivos",
+    "getDeviceById": "Não foi possível obter os dados do dispositivo",
     "deleteDevice": "Não foi possível excluir este dispositivo",
     "deleteMultipleDevices": "Não foi possível excluir estes dispositivos",
     "favoriteDevice": "Não foi possível favoritar este dispositivo",

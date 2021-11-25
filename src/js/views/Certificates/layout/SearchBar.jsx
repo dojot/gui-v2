@@ -76,7 +76,13 @@ const SearchBar = ({ viewMode, handleSearchCertificate, handleChangeViewMode }) 
             className: classes.searchInput,
             startAdornment: (
               <InputAdornment position='start'>
-                {isTyping ? <CircularProgress size={24} /> : <Search />}
+                {isTyping ? (
+                  <Box marginRight={1} paddingTop={0.5}>
+                    <CircularProgress size={16} />
+                  </Box>
+                ) : (
+                  <Search />
+                )}
               </InputAdornment>
             ),
             endAdornment: isShowingClearButton ? (

@@ -1,28 +1,5 @@
 import { protectAPI } from 'APIs';
 
-/**
-  Add these attrs below when Backstage is ready:
-
-  totalPages
-  currentPage
-  devices {
-    id
-    label
-    created
-    updated
-    certificate {
-      id
-      label
-    }
-    attrs {
-      id
-      label
-      type
-      valueType
-      value
-    }
-  }
-*/
 export const getDevicesList = (page, filter) => {
   return protectAPI({
     query: `
@@ -33,7 +10,14 @@ export const getDevicesList = (page, filter) => {
           devices {
             id
             label
-            attrs{
+            created
+            updated
+            certificate {
+              id
+              label
+            }
+            attrs {
+              id
               label
               valueType
               isDynamic
@@ -50,15 +34,35 @@ export const getDevicesList = (page, filter) => {
   });
 };
 
-export const deleteDevice = deviceId => {
+export const getDeviceById = deviceId => {
   return protectAPI({
     query: `
-      mutation deleteDevice($deviceId: String!) {
-        deleteDevice(deviceId: $deviceId)
+      query getDeviceById($deviceId: String!) {
+        getDeviceById(deviceId: $deviceId) {
+          id
+          label
+          attrs {
+            label
+            valueType
+          }
+        }
       }
     `,
     variables: JSON.stringify({
       deviceId,
+    }),
+  });
+};
+
+export const deleteDevice = deviceId => {
+  return protectAPI({
+    query: `
+      mutation deleteDevice($id: String!) {
+        deleteDevice(id: $id)
+      }
+    `,
+    variables: JSON.stringify({
+      id: deviceId,
     }),
   });
 };
@@ -125,8 +129,10 @@ export const editDevice = ({ deviceId, label, templates, attrs }) => {
 export const createDevice = ({ label, templates, attrs, certificate }) => {
   return protectAPI({
     query: `
-      mutation createDevice($label: String!, $templates: [Template]!, $attrs: [Attr], $certificate: Certificate) {
-        createDevice(label: $label, templates: $templates, attrs: $attrs, certificate: $certificate)
+      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $certificate: String) {
+        createDevice(label: $label, templates: $templates, attrs: $attrs, certificate: $certificate) {
+          id
+        }
       }
     `,
     variables: JSON.stringify({

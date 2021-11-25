@@ -2,6 +2,7 @@ import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
 const GET_DEVICES = 'app/devices/GET_DEVICES';
+const GET_DEVICE_BY_ID = 'app/devices/GET_DEVICE_BY_ID';
 const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';
 const FAVORITE_DEVICE = 'app/devices/FAVORITE_DEVICE';
 const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
@@ -12,6 +13,7 @@ const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
 
 export const constants = {
   GET_DEVICES,
+  GET_DEVICE_BY_ID,
   UPDATE_DEVICES,
   FAVORITE_DEVICE,
   DELETE_DEVICE,
@@ -26,13 +28,26 @@ export const getDevices = createAction(GET_DEVICES, payload => ({
   filter: payload.filter,
 }));
 
-export const updateDevices = createAction(UPDATE_DEVICES, payload => ({
-  devices: payload.devices,
-  paginationControl: {
-    totalPages: payload.totalPages,
-    currentPage: payload.currentPage,
-  },
+export const getDeviceById = createAction(GET_DEVICE_BY_ID, payload => ({
+  deviceId: payload.deviceId,
 }));
+
+export const updateDevices = createAction(UPDATE_DEVICES, payload => {
+  const actionPayload = {
+    devices: payload.devices,
+    deviceData: payload.deviceData,
+    paginationControl: {
+      totalPages: payload.totalPages,
+      currentPage: payload.currentPage,
+    },
+  };
+
+  Object.entries(actionPayload).forEach(([key, value]) => {
+    if (value === undefined) delete actionPayload[key];
+  });
+
+  return actionPayload;
+});
 
 export const favoriteDevice = createAction(FAVORITE_DEVICE, payload => ({
   deviceId: payload.deviceId,
@@ -67,6 +82,7 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
 
 export const actions = {
   getDevices,
+  getDeviceById,
   updateDevices,
   favoriteDevice,
   deleteDevice,
@@ -85,6 +101,7 @@ export const reducers = {
 export const initialState = () => {
   return Map({
     devices: [],
+    deviceData: null,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,

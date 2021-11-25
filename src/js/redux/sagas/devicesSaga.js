@@ -27,6 +27,25 @@ export function* handleGetDevices(action) {
   }
 }
 
+export function* handleGetDeviceById(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.GET_DEVICE_BY_ID));
+    const { deviceId } = action.payload;
+    const { getDeviceById } = yield Device.getDeviceById(deviceId);
+    if (getDeviceById) yield put(actions.updateDevices({ deviceData: getDeviceById }));
+  } catch (e) {
+    yield put(actions.updateDevices({ deviceData: null }));
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'getDeviceById',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.GET_DEVICE_BY_ID));
+  }
+}
+
 export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
@@ -149,12 +168,7 @@ export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
     const { label, templates, attrs, certificate, successCallback } = action.payload;
-    yield Device.createDevice({
-      label,
-      templates,
-      attrs,
-      certificate,
-    });
+    yield Device.createDevice({ label, templates, attrs, certificate });
     yield put(successActions.showSuccessToast({ i18nMessage: 'createDevice' }));
     if (successCallback) yield call(successCallback);
   } catch (e) {
@@ -171,6 +185,10 @@ export function* handleCreateDevice(action) {
 
 function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
+}
+
+function* watchGetDeviceById() {
+  yield takeLatest(constants.GET_DEVICE_BY_ID, handleGetDeviceById);
 }
 
 function* watchDeleteDevice() {
@@ -199,6 +217,7 @@ function* watchCreateDevice() {
 
 export const deviceSaga = [
   fork(watchGetDevices),
+  fork(watchGetDeviceById),
   fork(watchDeleteDevice),
   fork(watchDeleteMultipleDevices),
   fork(watchFavoriteDevice),

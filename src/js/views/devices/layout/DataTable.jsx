@@ -22,9 +22,7 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
-  page,
   devices,
-  rowsPerPage,
   selectedDevices,
   handleClickDevice,
   handleSelectDevice,
@@ -125,96 +123,85 @@ const DataTable = ({
           />
 
           <TableBody>
-            {devices
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
-              .map(device => {
-                const isSelected = selectedDevices.indexOf(device.id) !== -1;
+            {devices.sort(getComparator(order === DATA_ORDER.DESC, orderBy)).map(device => {
+              const isSelected = selectedDevices.indexOf(device.id) !== -1;
 
-                const handleClickInThisDevice = () => {
-                  handleClickDevice(device);
-                };
+              const handleClickInThisDevice = () => {
+                handleClickDevice(device);
+              };
 
-                const handleSelectThisRow = () => {
-                  handleSelectRow(device.id);
-                };
+              const handleSelectThisRow = () => {
+                handleSelectRow(device.id);
+              };
 
-                const handleFavoriteThisDevice = () => {
-                  handleFavoriteDevice(device);
-                };
+              const handleFavoriteThisDevice = () => {
+                handleFavoriteDevice(device);
+              };
 
-                const handleShowOptionsMenu = e => {
-                  handleSetDeviceOptionsMenu({
-                    anchorElement: e.target,
-                    device,
-                  });
-                };
+              const handleShowOptionsMenu = e => {
+                handleSetDeviceOptionsMenu({
+                  anchorElement: e.target,
+                  device,
+                });
+              };
 
-                return (
-                  <TableRow
-                    key={device.label}
-                    tabIndex={-1}
-                    role='checkbox'
-                    selected={isSelected}
-                    aria-checked={isSelected}
-                    onClick={handleClickInThisDevice}
-                    hover
-                  >
-                    <TableCell onClick={handleStopPropagation}>
+              return (
+                <TableRow
+                  key={device.label}
+                  tabIndex={-1}
+                  role='checkbox'
+                  selected={isSelected}
+                  aria-checked={isSelected}
+                  onClick={handleClickInThisDevice}
+                  hover
+                >
+                  <TableCell onClick={handleStopPropagation}>
+                    <Checkbox color='primary' checked={isSelected} onChange={handleSelectThisRow} />
+                  </TableCell>
+
+                  <TableCell onClick={handleStopPropagation}>
+                    <Tooltip
+                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                      placement='right'
+                      arrow
+                    >
                       <Checkbox
-                        color='primary'
-                        checked={isSelected}
-                        onChange={handleSelectThisRow}
+                        color='default'
+                        checked={device.favorite}
+                        icon={<StarBorderOutlined />}
+                        checkedIcon={<Star style={{ color: '#F1B44C' }} />}
+                        onChange={handleFavoriteThisDevice}
                       />
-                    </TableCell>
+                    </Tooltip>
+                  </TableCell>
 
-                    <TableCell onClick={handleStopPropagation}>
-                      <Tooltip
-                        title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
-                        placement='right'
-                        arrow
-                      >
-                        <Checkbox
-                          color='default'
-                          checked={device.favorite}
-                          icon={<StarBorderOutlined />}
-                          checkedIcon={<Star style={{ color: '#F1B44C' }} />}
-                          onChange={handleFavoriteThisDevice}
-                        />
-                      </Tooltip>
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>{device.id}</TableCell>
+                  <TableCell className={classes.clickableCell}>{device.label}</TableCell>
+                  <TableCell className={classes.clickableCell}>{device.attrsLength}</TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{device.id}</TableCell>
-                    <TableCell className={classes.clickableCell}>{device.label}</TableCell>
-                    <TableCell className={classes.clickableCell}>{device.attrsLength}</TableCell>
-                    <TableCell className={classes.clickableCell}>
-                      {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    <Tooltip
+                      title={t(
+                        device.hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip',
+                      )}
+                      placement='right'
+                      arrow
+                    >
+                      {device.hasCertificate ? <Check color='primary' /> : <Close color='error' />}
+                    </Tooltip>
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>
-                      <Tooltip
-                        title={t(
-                          device.hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip',
-                        )}
-                        placement='right'
-                        arrow
-                      >
-                        {device.hasCertificate ? (
-                          <Check color='primary' />
-                        ) : (
-                          <Close color='error' />
-                        )}
-                      </Tooltip>
-                    </TableCell>
-
-                    <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={handleShowOptionsMenu}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  <TableCell onClick={handleStopPropagation}>
+                    <IconButton onClick={handleShowOptionsMenu}>
+                      <MoreHoriz />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

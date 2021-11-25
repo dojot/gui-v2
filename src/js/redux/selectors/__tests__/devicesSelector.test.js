@@ -3,8 +3,8 @@ import { Map } from 'immutable';
 import {
   devicesForDataTableSelector,
   devicesSelector,
-  firstDeviceSelector,
   paginationControlSelector,
+  deviceDataSelector,
 } from '../devicesSelector';
 
 describe('Devices selector tests', () => {
@@ -30,13 +30,7 @@ describe('Devices selector tests', () => {
   const fakeState = {
     devices: Map({
       devices: fakeDevices,
-      paginationControl: fakePaginationControl,
-    }),
-  };
-
-  const fakeEmptyState = {
-    devices: Map({
-      devices: [],
+      deviceData: fakeDeviceData,
       paginationControl: fakePaginationControl,
     }),
   };
@@ -61,12 +55,8 @@ describe('Devices selector tests', () => {
     ]);
   });
 
-  it('should return the first device of the list', () => {
-    expect(firstDeviceSelector(fakeState)).toEqual(fakeDeviceData);
-  });
-
-  it('should return null when there is no devices in the list', () => {
-    expect(firstDeviceSelector(fakeEmptyState)).not.toBeTruthy();
+  it('should return the data of a device', () => {
+    expect(deviceDataSelector(fakeState)).toEqual(fakeDeviceData);
   });
 
   it('should return the pagination control data', () => {
