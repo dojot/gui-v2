@@ -20,13 +20,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { DialogHeader } from '../../../common/components/Dialogs';
-import { devicesWithAttrLengthSelector } from '../../../redux/selectors/devicesSelector';
+import { devicesSelector } from '../../../redux/selectors/devicesSelector';
 import { useDetailsModalStyles } from './style';
 
 const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) => {
   const { t } = useTranslation('certificates');
   const classes = useDetailsModalStyles();
-  const devices = useSelector(devicesWithAttrLengthSelector);
+  const devices = useSelector(devicesSelector);
   const [selectedDevice, setSelectedDevice] = useState('');
 
   const handleChangeSelectedDevice = e => {
