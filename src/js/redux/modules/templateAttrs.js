@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
-const LOADING = 'app/templateAttrs/LOADING';
 const GET_ATTRS = 'app/templateAttrs/GET_ATTRS';
 const UPDATE_ATTRS = 'app/templateAttrs/UPDATE_ATTRS';
 const DELETE_ATTR = 'app/templateAttrs/DELETE_ATTR';
@@ -10,7 +9,6 @@ const CREATE_ATTR = 'app/templateAttrs/CREATE_ATTR';
 const EDIT_ATTR = 'app/templateAttrs/EDIT_ATTR';
 
 export const constants = {
-  LOADING,
   GET_ATTRS,
   UPDATE_ATTRS,
   DELETE_ATTR,
@@ -25,10 +23,6 @@ export const updateAttrs = createAction(UPDATE_ATTRS, payload => ({
     totalPages: payload.totalPages,
     currentPage: payload.currentPage,
   },
-}));
-
-export const setLoadingAttrs = createAction(LOADING, payload => ({
-  loading: payload,
 }));
 
 export const getAttrs = createAction(GET_ATTRS, payload => ({
@@ -60,7 +54,6 @@ export const editAttr = createAction(EDIT_ATTR, payload => ({
 export const actions = {
   getAttrs,
   updateAttrs,
-  setLoadingAttrs,
   deleteAttr,
   deleteMultipleAttrs,
   createAttr,
@@ -71,15 +64,11 @@ export const reducers = {
   [UPDATE_ATTRS]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
-  [LOADING]: (state, { payload }) => {
-    return state.merge({ ...payload });
-  },
 };
 
 export const initialState = () => {
   return Map({
     attrs: [],
-    loading: false,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,

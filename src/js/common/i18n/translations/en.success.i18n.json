@@ -6,6 +6,19 @@
     "favoriteDevice": "Device added to favorites",
     "favoriteMultipleDevices": "All devices were added to favorites",
     "editDevice": "Device edited",
-    "createDevice": "Device created"
+    "createDevice": "Device created",
+
+    "deleteTemplate": "Template deleted",
+    "deleteMultipleTemplates": "All templates were deleted",
+    "createTemplate": "Template created",
+    "duplicateTemplate": "Duplicate template",
+
+    "deleteAttr": "Attribute deleted",
+    "deleteMultipleAttrs": "All Attributes were deleted",
+    "createAttr": "Attribute created",
+    "editAttr": "Attribute edited",
+
+    "deleteCertificationAuthority": "CA deletes",
+    "deleteMultipleCertificationAuthorities": "All CAs were deleted"
   }
 }

@@ -1,8 +1,6 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
-// import type { baseType } from '../../common/types/example'
-
 const UPDATE_MENU_STATE = 'app/base/UPDATE_MENU_STATE';
 const UPDATE_HEADER_TITLE = 'app/base/UPDATE_HEADER_TITLE';
 
@@ -11,14 +9,11 @@ export const constants = {
   UPDATE_HEADER_TITLE,
 };
 
-// ------------------------------------
-// Actions
-// ------------------------------------
-export const updateIsMenuOpen = createAction(UPDATE_MENU_STATE, (isMenuOpen: boolean) => ({
+export const updateIsMenuOpen = createAction(UPDATE_MENU_STATE, isMenuOpen => ({
   isMenuOpen,
 }));
 
-export const updateHeaderTitle = createAction(UPDATE_HEADER_TITLE, (headerTitle: string) => ({
+export const updateHeaderTitle = createAction(UPDATE_HEADER_TITLE, headerTitle => ({
   headerTitle,
 }));
 

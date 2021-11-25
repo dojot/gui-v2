@@ -6,10 +6,12 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { CERTIFICATION_AUTHORITIES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
-import { usePersistentState } from '../../common/hooks';
-import { actions as certificationAuthoritiesActions } from '../../redux/modules/certificationAuthorities';
+import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
-  loadingCertificationAuthoritiesSelector,
+  actions as certificationAuthoritiesActions,
+  constants,
+} from '../../redux/modules/certificationAuthorities';
+import {
   certificationAuthoritiesSelector,
   paginationControlSelector,
 } from '../../redux/selectors/certificationAuthoritiesSelector';
@@ -29,7 +31,7 @@ const CertificationAuthorities = () => {
   const dispatch = useDispatch();
 
   const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
-  const isLoadingCertificationAuthorities = useSelector(loadingCertificationAuthoritiesSelector);
+  const isLoadingCertificationAuthorities = useIsLoading(constants.GET_CERTIFICATION_AUTHORITIES);
   const { totalPages } = useSelector(paginationControlSelector);
   const [page] = useState(0);
   const [rowsPerPage] = useState(10);

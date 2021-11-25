@@ -6,6 +6,19 @@
     "favoriteDevice": "Dispositivo adicionado aos favoritos",
     "favoriteMultipleDevices": "Todos os dispositivos foram adicionados aos favoritos",
     "editDevice": "Dispositivo editado",
-    "createDevice": "Dispositivo criado"
+    "createDevice": "Dispositivo criado",
+
+    "deleteTemplate": "Modelo excluído",
+    "deleteMultipleTemplates": "Todos os modelos foram excluídos",
+    "createTemplate": "Modelo criado",
+    "duplicateTemplate": "Modelo duplicado",
+
+    "deleteAttr": "Atributo excluído",
+    "deleteMultipleAttrs": "Todos os atributos foram excluídos",
+    "createAttr": "Atributo criado",
+    "editAttr": "Atributo editado",
+
+    "deleteCertificationAuthority": "CA excluída",
+    "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas"
   }
 }

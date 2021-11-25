@@ -4,7 +4,6 @@ import { createAction, handleActions } from 'redux-actions';
 const GET_CERTIFICATION_AUTHORITIES = 'app/certification_authorities/GET_CERTIFICATION_AUTHORITIES';
 const UPDATE_CERTIFICATION_AUTHORITIES =
   'app/certification_authorities/UPDATE_CERTIFICATION_AUTHORITIES';
-const LOADING = 'app/certification_authorities/LOADING';
 const DELETE_CERTIFICATION_AUTHORITY =
   'app/certification_authorities/DELETE_CERTIFICATION_AUTHORITIES';
 const DELETE_ALL_CERTIFICATION_AUTHORITIES =
@@ -13,7 +12,6 @@ const DELETE_ALL_CERTIFICATION_AUTHORITIES =
 export const constants = {
   GET_CERTIFICATION_AUTHORITIES,
   UPDATE_CERTIFICATION_AUTHORITIES,
-  LOADING,
   DELETE_CERTIFICATION_AUTHORITY,
   DELETE_ALL_CERTIFICATION_AUTHORITIES,
 };
@@ -34,10 +32,6 @@ export const updateCertificationAuthorities = createAction(
   }),
 );
 
-export const setLoadingCertificationAuthorities = createAction(LOADING, payload => ({
-  loading: payload,
-}));
-
 export const deleteCertificationAuthority = createAction(
   DELETE_CERTIFICATION_AUTHORITY,
   payload => ({
@@ -55,7 +49,6 @@ export const deleteMultipleCertificationAuthorities = createAction(
 export const actions = {
   getCertificationAuthorities,
   updateCertificationAuthorities,
-  setLoadingCertificationAuthorities,
   deleteCertificationAuthority,
   deleteMultipleCertificationAuthorities,
 };
@@ -64,15 +57,11 @@ export const reducers = {
   [UPDATE_CERTIFICATION_AUTHORITIES]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
-  [LOADING]: (state, { payload }) => {
-    return state.merge({ ...payload });
-  },
 };
 
 export const initialState = () => {
   return Map({
     certificationAuthorities: [],
-    loading: false,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,

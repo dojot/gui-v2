@@ -7,12 +7,14 @@ import { useParams } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATE_ATTRIBUTES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
-import { usePersistentState } from '../../common/hooks';
-import { actions as attrActions } from '../../redux/modules/templateAttrs';
+import { useIsLoading, usePersistentState } from '../../common/hooks';
+import {
+  actions as attrActions,
+  constants as attrConstants,
+} from '../../redux/modules/templateAttrs';
 import {
   attrsSelector,
   paginationControlSelector,
-  loadingTemplateAttrsSelector,
 } from '../../redux/selectors/templateAttrsSelector';
 import { ViewContainer } from '../stateComponents';
 import AttrManagementModal from './layout/AttrManagementModal';
@@ -35,7 +37,8 @@ const TemplateAttrs = () => {
   const template = useSelector(() => ({})); // TODO: Create and use a selector
   const attrs = useSelector(attrsSelector);
   const { totalPages } = useSelector(paginationControlSelector);
-  const isLoadingAttrs = useSelector(loadingTemplateAttrsSelector);
+
+  const isLoadingAttrs = useIsLoading(attrConstants.GET_ATTRS);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);

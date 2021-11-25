@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
-const LOADING = 'app/templates/LOADING';
 const GET_TEMPLATES = 'app/templates/GET_TEMPLATES';
 const UPDATE_TEMPLATES = 'app/templates/UPDATE_TEMPLATES';
 const DELETE_TEMPLATE = 'app/templates/DELETE_TEMPLATE';
@@ -10,7 +9,6 @@ const CREATE_TEMPLATE = 'app/templates/CREATE_TEMPLATE';
 const DUPLICATE_TEMPLATE = 'app/templates/DUPLICATE_TEMPLATE';
 
 export const constants = {
-  LOADING,
   GET_TEMPLATES,
   UPDATE_TEMPLATES,
   DELETE_TEMPLATE,
@@ -30,10 +28,6 @@ export const updateTemplates = createAction(UPDATE_TEMPLATES, payload => ({
     totalPages: payload.totalPages,
     currentPage: payload.currentPage,
   },
-}));
-
-export const setLoadingTemplates = createAction(LOADING, payload => ({
-  loading: payload,
 }));
 
 export const deleteTemplate = createAction(DELETE_TEMPLATE, payload => ({
@@ -56,7 +50,6 @@ export const duplicateTemplate = createAction(DUPLICATE_TEMPLATE, payload => ({
 export const actions = {
   getTemplates,
   updateTemplates,
-  setLoadingTemplates,
   deleteTemplate,
   deleteMultipleTemplates,
   createTemplate,
@@ -67,15 +60,11 @@ export const reducers = {
   [UPDATE_TEMPLATES]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
-  [LOADING]: (state, { payload }) => {
-    return state.merge({ ...payload });
-  },
 };
 
 export const initialState = () => {
   return Map({
     templates: [],
-    loading: false,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,
