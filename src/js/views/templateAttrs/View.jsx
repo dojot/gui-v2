@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
+import { LocalOffer } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
+import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { TEMPLATE_ATTRIBUTES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { usePersistentState } from '../../common/hooks';
 import { actions as attrActions } from '../../redux/modules/templateAttrs';
@@ -18,7 +20,6 @@ import { ViewContainer } from '../stateComponents';
 import AttrManagementModal from './layout/AttrManagementModal';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
-import EmptyList from './layout/EmptyList';
 import Loading from './layout/Loading';
 import MassActions from './layout/MassActions';
 import OptionsMenu from './layout/OptionsMenu';
@@ -222,7 +223,14 @@ const TemplateAttrs = () => {
                 />
               )}
 
-              {attrs.length === 0 && <EmptyList handleCreateAttr={handleShowAttrManagementModal} />}
+              {attrs.length === 0 && (
+                <EmptyPlaceholder
+                  emptyListMessage={t('emptyListMessage')}
+                  icon={<LocalOffer fontSize='large' />}
+                  handleButtonClick={handleShowAttrManagementModal}
+                  textButton={t('createNewAttr')}
+                />
+              )}
             </>
           )}
         </Box>
