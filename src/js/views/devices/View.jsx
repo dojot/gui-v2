@@ -229,7 +229,7 @@ const Devices = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfDevices={totalPages * rowsPerPage} // TODO: This value should come from API
+          totalOfPages={totalPages}
           numberOfSelectedDevices={selectedDevices.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
