@@ -50,7 +50,7 @@ export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
     const { deviceId } = action.payload;
-    yield Device.deleteDevice(deviceId);
+    yield Device.deleteDevices([deviceId]);
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => id !== deviceId);
     yield put(actions.updateDevices({ devices: notDeletedDevices }));
@@ -71,7 +71,7 @@ export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
     const { deviceIdArray } = action.payload;
-    yield Device.deleteMultipleDevices(deviceIdArray);
+    yield Device.deleteDevices(deviceIdArray);
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => !deviceIdArray.includes(id));
     yield put(actions.updateDevices({ devices: notDeletedDevices }));

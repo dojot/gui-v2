@@ -54,28 +54,15 @@ export const getDeviceById = deviceId => {
   });
 };
 
-export const deleteDevice = deviceId => {
+export const deleteDevices = deviceIds => {
   return protectAPI({
     query: `
-      mutation deleteDevice($id: String!) {
-        deleteDevice(id: $id)
+      mutation deleteDevices($deviceIds: [String]!) {
+        deleteDevices(deviceIds: $deviceIds)
       }
     `,
     variables: JSON.stringify({
-      id: deviceId,
-    }),
-  });
-};
-
-export const deleteMultipleDevices = deviceIdArray => {
-  return protectAPI({
-    query: `
-      mutation deleteMultipleDevices($deviceIdArray: [String]!) {
-        deleteMultipleDevices(deviceIdArray: $deviceIdArray)
-      }
-    `,
-    variables: JSON.stringify({
-      deviceIdArray,
+      deviceIds,
     }),
   });
 };
