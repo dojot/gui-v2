@@ -171,6 +171,7 @@ const DataTable = ({
                         icon={<StarBorderOutlined />}
                         checkedIcon={<Star style={{ color: '#F1B44C' }} />}
                         onChange={handleFavoriteThisDevice}
+                        disabled // TODO: Enable again when Backstage implement this action
                       />
                     </Tooltip>
                   </TableCell>
