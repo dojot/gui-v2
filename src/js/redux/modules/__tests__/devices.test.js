@@ -21,7 +21,7 @@ describe('Devices module tests', () => {
   });
 
   it('should update the pagination control', () => {
-    const action = actions.updateDevices(fakePaginationControl);
+    const action = actions.updateDevices({ paginationControl: fakePaginationControl });
     const newState = reducers[action.type](initialState(), action);
     expect(newState.get('paginationControl')).toEqual(fakePaginationControl);
   });

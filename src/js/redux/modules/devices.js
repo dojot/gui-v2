@@ -36,12 +36,11 @@ export const updateDevices = createAction(UPDATE_DEVICES, payload => {
   const actionPayload = {
     devices: payload.devices,
     deviceData: payload.deviceData,
-    paginationControl: {
-      totalPages: payload.totalPages,
-      currentPage: payload.currentPage,
-    },
+    paginationControl: payload.paginationControl,
   };
 
+  // If some attribute is undefined it will be removed from the state
+  // So, its necessary to remove all undefined values from the payload
   Object.entries(actionPayload).forEach(([key, value]) => {
     if (value === undefined) delete actionPayload[key];
   });

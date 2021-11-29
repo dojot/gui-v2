@@ -13,7 +13,16 @@ export function* handleGetDevices(action) {
     yield put(loadingActions.addLoading(constants.GET_DEVICES));
     const { page, filter } = action.payload;
     const { getDevices } = yield Device.getDevicesList(page, filter);
-    if (getDevices) yield put(actions.updateDevices(getDevices));
+    if (getDevices)
+      yield put(
+        actions.updateDevices({
+          devices: getDevices.devices,
+          paginationControl: {
+            currentPage: getDevices.currentPage,
+            totalPages: getDevices.totalPages,
+          },
+        }),
+      );
   } catch (e) {
     yield put(actions.updateDevices({ devices: [] }));
     yield put(
