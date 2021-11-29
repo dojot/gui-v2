@@ -20,13 +20,13 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { DialogHeader } from '../../../common/components/Dialogs';
-import { devicesWithAttrLengthSelector } from '../../../redux/selectors/devicesSelector';
+import { devicesForDataTableSelector } from '../../../redux/selectors/devicesSelector';
 import { useDetailsModalStyles } from './style';
 
 const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) => {
   const { t } = useTranslation('certificates');
   const classes = useDetailsModalStyles();
-  const devices = useSelector(devicesWithAttrLengthSelector);
+  const devices = useSelector(devicesForDataTableSelector);
   const [selectedDevice, setSelectedDevice] = useState('');
 
   const handleChangeSelectedDevice = e => {
@@ -51,14 +51,17 @@ const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) =>
                     <TableCell className={classes.tableCellBold}>
                       {t('associateDeviceModal.table.id')}
                     </TableCell>
+
                     <TableCell className={classes.tableCellBold}>
                       {t('associateDeviceModal.table.devices')}
                     </TableCell>
+
                     <TableCell className={classes.tableCellBold}>
                       {t('associateDeviceModal.table.lastUpdate')}
                     </TableCell>
                   </TableRow>
                 </TableHead>
+
                 <TableBody>
                   {devices.map(device => (
                     <TableRow
@@ -72,8 +75,11 @@ const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) =>
                           onChange={handleChangeSelectedDevice}
                         />
                       </TableCell>
+
                       <TableCell className={classes.tableCellSecondary}>{device.id}</TableCell>
+
                       <TableCell className={classes.tableCellSecondary}>{device.label}</TableCell>
+
                       <TableCell className={classes.tableCellSecondary}>
                         {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
                       </TableCell>
