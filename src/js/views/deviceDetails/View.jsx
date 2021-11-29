@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import {
   Box,
@@ -40,6 +40,11 @@ const DeviceDetails = () => {
 
   const deviceData = useSelector(deviceDataSelector);
   const isLoadingDevice = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
+
+  const hasStaticAttrs = useMemo(() => {
+    if (!deviceData?.attrs?.length) return false;
+    return deviceData.attrs.some(attr => attr.type === TEMPLATE_ATTR_TYPES.STATIC);
+  }, [deviceData?.attrs]);
 
   useEffect(() => {
     dispatch(deviceActions.getDeviceById({ deviceId }));
@@ -92,6 +97,14 @@ const DeviceDetails = () => {
                     </ListItem>
                   );
                 })}
+
+                {!deviceData.templates?.length && (
+                  <ListItem divider>
+                    <Box margin='auto'>
+                      <ListItemText>{t('noTemplates')}</ListItemText>
+                    </Box>
+                  </ListItem>
+                )}
               </List>
 
               <List className={classes.dataGroup} disablePadding>
@@ -115,6 +128,14 @@ const DeviceDetails = () => {
                     </ListItem>
                   );
                 })}
+
+                {!hasStaticAttrs && (
+                  <ListItem divider>
+                    <Box margin='auto'>
+                      <ListItemText>{t('noStaticAttrs')}</ListItemText>
+                    </Box>
+                  </ListItem>
+                )}
               </List>
             </Grid>
 
@@ -127,7 +148,7 @@ const DeviceDetails = () => {
                   <ListItemText>{t('sectionTitles.lastUpdate')}</ListItemText>
                 </ListItem>
 
-                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                <Table sx={{ minWidth: 650 }} aria-label={t('lastUpdateTableLabel')}>
                   <TableHead>
                     <TableRow>
                       <TableCell className={classes.tableCellBold}>
@@ -152,6 +173,14 @@ const DeviceDetails = () => {
                         <TableCell>{row.value}</TableCell>
                       </TableRow>
                     ))}
+
+                    {!deviceData.lastUpdate?.length && (
+                      <TableRow>
+                        <TableCell align='center' colSpan={3}>
+                          {t('noLastUpdateData')}
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </List>

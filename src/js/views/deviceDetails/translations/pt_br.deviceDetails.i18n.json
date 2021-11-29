@@ -1,7 +1,11 @@
 {
   "title": "Detalhamento do Dispositivo: {{name}}",
   "titleWithoutName": "Detalhamento do Dispositivo",
-  "noDeviceDataToShow": "Nenhuma Informação para Exibir",
+  "noDeviceDataToShow": "Nenhuma Informação Para Exibir",
+  "noLastUpdateData": "Nenhuma Atualização Para Exibir",
+  "noTemplates": "Nenhum Modelo Para Exibir",
+  "noStaticAttrs": "Nenhum Atributo Estático Para Exibir",
+  "lastUpdateTableLabel": "Tabela de última Atualização",
   "sectionTitles": {
     "templates": "Modelos",
     "staticAttrs": "Atributos Estáticos",
