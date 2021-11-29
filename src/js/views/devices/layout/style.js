@@ -77,6 +77,7 @@ export const useMassActionsStyles = makeStyles(theme => ({
     background: theme.palette.background.default,
     '&:disabled': {
       background: 'rgba(255,255,255,0.7)',
+      color: theme.palette.text.primary,
     },
   },
   massActionsCloseButton: {

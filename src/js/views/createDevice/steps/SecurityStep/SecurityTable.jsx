@@ -87,7 +87,7 @@ const SecurityTable = ({
                   onClick={() => handleCertificateSelection(cert)}
                   hover
                 >
-                  <TableCell padding='checkbox'>
+                  <TableCell>
                     <Radio
                       color='primary'
                       checked={isSelected}
