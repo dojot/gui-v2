@@ -12,25 +12,26 @@ import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import logo from 'Assets/images/dojotLogo.png';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
-import { Link, withRouter } from 'react-router-dom';
+import { Link, withRouter, useHistory } from 'react-router-dom';
 
 import { useStyles } from './style';
 
-const DrawerComponent = props => {
-  const { isOpen, menuItems, location } = props;
+const DrawerComponent = ({ isOpen, menuItems, location }) => {
   const classes = useStyles();
-  const [collapsibleItemOpen, setCollapsibleItemOpen] = useState(false);
+  const history = useHistory();
+
+  const [collapsedItems, setCollapsedItems] = useState({});
 
   const getActiveRoute = path => {
     return location.pathname.indexOf(path) > -1;
   };
 
-  const toggleCollapsibleItem = label => {
-    if (label === collapsibleItemOpen) {
-      setCollapsibleItemOpen(null);
-    } else {
-      setCollapsibleItemOpen(label);
-    }
+  const handleToggleCollapsibleItem = label => {
+    setCollapsedItems(currentCollapsedItems => {
+      const collapsedItemsClone = { ...currentCollapsedItems };
+      collapsedItemsClone[label] = !collapsedItemsClone[label];
+      return collapsedItemsClone;
+    });
   };
 
   return (
@@ -61,29 +62,50 @@ const DrawerComponent = props => {
         {menuItems.map(item => {
           if (!item.visible) return null;
 
-          const isSelected = getActiveRoute(item.path);
+          if (item.collapsible && item.subItems) {
+            const isCollapsed = collapsedItems[item.label];
 
-          if (item.collapsible) {
+            const hasSelectedSubItem = item.subItems.find(subItem => {
+              return getActiveRoute(subItem.path);
+            });
+
+            const handleToggleCollapsibleItems = () => {
+              handleToggleCollapsibleItem(item.label);
+            };
+
+            const handleGoToSubItems = () => {
+              const notSelectedSubItem = item.subItems.find(subItem => {
+                return !getActiveRoute(subItem.path);
+              });
+
+              if (notSelectedSubItem) history.push(notSelectedSubItem.path);
+            };
+
             return (
-              <>
+              <div key={item.label}>
                 <MenuItem
-                  onClick={() => toggleCollapsibleItem(item.label)}
-                  selected={isSelected}
-                  className={classes.menuItem}
+                  selected={hasSelectedSubItem}
+                  onClick={isOpen ? handleToggleCollapsibleItems : handleGoToSubItems}
+                  classes={{
+                    root: isOpen ? classes.menuItem : classes.menuClosedItem,
+                    selected: classes.selected,
+                  }}
                 >
                   <ListItemIcon>
-                    <item.icon className={isSelected ? classes.iconSelected : classes.icon} />
+                    <item.icon
+                      className={hasSelectedSubItem ? classes.iconSelected : classes.icon}
+                    />
                   </ListItemIcon>
                   <ListItemText primary={item.label} />
-                  {collapsibleItemOpen ? <ExpandLess /> : <ExpandMore />}
+                  {isCollapsed ? <ExpandLess /> : <ExpandMore />}
                 </MenuItem>
 
-                <Collapse in={collapsibleItemOpen && isOpen} timeout='auto'>
+                <Collapse in={isCollapsed && isOpen} timeout='auto'>
                   {item.subItems.map(subItem => {
                     const isSubItemSelected = getActiveRoute(subItem.path);
 
                     return (
-                      <Link to={subItem.path} className={classes.menuLink} key={subItem.label}>
+                      <Link key={subItem.label} to={subItem.path} className={classes.menuLink}>
                         <MenuItem
                           selected={isSubItemSelected}
                           classes={{
@@ -97,12 +119,14 @@ const DrawerComponent = props => {
                     );
                   })}
                 </Collapse>
-              </>
+              </div>
             );
           }
 
+          const isSelected = getActiveRoute(item.path);
+
           return (
-            <Link to={item.path} className={classes.menuLink} key={item.label}>
+            <Link key={item.label} to={item.path} className={classes.menuLink}>
               <MenuItem
                 selected={isSelected}
                 classes={{
