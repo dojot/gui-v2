@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
 import { Box } from '@material-ui/core';
+import { VerifiedUserOutlined } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
+import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
@@ -21,7 +24,6 @@ import Cards from './layout/Cards';
 import CertificateOptionsMenu from './layout/CertificateOptionsMenu';
 import CertificatesLoading from './layout/CertificatesLoading';
 import DataTable from './layout/DataTable';
-import EmptyCertificatesList from './layout/EmptyCertificatesList';
 import MassActions from './layout/MassActions';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
@@ -29,6 +31,7 @@ import useStyles from './style';
 
 const Certificates = () => {
   const { t } = useTranslation('certificates');
+  const history = useHistory();
   const classes = useStyles();
   const dispatch = useDispatch();
   const certificates = useSelector(certificatesSelector);
@@ -199,7 +202,14 @@ const Certificates = () => {
             <CertificatesLoading />
           ) : (
             <>
-              {certificates.length === 0 && <EmptyCertificatesList />}
+              {certificates.length === 0 && (
+                <EmptyPlaceholder
+                  emptyListMessage={t('emptyListMessage')}
+                  icon={<VerifiedUserOutlined fontSize='large' />}
+                  handleButtonClick={() => history.push('/certificates/new')}
+                  textButton={t('createNewCertificate')}
+                />
+              )}
 
               {viewMode === VIEW_MODE.TABLE && certificates.length > 0 && (
                 <DataTable

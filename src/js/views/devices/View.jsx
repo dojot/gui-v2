@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
+import { DevicesOther } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
+import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
@@ -18,7 +20,6 @@ import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
 import DeviceOptionsMenu from './layout/DeviceOptionsMenu';
 import DevicesLoading from './layout/DevicesLoading';
-import EmptyDeviceList from './layout/EmptyDeviceList';
 import MassActions from './layout/MassActions';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
@@ -221,7 +222,14 @@ const Devices = () => {
                 />
               )}
 
-              {devices.length === 0 && <EmptyDeviceList />}
+              {devices.length === 0 && (
+                <EmptyPlaceholder
+                  emptyListMessage={t('emptyListMessage')}
+                  icon={<DevicesOther fontSize='large' />}
+                  handleButtonClick={() => history.push('/devices/new')}
+                  textButton={t('createNewDevice')}
+                />
+              )}
             </>
           )}
         </Box>
