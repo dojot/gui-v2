@@ -56,17 +56,19 @@ const Cards = ({
                       placement='top'
                       arrow
                     >
-                      <IconButton
-                        onClick={handleFavoriteThisDevice}
-                        size='small'
-                        disabled // TODO: Enable again when Backstage implement this action
-                      >
-                        {device.favorite ? (
-                          <Star style={{ color: '#F1B44C' }} />
-                        ) : (
-                          <StarBorderOutlined />
-                        )}
-                      </IconButton>
+                      <div>
+                        <IconButton
+                          onClick={handleFavoriteThisDevice}
+                          size='small'
+                          disabled // TODO: Enable again when Backstage implement this action
+                        >
+                          {device.favorite ? (
+                            <Star style={{ color: '#F1B44C' }} />
+                          ) : (
+                            <StarBorderOutlined />
+                          )}
+                        </IconButton>
+                      </div>
                     </Tooltip>
 
                     <Tooltip
