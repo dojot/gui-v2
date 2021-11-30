@@ -52,7 +52,7 @@ const SecurityStep = ({
     dispatch(
       securityActions.updateCertificate({
         page: {
-          number: page,
+          number: page + 1,
           size: rowsPerPage,
         },
       }),

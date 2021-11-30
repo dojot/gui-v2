@@ -76,7 +76,7 @@ const SecurityTable = ({
           />
 
           <TableBody>
-            {certificates.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(cert => {
+            {certificates.map(cert => {
               const isSelected = selectedCertificate === cert.id;
 
               return (
@@ -112,7 +112,7 @@ const SecurityTable = ({
           <Pagination
             page={page}
             rowsPerPage={rowsPerPage}
-            total={totalPages}
+            totalOfPages={totalPages}
             handleChangePage={handleChangePage}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
           />
