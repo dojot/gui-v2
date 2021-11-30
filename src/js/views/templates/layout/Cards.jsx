@@ -8,20 +8,14 @@ import { useTranslation } from 'react-i18next';
 import DataCard from '../../../common/components/Cards/DataCard';
 import { useCardsStyles } from './style';
 
-const Cards = ({
-  page,
-  templates,
-  rowsPerPage,
-  handleClickTemplate,
-  handleSetTemplateOptionsMenu,
-}) => {
+const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu }) => {
   const { t } = useTranslation(['templates', 'common']);
   const classes = useCardsStyles();
 
   return (
     <Box padding={2}>
       <Grid spacing={2} container>
-        {templates.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(template => {
+        {templates.map(template => {
           const handleSeeTemplateDetails = () => {
             handleClickTemplate(template);
           };
@@ -72,9 +66,7 @@ const Cards = ({
 };
 
 Cards.propTypes = {
-  page: PropTypes.number.isRequired,
   templates: PropTypes.array.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
   handleClickTemplate: PropTypes.func.isRequired,
   handleSetTemplateOptionsMenu: PropTypes.func.isRequired,
 };

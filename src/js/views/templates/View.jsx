@@ -185,9 +185,7 @@ const Templates = () => {
             <>
               {viewMode === VIEW_MODE.TABLE && templates.length > 0 && (
                 <DataTable
-                  page={page}
                   templates={templates}
-                  rowsPerPage={rowsPerPage}
                   selectedTemplates={selectedTemplates}
                   handleClickTemplate={handleClickTemplate}
                   handleSelectTemplate={setSelectedTemplates}
@@ -197,9 +195,7 @@ const Templates = () => {
 
               {viewMode === VIEW_MODE.CARD && templates.length > 0 && (
                 <Cards
-                  page={page}
                   templates={templates}
-                  rowsPerPage={rowsPerPage}
                   handleClickTemplate={handleClickTemplate}
                   handleSetTemplateOptionsMenu={setTemplateOptionsMenu}
                 />

@@ -20,9 +20,7 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
-  page,
   templates,
-  rowsPerPage,
   selectedTemplates,
   handleClickTemplate,
   handleSelectTemplate,
@@ -117,63 +115,54 @@ const DataTable = ({
           />
 
           <TableBody>
-            {templates
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
-              .map(template => {
-                const isSelected = selectedTemplates.indexOf(template.id) !== -1;
+            {templates.sort(getComparator(order === DATA_ORDER.DESC, orderBy)).map(template => {
+              const isSelected = selectedTemplates.indexOf(template.id) !== -1;
 
-                const handleClickInThisTemplate = () => {
-                  handleClickTemplate(template);
-                };
+              const handleClickInThisTemplate = () => {
+                handleClickTemplate(template);
+              };
 
-                const handleSelectThisRow = () => {
-                  handleSelectRow(template.id);
-                };
+              const handleSelectThisRow = () => {
+                handleSelectRow(template.id);
+              };
 
-                const handleShowOptionsMenu = e => {
-                  handleSetTemplateOptionsMenu({
-                    anchorElement: e.target,
-                    template,
-                  });
-                };
+              const handleShowOptionsMenu = e => {
+                handleSetTemplateOptionsMenu({
+                  anchorElement: e.target,
+                  template,
+                });
+              };
 
-                return (
-                  <TableRow
-                    key={template.label}
-                    tabIndex={-1}
-                    role='checkbox'
-                    selected={isSelected}
-                    aria-checked={isSelected}
-                    onClick={handleClickInThisTemplate}
-                    hover
-                  >
-                    <TableCell onClick={handleStopPropagation}>
-                      <Checkbox
-                        color='primary'
-                        checked={isSelected}
-                        onChange={handleSelectThisRow}
-                      />
-                    </TableCell>
+              return (
+                <TableRow
+                  key={template.label}
+                  tabIndex={-1}
+                  role='checkbox'
+                  selected={isSelected}
+                  aria-checked={isSelected}
+                  onClick={handleClickInThisTemplate}
+                  hover
+                >
+                  <TableCell onClick={handleStopPropagation}>
+                    <Checkbox color='primary' checked={isSelected} onChange={handleSelectThisRow} />
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{template.id}</TableCell>
+                  <TableCell className={classes.clickableCell}>{template.id}</TableCell>
 
-                    <TableCell className={classes.clickableCell}>{template.label}</TableCell>
+                  <TableCell className={classes.clickableCell}>{template.label}</TableCell>
 
-                    <TableCell className={classes.clickableCell}>
-                      {template.devicesLength}
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>{template.devicesLength}</TableCell>
 
-                    <TableCell className={classes.clickableCell}>{template.attrsLength}</TableCell>
+                  <TableCell className={classes.clickableCell}>{template.attrsLength}</TableCell>
 
-                    <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={handleShowOptionsMenu}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  <TableCell onClick={handleStopPropagation}>
+                    <IconButton onClick={handleShowOptionsMenu}>
+                      <MoreHoriz />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>
