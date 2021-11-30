@@ -9,7 +9,7 @@ import { usePaginationStyles } from './style';
 const Pagination = ({
   page,
   rowsPerPage,
-  totalOfAttrs,
+  totalOfPages,
   numberOfSelectedAttrs,
   handleChangePage,
   handleChangeRowsPerPage,
@@ -19,7 +19,7 @@ const Pagination = ({
 
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
-      <Typography>{t('totalOfAttrs', { count: totalOfAttrs })}</Typography>
+      <Typography>{t('totalOfPages', { count: totalOfPages })}</Typography>
 
       {!!numberOfSelectedAttrs && (
         <Typography>{t('numberOfSelectedAttrs', { count: numberOfSelectedAttrs })}</Typography>
@@ -28,13 +28,15 @@ const Pagination = ({
       <TablePagination
         page={page}
         component='div'
-        count={totalOfAttrs}
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}
-        onChangeRowsPerPage={handleChangeRowsPerPage}
+        count={totalOfPages * rowsPerPage}
         labelRowsPerPage={t('labelRowsPerPage')}
-        labelDisplayedRows={({ from, to, count }) => {
-          return t('labelDisplayedRows', { from, to, count });
+        nextIconButtonText={t('nextIconButtonText')}
+        backIconButtonText={t('backIconButtonText')}
+        onChangeRowsPerPage={handleChangeRowsPerPage}
+        labelDisplayedRows={() => {
+          return t('pageInfo', { page: page + 1, totalOfPages });
         }}
       />
     </Box>
@@ -44,14 +46,14 @@ const Pagination = ({
 Pagination.propTypes = {
   page: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  totalOfAttrs: PropTypes.number,
+  totalOfPages: PropTypes.number,
   numberOfSelectedAttrs: PropTypes.number.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
 };
 
 Pagination.defaultProps = {
-  totalOfAttrs: 0,
+  totalOfPages: 0,
 };
 
 export default Pagination;

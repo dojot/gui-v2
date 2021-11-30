@@ -207,9 +207,7 @@ const TemplateAttrs = () => {
             <>
               {viewMode === VIEW_MODE.TABLE && attrs.length > 0 && (
                 <DataTable
-                  page={page}
                   attrs={attrs}
-                  rowsPerPage={rowsPerPage}
                   selectedAttrs={selectedAttrs}
                   handleSelectAttr={setSelectedAttrs}
                   handleSetAttrOptionsMenu={setAttrOptionsMenu}
@@ -217,12 +215,7 @@ const TemplateAttrs = () => {
               )}
 
               {viewMode === VIEW_MODE.CARD && attrs.length > 0 && (
-                <Cards
-                  page={page}
-                  attrs={attrs}
-                  rowsPerPage={rowsPerPage}
-                  handleSetAttrOptionsMenu={setAttrOptionsMenu}
-                />
+                <Cards attrs={attrs} handleSetAttrOptionsMenu={setAttrOptionsMenu} />
               )}
 
               {attrs.length === 0 && <EmptyList handleCreateAttr={handleShowAttrManagementModal} />}
@@ -233,7 +226,7 @@ const TemplateAttrs = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfAttrs={totalPages}
+          totalOfPages={totalPages}
           numberOfSelectedAttrs={selectedAttrs.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}

@@ -19,14 +19,14 @@ Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
   ATTR_VALUE_TYPE_TRANSLATIONS[value] = translation;
 });
 
-const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
+const Cards = ({ attrs, handleSetAttrOptionsMenu }) => {
   const { t } = useTranslation(['templateAttrs', 'common']);
   const classes = useCardsStyles();
 
   return (
     <Box padding={2}>
       <Grid spacing={2} container alignItems='stretch'>
-        {attrs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(attr => {
+        {attrs.map(attr => {
           const attrTypeTranslation = ATTR_TYPE_TRANSLATIONS[attr.type] || attr.type;
 
           const valueTypeTranslation =
@@ -84,9 +84,7 @@ const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
 };
 
 Cards.propTypes = {
-  page: PropTypes.number.isRequired,
   attrs: PropTypes.array.isRequired,
-  rowsPerPage: PropTypes.number.isRequired,
   handleSetAttrOptionsMenu: PropTypes.func.isRequired,
 };
 
