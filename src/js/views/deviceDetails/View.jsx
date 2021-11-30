@@ -177,7 +177,7 @@ const DeviceDetails = () => {
                     {!deviceData.lastUpdate?.length && (
                       <TableRow>
                         <TableCell align='center' colSpan={3}>
-                          {t('noLastUpdateData')}
+                          <Typography>{t('noLastUpdateData')}</Typography>
                         </TableCell>
                       </TableRow>
                     )}
