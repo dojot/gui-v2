@@ -20,13 +20,15 @@ import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 
 import { DialogHeader } from '../../../common/components/Dialogs';
-import { devicesForDataTableSelector } from '../../../redux/selectors/devicesSelector';
+import { devicesSelector } from '../../../redux/selectors/devicesSelector';
 import { useDetailsModalStyles } from './style';
 
 const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) => {
   const { t } = useTranslation('certificates');
   const classes = useDetailsModalStyles();
-  const devices = useSelector(devicesForDataTableSelector);
+
+  const devices = useSelector(devicesSelector);
+
   const [selectedDevice, setSelectedDevice] = useState('');
 
   const handleChangeSelectedDevice = e => {
@@ -65,7 +67,7 @@ const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) =>
                 <TableBody>
                   {devices.map(device => (
                     <TableRow
-                      key={device.key}
+                      key={device.id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell>

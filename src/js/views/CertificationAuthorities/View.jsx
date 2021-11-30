@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 
 import { Box } from '@material-ui/core';
+import { VerifiedUserOutlined } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
 import { AlertDialog } from '../../common/components/Dialogs';
+import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { CERTIFICATION_AUTHORITIES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
@@ -20,7 +23,6 @@ import CaOptionsMenu from './layout/CaOptionsMenu';
 import Cards from './layout/Cards';
 import CertificationAuthoritiesLoading from './layout/CertificationAuthoritiesLoading';
 import DataTable from './layout/DataTable';
-import EmptyCaList from './layout/EmptyCaList';
 import MassActions from './layout/MassActions';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
@@ -29,6 +31,7 @@ import useStyles from './style';
 const CertificationAuthorities = () => {
   const { t } = useTranslation('certificationAuthorities');
   const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
 
   const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
@@ -145,7 +148,14 @@ const CertificationAuthorities = () => {
                 />
               )}
 
-              {certificationAuthorities.length === 0 && <EmptyCaList />}
+              {certificationAuthorities.length === 0 && (
+                <EmptyPlaceholder
+                  emptyListMessage={t('emptyListMessage')}
+                  icon={<VerifiedUserOutlined fontSize='large' />}
+                  handleButtonClick={() => history.push('/certification-authorities/new')}
+                  textButton={t('createCa')}
+                />
+              )}
             </>
           )}
         </Box>

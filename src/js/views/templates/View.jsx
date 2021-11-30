@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
+import { FilterNone } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
+import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { TEMPLATES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
@@ -19,7 +21,6 @@ import {
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
-import EmptyList from './layout/EmptyList';
 import Loading from './layout/Loading';
 import MassActions from './layout/MassActions';
 import OptionsMenu from './layout/OptionsMenu';
@@ -201,7 +202,14 @@ const Templates = () => {
                 />
               )}
 
-              {templates.length === 0 && <EmptyList />}
+              {templates.length === 0 && (
+                <EmptyPlaceholder
+                  emptyListMessage={t('emptyListMessage')}
+                  icon={<FilterNone fontSize='large' />}
+                  handleButtonClick={() => history.push('/templates/new')}
+                  textButton={t('createNewTemplate')}
+                />
+              )}
             </>
           )}
         </Box>
