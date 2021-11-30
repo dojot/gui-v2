@@ -5,5 +5,6 @@
   "createModel": "Create Model",
   "createCertificate": "Create Certificate",
   "importExport": "Import/Export",
-  "deviceTest": "Device Test"
+  "deviceTest": "Device Test",
+  "notAvailableAtTheMoment": "Not Available in The Moment"
 }
