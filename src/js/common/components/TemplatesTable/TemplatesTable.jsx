@@ -157,7 +157,7 @@ const TemplatesTable = ({
         />
 
         <TableBody>
-          {templates.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(template => {
+          {templates.map(template => {
             const isSelected = !!selectedTemplates[template.id];
 
             const handleSelectThisTemplate = () => {
@@ -197,7 +197,7 @@ const TemplatesTable = ({
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfTemplates={totalPages * rowsPerPage} // TODO: This value should come from API
+          totalOfPages={totalPages}
           numberOfSelectedTemplates={numberOfSelectedTemplates}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
