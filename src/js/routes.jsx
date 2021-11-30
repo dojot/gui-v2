@@ -28,11 +28,11 @@ const CreateCertificationAuthority = LazyLoading(() =>
   import('views/createCertificationAuthority'),
 );
 const EditDevice = LazyLoading(() => import('views/editDevice'));
-const redirectToDashboard = () => <Redirect to={{ pathname: '/dashboard' }} />;
+const redirectToHome = () => <Redirect to={{ pathname: '/home' }} />;
 
 const Routes = props => (
   <Switch>
-    <Route exact path='/' component={redirectToDashboard} />
+    <Route exact path='/' component={redirectToHome} />
     <Route path='/login' component={LogIn} />
     <Route path='/logout' component={LogOut} />
     <Route path='/help' component={ExampleRouteHandler} />
