@@ -213,7 +213,7 @@ const Templates = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfTemplates={totalPages}
+          totalOfPages={totalPages}
           numberOfSelectedTemplates={selectedTemplates.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
