@@ -31,22 +31,22 @@ const Home = () => {
     CREATE_DEVICE: {
       icon: <DevicesOther style={{ color: '#34C38F' }} fontSize='large' />,
       translationKey: 'createDevice',
-      route: '/create-device',
+      route: '/devices/new',
     },
     CREATE_DASHBOARD: {
       icon: <Dashboard style={{ color: '#5B73E8' }} fontSize='large' />,
       translationKey: 'createDashboard',
-      route: '/dashboard',
+      route: '/dashboard/widget',
     },
-    CREATE_MODEL: {
+    CREATE_TEMPLATE: {
       icon: <FilterNone style={{ color: '#F1B44C' }} fontSize='large' />,
-      translationKey: 'createModel',
-      route: '/create-model',
+      translationKey: 'createTemplate',
+      route: '/templates/new',
     },
     CREATE_CERTIFICATE: {
       icon: <VerifiedUser style={{ color: '#F46A6A' }} fontSize='large' />,
       translationKey: 'createCertificate',
-      route: '/create-certificate',
+      route: '/certificates/new',
     },
     IMPORT_EXPORT: {
       icon: <ImportExport style={{ color: '#50A5F1' }} fontSize='large' />,
