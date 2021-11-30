@@ -20,9 +20,7 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
-  page,
   certificates,
-  rowsPerPage,
   selectedCertificates,
   handleShowDevicesToAssociate,
   handleSelectCertificate,
@@ -118,7 +116,6 @@ const DataTable = ({
 
           <TableBody>
             {certificates
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
               .map(certificate => {
                 const isSelected = selectedCertificates.indexOf(certificate.id) !== -1;

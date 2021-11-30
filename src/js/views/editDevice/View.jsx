@@ -174,7 +174,7 @@ const EditDevice = () => {
     dispatch(
       templateActions.getTemplates({
         page: {
-          number: page + 1, // TODO: Should be zero based pagination
+          number: page + 1,
           size: rowsPerPage,
         },
       }),

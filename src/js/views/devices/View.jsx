@@ -129,7 +129,7 @@ const Devices = () => {
     dispatch(
       deviceActions.getDevices({
         page: {
-          number: page + 1, // TODO: Should be zero based pagination
+          number: page + 1,
           size: rowsPerPage,
         },
       }),

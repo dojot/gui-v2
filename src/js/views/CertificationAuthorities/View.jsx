@@ -27,15 +27,19 @@ import SearchBar from './layout/SearchBar';
 import useStyles from './style';
 
 const CertificationAuthorities = () => {
-  const classes = useStyles();
+  const { t } = useTranslation('certificationAuthorities');
   const dispatch = useDispatch();
+  const classes = useStyles();
 
   const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
-  const isLoadingCertificationAuthorities = useIsLoading(constants.GET_CERTIFICATION_AUTHORITIES);
   const { totalPages } = useSelector(paginationControlSelector);
+
+  const isLoadingCertificationAuthorities = useIsLoading(constants.GET_CERTIFICATION_AUTHORITIES);
+
   const [page] = useState(0);
   const [rowsPerPage] = useState(10);
   const [selectedAuthorities, setSelectedAuthorities] = useState([]);
+
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [certificationAuthorityOptionsMenu, setCertificationAuthorityOptionsMenu] = useState(null);
@@ -43,8 +47,6 @@ const CertificationAuthorities = () => {
     defaultValue: VIEW_MODE.TABLE,
     key: CERTIFICATION_AUTHORITIES_PAGE_KEYS.VIEW_MODE,
   });
-
-  const { t } = useTranslation('certificationAuthorities');
 
   const handleHideMassActions = () => {
     setSelectedAuthorities([]);
@@ -73,9 +75,9 @@ const CertificationAuthorities = () => {
 
   const handleConfirmCaDeletion = () => {
     const authorityId = certificationAuthorityOptionsMenu.certificationAuthority.id;
-    dispatch(certificationAuthoritiesActions.deleteDevice({ authorityId }));
-    setSelectedAuthorities(currentSelectedDevices => {
-      return currentSelectedDevices.filter(id => id !== authorityId);
+    dispatch(certificationAuthoritiesActions.deleteCertificationAuthority({ authorityId }));
+    setSelectedAuthorities(currentSelectedAuthorities => {
+      return currentSelectedAuthorities.filter(id => id !== authorityId);
     });
   };
 
@@ -130,9 +132,7 @@ const CertificationAuthorities = () => {
             <>
               {viewMode === VIEW_MODE.TABLE && certificationAuthorities.length > 0 && (
                 <DataTable
-                  page={page}
                   certificationAuthorities={certificationAuthorities}
-                  rowsPerPage={rowsPerPage}
                   selectedCertificationAuthorities={selectedAuthorities}
                   handleSelectAuthority={setSelectedAuthorities}
                 />
@@ -140,8 +140,6 @@ const CertificationAuthorities = () => {
 
               {viewMode === VIEW_MODE.CARD && certificationAuthorities.length > 0 && (
                 <Cards
-                  page={page}
-                  rowsPerPage={rowsPerPage}
                   certificationAuthorities={certificationAuthorities}
                   handleSetCaOptionsMenu={setCertificationAuthorityOptionsMenu}
                 />
@@ -155,7 +153,7 @@ const CertificationAuthorities = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfDevices={totalPages}
+          totalOfPages={totalPages}
           numberOfSelectedDevices={selectedAuthorities.length}
         />
       </Box>
