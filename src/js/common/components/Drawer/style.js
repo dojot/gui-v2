@@ -57,15 +57,10 @@ export const useStyles = makeStyles(theme => ({
   subItem: {
     margin: theme.spacing(0, 0, 0, 0),
     paddingLeft: '72px',
+    whiteSpace: 'nowrap',
   },
   closedSubItem: {
-    borderRadius: '100%',
-    height: '43px',
-    minHeight: '43px',
-    width: '43px',
-    minWidth: '43px',
-    margin: 'auto',
-    padding: '0 10.5px',
+    display: 'none',
   },
   subItemSelected: {
     backgroundColor: 'white !important',

@@ -25,10 +25,10 @@ import {
   actions as templateActions,
   constants as templateConstants,
 } from '../../redux/modules/templates';
-import { firstDeviceSelector } from '../../redux/selectors/devicesSelector';
+import { deviceDataSelector } from '../../redux/selectors/devicesSelector';
 import {
   paginationControlSelector,
-  templatesSelector,
+  templatesForDataTableSelector,
 } from '../../redux/selectors/templatesSelector';
 import { ViewContainer } from '../stateComponents';
 import AttrsTable from './AttrsTable';
@@ -41,11 +41,11 @@ const EditDevice = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const templates = useSelector(templatesSelector);
-  const deviceData = useSelector(firstDeviceSelector);
-  const { totalPages = 0 } = useSelector(paginationControlSelector);
+  const deviceData = useSelector(deviceDataSelector);
+  const templates = useSelector(templatesForDataTableSelector);
+  const { totalPages } = useSelector(paginationControlSelector);
 
-  const isLoadingDeviceData = useIsLoading(deviceConstants.GET_DEVICES);
+  const isLoadingDeviceData = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
   const isLoadingTemplates = useIsLoading(templateConstants.GET_TEMPLATES);
 
   const [page, setPage] = useState(0);
@@ -164,14 +164,17 @@ const EditDevice = () => {
   }, [deviceData, dispatch]);
 
   useEffect(() => {
-    dispatch(deviceActions.getDevices({ filter: { id: deviceId } }));
+    dispatch(deviceActions.getDeviceById({ deviceId }));
+    return () => {
+      dispatch(deviceActions.updateDevices({ deviceData: null }));
+    };
   }, [deviceId, dispatch]);
 
   useEffect(() => {
     dispatch(
       templateActions.getTemplates({
         page: {
-          number: page,
+          number: page + 1,
           size: rowsPerPage,
         },
       }),

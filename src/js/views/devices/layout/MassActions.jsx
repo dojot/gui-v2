@@ -29,6 +29,7 @@ const MassActions = ({
             onClick={handleFavoriteMultipleDevices}
             startIcon={<Star />}
             variant='contained'
+            disabled // TODO: Enable again when Backstage implement this action
           >
             {t('favorite')}
           </Button>

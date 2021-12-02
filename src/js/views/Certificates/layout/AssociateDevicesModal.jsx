@@ -26,7 +26,9 @@ import { useDetailsModalStyles } from './style';
 const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) => {
   const { t } = useTranslation('certificates');
   const classes = useDetailsModalStyles();
+
   const devices = useSelector(devicesSelector);
+
   const [selectedDevice, setSelectedDevice] = useState('');
 
   const handleChangeSelectedDevice = e => {
@@ -51,18 +53,21 @@ const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) =>
                     <TableCell className={classes.tableCellBold}>
                       {t('associateDeviceModal.table.id')}
                     </TableCell>
+
                     <TableCell className={classes.tableCellBold}>
                       {t('associateDeviceModal.table.devices')}
                     </TableCell>
+
                     <TableCell className={classes.tableCellBold}>
                       {t('associateDeviceModal.table.lastUpdate')}
                     </TableCell>
                   </TableRow>
                 </TableHead>
+
                 <TableBody>
                   {devices.map(device => (
                     <TableRow
-                      key={device.key}
+                      key={device.id}
                       sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                     >
                       <TableCell>
@@ -72,8 +77,11 @@ const AssociateDevicesModal = ({ isOpen, handleHideDevicesToAssociateModal }) =>
                           onChange={handleChangeSelectedDevice}
                         />
                       </TableCell>
+
                       <TableCell className={classes.tableCellSecondary}>{device.id}</TableCell>
+
                       <TableCell className={classes.tableCellSecondary}>{device.label}</TableCell>
+
                       <TableCell className={classes.tableCellSecondary}>
                         {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
                       </TableCell>

@@ -14,6 +14,7 @@ import {
 import { Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { useDispatch } from 'react-redux';
 
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
@@ -21,14 +22,13 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
-  page,
   certificationAuthorities,
-  rowsPerPage,
   selectedCertificationAuthorities,
   handleSelectAuthority,
 }) => {
   const { t } = useTranslation('certificationAuthorities');
   const classes = useDataTableStyles();
+  const dispatch = useDispatch();
 
   const [order, setOrder] = useState(DATA_ORDER.ASC);
   const [orderBy, setOrderBy] = useState('');
@@ -100,10 +100,7 @@ const DataTable = ({
   };
 
   const handleDeleteAuthority = () => {
-    // const updatedList = certificationAuthorities.filter(value => {
-    //   return value.id !== id;
-    // });
-    // handleUpdateAuthorityList(updatedList);
+    dispatch({ type: 'delete' });
   };
 
   return (
@@ -123,7 +120,6 @@ const DataTable = ({
 
           <TableBody>
             {certificationAuthorities
-              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
               .map(certificationAuthority => {
                 const isSelected =

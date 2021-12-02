@@ -29,12 +29,14 @@
   "securityStep": {
     "hint": "In this step you generate a certificate to make your device more secure.",
     "certificateName": "Certificate",
-    "creationTime":"Creation",
+    "creationTime": "Creation",
     "expirationTime": "Expire",
     "emptyCertificateList": "No Certificate Found",
     "totalPages": "Total Pages: {{count}}",
     "labelRowsPerPage": "Items per Page:",
-    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+    "nextIconButtonText": "Next Page",
+    "backIconButtonText": "Previous Page"
   },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",

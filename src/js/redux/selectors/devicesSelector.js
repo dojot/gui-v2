@@ -18,11 +18,7 @@ export const devicesForDataTableSelector = createSelector(devicesSelector, devic
   }));
 });
 
-export const firstDeviceSelector = createSelector(
+export const deviceDataSelector = createSelector(
   state => state.devices,
-  map => {
-    const devices = map.get('devices');
-    if (devices?.length) return devices[0];
-    return null;
-  },
+  map => map.get('deviceData'),
 );

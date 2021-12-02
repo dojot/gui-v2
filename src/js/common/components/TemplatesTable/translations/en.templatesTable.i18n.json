@@ -2,9 +2,11 @@
   "templateName": "Template Name",
   "numberOfAttrs": "Number Of Attributes",
   "searchTemplatePh": "Type to search a template...",
-  "totalOfTemplates": "Total of Templates: {{count}}",
+  "totalOfPages": "Total of Pages: {{count}}",
+  "nextIconButtonText": "Next Page",
+  "backIconButtonText": "Previous Page",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
   "numberOfSelectedTemplates": "{{count}} Selected Template",
   "numberOfSelectedTemplates_plural": "{{count}} Selected Templates",
-  "labelRowsPerPage": "Items per Page:",
-  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}"
+  "labelRowsPerPage": "Items per Page:"
 }

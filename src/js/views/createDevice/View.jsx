@@ -7,7 +7,8 @@ import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
-import { actions } from '../../redux/modules/devices';
+import { useIsLoading } from '../../common/hooks';
+import { actions, constants } from '../../redux/modules/devices';
 import { ViewContainer } from '../stateComponents';
 import { NUMBER_OF_STEPS } from './constants';
 import DeviceWizardStepper from './layout/DeviceWizardStepper';
@@ -22,6 +23,8 @@ const CreateDevice = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
+
+  const isCreatingDevice = useIsLoading(constants.CREATE_DEVICE);
 
   const [currentStep, setCurrentStep] = useState(0);
   const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
@@ -86,21 +89,28 @@ const CreateDevice = () => {
   const handleCreateService = () => {
     const selectedTemplatesAttrs = [];
     Object.values(selectedTemplates).forEach(template => {
-      selectedTemplatesAttrs.push(template.attrs);
+      selectedTemplatesAttrs.push(...template.attrs);
     });
 
     const attrsToSave = selectedTemplatesAttrs.map(attr => {
+      const attrClone = { ...attr };
+      attrClone.value_type = attrClone.valueType;
+      delete attrClone.isDynamic;
+      delete attrClone.staticValue;
+      delete attrClone.valueType;
       const attrValue = staticAttrValues[attr.id];
-      if (attrValue) return { ...attr, value: attrValue };
-      return attr;
+      if (attrValue) attrClone.static_value = attrValue;
+      return attrClone;
     });
+
+    const templateIds = Object.values(selectedTemplates).map(({ id }) => Number(id));
 
     dispatch(
       actions.createDevice({
+        certificate: '', // TODO: Save certificate
         label: deviceName,
-        templates: Object.values(selectedTemplates),
         attrs: attrsToSave,
-        certificate: {},
+        templates: templateIds,
         successCallback: handleGoBack,
       }),
     );
@@ -164,6 +174,7 @@ const CreateDevice = () => {
               {currentStep === 3 && (
                 <SummaryStep
                   deviceName={deviceName}
+                  isCreatingDevice={isCreatingDevice}
                   selectedTemplates={selectedTemplates}
                   setDeviceName={setDeviceName}
                   handleCreateService={handleCreateService}

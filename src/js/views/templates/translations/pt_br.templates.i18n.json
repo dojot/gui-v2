@@ -1,8 +1,10 @@
 {
   "title": "Modelos",
   "searchInputPh": "Pesquisar Modelo",
-  "totalOfTemplates": "Total de Itens: {{count}}",
-  "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
+  "totalOfPages": "Total de Páginas: {{count}}",
+  "nextIconButtonText": "Próxima Página",
+  "backIconButtonText": "Página Anterior",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
   "labelRowsPerPage": "Itens por página:",
   "massActions": "Ações em massa:",
   "numberOfSelectedTemplates": "{{count}} Linha Selecionada",

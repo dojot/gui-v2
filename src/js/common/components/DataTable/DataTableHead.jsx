@@ -25,8 +25,8 @@ const DataTableHead = ({
   return (
     <TableHead className={className}>
       <TableRow>
-        {disableCheckbox ? undefined : (
-          <TableCell padding='checkbox'>
+        {!disableCheckbox && (
+          <TableCell>
             <Checkbox
               color='primary'
               onChange={onSelectAllClick}
@@ -85,6 +85,7 @@ DataTableHead.propTypes = {
   startExtraCells: PropTypes.node,
   endExtraCells: PropTypes.node,
   disableOrderBy: PropTypes.bool,
+  disableCheckbox: PropTypes.bool,
 };
 
 DataTableHead.defaultProps = {
@@ -95,6 +96,7 @@ DataTableHead.defaultProps = {
   startExtraCells: null,
   endExtraCells: null,
   disableOrderBy: false,
+  disableCheckbox: false,
 };
 
 export default DataTableHead;

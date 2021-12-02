@@ -213,20 +213,16 @@ const Certificates = () => {
 
               {viewMode === VIEW_MODE.TABLE && certificates.length > 0 && (
                 <DataTable
-                  rowsPerPage={rowsPerPage}
-                  selectedCertificates={selectedCertificates}
-                  page={page}
                   certificates={certificates}
-                  handleSetCertificateOptionsMenu={setCertificatesOptionsMenu}
-                  handleShowDevicesToAssociate={handleShowDevicesToAssociate}
+                  selectedCertificates={selectedCertificates}
                   handleSelectCertificate={setSelectedCertificates}
+                  handleShowDevicesToAssociate={handleShowDevicesToAssociate}
+                  handleSetCertificateOptionsMenu={setCertificatesOptionsMenu}
                 />
               )}
 
               {viewMode === VIEW_MODE.CARD && certificates.length > 0 && (
                 <Cards
-                  rowsPerPage={rowsPerPage}
-                  page={page}
                   certificates={certificates}
                   handleSetCertificateOptionsMenu={setCertificatesOptionsMenu}
                   handleShowDevicesToAssociate={handleShowDevicesToAssociate}
@@ -239,9 +235,8 @@ const Certificates = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfDevices={totalPages}
+          totalOfPages={totalPages}
           numberOfSelectedCertificates={selectedCertificates.length}
-          totalOfCertificates={certificates.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
         />

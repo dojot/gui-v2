@@ -1,8 +1,10 @@
 {
   "title": "Templates / {{template}}",
   "searchInputPh": "Search Attribute",
-  "totalOfAttrs": "Total of Items: {{count}}",
-  "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+  "totalOfPages": "Total of Pages: {{count}}",
+  "nextIconButtonText": "Next Page",
+  "backIconButtonText": "Previous Page",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
   "labelRowsPerPage": "Items per page:",
   "massActions": "Mass Actions:",
   "numberOfSelectedAttrs": "{{count}} Line Selected",

@@ -130,7 +130,7 @@ const Devices = () => {
     dispatch(
       deviceActions.getDevices({
         page: {
-          number: page,
+          number: page + 1,
           size: rowsPerPage,
         },
       }),
@@ -237,7 +237,7 @@ const Devices = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfDevices={totalPages}
+          totalOfPages={totalPages}
           numberOfSelectedDevices={selectedDevices.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}

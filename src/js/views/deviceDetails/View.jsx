@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 
 import {
   Box,
@@ -21,8 +21,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
 
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
-import { useAttrTranslation } from '../../common/hooks';
-import { actions as deviceActions } from '../../redux/modules/devices';
+import { useAttrTranslation, useIsLoading } from '../../common/hooks';
+import {
+  actions as deviceActions,
+  constants as deviceConstants,
+} from '../../redux/modules/devices';
+import { deviceDataSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
 
@@ -34,17 +38,19 @@ const DeviceDetails = () => {
 
   const { getAttrValueTypeTranslation } = useAttrTranslation();
 
-  const deviceData = useSelector(() => ({}));
-  const isLoadingDevice = useSelector(() => false);
+  const deviceData = useSelector(deviceDataSelector);
+  const isLoadingDevice = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
+
+  const hasStaticAttrs = useMemo(() => {
+    if (!deviceData?.attrs?.length) return false;
+    return deviceData.attrs.some(attr => attr.type === TEMPLATE_ATTR_TYPES.STATIC);
+  }, [deviceData?.attrs]);
 
   useEffect(() => {
-    dispatch(
-      deviceActions.getDevices({
-        filter: {
-          id: deviceId,
-        },
-      }),
-    );
+    dispatch(deviceActions.getDeviceById({ deviceId }));
+    return () => {
+      dispatch(deviceActions.updateDevices({ deviceData: null }));
+    };
   }, [deviceId, dispatch]);
 
   if (isLoadingDevice) {
@@ -91,6 +97,14 @@ const DeviceDetails = () => {
                     </ListItem>
                   );
                 })}
+
+                {!deviceData.templates?.length && (
+                  <ListItem divider>
+                    <Box margin='auto'>
+                      <ListItemText>{t('noTemplates')}</ListItemText>
+                    </Box>
+                  </ListItem>
+                )}
               </List>
 
               <List className={classes.dataGroup} disablePadding>
@@ -114,6 +128,14 @@ const DeviceDetails = () => {
                     </ListItem>
                   );
                 })}
+
+                {!hasStaticAttrs && (
+                  <ListItem divider>
+                    <Box margin='auto'>
+                      <ListItemText>{t('noStaticAttrs')}</ListItemText>
+                    </Box>
+                  </ListItem>
+                )}
               </List>
             </Grid>
 
@@ -126,7 +148,7 @@ const DeviceDetails = () => {
                   <ListItemText>{t('sectionTitles.lastUpdate')}</ListItemText>
                 </ListItem>
 
-                <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+                <Table sx={{ minWidth: 650 }} aria-label={t('lastUpdateTableLabel')}>
                   <TableHead>
                     <TableRow>
                       <TableCell className={classes.tableCellBold}>
@@ -151,6 +173,14 @@ const DeviceDetails = () => {
                         <TableCell>{row.value}</TableCell>
                       </TableRow>
                     ))}
+
+                    {!deviceData.lastUpdate?.length && (
+                      <TableRow>
+                        <TableCell align='center' colSpan={3}>
+                          <Typography>{t('noLastUpdateData')}</Typography>
+                        </TableCell>
+                      </TableRow>
+                    )}
                   </TableBody>
                 </Table>
               </List>

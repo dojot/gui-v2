@@ -1,7 +1,11 @@
 {
   "title": "Device Details: {{name}}",
   "titleWithoutName": "Device Details",
-  "noDeviceDataToShow": "Nothing to Show",
+  "noDeviceDataToShow": "Nothing To Show",
+  "noLastUpdateData": "No Update To Show",
+  "noTemplates": "No Template To Show",
+  "noStaticAttrs": "No Static Attr To Show",
+  "lastUpdateTableLabel": "Last Update Table",
   "sectionTitles": {
     "templates": "Templates",
     "staticAttrs": "Static Attrs",

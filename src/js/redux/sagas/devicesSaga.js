@@ -13,7 +13,16 @@ export function* handleGetDevices(action) {
     yield put(loadingActions.addLoading(constants.GET_DEVICES));
     const { page, filter } = action.payload;
     const { getDevices } = yield Device.getDevicesList(page, filter);
-    if (getDevices) yield put(actions.updateDevices(getDevices));
+    if (getDevices)
+      yield put(
+        actions.updateDevices({
+          devices: getDevices.devices,
+          paginationControl: {
+            currentPage: getDevices.currentPage,
+            totalPages: getDevices.totalPages,
+          },
+        }),
+      );
   } catch (e) {
     yield put(actions.updateDevices({ devices: [] }));
     yield put(
@@ -27,11 +36,30 @@ export function* handleGetDevices(action) {
   }
 }
 
+export function* handleGetDeviceById(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.GET_DEVICE_BY_ID));
+    const { deviceId } = action.payload;
+    const { getDeviceById } = yield Device.getDeviceById(deviceId);
+    if (getDeviceById) yield put(actions.updateDevices({ deviceData: getDeviceById }));
+  } catch (e) {
+    yield put(actions.updateDevices({ deviceData: null }));
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'getDeviceById',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.GET_DEVICE_BY_ID));
+  }
+}
+
 export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
     const { deviceId } = action.payload;
-    yield Device.deleteDevice(deviceId);
+    yield Device.deleteDevices([deviceId]);
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => id !== deviceId);
     yield put(actions.updateDevices({ devices: notDeletedDevices }));
@@ -52,7 +80,7 @@ export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
     const { deviceIdArray } = action.payload;
-    yield Device.deleteMultipleDevices(deviceIdArray);
+    yield Device.deleteDevices(deviceIdArray);
     const devices = yield select(devicesSelector);
     const notDeletedDevices = devices.filter(({ id }) => !deviceIdArray.includes(id));
     yield put(actions.updateDevices({ devices: notDeletedDevices }));
@@ -149,12 +177,7 @@ export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
     const { label, templates, attrs, certificate, successCallback } = action.payload;
-    yield Device.createDevice({
-      label,
-      templates,
-      attrs,
-      certificate,
-    });
+    yield Device.createDevice({ label, templates, attrs, certificate });
     yield put(successActions.showSuccessToast({ i18nMessage: 'createDevice' }));
     if (successCallback) yield call(successCallback);
   } catch (e) {
@@ -171,6 +194,10 @@ export function* handleCreateDevice(action) {
 
 function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
+}
+
+function* watchGetDeviceById() {
+  yield takeLatest(constants.GET_DEVICE_BY_ID, handleGetDeviceById);
 }
 
 function* watchDeleteDevice() {
@@ -199,6 +226,7 @@ function* watchCreateDevice() {
 
 export const deviceSaga = [
   fork(watchGetDevices),
+  fork(watchGetDeviceById),
   fork(watchDeleteDevice),
   fork(watchDeleteMultipleDevices),
   fork(watchFavoriteDevice),
