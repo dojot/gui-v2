@@ -18,6 +18,7 @@ export const getDevicesList = (page, filter) => {
             }
             attrs {
               id
+              type
               label
               valueType
               isDynamic
@@ -41,9 +42,27 @@ export const getDeviceById = deviceId => {
         getDeviceById(deviceId: $deviceId) {
           id
           label
+          created
+          updated
           attrs {
+            id
+            type
             label
             valueType
+            staticValue
+          }
+          certificate {
+            id
+            label
+          }
+          templates {
+            id
+            label
+          }
+          lastUpdate {
+            date
+            label
+            value
           }
         }
       }
@@ -97,15 +116,17 @@ export const favoriteMultipleDevices = ({ deviceIdArray, user, tenant }) => {
   });
 };
 
-export const editDevice = ({ deviceId, label, templates, attrs }) => {
+export const editDevice = ({ id, label, templates, attrs }) => {
   return protectAPI({
     query: `
-      mutation editDevice($deviceId: String!, $label: String!, $templates: [Template]!, $attrs: [Attr]) {
-        editDevice(deviceId: $deviceId, label: $label, templates: $templates, attrs: $attrs)
+      mutation editDevice($id: String!, $label: String!, $templates: [Int]!, $attrs: [DeviceAttributes]) {
+        editDevice(id: $id, label: $label, templates: $templates, attrs: $attrs) {
+          id
+        }
       }
     `,
     variables: JSON.stringify({
-      deviceId,
+      id,
       label,
       templates,
       attrs,

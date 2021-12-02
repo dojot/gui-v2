@@ -14,13 +14,12 @@
   "dataTableHead": {
     "id": "ID",
     "label": "Name",
-    "devicesLength": "Number of Devices",
     "attrsLength": "Number of Properties",
     "actions": "Actions"
   },
   "cardData": {
-    "devicesLength": "Devices",
-    "attrsLength": "Properties"
+    "attrsLength": "Property",
+    "attrsLength_plural": "Properties"
   },
   "deleteTemplateAlert": {
     "title": "Delete Template",

@@ -6,13 +6,25 @@ import { constants, actions } from '../modules/devices';
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
 import { actions as successActions } from '../modules/success';
-import { devicesSelector } from '../selectors/devicesSelector';
+import { devicesSelector, paginationControlSelector } from '../selectors/devicesSelector';
+
+export function* getCurrentDevicesPageAgain() {
+  const pagination = yield select(paginationControlSelector);
+  yield put(
+    actions.getDevices({
+      page: {
+        number: pagination.currentPage,
+        size: pagination.itemsPerPage,
+      },
+    }),
+  );
+}
 
 export function* handleGetDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_DEVICES));
     const { page, filter } = action.payload;
-    const { getDevices } = yield Device.getDevicesList(page, filter);
+    const { getDevices } = yield call(Device.getDevicesList, page, filter);
     if (getDevices)
       yield put(
         actions.updateDevices({
@@ -20,6 +32,7 @@ export function* handleGetDevices(action) {
           paginationControl: {
             currentPage: getDevices.currentPage,
             totalPages: getDevices.totalPages,
+            itemsPerPage: page.size,
           },
         }),
       );
@@ -40,7 +53,7 @@ export function* handleGetDeviceById(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_DEVICE_BY_ID));
     const { deviceId } = action.payload;
-    const { getDeviceById } = yield Device.getDeviceById(deviceId);
+    const { getDeviceById } = yield call(Device.getDeviceById, deviceId);
     if (getDeviceById) yield put(actions.updateDevices({ deviceData: getDeviceById }));
   } catch (e) {
     yield put(actions.updateDevices({ deviceData: null }));
@@ -59,10 +72,8 @@ export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
     const { deviceId } = action.payload;
-    yield Device.deleteDevices([deviceId]);
-    const devices = yield select(devicesSelector);
-    const notDeletedDevices = devices.filter(({ id }) => id !== deviceId);
-    yield put(actions.updateDevices({ devices: notDeletedDevices }));
+    yield call(Device.deleteDevices, [deviceId]);
+    yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteDevice' }));
   } catch (e) {
     yield put(
@@ -80,10 +91,8 @@ export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
     const { deviceIdArray } = action.payload;
-    yield Device.deleteDevices(deviceIdArray);
-    const devices = yield select(devicesSelector);
-    const notDeletedDevices = devices.filter(({ id }) => !deviceIdArray.includes(id));
-    yield put(actions.updateDevices({ devices: notDeletedDevices }));
+    yield call(Device.deleteDevices, deviceIdArray);
+    yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleDevices' }));
   } catch (e) {
     yield put(
@@ -102,7 +111,7 @@ export function* handleFavoriteDevice(action) {
     yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
     const { deviceId } = action.payload;
     const { userName, tenant } = getUserInformation();
-    yield Device.favoriteDevice({ deviceId, user: userName, tenant });
+    yield call(Device.favoriteDevice, { deviceId, user: userName, tenant });
     const devices = yield select(devicesSelector);
     const newDevices = devices.map(device => {
       if (device.id === deviceId) return { ...device, favorite: !device.favorite };
@@ -127,7 +136,7 @@ export function* handleFavoriteMultipleDevices(action) {
     yield put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES));
     const { deviceIdArray } = action.payload;
     const { userName, tenant } = getUserInformation();
-    yield Device.favoriteMultipleDevices({ deviceIdArray, user: userName, tenant });
+    yield call(Device.favoriteMultipleDevices, { deviceIdArray, user: userName, tenant });
     const devices = yield select(devicesSelector);
     const newDevices = devices.map(device => {
       if (deviceIdArray.includes(device.id)) {
@@ -152,13 +161,8 @@ export function* handleFavoriteMultipleDevices(action) {
 export function* handleEditDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.EDIT_DEVICE));
-    const { deviceId, label, templates, attrs, successCallback } = action.payload;
-    yield Device.editDevice({
-      deviceId,
-      label,
-      templates,
-      attrs,
-    });
+    const { id, label, templates, attrs, successCallback } = action.payload;
+    yield call(Device.editDevice, { id, label, templates, attrs });
     yield put(successActions.showSuccessToast({ i18nMessage: 'editDevice' }));
     if (successCallback) yield call(successCallback);
   } catch (e) {
@@ -177,7 +181,7 @@ export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
     const { label, templates, attrs, certificate, successCallback } = action.payload;
-    yield Device.createDevice({ label, templates, attrs, certificate });
+    yield call(Device.createDevice, { label, templates, attrs, certificate });
     yield put(successActions.showSuccessToast({ i18nMessage: 'createDevice' }));
     if (successCallback) yield call(successCallback);
   } catch (e) {

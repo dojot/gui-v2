@@ -16,6 +16,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { DevicesOther, FilterNone, History, Label } from '@material-ui/icons';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -43,7 +44,7 @@ const DeviceDetails = () => {
 
   const hasStaticAttrs = useMemo(() => {
     if (!deviceData?.attrs?.length) return false;
-    return deviceData.attrs.some(attr => attr.type === TEMPLATE_ATTR_TYPES.STATIC);
+    return deviceData.attrs.some(attr => attr.type === TEMPLATE_ATTR_TYPES.STATIC.value);
   }, [deviceData?.attrs]);
 
   useEffect(() => {
@@ -116,14 +117,14 @@ const DeviceDetails = () => {
                 </ListItem>
 
                 {deviceData.attrs?.map(attr => {
-                  if (attr.type !== TEMPLATE_ATTR_TYPES.STATIC) return null;
+                  if (attr.type !== TEMPLATE_ATTR_TYPES.STATIC.value) return null;
 
                   return (
                     <ListItem key={attr.id} divider>
-                      <ListItemText primary={attr.label} secondary={attr.value} />
+                      <ListItemText primary={attr.label} secondary={attr.staticValue} />
                       <ListItemText
                         className={classes.dataGroupItemTextRight}
-                        secondary={getAttrValueTypeTranslation(attr.type)}
+                        secondary={getAttrValueTypeTranslation(attr.valueType)}
                       />
                     </ListItem>
                   );
@@ -167,9 +168,11 @@ const DeviceDetails = () => {
 
                   <TableBody>
                     {deviceData.lastUpdate?.map(row => (
-                      <TableRow key={row.key} className={classes.tableRow}>
-                        <TableCell>{row.date}</TableCell>
-                        <TableCell>{row.key}</TableCell>
+                      <TableRow key={row.label} className={classes.tableRow}>
+                        <TableCell>
+                          {row.date ? moment(row.date).format('DD/MM/YYYY HH:mm:ss') : ''}
+                        </TableCell>
+                        <TableCell>{row.label}</TableCell>
                         <TableCell>{row.value}</TableCell>
                       </TableRow>
                     ))}

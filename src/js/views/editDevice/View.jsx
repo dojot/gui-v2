@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { Close } from '@material-ui/icons';
+import { Close, Edit } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
@@ -45,8 +45,9 @@ const EditDevice = () => {
   const templates = useSelector(templatesForDataTableSelector);
   const { totalPages } = useSelector(paginationControlSelector);
 
-  const isLoadingDeviceData = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
+  const isEditingDevice = useIsLoading(deviceConstants.EDIT_DEVICE);
   const isLoadingTemplates = useIsLoading(templateConstants.GET_TEMPLATES);
+  const isLoadingDeviceData = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -63,7 +64,7 @@ const EditDevice = () => {
   const attrs = useMemo(() => {
     const allAttrs = [];
     Object.values(selectedTemplates).forEach(template => {
-      template.attrs.forEach(attr => {
+      template.attrs?.forEach(attr => {
         const attrClone = { ...attr };
         attrClone.templateLabel = template.label;
         if (attrClone.type === TEMPLATE_ATTR_TYPES.STATIC) {
@@ -122,15 +123,19 @@ const EditDevice = () => {
   const handleEditDevice = () => {
     const attrsToSave = attrs.map(attr => {
       const attrValue = staticAttrValues[attr.id];
-      if (attrValue) return { ...attr, value: attrValue };
+      if (attrValue) return { ...attr, staticValue: attrValue };
       return attr;
+    });
+
+    const templateIds = Object.values(selectedTemplates).map(({ id }) => {
+      return Number(id);
     });
 
     dispatch(
       deviceActions.editDevice({
-        deviceId,
+        id: deviceId,
         label: deviceName,
-        templates: Object.values(selectedTemplates),
+        templates: templateIds,
         attrs: attrsToSave,
         successCallback: handleGoBack,
       }),
@@ -153,8 +158,8 @@ const EditDevice = () => {
         const staticAttrsObject = {};
         deviceData.templates?.forEach(template => {
           template.attrs?.forEach(attr => {
-            if (attr.type === TEMPLATE_ATTR_TYPES.STATIC && attr.value) {
-              staticAttrsObject[attr.id] = attr.value;
+            if (attr.type === TEMPLATE_ATTR_TYPES.STATIC && attr.staticValue) {
+              staticAttrsObject[attr.id] = attr.staticValue;
             }
           });
         });
@@ -256,7 +261,7 @@ const EditDevice = () => {
           </Box>
 
           <Box className={classes.actions} paddingTop={4}>
-            <Button size='large' variant='text' onClick={handleGoBack}>
+            <Button size='large' variant='text' onClick={handleGoBack} disabled={isEditingDevice}>
               {t('common:cancel')}
             </Button>
 
@@ -264,8 +269,9 @@ const EditDevice = () => {
               size='large'
               color='primary'
               variant='contained'
-              disabled={!canSaveChanges}
               onClick={handleEditDevice}
+              disabled={!canSaveChanges || isEditingDevice}
+              endIcon={isEditingDevice ? <CircularProgress color='white' size={14} /> : <Edit />}
             >
               {t('common:edit')}
             </Button>

@@ -14,13 +14,12 @@
   "dataTableHead": {
     "id": "ID",
     "label": "Nome",
-    "devicesLength": "Nº de Dispositivos",
     "attrsLength": "Nº de Propriedades",
     "actions": "Ações"
   },
   "cardData": {
-    "devicesLength": "Dispositivos",
-    "attrsLength": "Propriedades"
+    "attrsLength": "Propriedade",
+    "attrsLength_plural": "Propriedades"
   },
   "deleteTemplateAlert": {
     "title": "Excluir Modelo",
