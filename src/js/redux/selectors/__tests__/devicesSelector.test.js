@@ -25,6 +25,7 @@ describe('Devices selector tests', () => {
   const fakePaginationControl = {
     totalPages: 150,
     currentPage: 27,
+    itemsPerPage: 10,
   };
 
   const fakeState = {
