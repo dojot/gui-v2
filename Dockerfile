@@ -1,4 +1,4 @@
-FROM node:12.18.2 as basis
+FROM node:14-bullseye as basis
 
 WORKDIR /opt/app
 
