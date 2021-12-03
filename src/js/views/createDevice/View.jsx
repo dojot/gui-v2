@@ -89,13 +89,19 @@ const CreateDevice = () => {
   const handleCreateService = () => {
     const selectedTemplatesAttrs = [];
     Object.values(selectedTemplates).forEach(template => {
-      selectedTemplatesAttrs.push(...template.attrs);
+      const attrsWithTemplateId = template.attrs.map(attr => ({
+        ...attr,
+        templateId: template.id,
+      }));
+      selectedTemplatesAttrs.push(...attrsWithTemplateId);
     });
 
     const attrsToSave = selectedTemplatesAttrs.map(attr => {
       const attrClone = { ...attr };
+      attrClone.id = Number(attrClone.id);
+      delete attrClone.isDynamic;
       const attrValue = staticAttrValues[attr.id];
-      if (attrValue) attrClone.staticValue = attrValue;
+      if (attrValue) attrClone.static_value = attrValue;
       return attrClone;
     });
 
