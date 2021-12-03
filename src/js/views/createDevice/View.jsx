@@ -89,11 +89,7 @@ const CreateDevice = () => {
   const handleCreateService = () => {
     const selectedTemplatesAttrs = [];
     Object.values(selectedTemplates).forEach(template => {
-      const attrsWithTemplateId = template.attrs.map(attr => ({
-        ...attr,
-        templateId: template.id,
-      }));
-      selectedTemplatesAttrs.push(...attrsWithTemplateId);
+      selectedTemplatesAttrs.push(...template.attrs);
     });
 
     const attrsToSave = selectedTemplatesAttrs.map(attr => {

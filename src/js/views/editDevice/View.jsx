@@ -67,7 +67,7 @@ const EditDevice = () => {
       template.attrs?.forEach(attr => {
         const attrClone = { ...attr };
         attrClone.templateLabel = template.label;
-        if (attrClone.type === TEMPLATE_ATTR_TYPES.STATIC) {
+        if (attrClone.type === TEMPLATE_ATTR_TYPES.STATIC.value) {
           allAttrs.unshift(attrClone); // Static attrs comes first
         } else {
           allAttrs.push(attrClone);
@@ -148,20 +148,21 @@ const EditDevice = () => {
 
       setSelectedTemplates(() => {
         const templatesObject = {};
-        deviceData?.templates?.forEach(template => {
-          templatesObject[template.id] = template;
+        deviceData.templates?.forEach(template => {
+          const templateAttrs = deviceData.attrs?.filter(
+            attr => String(attr.templateId) === String(template.id),
+          );
+          templatesObject[template.id] = { ...template, attrs: templateAttrs || [] };
         });
         return templatesObject;
       });
 
       setStaticAttrValues(() => {
         const staticAttrsObject = {};
-        deviceData.templates?.forEach(template => {
-          template.attrs?.forEach(attr => {
-            if (attr.type === TEMPLATE_ATTR_TYPES.STATIC && attr.staticValue) {
-              staticAttrsObject[attr.id] = attr.staticValue;
-            }
-          });
+        deviceData.attrs?.forEach(attr => {
+          if (attr.type === TEMPLATE_ATTR_TYPES.STATIC.value && attr.staticValue) {
+            staticAttrsObject[attr.id] = attr.staticValue;
+          }
         });
         return staticAttrsObject;
       });

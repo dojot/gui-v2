@@ -16,6 +16,7 @@ export const getTemplatesList = page => {
             label
             valueType
             isDynamic
+            templateId
             staticValue
           }
         }

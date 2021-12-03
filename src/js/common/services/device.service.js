@@ -22,6 +22,7 @@ export const getDevicesList = (page, filter) => {
               label
               valueType
               isDynamic
+              templateId
               staticValue
             }
           }
@@ -49,6 +50,7 @@ export const getDeviceById = deviceId => {
             type
             label
             valueType
+            templateId
             staticValue
           }
           certificate {
