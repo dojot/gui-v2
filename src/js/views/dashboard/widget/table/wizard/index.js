@@ -10,6 +10,7 @@ import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
+import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../common/constants';
 import useTable from '../../wizard/hooks/useTable';
 import { Attributes, General, Summary, RealtimeFilter, generalValidates } from '../../wizard/Steps';
 import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
@@ -98,7 +99,7 @@ const TableWizard = ({
         validate={null}
         name='attributes'
         staticSupported={false}
-        acceptedTypes={['GEO', 'NUMBER', 'BOOLEAN', 'STRING']}
+        acceptedTypes={Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(({ value }) => value)}
       />
       <RealtimeFilter validate={null} name='filters' />
       <Summary />

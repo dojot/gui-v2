@@ -7,6 +7,7 @@ import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
+import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../common/constants';
 import useArea from '../../wizard/hooks/useArea';
 import {
   Attributes,
@@ -85,7 +86,10 @@ const WizardPage = ({
         validate={null}
         name='attributes'
         staticSupported={false}
-        acceptedTypes={['NUMBER']}
+        acceptedTypes={[
+          TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+          TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+        ]}
       />
       <Filters validate={null} name='filters' />
       <Summary />
