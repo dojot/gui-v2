@@ -39,23 +39,15 @@ const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu })
                   <Typography className={classes.cardTitle}>{template.label}</Typography>
                 }
               >
-                {template.attrsLength >= 0 && (
-                  <Box marginBottom={1}>
-                    <Typography variant='body2'>
-                      <strong>{template.attrsLength}</strong>
-                    </Typography>
-                    <Typography variant='body2'>{t('cardData.attrsLength')}</Typography>
-                  </Box>
-                )}
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>
+                    <strong>{template.attrsLength || 0}</strong>
+                  </Typography>
 
-                {!!template.devicesLength && (
-                  <Box>
-                    <Typography variant='body2'>
-                      <strong>{template.devicesLength}</strong>
-                    </Typography>
-                    <Typography variant='body2'>{t('cardData.devicesLength')}</Typography>
-                  </Box>
-                )}
+                  <Typography variant='body2'>
+                    {t('cardData.attrsLength', { count: template.attrsLength || 0 })}
+                  </Typography>
+                </Box>
               </DataCard>
             </Grid>
           );

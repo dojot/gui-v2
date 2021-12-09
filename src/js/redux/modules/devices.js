@@ -65,6 +65,7 @@ export const deleteMultipleDevices = createAction(DELETE_MULTIPLE_DEVICES, paylo
 }));
 
 export const editDevice = createAction(EDIT_DEVICE, payload => ({
+  id: payload.id,
   label: payload.label,
   templates: payload.templates,
   attrs: payload.attrs,
@@ -104,6 +105,7 @@ export const initialState = () => {
     paginationControl: {
       totalPages: 0,
       currentPage: 1,
+      itemsPerPage: 0,
     },
   });
 };

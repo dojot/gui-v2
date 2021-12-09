@@ -43,10 +43,6 @@ const DataTable = ({
         label: t('dataTableHead.label'),
       },
       {
-        id: 'devicesLength',
-        label: t('dataTableHead.devicesLength'),
-      },
-      {
         id: 'attrsLength',
         label: t('dataTableHead.attrsLength'),
       },
@@ -150,8 +146,6 @@ const DataTable = ({
                   <TableCell className={classes.clickableCell}>{template.id}</TableCell>
 
                   <TableCell className={classes.clickableCell}>{template.label}</TableCell>
-
-                  <TableCell className={classes.clickableCell}>{template.devicesLength}</TableCell>
 
                   <TableCell className={classes.clickableCell}>{template.attrsLength}</TableCell>
 

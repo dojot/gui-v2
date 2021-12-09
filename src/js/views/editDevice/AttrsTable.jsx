@@ -61,7 +61,7 @@ const AttrsTable = ({
 
         <TableBody className={classes.tableBody}>
           {attrs.map(({ id, templateLabel, type, label, valueType }) => {
-            const isStaticAttr = type === TEMPLATE_ATTR_TYPES.STATIC;
+            const isStaticAttr = type === TEMPLATE_ATTR_TYPES.STATIC.value;
             const attrValue = staticAttrValues[id] || '';
 
             const handleUpdateValue = newValue => {

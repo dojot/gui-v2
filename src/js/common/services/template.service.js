@@ -10,10 +10,13 @@ export const getTemplatesList = page => {
         templates {
           id
           label
-          attrs{
+          attrs {
+            id
+            type
             label
             valueType
             isDynamic
+            templateId
             staticValue
           }
         }

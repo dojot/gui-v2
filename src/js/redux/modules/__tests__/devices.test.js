@@ -6,6 +6,7 @@ describe('Devices module tests', () => {
   const fakePaginationControl = {
     totalPages: 150,
     currentPage: 27,
+    itemsPerPage: 10,
   };
 
   it('should declare the constants in the correct format', () => {

@@ -94,10 +94,8 @@ const CreateDevice = () => {
 
     const attrsToSave = selectedTemplatesAttrs.map(attr => {
       const attrClone = { ...attr };
-      attrClone.value_type = attrClone.valueType;
+      attrClone.id = Number(attrClone.id);
       delete attrClone.isDynamic;
-      delete attrClone.staticValue;
-      delete attrClone.valueType;
       const attrValue = staticAttrValues[attr.id];
       if (attrValue) attrClone.static_value = attrValue;
       return attrClone;
