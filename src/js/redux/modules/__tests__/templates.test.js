@@ -6,6 +6,7 @@ describe('Templates module tests', () => {
   const fakePaginationControl = {
     totalPages: 150,
     currentPage: 27,
+    itemsPerPage: 10,
   };
 
   it('should declare the constants in the correct format', () => {
@@ -21,7 +22,7 @@ describe('Templates module tests', () => {
   });
 
   it('should update the pagination control', () => {
-    const action = actions.updateTemplates(fakePaginationControl);
+    const action = actions.updateTemplates({ paginationControl: fakePaginationControl });
     const newState = reducers[action.type](initialState(), action);
     expect(newState.get('paginationControl')).toEqual(fakePaginationControl);
   });

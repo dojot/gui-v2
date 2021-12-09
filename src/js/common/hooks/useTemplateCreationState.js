@@ -1,23 +1,23 @@
 import { useCallback, useMemo, useState } from 'react';
 
 export const useTemplateCreationState = () => {
-  const [templateName, setTemplateName] = useState('');
+  const [templateLabel, setTemplateLabel] = useState('');
   const [attrs, setAttrs] = useState([]);
 
   const canSaveTemplate = useMemo(() => {
     const haveAllRequiredData = attrs.every(attr => {
-      const { name, type, valueType } = attr;
-      return !!name.trim() && !!type && !!valueType;
+      const { label, type, valueType } = attr;
+      return !!label.trim() && !!type && !!valueType;
     });
 
-    return !!templateName.trim() && haveAllRequiredData;
-  }, [attrs, templateName]);
+    return !!templateLabel.trim() && haveAllRequiredData;
+  }, [attrs, templateLabel]);
 
   const handleCreateAttr = useCallback(() => {
     const id = Date.now();
     setAttrs(currentAttrs => [
       ...currentAttrs,
-      { id, name: '', type: '', valueType: '', value: '' },
+      { id, label: '', type: '', valueType: '', staticValue: '' },
     ]);
   }, []);
 
@@ -38,7 +38,7 @@ export const useTemplateCreationState = () => {
   }, []);
 
   const handleClearState = useCallback(() => {
-    setTemplateName('');
+    setTemplateLabel('');
     setAttrs([]);
   }, []);
 
@@ -53,8 +53,8 @@ export const useTemplateCreationState = () => {
   }, [attrs]);
 
   return {
-    templateName,
-    setTemplateName,
+    templateLabel,
+    setTemplateLabel,
     attrs,
     setAttrs,
     canSaveTemplate,

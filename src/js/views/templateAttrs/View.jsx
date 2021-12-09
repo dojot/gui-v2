@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import { LocalOffer } from '@material-ui/icons';
@@ -10,14 +10,12 @@ import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { TEMPLATE_ATTRIBUTES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
+import { actions as attrActions } from '../../redux/modules/templateAttrs';
 import {
-  actions as attrActions,
-  constants as attrConstants,
-} from '../../redux/modules/templateAttrs';
-import {
-  attrsSelector,
-  paginationControlSelector,
-} from '../../redux/selectors/templateAttrsSelector';
+  actions as templateActions,
+  constants as templateConstants,
+} from '../../redux/modules/templates';
+import { templateDataSelector } from '../../redux/selectors/templatesSelector';
 import { ViewContainer } from '../stateComponents';
 import AttrManagementModal from './layout/AttrManagementModal';
 import Cards from './layout/Cards';
@@ -35,27 +33,30 @@ const TemplateAttrs = () => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  const template = useSelector(() => ({})); // TODO: Create and use a selector
-  const attrs = useSelector(attrsSelector);
-  const { totalPages } = useSelector(paginationControlSelector);
-
-  const isLoadingAttrs = useIsLoading(attrConstants.GET_ATTRS);
+  const templateData = useSelector(templateDataSelector);
+  const isLoadingAttrs = useIsLoading(templateConstants.GET_TEMPLATE_BY_ID);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: TEMPLATE_ATTRIBUTES_PAGE_KEYS.VIEW_MODE,
   });
 
+  const [searchText, setSearchText] = useState('');
   const [selectedAttrs, setSelectedAttrs] = useState([]);
   const [attrOptionsMenu, setAttrOptionsMenu] = useState(null);
-
-  const [isShowingAttrManagementModal, setIsShowingAttrManagementModal] = useState(false);
-
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
+  const [isShowingAttrManagementModal, setIsShowingAttrManagementModal] = useState(false);
+
+  const attrs = useMemo(() => {
+    if (!templateData?.attrs) return [];
+    if (searchText) {
+      return templateData.attrs.filter(attr => attr.label.includes(searchText));
+    }
+    return templateData.attrs;
+  }, [searchText, templateData?.attrs]);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -75,8 +76,16 @@ const TemplateAttrs = () => {
   };
 
   const handleConfirmMultipleAttrsDeletion = () => {
-    dispatch(attrActions.deleteMultipleAttrs({ templateId, attrIdArray: selectedAttrs }));
     handleHideMassActions();
+    dispatch(
+      attrActions.deleteMultipleAttrs({
+        templateId,
+        attrIds: selectedAttrs,
+        successCallback() {
+          dispatch(templateActions.getTemplateById({ templateId }));
+        },
+      }),
+    );
   };
 
   const handleCloseMultipleAttrDeletionAlert = () => {
@@ -97,10 +106,18 @@ const TemplateAttrs = () => {
 
   const handleConfirmAttrDeletion = () => {
     const attrId = attrOptionsMenu.attr.id;
-    dispatch(attrActions.deleteAttr({ templateId, attrId }));
-    setSelectedAttrs(currentSelectedAttrs => {
-      return currentSelectedAttrs.filter(id => id !== attrId);
-    });
+    dispatch(
+      attrActions.deleteAttr({
+        attrId,
+        templateId,
+        successCallback() {
+          dispatch(templateActions.getTemplateById({ templateId }));
+          setSelectedAttrs(currentSelectedAttrs => {
+            return currentSelectedAttrs.filter(id => id !== attrId);
+          });
+        },
+      }),
+    );
   };
 
   const handleCloseAttrDeletionAlert = () => {
@@ -118,39 +135,47 @@ const TemplateAttrs = () => {
   };
 
   const handleSaveAttr = newAttrData => {
-    handleHideAttrManagementModal();
-    const isEditingAttr = !!attrOptionsMenu?.attr;
-    if (isEditingAttr) {
-      dispatch(attrActions.editAttr({ templateId, attr: newAttrData }));
+    if (attrOptionsMenu?.attr) {
+      dispatch(
+        attrActions.editAttr({
+          templateId,
+          attr: newAttrData,
+          attrId: attrOptionsMenu.attr.id,
+          successCallback() {
+            handleHideAttrManagementModal();
+            dispatch(templateActions.getTemplateById({ templateId }));
+          },
+        }),
+      );
     } else {
-      dispatch(attrActions.createAttr({ templateId, attr: newAttrData }));
+      dispatch(
+        attrActions.createAttr({
+          templateId,
+          attr: newAttrData,
+          successCallback() {
+            handleHideAttrManagementModal();
+            dispatch(templateActions.getTemplateById({ templateId }));
+          },
+        }),
+      );
     }
   };
 
   const handleSearchAttr = search => {
-    dispatch(attrActions.getAttrs({ templateId, filter: { label: search } }));
+    setSearchText(search);
   };
 
   useEffect(() => {
-    dispatch(
-      attrActions.getAttrs({
-        templateId,
-        page: {
-          number: page,
-          size: rowsPerPage,
-        },
-      }),
-    );
-  }, [dispatch, page, rowsPerPage, templateId]);
+    dispatch(templateActions.getTemplateById({ templateId }));
+    return () => dispatch(templateActions.updateTemplates({ templateData: null }));
+  }, [dispatch, templateId]);
 
   useEffect(() => {
     if (viewMode) setSelectedAttrs([]);
   }, [viewMode]);
 
-  // TODO: Create an useEffect to fetch the template data (or only the label)
-
   return (
-    <ViewContainer headerTitle={t('title', { template: template.label || templateId })}>
+    <ViewContainer headerTitle={t('title', { template: templateData?.label || templateId })}>
       <OptionsMenu
         isShowingMenu={!!attrOptionsMenu}
         anchorElement={attrOptionsMenu?.anchorElement}
@@ -208,7 +233,9 @@ const TemplateAttrs = () => {
             <>
               {viewMode === VIEW_MODE.TABLE && attrs.length > 0 && (
                 <DataTable
+                  page={page}
                   attrs={attrs}
+                  rowsPerPage={rowsPerPage}
                   selectedAttrs={selectedAttrs}
                   handleSelectAttr={setSelectedAttrs}
                   handleSetAttrOptionsMenu={setAttrOptionsMenu}
@@ -216,15 +243,20 @@ const TemplateAttrs = () => {
               )}
 
               {viewMode === VIEW_MODE.CARD && attrs.length > 0 && (
-                <Cards attrs={attrs} handleSetAttrOptionsMenu={setAttrOptionsMenu} />
+                <Cards
+                  page={page}
+                  attrs={attrs}
+                  rowsPerPage={rowsPerPage}
+                  handleSetAttrOptionsMenu={setAttrOptionsMenu}
+                />
               )}
 
               {attrs.length === 0 && (
                 <EmptyPlaceholder
-                  emptyListMessage={t('emptyListMessage')}
-                  icon={<LocalOffer fontSize='large' />}
-                  handleButtonClick={handleShowAttrManagementModal}
                   textButton={t('createNewAttr')}
+                  icon={<LocalOffer fontSize='large' />}
+                  emptyListMessage={t('emptyListMessage')}
+                  handleButtonClick={handleShowAttrManagementModal}
                 />
               )}
             </>
@@ -234,8 +266,8 @@ const TemplateAttrs = () => {
         <Pagination
           page={page}
           rowsPerPage={rowsPerPage}
-          totalOfPages={totalPages}
           numberOfSelectedAttrs={selectedAttrs.length}
+          totalOfPages={Math.ceil(attrs.length / rowsPerPage)}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
         />

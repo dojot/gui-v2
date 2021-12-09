@@ -21,6 +21,7 @@ const DeviceDetails = LazyLoading(() => import('views/deviceDetails'));
 const CreateDevice = LazyLoading(() => import('views/createDevice'));
 const Templates = LazyLoading(() => import('views/templates'));
 const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
+const EditTemplate = LazyLoading(() => import('views/editTemplate'));
 const TemplateAttrs = LazyLoading(() => import('views/templateAttrs'));
 const Certificates = LazyLoading(() => import('views/Certificates'));
 const CertificationAuthorities = LazyLoading(() => import('views/CertificationAuthorities'));
@@ -51,6 +52,7 @@ const Routes = props => (
     <PrivateRoute path='/templates' component={Templates} attrs={props} exact />
     <PrivateRoute path='/templates/new' component={CreateTemplate} attrs={props} exact />
     <PrivateRoute path='/templates/:templateId' component={TemplateAttrs} attrs={props} exact />
+    <PrivateRoute path='/templates/edit/:templateId' component={EditTemplate} attrs={props} exact />
     <PrivateRoute path='/flow' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/notification' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/users' component={TestRouteHandler} attrs={props} />

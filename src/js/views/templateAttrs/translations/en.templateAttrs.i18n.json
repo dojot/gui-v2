@@ -16,7 +16,7 @@
     "label": "Name",
     "type": "Attribute Type",
     "valueType": "Value Type",
-    "value": "Value",
+    "staticValue": "Static Value",
     "actions": "Actions"
   },
   "deleteAttrAlert": {

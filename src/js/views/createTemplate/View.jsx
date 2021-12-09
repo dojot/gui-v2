@@ -19,16 +19,16 @@ const CreateTemplate = () => {
 
   const {
     attrs,
-    templateName,
+    templateLabel,
     canSaveTemplate,
-    setTemplateName,
+    setTemplateLabel,
     handleCreateAttr,
     handleDeleteAttr,
     handleUpdateAttr,
     getAttrsWithoutId,
   } = useTemplateCreationState();
 
-  const handleCancelTemplateCreation = () => {
+  const handleLeaveTemplateCreation = () => {
     if (history.length) history.goBack();
     else history.push('/templates');
   };
@@ -36,8 +36,9 @@ const CreateTemplate = () => {
   const handleSaveTemplate = () => {
     dispatch(
       templateActions.createTemplate({
-        name: templateName,
+        label: templateLabel,
         attrs: getAttrsWithoutId(),
+        successCallback: handleLeaveTemplateCreation,
       }),
     );
   };
@@ -49,15 +50,15 @@ const CreateTemplate = () => {
           <TemplateCreation
             className={classes.templateCreation}
             attrs={attrs}
-            templateName={templateName}
-            setTemplateName={setTemplateName}
+            templateLabel={templateLabel}
+            setTemplateLabel={setTemplateLabel}
             handleCreateAttr={handleCreateAttr}
             handleDeleteAttr={handleDeleteAttr}
             handleUpdateAttr={handleUpdateAttr}
           />
 
           <Box className={classes.actions} paddingTop={4}>
-            <Button size='large' variant='text' onClick={handleCancelTemplateCreation}>
+            <Button size='large' variant='text' onClick={handleLeaveTemplateCreation}>
               {t('common:cancel')}
             </Button>
 

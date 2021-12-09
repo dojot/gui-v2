@@ -41,9 +41,9 @@ const TemplatesStep = ({
 
   const {
     attrs,
-    templateName,
+    templateLabel,
     canSaveTemplate,
-    setTemplateName,
+    setTemplateLabel,
     handleCreateAttr,
     handleDeleteAttr,
     handleUpdateAttr,
@@ -74,13 +74,11 @@ const TemplatesStep = ({
   };
 
   const handleSaveNewTemplate = () => {
-    setIsCreatingTemplate(false);
-    handleClearState();
-
     dispatch(
       templateActions.createTemplate({
-        name: templateName,
+        label: templateLabel,
         attrs: getAttrsWithoutId(),
+        successCallback: handleDiscardNewTemplate,
       }),
     );
   };
@@ -116,8 +114,8 @@ const TemplatesStep = ({
             <TemplateCreation
               className={classes.templateCreation}
               attrs={attrs}
-              templateName={templateName}
-              setTemplateName={setTemplateName}
+              templateLabel={templateLabel}
+              setTemplateLabel={setTemplateLabel}
               handleCreateAttr={handleCreateAttr}
               handleDeleteAttr={handleDeleteAttr}
               handleUpdateAttr={handleUpdateAttr}

@@ -19,14 +19,14 @@ Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
   ATTR_VALUE_TYPE_TRANSLATIONS[value] = translation;
 });
 
-const Cards = ({ attrs, handleSetAttrOptionsMenu }) => {
+const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
   const { t } = useTranslation(['templateAttrs', 'common']);
   const classes = useCardsStyles();
 
   return (
     <Box padding={2}>
       <Grid spacing={2} container alignItems='stretch'>
-        {attrs.map(attr => {
+        {attrs.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(attr => {
           const attrTypeTranslation = ATTR_TYPE_TRANSLATIONS[attr.type] || attr.type;
 
           const valueTypeTranslation =
@@ -48,29 +48,25 @@ const Cards = ({ attrs, handleSetAttrOptionsMenu }) => {
                 headerIcon={<LocalOffer className={classes.cardIcon} />}
                 headerTitle={<Typography className={classes.cardTitle}>{attr.label}</Typography>}
               >
-                {attr.type && (
-                  <Box marginBottom={1}>
-                    <Typography variant='body2'>{t('attrData.type')}</Typography>
-                    <Typography variant='body2'>
-                      <strong>{t(attrTypeTranslation)}</strong>
-                    </Typography>
-                  </Box>
-                )}
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>{t('attrData.type')}</Typography>
+                  <Typography variant='body2'>
+                    <strong>{t(attrTypeTranslation)}</strong>
+                  </Typography>
+                </Box>
 
-                {attr.valueType && (
-                  <Box marginBottom={1}>
-                    <Typography variant='body2'>{t('attrData.valueType')}</Typography>
-                    <Typography variant='body2'>
-                      <strong>{t(valueTypeTranslation)}</strong>
-                    </Typography>
-                  </Box>
-                )}
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>{t('attrData.valueType')}</Typography>
+                  <Typography variant='body2'>
+                    <strong>{t(valueTypeTranslation)}</strong>
+                  </Typography>
+                </Box>
 
-                {attr.value && (
+                {attr.staticValue && (
                   <Box marginBottom={1}>
-                    <Typography variant='body2'>{t('attrData.value')}</Typography>
+                    <Typography variant='body2'>{t('attrData.staticValue')}</Typography>
                     <Typography variant='body2'>
-                      <strong>{attr.value}</strong>
+                      <strong>{attr.staticValue}</strong>
                     </Typography>
                   </Box>
                 )}
@@ -84,6 +80,8 @@ const Cards = ({ attrs, handleSetAttrOptionsMenu }) => {
 };
 
 Cards.propTypes = {
+  page: PropTypes.number.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
   attrs: PropTypes.array.isRequired,
   handleSetAttrOptionsMenu: PropTypes.func.isRequired,
 };

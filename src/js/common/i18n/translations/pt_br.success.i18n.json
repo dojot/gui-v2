@@ -11,6 +11,7 @@
     "deleteTemplate": "Modelo excluído",
     "deleteMultipleTemplates": "Todos os modelos foram excluídos",
     "createTemplate": "Modelo criado",
+    "editTemplate": "Modelo editado",
     "duplicateTemplate": "Modelo duplicado",
 
     "deleteAttr": "Atributo excluído",

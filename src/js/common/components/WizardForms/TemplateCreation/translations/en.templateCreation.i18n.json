@@ -1,7 +1,7 @@
 {
   "title": "New Modelo",
   "subtitle": "Hint: Create templates that can be reused to in other devices.",
-  "templateNamePh": "Template Name",
+  "templateLabelPh": "Template Name",
   "createAttrButton": "Create Attribute",
   "noAttr": "No attribute created"
 }

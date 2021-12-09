@@ -25,8 +25,10 @@ import { useStyles } from './style';
 const TemplateCreation = ({
   className,
   attrs,
-  templateName,
-  setTemplateName,
+  title,
+  subtitle,
+  templateLabel,
+  setTemplateLabel,
   handleCreateAttr,
   handleDeleteAttr,
   handleUpdateAttr,
@@ -35,31 +37,31 @@ const TemplateCreation = ({
   const { t } = useTranslation(['templateCreation', 'attrs']);
   const classes = useStyles();
 
-  const handleClearTemplateName = () => {
-    setTemplateName('');
+  const handleClearTemplateLabel = () => {
+    setTemplateLabel('');
   };
 
   return (
     <Box className={`${classes.container} ${className}`} padding={2}>
       <Box marginBottom={2}>
         <Typography className={classes.title} variant='h6'>
-          {t('title')}
+          {title || t('title')}
         </Typography>
 
-        <Typography variant='subtitle2'>{t('subtitle')}</Typography>
+        <Typography variant='subtitle2'>{subtitle || t('subtitle')}</Typography>
       </Box>
 
       <Box marginBottom={2}>
         <TextField
           className={classes.input}
-          onChange={e => setTemplateName(e.target.value)}
-          label={t('templateNamePh')}
-          value={templateName}
+          onChange={e => setTemplateLabel(e.target.value)}
+          label={t('templateLabelPh')}
+          value={templateLabel}
           variant='outlined'
           InputProps={{
-            endAdornment: templateName ? (
+            endAdornment: templateLabel ? (
               <InputAdornment position='end'>
-                <IconButton onClick={handleClearTemplateName}>
+                <IconButton onClick={handleClearTemplateLabel}>
                   <Close />
                 </IconButton>
               </InputAdornment>
@@ -85,7 +87,7 @@ const TemplateCreation = ({
           <TableHead className={classes.tableHead}>
             <TableRow>
               <TableCell>
-                <strong>{t('attrs:attrLabel.attrName')}</strong>
+                <strong>{t('attrs:attrLabel.attrLabel')}</strong>
               </TableCell>
 
               <TableCell>
@@ -105,9 +107,9 @@ const TemplateCreation = ({
           </TableHead>
 
           <TableBody>
-            {attrs.map(({ id, name, type, valueType, value }, index) => {
-              const handleUpdateName = newName => {
-                handleUpdateAttr(index, 'name', newName);
+            {attrs.map(({ id, label, type, valueType, staticValue }, index) => {
+              const handleUpdateLabel = newLabel => {
+                handleUpdateAttr(index, 'label', newLabel);
               };
 
               const handleUpdateType = newType => {
@@ -118,8 +120,8 @@ const TemplateCreation = ({
                 handleUpdateAttr(index, 'valueType', newValueType);
               };
 
-              const handleUpdateValue = newValue => {
-                handleUpdateAttr(index, 'value', newValue);
+              const handleUpdateValue = newStaticValue => {
+                handleUpdateAttr(index, 'staticValue', newStaticValue);
               };
 
               return (
@@ -128,10 +130,10 @@ const TemplateCreation = ({
                     <TextField
                       className={classes.input}
                       size='small'
-                      defaultValue={name}
                       variant='outlined'
-                      placeholder={t('attrs:attrLabel.attrName')}
-                      onBlur={e => handleUpdateName(e.target.value)}
+                      defaultValue={label}
+                      placeholder={t('attrs:attrLabel.attrLabel')}
+                      onBlur={e => handleUpdateLabel(e.target.value)}
                     />
                   </TableCell>
 
@@ -175,9 +177,10 @@ const TemplateCreation = ({
                     <TextField
                       className={classes.input}
                       size='small'
-                      defaultValue={value}
                       variant='outlined'
+                      defaultValue={staticValue}
                       placeholder={t('attrs:attrLabel.attrValue')}
+                      disabled={type !== TEMPLATE_ATTR_TYPES.STATIC.value}
                       onBlur={e => handleUpdateValue(e.target.value)}
                     />
                   </TableCell>
@@ -207,10 +210,12 @@ const TemplateCreation = ({
 
 TemplateCreation.propTypes = {
   className: PropTypes.string,
+  title: PropTypes.string,
+  subtitle: PropTypes.string,
   attrs: PropTypes.array.isRequired,
-  templateName: PropTypes.string.isRequired,
+  templateLabel: PropTypes.string.isRequired,
   endExtraComponent: PropTypes.node,
-  setTemplateName: PropTypes.func.isRequired,
+  setTemplateLabel: PropTypes.func.isRequired,
   handleCreateAttr: PropTypes.func.isRequired,
   handleDeleteAttr: PropTypes.func.isRequired,
   handleUpdateAttr: PropTypes.func.isRequired,
@@ -218,6 +223,8 @@ TemplateCreation.propTypes = {
 
 TemplateCreation.defaultProps = {
   className: '',
+  title: '',
+  subtitle: '',
   endExtraComponent: null,
 };
 
