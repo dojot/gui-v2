@@ -143,6 +143,9 @@ export const UserInfo = () => {
                     data-testid='changePassword'
                     className={classes.clickableListItem}
                     onClick={handleChangePassword}
+                    // TODO: Enable again when possible
+                    style={{ pointerEvents: 'none' }}
+                    disabled
                   >
                     <ListItemIcon className={classes.listItemIcon}>
                       <Lock />

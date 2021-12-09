@@ -2,8 +2,9 @@
   "title": "Home",
   "createDevice": "Criar Dispositivo",
   "createDashboard": "Criar Dashboard",
-  "createModel": "Criar Modelo",
+  "createTemplate": "Criar Modelo",
   "createCertificate": "Criar Certificado",
   "importExport": "Importar/Exportar",
-  "deviceTest": "Device Test"
+  "deviceTest": "Device Test",
+  "notAvailableAtTheMoment": "Não Disponível no Momento"
 }

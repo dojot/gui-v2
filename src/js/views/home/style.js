@@ -15,4 +15,8 @@ export default makeStyles(() => ({
     alignItems: 'center',
     justifyContent: 'space-around',
   },
+  cardDisabled: {
+    opacity: 0.5,
+    cursor: 'not-allowed',
+  },
 }));
