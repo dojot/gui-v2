@@ -27,6 +27,7 @@ const TemplatesTable = ({
   templates,
   totalPages,
   rowsPerPage,
+  lastSearchedText,
   selectedTemplates,
   numberOfSelectedTemplates,
   handleChangePage,
@@ -40,7 +41,10 @@ const TemplatesTable = ({
   const searchInputRef = useRef(null);
 
   const [isTyping, setIsTyping] = useState(false);
-  const [isShowingClearButton, setIsShowingClearButton] = useState(false);
+  const [isShowingClearButton, setIsShowingClearButton] = useState(() => {
+    if (lastSearchedText) return true;
+    return false;
+  });
 
   const headCells = useMemo(
     () => [
@@ -127,8 +131,9 @@ const TemplatesTable = ({
                 className={classes.searchTextField}
                 size='small'
                 variant='outlined'
-                onChange={handleChangeSearchText}
+                defaultValue={lastSearchedText}
                 placeholder={t('searchTemplatePh')}
+                onChange={handleChangeSearchText}
                 InputProps={{
                   className: classes.searchInput,
                   startAdornment: (
@@ -144,7 +149,7 @@ const TemplatesTable = ({
                   ),
                   endAdornment: isShowingClearButton ? (
                     <InputAdornment position='end'>
-                      <IconButton onClick={handleClearSearch} size='small'>
+                      <IconButton onClick={handleClearSearch} disabled={isTyping} size='small'>
                         <Close />
                       </IconButton>
                     </InputAdornment>
@@ -212,12 +217,17 @@ TemplatesTable.propTypes = {
   templates: PropTypes.array.isRequired,
   totalPages: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
+  lastSearchedText: PropTypes.string,
   selectedTemplates: PropTypes.object.isRequired,
   numberOfSelectedTemplates: PropTypes.number.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   setSelectedTemplates: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleSearchForTemplates: PropTypes.func.isRequired,
+};
+
+TemplatesTable.defaultProps = {
+  lastSearchedText: '',
 };
 
 export default TemplatesTable;

@@ -36,6 +36,7 @@ const TemplatesStep = ({
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [lastSearchedText, setLastSearchedText] = useState('');
 
   const [isCreatingTemplate, setIsCreatingTemplate] = useState(false);
 
@@ -65,6 +66,7 @@ const TemplatesStep = ({
   };
 
   const handleSearchForTemplates = search => {
+    setLastSearchedText(search);
     dispatch(templateActions.getTemplates({ filter: { label: search } }));
   };
 
@@ -133,6 +135,7 @@ const TemplatesStep = ({
               templates={templates}
               totalPages={totalPages}
               rowsPerPage={rowsPerPage}
+              lastSearchedText={lastSearchedText}
               selectedTemplates={selectedTemplates}
               isLoadingTemplates={isLoadingTemplates}
               numberOfSelectedTemplates={numberOfSelectedTemplates}

@@ -12,6 +12,7 @@ const TemplateTables = ({
   templates,
   totalPages,
   rowsPerPage,
+  lastSearchedText,
   selectedTemplates,
   isLoadingTemplates,
   numberOfSelectedTemplates,
@@ -38,6 +39,7 @@ const TemplateTables = ({
         templates={templates}
         totalPages={totalPages}
         rowsPerPage={rowsPerPage}
+        lastSearchedText={lastSearchedText}
         selectedTemplates={selectedTemplates}
         numberOfSelectedTemplates={numberOfSelectedTemplates}
         handleChangePage={handleChangePage}
@@ -62,6 +64,7 @@ TemplateTables.propTypes = {
   templates: PropTypes.array.isRequired,
   totalPages: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
+  lastSearchedText: PropTypes.string,
   selectedTemplates: PropTypes.object.isRequired,
   isLoadingTemplates: PropTypes.bool.isRequired,
   numberOfSelectedTemplates: PropTypes.number.isRequired,
@@ -69,6 +72,10 @@ TemplateTables.propTypes = {
   setSelectedTemplates: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
   handleSearchForTemplates: PropTypes.func.isRequired,
+};
+
+TemplateTables.defaultProps = {
+  lastSearchedText: '',
 };
 
 export default TemplateTables;
