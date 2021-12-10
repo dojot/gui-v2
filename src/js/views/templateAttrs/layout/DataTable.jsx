@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Checkbox,
@@ -36,16 +36,17 @@ Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
 const DataTable = ({
   page,
   attrs,
+  order,
+  orderBy,
   rowsPerPage,
   selectedAttrs,
+  setOrder,
+  setOrderBy,
   handleSelectAttr,
   handleSetAttrOptionsMenu,
 }) => {
   const { t } = useTranslation('templateAttrs');
   const classes = useDataTableStyles();
-
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
 
   const headCells = useMemo(
     () => [
@@ -190,8 +191,12 @@ const DataTable = ({
 DataTable.propTypes = {
   page: PropTypes.number.isRequired,
   attrs: PropTypes.array.isRequired,
+  order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
+  orderBy: PropTypes.string.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   selectedAttrs: PropTypes.array.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  setOrderBy: PropTypes.func.isRequired,
   handleSelectAttr: PropTypes.func.isRequired,
   handleSetAttrOptionsMenu: PropTypes.func.isRequired,
 };

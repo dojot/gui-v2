@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { DATA_ORDER, DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
 import {
@@ -38,6 +38,8 @@ const Devices = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
+  const [orderBy, setOrderBy] = useState('');
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
@@ -200,10 +202,12 @@ const Devices = () => {
             <>
               {viewMode === VIEW_MODE.TABLE && devices.length > 0 && (
                 <DataTable
-                  page={page}
+                  order={order}
+                  orderBy={orderBy}
                   devices={devices}
-                  rowsPerPage={rowsPerPage}
                   selectedDevices={selectedDevices}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleClickDevice={handleClickDevice}
                   handleSelectDevice={setSelectedDevices}
                   handleFavoriteDevice={handleFavoriteDevice}

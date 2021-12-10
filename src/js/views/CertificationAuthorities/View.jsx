@@ -8,7 +8,7 @@ import { useHistory } from 'react-router-dom';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { CERTIFICATION_AUTHORITIES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { CERTIFICATION_AUTHORITIES_PAGE_KEYS, DATA_ORDER, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
   actions as certificationAuthoritiesActions,
@@ -41,6 +41,8 @@ const CertificationAuthorities = () => {
 
   const [page] = useState(0);
   const [rowsPerPage] = useState(10);
+  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
   const [selectedAuthorities, setSelectedAuthorities] = useState([]);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
@@ -135,8 +137,12 @@ const CertificationAuthorities = () => {
             <>
               {viewMode === VIEW_MODE.TABLE && certificationAuthorities.length > 0 && (
                 <DataTable
+                  order={order}
+                  orderBy={orderBy}
                   certificationAuthorities={certificationAuthorities}
                   selectedCertificationAuthorities={selectedAuthorities}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSelectAuthority={setSelectedAuthorities}
                 />
               )}

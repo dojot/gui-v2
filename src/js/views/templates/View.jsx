@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { TEMPLATES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { DATA_ORDER, TEMPLATES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
   actions as templateActions,
@@ -41,6 +41,8 @@ const Templates = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
+  const [orderBy, setOrderBy] = useState('');
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
@@ -186,8 +188,12 @@ const Templates = () => {
             <>
               {viewMode === VIEW_MODE.TABLE && templates.length > 0 && (
                 <DataTable
+                  order={order}
+                  orderBy={orderBy}
                   templates={templates}
                   selectedTemplates={selectedTemplates}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleClickTemplate={handleClickTemplate}
                   handleSelectTemplate={setSelectedTemplates}
                   handleSetTemplateOptionsMenu={setTemplateOptionsMenu}

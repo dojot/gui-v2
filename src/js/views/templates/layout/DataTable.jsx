@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Checkbox,
@@ -20,17 +20,18 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
+  order,
+  orderBy,
   templates,
   selectedTemplates,
+  setOrder,
+  setOrderBy,
   handleClickTemplate,
   handleSelectTemplate,
   handleSetTemplateOptionsMenu,
 }) => {
   const { t } = useTranslation('templates');
   const classes = useDataTableStyles();
-
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
 
   const headCells = useMemo(
     () => [
@@ -165,7 +166,12 @@ const DataTable = ({
 };
 
 DataTable.propTypes = {
+  order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
+  orderBy: PropTypes.string.isRequired,
   templates: PropTypes.array.isRequired,
+  selectedTemplates: PropTypes.array.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  setOrderBy: PropTypes.func.isRequired,
   handleClickTemplate: PropTypes.func.isRequired,
   handleSelectTemplate: PropTypes.func.isRequired,
   handleSetTemplateOptionsMenu: PropTypes.func.isRequired,

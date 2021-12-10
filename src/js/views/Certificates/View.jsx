@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { DATA_ORDER, DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
   actions as certificatesActions,
@@ -46,6 +46,8 @@ const Certificates = () => {
   const [isShowingDisassociateDeviceAlert, setIsShowingDisassociateDeviceAlert] = useState(false);
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
+  const [orderBy, setOrderBy] = useState('');
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: DEVICES_PAGE_KEYS.VIEW_MODE,
@@ -213,8 +215,12 @@ const Certificates = () => {
 
               {viewMode === VIEW_MODE.TABLE && certificates.length > 0 && (
                 <DataTable
+                  order={order}
+                  orderBy={orderBy}
                   certificates={certificates}
                   selectedCertificates={selectedCertificates}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSelectCertificate={setSelectedCertificates}
                   handleShowDevicesToAssociate={handleShowDevicesToAssociate}
                   handleSetCertificateOptionsMenu={setCertificatesOptionsMenu}

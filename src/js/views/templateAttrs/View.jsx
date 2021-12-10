@@ -8,7 +8,7 @@ import { useParams } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { TEMPLATE_ATTRIBUTES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { DATA_ORDER, TEMPLATE_ATTRIBUTES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import { actions as attrActions } from '../../redux/modules/templateAttrs';
 import {
@@ -38,6 +38,9 @@ const TemplateAttrs = () => {
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
+  const [orderBy, setOrderBy] = useState('');
+
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: TEMPLATE_ATTRIBUTES_PAGE_KEYS.VIEW_MODE,
@@ -235,8 +238,12 @@ const TemplateAttrs = () => {
                 <DataTable
                   page={page}
                   attrs={attrs}
+                  order={order}
+                  orderBy={orderBy}
                   rowsPerPage={rowsPerPage}
                   selectedAttrs={selectedAttrs}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSelectAttr={setSelectedAttrs}
                   handleSetAttrOptionsMenu={setAttrOptionsMenu}
                 />

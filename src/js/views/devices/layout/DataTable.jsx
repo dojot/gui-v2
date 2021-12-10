@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Checkbox,
@@ -22,8 +22,12 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
+  order,
+  orderBy,
   devices,
   selectedDevices,
+  setOrder,
+  setOrderBy,
   handleClickDevice,
   handleSelectDevice,
   handleFavoriteDevice,
@@ -31,9 +35,6 @@ const DataTable = ({
 }) => {
   const { t } = useTranslation('devices');
   const classes = useDataTableStyles();
-
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
 
   const headCells = useMemo(
     () => [
@@ -211,19 +212,16 @@ const DataTable = ({
 };
 
 DataTable.propTypes = {
-  devices: PropTypes.array,
-  handleClickDevice: PropTypes.func,
-  handleSelectDevice: PropTypes.func,
-  handleFavoriteDevice: PropTypes.func,
-  handleSetDeviceOptionsMenu: PropTypes.func,
-};
-
-DataTable.defaultProps = {
-  devices: [],
-  handleClickDevice: null,
-  handleSelectDevice: null,
-  handleFavoriteDevice: null,
-  handleSetDeviceOptionsMenu: null,
+  order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  devices: PropTypes.array.isRequired,
+  selectedDevices: PropTypes.array.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  setOrderBy: PropTypes.func.isRequired,
+  handleClickDevice: PropTypes.func.isRequired,
+  handleSelectDevice: PropTypes.func.isRequired,
+  handleFavoriteDevice: PropTypes.func.isRequired,
+  handleSetDeviceOptionsMenu: PropTypes.func.isRequired,
 };
 
 export default DataTable;
