@@ -96,8 +96,9 @@ const CreateDevice = () => {
       const attrClone = { ...attr };
       attrClone.id = Number(attrClone.id);
       delete attrClone.isDynamic;
+      delete attrClone.templateLabel;
       const attrValue = staticAttrValues[attr.id];
-      if (attrValue) attrClone.static_value = attrValue;
+      if (attrValue) attrClone.staticValue = attrValue;
       return attrClone;
     });
 
