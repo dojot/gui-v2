@@ -14,12 +14,13 @@
     "createDevice": "Could not create a device",
 
     "getTemplates": "Could not get templates",
+    "getTemplateById": "Could not get the template data",
     "deleteTemplate": "Could not delete this template",
     "deleteMultipleTemplates": "Could not delete these templates",
     "createTemplate": "Could not create a template",
+    "editTemplate": "Could not edit this template",
     "duplicateTemplate": "Could not duplicate this template",
 
-    "getAttrs": "Could not get attributes",
     "deleteAttr": "Could not delete this attribute",
     "deleteMultipleAttrs": "Could not delete these attributes",
     "createAttr": "Could not create a attribute",

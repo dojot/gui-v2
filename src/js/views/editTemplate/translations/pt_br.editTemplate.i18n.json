@@ -1,0 +1,7 @@
+{
+  "title": "Editar Modelo: {{label}}",
+  "titleWithoutLabel": "Editar Modelo",
+  "noTemplateData": "Não é possível editar este modelo",
+  "formTitle": "Editar Modelo",
+  "formSubtitle": "Modifique o nome ou os atributos do modelo"
+}

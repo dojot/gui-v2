@@ -11,6 +11,7 @@
     "deleteTemplate": "Template deleted",
     "deleteMultipleTemplates": "All templates were deleted",
     "createTemplate": "Template created",
+    "editTemplate": "Template edited",
     "duplicateTemplate": "Duplicate template",
 
     "deleteAttr": "Attribute deleted",

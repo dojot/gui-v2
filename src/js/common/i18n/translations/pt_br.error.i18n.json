@@ -14,12 +14,13 @@
     "createDevice": "Não foi possível criar um dispositivo",
 
     "getTemplates": "Não foi possível obter os modelos",
+    "getTemplateById": "Não foi possível obter os dados do modelo",
     "deleteTemplate": "Não foi possível excluir este modelo",
     "deleteMultipleTemplates": "Não foi possível excluir estes modelos",
     "createTemplate": "Não foi possível criar o modelo",
+    "editTemplate": "Não foi possível editar este modelo",
     "duplicateTemplate": "Não foi possível duplicar este modelo",
 
-    "getAttrs": "Não foi possível obter os atributos",
     "deleteAttr": "Não foi possível excluir este atributo",
     "deleteMultipleAttrs": "Não foi possível excluir estes atributos",
     "createAttr": "Não foi possível criar um atributo",

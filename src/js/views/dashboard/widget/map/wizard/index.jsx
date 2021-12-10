@@ -9,6 +9,7 @@ import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 import * as Yup from 'yup';
 
+import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../common/constants';
 import { useMap } from '../../wizard/hooks';
 import { Attributes, General, Summary, RealtimeFilter, generalValidates } from '../../wizard/Steps';
 import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
@@ -89,7 +90,11 @@ const MapWizard = ({
     >
       <General validate={generalValidates} name='general' />
       <Selector validate={selectorValidates} />
-      <Attributes validate={null} name='attributes' acceptedTypes={['GEO']} />
+      <Attributes
+        validate={null}
+        name='attributes'
+        acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.GEO_POINT.value]}
+      />
       <RealtimeFilter validate={null} name='filters' />
       <Summary />
     </Wizard>

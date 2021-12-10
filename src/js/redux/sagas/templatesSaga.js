@@ -1,20 +1,41 @@
-// TODO: Handle the exception more appropriately
-
-import { put, fork, takeLatest, select } from 'redux-saga/effects';
+import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { Template } from 'Services';
 
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
 import { actions as successActions } from '../modules/success';
 import { constants, actions } from '../modules/templates';
-import { templatesSelector } from '../selectors/templatesSelector';
+import { paginationControlSelector } from '../selectors/templatesSelector';
+
+export function* getCurrentTemplatesPageAgain() {
+  const pagination = yield select(paginationControlSelector);
+  yield put(
+    actions.getTemplates({
+      page: {
+        number: pagination.currentPage,
+        size: pagination.itemsPerPage,
+      },
+    }),
+  );
+}
 
 export function* handleGetTemplates(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_TEMPLATES));
     const { page, filter } = action.payload;
-    const { getTemplates } = yield Template.getTemplatesList(page, filter);
-    if (getTemplates) yield put(actions.updateTemplates(getTemplates));
+    const { getTemplates } = yield call(Template.getTemplatesList, page, filter);
+    if (getTemplates) {
+      yield put(
+        actions.updateTemplates({
+          templates: getTemplates.templates,
+          paginationControl: {
+            currentPage: getTemplates.currentPage,
+            totalPages: getTemplates.totalPages,
+            itemsPerPage: page?.size || 0,
+          },
+        }),
+      );
+    }
   } catch (e) {
     yield put(actions.updateTemplates({ templates: [] }));
     yield put(
@@ -28,14 +49,31 @@ export function* handleGetTemplates(action) {
   }
 }
 
+export function* handleGetTemplateById(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.GET_TEMPLATE_BY_ID));
+    const { templateId } = action.payload;
+    const { getTemplateById } = yield call(Template.getTemplateById, templateId);
+    if (getTemplateById) yield put(actions.updateTemplates({ templateData: getTemplateById }));
+  } catch (e) {
+    yield put(actions.updateTemplates({ templateData: null }));
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'getTemplateById',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.GET_TEMPLATE_BY_ID));
+  }
+}
+
 export function* handleDeleteTemplate(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_TEMPLATE));
     const { templateId } = action.payload;
-    yield Template.deleteTemplate(templateId);
-    const templates = yield select(templatesSelector);
-    const notDeletedTemplates = templates.filter(({ id }) => id !== templateId);
-    yield put(actions.updateTemplates({ templates: notDeletedTemplates }));
+    yield call(Template.deleteTemplates, [templateId]);
+    yield call(getCurrentTemplatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteTemplate' }));
   } catch (e) {
     yield put(
@@ -51,12 +89,10 @@ export function* handleDeleteTemplate(action) {
 
 export function* handleDeleteMultipleTemplates(action) {
   try {
-    yield put(loadingActions.addLoading(constants.DELETE_ALL_TEMPLATES));
-    const { templateIdArray } = action.payload;
-    yield Template.deleteMultipleTemplates(templateIdArray);
-    const templates = yield select(templatesSelector);
-    const notDeletedTemplates = templates.filter(({ id }) => !templateIdArray.includes(id));
-    yield put(actions.updateTemplates({ templates: notDeletedTemplates }));
+    yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_TEMPLATES));
+    const { templateIds } = action.payload;
+    yield call(Template.deleteTemplates, templateIds);
+    yield call(getCurrentTemplatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleTemplates' }));
   } catch (e) {
     yield put(
@@ -66,17 +102,16 @@ export function* handleDeleteMultipleTemplates(action) {
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.DELETE_ALL_TEMPLATES));
+    yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_TEMPLATES));
   }
 }
 
 export function* handleCreateTemplate(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_TEMPLATE));
-    const template = action.payload;
-    yield Template.createTemplate(template);
-    const templates = yield select(templatesSelector);
-    yield put(actions.updateTemplates({ templates: [...templates, template] }));
+    const { label, attrs, successCallback } = action.payload;
+    yield call(Template.createTemplate, { label, attrs });
+    if (successCallback) yield call(successCallback);
     yield put(successActions.showSuccessToast({ i18nMessage: 'createTemplate' }));
   } catch (e) {
     yield put(
@@ -90,13 +125,31 @@ export function* handleCreateTemplate(action) {
   }
 }
 
+export function* handleEditTemplate(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.EDIT_TEMPLATE));
+    const { id, label, attrs, successCallback } = action.payload;
+    yield call(Template.editTemplate, { id, label, attrs });
+    if (successCallback) yield call(successCallback);
+    yield put(successActions.showSuccessToast({ i18nMessage: 'editTemplate' }));
+  } catch (e) {
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'editTemplate',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.EDIT_TEMPLATE));
+  }
+}
+
 export function* handleDuplicateTemplate(action) {
   try {
     yield put(loadingActions.addLoading(constants.DUPLICATE_TEMPLATE));
     const { templateId } = action.payload;
-    const { duplicateTemplate } = yield Template.duplicateTemplate(templateId);
-    const templates = yield select(templatesSelector);
-    yield put(actions.updateTemplates({ templates: [...templates, duplicateTemplate] }));
+    yield call(Template.duplicateTemplate, templateId);
+    yield call(getCurrentTemplatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'duplicateTemplate' }));
   } catch (e) {
     yield put(
@@ -114,16 +167,24 @@ function* watchGetTemplates() {
   yield takeLatest(constants.GET_TEMPLATES, handleGetTemplates);
 }
 
+function* watchGetTemplateById() {
+  yield takeLatest(constants.GET_TEMPLATE_BY_ID, handleGetTemplateById);
+}
+
 function* watchDeleteTemplate() {
   yield takeLatest(constants.DELETE_TEMPLATE, handleDeleteTemplate);
 }
 
 function* watchDeleteMultipleTemplates() {
-  yield takeLatest(constants.DELETE_ALL_TEMPLATES, handleDeleteMultipleTemplates);
+  yield takeLatest(constants.DELETE_MULTIPLE_TEMPLATES, handleDeleteMultipleTemplates);
 }
 
 function* watchCreateTemplate() {
   yield takeLatest(constants.CREATE_TEMPLATE, handleCreateTemplate);
+}
+
+function* watchEditTemplate() {
+  yield takeLatest(constants.EDIT_TEMPLATE, handleEditTemplate);
 }
 
 function* watchDuplicateTemplate() {
@@ -132,8 +193,10 @@ function* watchDuplicateTemplate() {
 
 export const templateSaga = [
   fork(watchGetTemplates),
+  fork(watchGetTemplateById),
   fork(watchDeleteTemplate),
   fork(watchDeleteMultipleTemplates),
   fork(watchCreateTemplate),
+  fork(watchEditTemplate),
   fork(watchDuplicateTemplate),
 ];

@@ -24,6 +24,7 @@ import { useTranslation } from 'react-i18next';
 import { useDebounce } from 'use-debounce';
 import { object2Array, hexToRgb } from 'Utils';
 
+import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../../common/constants';
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
@@ -311,13 +312,13 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
 };
 
 Index.defaultProps = {
-  acceptedTypes: ['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED'],
+  acceptedTypes: Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(({ value }) => value),
   staticSupported: true,
 };
 
 Index.propTypes = {
   acceptedTypes: PropTypes.arrayOf(
-    PropTypes.oneOf(['NUMBER', 'BOOLEAN', 'STRING', 'GEO', 'UNDEFINED']),
+    PropTypes.oneOf(Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(({ value }) => value)),
   ),
   staticSupported: PropTypes.bool,
   name: PropTypes.string.isRequired,

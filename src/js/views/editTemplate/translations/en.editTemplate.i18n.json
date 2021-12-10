@@ -1,0 +1,7 @@
+{
+  "title": "Edit Template: {{label}}",
+  "titleWithoutLabel": "Edit Template",
+  "noTemplateData": "It's not possible to edit this template",
+  "formTitle": "Edit Template",
+  "formSubtitle": "Change the template name or attributes"
+}

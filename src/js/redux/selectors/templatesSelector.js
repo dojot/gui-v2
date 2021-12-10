@@ -5,6 +5,11 @@ export const templatesSelector = createSelector(
   map => map.get('templates'),
 );
 
+export const templateDataSelector = createSelector(
+  state => state.templates,
+  map => map.get('templateData'),
+);
+
 export const paginationControlSelector = createSelector(
   state => state.templates,
   map => map.get('paginationControl'),

@@ -7,6 +7,7 @@ import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
+import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../common/constants';
 import useBar from '../../wizard/hooks/useBar';
 import {
   Attributes,
@@ -86,7 +87,7 @@ const BarWizard = ({
         validate={null}
         name='attributes'
         staticSupported={false}
-        acceptedTypes={['NUMBER']}
+        acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.INTEGER, TEMPLATE_ATTR_VALUE_TYPES.FLOAT]}
       />
       <Filters validate={null} name='filters' />
       <Summary />

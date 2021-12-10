@@ -19,6 +19,8 @@ import devicesEn from '../../views/devices/translations/en.devices.i18n.json';
 import devicesPtBr from '../../views/devices/translations/pt_br.devices.i18n.json';
 import editDeviceEn from '../../views/editDevice/translations/en.editDevice.i18n.json';
 import editDevicePtBr from '../../views/editDevice/translations/pt_br.editDevice.i18n.json';
+import editTemplateEn from '../../views/editTemplate/translations/en.editTemplate.i18n.json';
+import editTemplatePtBr from '../../views/editTemplate/translations/pt_br.editTemplate.i18n.json';
 import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
@@ -73,6 +75,7 @@ const resources = {
     templatesTable: templatesTableEn,
     error: errorEn,
     success: successEn,
+    editTemplate: editTemplateEn,
   },
   pt: {
     login: loginPtBr,
@@ -98,6 +101,7 @@ const resources = {
     templatesTable: templatesTablePtBr,
     error: errorPtBr,
     success: successPtBr,
+    editTemplate: editTemplatePtBr,
   },
 };
 

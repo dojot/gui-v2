@@ -1,65 +1,26 @@
 import { protectAPI } from 'APIs';
 
-export const getAttrList = page => {
+export const deleteTemplateAttrs = (templateId, attrIds) => {
   return protectAPI({
     query: `
-    query getAttrs($page: PageInput) {
-      getAttrs(page: $page) {
-        totalPages
-        currentPage
-        attrs {
-          id
-          label
-          type
-          valueType
-          value
-        }
-      }
-    }
-    `,
-    variables: JSON.stringify({
-      page,
-    }),
-  });
-};
-
-export const deleteAttr = (templateId, attrId) => {
-  return protectAPI({
-    query: `
-      mutation deleteAttr($templateId: String!, $attrId: String!) {
-        deleteAttr(templateId: $templateId, attrId: $attrId) {
+      mutation deleteTemplateAttrs($templateId: String!, $attrIds: [String]!) {
+        deleteTemplateAttrs(templateId: $templateId, attrIds: $attrIds) {
           id
         }
       }
     `,
     variables: JSON.stringify({
       templateId,
-      attrId,
+      attrIds,
     }),
   });
 };
 
-export const deleteMultipleAttrs = (templateId, attrIdArray) => {
+export const createTemplateAttr = (templateId, attr) => {
   return protectAPI({
     query: `
-      mutation deleteMultipleAttrs($templateId: String!, $attrIdArray: [String]!) {
-        deleteMultipleAttrs(templateId: $templateId, attrIdArray: $attrIdArray) {
-          id
-        }
-      }
-    `,
-    variables: JSON.stringify({
-      templateId,
-      attrIdArray,
-    }),
-  });
-};
-
-export const createAttr = (templateId, attr) => {
-  return protectAPI({
-    query: `
-      mutation createAttr($templateId: String!, $attr: Attr) {
-        createAttr(templateId: $templateId, attr: $attr) {
+      mutation createTemplateAttr($templateId: String!, $attr: TemplateAttr!) {
+        createTemplateAttr(templateId: $templateId, attr: $attr) {
           id
         }
       }
@@ -71,17 +32,18 @@ export const createAttr = (templateId, attr) => {
   });
 };
 
-export const editAttr = (templateId, attr) => {
+export const editTemplateAttr = (templateId, attrId, attr) => {
   return protectAPI({
     query: `
-      mutation createAttr($templateId: String!, $attr: Attr) {
-        createAttr(templateId: $templateId, attr: $attr) {
+      mutation editTemplateAttr($templateId: String!, $attrId: String!, $attr: TemplateAttr!) {
+        editTemplateAttr(templateId: $templateId, attrId: $attrId, attr: $attr) {
           id
         }
       }
     `,
     variables: JSON.stringify({
       templateId,
+      attrId,
       attr,
     }),
   });

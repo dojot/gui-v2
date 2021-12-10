@@ -32,7 +32,7 @@ export function* handleGetDevices(action) {
           paginationControl: {
             currentPage: getDevices.currentPage,
             totalPages: getDevices.totalPages,
-            itemsPerPage: page.size,
+            itemsPerPage: page?.size || 0,
           },
         }),
       );

@@ -157,3 +157,18 @@ export const createDevice = ({ label, templates, attrs, certificate }) => {
 export const getDevicesHistoryParsed = filter => {
   return protectAPI(filter);
 };
+
+export const parseHistoryQuery = (filter, configs, isRealTime) => {
+  return {
+    query: `
+      query getDeviceHistory($filter: HistoryInput!, $configs: ConfigsInput) {
+        getDeviceHistoryForDashboard(filter: $filter, configs: $configs)
+      }
+    `,
+    variables: JSON.stringify({
+      filter,
+      configs,
+    }),
+    isRealTime,
+  };
+};

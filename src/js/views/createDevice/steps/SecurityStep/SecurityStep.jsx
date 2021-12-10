@@ -35,7 +35,6 @@ const SecurityStep = ({
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (_, newPage) => {
-    console.log(newPage);
     setPage(newPage);
   };
 

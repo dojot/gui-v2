@@ -22,48 +22,54 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
   const { t } = useTranslation(['templateAttrs', 'common']);
   const classes = useAttrManagementModalStyles();
 
-  const [name, setName] = useState('');
+  const [label, setLabel] = useState('');
   const [type, setType] = useState('');
   const [valueType, setValueType] = useState('');
-  const [value, setValue] = useState('');
+  const [staticValue, setStaticValue] = useState('');
   const [saveButtonTouched, setSaveButtonTouched] = useState(false);
 
   const handleValidateAttr = () => {
-    return !!name.trim() && !!type && !!valueType;
+    return !!label.trim() && !!type && !!valueType;
   };
 
   const handleValidateAndSave = () => {
     setSaveButtonTouched(true);
     if (handleValidateAttr()) {
       handleSaveAttr({
-        name,
+        label,
         type,
         valueType,
-        value,
+        staticValue,
       });
     }
   };
 
   const handleClearState = () => {
-    setName('');
+    setLabel('');
     setType('');
     setValueType('');
-    setValue('');
+    setStaticValue('');
     setSaveButtonTouched(false);
   };
 
   useEffect(() => {
     if (isOpen && attrToEdit) {
-      setName(attrToEdit.label || '');
+      setLabel(attrToEdit.label || '');
       setType(attrToEdit.type || '');
       setValueType(attrToEdit.valueType || '');
-      setValue(attrToEdit.value || '');
+      setStaticValue(attrToEdit.staticValue || '');
     }
   }, [attrToEdit, isOpen]);
 
   useEffect(() => {
     if (!isOpen) setTimeout(handleClearState, 100);
   }, [isOpen]);
+
+  useEffect(() => {
+    if (type !== TEMPLATE_ATTR_TYPES.STATIC.value) {
+      setStaticValue('');
+    }
+  }, [type]);
 
   return (
     <Dialog open={isOpen} onClose={handleHideModal} maxWidth='md' fullWidth>
@@ -76,11 +82,11 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
         <Box marginBottom={2}>
           <FormControl fullWidth>
             <TextField
-              value={name}
+              value={label}
               variant='outlined'
-              error={saveButtonTouched && !name.trim()}
-              label={`${t('attrs:attrLabel.attrName')} *`}
-              onChange={e => setName(e.target.value)}
+              error={saveButtonTouched && !label.trim()}
+              label={`${t('attrs:attrLabel.attrLabel')} *`}
+              onChange={e => setLabel(e.target.value)}
             />
           </FormControl>
         </Box>
@@ -143,10 +149,11 @@ const AttrManagementModal = ({ isOpen, attrToEdit, handleHideModal, handleSaveAt
         <Box marginBottom={2}>
           <FormControl fullWidth>
             <TextField
-              value={value}
               variant='outlined'
+              value={staticValue}
               label={t('attrs:attrLabel.attrValue')}
-              onChange={e => setValue(e.target.value)}
+              disabled={type !== TEMPLATE_ATTR_TYPES.STATIC.value}
+              onChange={e => setStaticValue(e.target.value)}
             />
           </FormControl>
         </Box>

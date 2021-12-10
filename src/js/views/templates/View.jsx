@@ -75,7 +75,7 @@ const Templates = () => {
   };
 
   const handleConfirmMultipleTemplatesDeletion = () => {
-    dispatch(templateActions.deleteMultipleTemplates({ templateIdArray: selectedTemplates }));
+    dispatch(templateActions.deleteMultipleTemplates({ templateIds: selectedTemplates }));
     handleHideMassActions();
   };
 
@@ -88,7 +88,6 @@ const Templates = () => {
   };
 
   const handleEditTemplate = () => {
-    handleHideOptionsMenu();
     const templateId = templateOptionsMenu.template.id;
     history.push(`/templates/edit/${templateId}`);
   };
@@ -100,6 +99,7 @@ const Templates = () => {
   const handleDuplicateTemplate = () => {
     const templateId = templateOptionsMenu.template.id;
     dispatch(templateActions.duplicateTemplate({ templateId }));
+    handleHideOptionsMenu();
   };
 
   const handleConfirmTemplateDeletion = () => {
@@ -123,7 +123,7 @@ const Templates = () => {
     dispatch(
       templateActions.getTemplates({
         page: {
-          number: page,
+          number: page + 1,
           size: rowsPerPage,
         },
       }),

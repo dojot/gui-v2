@@ -33,7 +33,14 @@ Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
   ATTR_VALUE_TYPE_TRANSLATIONS[value] = translation;
 });
 
-const DataTable = ({ attrs, selectedAttrs, handleSelectAttr, handleSetAttrOptionsMenu }) => {
+const DataTable = ({
+  page,
+  attrs,
+  rowsPerPage,
+  selectedAttrs,
+  handleSelectAttr,
+  handleSetAttrOptionsMenu,
+}) => {
   const { t } = useTranslation('templateAttrs');
   const classes = useDataTableStyles();
 
@@ -59,8 +66,8 @@ const DataTable = ({ attrs, selectedAttrs, handleSelectAttr, handleSetAttrOption
         label: t('attrData.valueType'),
       },
       {
-        id: 'value',
-        label: t('attrData.value'),
+        id: 'staticValue',
+        label: t('attrData.staticValue'),
       },
       {
         id: 'actions',
@@ -127,49 +134,52 @@ const DataTable = ({ attrs, selectedAttrs, handleSelectAttr, handleSetAttrOption
           />
 
           <TableBody>
-            {attrs.sort(getComparator(order === DATA_ORDER.DESC, orderBy)).map(attr => {
-              const isSelected = selectedAttrs.indexOf(attr.id) !== -1;
+            {attrs
+              .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+              .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
+              .map(attr => {
+                const isSelected = selectedAttrs.indexOf(attr.id) !== -1;
 
-              const attrTypeTranslation = ATTR_TYPE_TRANSLATIONS[attr.type] || attr.type;
+                const attrTypeTranslation = ATTR_TYPE_TRANSLATIONS[attr.type] || attr.type;
 
-              const valueTypeTranslation =
-                ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType] || attr.valueType;
+                const valueTypeTranslation =
+                  ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType] || attr.valueType;
 
-              const handleSelectThisRow = () => {
-                handleSelectRow(attr.id);
-              };
+                const handleSelectThisRow = () => {
+                  handleSelectRow(attr.id);
+                };
 
-              const handleShowOptionsMenu = e => {
-                handleSetAttrOptionsMenu({
-                  anchorElement: e.target,
-                  attr,
-                });
-              };
+                const handleShowOptionsMenu = e => {
+                  handleSetAttrOptionsMenu({
+                    anchorElement: e.target,
+                    attr,
+                  });
+                };
 
-              return (
-                <TableRow key={attr.id} tabIndex={-1} selected={isSelected} hover>
-                  <TableCell onClick={handleStopPropagation}>
-                    <Checkbox color='primary' checked={isSelected} onChange={handleSelectThisRow} />
-                  </TableCell>
+                return (
+                  <TableRow key={attr.id} tabIndex={-1} selected={isSelected} hover>
+                    <TableCell onClick={handleStopPropagation}>
+                      <Checkbox
+                        color='primary'
+                        checked={isSelected}
+                        onChange={handleSelectThisRow}
+                      />
+                    </TableCell>
 
-                  <TableCell className={classes.clickableCell}>{attr.id}</TableCell>
+                    <TableCell>{attr.id}</TableCell>
+                    <TableCell>{attr.label}</TableCell>
+                    <TableCell>{t(attrTypeTranslation)}</TableCell>
+                    <TableCell>{t(valueTypeTranslation)}</TableCell>
+                    <TableCell>{attr.staticValue}</TableCell>
 
-                  <TableCell className={classes.clickableCell}>{attr.label}</TableCell>
-
-                  <TableCell className={classes.clickableCell}>{t(attrTypeTranslation)}</TableCell>
-
-                  <TableCell className={classes.clickableCell}>{t(valueTypeTranslation)}</TableCell>
-
-                  <TableCell className={classes.clickableCell}>{attr.value}</TableCell>
-
-                  <TableCell onClick={handleStopPropagation}>
-                    <IconButton onClick={handleShowOptionsMenu}>
-                      <MoreHoriz />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                    <TableCell onClick={handleStopPropagation}>
+                      <IconButton onClick={handleShowOptionsMenu}>
+                        <MoreHoriz />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
@@ -178,7 +188,9 @@ const DataTable = ({ attrs, selectedAttrs, handleSelectAttr, handleSetAttrOption
 };
 
 DataTable.propTypes = {
+  page: PropTypes.number.isRequired,
   attrs: PropTypes.array.isRequired,
+  rowsPerPage: PropTypes.number.isRequired,
   selectedAttrs: PropTypes.array.isRequired,
   handleSelectAttr: PropTypes.func.isRequired,
   handleSetAttrOptionsMenu: PropTypes.func.isRequired,

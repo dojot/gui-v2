@@ -82,7 +82,7 @@ const AttrsStep = ({
                 </TableCell>
 
                 <TableCell>
-                  <strong>{t('attrs:attrLabel.attrName')}</strong>
+                  <strong>{t('attrs:attrLabel.attrLabel')}</strong>
                 </TableCell>
 
                 <TableCell>
@@ -161,7 +161,7 @@ const AttrsStep = ({
                 </TableCell>
 
                 <TableCell>
-                  <strong>{t('attrs:attrLabel.attrName')}</strong>
+                  <strong>{t('attrs:attrLabel.attrLabel')}</strong>
                 </TableCell>
 
                 <TableCell>
@@ -206,7 +206,7 @@ const AttrsStep = ({
                 </TableCell>
 
                 <TableCell>
-                  <strong>{t('attrs:attrLabel.attrName')}</strong>
+                  <strong>{t('attrs:attrLabel.attrLabel')}</strong>
                 </TableCell>
 
                 <TableCell>

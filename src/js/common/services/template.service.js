@@ -1,10 +1,10 @@
 import { protectAPI } from 'APIs';
 
-export const getTemplatesList = page => {
+export const getTemplatesList = (page, filter) => {
   return protectAPI({
     query: `
-    query getTemplates($page: PageInput) {
-      getTemplates(page: $page) {
+    query getTemplates($page: PageInput, $filter: FilterTemplateInput) {
+      getTemplates(page: $page, filter: $filter) {
         totalPages
         currentPage
         templates {
@@ -25,18 +25,29 @@ export const getTemplatesList = page => {
     `,
     variables: JSON.stringify({
       page,
+      filter,
     }),
   });
 };
 
-export const deleteTemplate = templateId => {
+export const getTemplateById = templateId => {
   return protectAPI({
     query: `
-      mutation deleteTemplate($templateId: String!) {
-        deleteTemplate(templateId: $templateId) {
+    query getTemplateById($templateId: String!) {
+      getTemplateById(templateId: $templateId) {
+        id
+        label
+        attrs {
           id
+          type
+          label
+          valueType
+          isDynamic
+          templateId
+          staticValue
         }
       }
+    }
     `,
     variables: JSON.stringify({
       templateId,
@@ -44,33 +55,48 @@ export const deleteTemplate = templateId => {
   });
 };
 
-export const deleteMultipleTemplates = templateIdArray => {
+export const deleteTemplates = templateIds => {
   return protectAPI({
     query: `
-      mutation deleteMultipleTemplates($templateIdArray: [String]!) {
-        deleteMultipleTemplates(templateIdArray: $templateIdArray) {
-          id
-        }
+      mutation deleteTemplates($templateIds: [String]!) {
+        deleteTemplates(templateIds: $templateIds)
       }
     `,
     variables: JSON.stringify({
-      templateIdArray,
+      templateIds,
     }),
   });
 };
 
-export const createTemplate = template => {
+export const createTemplate = ({ label, attrs }) => {
   return protectAPI({
     query: `
-      mutation createTemplate($name: [String]!, $attrs: Attrs) {
-        createTemplate(name: $name, attrs: $attrs) {
+      mutation createTemplate($label: String!, $attrs: [TemplateAttr]!) {
+        createTemplate(label: $label, attrs: $attrs) {
           id
         }
       }
     `,
     variables: JSON.stringify({
-      name: template.name,
-      attrs: template.attrs,
+      label,
+      attrs,
+    }),
+  });
+};
+
+export const editTemplate = ({ id, label, attrs }) => {
+  return protectAPI({
+    query: `
+      mutation editTemplate($id: String!, $label: String!, $attrs: [TemplateAttr]!) {
+        editTemplate(id: $id, label: $label, attrs: $attrs) {
+          id
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      id,
+      label,
+      attrs,
     }),
   });
 };
