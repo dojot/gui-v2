@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Checkbox,
@@ -22,16 +22,17 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
+  order,
+  orderBy,
   certificationAuthorities,
   selectedCertificationAuthorities,
+  setOrder,
+  setOrderBy,
   handleSelectAuthority,
 }) => {
   const { t } = useTranslation('certificationAuthorities');
   const classes = useDataTableStyles();
   const dispatch = useDispatch();
-
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
 
   const headCells = useMemo(
     () => [
@@ -145,7 +146,9 @@ const DataTable = ({
                         onChange={handleSelectThisRow}
                       />
                     </TableCell>
+
                     <TableCell>{certificationAuthority.name}</TableCell>
+
                     <TableCell>
                       {certificationAuthority.validityPeriodStart} -{' '}
                       {certificationAuthority.validityPeriodEnd}
@@ -194,15 +197,13 @@ const DataTable = ({
 };
 
 DataTable.propTypes = {
-  certificationAuthorities: PropTypes.array,
-  handleSelectAuthority: PropTypes.func,
-  selectedCertificationAuthorities: PropTypes.array,
-};
-
-DataTable.defaultProps = {
-  certificationAuthorities: [],
-  handleSelectAuthority: null,
-  selectedCertificationAuthorities: [],
+  order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  certificationAuthorities: PropTypes.array.isRequired,
+  selectedCertificationAuthorities: PropTypes.array.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  setOrderBy: PropTypes.func.isRequired,
+  handleSelectAuthority: PropTypes.func.isRequired,
 };
 
 export default DataTable;

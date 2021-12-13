@@ -80,7 +80,7 @@ const SearchBar = ({ viewMode, handleSearchCertificationAuthorities, handleChang
             ),
             endAdornment: isShowingClearButton ? (
               <InputAdornment position='end'>
-                <IconButton onClick={handleClearSearch} size='small'>
+                <IconButton onClick={handleClearSearch} disabled={isTyping} size='small'>
                   <Close />
                 </IconButton>
               </InputAdornment>

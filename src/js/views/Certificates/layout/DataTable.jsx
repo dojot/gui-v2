@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
 import {
   Checkbox,
@@ -20,17 +20,18 @@ import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
+  order,
+  orderBy,
   certificates,
   selectedCertificates,
-  handleShowDevicesToAssociate,
+  setOrder,
+  setOrderBy,
   handleSelectCertificate,
+  handleShowDevicesToAssociate,
   handleSetCertificateOptionsMenu,
 }) => {
   const { t } = useTranslation('certificates');
   const classes = useDataTableStyles();
-
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
 
   const headCells = useMemo(
     () => [
@@ -180,17 +181,14 @@ const DataTable = ({
 };
 
 DataTable.propTypes = {
-  certificates: PropTypes.array,
-  handleShowDevicesToAssociate: PropTypes.func,
-  handleSelectCertificate: PropTypes.func,
-  handleSetCertificateOptionsMenu: PropTypes.func,
-};
-
-DataTable.defaultProps = {
-  certificates: [],
-  handleShowDevicesToAssociate: null,
-  handleSelectCertificate: null,
-  handleSetCertificateOptionsMenu: null,
+  order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
+  orderBy: PropTypes.string.isRequired,
+  certificates: PropTypes.array.isRequired,
+  setOrder: PropTypes.func.isRequired,
+  setOrderBy: PropTypes.func.isRequired,
+  handleSelectCertificate: PropTypes.func.isRequired,
+  handleShowDevicesToAssociate: PropTypes.func.isRequired,
+  handleSetCertificateOptionsMenu: PropTypes.func.isRequired,
 };
 
 export default DataTable;

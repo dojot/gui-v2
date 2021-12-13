@@ -26,6 +26,11 @@ export default makeStyles(theme => ({
     borderBottom: 'none',
     marginBottom: '1rem',
   },
+  dataGroupWithBottomBorder: {
+    background: '#f2f2f2',
+    border: `1px solid ${theme.palette.divider}`,
+    marginBottom: '1rem',
+  },
   dataGroupTitleIcon: {
     minWidth: 'auto',
     marginRight: theme.spacing(2),

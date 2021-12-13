@@ -128,7 +128,9 @@ const EditTemplate = () => {
               color='primary'
               variant='contained'
               disabled={!canSaveTemplate || isEditingTemplate}
-              endIcon={isEditingTemplate ? <CircularProgress color='white' size={14} /> : <Edit />}
+              endIcon={
+                isEditingTemplate ? <CircularProgress color='inherit' size={14} /> : <Edit />
+              }
               onClick={handleEditTemplate}
             >
               {t('common:edit')}

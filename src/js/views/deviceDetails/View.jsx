@@ -141,7 +141,7 @@ const DeviceDetails = () => {
             </Grid>
 
             <Grid item xs={12} sm={12} md={8}>
-              <List className={classes.dataGroup} disablePadding>
+              <List className={classes.dataGroupWithBottomBorder} disablePadding>
                 <ListItem divider>
                   <ListItemIcon className={classes.dataGroupTitleIcon}>
                     <History fontSize='small' style={{ color: '#f46a6a' }} />

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import { Box, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -96,8 +96,9 @@ const CreateDevice = () => {
       const attrClone = { ...attr };
       attrClone.id = Number(attrClone.id);
       delete attrClone.isDynamic;
+      delete attrClone.templateLabel;
       const attrValue = staticAttrValues[attr.id];
-      if (attrValue) attrClone.static_value = attrValue;
+      if (attrValue) attrClone.staticValue = attrValue;
       return attrClone;
     });
 
@@ -113,6 +114,21 @@ const CreateDevice = () => {
       }),
     );
   };
+
+  // Every time a template is selected this useEffect sets the attr static value as default attr value
+  useEffect(() => {
+    Object.values(selectedTemplates).forEach(template => {
+      template.attrs.forEach(attr => {
+        if (attr.type === TEMPLATE_ATTR_TYPES.STATIC.value) {
+          setStaticAttrValues(currentAttrValues => {
+            const actualValue = currentAttrValues[attr.id];
+            const value = actualValue || attr.staticValue || '';
+            return { ...currentAttrValues, [attr.id]: value };
+          });
+        }
+      });
+    });
+  }, [selectedTemplates]);
 
   return (
     <ViewContainer headerTitle={t('title')}>

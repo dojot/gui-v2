@@ -122,9 +122,12 @@ const EditDevice = () => {
 
   const handleEditDevice = () => {
     const attrsToSave = attrs.map(attr => {
+      const attrClone = { ...attr, id: Number(attr.id) };
+      delete attrClone.isDynamic;
+      delete attrClone.templateLabel;
       const attrValue = staticAttrValues[attr.id];
-      if (attrValue) return { ...attr, staticValue: attrValue };
-      return attr;
+      if (attrValue) attrClone.staticValue = attrValue;
+      return attrClone;
     });
 
     const templateIds = Object.values(selectedTemplates).map(({ id }) => {
@@ -272,7 +275,7 @@ const EditDevice = () => {
               variant='contained'
               onClick={handleEditDevice}
               disabled={!canSaveChanges || isEditingDevice}
-              endIcon={isEditingDevice ? <CircularProgress color='white' size={14} /> : <Edit />}
+              endIcon={isEditingDevice ? <CircularProgress color='inherit' size={14} /> : <Edit />}
             >
               {t('common:edit')}
             </Button>
