@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { DATA_ORDER, DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
+import { CERTIFICATES_PAGE_KEYS, DATA_ORDER, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import {
   actions as certificatesActions,
@@ -31,26 +31,32 @@ import useStyles from './style';
 
 const Certificates = () => {
   const { t } = useTranslation('certificates');
+  const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
-  const dispatch = useDispatch();
+
   const certificates = useSelector(certificatesSelector);
-  const isLoadingCertificates = useIsLoading(certificatesConstants.GET_CERTIFICATES);
   const { totalPages } = useSelector(paginationControlSelector);
-  const [certificatesOptionsMenu, setCertificatesOptionsMenu] = useState(null);
-  const [isShowingDevicesToAssociate, setIsShowingDevicesToAssociate] = useState(false);
+  const isLoadingCertificates = useIsLoading(certificatesConstants.GET_CERTIFICATES);
+
   const [clickedCertificate, setClickedCertificate] = useState(null);
   const [selectedCertificates, setSelectedCertificates] = useState([]);
+  const [certificatesOptionsMenu, setCertificatesOptionsMenu] = useState(null);
+
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
+  const [isShowingDevicesToAssociate, setIsShowingDevicesToAssociate] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [isShowingDisassociateDeviceAlert, setIsShowingDisassociateDeviceAlert] = useState(false);
+
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
   const [order, setOrder] = useState(DATA_ORDER.ASC);
   const [orderBy, setOrderBy] = useState('');
+
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
-    key: DEVICES_PAGE_KEYS.VIEW_MODE,
+    key: CERTIFICATES_PAGE_KEYS.VIEW_MODE,
   });
 
   const handleChangePage = (_, newPage) => {
@@ -94,8 +100,8 @@ const Certificates = () => {
   const handleConfirmCertificateDeletion = () => {
     const certificateId = certificatesOptionsMenu.certificate.id;
     dispatch(certificatesActions.deleteCertificate({ certificateId }));
-    setSelectedCertificates(currentSelectedDevices => {
-      return currentSelectedDevices.filter(id => id !== certificateId);
+    setSelectedCertificates(currentSelectedCertificates => {
+      return currentSelectedCertificates.filter(id => id !== certificateId);
     });
   };
 
@@ -108,11 +114,12 @@ const Certificates = () => {
   };
 
   const handleConfirmDisassociateDevice = () => {
-    console.log(certificatesOptionsMenu.certificate);
-    dispatch(
-      certificatesActions.disassociateDevice({ certificate: certificatesOptionsMenu.certificate }),
-    );
     setIsShowingDisassociateDeviceAlert(false);
+    dispatch(
+      certificatesActions.disassociateDevice({
+        certificate: certificatesOptionsMenu.certificate,
+      }),
+    );
   };
 
   const handleCloseCertificateDeletionAlert = () => {
@@ -132,11 +139,32 @@ const Certificates = () => {
     setIsShowingDisassociateDeviceAlert(true);
   };
 
+  useEffect(() => {
+    dispatch(
+      certificatesActions.getCertificates({
+        page: {
+          number: page + 1,
+          size: rowsPerPage,
+        },
+      }),
+    );
+  }, [dispatch, page, rowsPerPage]);
+
+  useEffect(() => {
+    if (viewMode) setSelectedCertificates([]);
+  }, [viewMode]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(certificatesActions.updateCertificates({ certificates: [] }));
+    };
+  }, [dispatch]);
+
   return (
     <ViewContainer headerTitle={t('headerTitle')}>
       <AssociateDevicesModal
         isOpen={isShowingDevicesToAssociate}
-        deviceDetails={clickedCertificate || {}}
+        certificate={clickedCertificate || {}}
         handleHideDevicesToAssociateModal={handleHideDevicesToAssociateModal}
       />
 
