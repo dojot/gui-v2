@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
@@ -29,35 +29,46 @@ import SearchBar from './layout/SearchBar';
 import useStyles from './style';
 
 const CertificationAuthorities = () => {
-  const { t } = useTranslation('certificationAuthorities');
+  const { t } = useTranslation(['certificationAuthorities', 'common']);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
 
-  const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
-
+  const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
   const isLoadingCertificationAuthorities = useIsLoading(constants.GET_CERTIFICATION_AUTHORITIES);
 
-  const [page] = useState(0);
-  const [rowsPerPage] = useState(10);
-  const [orderBy, setOrderBy] = useState('');
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
   const [selectedAuthorities, setSelectedAuthorities] = useState([]);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [certificationAuthorityOptionsMenu, setCertificationAuthorityOptionsMenu] = useState(null);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
+
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: CERTIFICATION_AUTHORITIES_PAGE_KEYS.VIEW_MODE,
   });
 
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
   const handleHideMassActions = () => {
     setSelectedAuthorities([]);
   };
 
-  const handleDeleteMultipleCa = () => {
+  const handleDeleteMultipleCertificationmAuthorities = () => {
     setIsShowingMultipleDeleteAlert(true);
   };
 
@@ -91,16 +102,49 @@ const CertificationAuthorities = () => {
     handleHideOptionsMenu();
   };
 
+  const handleSearchCertificationAuthorities = search => {
+    dispatch(
+      certificationAuthoritiesActions.getCertificationAuthorities({
+        filter: { label: search },
+      }),
+    );
+  };
+
+  useEffect(() => {
+    dispatch(
+      certificationAuthoritiesActions.getCertificationAuthorities({
+        page: {
+          number: page + 1,
+          size: rowsPerPage,
+        },
+      }),
+    );
+  }, [dispatch, page, rowsPerPage]);
+
+  useEffect(() => {
+    if (viewMode) setSelectedAuthorities([]);
+  }, [viewMode]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(
+        certificationAuthoritiesActions.updateCertificates({
+          certificationAuthorities: [],
+        }),
+      );
+    };
+  }, [dispatch]);
+
   return (
     <ViewContainer headerTitle={t('headerTitle')}>
       <AlertDialog
         isOpen={isShowingMultipleDeleteAlert}
+        cancelButtonText={t('common:cancel')}
+        confirmButtonText={t('common:exclude')}
         title={t('deleteMultipleCaAlert.title')}
         message={t('deleteMultipleCaAlert.message')}
         handleConfirm={handleConfirmMultipleCaDeletion}
         handleClose={handleCloseMultipleCaDeletionAlert}
-        cancelButtonText='cancelar'
-        confirmButtonText='confirmar'
       />
 
       <AlertDialog
@@ -116,17 +160,23 @@ const CertificationAuthorities = () => {
       <CaOptionsMenu
         isShowingMenu={!!certificationAuthorityOptionsMenu}
         anchorElement={certificationAuthorityOptionsMenu?.anchorElement}
-        handleDeleteCa={handleDeleteCertificationAuthority}
         handleHideOptionsMenu={handleHideOptionsMenu}
+        handleDeleteCa={handleDeleteCertificationAuthority}
       />
 
       <Box className={classes.container}>
-        <SearchBar viewMode={viewMode} handleChangeViewMode={setViewMode} />
+        <SearchBar
+          viewMode={viewMode}
+          handleChangeViewMode={setViewMode}
+          handleSearchCertificationAuthorities={handleSearchCertificationAuthorities}
+        />
 
         {selectedAuthorities.length > 0 && (
           <MassActions
             handleHideMassActions={handleHideMassActions}
-            handleDeleteMultipleDevices={handleDeleteMultipleCa}
+            handleDeleteMultipleCertificationmAuthorities={
+              handleDeleteMultipleCertificationmAuthorities
+            }
           />
         )}
 
@@ -139,10 +189,10 @@ const CertificationAuthorities = () => {
                 <DataTable
                   order={order}
                   orderBy={orderBy}
-                  certificationAuthorities={certificationAuthorities}
-                  selectedCertificationAuthorities={selectedAuthorities}
                   setOrder={setOrder}
                   setOrderBy={setOrderBy}
+                  certificationAuthorities={certificationAuthorities}
+                  selectedCertificationAuthorities={selectedAuthorities}
                   handleSelectAuthority={setSelectedAuthorities}
                 />
               )}
@@ -156,10 +206,10 @@ const CertificationAuthorities = () => {
 
               {certificationAuthorities.length === 0 && (
                 <EmptyPlaceholder
+                  textButton={t('createCa')}
                   emptyListMessage={t('emptyListMessage')}
                   icon={<VerifiedUserOutlined fontSize='large' />}
                   handleButtonClick={() => history.push('/certification-authorities/new')}
-                  textButton={t('createCa')}
                 />
               )}
             </>
@@ -170,7 +220,9 @@ const CertificationAuthorities = () => {
           page={page}
           rowsPerPage={rowsPerPage}
           totalOfPages={totalPages}
-          numberOfSelectedDevices={selectedAuthorities.length}
+          numberOfSelectedAuthorities={selectedAuthorities.length}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Box>
     </ViewContainer>

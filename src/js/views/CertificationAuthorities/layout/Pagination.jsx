@@ -10,7 +10,7 @@ const Pagination = ({
   page,
   rowsPerPage,
   totalOfPages,
-  numberOfSelectedCAs,
+  numberOfSelectedAuthorities,
   handleChangePage,
   handleChangeRowsPerPage,
 }) => {
@@ -21,8 +21,10 @@ const Pagination = ({
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
       <Typography>{t('totalOfPages', { count: totalOfPages })}</Typography>
 
-      {!!numberOfSelectedCAs && (
-        <Typography>{t('numberOfSelectedItems', { count: numberOfSelectedCAs })}</Typography>
+      {!!numberOfSelectedAuthorities && (
+        <Typography>
+          {t('numberOfSelectedItems', { count: numberOfSelectedAuthorities })}
+        </Typography>
       )}
 
       <TablePagination
@@ -48,7 +50,7 @@ Pagination.propTypes = {
   rowsPerPage: PropTypes.number,
   totalOfPages: PropTypes.number,
   handleChangePage: PropTypes.func,
-  numberOfSelectedCAs: PropTypes.number,
+  numberOfSelectedAuthorities: PropTypes.number,
   handleChangeRowsPerPage: PropTypes.func,
 };
 
@@ -57,7 +59,7 @@ Pagination.defaultProps = {
   rowsPerPage: 0,
   totalOfPages: 0,
   handleChangePage: null,
-  numberOfSelectedCAs: 0,
+  numberOfSelectedAuthorities: 0,
   handleChangeRowsPerPage: null,
 };
 

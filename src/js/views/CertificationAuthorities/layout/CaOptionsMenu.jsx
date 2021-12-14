@@ -5,11 +5,11 @@ import { Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { useDeviceOptionsStyles } from './style';
+import { useOptionsMenuStyles } from './style';
 
 const CaOptionsMenu = ({ isShowingMenu, anchorElement, handleDeleteCa, handleHideOptionsMenu }) => {
   const { t } = useTranslation(['certificationAuthorities', 'common']);
-  const classes = useDeviceOptionsStyles();
+  const classes = useOptionsMenuStyles();
 
   return (
     <Menu

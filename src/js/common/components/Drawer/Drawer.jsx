@@ -84,7 +84,7 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
             return (
               <div key={item.label}>
                 <MenuItem
-                  selected={hasSelectedSubItem}
+                  selected={!!hasSelectedSubItem}
                   onClick={isOpen ? handleToggleCollapsibleItems : handleGoToSubItems}
                   classes={{
                     root: isOpen ? classes.menuItem : classes.menuClosedItem,
