@@ -42,17 +42,17 @@ export const deleteCertificate = certificateId => {
   });
 };
 
-export const deleteMultipleCertificates = certificatesIdArray => {
+export const deleteMultipleCertificates = certificatesIds => {
   return protectAPI({
     query: `
-      mutation deleteMultipleCertificates($certificatesIdArray: [String]!) {
-        deleteMultipleCertificates(certificatesIdArray: $certificatesIdArray) {
+      mutation deleteMultipleCertificates($certificatesIds: [String]!) {
+        deleteMultipleCertificates(certificatesIds: $certificatesIds) {
           id
         }
       }
     `,
     variables: JSON.stringify({
-      certificatesIdArray,
+      certificatesIds,
     }),
   });
 };

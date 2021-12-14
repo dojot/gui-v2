@@ -107,7 +107,9 @@ const Certificates = () => {
 
   const handleConfirmMultipleCertificatesDeletion = () => {
     dispatch(
-      certificatesActions.deleteMultipleCertificates({ certificatesIdArray: selectedCertificates }),
+      certificatesActions.deleteMultipleCertificates({
+        certificatesIds: selectedCertificates,
+      }),
     );
     setIsShowingMultipleDeleteAlert(false);
     handleHideMassActions();
