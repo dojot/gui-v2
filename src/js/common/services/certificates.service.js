@@ -1,20 +1,29 @@
 import { protectAPI } from 'APIs';
 
-export const getCertificatesList = (page, filter) => {
+export const getCertificateList = page => {
   return protectAPI({
     query: `
-      query getCertificates($page: PageInput, $filter: FilterDeviceInput) {
-        getCertificates(page: $page, filter: $filter) {
-          totalPages
-          currentPage
+      query getCertificateList($page: PageInput!) {
+        getCertificateList(page: $page) {
+          pagination {
+            currentPage
+            totalPages
+          }
           certificates {
-            id
-            label
-            attrs{
-              label
-              valueType
-              isDynamic
-              staticValue
+            issuedByDojotPki
+            autoRegistered
+            subjectDN
+            fingerprint
+            pem
+            tenant
+            createdAt
+            modifiedAt
+            belongsTo {
+              device
+            }
+            validity {
+              notBefore
+              notAfter
             }
           }
         }
@@ -22,7 +31,6 @@ export const getCertificatesList = (page, filter) => {
     `,
     variables: JSON.stringify({
       page,
-      filter,
     }),
   });
 };

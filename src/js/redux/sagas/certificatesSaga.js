@@ -23,14 +23,14 @@ export function* handleGetCertificates(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_CERTIFICATES));
     const { page, filter } = action.payload;
-    const { getCertificates } = yield call(Certificates.getCertificatesList, page, filter);
-    if (getCertificates) {
+    const { getCertificateList } = yield call(Certificates.getCertificateList, page, filter);
+    if (getCertificateList) {
       yield put(
         actions.updateCertificates({
-          certificates: getCertificates.certificates,
-          paginationCOntrol: {
-            currentPage: getCertificates.currentPage,
-            totalPages: getCertificates.totalPages,
+          certificates: getCertificateList.certificates,
+          paginationControl: {
+            currentPage: getCertificateList.currentPage,
+            totalPages: getCertificateList.totalPages,
             itemsPerPage: page?.size || 0,
           },
         }),

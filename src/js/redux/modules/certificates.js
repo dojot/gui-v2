@@ -36,11 +36,11 @@ export const updateCertificates = createAction(UPDATE_CERTIFICATES, payload => {
 });
 
 export const deleteCertificate = createAction(DELETE_CERTIFICATE, payload => ({
-  certificateId: payload.certificateId,
+  fingerprint: payload.fingerprint,
 }));
 
 export const deleteMultipleCertificates = createAction(DELETE_MULTIPLE_CERTIFICATES, payload => ({
-  certificatesIds: payload.certificatesIds,
+  fingerprints: payload.fingerprints,
 }));
 
 export const disassociateDevice = createAction(DISASSOCIATE_DEVICE, payload => ({

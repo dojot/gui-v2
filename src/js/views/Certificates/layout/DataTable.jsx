@@ -2,7 +2,9 @@ import React, { useMemo } from 'react';
 
 import {
   Checkbox,
+  Chip,
   IconButton,
+  Link,
   Paper,
   Table,
   TableBody,
@@ -11,8 +13,10 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { MoreHoriz } from '@material-ui/icons';
+import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
@@ -27,7 +31,6 @@ const DataTable = ({
   setOrder,
   setOrderBy,
   handleSelectCertificate,
-  handleShowDevicesToAssociate,
   handleSetCertificateOptionsMenu,
 }) => {
   const { t } = useTranslation('certificates');
@@ -36,16 +39,16 @@ const DataTable = ({
   const headCells = useMemo(
     () => [
       {
-        id: 'label',
-        label: t('dataTableHead.label'),
-      },
-      {
-        id: 'validityPeriod',
-        label: t('dataTableHead.validityPeriod'),
+        id: 'fingerprint',
+        label: t('dataTableHead.fingerprint'),
       },
       {
         id: 'deviceId',
         label: t('dataTableHead.deviceId'),
+      },
+      {
+        id: 'validity',
+        label: t('dataTableHead.validity'),
       },
       {
         id: 'status',
@@ -54,7 +57,6 @@ const DataTable = ({
       {
         id: 'actions',
         label: t('dataTableHead.actions'),
-        disableOrderBy: true,
       },
     ],
     [t],
@@ -68,7 +70,7 @@ const DataTable = ({
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelectedCertificates = certificates.map(row => row.id);
+      const newSelectedCertificates = certificates.map(row => row.fingerprint);
       handleSelectCertificate(newSelectedCertificates);
       return;
     }
@@ -113,20 +115,37 @@ const DataTable = ({
             numSelected={selectedCertificates.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
+            disableOrderBy
           />
 
           <TableBody>
             {certificates
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
               .map(certificate => {
-                const isSelected = selectedCertificates.indexOf(certificate.id) !== -1;
+                const isSelected = selectedCertificates.indexOf(certificate.fingerprint) !== -1;
 
-                const handleShowDeviceLinkedModal = () => {
-                  handleShowDevicesToAssociate(certificate);
-                };
+                const validityInitialDate = certificate.validity?.notBefore
+                  ? moment(certificate.validity.notBefore).format('LL')
+                  : '';
+
+                const validityFinalDate = certificate.validity?.notAfter
+                  ? moment(certificate.validity.notAfter).format('LL')
+                  : '';
+
+                const isExpired = certificate.validity?.notAfter
+                  ? moment(certificate.validity.notAfter).isAfter(moment(), 'day')
+                  : false;
+
+                const isAboutToExpire = certificate.validity?.notAfter
+                  ? moment(certificate.validity.notAfter).isSame(moment(), 'day')
+                  : false;
+
+                let statusText = t('status.valid');
+                if (isExpired) statusText = t('status.expired');
+                else if (isAboutToExpire) statusText = t('status.aboutToExpire');
 
                 const handleSelectThisRow = () => {
-                  handleSelectRow(certificate.id);
+                  handleSelectRow(certificate.fingerprint);
                 };
 
                 const handleShowOptionsMenu = e => {
@@ -153,17 +172,34 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell>{certificate.label}</TableCell>
-                    <TableCell>{certificate.validityPeriod}</TableCell>
                     <TableCell
-                      className={certificate.deviceId && classes.clickableCell}
-                      onClick={certificate.deviceId ? handleShowDeviceLinkedModal : null}
+                      style={{ maxWidth: '150px', wordBreak: 'break-all', fontSize: '0.7rem' }}
                     >
-                      {certificate.deviceId
-                        ? certificate.deviceId
-                        : t('dataTableBody.notAssociated')}
+                      {certificate.fingerprint}
                     </TableCell>
-                    <TableCell>{certificate.status}</TableCell>
+
+                    <TableCell>
+                      {certificate.belongsTo?.device ? (
+                        <RouterLink
+                          component={Link}
+                          href={`/devices/${certificate.belongsTo.device}`}
+                        >
+                          {certificate.belongsTo.device}
+                        </RouterLink>
+                      ) : (
+                        t('dataTableBody.noDeviceAssociated')
+                      )}
+                    </TableCell>
+
+                    <TableCell>
+                      {validityInitialDate && validityFinalDate
+                        ? `${validityInitialDate} - ${validityFinalDate}`
+                        : t('validityNotDefined')}
+                    </TableCell>
+
+                    <TableCell>
+                      <Chip color='primary' size='small' label={statusText} />
+                    </TableCell>
 
                     <TableCell onClick={handleStopPropagation}>
                       <IconButton onClick={handleShowOptionsMenu}>
@@ -187,7 +223,6 @@ DataTable.propTypes = {
   setOrder: PropTypes.func.isRequired,
   setOrderBy: PropTypes.func.isRequired,
   handleSelectCertificate: PropTypes.func.isRequired,
-  handleShowDevicesToAssociate: PropTypes.func.isRequired,
   handleSetCertificateOptionsMenu: PropTypes.func.isRequired,
 };
 

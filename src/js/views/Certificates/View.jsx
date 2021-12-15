@@ -98,10 +98,12 @@ const Certificates = () => {
   };
 
   const handleConfirmCertificateDeletion = () => {
-    const certificateId = certificatesOptionsMenu.certificate.id;
-    dispatch(certificatesActions.deleteCertificate({ certificateId }));
+    const { fingerprint } = certificatesOptionsMenu.certificate;
+    dispatch(certificatesActions.deleteCertificate({ fingerprint }));
     setSelectedCertificates(currentSelectedCertificates => {
-      return currentSelectedCertificates.filter(id => id !== certificateId);
+      return currentSelectedCertificates.filter(
+        currentFingerprint => currentFingerprint !== fingerprint,
+      );
     });
   };
 
@@ -252,7 +254,6 @@ const Certificates = () => {
                   setOrder={setOrder}
                   setOrderBy={setOrderBy}
                   handleSelectCertificate={setSelectedCertificates}
-                  handleShowDevicesToAssociate={handleShowDevicesToAssociate}
                   handleSetCertificateOptionsMenu={setCertificatesOptionsMenu}
                 />
               )}

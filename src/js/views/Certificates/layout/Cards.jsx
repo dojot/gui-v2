@@ -30,7 +30,7 @@ const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptio
           };
 
           return (
-            <Grid key={certificate.id} xs={12} sm={6} md={4} xl={3} item>
+            <Grid key={certificate.fingerprint} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
                 className={classes.card}
                 onClick={handleSeeCertificateDetails}

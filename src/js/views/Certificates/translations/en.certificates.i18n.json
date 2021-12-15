@@ -18,15 +18,21 @@
   "hasAssociatedDeviceTooltip": "Has associated device",
   "noAssociatedDeviceTooltip": "No associated device",
   "lastUpdateTooltip": "Last update",
+  "validityNotDefined": "Validity Not Defined",
+  "status": {
+    "valid": "Valid",
+    "expired": "Expired",
+    "aboutToExpire": "About To Expire"
+  },
   "dataTableHead": {
-    "label": "Name",
-    "validityPeriod": "Validity Period",
-    "deviceId": "Device Id",
+    "fingerprint": "Fingerprint",
+    "deviceId": "Device ID",
+    "validity": "Validity Period",
     "status": "Status",
     "actions": "Actions"
   },
   "dataTableBody": {
-    "notAssociated": "Not associated"
+    "noDeviceAssociated": "No Device Associated"
   },
   "associateDeviceModal": {
     "table": {

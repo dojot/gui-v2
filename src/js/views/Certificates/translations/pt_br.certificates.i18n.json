@@ -7,26 +7,32 @@
   "backIconButtonText": "Página Anterior",
   "pageInfo": "Página {{page}} de {{totalOfPages}}",
   "labelRowsPerPage": "Itens por página:",
-  "associateToDevice": "Associar a um dispositivo",
-  "disassociateDevice": "Desassociar dispositivo",
-  "changeAssociation": "Trocar associação",
+  "associateToDevice": "Associar a um Dispositivo",
+  "disassociateDevice": "Desassociar Dispositivo",
+  "changeAssociation": "Trocar Associação",
   "AssociateToDeviceModalTitle": "Dispositivos",
-  "searchInputPh": "Pesquisar certificado",
+  "searchInputPh": "Pesquisar Certificado",
   "createNewCertificate": "Criar Novo Certificado",
   "emptyListMessage": "Nenhum Certificado Encontrado",
   "massActions": "Ações em massa:",
   "hasAssociatedDeviceTooltip": "Possui dispositivo associado",
   "noAssociatedDeviceTooltip": "Não possui dispositivo associado",
   "lastUpdateTooltip": "Última atualização",
+  "validityNotDefined": "Validade Não Definida",
+  "status": {
+    "valid": "Válido",
+    "expired": "Expirado",
+    "aboutToExpire": "A Expirar"
+  },
   "dataTableHead": {
-    "label": "Nome",
-    "validityPeriod": "Período de Validade",
-    "deviceId": "Id do Dispositivo",
+    "fingerprint": "Fingerprint",
+    "deviceId": "ID do Dispositivo",
+    "validity": "Período de Validade",
     "status": "Status",
     "actions": "Ações"
   },
   "dataTableBody": {
-    "notAssociated": "Não associado"
+    "noDeviceAssociated": "Nenhum Dispositivo Associado"
   },
   "associateDeviceModal": {
     "table": {
