@@ -69,7 +69,15 @@ const CertificationAuthorities = () => {
   };
 
   const handleDeleteMultipleCertificationmAuthorities = () => {
-    setIsShowingMultipleDeleteAlert(true);
+    setIsShowingMultipleDeleteAlert(false);
+    dispatch(
+      certificationAuthoritiesActions.deleteCertificationAuthority({
+        certificationAuthoritiesIds: selectedAuthorities,
+      }),
+    );
+    setSelectedAuthorities(currentSelectedAuthorities => {
+      return currentSelectedAuthorities.filter(id => !selectedAuthorities.includes(id));
+    });
   };
 
   const handleConfirmMultipleCaDeletion = () => {
@@ -128,7 +136,7 @@ const CertificationAuthorities = () => {
   useEffect(() => {
     return () => {
       dispatch(
-        certificationAuthoritiesActions.updateCertificates({
+        certificationAuthoritiesActions.updateCertificationAuthorities({
           certificationAuthorities: [],
         }),
       );

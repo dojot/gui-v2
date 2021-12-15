@@ -6,6 +6,7 @@ describe('Certification authorities module tests', () => {
   const fakePaginationControl = {
     totalPages: 150,
     currentPage: 27,
+    itemsPerPage: 10,
   };
 
   it('should declare the constants in the correct format', () => {
@@ -23,7 +24,9 @@ describe('Certification authorities module tests', () => {
   });
 
   it('should update the pagination control', () => {
-    const action = actions.updateCertificationAuthorities(fakePaginationControl);
+    const action = actions.updateCertificationAuthorities({
+      paginationControl: fakePaginationControl,
+    });
     const newState = reducers[action.type](initialState(), action);
     expect(newState.get('paginationControl')).toEqual(fakePaginationControl);
   });

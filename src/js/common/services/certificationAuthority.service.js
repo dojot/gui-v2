@@ -42,17 +42,17 @@ export const deleteCertificationAuthority = certificationAuthorityId => {
   });
 };
 
-export const deleteMultipleCertificationAuthorities = certificationAuthoritiesIdArray => {
+export const deleteMultipleCertificationAuthorities = certificationAuthoritiesIds => {
   return protectAPI({
     query: `
       mutation deleteMultipleCertificationAuthorities($deviceIdArray: [String]!) {
-        deleteMultipleDevices(certificationAuthoritiesIdArray: $certificationAuthoritiesIdArray) {
+        deleteMultipleDevices(certificationAuthoritiesIds: $certificationAuthoritiesIds) {
           id
         }
       }
     `,
     variables: JSON.stringify({
-      certificationAuthoritiesIdArray,
+      certificationAuthoritiesIds,
     }),
   });
 };
