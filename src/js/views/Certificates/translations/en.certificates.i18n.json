@@ -19,12 +19,12 @@
   "noAssociatedDeviceTooltip": "No associated device",
   "lastUpdateTooltip": "Last update",
   "validityNotDefined": "Validity Not Defined",
-  "status": {
-    "valid": "Valid",
-    "expired": "Expired",
-    "aboutToExpire": "About To Expire"
+  "certificateStatus": {
+    "VALID": "Valid",
+    "EXPIRED": "Expired",
+    "ABOUT_TO_EXPIRE": "About To Expire"
   },
-  "dataTableHead": {
+  "dataLabels": {
     "fingerprint": "Fingerprint",
     "deviceId": "Device ID",
     "validity": "Validity Period",
@@ -59,8 +59,5 @@
     "message": "Are you sure you want to disassociate ({{deviceId}}) of ({{certificateLabel}})?",
     "cancelButton": "Cancel",
     "confirmButton": "Disassociate"
-  },
-  "cards": {
-    "deviceId": "Device Id"
   }
 }

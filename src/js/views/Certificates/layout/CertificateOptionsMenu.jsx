@@ -8,13 +8,13 @@ import { useTranslation } from 'react-i18next';
 import { useCertificateOptionsStyles } from './style';
 
 const CertificateOptionsMenu = ({
+  certificate,
   isShowingMenu,
   anchorElement,
-  handleDeleteCertificate,
   handleHideOptionsMenu,
-  certificate,
-  handleShowDevicesToAssociate,
+  handleDeleteCertificate,
   handleDisassociateDevice,
+  handleShowDevicesToAssociate,
 }) => {
   const { t } = useTranslation(['certificates', 'common']);
   const classes = useCertificateOptionsStyles();
@@ -28,7 +28,7 @@ const CertificateOptionsMenu = ({
     >
       <MenuItem
         className={classes.menuItem}
-        disabled={certificate?.deviceId !== null}
+        disabled={!!certificate?.belongsTo?.device}
         onClick={handleShowDevicesToAssociate}
       >
         <InsertLink />
@@ -37,14 +37,14 @@ const CertificateOptionsMenu = ({
 
       <MenuItem
         className={classes.menuItem}
-        disabled={!certificate?.deviceId}
+        disabled={!certificate?.belongsTo?.device}
         onClick={handleDisassociateDevice}
       >
         <LinkOff />
         <span className={classes.menuItemText}>{t('certificates:disassociateDevice')}</span>
       </MenuItem>
 
-      <MenuItem className={classes.menuItem} disabled={!certificate?.deviceId}>
+      <MenuItem className={classes.menuItem} disabled={!certificate?.belongsTo?.device}>
         <Loop />
         <span className={classes.menuItemText}>{t('certificates:changeAssociation')}</span>
       </MenuItem>
@@ -58,23 +58,23 @@ const CertificateOptionsMenu = ({
 };
 
 CertificateOptionsMenu.propTypes = {
+  certificate: PropTypes.object,
   isShowingMenu: PropTypes.bool,
   anchorElement: PropTypes.object,
-  handleDeleteCertificate: PropTypes.func,
   handleHideOptionsMenu: PropTypes.func,
-  certificate: PropTypes.object,
-  handleShowDevicesToAssociate: PropTypes.func,
+  handleDeleteCertificate: PropTypes.func,
   handleDisassociateDevice: PropTypes.func,
+  handleShowDevicesToAssociate: PropTypes.func,
 };
 
 CertificateOptionsMenu.defaultProps = {
+  certificate: null,
   isShowingMenu: false,
   anchorElement: null,
-  handleDeleteCertificate: null,
   handleHideOptionsMenu: null,
-  certificate: null,
-  handleShowDevicesToAssociate: null,
+  handleDeleteCertificate: null,
   handleDisassociateDevice: null,
+  handleShowDevicesToAssociate: null,
 };
 
 export default CertificateOptionsMenu;

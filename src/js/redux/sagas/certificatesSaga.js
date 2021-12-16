@@ -29,8 +29,8 @@ export function* handleGetCertificates(action) {
         actions.updateCertificates({
           certificates: getCertificateList.certificates,
           paginationControl: {
-            currentPage: getCertificateList.currentPage,
-            totalPages: getCertificateList.totalPages,
+            currentPage: getCertificateList.pagination.currentPage,
+            totalPages: getCertificateList.pagination.totalPages,
             itemsPerPage: page?.size || 0,
           },
         }),

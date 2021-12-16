@@ -13,7 +13,6 @@ import {
   TableRow,
 } from '@material-ui/core';
 import { MoreHoriz } from '@material-ui/icons';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
@@ -21,6 +20,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
 import { getComparator } from '../../../common/utils';
+import { useCertificateComputedData } from '../hooks';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -36,27 +36,29 @@ const DataTable = ({
   const { t } = useTranslation('certificates');
   const classes = useDataTableStyles();
 
+  const handleGetCertificateComputedData = useCertificateComputedData();
+
   const headCells = useMemo(
     () => [
       {
         id: 'fingerprint',
-        label: t('dataTableHead.fingerprint'),
+        label: t('dataLabels.fingerprint'),
       },
       {
         id: 'deviceId',
-        label: t('dataTableHead.deviceId'),
+        label: t('dataLabels.deviceId'),
       },
       {
         id: 'validity',
-        label: t('dataTableHead.validity'),
+        label: t('dataLabels.validity'),
       },
       {
         id: 'status',
-        label: t('dataTableHead.status'),
+        label: t('dataLabels.status'),
       },
       {
         id: 'actions',
-        label: t('dataTableHead.actions'),
+        label: t('dataLabels.actions'),
       },
     ],
     [t],
@@ -124,25 +126,12 @@ const DataTable = ({
               .map(certificate => {
                 const isSelected = selectedCertificates.indexOf(certificate.fingerprint) !== -1;
 
-                const validityInitialDate = certificate.validity?.notBefore
-                  ? moment(certificate.validity.notBefore).format('LL')
-                  : '';
-
-                const validityFinalDate = certificate.validity?.notAfter
-                  ? moment(certificate.validity.notAfter).format('LL')
-                  : '';
-
-                const isExpired = certificate.validity?.notAfter
-                  ? moment(certificate.validity.notAfter).isAfter(moment(), 'day')
-                  : false;
-
-                const isAboutToExpire = certificate.validity?.notAfter
-                  ? moment(certificate.validity.notAfter).isSame(moment(), 'day')
-                  : false;
-
-                let statusText = t('status.valid');
-                if (isExpired) statusText = t('status.expired');
-                else if (isAboutToExpire) statusText = t('status.aboutToExpire');
+                const {
+                  statusText,
+                  statusColor,
+                  validityInitialDate,
+                  validityFinalDate,
+                } = handleGetCertificateComputedData(certificate.validity);
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(certificate.fingerprint);
@@ -157,7 +146,7 @@ const DataTable = ({
 
                 return (
                   <TableRow
-                    key={certificate.label}
+                    key={certificate.fingerprint}
                     tabIndex={-1}
                     role='checkbox'
                     selected={isSelected}
@@ -172,9 +161,7 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell
-                      style={{ maxWidth: '150px', wordBreak: 'break-all', fontSize: '0.7rem' }}
-                    >
+                    <TableCell className={classes.truncatedFingerprint}>
                       {certificate.fingerprint}
                     </TableCell>
 
@@ -198,7 +185,11 @@ const DataTable = ({
                     </TableCell>
 
                     <TableCell>
-                      <Chip color='primary' size='small' label={statusText} />
+                      <Chip
+                        style={{ background: statusColor, color: 'white' }}
+                        label={statusText}
+                        size='small'
+                      />
                     </TableCell>
 
                     <TableCell onClick={handleStopPropagation}>
