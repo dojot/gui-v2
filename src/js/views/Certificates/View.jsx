@@ -69,7 +69,7 @@ const Certificates = () => {
   };
 
   const handleSearchCertificate = search => {
-    dispatch(certificatesActions.getCertificates({ filter: { label: search } }));
+    dispatch(certificatesActions.getCertificates({ filter: { fingerprint: search } }));
   };
 
   const handleHideOptionsMenu = () => {

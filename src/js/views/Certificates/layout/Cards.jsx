@@ -10,7 +10,7 @@ import DataCard from '../../../common/components/Cards/DataCard';
 import { useCertificateComputedData } from '../hooks';
 import { useCardsStyles } from './style';
 
-const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptionsMenu }) => {
+const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
   const { t } = useTranslation(['certificates', 'common']);
   const classes = useCardsStyles();
 
@@ -27,10 +27,6 @@ const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptio
             validityFinalDate,
           } = handleGetCertificateComputedData(certificate.validity);
 
-          const handleSeeCertificateDetails = () => {
-            handleClickCertificate(certificate);
-          };
-
           const handleShowOptionsMenu = e => {
             e.stopPropagation();
             handleSetCertificateOptionsMenu({
@@ -43,7 +39,6 @@ const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptio
             <Grid key={certificate.fingerprint} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
                 className={classes.card}
-                onClick={handleSeeCertificateDetails}
                 onOptionsClick={handleShowOptionsMenu}
                 headerIcon={<VerifiedUserOutlined className={classes.cardIcon} />}
                 headerTitle={
@@ -97,13 +92,11 @@ const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptio
 
 Cards.propTypes = {
   certificates: PropTypes.array,
-  handleClickCertificate: PropTypes.func,
   handleSetCertificateOptionsMenu: PropTypes.func,
 };
 
 Cards.defaultProps = {
   certificates: [],
-  handleClickCertificate: null,
   handleSetCertificateOptionsMenu: null,
 };
 

@@ -1,10 +1,10 @@
 import { protectAPI } from 'APIs';
 
-export const getCertificateList = page => {
+export const getCertificateList = (page, filter) => {
   return protectAPI({
     query: `
-      query getCertificateList($page: PageInput!) {
-        getCertificateList(page: $page) {
+      query getCertificateList($page: PageInput, $filter: FilterCertificateInput) {
+        getCertificateList(page: $page, filter:$filter) {
           pagination {
             currentPage
             totalPages
@@ -31,6 +31,7 @@ export const getCertificateList = page => {
     `,
     variables: JSON.stringify({
       page,
+      filter,
     }),
   });
 };
