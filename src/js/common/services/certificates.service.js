@@ -36,32 +36,15 @@ export const getCertificateList = (page, filter) => {
   });
 };
 
-export const deleteCertificate = certificateId => {
+export const deleteMultipleCertificates = fingerprints => {
   return protectAPI({
     query: `
-      mutation deleteCertificate($certificateId: String!) {
-        deleteCertificate(certificateId: $certificateId) {
-          id
-        }
+      mutation deleteCertificates($fingerprints: [String]!) {
+        deleteCertificates(fingerprints: $fingerprints)
       }
     `,
     variables: JSON.stringify({
-      certificateId,
-    }),
-  });
-};
-
-export const deleteMultipleCertificates = certificatesIds => {
-  return protectAPI({
-    query: `
-      mutation deleteMultipleCertificates($certificatesIds: [String]!) {
-        deleteMultipleCertificates(certificatesIds: $certificatesIds) {
-          id
-        }
-      }
-    `,
-    variables: JSON.stringify({
-      certificatesIds,
+      fingerprints,
     }),
   });
 };

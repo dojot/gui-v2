@@ -110,7 +110,7 @@ const Certificates = () => {
   const handleConfirmMultipleCertificatesDeletion = () => {
     dispatch(
       certificatesActions.deleteMultipleCertificates({
-        certificatesIds: selectedCertificates,
+        fingerprints: selectedCertificates,
       }),
     );
     setIsShowingMultipleDeleteAlert(false);
@@ -198,8 +198,8 @@ const Certificates = () => {
         message={t('deleteMultipleCertificatesAlert.message')}
         handleConfirm={handleConfirmMultipleCertificatesDeletion}
         handleClose={handleCloseMultipleCertificatesDeletionAlert}
-        cancelButtonText='deleteMultipleCertificatesAlert.cancelButton'
-        confirmButtonText='deleteMultipleCertificatesAlert.confirmButton'
+        cancelButtonText={t('deleteMultipleCertificatesAlert.cancelButton')}
+        confirmButtonText={t('deleteMultipleCertificatesAlert.confirmButton')}
       />
 
       <AlertDialog

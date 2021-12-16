@@ -52,8 +52,8 @@ export function* handleGetCertificates(action) {
 export function* handleDeleteCertificate(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_CERTIFICATE));
-    const { certificate } = action.payload;
-    yield call(Certificates.deleteCertificate, certificate);
+    const { fingerprint } = action.payload;
+    yield call(Certificates.deleteMultipleCertificates, [fingerprint]);
     yield call(getCurrentCertificatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteCertificate' }));
   } catch (e) {
@@ -71,8 +71,8 @@ export function* handleDeleteCertificate(action) {
 export function* handleDeleteMultipleCertificates(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_CERTIFICATES));
-    const { certificateIdArray } = action.payload;
-    yield call(Certificates.deleteMultipleCertificates, certificateIdArray);
+    const { fingerprints } = action.payload;
+    yield call(Certificates.deleteMultipleCertificates, fingerprints);
     yield call(getCurrentCertificatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleCertificates' }));
   } catch (e) {
