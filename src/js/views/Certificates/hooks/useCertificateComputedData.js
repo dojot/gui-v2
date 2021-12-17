@@ -1,6 +1,7 @@
 import { useCallback } from 'react';
 
-import moment, { useTranslation } from 'react-i18next';
+import moment from 'moment';
+import { useTranslation } from 'react-i18next';
 
 import { CERTIFICATE_STATUS, CERTIFICATE_STATUS_COLORS } from '../../../common/constants';
 
@@ -27,12 +28,10 @@ export const useCertificateComputedData = () => {
         ? moment(validity.notAfter).format('DD/MM/YYYY')
         : '';
 
-      const isExpired = validity.notAfter
-        ? moment(validity.notAfter).isAfter(moment(), 'day')
-        : false;
+      const isExpired = validity.notAfter ? moment().isAfter(validity.notAfter, 'days') : false;
 
       const isAboutToExpire = validity.notAfter
-        ? moment(validity.notAfter).isSame(moment(), 'day')
+        ? moment(validity.notAfter).isSame(moment(), 'days')
         : false;
 
       let status = CERTIFICATE_STATUS.VALID;

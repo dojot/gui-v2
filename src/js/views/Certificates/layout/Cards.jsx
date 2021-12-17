@@ -49,10 +49,7 @@ const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
                   <Typography variant='body2'>{t('dataLabels.deviceId')}</Typography>
 
                   {certificate.belongsTo?.device ? (
-                    <RouterLink
-                      component={Link}
-                      href={`/certificates/${certificate.belongsTo.device}`}
-                    >
+                    <RouterLink component={Link} to={`/devices/${certificate.belongsTo.device}`}>
                       {certificate.belongsTo.device}
                     </RouterLink>
                   ) : (

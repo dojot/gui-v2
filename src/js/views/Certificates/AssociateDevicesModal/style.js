@@ -24,5 +24,6 @@ export const usePaginationStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+    padding: '0.5rem 0',
   },
 }));

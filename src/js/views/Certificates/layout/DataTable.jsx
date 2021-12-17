@@ -169,7 +169,7 @@ const DataTable = ({
                       {certificate.belongsTo?.device ? (
                         <RouterLink
                           component={Link}
-                          href={`/devices/${certificate.belongsTo.device}`}
+                          to={`/devices/${certificate.belongsTo.device}`}
                         >
                           {certificate.belongsTo.device}
                         </RouterLink>
