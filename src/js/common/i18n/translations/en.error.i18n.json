@@ -30,6 +30,7 @@
     "deleteCertificate": "Could not delete this certificate",
     "deleteMultipleCertificates": "Could not delete these certificates",
     "disassociateDevice": "Could not disassociate the certificate from this device",
+    "associateDevice": "Could not associate the certificate with this device",
 
     "getCertificationAuthorities": "Could not get CAs",
     "deleteCertificationAuthority": "Could not delete this CA",

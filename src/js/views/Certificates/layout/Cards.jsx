@@ -46,9 +46,7 @@ const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
                 }
               >
                 <Box marginBottom={1}>
-                  <Typography variant='body2'>
-                    <strong>{t('dataLabels.deviceId')}</strong>
-                  </Typography>
+                  <Typography variant='body2'>{t('dataLabels.deviceId')}</Typography>
 
                   {certificate.belongsTo?.device ? (
                     <RouterLink
@@ -58,19 +56,21 @@ const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
                       {certificate.belongsTo.device}
                     </RouterLink>
                   ) : (
-                    <Typography variant='body2'>{t('noAssociatedDeviceTooltip')}</Typography>
+                    <Typography variant='body2'>
+                      <strong>{t('noAssociatedDeviceTooltip')}</strong>
+                    </Typography>
                   )}
                 </Box>
 
                 <Box marginBottom={1}>
-                  <Typography variant='body2'>
-                    <strong>{t('dataLabels.validity')}</strong>
-                  </Typography>
+                  <Typography variant='body2'>{t('dataLabels.validity')}</Typography>
 
                   <Typography variant='body2'>
-                    {validityInitialDate && validityFinalDate
-                      ? `${validityInitialDate} - ${validityFinalDate}`
-                      : t('validityNotDefined')}
+                    <strong>
+                      {validityInitialDate && validityFinalDate
+                        ? `${validityInitialDate} - ${validityFinalDate}`
+                        : t('validityNotDefined')}
+                    </strong>
                   </Typography>
                 </Box>
 

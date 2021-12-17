@@ -49,25 +49,29 @@ export const deleteMultipleCertificates = fingerprints => {
   });
 };
 
-export const disassociateDevice = certificate => {
+export const disassociateDevice = fingerprint => {
   return protectAPI({
     query: `
-      mutation disassociateDevice($certificate: [String]!) {
-        disassociateDevice(certificate: $certificate) {
-          id
-          label
-          validityPeriod
-          status
-          deviceId
-        }
+      mutation disassociateDevice($fingerprint: String!) {
+        disassociateDevice(fingerprint: $fingerprint)
       }
     `,
     variables: JSON.stringify({
-      certificate,
+      fingerprint,
     }),
   });
 };
 
-export const getCertificatesHistoryParsed = filter => {
-  return protectAPI(filter);
+export const associateDevice = (fingerprint, deviceId) => {
+  return protectAPI({
+    query: `
+      mutation associateDevice($fingerprint: String!, $deviceId: String!) {
+        associateDevice(fingerprint: $fingerprint, deviceId: $deviceId)
+      }
+    `,
+    variables: JSON.stringify({
+      fingerprint,
+      deviceId,
+    }),
+  });
 };

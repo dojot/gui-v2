@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Menu, MenuItem } from '@material-ui/core';
-import { Delete, InsertLink, LinkOff, Loop } from '@material-ui/icons';
+import { Delete, InsertLink, LinkOff } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -26,11 +26,7 @@ const CertificateOptionsMenu = ({
       anchorEl={anchorElement}
       onClose={handleHideOptionsMenu}
     >
-      <MenuItem
-        className={classes.menuItem}
-        disabled={!!certificate?.belongsTo?.device}
-        onClick={handleShowDevicesToAssociate}
-      >
+      <MenuItem className={classes.menuItem} onClick={handleShowDevicesToAssociate}>
         <InsertLink />
         <span className={classes.menuItemText}>{t('certificates:associateToDevice')}</span>
       </MenuItem>
@@ -42,11 +38,6 @@ const CertificateOptionsMenu = ({
       >
         <LinkOff />
         <span className={classes.menuItemText}>{t('certificates:disassociateDevice')}</span>
-      </MenuItem>
-
-      <MenuItem className={classes.menuItem} disabled={!certificate?.belongsTo?.device}>
-        <Loop />
-        <span className={classes.menuItemText}>{t('certificates:changeAssociation')}</span>
       </MenuItem>
 
       <MenuItem className={classes.menuItem} onClick={handleDeleteCertificate}>

@@ -37,7 +37,7 @@
   "associateDeviceModal": {
     "table": {
       "id": "Id",
-      "devices": "Dispositivos",
+      "label": "Nome do Dispositivo",
       "lastUpdate": "Última atualização"
     },
     "associate": "Associar"

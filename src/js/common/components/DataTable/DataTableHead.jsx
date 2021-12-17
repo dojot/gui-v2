@@ -44,6 +44,7 @@ const DataTableHead = ({
           return (
             <TableCell
               key={headCell.id}
+              className={headCell.className}
               align={headCell.align || 'left'}
               sortDirection={isOrderingByThisCell ? order : false}
             >
@@ -71,17 +72,18 @@ DataTableHead.propTypes = {
   cells: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.string,
+      className: PropTypes.string,
       label: PropTypes.string,
       align: PropTypes.oneOf(['left', 'center', 'right', 'justify', 'inherit']),
       disableOrderBy: PropTypes.bool,
     }),
   ).isRequired,
-  numSelected: PropTypes.number.isRequired,
+  numSelected: PropTypes.number,
   onRequestSort: PropTypes.func,
-  onSelectAllClick: PropTypes.func.isRequired,
+  onSelectAllClick: PropTypes.func,
   order: PropTypes.oneOf(Object.values(DATA_ORDER)),
   orderBy: PropTypes.string,
-  rowCount: PropTypes.number.isRequired,
+  rowCount: PropTypes.number,
   startExtraCells: PropTypes.node,
   endExtraCells: PropTypes.node,
   disableOrderBy: PropTypes.bool,
@@ -90,9 +92,12 @@ DataTableHead.propTypes = {
 
 DataTableHead.defaultProps = {
   className: '',
+  numSelected: 0,
   onRequestSort: null,
+  onSelectAllClick: null,
   order: DATA_ORDER.ASC,
   orderBy: '',
+  rowCount: 0,
   startExtraCells: null,
   endExtraCells: null,
   disableOrderBy: false,

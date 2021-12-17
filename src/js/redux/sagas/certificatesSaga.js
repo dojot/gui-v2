@@ -5,7 +5,7 @@ import { constants, actions } from '../modules/certificates';
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
 import { actions as successActions } from '../modules/success';
-import { certificatesSelector, paginationControlSelector } from '../selectors/certificatesSelector';
+import { paginationControlSelector } from '../selectors/certificatesSelector';
 
 export function* getCurrentCertificatesPageAgain() {
   const pagination = yield select(paginationControlSelector);
@@ -90,15 +90,10 @@ export function* handleDeleteMultipleCertificates(action) {
 export function* handleDisassociateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DISASSOCIATE_DEVICE));
-    const { certificate } = action.payload;
-    yield call(Certificates.disassociateDevice, certificate);
-    const certificates = yield select(certificatesSelector);
-    yield put(
-      actions.updateCertificates({
-        certificates,
-      }),
-    );
-    yield put(successActions.showSuccessToast({ i18nMessage: 'disassociateCertificate' }));
+    const { fingerprint } = action.payload;
+    yield call(Certificates.disassociateDevice, fingerprint);
+    yield call(getCurrentCertificatesPageAgain);
+    yield put(successActions.showSuccessToast({ i18nMessage: 'disassociateDevice' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -108,6 +103,25 @@ export function* handleDisassociateDevice(action) {
     );
   } finally {
     yield put(loadingActions.removeLoading(constants.DISASSOCIATE_DEVICE));
+  }
+}
+
+export function* handleAssociateDevice(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.ASSOCIATE_DEVICE));
+    const { fingerprint, deviceId } = action.payload;
+    yield call(Certificates.associateDevice, fingerprint, deviceId);
+    yield call(getCurrentCertificatesPageAgain);
+    yield put(successActions.showSuccessToast({ i18nMessage: 'associateDevice' }));
+  } catch (e) {
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'associateDevice',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.ASSOCIATE_DEVICE));
   }
 }
 
@@ -127,9 +141,14 @@ function* watchDisassociateDevice() {
   yield takeLatest(constants.DISASSOCIATE_DEVICE, handleDisassociateDevice);
 }
 
+function* watchAssociateDevice() {
+  yield takeLatest(constants.ASSOCIATE_DEVICE, handleAssociateDevice);
+}
+
 export const certificatesSaga = [
   fork(watchGetCertificates),
   fork(watchDeleteCertificate),
   fork(watchDeleteMultipleCertificates),
   fork(watchDisassociateDevice),
+  fork(watchAssociateDevice),
 ];

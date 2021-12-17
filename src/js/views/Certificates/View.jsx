@@ -19,7 +19,7 @@ import {
   paginationControlSelector,
 } from '../../redux/selectors/certificatesSelector';
 import { ViewContainer } from '../stateComponents';
-import AssociateDevicesModal from './layout/AssociateDevicesModal';
+import AssociateDevicesModal from './AssociateDevicesModal';
 import Cards from './layout/Cards';
 import CertificateOptionsMenu from './layout/CertificateOptionsMenu';
 import CertificatesLoading from './layout/CertificatesLoading';
@@ -39,7 +39,6 @@ const Certificates = () => {
   const { totalPages } = useSelector(paginationControlSelector);
   const isLoadingCertificates = useIsLoading(certificatesConstants.GET_CERTIFICATES);
 
-  const [clickedCertificate, setClickedCertificate] = useState(null);
   const [selectedCertificates, setSelectedCertificates] = useState([]);
   const [certificatesOptionsMenu, setCertificatesOptionsMenu] = useState(null);
 
@@ -78,10 +77,10 @@ const Certificates = () => {
 
   const handleHideDevicesToAssociateModal = () => {
     setIsShowingDevicesToAssociate(false);
+    handleHideOptionsMenu();
   };
 
-  const handleShowDevicesToAssociate = certificate => {
-    setClickedCertificate(certificate);
+  const handleShowDevicesToAssociate = () => {
     setIsShowingDevicesToAssociate(true);
   };
 
@@ -95,6 +94,7 @@ const Certificates = () => {
 
   const handleCloseDisassociateDeviceAlert = () => {
     setIsShowingDisassociateDeviceAlert(false);
+    handleHideOptionsMenu();
   };
 
   const handleConfirmCertificateDeletion = () => {
@@ -118,12 +118,9 @@ const Certificates = () => {
   };
 
   const handleConfirmDisassociateDevice = () => {
+    const { fingerprint } = certificatesOptionsMenu.certificate;
+    dispatch(certificatesActions.disassociateDevice({ fingerprint }));
     setIsShowingDisassociateDeviceAlert(false);
-    dispatch(
-      certificatesActions.disassociateDevice({
-        certificate: certificatesOptionsMenu.certificate,
-      }),
-    );
   };
 
   const handleCloseCertificateDeletionAlert = () => {
@@ -168,7 +165,7 @@ const Certificates = () => {
     <ViewContainer headerTitle={t('headerTitle')}>
       <AssociateDevicesModal
         isOpen={isShowingDevicesToAssociate}
-        certificate={clickedCertificate || {}}
+        certificate={certificatesOptionsMenu?.certificate || {}}
         handleHideDevicesToAssociateModal={handleHideDevicesToAssociateModal}
       />
 

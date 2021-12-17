@@ -6,6 +6,7 @@ const UPDATE_CERTIFICATES = 'app/certificates/UPDATE_CERTIFICATES';
 const DELETE_CERTIFICATE = 'app/certificates/DELETE_CERTIFICATES';
 const DELETE_MULTIPLE_CERTIFICATES = 'app/certificates/DELETE_MULTIPLE_CERTIFICATES';
 const DISASSOCIATE_DEVICE = 'app/certificates/DISASSOCIATE_DEVICE';
+const ASSOCIATE_DEVICE = 'app/certificates/ASSOCIATE_DEVICE';
 
 export const constants = {
   GET_CERTIFICATES,
@@ -13,6 +14,7 @@ export const constants = {
   DELETE_CERTIFICATE,
   DELETE_MULTIPLE_CERTIFICATES,
   DISASSOCIATE_DEVICE,
+  ASSOCIATE_DEVICE,
 };
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
@@ -44,7 +46,12 @@ export const deleteMultipleCertificates = createAction(DELETE_MULTIPLE_CERTIFICA
 }));
 
 export const disassociateDevice = createAction(DISASSOCIATE_DEVICE, payload => ({
-  certificate: payload.certificate,
+  fingerprint: payload.fingerprint,
+}));
+
+export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
+  fingerprint: payload.fingerprint,
+  deviceId: payload.deviceId,
 }));
 
 export const actions = {
@@ -53,6 +60,7 @@ export const actions = {
   deleteCertificate,
   deleteMultipleCertificates,
   disassociateDevice,
+  associateDevice,
 };
 
 export const reducers = {
