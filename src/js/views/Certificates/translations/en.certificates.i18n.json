@@ -56,7 +56,7 @@
   },
   "disassociateDeviceAlert": {
     "title": "Disassociate Device ({{deviceId}})",
-    "message": "Are you sure you want to disassociate ({{deviceId}}) of ({{certificateLabel}})?",
+    "message": "Are you sure you want to disassociate ({{deviceId}}) from this certificate?",
     "cancelButton": "Cancel",
     "confirmButton": "Disassociate"
   }

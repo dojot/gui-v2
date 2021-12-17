@@ -202,11 +202,10 @@ const Certificates = () => {
       <AlertDialog
         isOpen={isShowingDisassociateDeviceAlert}
         title={t('disassociateDeviceAlert.title', {
-          deviceId: certificatesOptionsMenu?.certificate.deviceId,
+          deviceId: certificatesOptionsMenu?.certificate?.belongsTo?.device,
         })}
         message={t('disassociateDeviceAlert.message', {
-          deviceId: certificatesOptionsMenu?.certificate.deviceId,
-          certificateLabel: certificatesOptionsMenu?.certificate.label,
+          deviceId: certificatesOptionsMenu?.certificate?.belongsTo?.device,
         })}
         handleConfirm={handleConfirmDisassociateDevice}
         handleClose={handleCloseDisassociateDeviceAlert}
