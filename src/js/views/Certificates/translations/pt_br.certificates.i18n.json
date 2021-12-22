@@ -19,11 +19,6 @@
   "noAssociatedDeviceTooltip": "Não possui dispositivo associado",
   "lastUpdateTooltip": "Última atualização",
   "validityNotDefined": "Validade Não Definida",
-  "certificateStatus": {
-    "VALID": "Válido",
-    "EXPIRED": "Expirado",
-    "ABOUT_TO_EXPIRE": "A Expirar"
-  },
   "dataLabels": {
     "fingerprint": "Fingerprint",
     "deviceId": "ID do Dispositivo",

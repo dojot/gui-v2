@@ -11,6 +11,7 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Tooltip,
 } from '@material-ui/core';
 import { MoreHoriz } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -19,8 +20,8 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
+import { useCertificateComputedData } from '../../../common/hooks';
 import { getComparator } from '../../../common/utils';
-import { useCertificateComputedData } from '../hooks';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -161,8 +162,16 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell className={classes.truncatedFingerprint}>
-                      {certificate.fingerprint}
+                    <TableCell>
+                      <Tooltip
+                        title={certificate.fingerprint}
+                        classes={{ tooltip: classes.tooltip }}
+                        placement='right'
+                        interactive
+                        arrow
+                      >
+                        <div className={classes.truncatedText}>{certificate.fingerprint}</div>
+                      </Tooltip>
                     </TableCell>
 
                     <TableCell>

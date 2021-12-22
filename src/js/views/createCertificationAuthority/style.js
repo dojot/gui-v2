@@ -7,17 +7,17 @@ export default makeStyles(theme => ({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
+    minHeight: '100%',
+    height: '100%',
   },
   content: {
     width: '60%',
-    height: '100vh',
+    height: '100%',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  inputNameCA: {
-    marginBottom: theme.spacing(2),
+    margin: '2rem 0',
   },
   bottomButtonsWrapper: {
     display: 'flex',

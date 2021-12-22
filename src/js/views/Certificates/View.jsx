@@ -21,10 +21,10 @@ import {
 import { ViewContainer } from '../stateComponents';
 import AssociateDevicesModal from './AssociateDevicesModal';
 import Cards from './layout/Cards';
-import CertificateOptionsMenu from './layout/CertificateOptionsMenu';
-import CertificatesLoading from './layout/CertificatesLoading';
 import DataTable from './layout/DataTable';
+import Loading from './layout/Loading';
 import MassActions from './layout/MassActions';
+import OptionsMenu from './layout/OptionsMenu';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
@@ -169,7 +169,7 @@ const Certificates = () => {
         handleHideDevicesToAssociateModal={handleHideDevicesToAssociateModal}
       />
 
-      <CertificateOptionsMenu
+      <OptionsMenu
         isShowingMenu={!!certificatesOptionsMenu}
         anchorElement={certificatesOptionsMenu?.anchorElement}
         certificate={certificatesOptionsMenu?.certificate}
@@ -229,7 +229,7 @@ const Certificates = () => {
 
         <Box className={classes.content}>
           {isLoadingCertificates ? (
-            <CertificatesLoading />
+            <Loading />
           ) : (
             <>
               {certificates.length === 0 && (

@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
 import DataCard from '../../../common/components/Cards/DataCard';
-import { useCertificateComputedData } from '../hooks';
+import { useCertificateComputedData } from '../../../common/hooks';
 import { useCardsStyles } from './style';
 
 const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
