@@ -6,6 +6,8 @@
   "noTemplates": "Nenhum Modelo Para Exibir",
   "noStaticAttrs": "Nenhum Atributo Estático Para Exibir",
   "lastUpdateTableLabel": "Tabela de última Atualização",
+  "editDevice": "Editar Dispositivo",
+  "deleteDevice": "Excluir Dispositivo",
   "sectionTitles": {
     "templates": "Modelos",
     "staticAttrs": "Atributos Estáticos",
@@ -15,5 +17,11 @@
     "date": "Data",
     "key": "Chave",
     "value": "Valor"
+  },
+  "deleteDeviceAlert": {
+    "title": "Excluir Dispositivo",
+    "message": "Tem certeza que deseja excluir este dispositivo?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
   }
 }

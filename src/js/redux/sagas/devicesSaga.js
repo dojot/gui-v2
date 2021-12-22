@@ -71,9 +71,10 @@ export function* handleGetDeviceById(action) {
 export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
-    const { deviceId } = action.payload;
+    const { deviceId, successCallback, shouldGetCurrentPageAgain } = action.payload;
     yield call(Device.deleteDevices, [deviceId]);
-    yield call(getCurrentDevicesPageAgain);
+    if (successCallback) yield call(successCallback);
+    if (shouldGetCurrentPageAgain) yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteDevice' }));
   } catch (e) {
     yield put(

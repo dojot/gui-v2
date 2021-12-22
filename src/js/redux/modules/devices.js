@@ -54,6 +54,8 @@ export const favoriteDevice = createAction(FAVORITE_DEVICE, payload => ({
 
 export const deleteDevice = createAction(DELETE_DEVICE, payload => ({
   deviceId: payload.deviceId,
+  successCallback: payload.successCallback,
+  shouldGetCurrentPageAgain: payload.shouldGetCurrentPageAgain ?? true,
 }));
 
 export const favoriteMultipleDevices = createAction(FAVORITE_MULTIPLE_DEVICES, payload => ({
