@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useOptionsMenuStyles } from './style';
 
-const CaOptionsMenu = ({ isShowingMenu, anchorElement, handleDeleteCa, handleHideOptionsMenu }) => {
+const CaOptionsMenu = ({ isShowingMenu, anchorElement, handleDelete, handleHideOptionsMenu }) => {
   const { t } = useTranslation(['certificationAuthorities', 'common']);
   const classes = useOptionsMenuStyles();
 
@@ -18,7 +18,7 @@ const CaOptionsMenu = ({ isShowingMenu, anchorElement, handleDeleteCa, handleHid
       anchorEl={anchorElement}
       onClose={handleHideOptionsMenu}
     >
-      <MenuItem className={classes.menuItem} onClick={handleDeleteCa}>
+      <MenuItem className={classes.menuItem} onClick={handleDelete}>
         <Delete />
         <span className={classes.menuItemText}>{t('common:exclude')}</span>
       </MenuItem>
@@ -29,14 +29,14 @@ const CaOptionsMenu = ({ isShowingMenu, anchorElement, handleDeleteCa, handleHid
 CaOptionsMenu.propTypes = {
   isShowingMenu: PropTypes.bool,
   anchorElement: PropTypes.object,
-  handleDeleteCa: PropTypes.func,
+  handleDelete: PropTypes.func,
   handleHideOptionsMenu: PropTypes.func,
 };
 
 CaOptionsMenu.defaultProps = {
   isShowingMenu: false,
   anchorElement: null,
-  handleDeleteCa: null,
+  handleDelete: null,
   handleHideOptionsMenu: null,
 };
 

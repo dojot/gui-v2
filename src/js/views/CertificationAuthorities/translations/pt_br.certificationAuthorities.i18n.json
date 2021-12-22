@@ -1,7 +1,7 @@
 {
   "security": "Segurança",
   "headerTitle": "CA",
-  "createCa": "Criar CA",
+  "createCertificationAuthority": "Criar CA",
   "searchInputPh": "Pesquisar CA",
   "totalOfPages": "Total de Páginas: {{count}}",
   "nextIconButtonText": "Próxima Página",
@@ -11,10 +11,11 @@
   "numberOfSelectedItems_plural": "{{count}} Linhas Selecionadas",
   "labelRowsPerPage": "Itens por página:",
   "emptyListMessage": "Nenhuma CA Encontrada",
+  "validityNotDefined": "Validade Não Definida",
   "dataTableHead": {
-    "label": "Nome",
-    "validityPeriod": "Período de Validade",
-    "linkedCertificate": "Certificado Vinculado",
+    "caFingerprint": "CA Fingerprint",
+    "subjectDN": "Subject DN",
+    "validity": "Período de Validade",
     "status": "Status",
     "actions": "Ações"
   },
@@ -25,13 +26,13 @@
       "to_expire": "A expirar"
     }
   },
-  "deleteMultipleCaAlert": {
+  "deleteMultipleAlertModal": {
     "title": "Excluir CA's Selecionadas",
     "message": "Tem certeza que deseja excluir todas as CA's selecionadas?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
   },
-  "deleteCaAlert": {
+  "deleteAlertModal": {
     "title": "Excluir CA",
     "message": "Tem certeza que deseja excluir esta CA?",
     "cancelButton": "Cancelar",

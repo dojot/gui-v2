@@ -88,10 +88,13 @@ export const useDataTableStyles = makeStyles(theme => ({
     color: '#7B92FF',
     textDecoration: 'underline',
   },
-  truncatedFingerprint: {
-    maxWidth: '120px',
+  truncatedText: {
+    maxWidth: '200px',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',
+  },
+  tooltip: {
+    fontSize: '1rem',
   },
 }));

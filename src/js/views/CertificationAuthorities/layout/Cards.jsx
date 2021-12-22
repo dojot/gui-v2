@@ -1,41 +1,79 @@
 import React from 'react';
 
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Chip, Grid, Typography } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 
 import DataCard from '../../../common/components/Cards/DataCard';
+import { useCertificateComputedData } from '../../../common/hooks';
 import { useCardsStyles } from './style';
 
-const Cards = ({ certificationAuthorities, handleSetCaOptionsMenu }) => {
+const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
+  const { t } = useTranslation('certificationAuthorities');
   const classes = useCardsStyles();
+
+  const handleGetCertificateComputedData = useCertificateComputedData();
 
   return (
     <Box padding={2}>
       <Grid spacing={2} container>
         {certificationAuthorities.map(certificationAuthority => {
+          const {
+            statusText,
+            statusColor,
+            validityInitialDate,
+            validityFinalDate,
+          } = handleGetCertificateComputedData(certificationAuthority.validity);
+
           const handleShowOptionsMenu = e => {
             e.stopPropagation();
-            handleSetCaOptionsMenu({
+            handleSetOptionsMenu({
               anchorElement: e.target,
               certificationAuthority,
             });
           };
 
           return (
-            <Grid key={certificationAuthority.id} xs={12} sm={6} md={4} xl={3} item>
+            <Grid key={certificationAuthority.caFingerprint} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
-                className={classes.certificationAuthorityCard}
-                headerIcon={
-                  <VerifiedUserOutlined className={classes.certificationAuthorityCardIcon} />
-                }
+                className={classes.card}
+                headerIcon={<VerifiedUserOutlined className={classes.cardIcon} />}
                 headerTitle={
-                  <Typography className={classes.certificationAuthorityCardTitle}>
-                    {certificationAuthority.name}
+                  <Typography className={classes.cardTitle}>
+                    {certificationAuthority.caFingerprint}
                   </Typography>
                 }
                 onOptionsClick={handleShowOptionsMenu}
-              />
+              >
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>{t('dataTableHead.subjectDN')}</Typography>
+
+                  <Typography variant='body2'>
+                    <strong>{certificationAuthority.subjectDN}</strong>
+                  </Typography>
+                </Box>
+
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>{t('dataTableHead.validity')}</Typography>
+
+                  <Typography variant='body2'>
+                    <strong>
+                      {validityInitialDate && validityFinalDate
+                        ? `${validityInitialDate} - ${validityFinalDate}`
+                        : t('validityNotDefined')}
+                    </strong>
+                  </Typography>
+                </Box>
+
+                <Box marginBottom={1}>
+                  <Chip
+                    style={{ background: statusColor, color: 'white' }}
+                    label={statusText}
+                    size='small'
+                  />
+                </Box>
+              </DataCard>
             </Grid>
           );
         })}
@@ -46,12 +84,12 @@ const Cards = ({ certificationAuthorities, handleSetCaOptionsMenu }) => {
 
 Cards.propTypes = {
   certificationAuthorities: PropTypes.array,
-  handleSetCaOptionsMenu: PropTypes.func,
+  handleSetOptionsMenu: PropTypes.func,
 };
 
 Cards.defaultProps = {
   certificationAuthorities: [],
-  handleSetCaOptionsMenu: null,
+  handleSetOptionsMenu: null,
 };
 
 export default Cards;

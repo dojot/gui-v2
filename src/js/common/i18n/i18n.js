@@ -3,8 +3,8 @@ import { initReactI18next } from 'react-i18next';
 
 import certificatesEn from '../../views/Certificates/translations/en.certificates.i18n.json';
 import certificatesPtBr from '../../views/Certificates/translations/pt_br.certificates.i18n.json';
-import certificationAuthoritiesEn from '../../views/CertificationAuthorities/translations/en.security.i18n.json';
-import certificationAuthoritiesPtBr from '../../views/CertificationAuthorities/translations/pt_br.security.i18n.json';
+import certificationAuthoritiesEn from '../../views/CertificationAuthorities/translations/en.certificationAuthorities.i18n.json';
+import certificationAuthoritiesPtBr from '../../views/CertificationAuthorities/translations/pt_br.certificationAuthorities.i18n.json';
 import createCertificationAuthorityEn from '../../views/createCertificationAuthority/translations/en.createCertificationAuthority.json';
 import createCertificationAuthorityPtBr from '../../views/createCertificationAuthority/translations/pt_br.createCertificationAuthority.json';
 import createDeviceEn from '../../views/createDevice/translations/en.createDevice.i18n.json';
@@ -43,10 +43,12 @@ import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
 import attrsEn from './translations/en.attrs.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
+import constantsEn from './translations/en.constants.i18n.json';
 import errorEn from './translations/en.error.i18n.json';
 import successEn from './translations/en.success.i18n.json';
 import attrsPtBr from './translations/pt_br.attrs.i18n.json';
 import commonPtBr from './translations/pt_br.common.i18n.json';
+import constantsPtBr from './translations/pt_br.constants.i18n.json';
 import errorPtBr from './translations/pt_br.error.i18n.json';
 import successPtBr from './translations/pt_br.success.i18n.json';
 
@@ -76,6 +78,7 @@ const resources = {
     error: errorEn,
     success: successEn,
     editTemplate: editTemplateEn,
+    constants: constantsEn,
   },
   pt: {
     login: loginPtBr,
@@ -102,6 +105,7 @@ const resources = {
     error: errorPtBr,
     success: successPtBr,
     editTemplate: editTemplatePtBr,
+    constants: constantsPtBr,
   },
 };
 

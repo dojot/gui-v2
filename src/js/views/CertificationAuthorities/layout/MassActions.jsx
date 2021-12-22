@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useMassActionsStyles } from './style';
 
-const MassActions = ({ handleHideMassActions, handleDeleteMultipleCertificationmAuthorities }) => {
+const MassActions = ({ handleHideMassActions, handleDeleteMultipleCertificationAuthorities }) => {
   const { t } = useTranslation(['certificationAuthorities', 'common']);
   const classes = useMassActionsStyles();
 
@@ -21,7 +21,7 @@ const MassActions = ({ handleHideMassActions, handleDeleteMultipleCertificationm
         <Grid item xs='auto'>
           <Button
             className={classes.massActionsButton}
-            onClick={handleDeleteMultipleCertificationmAuthorities}
+            onClick={handleDeleteMultipleCertificationAuthorities}
             startIcon={<Delete />}
             variant='contained'
           >
@@ -45,12 +45,12 @@ const MassActions = ({ handleHideMassActions, handleDeleteMultipleCertificationm
 
 MassActions.propTypes = {
   handleHideMassActions: PropTypes.func,
-  handleDeleteMultipleCertificationmAuthorities: PropTypes.func,
+  handleDeleteMultipleCertificationAuthorities: PropTypes.func,
 };
 
 MassActions.defaultProps = {
   handleHideMassActions: null,
-  handleDeleteMultipleCertificationmAuthorities: null,
+  handleDeleteMultipleCertificationAuthorities: null,
 };
 
 export default MassActions;

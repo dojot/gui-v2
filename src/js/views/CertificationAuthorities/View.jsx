@@ -19,11 +19,11 @@ import {
   paginationControlSelector,
 } from '../../redux/selectors/certificationAuthoritiesSelector';
 import { ViewContainer } from '../stateComponents';
-import CaOptionsMenu from './layout/CaOptionsMenu';
 import Cards from './layout/Cards';
-import CertificationAuthoritiesLoading from './layout/CertificationAuthoritiesLoading';
 import DataTable from './layout/DataTable';
+import Loading from './layout/Loading';
 import MassActions from './layout/MassActions';
+import OptionsMenu from './layout/OptionsMenu';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
@@ -38,7 +38,7 @@ const CertificationAuthorities = () => {
   const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
   const isLoadingCertificationAuthorities = useIsLoading(constants.GET_CERTIFICATION_AUTHORITIES);
 
-  const [selectedAuthorities, setSelectedAuthorities] = useState([]);
+  const [selectedCertificationAuthorities, setSelectedCertificationAuthorities] = useState([]);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
@@ -65,27 +65,28 @@ const CertificationAuthorities = () => {
   };
 
   const handleHideMassActions = () => {
-    setSelectedAuthorities([]);
+    setSelectedCertificationAuthorities([]);
   };
 
-  const handleDeleteMultipleCertificationmAuthorities = () => {
-    setIsShowingMultipleDeleteAlert(false);
+  const handleDeleteMultipleCertificationAuthorities = () => {
+    setIsShowingMultipleDeleteAlert(true);
+  };
+
+  const handleConfirmMultipleDeletion = () => {
     dispatch(
-      certificationAuthoritiesActions.deleteCertificationAuthority({
-        certificationAuthoritiesIds: selectedAuthorities,
+      certificationAuthoritiesActions.deleteMultipleCertificationAuthorities({
+        fingerprints: selectedCertificationAuthorities,
       }),
     );
-    setSelectedAuthorities(currentSelectedAuthorities => {
-      return currentSelectedAuthorities.filter(id => !selectedAuthorities.includes(id));
+    setIsShowingMultipleDeleteAlert(false);
+    setSelectedCertificationAuthorities(currentSelectedAuthorities => {
+      return currentSelectedAuthorities.filter(
+        fingerprint => !selectedCertificationAuthorities.includes(fingerprint),
+      );
     });
   };
 
-  const handleConfirmMultipleCaDeletion = () => {
-    setSelectedAuthorities([]);
-    setIsShowingMultipleDeleteAlert(false);
-  };
-
-  const handleCloseMultipleCaDeletionAlert = () => {
+  const handleCloseMultipleDeletionAlert = () => {
     setIsShowingMultipleDeleteAlert(false);
   };
 
@@ -97,11 +98,13 @@ const CertificationAuthorities = () => {
     setIsShowingDeleteAlert(true);
   };
 
-  const handleConfirmCaDeletion = () => {
-    const authorityId = certificationAuthorityOptionsMenu.certificationAuthority.id;
-    dispatch(certificationAuthoritiesActions.deleteCertificationAuthority({ authorityId }));
-    setSelectedAuthorities(currentSelectedAuthorities => {
-      return currentSelectedAuthorities.filter(id => id !== authorityId);
+  const handleConfirmDeletion = () => {
+    const fingerprint = certificationAuthorityOptionsMenu.certificationAuthority.caFingerprint;
+    dispatch(certificationAuthoritiesActions.deleteCertificationAuthority({ fingerprint }));
+    setSelectedCertificationAuthorities(currentSelectedAuthorities => {
+      return currentSelectedAuthorities.filter(
+        currentFingerprint => currentFingerprint !== fingerprint,
+      );
     });
   };
 
@@ -113,7 +116,7 @@ const CertificationAuthorities = () => {
   const handleSearchCertificationAuthorities = search => {
     dispatch(
       certificationAuthoritiesActions.getCertificationAuthorities({
-        filter: { label: search },
+        filter: { caFingerprint: search },
       }),
     );
   };
@@ -130,7 +133,7 @@ const CertificationAuthorities = () => {
   }, [dispatch, page, rowsPerPage]);
 
   useEffect(() => {
-    if (viewMode) setSelectedAuthorities([]);
+    if (viewMode) setSelectedCertificationAuthorities([]);
   }, [viewMode]);
 
   useEffect(() => {
@@ -149,27 +152,27 @@ const CertificationAuthorities = () => {
         isOpen={isShowingMultipleDeleteAlert}
         cancelButtonText={t('common:cancel')}
         confirmButtonText={t('common:exclude')}
-        title={t('deleteMultipleCaAlert.title')}
-        message={t('deleteMultipleCaAlert.message')}
-        handleConfirm={handleConfirmMultipleCaDeletion}
-        handleClose={handleCloseMultipleCaDeletionAlert}
+        title={t('deleteMultipleAlertModal.title')}
+        message={t('deleteMultipleAlertModal.message')}
+        handleConfirm={handleConfirmMultipleDeletion}
+        handleClose={handleCloseMultipleDeletionAlert}
       />
 
       <AlertDialog
         isOpen={isShowingDeleteAlert}
-        title={t('deleteCaAlert.title')}
-        message={t('deleteCaAlert.message')}
-        handleConfirm={handleConfirmCaDeletion}
+        title={t('deleteAlertModal.title')}
+        message={t('deleteAlertModal.message')}
+        handleConfirm={handleConfirmDeletion}
         handleClose={handleCloseCaDeletionAlert}
-        cancelButtonText={t('deleteCaAlert.cancelButton')}
-        confirmButtonText={t('deleteCaAlert.confirmButton')}
+        cancelButtonText={t('deleteAlertModal.cancelButton')}
+        confirmButtonText={t('deleteAlertModal.confirmButton')}
       />
 
-      <CaOptionsMenu
+      <OptionsMenu
         isShowingMenu={!!certificationAuthorityOptionsMenu}
         anchorElement={certificationAuthorityOptionsMenu?.anchorElement}
         handleHideOptionsMenu={handleHideOptionsMenu}
-        handleDeleteCa={handleDeleteCertificationAuthority}
+        handleDelete={handleDeleteCertificationAuthority}
       />
 
       <Box className={classes.container}>
@@ -179,43 +182,44 @@ const CertificationAuthorities = () => {
           handleSearchCertificationAuthorities={handleSearchCertificationAuthorities}
         />
 
-        {selectedAuthorities.length > 0 && (
+        {selectedCertificationAuthorities.length > 0 && (
           <MassActions
             handleHideMassActions={handleHideMassActions}
-            handleDeleteMultipleCertificationmAuthorities={
-              handleDeleteMultipleCertificationmAuthorities
+            handleDeleteMultipleCertificationAuthorities={
+              handleDeleteMultipleCertificationAuthorities
             }
           />
         )}
 
         <Box className={classes.content}>
           {isLoadingCertificationAuthorities ? (
-            <CertificationAuthoritiesLoading />
+            <Loading />
           ) : (
             <>
               {viewMode === VIEW_MODE.TABLE && certificationAuthorities.length > 0 && (
                 <DataTable
                   order={order}
                   orderBy={orderBy}
+                  certificationAuthorities={certificationAuthorities}
+                  selectedCertificationAuthorities={selectedCertificationAuthorities}
                   setOrder={setOrder}
                   setOrderBy={setOrderBy}
-                  certificationAuthorities={certificationAuthorities}
-                  selectedCertificationAuthorities={selectedAuthorities}
-                  handleSelectAuthority={setSelectedAuthorities}
+                  handleSetOptionsMenu={setCertificationAuthorityOptionsMenu}
+                  handleSelectCertificationAuthority={setSelectedCertificationAuthorities}
                 />
               )}
 
               {viewMode === VIEW_MODE.CARD && certificationAuthorities.length > 0 && (
                 <Cards
                   certificationAuthorities={certificationAuthorities}
-                  handleSetCaOptionsMenu={setCertificationAuthorityOptionsMenu}
+                  handleSetOptionsMenu={setCertificationAuthorityOptionsMenu}
                 />
               )}
 
               {certificationAuthorities.length === 0 && (
                 <EmptyPlaceholder
-                  textButton={t('createCa')}
                   emptyListMessage={t('emptyListMessage')}
+                  textButton={t('createCertificationAuthority')}
                   icon={<VerifiedUserOutlined fontSize='large' />}
                   handleButtonClick={() => history.push('/certification-authorities/new')}
                 />
@@ -228,7 +232,7 @@ const CertificationAuthorities = () => {
           page={page}
           rowsPerPage={rowsPerPage}
           totalOfPages={totalPages}
-          numberOfSelectedAuthorities={selectedAuthorities.length}
+          numberOfSelectedItems={selectedCertificationAuthorities.length}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
         />

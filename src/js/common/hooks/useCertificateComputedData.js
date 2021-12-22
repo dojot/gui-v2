@@ -3,10 +3,10 @@ import { useCallback } from 'react';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
-import { CERTIFICATE_STATUS, CERTIFICATE_STATUS_COLORS } from '../../../common/constants';
+import { CERTIFICATE_STATUS, CERTIFICATE_STATUS_COLORS } from '../constants';
 
 export const useCertificateComputedData = () => {
-  const { t } = useTranslation('certificates');
+  const { t } = useTranslation('constants');
 
   const handleGetCertificateComputedData = useCallback(
     validity => {
@@ -20,32 +20,24 @@ export const useCertificateComputedData = () => {
         };
       }
 
-      const validityInitialDate = validity.notBefore
-        ? moment(validity.notBefore).format('DD/MM/YYYY')
-        : '';
+      const { notBefore, notAfter } = validity;
 
-      const validityFinalDate = validity.notAfter
-        ? moment(validity.notAfter).format('DD/MM/YYYY')
-        : '';
+      const validityInitialDate = notBefore ? moment(notBefore).format('DD/MM/YYYY') : '';
+      const validityFinalDate = notAfter ? moment(notAfter).format('DD/MM/YYYY') : '';
 
-      const isExpired = validity.notAfter ? moment().isAfter(validity.notAfter, 'days') : false;
-
-      const isAboutToExpire = validity.notAfter
-        ? moment(validity.notAfter).isSame(moment(), 'days')
-        : false;
+      const isExpired = notAfter ? moment().isAfter(notAfter, 'days') : false;
+      const isAboutToExpire = notAfter ? moment(notAfter).isSame(moment(), 'days') : false;
 
       let status = CERTIFICATE_STATUS.VALID;
       if (isExpired) status = CERTIFICATE_STATUS.EXPIRED;
       else if (isAboutToExpire) status = CERTIFICATE_STATUS.ABOUT_TO_EXPIRE;
-
-      const statusColor = CERTIFICATE_STATUS_COLORS[status];
 
       return {
         validityInitialDate,
         validityFinalDate,
         status,
         statusText: t(`certificateStatus.${status}`),
-        statusColor,
+        statusColor: CERTIFICATE_STATUS_COLORS[status],
       };
     },
     [t],

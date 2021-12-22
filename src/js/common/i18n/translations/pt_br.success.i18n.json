@@ -25,6 +25,7 @@
     "associateDevice": "Certificado associado ao dispositivo",
 
     "deleteCertificationAuthority": "CA excluída",
-    "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas"
+    "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
+    "createCertificationAuthority": "CA criada"
   }
 }
