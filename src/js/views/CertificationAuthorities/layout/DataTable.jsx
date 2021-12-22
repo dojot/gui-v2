@@ -68,8 +68,7 @@ const DataTable = ({
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelectedDevices = certificationAuthorities.map(row => row.id);
-      handleSelectAuthority(newSelectedDevices);
+      handleSelectAuthority(certificationAuthorities.map(row => row.id));
       return;
     }
 

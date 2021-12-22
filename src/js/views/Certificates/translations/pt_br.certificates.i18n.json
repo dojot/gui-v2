@@ -7,31 +7,37 @@
   "backIconButtonText": "Página Anterior",
   "pageInfo": "Página {{page}} de {{totalOfPages}}",
   "labelRowsPerPage": "Itens por página:",
-  "associateToDevice": "Associar a um dispositivo",
-  "disassociateDevice": "Desassociar dispositivo",
-  "changeAssociation": "Trocar associação",
+  "associateToDevice": "Associar a um Dispositivo",
+  "disassociateDevice": "Desassociar Dispositivo",
+  "changeAssociation": "Trocar Associação",
   "AssociateToDeviceModalTitle": "Dispositivos",
-  "searchInputPh": "Pesquisar certificado",
+  "searchInputPh": "Pesquisar Certificado",
   "createNewCertificate": "Criar Novo Certificado",
   "emptyListMessage": "Nenhum Certificado Encontrado",
   "massActions": "Ações em massa:",
   "hasAssociatedDeviceTooltip": "Possui dispositivo associado",
   "noAssociatedDeviceTooltip": "Não possui dispositivo associado",
   "lastUpdateTooltip": "Última atualização",
-  "dataTableHead": {
-    "label": "Nome",
-    "validityPeriod": "Período de Validade",
-    "deviceId": "Id do Dispositivo",
+  "validityNotDefined": "Validade Não Definida",
+  "certificateStatus": {
+    "VALID": "Válido",
+    "EXPIRED": "Expirado",
+    "ABOUT_TO_EXPIRE": "A Expirar"
+  },
+  "dataLabels": {
+    "fingerprint": "Fingerprint",
+    "deviceId": "ID do Dispositivo",
+    "validity": "Período de Validade",
     "status": "Status",
     "actions": "Ações"
   },
   "dataTableBody": {
-    "notAssociated": "Não associado"
+    "noDeviceAssociated": "Nenhum Dispositivo Associado"
   },
   "associateDeviceModal": {
     "table": {
       "id": "Id",
-      "devices": "Dispositivos",
+      "label": "Nome do Dispositivo",
       "lastUpdate": "Última atualização"
     },
     "associate": "Associar"
@@ -50,11 +56,8 @@
   },
   "disassociateDeviceAlert": {
     "title": "Desassociar Dispositivo ({{deviceId}})",
-    "message": "Tem certeza que deseja desassociar ({{deviceId}}) de ({{certificateLabel}})?",
+    "message": "Tem certeza que deseja desassociar o dispositivo ({{deviceId}}) deste certificado?",
     "cancelButton": "Cancelar",
     "confirmButton": "Desassociar"
-  },
-  "cards": {
-    "deviceId": "Id do Dispositivo"
   }
 }

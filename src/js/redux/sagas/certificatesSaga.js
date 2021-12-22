@@ -1,18 +1,41 @@
-import { put, fork, takeLatest, select } from 'redux-saga/effects';
+import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { Certificates } from 'Services';
 
 import { constants, actions } from '../modules/certificates';
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
 import { actions as successActions } from '../modules/success';
-import { certificatesSelector } from '../selectors/certificatesSelector';
+import { paginationControlSelector } from '../selectors/certificatesSelector';
+
+export function* getCurrentCertificatesPageAgain() {
+  const pagination = yield select(paginationControlSelector);
+  yield put(
+    actions.getCertificates({
+      page: {
+        number: pagination.currentPage,
+        size: pagination.itemsPerPage,
+      },
+    }),
+  );
+}
 
 export function* handleGetCertificates(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_CERTIFICATES));
     const { page, filter } = action.payload;
-    const { getCertificates } = yield Certificates.getCertificatesList(page, filter);
-    if (getCertificates) yield put(actions.updateCertificates(getCertificates));
+    const { getCertificateList } = yield call(Certificates.getCertificateList, page, filter);
+    if (getCertificateList) {
+      yield put(
+        actions.updateCertificates({
+          certificates: getCertificateList.certificates,
+          paginationControl: {
+            currentPage: getCertificateList.pagination.currentPage,
+            totalPages: getCertificateList.pagination.totalPages,
+            itemsPerPage: page?.size || 0,
+          },
+        }),
+      );
+    }
   } catch (e) {
     yield put(actions.updateCertificates({ certificates: [] }));
     yield put(
@@ -29,15 +52,9 @@ export function* handleGetCertificates(action) {
 export function* handleDeleteCertificate(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_CERTIFICATE));
-    const { certificate } = action.payload;
-    yield Certificates.deleteCertificate(certificate);
-    const certificates = yield select(certificatesSelector);
-    const notDeletedCertificates = certificates.filter(({ id }) => id !== certificate);
-    yield put(
-      actions.updateCertificates({
-        certificates: notDeletedCertificates,
-      }),
-    );
+    const { fingerprint } = action.payload;
+    yield call(Certificates.deleteMultipleCertificates, [fingerprint]);
+    yield call(getCurrentCertificatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteCertificate' }));
   } catch (e) {
     yield put(
@@ -53,18 +70,10 @@ export function* handleDeleteCertificate(action) {
 
 export function* handleDeleteMultipleCertificates(action) {
   try {
-    yield put(loadingActions.addLoading(constants.DELETE_ALL_CERTIFICATES));
-    const { certificateIdArray } = action.payload;
-    yield Certificates.deleteMultipleCertificates(certificateIdArray);
-    const certificates = yield select(certificatesSelector);
-    const notDeletedCertificates = certificates.filter(
-      ({ id }) => !certificateIdArray.includes(id),
-    );
-    yield put(
-      actions.updateCertificates({
-        certificates: notDeletedCertificates,
-      }),
-    );
+    yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_CERTIFICATES));
+    const { fingerprints } = action.payload;
+    yield call(Certificates.deleteMultipleCertificates, fingerprints);
+    yield call(getCurrentCertificatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleCertificates' }));
   } catch (e) {
     yield put(
@@ -74,22 +83,17 @@ export function* handleDeleteMultipleCertificates(action) {
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.DELETE_ALL_CERTIFICATES));
+    yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_CERTIFICATES));
   }
 }
 
 export function* handleDisassociateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DISASSOCIATE_DEVICE));
-    const { certificate } = action.payload;
-    yield Certificates.disassociateDevice(certificate);
-    const certificates = yield select(certificatesSelector);
-    yield put(
-      actions.updateCertificates({
-        certificates,
-      }),
-    );
-    yield put(successActions.showSuccessToast({ i18nMessage: 'disassociateCertificate' }));
+    const { fingerprint } = action.payload;
+    yield call(Certificates.disassociateDevice, fingerprint);
+    yield call(getCurrentCertificatesPageAgain);
+    yield put(successActions.showSuccessToast({ i18nMessage: 'disassociateDevice' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -102,6 +106,25 @@ export function* handleDisassociateDevice(action) {
   }
 }
 
+export function* handleAssociateDevice(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.ASSOCIATE_DEVICE));
+    const { fingerprint, deviceId } = action.payload;
+    yield call(Certificates.associateDevice, fingerprint, deviceId);
+    yield call(getCurrentCertificatesPageAgain);
+    yield put(successActions.showSuccessToast({ i18nMessage: 'associateDevice' }));
+  } catch (e) {
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'associateDevice',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.ASSOCIATE_DEVICE));
+  }
+}
+
 function* watchGetCertificates() {
   yield takeLatest(constants.GET_CERTIFICATES, handleGetCertificates);
 }
@@ -111,11 +134,15 @@ function* watchDeleteCertificate() {
 }
 
 function* watchDeleteMultipleCertificates() {
-  yield takeLatest(constants.DELETE_ALL_CERTIFICATES, handleDeleteMultipleCertificates);
+  yield takeLatest(constants.DELETE_MULTIPLE_CERTIFICATES, handleDeleteMultipleCertificates);
 }
 
 function* watchDisassociateDevice() {
   yield takeLatest(constants.DISASSOCIATE_DEVICE, handleDisassociateDevice);
+}
+
+function* watchAssociateDevice() {
+  yield takeLatest(constants.ASSOCIATE_DEVICE, handleAssociateDevice);
 }
 
 export const certificatesSaga = [
@@ -123,4 +150,5 @@ export const certificatesSaga = [
   fork(watchDeleteCertificate),
   fork(watchDeleteMultipleCertificates),
   fork(watchDisassociateDevice),
+  fork(watchAssociateDevice),
 ];

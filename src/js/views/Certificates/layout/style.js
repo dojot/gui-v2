@@ -30,13 +30,9 @@ export const useSearchBarStyles = makeStyles(theme => ({
   },
 }));
 
-export const useCardsStyles = makeStyles(theme => ({
+export const useCardsStyles = makeStyles(() => ({
   card: {
-    cursor: 'pointer',
-    transition: 'background 0.1s ease-in-out',
-    '&:hover': {
-      background: theme.palette.action.hover,
-    },
+    cursor: 'default',
   },
   cardIcon: {
     fontSize: '40px',
@@ -44,10 +40,8 @@ export const useCardsStyles = makeStyles(theme => ({
   cardTitle: {
     fontSize: '16px',
     fontWeight: 'bold',
-  },
-  deviceId: {
-    color: theme.palette.info.dark,
-    textDecoration: 'underline',
+    wordBreak: 'break-all',
+    paddingRight: '1.4rem',
   },
 }));
 
@@ -66,24 +60,6 @@ export const usePaginationStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-}));
-
-export const useDetailsModalStyles = makeStyles(theme => ({
-  dataGroup: {
-    background: '#f2f2f2',
-    border: `1px solid ${theme.palette.divider}`,
-    borderBottom: 'none',
-  },
-  dataGroupTitleIcon: {
-    minWidth: 'auto',
-    marginRight: theme.spacing(2),
-  },
-  tableCellBold: {
-    fontWeight: 'bold',
-  },
-  tableCellSecondary: {
-    color: theme.palette.text.secondary,
   },
 }));
 
@@ -111,5 +87,11 @@ export const useDataTableStyles = makeStyles(theme => ({
     cursor: 'pointer',
     color: '#7B92FF',
     textDecoration: 'underline',
+  },
+  truncatedFingerprint: {
+    maxWidth: '120px',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
 }));

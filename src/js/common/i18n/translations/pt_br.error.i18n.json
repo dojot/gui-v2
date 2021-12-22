@@ -26,6 +26,12 @@
     "createAttr": "Não foi possível criar um atributo",
     "editAttr": "Não foi possível editar este atributo",
 
+    "getCertificates": "Não foi possível obter os certificados",
+    "deleteCertificate": "Não foi possível excluir este certificado",
+    "deleteMultipleCertificates": "Não foi possível excluir estes certificados",
+    "disassociateDevice": "Não foi possível desassociar o certificado deste dispositivo",
+    "associateDevice": "Não foi possível associar o certificado com este dispositivo",
+
     "getCertificationAuthorities": "Não foi possível obter as CAs",
     "deleteCertificationAuthority": "Não foi possível excluir esta CA",
     "deleteMultipleCertificationAuthorities": "Não foi possível excluir estas CAs"

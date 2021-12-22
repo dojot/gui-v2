@@ -1,20 +1,29 @@
 import { protectAPI } from 'APIs';
 
-export const getCertificatesList = (page, filter) => {
+export const getCertificateList = (page, filter) => {
   return protectAPI({
     query: `
-      query getCertificates($page: PageInput, $filter: FilterDeviceInput) {
-        getCertificates(page: $page, filter: $filter) {
-          totalPages
-          currentPage
+      query getCertificateList($page: PageInput, $filter: FilterCertificateInput) {
+        getCertificateList(page: $page, filter:$filter) {
+          pagination {
+            currentPage
+            totalPages
+          }
           certificates {
-            id
-            label
-            attrs{
-              label
-              valueType
-              isDynamic
-              staticValue
+            issuedByDojotPki
+            autoRegistered
+            subjectDN
+            fingerprint
+            pem
+            tenant
+            createdAt
+            modifiedAt
+            belongsTo {
+              device
+            }
+            validity {
+              notBefore
+              notAfter
             }
           }
         }
@@ -27,55 +36,42 @@ export const getCertificatesList = (page, filter) => {
   });
 };
 
-export const deleteCertificate = certificateId => {
+export const deleteMultipleCertificates = fingerprints => {
   return protectAPI({
     query: `
-      mutation deleteCertificate($certificateId: String!) {
-        deleteCertificate(certificateId: $certificateId) {
-          id
-        }
+      mutation deleteCertificates($fingerprints: [String]!) {
+        deleteCertificates(fingerprints: $fingerprints)
       }
     `,
     variables: JSON.stringify({
-      certificateId,
+      fingerprints,
     }),
   });
 };
 
-export const deleteMultipleCertificates = certificatesIdArray => {
+export const disassociateDevice = fingerprint => {
   return protectAPI({
     query: `
-      mutation deleteMultipleCertificates($certificatesIdArray: [String]!) {
-        deleteMultipleCertificates(certificatesIdArray: $certificatesIdArray) {
-          id
-        }
+      mutation disassociateDevice($fingerprint: String!) {
+        disassociateDevice(fingerprint: $fingerprint)
       }
     `,
     variables: JSON.stringify({
-      certificatesIdArray,
+      fingerprint,
     }),
   });
 };
 
-export const disassociateDevice = certificate => {
+export const associateDevice = (fingerprint, deviceId) => {
   return protectAPI({
     query: `
-      mutation disassociateDevice($certificate: [String]!) {
-        disassociateDevice(certificate: $certificate) {
-          id
-          label
-          validityPeriod
-          status
-          deviceId
-        }
+      mutation associateDevice($fingerprint: String!, $deviceId: String!) {
+        associateDevice(fingerprint: $fingerprint, deviceId: $deviceId)
       }
     `,
     variables: JSON.stringify({
-      certificate,
+      fingerprint,
+      deviceId,
     }),
   });
-};
-
-export const getCertificatesHistoryParsed = filter => {
-  return protectAPI(filter);
 };

@@ -1,25 +1,31 @@
 import React from 'react';
 
-import { Box, Grid, Typography, Tooltip } from '@material-ui/core';
+import { Box, Grid, Typography, Link, Chip } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { Link as RouterLink } from 'react-router-dom';
 
 import DataCard from '../../../common/components/Cards/DataCard';
+import { useCertificateComputedData } from '../hooks';
 import { useCardsStyles } from './style';
 
-const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptionsMenu }) => {
+const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
   const { t } = useTranslation(['certificates', 'common']);
   const classes = useCardsStyles();
+
+  const handleGetCertificateComputedData = useCertificateComputedData();
 
   return (
     <Box padding={2}>
       <Grid spacing={2} container>
         {certificates.map(certificate => {
-          const handleSeeCertificateDetails = () => {
-            handleClickCertificate(certificate);
-          };
+          const {
+            statusText,
+            statusColor,
+            validityInitialDate,
+            validityFinalDate,
+          } = handleGetCertificateComputedData(certificate.validity);
 
           const handleShowOptionsMenu = e => {
             e.stopPropagation();
@@ -30,37 +36,47 @@ const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptio
           };
 
           return (
-            <Grid key={certificate.id} xs={12} sm={6} md={4} xl={3} item>
+            <Grid key={certificate.fingerprint} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
                 className={classes.card}
-                onClick={handleSeeCertificateDetails}
                 onOptionsClick={handleShowOptionsMenu}
                 headerIcon={<VerifiedUserOutlined className={classes.cardIcon} />}
                 headerTitle={
-                  <Typography className={classes.cardTitle}>{certificate.label}</Typography>
-                }
-                footer={
-                  <>
-                    <Tooltip title={t('lastUpdateTooltip')} placement='right' arrow>
-                      <div>
-                        <Typography variant='body2'>
-                          {moment(certificate.updated || certificate.created).format(
-                            'DD/MM/YYYY HH:mm:ss',
-                          )}
-                        </Typography>
-                      </div>
-                    </Tooltip>
-                  </>
+                  <Typography className={classes.cardTitle}>{certificate.fingerprint}</Typography>
                 }
               >
                 <Box marginBottom={1}>
-                  <Typography variant='body2' className={certificate.deviceId && classes.deviceId}>
-                    {t(
-                      certificate.deviceId
-                        ? certificate.deviceId
-                        : 'certificates:noAssociatedDeviceTooltip',
-                    )}
+                  <Typography variant='body2'>{t('dataLabels.deviceId')}</Typography>
+
+                  {certificate.belongsTo?.device ? (
+                    <RouterLink component={Link} to={`/devices/${certificate.belongsTo.device}`}>
+                      {certificate.belongsTo.device}
+                    </RouterLink>
+                  ) : (
+                    <Typography variant='body2'>
+                      <strong>{t('noAssociatedDeviceTooltip')}</strong>
+                    </Typography>
+                  )}
+                </Box>
+
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>{t('dataLabels.validity')}</Typography>
+
+                  <Typography variant='body2'>
+                    <strong>
+                      {validityInitialDate && validityFinalDate
+                        ? `${validityInitialDate} - ${validityFinalDate}`
+                        : t('validityNotDefined')}
+                    </strong>
                   </Typography>
+                </Box>
+
+                <Box marginBottom={1}>
+                  <Chip
+                    style={{ background: statusColor, color: 'white' }}
+                    label={statusText}
+                    size='small'
+                  />
                 </Box>
               </DataCard>
             </Grid>
@@ -73,13 +89,11 @@ const Cards = ({ certificates, handleClickCertificate, handleSetCertificateOptio
 
 Cards.propTypes = {
   certificates: PropTypes.array,
-  handleClickCertificate: PropTypes.func,
   handleSetCertificateOptionsMenu: PropTypes.func,
 };
 
 Cards.defaultProps = {
   certificates: [],
-  handleClickCertificate: null,
   handleSetCertificateOptionsMenu: null,
 };
 

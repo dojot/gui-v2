@@ -1,21 +1,46 @@
-import { put, fork, takeLatest, select } from 'redux-saga/effects';
+import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { CertificationAuthority } from 'Services';
 
 import { constants, actions } from '../modules/certificationAuthorities';
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
 import { actions as successActions } from '../modules/success';
-import { certificationAuthoritiesSelector } from '../selectors/certificationAuthoritiesSelector';
+import { paginationControlSelector } from '../selectors/certificationAuthoritiesSelector';
+
+export function* getCurrentCertificationAuthoritiesPageAgain() {
+  const pagination = yield select(paginationControlSelector);
+  yield put(
+    actions.getCertificationAuthorities({
+      page: {
+        number: pagination.currentPage,
+        size: pagination.itemsPerPage,
+      },
+    }),
+  );
+}
 
 export function* handleGetCertificationAuthorities(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_CERTIFICATION_AUTHORITIES));
     const { page, filter } = action.payload;
-    const {
-      getCertificationAuthorities,
-    } = yield CertificationAuthority.getCertificationAuthoritiesList(page, filter);
-    if (getCertificationAuthorities)
-      yield put(actions.updateCertificationAuthorities(getCertificationAuthorities));
+    const { getCertificationAuthorities } = yield call(
+      CertificationAuthority.getCertificationAuthoritiesList,
+      page,
+      filter,
+    );
+
+    if (getCertificationAuthorities) {
+      yield put(
+        actions.updateCertificationAuthorities({
+          CertificationAuthorities: getCertificationAuthorities.certificationAuthorities,
+          paginationControl: {
+            currentPage: getCertificationAuthorities.currentPage,
+            totalPages: getCertificationAuthorities.totalPages,
+            itemsPerPage: page?.size || 0,
+          },
+        }),
+      );
+    }
   } catch (e) {
     yield put(actions.updateCertificationAuthorities({ certificationAuthorities: [] }));
     yield put(
@@ -33,16 +58,8 @@ export function* handleDeleteCertificationAuthority(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_CERTIFICATION_AUTHORITY));
     const { certificationAuthority } = action.payload;
-    yield CertificationAuthority.deleteCertificationAuthority(certificationAuthority);
-    const certificationAuthorities = yield select(certificationAuthoritiesSelector);
-    const notDeletedCertificationAuthorities = certificationAuthorities.filter(
-      ({ id }) => id !== certificationAuthority,
-    );
-    yield put(
-      actions.updateCertificationAuthorities({
-        certificationAuthorities: notDeletedCertificationAuthorities,
-      }),
-    );
+    yield call(CertificationAuthority.deleteCertificationAuthority, certificationAuthority);
+    yield call(getCurrentCertificationAuthoritiesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteCertificationAuthority' }));
   } catch (e) {
     yield put(
@@ -58,20 +75,13 @@ export function* handleDeleteCertificationAuthority(action) {
 
 export function* handleDeleteMultipleCertificationAuthorities(action) {
   try {
-    yield put(loadingActions.addLoading(constants.DELETE_ALL_CERTIFICATION_AUTHORITIES));
-    const { certificationAuthorityIdArray } = action.payload;
-    yield CertificationAuthority.deleteMultipleCertificationAuthorities(
-      certificationAuthorityIdArray,
+    yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES));
+    const { certificationAuthoritiesIds } = action.payload;
+    yield call(
+      CertificationAuthority.deleteMultipleCertificationAuthorities,
+      certificationAuthoritiesIds,
     );
-    const certificationAuthorities = yield select(certificationAuthoritiesSelector);
-    const notDeletedCertificationAuthorities = certificationAuthorities.filter(
-      ({ id }) => !certificationAuthorityIdArray.includes(id),
-    );
-    yield put(
-      actions.updateCertificationAuthorities({
-        certificationAuthorities: notDeletedCertificationAuthorities,
-      }),
-    );
+    yield call(getCurrentCertificationAuthoritiesPageAgain);
     yield put(
       successActions.showSuccessToast({ i18nMessage: 'deleteMultipleCertificationAuthorities' }),
     );
@@ -83,7 +93,7 @@ export function* handleDeleteMultipleCertificationAuthorities(action) {
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.DELETE_ALL_CERTIFICATION_AUTHORITIES));
+    yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES));
   }
 }
 
@@ -97,7 +107,7 @@ function* watchDeleteCertificationAuthority() {
 
 function* watchDeleteMultipleCertificationAuthorities() {
   yield takeLatest(
-    constants.DELETE_ALL_CERTIFICATION_AUTHORITIES,
+    constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES,
     handleDeleteMultipleCertificationAuthorities,
   );
 }

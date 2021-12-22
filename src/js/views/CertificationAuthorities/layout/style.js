@@ -47,7 +47,7 @@ export const useCardsStyles = makeStyles(theme => ({
   },
 }));
 
-export const useDeviceOptionsStyles = makeStyles(theme => ({
+export const useOptionsMenuStyles = makeStyles(theme => ({
   menuItem: {
     display: 'flex',
     alignItems: 'center',

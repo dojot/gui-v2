@@ -3,3 +3,4 @@ export * from './wizard';
 export * from './dataVisualization';
 export * from './templateAttrs';
 export * from './mapImagery';
+export * from './certificates';
