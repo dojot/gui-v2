@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 
 import { Box, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router';
 
 import { ViewContainer } from '../stateComponents';
 import { CONSTANTS } from './constants';
@@ -10,6 +11,7 @@ import useStyles from './style';
 
 const CreateCertificate = () => {
   const { t } = useTranslation('createCertificate');
+  const history = useHistory();
   const classes = useStyles();
 
   const [expanded, setExpanded] = useState('');
@@ -25,6 +27,11 @@ const CreateCertificate = () => {
     },
     [expanded],
   );
+
+  const handleLeaveCertificateCreation = () => {
+    if (history.length) history.goBack();
+    else history.push('/certificates');
+  };
 
   return (
     <ViewContainer headerTitle={t('Novo certificado')}>
@@ -68,15 +75,10 @@ const CreateCertificate = () => {
         </Box>
 
         <Box className={classes.footer}>
-          <Button onClick={() => setExpanded('')} className={classes.cancelButton}>
+          <Button onClick={handleLeaveCertificateCreation} className={classes.cancelButton}>
             {t('cancelButton')}
           </Button>
-          <Button
-            className={classes.submitButton}
-            variant='contained'
-            color='primary'
-            disabled={!isGeneratedCertificate}
-          >
+          <Button variant='contained' color='primary' disabled={!isGeneratedCertificate}>
             {t('finishButton')}
           </Button>
         </Box>

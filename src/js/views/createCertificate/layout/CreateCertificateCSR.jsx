@@ -36,11 +36,11 @@ function CreateCertificateCSR() {
           <Collapse in={csrHelp}>
             <Typography>
               <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>
-              <u>{t('createCertificateCSR.csrHelpSteps.step1_text')}</u>
+              <u>{t('createCertificateCSR.csrHelpSteps.step1Text')}</u>
             </Typography>
             <Typography>
               <b>{t('createCertificateCSR.csrHelpSteps.step2')}</b>
-              {t('createCertificateCSR.csrHelpSteps.step2_text')}
+              {t('createCertificateCSR.csrHelpSteps.step2Text')}
             </Typography>
           </Collapse>
           <br />

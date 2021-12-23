@@ -44,4 +44,10 @@ export default makeStyles(theme => ({
   generateCertificateButton: {
     width: 200,
   },
+  filesWrapper: {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '40%',
+    justifyContent: 'space-between',
+  },
 }));

@@ -23,7 +23,4 @@ export default makeStyles(theme => ({
   cancelButton: {
     margin: theme.spacing(0, 4),
   },
-  submitButton: {
-    // margin: theme.spacing(0, 2),
-  },
 }));

@@ -3,8 +3,6 @@ import React, { useState } from 'react';
 import { AccordionDetails, Typography, TextField, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
-// import { actions as certificateActions } from '../../../redux/modules/certificates';
-
 import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
