@@ -10,20 +10,15 @@ const Pagination = ({
   page,
   rowsPerPage,
   totalOfPages,
-  numberOfSelectedItems,
   handleChangePage,
   handleChangeRowsPerPage,
 }) => {
-  const { t } = useTranslation('certificationAuthorities');
+  const { t } = useTranslation('certificates');
   const classes = usePaginationStyles();
 
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
       <Typography>{t('totalOfPages', { count: totalOfPages })}</Typography>
-
-      {!!numberOfSelectedItems && (
-        <Typography>{t('numberOfSelectedItems', { count: numberOfSelectedItems })}</Typography>
-      )}
 
       <TablePagination
         page={page}
@@ -48,7 +43,6 @@ Pagination.propTypes = {
   rowsPerPage: PropTypes.number,
   totalOfPages: PropTypes.number,
   handleChangePage: PropTypes.func,
-  numberOfSelectedItems: PropTypes.number,
   handleChangeRowsPerPage: PropTypes.func,
 };
 
@@ -57,7 +51,6 @@ Pagination.defaultProps = {
   rowsPerPage: 0,
   totalOfPages: 0,
   handleChangePage: null,
-  numberOfSelectedItems: 0,
   handleChangeRowsPerPage: null,
 };
 

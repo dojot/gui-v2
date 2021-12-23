@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
@@ -19,54 +19,74 @@ import {
   paginationControlSelector,
 } from '../../redux/selectors/certificationAuthoritiesSelector';
 import { ViewContainer } from '../stateComponents';
-import CaOptionsMenu from './layout/CaOptionsMenu';
 import Cards from './layout/Cards';
-import CertificationAuthoritiesLoading from './layout/CertificationAuthoritiesLoading';
 import DataTable from './layout/DataTable';
+import Loading from './layout/Loading';
 import MassActions from './layout/MassActions';
+import OptionsMenu from './layout/OptionsMenu';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
 
 const CertificationAuthorities = () => {
-  const { t } = useTranslation('certificationAuthorities');
+  const { t } = useTranslation(['certificationAuthorities', 'common']);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
 
-  const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
-
+  const certificationAuthorities = useSelector(certificationAuthoritiesSelector);
   const isLoadingCertificationAuthorities = useIsLoading(constants.GET_CERTIFICATION_AUTHORITIES);
 
-  const [page] = useState(0);
-  const [rowsPerPage] = useState(10);
-  const [orderBy, setOrderBy] = useState('');
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [selectedAuthorities, setSelectedAuthorities] = useState([]);
+  const [selectedCertificationAuthorities, setSelectedCertificationAuthorities] = useState([]);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [certificationAuthorityOptionsMenu, setCertificationAuthorityOptionsMenu] = useState(null);
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const [orderBy, setOrderBy] = useState('');
+  const [order, setOrder] = useState(DATA_ORDER.ASC);
+
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: CERTIFICATION_AUTHORITIES_PAGE_KEYS.VIEW_MODE,
   });
 
-  const handleHideMassActions = () => {
-    setSelectedAuthorities([]);
+  const handleChangePage = (_, newPage) => {
+    setPage(newPage);
   };
 
-  const handleDeleteMultipleCa = () => {
+  const handleChangeRowsPerPage = event => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+  const handleHideMassActions = () => {
+    setSelectedCertificationAuthorities([]);
+  };
+
+  const handleDeleteMultipleCertificationAuthorities = () => {
     setIsShowingMultipleDeleteAlert(true);
   };
 
-  const handleConfirmMultipleCaDeletion = () => {
-    setSelectedAuthorities([]);
+  const handleConfirmMultipleDeletion = () => {
+    dispatch(
+      certificationAuthoritiesActions.deleteMultipleCertificationAuthorities({
+        fingerprints: selectedCertificationAuthorities,
+      }),
+    );
     setIsShowingMultipleDeleteAlert(false);
+    setSelectedCertificationAuthorities(currentSelectedAuthorities => {
+      return currentSelectedAuthorities.filter(
+        fingerprint => !selectedCertificationAuthorities.includes(fingerprint),
+      );
+    });
   };
 
-  const handleCloseMultipleCaDeletionAlert = () => {
+  const handleCloseMultipleDeletionAlert = () => {
     setIsShowingMultipleDeleteAlert(false);
   };
 
@@ -78,11 +98,13 @@ const CertificationAuthorities = () => {
     setIsShowingDeleteAlert(true);
   };
 
-  const handleConfirmCaDeletion = () => {
-    const authorityId = certificationAuthorityOptionsMenu.certificationAuthority.id;
-    dispatch(certificationAuthoritiesActions.deleteCertificationAuthority({ authorityId }));
-    setSelectedAuthorities(currentSelectedAuthorities => {
-      return currentSelectedAuthorities.filter(id => id !== authorityId);
+  const handleConfirmDeletion = () => {
+    const fingerprint = certificationAuthorityOptionsMenu.certificationAuthority.caFingerprint;
+    dispatch(certificationAuthoritiesActions.deleteCertificationAuthority({ fingerprint }));
+    setSelectedCertificationAuthorities(currentSelectedAuthorities => {
+      return currentSelectedAuthorities.filter(
+        currentFingerprint => currentFingerprint !== fingerprint,
+      );
     });
   };
 
@@ -91,48 +113,87 @@ const CertificationAuthorities = () => {
     handleHideOptionsMenu();
   };
 
+  const handleSearchCertificationAuthorities = search => {
+    dispatch(
+      certificationAuthoritiesActions.getCertificationAuthorities({
+        filter: { caFingerprint: search },
+      }),
+    );
+  };
+
+  useEffect(() => {
+    dispatch(
+      certificationAuthoritiesActions.getCertificationAuthorities({
+        page: {
+          number: page + 1,
+          size: rowsPerPage,
+        },
+      }),
+    );
+  }, [dispatch, page, rowsPerPage]);
+
+  useEffect(() => {
+    if (viewMode) setSelectedCertificationAuthorities([]);
+  }, [viewMode]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(
+        certificationAuthoritiesActions.updateCertificationAuthorities({
+          certificationAuthorities: [],
+        }),
+      );
+    };
+  }, [dispatch]);
+
   return (
     <ViewContainer headerTitle={t('headerTitle')}>
       <AlertDialog
         isOpen={isShowingMultipleDeleteAlert}
-        title={t('deleteMultipleCaAlert.title')}
-        message={t('deleteMultipleCaAlert.message')}
-        handleConfirm={handleConfirmMultipleCaDeletion}
-        handleClose={handleCloseMultipleCaDeletionAlert}
-        cancelButtonText='cancelar'
-        confirmButtonText='confirmar'
+        cancelButtonText={t('common:cancel')}
+        confirmButtonText={t('common:exclude')}
+        title={t('deleteMultipleAlertModal.title')}
+        message={t('deleteMultipleAlertModal.message')}
+        handleConfirm={handleConfirmMultipleDeletion}
+        handleClose={handleCloseMultipleDeletionAlert}
       />
 
       <AlertDialog
         isOpen={isShowingDeleteAlert}
-        title={t('deleteCaAlert.title')}
-        message={t('deleteCaAlert.message')}
-        handleConfirm={handleConfirmCaDeletion}
+        title={t('deleteAlertModal.title')}
+        message={t('deleteAlertModal.message')}
+        handleConfirm={handleConfirmDeletion}
         handleClose={handleCloseCaDeletionAlert}
-        cancelButtonText={t('deleteCaAlert.cancelButton')}
-        confirmButtonText={t('deleteCaAlert.confirmButton')}
+        cancelButtonText={t('deleteAlertModal.cancelButton')}
+        confirmButtonText={t('deleteAlertModal.confirmButton')}
       />
 
-      <CaOptionsMenu
+      <OptionsMenu
         isShowingMenu={!!certificationAuthorityOptionsMenu}
         anchorElement={certificationAuthorityOptionsMenu?.anchorElement}
-        handleDeleteCa={handleDeleteCertificationAuthority}
         handleHideOptionsMenu={handleHideOptionsMenu}
+        handleDelete={handleDeleteCertificationAuthority}
       />
 
       <Box className={classes.container}>
-        <SearchBar viewMode={viewMode} handleChangeViewMode={setViewMode} />
+        <SearchBar
+          viewMode={viewMode}
+          handleChangeViewMode={setViewMode}
+          handleSearchCertificationAuthorities={handleSearchCertificationAuthorities}
+        />
 
-        {selectedAuthorities.length > 0 && (
+        {selectedCertificationAuthorities.length > 0 && (
           <MassActions
             handleHideMassActions={handleHideMassActions}
-            handleDeleteMultipleDevices={handleDeleteMultipleCa}
+            handleDeleteMultipleCertificationAuthorities={
+              handleDeleteMultipleCertificationAuthorities
+            }
           />
         )}
 
         <Box className={classes.content}>
           {isLoadingCertificationAuthorities ? (
-            <CertificationAuthoritiesLoading />
+            <Loading />
           ) : (
             <>
               {viewMode === VIEW_MODE.TABLE && certificationAuthorities.length > 0 && (
@@ -140,26 +201,27 @@ const CertificationAuthorities = () => {
                   order={order}
                   orderBy={orderBy}
                   certificationAuthorities={certificationAuthorities}
-                  selectedCertificationAuthorities={selectedAuthorities}
+                  selectedCertificationAuthorities={selectedCertificationAuthorities}
                   setOrder={setOrder}
                   setOrderBy={setOrderBy}
-                  handleSelectAuthority={setSelectedAuthorities}
+                  handleSetOptionsMenu={setCertificationAuthorityOptionsMenu}
+                  handleSelectCertificationAuthority={setSelectedCertificationAuthorities}
                 />
               )}
 
               {viewMode === VIEW_MODE.CARD && certificationAuthorities.length > 0 && (
                 <Cards
                   certificationAuthorities={certificationAuthorities}
-                  handleSetCaOptionsMenu={setCertificationAuthorityOptionsMenu}
+                  handleSetOptionsMenu={setCertificationAuthorityOptionsMenu}
                 />
               )}
 
               {certificationAuthorities.length === 0 && (
                 <EmptyPlaceholder
                   emptyListMessage={t('emptyListMessage')}
+                  textButton={t('createCertificationAuthority')}
                   icon={<VerifiedUserOutlined fontSize='large' />}
                   handleButtonClick={() => history.push('/certification-authorities/new')}
-                  textButton={t('createCa')}
                 />
               )}
             </>
@@ -170,7 +232,9 @@ const CertificationAuthorities = () => {
           page={page}
           rowsPerPage={rowsPerPage}
           totalOfPages={totalPages}
-          numberOfSelectedDevices={selectedAuthorities.length}
+          numberOfSelectedItems={selectedCertificationAuthorities.length}
+          handleChangePage={handleChangePage}
+          handleChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Box>
     </ViewContainer>

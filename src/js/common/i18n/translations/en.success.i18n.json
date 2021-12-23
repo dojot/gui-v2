@@ -19,7 +19,13 @@
     "createAttr": "Attribute created",
     "editAttr": "Attribute edited",
 
+    "deleteCertificate": "Certificate deleted",
+    "deleteMultipleCertificates": "All certificates were deleted",
+    "disassociateDevice": "Certificate disassociated from device",
+    "associateDevice": "Certificate associated with the device",
+
     "deleteCertificationAuthority": "CA deletes",
-    "deleteMultipleCertificationAuthorities": "All CAs were deleted"
+    "deleteMultipleCertificationAuthorities": "All CAs were deleted",
+    "createCertificationAuthority": "CA created"
   }
 }

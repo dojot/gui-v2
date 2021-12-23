@@ -19,7 +19,13 @@
     "createAttr": "Atributo criado",
     "editAttr": "Atributo editado",
 
+    "deleteCertificate": "Certificado excluído",
+    "deleteMultipleCertificates": "Todos os certificados foram excluídos",
+    "disassociateDevice": "Certificado desassociado do dispositivo",
+    "associateDevice": "Certificado associado ao dispositivo",
+
     "deleteCertificationAuthority": "CA excluída",
-    "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas"
+    "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
+    "createCertificationAuthority": "CA criada"
   }
 }

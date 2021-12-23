@@ -3,18 +3,23 @@ import { protectAPI } from 'APIs';
 export const getCertificationAuthoritiesList = (page, filter) => {
   return protectAPI({
     query: `
-      query getCertificationAuthorities($page: PageInput, $filter: FilterDeviceInput) {
+      query getCertificationAuthorities($page: PageInput, $filter: FilterCertificationAuthoritiesInput) {
         getCertificationAuthorities(page: $page, filter: $filter) {
-          totalPages
-          currentPage
-          devices {
-            id
-            label
-            attrs{
-              label
-              valueType
-              isDynamic
-              staticValue
+          pagination {
+            totalPages
+            currentPage
+          }
+          certificationAuthorities {
+            allowAutoRegistration
+            caFingerprint
+            caPem
+            subjectDN
+            tenant
+            createdAt
+            modifiedAt
+            validity {
+              notBefore
+              notAfter
             }
           }
         }
@@ -27,32 +32,28 @@ export const getCertificationAuthoritiesList = (page, filter) => {
   });
 };
 
-export const deleteCertificationAuthority = certificationAuthorityId => {
+export const deleteMultipleCertificationAuthorities = fingerprints => {
   return protectAPI({
     query: `
-      mutation deleteDevice($certificationAuthorityId: String!) {
-        deleteDevice(deviceId: $certificationAuthorityId) {
-          id
-        }
+      mutation deleteCertificationAuthorities($fingerprints: [String]!) {
+        deleteCertificationAuthorities(fingerprints: $fingerprints)
       }
     `,
     variables: JSON.stringify({
-      certificationAuthorityId,
+      fingerprints,
     }),
   });
 };
 
-export const deleteMultipleCertificationAuthorities = certificationAuthoritiesIdArray => {
+export const createCertificationAuthority = ({ caPem }) => {
   return protectAPI({
     query: `
-      mutation deleteMultipleCertificationAuthorities($deviceIdArray: [String]!) {
-        deleteMultipleDevices(certificationAuthoritiesIdArray: $certificationAuthoritiesIdArray) {
-          id
-        }
+      mutation createCertificationAuthority($caPem: String!) {
+        createCertificationAuthority(caPem: $caPem)
       }
     `,
     variables: JSON.stringify({
-      certificationAuthoritiesIdArray,
+      caPem,
     }),
   });
 };

@@ -26,8 +26,15 @@
     "createAttr": "Could not create a attribute",
     "editAttr": "Could not edit this attribute",
 
+    "getCertificates": "Could not get certificates",
+    "deleteCertificate": "Could not delete this certificate",
+    "deleteMultipleCertificates": "Could not delete these certificates",
+    "disassociateDevice": "Could not disassociate the certificate from this device",
+    "associateDevice": "Could not associate the certificate with this device",
+
     "getCertificationAuthorities": "Could not get CAs",
     "deleteCertificationAuthority": "Could not delete this CA",
-    "deleteMultipleCertificationAuthorities": "Could not delete these CAs"
+    "deleteMultipleCertificationAuthorities": "Could not delete these CAs",
+    "createCertificationAuthority": "Could not create a CA"
   }
 }

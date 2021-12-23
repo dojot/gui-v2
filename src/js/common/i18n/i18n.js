@@ -45,10 +45,12 @@ import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
 import attrsEn from './translations/en.attrs.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
+import constantsEn from './translations/en.constants.i18n.json';
 import errorEn from './translations/en.error.i18n.json';
 import successEn from './translations/en.success.i18n.json';
 import attrsPtBr from './translations/pt_br.attrs.i18n.json';
 import commonPtBr from './translations/pt_br.common.i18n.json';
+import constantsPtBr from './translations/pt_br.constants.i18n.json';
 import errorPtBr from './translations/pt_br.error.i18n.json';
 import successPtBr from './translations/pt_br.success.i18n.json';
 
@@ -79,6 +81,7 @@ const resources = {
     success: successEn,
     editTemplate: editTemplateEn,
     createCertificate: createCertificateEn,
+    constants: constantsEn,
   },
   pt: {
     login: loginPtBr,
@@ -106,6 +109,7 @@ const resources = {
     success: successPtBr,
     editTemplate: editTemplatePtBr,
     createCertificate: createCertificatePtBr,
+    constants: constantsPtBr,
   },
 };
 

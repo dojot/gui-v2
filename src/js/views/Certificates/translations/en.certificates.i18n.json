@@ -18,20 +18,21 @@
   "hasAssociatedDeviceTooltip": "Has associated device",
   "noAssociatedDeviceTooltip": "No associated device",
   "lastUpdateTooltip": "Last update",
-  "dataTableHead": {
-    "label": "Name",
-    "validityPeriod": "Validity Period",
-    "deviceId": "Device Id",
+  "validityNotDefined": "Validity Not Defined",
+  "dataLabels": {
+    "fingerprint": "Fingerprint",
+    "deviceId": "Device ID",
+    "validity": "Validity Period",
     "status": "Status",
     "actions": "Actions"
   },
   "dataTableBody": {
-    "notAssociated": "Not associated"
+    "noDeviceAssociated": "No Device Associated"
   },
   "associateDeviceModal": {
     "table": {
       "id": "Id",
-      "devices": "Devices",
+      "label": "Device Name",
       "lastUpdate": "Last update"
     },
     "associate": "Associate"
@@ -50,11 +51,8 @@
   },
   "disassociateDeviceAlert": {
     "title": "Disassociate Device ({{deviceId}})",
-    "message": "Are you sure you want to disassociate ({{deviceId}}) of ({{certificateLabel}})?",
+    "message": "Are you sure you want to disassociate ({{deviceId}}) from this certificate?",
     "cancelButton": "Cancel",
     "confirmButton": "Disassociate"
-  },
-  "cards": {
-    "deviceId": "Device Id"
   }
 }

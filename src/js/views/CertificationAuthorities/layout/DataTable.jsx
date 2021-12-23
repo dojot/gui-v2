@@ -10,14 +10,15 @@ import {
   TableContainer,
   TableRow,
   Chip,
+  Tooltip,
 } from '@material-ui/core';
-import { Delete } from '@material-ui/icons';
+import { MoreHoriz } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useDispatch } from 'react-redux';
 
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
+import { useCertificateComputedData } from '../../../common/hooks';
 import { getComparator } from '../../../common/utils';
 import { useDataTableStyles } from './style';
 
@@ -28,25 +29,27 @@ const DataTable = ({
   selectedCertificationAuthorities,
   setOrder,
   setOrderBy,
-  handleSelectAuthority,
+  handleSetOptionsMenu,
+  handleSelectCertificationAuthority,
 }) => {
   const { t } = useTranslation('certificationAuthorities');
   const classes = useDataTableStyles();
-  const dispatch = useDispatch();
+
+  const handleGetCertificateComputedData = useCertificateComputedData();
 
   const headCells = useMemo(
     () => [
       {
-        id: 'name',
-        label: t('dataTableHead.label'),
+        id: 'cafingerprint',
+        label: t('dataTableHead.caFingerprint'),
       },
       {
-        id: 'validityPeriod',
-        label: t('dataTableHead.validityPeriod'),
+        id: 'subjectDN',
+        label: t('dataTableHead.subjectDN'),
       },
       {
-        id: 'linkedCertificate',
-        label: t('dataTableHead.linkedCertificate'),
+        id: 'validity',
+        label: t('dataTableHead.validity'),
       },
       {
         id: 'status',
@@ -68,20 +71,19 @@ const DataTable = ({
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelectedDevices = certificationAuthorities.map(row => row.id);
-      handleSelectAuthority(newSelectedDevices);
+      handleSelectCertificationAuthority(certificationAuthorities.map(row => row.caFingerprint));
       return;
     }
 
-    handleSelectAuthority([]);
+    handleSelectCertificationAuthority([]);
   };
 
-  const handleSelectRow = id => {
-    const selectedIndex = selectedCertificationAuthorities.indexOf(id);
+  const handleSelectRow = fingerprint => {
+    const selectedIndex = selectedCertificationAuthorities.indexOf(fingerprint);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selectedCertificationAuthorities, id);
+      newSelected = newSelected.concat(selectedCertificationAuthorities, fingerprint);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selectedCertificationAuthorities.slice(1));
     } else if (selectedIndex === selectedCertificationAuthorities.length - 1) {
@@ -93,15 +95,11 @@ const DataTable = ({
       );
     }
 
-    handleSelectAuthority(newSelected);
+    handleSelectCertificationAuthority(newSelected);
   };
 
   const handleStopPropagation = e => {
     e.stopPropagation();
-  };
-
-  const handleDeleteAuthority = () => {
-    dispatch({ type: 'delete' });
   };
 
   return (
@@ -117,22 +115,37 @@ const DataTable = ({
             numSelected={selectedCertificationAuthorities.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
+            disableOrderBy
           />
 
           <TableBody>
             {certificationAuthorities
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
               .map(certificationAuthority => {
-                const isSelected =
-                  selectedCertificationAuthorities.indexOf(certificationAuthority.id) !== -1;
+                const { caFingerprint, validity } = certificationAuthority;
+                const isSelected = selectedCertificationAuthorities.indexOf(caFingerprint) !== -1;
+
+                const {
+                  statusColor,
+                  statusText,
+                  validityFinalDate,
+                  validityInitialDate,
+                } = handleGetCertificateComputedData(validity);
 
                 const handleSelectThisRow = () => {
-                  handleSelectRow(certificationAuthority.id);
+                  handleSelectRow(caFingerprint);
+                };
+
+                const handleShowOptionsMenu = e => {
+                  handleSetOptionsMenu({
+                    anchorElement: e.target,
+                    certificationAuthority,
+                  });
                 };
 
                 return (
                   <TableRow
-                    key={certificationAuthority.label}
+                    key={caFingerprint}
                     tabIndex={-1}
                     role='checkbox'
                     selected={isSelected}
@@ -147,43 +160,51 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell>{certificationAuthority.name}</TableCell>
-
                     <TableCell>
-                      {certificationAuthority.validityPeriodStart} -{' '}
-                      {certificationAuthority.validityPeriodEnd}
+                      <Tooltip
+                        title={certificationAuthority.caFingerprint}
+                        classes={{ tooltip: classes.tooltip }}
+                        placement='right'
+                        interactive
+                        arrow
+                      >
+                        <div className={classes.truncatedText}>
+                          {certificationAuthority.caFingerprint}
+                        </div>
+                      </Tooltip>
                     </TableCell>
 
-                    <TableCell className={classes.linkedCertificate}>
-                      {certificationAuthority.linkedCertificate}
+                    <TableCell>
+                      <Tooltip
+                        title={certificationAuthority.subjectDN}
+                        classes={{ tooltip: classes.tooltip }}
+                        placement='right'
+                        interactive
+                        arrow
+                      >
+                        <div className={classes.truncatedText}>
+                          {certificationAuthority.subjectDN}
+                        </div>
+                      </Tooltip>
                     </TableCell>
 
                     <TableCell>
-                      {certificationAuthority.status === 'valid' && (
-                        <Chip
-                          label={t('dataTableBody.status.valid')}
-                          className={classes.statusValid}
-                        />
-                      )}
+                      {validityInitialDate && validityFinalDate
+                        ? `${validityInitialDate} - ${validityFinalDate}`
+                        : t('validityNotDefined')}
+                    </TableCell>
 
-                      {certificationAuthority.status === 'expired' && (
-                        <Chip
-                          label={t('dataTableBody.status.expired')}
-                          className={classes.statusExpired}
-                        />
-                      )}
-
-                      {certificationAuthority.status === 'to_expire' && (
-                        <Chip
-                          label={t('dataTableBody.status.to_expire')}
-                          className={classes.statusToExpire}
-                        />
-                      )}
+                    <TableCell>
+                      <Chip
+                        style={{ background: statusColor, color: 'white' }}
+                        label={statusText}
+                        size='small'
+                      />
                     </TableCell>
 
                     <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={() => handleDeleteAuthority()}>
-                        <Delete />
+                      <IconButton onClick={handleShowOptionsMenu}>
+                        <MoreHoriz />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -203,7 +224,8 @@ DataTable.propTypes = {
   selectedCertificationAuthorities: PropTypes.array.isRequired,
   setOrder: PropTypes.func.isRequired,
   setOrderBy: PropTypes.func.isRequired,
-  handleSelectAuthority: PropTypes.func.isRequired,
+  handleSetOptionsMenu: PropTypes.func.isRequired,
+  handleSelectCertificationAuthority: PropTypes.func.isRequired,
 };
 
 export default DataTable;

@@ -1,14 +1,14 @@
 import React from 'react';
 
 import { Grid, Box, Typography, Button, IconButton } from '@material-ui/core';
-import { VerifiedUser, Close, Delete, Star } from '@material-ui/icons';
+import { Close, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { useMassActionsStyles } from './style';
 
-const MassActions = ({ handleHideMassActions, handleDeleteMultipleDevices }) => {
-  const { t } = useTranslation(['certificationAuthoritys', 'common']);
+const MassActions = ({ handleHideMassActions, handleDeleteMultipleCertificationAuthorities }) => {
+  const { t } = useTranslation(['certificationAuthorities', 'common']);
   const classes = useMassActionsStyles();
 
   return (
@@ -21,7 +21,7 @@ const MassActions = ({ handleHideMassActions, handleDeleteMultipleDevices }) => 
         <Grid item xs='auto'>
           <Button
             className={classes.massActionsButton}
-            onClick={handleDeleteMultipleDevices}
+            onClick={handleDeleteMultipleCertificationAuthorities}
             startIcon={<Delete />}
             variant='contained'
           >
@@ -32,8 +32,8 @@ const MassActions = ({ handleHideMassActions, handleDeleteMultipleDevices }) => 
         <Grid item container xs justify='flex-end'>
           <IconButton
             className={classes.massActionsCloseButton}
-            size='small'
             onClick={handleHideMassActions}
+            size='small'
           >
             <Close />
           </IconButton>
@@ -45,13 +45,12 @@ const MassActions = ({ handleHideMassActions, handleDeleteMultipleDevices }) => 
 
 MassActions.propTypes = {
   handleHideMassActions: PropTypes.func,
-
-  handleDeleteMultipleDevices: PropTypes.func,
+  handleDeleteMultipleCertificationAuthorities: PropTypes.func,
 };
 
 MassActions.defaultProps = {
   handleHideMassActions: null,
-  handleDeleteMultipleDevices: null,
+  handleDeleteMultipleCertificationAuthorities: null,
 };
 
 export default MassActions;

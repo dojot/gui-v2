@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useSearchBarStyles = makeStyles(theme => ({
   searchContainer: {
-    background: theme.palette.background.certificationAuthoritys,
+    background: theme.palette.grey[100],
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -30,24 +30,22 @@ export const useSearchBarStyles = makeStyles(theme => ({
   },
 }));
 
-export const useCardsStyles = makeStyles(theme => ({
-  certificationAuthorityCard: {
-    cursor: 'pointer',
-    transition: 'background 0.1s ease-in-out',
-    '&:hover': {
-      background: theme.palette.action.hover,
-    },
+export const useCardsStyles = makeStyles(() => ({
+  card: {
+    cursor: 'default',
   },
-  certificationAuthorityCardIcon: {
+  cardIcon: {
     fontSize: '40px',
   },
-  certificationAuthorityCardTitle: {
+  cardTitle: {
     fontSize: '16px',
     fontWeight: 'bold',
+    wordBreak: 'break-all',
+    paddingRight: '1.4rem',
   },
 }));
 
-export const useDeviceOptionsStyles = makeStyles(theme => ({
+export const useOptionsMenuStyles = makeStyles(theme => ({
   menuItem: {
     display: 'flex',
     alignItems: 'center',
@@ -62,30 +60,6 @@ export const usePaginationStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
-  },
-}));
-
-export const useDetailsModalStyles = makeStyles(theme => ({
-  detailsModalTitle: {
-    borderBottom: `1px solid ${theme.palette.grey[100]}`,
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-  },
-  dataGroup: {
-    background: '#f2f2f2',
-    border: `1px solid ${theme.palette.divider}`,
-    borderBottom: 'none',
-  },
-  dataGroupTitleIcon: {
-    minWidth: 'auto',
-    marginRight: theme.spacing(2),
-  },
-  tableCellBold: {
-    fontWeight: 'bold',
-  },
-  tableCellSecondary: {
-    color: theme.palette.text.secondary,
   },
 }));
 
@@ -107,59 +81,18 @@ export const useMassActionsStyles = makeStyles(theme => ({
 
 export const useDataTableStyles = makeStyles(theme => ({
   tableHead: {
-    background: theme.palette.background.certificationAuthoritys,
+    background: theme.palette.grey[100],
   },
   clickableCell: {
     cursor: 'pointer',
   },
-  linkedCertificate: {
-    textDecoration: 'underline',
-    color: theme.palette.primary.main,
-    cursor: 'pointer',
+  truncatedText: {
+    maxWidth: '200px',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
   },
-  statusValid: {
-    color: theme.palette.background.paper,
-    fontWeight: 'bold',
-    backgroundColor: theme.palette.success.main,
-  },
-  statusExpired: {
-    color: theme.palette.background.paper,
-    fontWeight: 'bold',
-    backgroundColor: theme.palette.error.main,
-  },
-  statusToExpire: {
-    color: theme.palette.background.paper,
-    fontWeight: 'bold',
-    backgroundColor: theme.palette.favorite,
-  },
-}));
-
-export const useCreateCAStyles = makeStyles(theme => ({
-  container: {
-    display: 'flex',
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-  },
-  content: {
-    width: '60%',
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  inputNameCA: {
-    marginBottom: theme.spacing(2),
-  },
-  bottomButtonsWrapper: {
-    display: 'flex',
-    justifyContent: 'flex-end',
-    width: '100%',
-    marginTop: theme.spacing(4),
-  },
-  saveButton: {
-    marginLeft: theme.spacing(4),
+  tooltip: {
+    fontSize: '1rem',
   },
 }));
