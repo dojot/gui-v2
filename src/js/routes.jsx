@@ -24,6 +24,7 @@ const CreateTemplate = LazyLoading(() => import('views/createTemplate'));
 const EditTemplate = LazyLoading(() => import('views/editTemplate'));
 const TemplateAttrs = LazyLoading(() => import('views/templateAttrs'));
 const Certificates = LazyLoading(() => import('views/Certificates'));
+const CreateCertificate = LazyLoading(() => import('views/createCertificate'));
 const CertificationAuthorities = LazyLoading(() => import('views/CertificationAuthorities'));
 const CreateCertificationAuthority = LazyLoading(() =>
   import('views/createCertificationAuthority'),
@@ -58,6 +59,7 @@ const Routes = props => (
     <PrivateRoute path='/users' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/profiles' component={GridTest} attrs={props} />
     <PrivateRoute path='/certificates' component={Certificates} attrs={props} exact />
+    <PrivateRoute path='/certificates/new' component={CreateCertificate} attrs={props} exact />
     <PrivateRoute
       path='/certification-authorities'
       component={CertificationAuthorities}

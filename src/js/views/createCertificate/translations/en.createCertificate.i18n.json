@@ -1,0 +1,36 @@
+{
+  "headerTitle": "New Certificate",
+  "finishButton": "Finish",
+  "cancelButton": "Cancel",
+  "createCertificateOneClick": {
+    "title": "Create certificate with one click",
+    "subTitle": "More practical: The platform generates the certificate and private key for the device"
+  },
+  "createCertificateCSR": {
+    "title": "Submit a Certificate Signing Request (CSR)",
+    "subTitle": "More secure: The platform generates a certificate but has no knowledge of the private key",
+    "generateCsrHelp": "How to generate a CSR?",
+    "csrHelpSteps": {
+      "step1": "Step 1",
+      "step1Text": "Run the command openssl req  -newkey 'rsa:2048'  -nodes  -sha256  -keyout 'privatekey.pem'  -out 'csr.pem'  -subj '/CN=Any value'",
+      "step2": "Step 2",
+      "step2Text": "Copy the contents of the csr.pem file into the text area below"
+    },
+    "generateCertificate": "Generate Certificate",
+    "inputPlaceholder": "Insert your text here"
+  },
+  "createCertificateCA": {
+    "title": "Use my certificate",
+    "subTitle": "Enables you to use your existing public key infrastructure",
+    "inputDataLabel": "Enter the data in order: from device certificate to root CA. According to the degree of importance.",
+    "inputPlaceholder": "Insert your text here",
+    "generateCertificate": "OK"
+  },
+  "generatedCertificateResume": {
+    "downloadFilesMessage": "To connect a device, you need to download the following items:",
+    "certificate": "Certificate",
+    "privateKey": "Private Key",
+    "publicKey": "Public Key (optional)",
+    "caCertificate": "CA Certificate"
+  }
+}

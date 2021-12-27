@@ -3,8 +3,10 @@ import { initReactI18next } from 'react-i18next';
 
 import certificatesEn from '../../views/Certificates/translations/en.certificates.i18n.json';
 import certificatesPtBr from '../../views/Certificates/translations/pt_br.certificates.i18n.json';
-import certificationAuthoritiesEn from '../../views/CertificationAuthorities/translations/en.certificationAuthorities.i18n.json';
-import certificationAuthoritiesPtBr from '../../views/CertificationAuthorities/translations/pt_br.certificationAuthorities.i18n.json';
+import certificationAuthoritiesEn from '../../views/CertificationAuthorities/translations/en.security.i18n.json';
+import certificationAuthoritiesPtBr from '../../views/CertificationAuthorities/translations/pt_br.security.i18n.json';
+import createCertificateEn from '../../views/createCertificate/translations/en.createCertificate.i18n.json';
+import createCertificatePtBr from '../../views/createCertificate/translations/pt_br.createCertificate.i18n.json';
 import createCertificationAuthorityEn from '../../views/createCertificationAuthority/translations/en.createCertificationAuthority.json';
 import createCertificationAuthorityPtBr from '../../views/createCertificationAuthority/translations/pt_br.createCertificationAuthority.json';
 import createDeviceEn from '../../views/createDevice/translations/en.createDevice.i18n.json';
@@ -78,6 +80,7 @@ const resources = {
     error: errorEn,
     success: successEn,
     editTemplate: editTemplateEn,
+    createCertificate: createCertificateEn,
     constants: constantsEn,
   },
   pt: {
@@ -105,6 +108,7 @@ const resources = {
     error: errorPtBr,
     success: successPtBr,
     editTemplate: editTemplatePtBr,
+    createCertificate: createCertificatePtBr,
     constants: constantsPtBr,
   },
 };
