@@ -28,7 +28,7 @@ describe('CollapsibleList', () => {
   it('should the content be hidden and call handleToggleContent function', () => {
     const handleToggleContent = jest.fn();
 
-    const { container, getByText, getByTestId } = render(
+    const { getByText, getByTestId } = render(
       <CollapsibleList
         title='TitleText'
         caption='CaptionText'
@@ -39,13 +39,10 @@ describe('CollapsibleList', () => {
       </CollapsibleList>,
     );
 
-    expect(container).toBeVisible();
-    expect(container).toBeInTheDocument();
-
     expect(getByText('TitleText')).toBeVisible();
     expect(getByText('CaptionText')).toBeVisible();
 
-    // getByText will not find the element and will throw and error
+    // getByText will not find the element and will throw an error
     expect(() => getByText('Content')).toThrow();
 
     fireEvent.click(getByTestId('collapsible-list-header'));
