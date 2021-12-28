@@ -117,7 +117,7 @@ const DataTable = ({
             orderBy={orderBy}
             cells={headCells}
             rowCount={devices.length}
-            startExtraCells={<TableCell />}
+            startExtraCells={false && <TableCell />} // TODO: Show again when you can favorite devices
             numSelected={selectedDevices.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
@@ -160,26 +160,30 @@ const DataTable = ({
                     <Checkbox color='primary' checked={isSelected} onChange={handleSelectThisRow} />
                   </TableCell>
 
-                  <TableCell onClick={handleStopPropagation}>
-                    <Tooltip
-                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
-                      placement='right'
-                      arrow
-                    >
-                      <Checkbox
-                        color='default'
-                        checked={device.favorite}
-                        icon={<StarBorderOutlined />}
-                        checkedIcon={<Star style={{ color: '#F1B44C' }} />}
-                        onChange={handleFavoriteThisDevice}
-                        disabled // TODO: Enable again when Backstage implement this action
-                      />
-                    </Tooltip>
-                  </TableCell>
+                  {false && (
+                    // TODO: Show again when you can favorite devices
+                    <TableCell onClick={handleStopPropagation}>
+                      <Tooltip
+                        title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                        placement='right'
+                        arrow
+                      >
+                        <Checkbox
+                          color='default'
+                          checked={device.favorite}
+                          icon={<StarBorderOutlined />}
+                          checkedIcon={<Star style={{ color: '#F1B44C' }} />}
+                          onChange={handleFavoriteThisDevice}
+                          disabled
+                        />
+                      </Tooltip>
+                    </TableCell>
+                  )}
 
                   <TableCell className={classes.clickableCell}>{device.id}</TableCell>
                   <TableCell className={classes.clickableCell}>{device.label}</TableCell>
                   <TableCell className={classes.clickableCell}>{device.attrsLength}</TableCell>
+
                   <TableCell className={classes.clickableCell}>
                     {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
