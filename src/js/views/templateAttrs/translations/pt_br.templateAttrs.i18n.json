@@ -1,6 +1,6 @@
 {
   "title": "Modelos / {{template}}",
-  "searchInputPh": "Pesquisar Atributo",
+  "searchInputPh": "Pesquisar Atributo Por Nome",
   "totalOfPages": "Total de Páginas: {{count}}",
   "nextIconButtonText": "Próxima Página",
   "backIconButtonText": "Página Anterior",

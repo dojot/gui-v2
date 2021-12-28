@@ -11,7 +11,7 @@
   "disassociateDevice": "Disassociate device",
   "changeAssociation": "Change association",
   "AssociateToDeviceModalTitle": "Devices",
-  "searchInputPh": "Search certificate",
+  "searchInputPh": "Search Certificate By Fingerprint",
   "createNewCertificate": "Create New Certificate",
   "emptyListMessage": "No Certificates found",
   "massActions": "Mass actions:",

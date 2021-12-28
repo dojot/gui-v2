@@ -1,6 +1,6 @@
 {
   "title": "Dispositivos",
-  "searchInputPh": "Pesquisar Dispositivo",
+  "searchInputPh": "Pesquisar Dispositivo Por Nome",
   "totalOfPages": "Total de Páginas: {{count}}",
   "nextIconButtonText": "Próxima Página",
   "backIconButtonText": "Página Anterior",
