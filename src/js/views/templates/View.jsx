@@ -43,6 +43,7 @@ const Templates = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [order, setOrder] = useState(DATA_ORDER.ASC);
   const [orderBy, setOrderBy] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
@@ -118,7 +119,8 @@ const Templates = () => {
   };
 
   const handleSearchTemplate = search => {
-    dispatch(templateActions.getTemplates({ filter: { label: search } }));
+    setPage(0);
+    setSearchText(search);
   };
 
   useEffect(() => {
@@ -128,9 +130,12 @@ const Templates = () => {
           number: page + 1,
           size: rowsPerPage,
         },
+        filter: {
+          label: searchText,
+        },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (viewMode) setSelectedTemplates([]);
