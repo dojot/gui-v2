@@ -15,8 +15,8 @@ import {
   constants as templateConstants,
 } from '../../redux/modules/templates';
 import {
+  templatesSelector,
   paginationControlSelector,
-  templatesForDataTableSelector,
 } from '../../redux/selectors/templatesSelector';
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
@@ -34,7 +34,7 @@ const Templates = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const templates = useSelector(templatesForDataTableSelector);
+  const templates = useSelector(templatesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
 
   const isLoadingTemplates = useIsLoading(templateConstants.GET_TEMPLATES);
