@@ -151,7 +151,7 @@ const DataTable = ({
 
                 return (
                   <TableRow
-                    key={template.label}
+                    key={template.id}
                     tabIndex={-1}
                     role='checkbox'
                     selected={isSelected}
