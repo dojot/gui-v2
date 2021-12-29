@@ -48,6 +48,7 @@ const CertificationAuthorities = () => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const [orderBy, setOrderBy] = useState('');
+  const [searchText, setSearchText] = useState('');
   const [order, setOrder] = useState(DATA_ORDER.ASC);
 
   const [viewMode, setViewMode] = usePersistentState({
@@ -114,11 +115,8 @@ const CertificationAuthorities = () => {
   };
 
   const handleSearchCertificationAuthorities = search => {
-    dispatch(
-      certificationAuthoritiesActions.getCertificationAuthorities({
-        filter: { caFingerprint: search },
-      }),
-    );
+    setPage(0);
+    setSearchText(search);
   };
 
   useEffect(() => {
@@ -128,9 +126,12 @@ const CertificationAuthorities = () => {
           number: page + 1,
           size: rowsPerPage,
         },
+        filter: {
+          caFingerprint: searchText,
+        },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (viewMode) setSelectedCertificationAuthorities([]);

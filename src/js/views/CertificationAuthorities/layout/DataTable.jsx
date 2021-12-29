@@ -58,15 +58,38 @@ const DataTable = ({
       {
         id: 'actions',
         label: t('dataTableHead.actions'),
+        disableOrderBy: true,
       },
     ],
     [t],
   );
 
+  const valueFormatters = useMemo(
+    () => ({
+      validity(certificationAuthority) {
+        const { validityInitialDate, validityFinalDate } = handleGetCertificateComputedData(
+          certificationAuthority.validity,
+        );
+        return `${validityInitialDate} - ${validityFinalDate}`;
+      },
+      status(certificationAuthority) {
+        const { statusText } = handleGetCertificateComputedData(certificationAuthority.validity);
+        return statusText;
+      },
+    }),
+    [handleGetCertificateComputedData],
+  );
+
   const handleRequestSort = (_, property) => {
-    const isAsc = orderBy === property && order === DATA_ORDER.ASC;
-    setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
-    setOrderBy(property);
+    const isSameProperty = orderBy === property;
+    if (isSameProperty) {
+      const isAsc = order === DATA_ORDER.ASC;
+      setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
+      setOrderBy(isAsc ? property : '');
+    } else {
+      setOrder(DATA_ORDER.ASC);
+      setOrderBy(property);
+    }
   };
 
   const handleSelectAllClick = event => {
@@ -115,12 +138,12 @@ const DataTable = ({
             numSelected={selectedCertificationAuthorities.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
-            disableOrderBy
           />
 
           <TableBody>
             {certificationAuthorities
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
+              .slice()
+              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(certificationAuthority => {
                 const { caFingerprint, validity } = certificationAuthority;
                 const isSelected = selectedCertificationAuthorities.indexOf(caFingerprint) !== -1;
