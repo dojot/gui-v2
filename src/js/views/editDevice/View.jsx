@@ -52,6 +52,7 @@ const EditDevice = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [isShowingAttrs, setIsShowingAttrs] = useState(true);
+  const [searchTemplateText, setSearchTemplateText] = useState('');
 
   const [deviceName, setDeviceName] = useState('');
   const [selectedTemplates, setSelectedTemplates] = useState({});
@@ -104,7 +105,8 @@ const EditDevice = () => {
   };
 
   const handleSearchForTemplates = search => {
-    dispatch(templateActions.getTemplates({ filter: { label: search } }));
+    setPage(0);
+    setSearchTemplateText(search);
   };
 
   const handleGoBack = () => {
@@ -186,9 +188,12 @@ const EditDevice = () => {
           number: page + 1,
           size: rowsPerPage,
         },
+        filter: {
+          label: searchTemplateText,
+        },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchTemplateText]);
 
   if (isLoadingDeviceData) {
     return (
