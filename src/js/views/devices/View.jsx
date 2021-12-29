@@ -11,10 +11,7 @@ import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { DATA_ORDER, DEVICES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
 import { useIsLoading, usePersistentState } from '../../common/hooks';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
-import {
-  paginationControlSelector,
-  devicesForDataTableSelector,
-} from '../../redux/selectors/devicesSelector';
+import { devicesSelector, paginationControlSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
@@ -31,7 +28,7 @@ const Devices = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const devices = useSelector(devicesForDataTableSelector);
+  const devices = useSelector(devicesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
 
   const isLoadingDevices = useIsLoading(constants.GET_DEVICES);
@@ -228,10 +225,10 @@ const Devices = () => {
 
               {devices.length === 0 && (
                 <EmptyPlaceholder
+                  textButton={t('createNewDevice')}
                   emptyListMessage={t('emptyListMessage')}
                   icon={<DevicesOther fontSize='large' />}
                   handleButtonClick={() => history.push('/devices/new')}
-                  textButton={t('createNewDevice')}
                 />
               )}
             </>

@@ -23,6 +23,8 @@ const Cards = ({
       <Grid spacing={2} container>
         {devices.map(device => {
           const lastUpdate = device.updated || device.created;
+          const attrsLength = device.attrs?.length || 0;
+          const hasCertificate = !!device.certificate;
 
           const handleSeeDeviceDetails = () => {
             handleClickDevice(device);
@@ -71,33 +73,25 @@ const Cards = ({
                     )}
 
                     <Tooltip
-                      title={t(
-                        device.hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip',
-                      )}
+                      title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
                       placement='right'
                       arrow
                     >
                       <div>
                         <IconButton size='small' disabled>
-                          {device.hasCertificate ? (
-                            <Check color='primary' />
-                          ) : (
-                            <Close color='error' />
-                          )}
+                          {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
                         </IconButton>
                       </div>
                     </Tooltip>
                   </>
                 }
               >
-                {device.attrsLength >= 0 && (
-                  <Box marginBottom={1}>
-                    <Typography variant='body2'>
-                      <strong>{device.attrsLength}</strong>
-                    </Typography>
-                    <Typography variant='body2'>{t('cardData.properties')}</Typography>
-                  </Box>
-                )}
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>
+                    <strong>{attrsLength}</strong>
+                  </Typography>
+                  <Typography variant='body2'>{t('cardData.properties')}</Typography>
+                </Box>
 
                 {!!lastUpdate && (
                   <Box>

@@ -10,14 +10,6 @@ export const paginationControlSelector = createSelector(
   map => map.get('paginationControl'),
 );
 
-export const devicesForDataTableSelector = createSelector(devicesSelector, devices => {
-  return devices.map(device => ({
-    ...device,
-    attrsLength: device.attrs?.length || 0,
-    hasCertificate: !!device?.certificate,
-  }));
-});
-
 export const deviceDataSelector = createSelector(
   state => state.devices,
   map => map.get('deviceData'),
