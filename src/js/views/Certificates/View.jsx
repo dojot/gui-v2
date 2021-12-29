@@ -52,6 +52,7 @@ const Certificates = () => {
 
   const [order, setOrder] = useState(DATA_ORDER.ASC);
   const [orderBy, setOrderBy] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
@@ -68,7 +69,8 @@ const Certificates = () => {
   };
 
   const handleSearchCertificate = search => {
-    dispatch(certificatesActions.getCertificates({ filter: { fingerprint: search } }));
+    setPage(0);
+    setSearchText(search);
   };
 
   const handleHideOptionsMenu = () => {
@@ -147,9 +149,12 @@ const Certificates = () => {
           number: page + 1,
           size: rowsPerPage,
         },
+        filter: {
+          fingerprint: searchText,
+        },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (viewMode) setSelectedCertificates([]);
