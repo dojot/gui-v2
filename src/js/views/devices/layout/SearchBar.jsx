@@ -10,7 +10,7 @@ import { VIEW_MODE } from '../../../common/constants';
 import { useDebounce } from '../../../common/hooks';
 import { useSearchBarStyles } from './style';
 
-const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
+const SearchBar = ({ viewMode, searchText, handleSearchDevice, handleChangeViewMode }) => {
   const { t } = useTranslation('devices');
   const classes = useSearchBarStyles();
   const history = useHistory();
@@ -70,6 +70,7 @@ const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
           className={classes.searchTextField}
           size='small'
           variant='outlined'
+          defaultValue={searchText}
           placeholder={t('searchInputPh')}
           onChange={handleChangeSearchText}
           InputProps={{
@@ -110,12 +111,14 @@ const SearchBar = ({ viewMode, handleSearchDevice, handleChangeViewMode }) => {
 
 SearchBar.propTypes = {
   viewMode: PropTypes.oneOf(Object.values(VIEW_MODE)),
+  searchText: PropTypes.string,
   handleSearchDevice: PropTypes.func,
   handleChangeViewMode: PropTypes.func,
 };
 
 SearchBar.defaultProps = {
   viewMode: VIEW_MODE.TABLE,
+  searchText: '',
   handleSearchDevice: null,
   handleChangeViewMode: null,
 };
