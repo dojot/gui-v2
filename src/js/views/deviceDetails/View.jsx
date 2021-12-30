@@ -1,7 +1,8 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 
 import {
   Box,
+  Button,
   CircularProgress,
   Grid,
   List,
@@ -15,12 +16,14 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { DevicesOther, FilterNone, History, Label } from '@material-ui/icons';
+import { Delete, DevicesOther, Edit, FilterNone, History, Label } from '@material-ui/icons';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
+import { Link as RouterLink } from 'react-router-dom';
 
+import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
 import { useAttrTranslation, useIsLoading } from '../../common/hooks';
 import {
@@ -35,17 +38,44 @@ const DeviceDetails = () => {
   const { t } = useTranslation('deviceDetails');
   const { deviceId } = useParams();
   const dispatch = useDispatch();
+  const history = useHistory();
   const classes = useStyles();
 
   const { getAttrValueTypeTranslation } = useAttrTranslation();
 
   const deviceData = useSelector(deviceDataSelector);
+  const isDeletingDevice = useIsLoading(deviceConstants.DELETE_DEVICE);
   const isLoadingDevice = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
+
+  const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
 
   const hasStaticAttrs = useMemo(() => {
     if (!deviceData?.attrs?.length) return false;
     return deviceData.attrs.some(attr => attr.type === TEMPLATE_ATTR_TYPES.STATIC.value);
   }, [deviceData?.attrs]);
+
+  const handleGoBack = () => {
+    if (history.length) history.goBack();
+    else history.push('/devices');
+  };
+
+  const handleShowDeleteDeviceAlert = () => {
+    setIsShowingDeleteAlert(true);
+  };
+
+  const handleHideDeleteDeviceAlert = () => {
+    setIsShowingDeleteAlert(false);
+  };
+
+  const handleConfirmDeviceDeletion = () => {
+    dispatch(
+      deviceActions.deleteDevice({
+        deviceId,
+        successCallback: handleGoBack,
+        shouldGetCurrentPageAgain: false,
+      }),
+    );
+  };
 
   useEffect(() => {
     dispatch(deviceActions.getDeviceById({ deviceId }));
@@ -79,8 +109,46 @@ const DeviceDetails = () => {
 
   return (
     <ViewContainer headerTitle={t('title', { name: deviceData.label })}>
+      <AlertDialog
+        isOpen={isShowingDeleteAlert}
+        title={t('deleteDeviceAlert.title')}
+        message={t('deleteDeviceAlert.message')}
+        handleConfirm={handleConfirmDeviceDeletion}
+        handleClose={handleHideDeleteDeviceAlert}
+        cancelButtonText={t('deleteDeviceAlert.cancelButton')}
+        confirmButtonText={t('deleteDeviceAlert.confirmButton')}
+      />
+
       <Box className={classes.container} padding={3}>
         <Box className={classes.content}>
+          <Box className={classes.actions}>
+            <Button
+              className={classes.deleteAction}
+              size='large'
+              variant='outlined'
+              disabled={isDeletingDevice}
+              onClick={handleShowDeleteDeviceAlert}
+              endIcon={
+                isDeletingDevice ? <CircularProgress size={16} color='inherit' /> : <Delete />
+              }
+            >
+              {t('deleteDevice')}
+            </Button>
+
+            <RouterLink
+              to={`/devices/edit/${deviceId}`}
+              className={classes.editAction}
+              disabled={isDeletingDevice}
+              component={Button}
+              endIcon={<Edit />}
+              variant='outlined'
+              color='primary'
+              size='large'
+            >
+              {t('editDevice')}
+            </RouterLink>
+          </Box>
+
           <Grid container spacing={2}>
             <Grid item xs={12} sm={12} md={4}>
               <List className={classes.dataGroup} disablePadding>
