@@ -26,7 +26,12 @@ const CollapsibleList = ({
 
   return (
     <List className={classes.container}>
-      <ListItem className={classes.header} onClick={handleToggleContent} disableGutters>
+      <ListItem
+        className={classes.header}
+        onClick={handleToggleContent}
+        data-testid='collapsible-list-header'
+        disableGutters
+      >
         <ListItemText
           primary={
             <Typography className={classes.title} component='span'>
