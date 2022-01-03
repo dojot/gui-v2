@@ -8,8 +8,13 @@ import { useParams } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { DATA_ORDER, TEMPLATE_ATTRIBUTES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
-import { useIsLoading, usePersistentState } from '../../common/hooks';
+import {
+  DATA_ORDER,
+  ROWS_PER_PAGE_OPTIONS,
+  TEMPLATE_ATTRIBUTES_PAGE_KEYS,
+  VIEW_MODE,
+} from '../../common/constants';
+import { useIsLoading, usePersistentState, useSearchParamState } from '../../common/hooks';
 import { actions as attrActions } from '../../redux/modules/templateAttrs';
 import {
   actions as templateActions,
@@ -36,17 +41,37 @@ const TemplateAttrs = () => {
   const templateData = useSelector(templateDataSelector);
   const isLoadingAttrs = useIsLoading(templateConstants.GET_TEMPLATE_BY_ID);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
+  const [page, setPage] = useSearchParamState({ key: 'p', type: 'number', defaultValue: 0 });
+
+  const [orderBy, setOrderBy] = useSearchParamState({
+    key: 'ob',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [searchText, setSearchText] = useSearchParamState({
+    key: 's',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+  });
+
+  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
+    key: 'r',
+    type: 'number',
+    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
+  });
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: TEMPLATE_ATTRIBUTES_PAGE_KEYS.VIEW_MODE,
   });
 
-  const [searchText, setSearchText] = useState('');
   const [selectedAttrs, setSelectedAttrs] = useState([]);
   const [attrOptionsMenu, setAttrOptionsMenu] = useState(null);
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
@@ -217,6 +242,7 @@ const TemplateAttrs = () => {
       <Box className={classes.container}>
         <SearchBar
           viewMode={viewMode}
+          lastSearchedText={searchText}
           handleChangeViewMode={setViewMode}
           handleSearchAttr={handleSearchAttr}
           handleCreateAttr={handleShowAttrManagementModal}
