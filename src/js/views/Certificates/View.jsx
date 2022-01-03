@@ -8,8 +8,13 @@ import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { CERTIFICATES_PAGE_KEYS, DATA_ORDER, VIEW_MODE } from '../../common/constants';
-import { useIsLoading, usePersistentState } from '../../common/hooks';
+import {
+  CERTIFICATES_PAGE_KEYS,
+  DATA_ORDER,
+  ROWS_PER_PAGE_OPTIONS,
+  VIEW_MODE,
+} from '../../common/constants';
+import { useIsLoading, usePersistentState, useSearchParamState } from '../../common/hooks';
 import {
   actions as certificatesActions,
   constants as certificatesConstants,
@@ -47,12 +52,31 @@ const Certificates = () => {
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [isShowingDisassociateDeviceAlert, setIsShowingDisassociateDeviceAlert] = useState(false);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useSearchParamState({ key: 'p', type: 'number', defaultValue: 0 });
 
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
-  const [searchText, setSearchText] = useState('');
+  const [orderBy, setOrderBy] = useSearchParamState({
+    key: 'ob',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [searchText, setSearchText] = useSearchParamState({
+    key: 's',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+  });
+
+  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
+    key: 'r',
+    type: 'number',
+    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
+  });
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
@@ -221,6 +245,7 @@ const Certificates = () => {
       <Box className={classes.container}>
         <SearchBar
           viewMode={viewMode}
+          lastSearchedText={searchText}
           handleChangeViewMode={setViewMode}
           handleSearchCertificate={handleSearchCertificate}
         />
