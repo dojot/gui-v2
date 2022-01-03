@@ -10,9 +10,10 @@ import { useHistory } from 'react-router-dom';
 export const useGetURLSearchParams = () => {
   const history = useHistory();
 
-  // Get the search string without the "?" character
-  const searchParams = history.location.search.slice(1);
-  if (!searchParams) return undefined;
+  if (history.location.search) {
+    const searchParams = new URLSearchParams(history.location.search);
+    return Object.fromEntries(searchParams);
+  }
 
-  return Object.fromEntries(new URLSearchParams(searchParams));
+  return undefined;
 };

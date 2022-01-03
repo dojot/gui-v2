@@ -14,12 +14,7 @@ import {
   ROWS_PER_PAGE_OPTIONS,
   VIEW_MODE,
 } from '../../common/constants';
-import {
-  useIsLoading,
-  usePersistentState,
-  useSetURLSearchParams,
-  useGetURLSearchParams,
-} from '../../common/hooks';
+import { useIsLoading, usePersistentState, useSearchParamState } from '../../common/hooks';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
 import { devicesSelector, paginationControlSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
@@ -38,29 +33,34 @@ const Devices = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const searchParamsObject = useGetURLSearchParams();
-
   const devices = useSelector(devicesSelector);
   const isLoadingDevices = useIsLoading(constants.GET_DEVICES);
   const { totalPages } = useSelector(paginationControlSelector);
 
-  const [orderBy, setOrderBy] = useState(searchParamsObject?.ob || '');
-  const [searchText, setSearchText] = useState(searchParamsObject?.s || '');
-  const [order, setOrder] = useState(searchParamsObject?.o || DATA_ORDER.ASC);
+  const [page, setPage] = useSearchParamState({ key: 'p', type: 'number', defaultValue: 0 });
 
-  const [rowsPerPage, setRowsPerPage] = useState(() => {
-    if (searchParamsObject?.r) {
-      const rowsPerPageNumber = Number(searchParamsObject.r);
-      return ROWS_PER_PAGE_OPTIONS.includes(rowsPerPageNumber)
-        ? rowsPerPageNumber
-        : ROWS_PER_PAGE_OPTIONS[0];
-    }
-    return ROWS_PER_PAGE_OPTIONS[0];
+  const [orderBy, setOrderBy] = useSearchParamState({
+    key: 'ob',
+    type: 'string',
+    defaultValue: '',
   });
 
-  const [page, setPage] = useState(() => {
-    if (searchParamsObject?.p) return Math.max(0, Number(searchParamsObject.p) - 1);
-    return 0;
+  const [searchText, setSearchText] = useSearchParamState({
+    key: 's',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+  });
+
+  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
+    key: 'r',
+    type: 'number',
+    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
   });
 
   const [viewMode, setViewMode] = usePersistentState({
@@ -151,14 +151,6 @@ const Devices = () => {
     setSearchText(search);
   };
 
-  useSetURLSearchParams({
-    p: page + 1,
-    r: rowsPerPage,
-    o: order,
-    ob: orderBy,
-    s: searchText,
-  });
-
   useEffect(() => {
     dispatch(
       deviceActions.getDevices({
@@ -216,7 +208,7 @@ const Devices = () => {
       <Box className={classes.container}>
         <SearchBar
           viewMode={viewMode}
-          searchText={searchText}
+          lastSearchedText={searchText}
           handleChangeViewMode={setViewMode}
           handleSearchDevice={handleSearchDevice}
         />
