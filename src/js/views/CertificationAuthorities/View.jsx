@@ -8,8 +8,13 @@ import { useHistory } from 'react-router-dom';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { CERTIFICATION_AUTHORITIES_PAGE_KEYS, DATA_ORDER, VIEW_MODE } from '../../common/constants';
-import { useIsLoading, usePersistentState } from '../../common/hooks';
+import {
+  CERTIFICATION_AUTHORITIES_PAGE_KEYS,
+  DATA_ORDER,
+  ROWS_PER_PAGE_OPTIONS,
+  VIEW_MODE,
+} from '../../common/constants';
+import { useIsLoading, usePersistentState, useSearchParamState } from '../../common/hooks';
 import {
   actions as certificationAuthoritiesActions,
   constants,
@@ -44,12 +49,31 @@ const CertificationAuthorities = () => {
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [certificationAuthorityOptionsMenu, setCertificationAuthorityOptionsMenu] = useState(null);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [page, setPage] = useSearchParamState({ key: 'p', type: 'number', defaultValue: 0 });
 
-  const [orderBy, setOrderBy] = useState('');
-  const [searchText, setSearchText] = useState('');
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
+  const [orderBy, setOrderBy] = useSearchParamState({
+    key: 'ob',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [searchText, setSearchText] = useSearchParamState({
+    key: 's',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+  });
+
+  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
+    key: 'r',
+    type: 'number',
+    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
+  });
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
@@ -179,6 +203,7 @@ const CertificationAuthorities = () => {
       <Box className={classes.container}>
         <SearchBar
           viewMode={viewMode}
+          lastSearchedText={searchText}
           handleChangeViewMode={setViewMode}
           handleSearchCertificationAuthorities={handleSearchCertificationAuthorities}
         />
