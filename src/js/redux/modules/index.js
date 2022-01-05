@@ -8,5 +8,4 @@ export { default as dashboard } from './dashboard';
 export { default as templates } from './templates';
 export { default as certificates } from './certificates';
 export { default as templateAttrs } from './templateAttrs';
-export { default as security } from './security';
 export { default as certificationAuthorities } from './certificationAuthorities';

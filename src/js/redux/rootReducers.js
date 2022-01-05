@@ -12,7 +12,6 @@ import {
   success,
   templateAttrs,
   templates,
-  security,
 } from './modules';
 
 export default combineReducers({
@@ -26,6 +25,5 @@ export default combineReducers({
   loading,
   success,
   templateAttrs,
-  security,
   templates,
 });
