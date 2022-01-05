@@ -8,10 +8,24 @@ import { useTranslation } from 'react-i18next';
 import ActionButtons from '../../layout/ActionButtons';
 import { useSummaryStepStyles } from './style';
 
+const download = (filename, text) => {
+  const element = document.createElement('a');
+  element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+};
+
 const SummaryStep = ({
   deviceName,
   isCreatingDevice,
   selectedTemplates,
+  selectedCertificate,
   setDeviceName,
   handleCreateService,
   handleGoToPreviousStep,
@@ -86,34 +100,54 @@ const SummaryStep = ({
               </Typography>
             </Box>
           </Box>
+          {selectedCertificate?.pem ? (
+            <Box className={classes.certificateData}>
+              <Typography>{t('summaryStep.certificate')}</Typography>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <Link
+                tabIndex={0}
+                component='button'
+                onClick={() => download('certificate.pem', selectedCertificate.pem)}
+              >
+                Link
+              </Link>
+            </Box>
+          ) : null}
+          {selectedCertificate?.privateKey ? (
+            <Box className={classes.certificateData}>
+              <Typography>{t('summaryStep.privateKey')}</Typography>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <Link
+                tabIndex={0}
+                component='button'
+                onClick={() => download('privateKey.pem', selectedCertificate.privateKey)}
+              >
+                Link
+              </Link>
+            </Box>
+          ) : null}
+          {selectedCertificate?.publicKey ? (
+            <Box className={classes.certificateData}>
+              <Typography>{t('summaryStep.publicKey')}</Typography>
+              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+              <Link
+                tabIndex={0}
+                component='button'
+                onClick={() => download('publicKey.pem', selectedCertificate.publicKey)}
+              >
+                Link
+              </Link>
+            </Box>
+          ) : null}
 
-          <Box className={classes.certificateData}>
-            <Typography>{t('summaryStep.certificate')}</Typography>
-            <Link href='https://www.google.com' download>
-              Link
-            </Link>
-          </Box>
-
-          <Box className={classes.certificateData}>
-            <Typography>{t('summaryStep.privateKey')}</Typography>
-            <Link href='https://www.google.com' download>
-              Link
-            </Link>
-          </Box>
-
-          <Box className={classes.certificateData}>
-            <Typography>{t('summaryStep.publicKey')}</Typography>
-            <Link href='https://www.google.com' download>
-              Link
-            </Link>
-          </Box>
-
-          <Box className={classes.certificateData}>
-            <Typography>{t('summaryStep.caCertificate')}</Typography>
-            <Link href='https://www.google.com' download>
-              Link
-            </Link>
-          </Box>
+          {selectedCertificate?.caCertificate ? (
+            <Box className={classes.certificateData}>
+              <Typography>{t('summaryStep.caCertificate')}</Typography>
+              <Link href='https://www.google.com' download>
+                Link
+              </Link>
+            </Box>
+          ) : null}
         </Box>
       </Box>
 

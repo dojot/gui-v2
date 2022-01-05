@@ -78,7 +78,7 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
   label: payload.label,
   templates: payload.templates,
   attrs: payload.attrs,
-  certificate: payload.certificate,
+  fingerprint: payload.fingerprint,
   successCallback: payload.successCallback,
 }));
 

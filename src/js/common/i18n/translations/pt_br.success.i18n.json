@@ -23,6 +23,7 @@
     "deleteMultipleCertificates": "Todos os certificados foram excluídos",
     "disassociateDevice": "Certificado desassociado do dispositivo",
     "associateDevice": "Certificado associado ao dispositivo",
+    "createCertificate": "Certificado criado",
 
     "deleteCertificationAuthority": "CA excluída",
     "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",

@@ -51,7 +51,7 @@ const SecurityTable = ({
   );
 
   const handleCertificateSelection = cert => {
-    setSelectedCertificate(cert.id);
+    setSelectedCertificate(cert);
   };
 
   if (isLoading) {
@@ -77,11 +77,10 @@ const SecurityTable = ({
 
           <TableBody>
             {certificates.map(cert => {
-              const isSelected = selectedCertificate === cert.id;
-
+              const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
               return (
                 <TableRow
-                  key={cert.id}
+                  key={cert.fingerprint}
                   tabIndex={-1}
                   role='radio'
                   onClick={() => handleCertificateSelection(cert)}
@@ -94,13 +93,12 @@ const SecurityTable = ({
                       onChange={() => handleCertificateSelection(cert)}
                     />
                   </TableCell>
-
-                  <TableCell className={classes.clickableCell}>{cert.id}</TableCell>
+                  <TableCell className={classes.clickableCell}>{cert.fingerprint}</TableCell>
                   <TableCell className={classes.clickableCell}>
-                    {formatDate(cert.creation, 'DD/MM/YYYY HH:mm:ss')}
+                    {formatDate(cert.validity.notBefore, 'DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
                   <TableCell className={classes.clickableCell} colSpan='2'>
-                    {formatDate(cert.expiration, 'DD/MM/YYYY HH:mm:ss')}
+                    {formatDate(cert.validity.notAfter, 'DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
                 </TableRow>
               );

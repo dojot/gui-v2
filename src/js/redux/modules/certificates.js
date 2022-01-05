@@ -1,7 +1,10 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
+const CREATE_ONE_CLICK = 'app/certificates/CREATE_ONE_CLICK';
 const GET_CERTIFICATES = 'app/certificates/GET_CERTIFICATES';
+const GET_CERTIFICATES_BY_ID = 'app/certificates/GET_CERTIFICATES_BY_ID';
+const GET_CERTIFICATES_BY_FINGERPRINT = 'app/certificates/GET_CERTIFICATES_BY_FINGERPRINT';
 const UPDATE_CERTIFICATES = 'app/certificates/UPDATE_CERTIFICATES';
 const DELETE_CERTIFICATE = 'app/certificates/DELETE_CERTIFICATES';
 const DELETE_MULTIPLE_CERTIFICATES = 'app/certificates/DELETE_MULTIPLE_CERTIFICATES';
@@ -9,7 +12,10 @@ const DISASSOCIATE_DEVICE = 'app/certificates/DISASSOCIATE_DEVICE';
 const ASSOCIATE_DEVICE = 'app/certificates/ASSOCIATE_DEVICE';
 
 export const constants = {
+  CREATE_ONE_CLICK,
   GET_CERTIFICATES,
+  GET_CERTIFICATES_BY_ID,
+  GET_CERTIFICATES_BY_FINGERPRINT,
   UPDATE_CERTIFICATES,
   DELETE_CERTIFICATE,
   DELETE_MULTIPLE_CERTIFICATES,
@@ -17,7 +23,26 @@ export const constants = {
   ASSOCIATE_DEVICE,
 };
 
+export const createOneClick = createAction(CREATE_ONE_CLICK, payload => ({
+  commonName: payload.commonName,
+}));
+
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
+  page: payload.page,
+  filter: payload.filter,
+}));
+
+export const getCertificateByFingerprint = createAction(
+  GET_CERTIFICATES_BY_FINGERPRINT,
+  payload => ({
+    fingerprint: payload.fingerprint,
+    privateKey: payload.privateKeyPEM,
+    publicKey: payload.publicKeyPEM,
+  }),
+);
+
+export const getCertificateById = createAction(GET_CERTIFICATES_BY_ID, payload => ({
+  id: payload.id,
   page: payload.page,
   filter: payload.filter,
 }));
@@ -55,7 +80,10 @@ export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
 }));
 
 export const actions = {
+  createOneClick,
   getCertificates,
+  getCertificateById,
+  getCertificateByFingerprint,
   updateCertificates,
   deleteCertificate,
   deleteMultipleCertificates,

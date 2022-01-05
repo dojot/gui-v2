@@ -31,6 +31,7 @@
     "deleteMultipleCertificates": "Não foi possível excluir estes certificados",
     "disassociateDevice": "Não foi possível desassociar o certificado deste dispositivo",
     "associateDevice": "Não foi possível associar o certificado com este dispositivo",
+    "createCertificate": "Não foi possível criar o certificado",
 
     "getCertificationAuthorities": "Não foi possível obter as CAs",
     "deleteCertificationAuthority": "Não foi possível excluir esta CA",

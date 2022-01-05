@@ -181,8 +181,8 @@ export function* handleEditDevice(action) {
 export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
-    const { label, templates, attrs, certificate, successCallback } = action.payload;
-    yield call(Device.createDevice, { label, templates, attrs, certificate });
+    const { label, templates, attrs, fingerprint, successCallback } = action.payload;
+    yield call(Device.createDevice, { label, templates, attrs, fingerprint });
     yield put(successActions.showSuccessToast({ i18nMessage: 'createDevice' }));
     if (successCallback) yield call(successCallback);
   } catch (e) {

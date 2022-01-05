@@ -5,13 +5,11 @@ import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-  certificateSelector,
-  loadingCertificateSelector,
-  paginationControlSelector,
-} from 'Selectors/securitySelector';
+import { constants } from 'Redux/certificates';
+import { certificatesSelector, paginationControlSelector } from 'Selectors/certificatesSelector';
 
-import { actions as securityActions } from '../../../../redux/modules/security';
+import { useIsLoading } from '../../../../common/hooks';
+import { actions as certificatesActions } from '../../../../redux/modules/certificates';
 import ActionButtons from '../../layout/ActionButtons';
 import SecurityTable from './SecurityTable';
 import { useSecurityStepStyles } from './style';
@@ -27,9 +25,10 @@ const SecurityStep = ({
   const classes = useSecurityStepStyles();
   const dispatch = useDispatch();
 
-  const certificates = useSelector(certificateSelector);
-  const isLoading = useSelector(loadingCertificateSelector);
+  const certificates = useSelector(certificatesSelector);
   const { totalPages = 0 } = useSelector(paginationControlSelector);
+
+  const isLoadingCertificates = useIsLoading(constants.GET_CERTIFICATES);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -44,12 +43,17 @@ const SecurityStep = ({
   };
 
   const handleOnClickCreation = () => {
-    // TODO
+    dispatch(
+      certificatesActions.createOneClick({
+        commonName: 'Dojot - IoT',
+      }),
+    );
   };
 
   useEffect(() => {
     dispatch(
-      securityActions.updateCertificate({
+      certificatesActions.getCertificateById({
+        id: 'null',
         page: {
           number: page + 1,
           size: rowsPerPage,
@@ -76,7 +80,7 @@ const SecurityStep = ({
             totalPages={totalPages}
             rowsPerPage={rowsPerPage}
             selectedCertificate={selectedCertificate}
-            isLoading={isLoading}
+            isLoading={isLoadingCertificates}
             handleChangePage={handleChangePage}
             setSelectedCertificate={setSelectedCertificate}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
