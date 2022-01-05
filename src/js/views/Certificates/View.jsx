@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
+import { isNumber } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -52,7 +53,36 @@ const Certificates = () => {
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [isShowingDisassociateDeviceAlert, setIsShowingDisassociateDeviceAlert] = useState(false);
 
-  const [page, setPage] = useSearchParamState({ key: 'p', type: 'number', defaultValue: 0 });
+  const [page, setPage] = useSearchParamState({
+    key: 'p',
+    type: 'number',
+    defaultValue: 0,
+    valueFormatter(value, defaultValue) {
+      const zeroBasedTotalPages = totalPages - 1;
+      if (isNumber(value) && value >= 0 && value <= zeroBasedTotalPages) return value;
+      return defaultValue;
+    },
+  });
+
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+    valueFormatter(value, defaultValue) {
+      if (Object.values(DATA_ORDER).includes(value)) return value;
+      return defaultValue;
+    },
+  });
+
+  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
+    key: 'r',
+    type: 'number',
+    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
+    valueFormatter(value, defaultValue) {
+      if (isNumber(value) && ROWS_PER_PAGE_OPTIONS.includes(value)) return value;
+      return defaultValue;
+    },
+  });
 
   const [orderBy, setOrderBy] = useSearchParamState({
     key: 'ob',
@@ -64,18 +94,6 @@ const Certificates = () => {
     key: 's',
     type: 'string',
     defaultValue: '',
-  });
-
-  const [order, setOrder] = useSearchParamState({
-    key: 'or',
-    type: 'string',
-    defaultValue: DATA_ORDER.ASC,
-  });
-
-  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
-    key: 'r',
-    type: 'number',
-    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
   });
 
   const [viewMode, setViewMode] = usePersistentState({

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import { LocalOffer } from '@material-ui/icons';
+import { isNumber } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router';
@@ -41,7 +42,25 @@ const TemplateAttrs = () => {
   const templateData = useSelector(templateDataSelector);
   const isLoadingAttrs = useIsLoading(templateConstants.GET_TEMPLATE_BY_ID);
 
-  const [page, setPage] = useSearchParamState({ key: 'p', type: 'number', defaultValue: 0 });
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+    valueFormatter(value, defaultValue) {
+      if (Object.values(DATA_ORDER).includes(value)) return value;
+      return defaultValue;
+    },
+  });
+
+  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
+    key: 'r',
+    type: 'number',
+    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
+    valueFormatter(value, defaultValue) {
+      if (isNumber(value) && ROWS_PER_PAGE_OPTIONS.includes(value)) return value;
+      return defaultValue;
+    },
+  });
 
   const [orderBy, setOrderBy] = useSearchParamState({
     key: 'ob',
@@ -55,28 +74,10 @@ const TemplateAttrs = () => {
     defaultValue: '',
   });
 
-  const [order, setOrder] = useSearchParamState({
-    key: 'or',
-    type: 'string',
-    defaultValue: DATA_ORDER.ASC,
-  });
-
-  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
-    key: 'r',
-    type: 'number',
-    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
-  });
-
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: TEMPLATE_ATTRIBUTES_PAGE_KEYS.VIEW_MODE,
   });
-
-  const [selectedAttrs, setSelectedAttrs] = useState([]);
-  const [attrOptionsMenu, setAttrOptionsMenu] = useState(null);
-  const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
-  const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
-  const [isShowingAttrManagementModal, setIsShowingAttrManagementModal] = useState(false);
 
   const attrs = useMemo(() => {
     if (!templateData?.attrs) return [];
@@ -85,6 +86,27 @@ const TemplateAttrs = () => {
     }
     return templateData.attrs;
   }, [searchText, templateData?.attrs]);
+
+  const totalPages = useMemo(() => {
+    return Math.ceil(attrs.length / rowsPerPage);
+  }, [attrs.length, rowsPerPage]);
+
+  const [page, setPage] = useSearchParamState({
+    key: 'p',
+    type: 'number',
+    defaultValue: 0,
+    valueFormatter(value, defaultValue) {
+      const zeroBasedTotalPages = totalPages - 1;
+      if (isNumber(value) && value >= 0 && value <= zeroBasedTotalPages) return value;
+      return defaultValue;
+    },
+  });
+
+  const [selectedAttrs, setSelectedAttrs] = useState([]);
+  const [attrOptionsMenu, setAttrOptionsMenu] = useState(null);
+  const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
+  const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
+  const [isShowingAttrManagementModal, setIsShowingAttrManagementModal] = useState(false);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -298,9 +320,9 @@ const TemplateAttrs = () => {
 
         <Pagination
           page={page}
+          totalOfPages={totalPages}
           rowsPerPage={rowsPerPage}
           numberOfSelectedAttrs={selectedAttrs.length}
-          totalOfPages={Math.ceil(attrs.length / rowsPerPage)}
           handleChangePage={handleChangePage}
           handleChangeRowsPerPage={handleChangeRowsPerPage}
         />
