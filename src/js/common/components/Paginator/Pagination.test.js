@@ -16,12 +16,6 @@ const initialProps = {
   onPageSizeChange: onPageSizeChangeMocked,
 };
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: key => key,
-  }),
-}));
-
 describe('Paginator', () => {
   beforeEach(() => {
     onPageChangeMocked.mockClear();

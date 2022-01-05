@@ -6,12 +6,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 import Loading from './Loading';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: key => key,
-  }),
-}));
-
 describe('Loading Screen', () => {
   beforeEach(() => {
     jest.clearAllMocks();
