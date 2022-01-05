@@ -79,10 +79,28 @@ const DataTable = ({
     [t],
   );
 
+  const valueFormatters = useMemo(
+    () => ({
+      type(attr) {
+        return t(ATTR_TYPE_TRANSLATIONS[attr.type]) || attr.type;
+      },
+      valueType(attr) {
+        return t(ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType]) || attr.valueType;
+      },
+    }),
+    [t],
+  );
+
   const handleRequestSort = (_, property) => {
-    const isAsc = orderBy === property && order === DATA_ORDER.ASC;
-    setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
-    setOrderBy(property);
+    const isSameProperty = orderBy === property;
+    if (isSameProperty) {
+      const isAsc = order === DATA_ORDER.ASC;
+      setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
+      setOrderBy(isAsc ? property : '');
+    } else {
+      setOrder(DATA_ORDER.ASC);
+      setOrderBy(property);
+    }
   };
 
   const handleSelectAllClick = event => {
@@ -137,14 +155,11 @@ const DataTable = ({
           <TableBody>
             {attrs
               .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
+              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(attr => {
                 const isSelected = selectedAttrs.indexOf(attr.id) !== -1;
-
-                const attrTypeTranslation = ATTR_TYPE_TRANSLATIONS[attr.type] || attr.type;
-
-                const valueTypeTranslation =
-                  ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType] || attr.valueType;
+                const attrTypeTranslation = valueFormatters.type(attr);
+                const valueTypeTranslation = valueFormatters.valueType(attr);
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(attr.id);
@@ -169,8 +184,8 @@ const DataTable = ({
 
                     <TableCell>{attr.id}</TableCell>
                     <TableCell>{attr.label}</TableCell>
-                    <TableCell>{t(attrTypeTranslation)}</TableCell>
-                    <TableCell>{t(valueTypeTranslation)}</TableCell>
+                    <TableCell>{attrTypeTranslation}</TableCell>
+                    <TableCell>{valueTypeTranslation}</TableCell>
                     <TableCell>{attr.staticValue}</TableCell>
 
                     <TableCell onClick={handleStopPropagation}>

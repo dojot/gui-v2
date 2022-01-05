@@ -16,6 +16,8 @@ const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu })
     <Box padding={2}>
       <Grid spacing={2} container>
         {templates.map(template => {
+          const attrsLength = template.attrs?.length || 0;
+
           const handleSeeTemplateDetails = () => {
             handleClickTemplate(template);
           };
@@ -41,11 +43,11 @@ const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu })
               >
                 <Box marginBottom={1}>
                   <Typography variant='body2'>
-                    <strong>{template.attrsLength || 0}</strong>
+                    <strong>{attrsLength}</strong>
                   </Typography>
 
                   <Typography variant='body2'>
-                    {t('cardData.attrsLength', { count: template.attrsLength || 0 })}
+                    {t('cardData.attrsLength', { count: attrsLength })}
                   </Typography>
                 </Box>
               </DataCard>

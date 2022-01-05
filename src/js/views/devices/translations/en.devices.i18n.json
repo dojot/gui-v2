@@ -1,6 +1,6 @@
 {
   "title": "Devices",
-  "searchInputPh": "Search Device",
+  "searchInputPh": "Search Device By Name",
   "totalOfPages": "Total of Pages: {{count}}",
   "nextIconButtonText": "Next Page",
   "backIconButtonText": "Previous Page",

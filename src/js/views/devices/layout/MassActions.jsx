@@ -23,17 +23,20 @@ const MassActions = ({
           <Typography className={classes.massActionsLabel}>{t('massActions')}</Typography>
         </Grid>
 
-        <Grid item xs='auto'>
-          <Button
-            className={classes.massActionsButton}
-            onClick={handleFavoriteMultipleDevices}
-            startIcon={<Star />}
-            variant='contained'
-            disabled // TODO: Enable again when Backstage implement this action
-          >
-            {t('favorite')}
-          </Button>
-        </Grid>
+        {false && (
+          // TODO: Show again when you can favorite devices
+          <Grid item xs='auto'>
+            <Button
+              className={classes.massActionsButton}
+              onClick={handleFavoriteMultipleDevices}
+              startIcon={<Star />}
+              variant='contained'
+              disabled
+            >
+              {t('favorite')}
+            </Button>
+          </Grid>
+        )}
 
         <Grid item xs='auto'>
           <Button

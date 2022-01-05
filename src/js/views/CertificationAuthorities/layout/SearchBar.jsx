@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@material-ui/core';
 import { ViewModule, List, Search, Add, Close } from '@material-ui/icons';
@@ -10,14 +10,19 @@ import { VIEW_MODE } from '../../../common/constants';
 import { useDebounce } from '../../../common/hooks';
 import { useSearchBarStyles } from './style';
 
-const SearchBar = ({ viewMode, handleSearchCertificationAuthorities, handleChangeViewMode }) => {
+const SearchBar = ({
+  viewMode,
+  lastSearchedText,
+  handleChangeViewMode,
+  handleSearchCertificationAuthorities,
+}) => {
   const { t } = useTranslation('certificationAuthorities');
   const classes = useSearchBarStyles();
   const searchInputRef = useRef(null);
   const history = useHistory();
 
   const [isTyping, setIsTyping] = useState(false);
-  const [isShowingClearButton, setIsShowingClearButton] = useState(false);
+  const [internalSearchText, setInternalSearchText] = useState('');
 
   const handleDebounce = useDebounce({
     delay: 1000,
@@ -36,16 +41,21 @@ const SearchBar = ({ viewMode, handleSearchCertificationAuthorities, handleChang
 
   const handleClearSearch = () => {
     handleSearchCertificationAuthorities('');
-    setIsShowingClearButton(false);
+    setInternalSearchText('');
     if (searchInputRef.current) {
       searchInputRef.current.value = '';
     }
   };
 
   const handleChangeSearchText = e => {
-    handleDebounce(e.target.value);
-    setIsShowingClearButton(!!e.target.value);
+    const search = e.target.value;
+    setInternalSearchText(search);
+    handleDebounce(search);
   };
+
+  useEffect(() => {
+    setInternalSearchText(lastSearchedText);
+  }, [lastSearchedText]);
 
   return (
     <Box className={classes.searchContainer} paddingY={1} paddingX={2} margin={0}>
@@ -69,6 +79,7 @@ const SearchBar = ({ viewMode, handleSearchCertificationAuthorities, handleChang
           className={classes.searchTextField}
           size='small'
           variant='outlined'
+          value={internalSearchText}
           placeholder={t('searchInputPh')}
           onChange={handleChangeSearchText}
           InputProps={{
@@ -84,7 +95,7 @@ const SearchBar = ({ viewMode, handleSearchCertificationAuthorities, handleChang
                 )}
               </InputAdornment>
             ),
-            endAdornment: isShowingClearButton ? (
+            endAdornment: internalSearchText ? (
               <InputAdornment position='end'>
                 <IconButton onClick={handleClearSearch} disabled={isTyping} size='small'>
                   <Close />
@@ -109,14 +120,16 @@ const SearchBar = ({ viewMode, handleSearchCertificationAuthorities, handleChang
 
 SearchBar.propTypes = {
   viewMode: PropTypes.oneOf(Object.values(VIEW_MODE)),
-  handleSearchCertificationAuthorities: PropTypes.func,
+  lastSearchedText: PropTypes.string,
   handleChangeViewMode: PropTypes.func,
+  handleSearchCertificationAuthorities: PropTypes.func,
 };
 
 SearchBar.defaultProps = {
   viewMode: VIEW_MODE.TABLE,
-  handleSearchCertificationAuthorities: null,
+  lastSearchedText: '',
   handleChangeViewMode: null,
+  handleSearchCertificationAuthorities: null,
 };
 
 export default SearchBar;

@@ -36,7 +36,7 @@ const TemplatesStep = ({
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [lastSearchedText, setLastSearchedText] = useState('');
+  const [searchText, setSearchText] = useState('');
 
   const [isCreatingTemplate, setIsCreatingTemplate] = useState(false);
 
@@ -66,8 +66,8 @@ const TemplatesStep = ({
   };
 
   const handleSearchForTemplates = search => {
-    setLastSearchedText(search);
-    dispatch(templateActions.getTemplates({ filter: { label: search } }));
+    setPage(0);
+    setSearchText(search);
   };
 
   const handleDiscardNewTemplate = () => {
@@ -89,12 +89,15 @@ const TemplatesStep = ({
     dispatch(
       templateActions.getTemplates({
         page: {
-          number: page,
+          number: page + 1,
           size: rowsPerPage,
+        },
+        filter: {
+          label: searchText,
         },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchText]);
 
   return (
     <Box className={classes.container}>
@@ -135,7 +138,7 @@ const TemplatesStep = ({
               templates={templates}
               totalPages={totalPages}
               rowsPerPage={rowsPerPage}
-              lastSearchedText={lastSearchedText}
+              lastSearchedText={searchText}
               selectedTemplates={selectedTemplates}
               isLoadingTemplates={isLoadingTemplates}
               numberOfSelectedTemplates={numberOfSelectedTemplates}

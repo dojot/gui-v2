@@ -1,6 +1,6 @@
 {
   "title": "Templates / {{template}}",
-  "searchInputPh": "Search Attribute",
+  "searchInputPh": "Search Attribute By Name",
   "totalOfPages": "Total of Pages: {{count}}",
   "nextIconButtonText": "Next Page",
   "backIconButtonText": "Previous Page",

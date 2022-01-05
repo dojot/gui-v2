@@ -164,6 +164,7 @@ const TemplatesTable = ({
         <TableBody>
           {templates.map(template => {
             const isSelected = !!selectedTemplates[template.id];
+            const attrsLength = template.attrs?.length || 0;
 
             const handleSelectThisTemplate = () => {
               handleSelectTemplate(template);
@@ -190,7 +191,7 @@ const TemplatesTable = ({
                 <TableCell className={classes.clickableCell}>{template.label}</TableCell>
 
                 <TableCell className={classes.clickableCell} colSpan='2'>
-                  {template.attrsLength}
+                  {attrsLength}
                 </TableCell>
               </TableRow>
             );

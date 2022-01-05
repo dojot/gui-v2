@@ -11,7 +11,7 @@
   "disassociateDevice": "Desassociar Dispositivo",
   "changeAssociation": "Trocar Associação",
   "AssociateToDeviceModalTitle": "Dispositivos",
-  "searchInputPh": "Pesquisar Certificado",
+  "searchInputPh": "Pesquisar Certificado Por Fingerprint",
   "createNewCertificate": "Criar Novo Certificado",
   "emptyListMessage": "Nenhum Certificado Encontrado",
   "massActions": "Ações em massa:",

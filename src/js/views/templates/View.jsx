@@ -2,21 +2,27 @@ import React, { useEffect, useState } from 'react';
 
 import { Box } from '@material-ui/core';
 import { FilterNone } from '@material-ui/icons';
+import { isNumber } from 'lodash';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { AlertDialog } from '../../common/components/Dialogs';
 import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
-import { DATA_ORDER, TEMPLATES_PAGE_KEYS, VIEW_MODE } from '../../common/constants';
-import { useIsLoading, usePersistentState } from '../../common/hooks';
+import {
+  DATA_ORDER,
+  ROWS_PER_PAGE_OPTIONS,
+  TEMPLATES_PAGE_KEYS,
+  VIEW_MODE,
+} from '../../common/constants';
+import { useIsLoading, usePersistentState, useSearchParamState } from '../../common/hooks';
 import {
   actions as templateActions,
   constants as templateConstants,
 } from '../../redux/modules/templates';
 import {
+  templatesSelector,
   paginationControlSelector,
-  templatesForDataTableSelector,
 } from '../../redux/selectors/templatesSelector';
 import { ViewContainer } from '../stateComponents';
 import Cards from './layout/Cards';
@@ -34,15 +40,53 @@ const Templates = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const templates = useSelector(templatesForDataTableSelector);
+  const templates = useSelector(templatesSelector);
   const { totalPages } = useSelector(paginationControlSelector);
 
   const isLoadingTemplates = useIsLoading(templateConstants.GET_TEMPLATES);
 
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [order, setOrder] = useState(DATA_ORDER.ASC);
-  const [orderBy, setOrderBy] = useState('');
+  const [page, setPage] = useSearchParamState({
+    key: 'p',
+    type: 'number',
+    defaultValue: 0,
+    valueFormatter(value, defaultValue) {
+      const zeroBasedTotalPages = totalPages - 1;
+      if (isNumber(value) && value >= 0 && value <= zeroBasedTotalPages) return value;
+      return defaultValue;
+    },
+  });
+
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+    valueFormatter(value, defaultValue) {
+      if (Object.values(DATA_ORDER).includes(value)) return value;
+      return defaultValue;
+    },
+  });
+
+  const [rowsPerPage, setRowsPerPage] = useSearchParamState({
+    key: 'r',
+    type: 'number',
+    defaultValue: ROWS_PER_PAGE_OPTIONS[0],
+    valueFormatter(value, defaultValue) {
+      if (isNumber(value) && ROWS_PER_PAGE_OPTIONS.includes(value)) return value;
+      return defaultValue;
+    },
+  });
+
+  const [orderBy, setOrderBy] = useSearchParamState({
+    key: 'ob',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [searchText, setSearchText] = useSearchParamState({
+    key: 's',
+    type: 'string',
+    defaultValue: '',
+  });
 
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
@@ -118,7 +162,8 @@ const Templates = () => {
   };
 
   const handleSearchTemplate = search => {
-    dispatch(templateActions.getTemplates({ filter: { label: search } }));
+    setPage(0);
+    setSearchText(search);
   };
 
   useEffect(() => {
@@ -128,9 +173,12 @@ const Templates = () => {
           number: page + 1,
           size: rowsPerPage,
         },
+        filter: {
+          label: searchText,
+        },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (viewMode) setSelectedTemplates([]);
@@ -170,6 +218,7 @@ const Templates = () => {
       <Box className={classes.container}>
         <SearchBar
           viewMode={viewMode}
+          lastSearchedText={searchText}
           handleChangeViewMode={setViewMode}
           handleSearchTemplate={handleSearchTemplate}
         />

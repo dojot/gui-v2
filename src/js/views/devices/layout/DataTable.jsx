@@ -67,10 +67,32 @@ const DataTable = ({
     [t],
   );
 
+  const valueFormatters = useMemo(
+    () => ({
+      attrsLength(device) {
+        return device.attrs?.length || 0;
+      },
+      hasCertificate(device) {
+        return !!device.certificate;
+      },
+      updated(device) {
+        const date = device.updated || device.created;
+        return date ? moment(date).unix() : 0;
+      },
+    }),
+    [],
+  );
+
   const handleRequestSort = (_, property) => {
-    const isAsc = orderBy === property && order === DATA_ORDER.ASC;
-    setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
-    setOrderBy(property);
+    const isSameProperty = orderBy === property;
+    if (isSameProperty) {
+      const isAsc = order === DATA_ORDER.ASC;
+      setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
+      setOrderBy(isAsc ? property : '');
+    } else {
+      setOrder(DATA_ORDER.ASC);
+      setOrderBy(property);
+    }
   };
 
   const handleSelectAllClick = event => {
@@ -117,93 +139,107 @@ const DataTable = ({
             orderBy={orderBy}
             cells={headCells}
             rowCount={devices.length}
-            startExtraCells={<TableCell />}
+            startExtraCells={false && <TableCell />} // TODO: Show again when you can favorite devices
             numSelected={selectedDevices.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
           />
 
           <TableBody>
-            {devices.sort(getComparator(order === DATA_ORDER.DESC, orderBy)).map(device => {
-              const isSelected = selectedDevices.indexOf(device.id) !== -1;
+            {devices
+              .slice()
+              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
+              .map(device => {
+                const isSelected = selectedDevices.indexOf(device.id) !== -1;
+                const hasCertificate = !!device.certificate;
 
-              const handleClickInThisDevice = () => {
-                handleClickDevice(device);
-              };
+                const handleClickInThisDevice = () => {
+                  handleClickDevice(device);
+                };
 
-              const handleSelectThisRow = () => {
-                handleSelectRow(device.id);
-              };
+                const handleSelectThisRow = () => {
+                  handleSelectRow(device.id);
+                };
 
-              const handleFavoriteThisDevice = () => {
-                handleFavoriteDevice(device);
-              };
+                const handleFavoriteThisDevice = () => {
+                  handleFavoriteDevice(device);
+                };
 
-              const handleShowOptionsMenu = e => {
-                handleSetDeviceOptionsMenu({
-                  anchorElement: e.target,
-                  device,
-                });
-              };
+                const handleShowOptionsMenu = e => {
+                  handleSetDeviceOptionsMenu({
+                    anchorElement: e.target,
+                    device,
+                  });
+                };
 
-              return (
-                <TableRow
-                  key={device.label}
-                  tabIndex={-1}
-                  role='checkbox'
-                  selected={isSelected}
-                  aria-checked={isSelected}
-                  onClick={handleClickInThisDevice}
-                  hover
-                >
-                  <TableCell onClick={handleStopPropagation}>
-                    <Checkbox color='primary' checked={isSelected} onChange={handleSelectThisRow} />
-                  </TableCell>
-
-                  <TableCell onClick={handleStopPropagation}>
-                    <Tooltip
-                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
-                      placement='right'
-                      arrow
-                    >
+                return (
+                  <TableRow
+                    key={device.id}
+                    tabIndex={-1}
+                    role='checkbox'
+                    selected={isSelected}
+                    aria-checked={isSelected}
+                    onClick={handleClickInThisDevice}
+                    hover
+                  >
+                    <TableCell onClick={handleStopPropagation}>
                       <Checkbox
-                        color='default'
-                        checked={device.favorite}
-                        icon={<StarBorderOutlined />}
-                        checkedIcon={<Star style={{ color: '#F1B44C' }} />}
-                        onChange={handleFavoriteThisDevice}
-                        disabled // TODO: Enable again when Backstage implement this action
+                        color='primary'
+                        checked={isSelected}
+                        onChange={handleSelectThisRow}
                       />
-                    </Tooltip>
-                  </TableCell>
+                    </TableCell>
 
-                  <TableCell className={classes.clickableCell}>{device.id}</TableCell>
-                  <TableCell className={classes.clickableCell}>{device.label}</TableCell>
-                  <TableCell className={classes.clickableCell}>{device.attrsLength}</TableCell>
-                  <TableCell className={classes.clickableCell}>
-                    {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
-                  </TableCell>
+                    {false && (
+                      // TODO: Show again when you can favorite devices
+                      <TableCell onClick={handleStopPropagation}>
+                        <Tooltip
+                          title={t(
+                            device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip',
+                          )}
+                          placement='right'
+                          arrow
+                        >
+                          <Checkbox
+                            color='default'
+                            checked={device.favorite}
+                            icon={<StarBorderOutlined />}
+                            checkedIcon={<Star style={{ color: '#F1B44C' }} />}
+                            onChange={handleFavoriteThisDevice}
+                            disabled
+                          />
+                        </Tooltip>
+                      </TableCell>
+                    )}
 
-                  <TableCell className={classes.clickableCell}>
-                    <Tooltip
-                      title={t(
-                        device.hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip',
-                      )}
-                      placement='right'
-                      arrow
-                    >
-                      {device.hasCertificate ? <Check color='primary' /> : <Close color='error' />}
-                    </Tooltip>
-                  </TableCell>
+                    <TableCell className={classes.clickableCell}>{device.id}</TableCell>
+                    <TableCell className={classes.clickableCell}>{device.label}</TableCell>
+                    <TableCell className={classes.clickableCell}>
+                      {device.attrs?.length || 0}
+                    </TableCell>
 
-                  <TableCell onClick={handleStopPropagation}>
-                    <IconButton onClick={handleShowOptionsMenu}>
-                      <MoreHoriz />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                    <TableCell className={classes.clickableCell}>
+                      {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
+                    </TableCell>
+
+                    <TableCell className={classes.clickableCell}>
+                      <Tooltip
+                        title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
+                        placement='right'
+                        arrow
+                      >
+                        {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
+                      </Tooltip>
+                    </TableCell>
+
+                    <TableCell onClick={handleStopPropagation}>
+                      <IconButton onClick={handleShowOptionsMenu}>
+                        <MoreHoriz />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>
