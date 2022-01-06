@@ -13,8 +13,7 @@ export const getDevicesList = (page, filter) => {
             created
             updated
             certificate {
-              id
-              label
+              fingerprint
             }
             attrs {
               id
@@ -54,8 +53,7 @@ export const getDeviceById = deviceId => {
             staticValue
           }
           certificate {
-            id
-            label
+            fingerprint
           }
           templates {
             id
@@ -136,11 +134,11 @@ export const editDevice = ({ id, label, templates, attrs }) => {
   });
 };
 
-export const createDevice = ({ label, templates, attrs, certificate }) => {
+export const createDevice = ({ label, templates, attrs, fingerprint }) => {
   return protectAPI({
     query: `
-      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $certificate: String) {
-        createDevice(label: $label, templates: $templates, attrs: $attrs, certificate: $certificate) {
+      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $fingerprint: String) {
+        createDevice(label: $label, templates: $templates, attrs: $attrs, fingerprint: $fingerprint) {
           id
         }
       }
@@ -149,7 +147,7 @@ export const createDevice = ({ label, templates, attrs, certificate }) => {
       label,
       templates,
       attrs,
-      certificate,
+      fingerprint,
     }),
   });
 };

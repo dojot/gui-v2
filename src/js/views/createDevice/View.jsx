@@ -106,7 +106,7 @@ const CreateDevice = () => {
 
     dispatch(
       actions.createDevice({
-        certificate: '', // TODO: Save certificate
+        fingerprint: selectedCertificate?.fingerprint || '',
         label: deviceName,
         attrs: attrsToSave,
         templates: templateIds,
@@ -190,6 +190,7 @@ const CreateDevice = () => {
                   deviceName={deviceName}
                   isCreatingDevice={isCreatingDevice}
                   selectedTemplates={selectedTemplates}
+                  selectedCertificate={selectedCertificate}
                   setDeviceName={setDeviceName}
                   handleCreateService={handleCreateService}
                   handleGoToPreviousStep={handleGoToPreviousStep}

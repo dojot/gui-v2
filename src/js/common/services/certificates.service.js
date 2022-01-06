@@ -36,6 +36,56 @@ export const getCertificateList = (page, filter) => {
   });
 };
 
+export const getCertificate = (page, filter, id) => {
+  return protectAPI({
+    query: `
+      query getCertificateById($page: PageInput, $filter: FilterCertificateInput, $id: String!) {
+        getCertificateById(page: $page, filter: $filter, id: $id) {
+          pagination {
+            currentPage
+            totalPages
+          }
+          certificates {
+            subjectDN
+            fingerprint
+            pem
+            validity {
+              notBefore
+              notAfter
+            }
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      page,
+      filter,
+      id,
+    }),
+  });
+};
+
+export const getCertificateByFingerprint = fingerprint => {
+  return protectAPI({
+    query: `
+      query getCertificateByFingerprint($fingerprint: String!) {
+        getCertificateByFingerprint(fingerprint: $fingerprint) {
+          subjectDN
+          fingerprint
+          pem
+          validity {
+            notBefore
+            notAfter
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      fingerprint,
+    }),
+  });
+};
+
 export const deleteMultipleCertificates = fingerprints => {
   return protectAPI({
     query: `
@@ -72,6 +122,24 @@ export const associateDevice = (fingerprint, deviceId) => {
     variables: JSON.stringify({
       fingerprint,
       deviceId,
+    }),
+  });
+};
+
+export const createOneClickCertificate = commonName => {
+  return protectAPI({
+    query: `
+      mutation createCertificate($commonName: String) {
+        createCertificate(commonName: $commonName) {
+          certificateFingerprint
+          certificatePem
+          privateKeyPEM
+          publicKeyPEM
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      commonName,
     }),
   });
 };

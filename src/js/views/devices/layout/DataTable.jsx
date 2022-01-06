@@ -73,7 +73,7 @@ const DataTable = ({
         return device.attrs?.length || 0;
       },
       hasCertificate(device) {
-        return !!device.certificate;
+        return !!device.certificate?.fingerprint;
       },
       updated(device) {
         const date = device.updated || device.created;
@@ -151,7 +151,7 @@ const DataTable = ({
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(device => {
                 const isSelected = selectedDevices.indexOf(device.id) !== -1;
-                const hasCertificate = !!device.certificate;
+                const hasCertificate = !!device.certificate?.fingerprint;
 
                 const handleClickInThisDevice = () => {
                   handleClickDevice(device);
