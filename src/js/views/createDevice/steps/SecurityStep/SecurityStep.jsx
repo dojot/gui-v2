@@ -45,7 +45,7 @@ const SecurityStep = ({
   const handleOnClickCreation = () => {
     dispatch(
       certificatesActions.createOneClick({
-        commonName: 'Dojot - IoT',
+        commonName: undefined,
       }),
     );
   };

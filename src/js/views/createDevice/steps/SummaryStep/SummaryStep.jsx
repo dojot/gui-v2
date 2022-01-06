@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 
 import { Box, IconButton, InputAdornment, Link, TextField, Typography } from '@material-ui/core';
@@ -103,7 +104,7 @@ const SummaryStep = ({
           {selectedCertificate?.pem ? (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.certificate')}</Typography>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+
               <Link
                 tabIndex={0}
                 component='button'
@@ -116,7 +117,6 @@ const SummaryStep = ({
           {selectedCertificate?.privateKey ? (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.privateKey')}</Typography>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
               <Link
                 tabIndex={0}
                 component='button'
@@ -129,7 +129,7 @@ const SummaryStep = ({
           {selectedCertificate?.publicKey ? (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.publicKey')}</Typography>
-              {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+
               <Link
                 tabIndex={0}
                 component='button'
@@ -143,7 +143,11 @@ const SummaryStep = ({
           {selectedCertificate?.caCertificate ? (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.caCertificate')}</Typography>
-              <Link href='https://www.google.com' download>
+              <Link
+                tabIndex={0}
+                component='button'
+                onClick={() => download('caCertificate.pem', selectedCertificate.caCertificate)}
+              >
                 Link
               </Link>
             </Box>
