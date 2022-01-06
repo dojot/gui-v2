@@ -24,7 +24,7 @@ const Cards = ({
         {devices.map(device => {
           const lastUpdate = device.updated || device.created;
           const attrsLength = device.attrs?.length || 0;
-          const hasCertificate = !!device.certificate;
+          const hasCertificate = !!device.certificate?.fingerprint;
 
           const handleSeeDeviceDetails = () => {
             handleClickDevice(device);
