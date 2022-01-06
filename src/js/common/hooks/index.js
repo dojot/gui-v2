@@ -1,4 +1,4 @@
-export * from './useDebouce';
+export * from './useDebounce';
 export * from './useIsLoading';
 export * from './useAttrTranslation';
 export * from './usePersistentState';

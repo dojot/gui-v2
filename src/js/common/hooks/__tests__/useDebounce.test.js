@@ -3,7 +3,7 @@ import { act, renderHook } from '@testing-library/react-hooks';
 
 import { useDebounce } from '..';
 
-describe('useDebouce', () => {
+describe('useDebounce', () => {
   it('should return a function to trigger the debouce', () => {
     const { result } = renderHook(() => useDebounce());
     expect(typeof result.current).toBe('function');
@@ -75,5 +75,13 @@ describe('useDebouce', () => {
 
     expect(startCallback).toBeCalledWith(myProp, myProp, myProp);
     await waitFor(() => expect(stopCallback).toBeCalledWith(myProp, myProp, myProp));
+  });
+
+  it('should not throw an error without the callback functions', () => {
+    const { result } = renderHook(() => useDebounce());
+
+    act(() => {
+      expect(result.current).not.toThrow();
+    });
   });
 });
