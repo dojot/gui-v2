@@ -113,4 +113,18 @@ describe('usePersistentState', () => {
     expect(localStorage.getItem(TESTING_KEY)).toBe('default');
     expect(result.current[0]).toBe('default');
   });
+
+  it('should return the default value when the value is null and isJson === true', () => {
+    localStorage.setItem(TESTING_KEY, null);
+
+    const { result } = renderHook(() =>
+      usePersistentState({
+        key: TESTING_KEY,
+        defaultValue: 'default',
+        isJson: true,
+      }),
+    );
+
+    expect(result.current[0]).toBe('default');
+  });
 });
