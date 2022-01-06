@@ -7,6 +7,8 @@ const DELETE_CERTIFICATE = 'app/certificates/DELETE_CERTIFICATES';
 const DELETE_MULTIPLE_CERTIFICATES = 'app/certificates/DELETE_MULTIPLE_CERTIFICATES';
 const DISASSOCIATE_DEVICE = 'app/certificates/DISASSOCIATE_DEVICE';
 const ASSOCIATE_DEVICE = 'app/certificates/ASSOCIATE_DEVICE';
+const CREATE_CERTIFICATE_ONE_CLICK = 'app/certificates/CREATE_CERTIFICATE_ONE_CLICK';
+const CREATE_CERTIFICATE_CSR = 'app/certificates/CREATE_CERTIFICATE_CSR';
 
 export const constants = {
   GET_CERTIFICATES,
@@ -15,6 +17,8 @@ export const constants = {
   DELETE_MULTIPLE_CERTIFICATES,
   DISASSOCIATE_DEVICE,
   ASSOCIATE_DEVICE,
+  CREATE_CERTIFICATE_ONE_CLICK,
+  CREATE_CERTIFICATE_CSR,
 };
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
@@ -54,6 +58,14 @@ export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
   deviceId: payload.deviceId,
 }));
 
+export const createCertificateOneClick = createAction(CREATE_CERTIFICATE_ONE_CLICK, payload => ({
+  commonName: payload.commonName,
+}));
+
+export const createCertificateCSR = createAction(CREATE_CERTIFICATE_CSR, payload => ({
+  csrPEM: payload.csrPEM,
+}));
+
 export const actions = {
   getCertificates,
   updateCertificates,
@@ -61,6 +73,8 @@ export const actions = {
   deleteMultipleCertificates,
   disassociateDevice,
   associateDevice,
+  createCertificateOneClick,
+  createCertificateCSR,
 };
 
 export const reducers = {

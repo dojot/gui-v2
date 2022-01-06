@@ -75,3 +75,50 @@ export const associateDevice = (fingerprint, deviceId) => {
     }),
   });
 };
+
+export const createCertificateOneClick = commonName => {
+  console.log('common do service => ', commonName);
+  return protectAPI({
+    query: `
+      mutation createCertificate($commonName: String) {
+        createCertificate(commonName: $commonName) {
+          certificatePem
+          certificateFingerprint
+          privateKeyPEM
+          publicKeyPEM
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      commonName,
+    }),
+  });
+};
+
+export const createCertificateCSR = csrPEM => {
+  return protectAPI({
+    query: `
+      mutation createCertificateCSR($csrPEM: String!) {
+        createCertificateCSR(csrPEM: $csrPEM) {
+          certificatePem
+          certificateFingerprint
+          privateKeyPEM
+          publicKeyPEM
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      csrPEM,
+    }),
+  });
+};
+
+// export const createCertificateCSR = () => {
+//   return protectAPI({
+//     query: `
+//       mutation createCertificate() {
+//         crea
+//       }
+//     `
+//   })
+// }
