@@ -43,6 +43,20 @@ describe('useCertificateComputedData', () => {
     });
   });
 
+  it('should return the default data when the validity is an empty object', () => {
+    const { result } = renderHook(() => useCertificateComputedData());
+
+    act(() => {
+      expect(result.current({})).toMatchObject({
+        validityInitialDate: '',
+        validityFinalDate: '',
+        status: CERTIFICATE_STATUS.VALID,
+        statusText: `certificateStatus.${CERTIFICATE_STATUS.VALID}`,
+        statusColor: CERTIFICATE_STATUS_COLORS.VALID,
+      });
+    });
+  });
+
   it('should the dates be in this format: DD/MM/YYYY', () => {
     const { result } = renderHook(() => useCertificateComputedData());
 
