@@ -23,9 +23,25 @@ describe('useIsLoading', () => {
     return <Provider store={store}>{children}</Provider>;
   };
 
+  const emptyStore = mockStore({
+    loading: Map({}),
+  });
+
+  const EmptyStoreWrapper = ({ children }) => {
+    return <Provider store={emptyStore}>{children}</Provider>;
+  };
+
   it('should return false if the key does not exist', () => {
     const { result } = renderHook(() => useIsLoading('NOT_EXISTING_KEY'), {
       wrapper: StoreWrapper,
+    });
+
+    expect(result.current).toBe(false);
+  });
+
+  it('should return false if the loading reducer is an empty object', () => {
+    const { result } = renderHook(() => useIsLoading('KEY_1'), {
+      wrapper: EmptyStoreWrapper,
     });
 
     expect(result.current).toBe(false);
