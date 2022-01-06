@@ -1,5 +1,5 @@
 {
-  "headerTitle": "New Certificate",
+  "headerTitle": "New certificate",
   "finishButton": "Finish",
   "cancelButton": "Cancel",
   "createCertificateOneClick": {
@@ -24,10 +24,10 @@
     "subTitle": "Enables you to use your existing public key infrastructure",
     "inputDataLabel": "Enter the data in order: from device certificate to root CA. According to the degree of importance.",
     "inputPlaceholder": "Insert your text here",
-    "generateCertificate": "OK"
+    "generateCertificate": "Generate certificate"
   },
   "generatedCertificateResume": {
-    "downloadFilesMessage": "To connect a device, you need to download the following items:",
+    "certificateAndKeysTitle": "To connect a device, you need to download the following items:",
     "certificate": "Certificate",
     "privateKey": "Private Key",
     "publicKey": "Public Key (optional)",

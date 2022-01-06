@@ -19,6 +19,7 @@
     "createAttr": "Attribute created",
     "editAttr": "Attribute edited",
 
+    "createCertificate": "Certificate created",
     "deleteCertificate": "Certificate deleted",
     "deleteMultipleCertificates": "All certificates were deleted",
     "disassociateDevice": "Certificate disassociated from device",

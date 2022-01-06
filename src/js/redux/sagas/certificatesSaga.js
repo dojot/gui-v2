@@ -129,8 +129,11 @@ export function* handleCreateCertificateOneClick(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_ONE_CLICK));
     const { commonName } = action.payload;
-    yield call(Certificates.createCertificateOneClick, commonName);
-    yield call(getCurrentCertificatesPageAgain);
+    const { createCertificateOneClick } = yield call(
+      Certificates.createCertificateOneClick,
+      commonName,
+    );
+    yield put(actions.saveCertificateData({ certificateData: createCertificateOneClick }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
     console.log(e);
@@ -149,8 +152,28 @@ export function* handleCreateCertificateCSR(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_CSR));
     const { csrPEM } = action.payload;
-    yield call(Certificates.createCertificateCSR, csrPEM);
-    yield call(getCurrentCertificatesPageAgain);
+    console.log('csrPEM da SAGA => ', csrPEM);
+    const { createCertificateCSR } = yield call(Certificates.createCertificateCSR, csrPEM);
+    yield put(actions.saveCertificateData({ certificateData: createCertificateCSR }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
+  } catch (e) {
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'createCertificate',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.CREATE_CERTIFICATE_CSR));
+  }
+}
+
+export function* handleCreateCertificateCA(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_CSR));
+    const { csrPEM } = action.payload;
+    const { createCertificateCA } = yield call(Certificates.createCertificateCA, csrPEM);
+    yield put(actions.saveCertificateData({ certificateData: createCertificateCA }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
     yield put(

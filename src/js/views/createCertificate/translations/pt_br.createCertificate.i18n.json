@@ -24,10 +24,10 @@
     "subTitle": "Possibilita utilizar a sua infraestrutura de chaves publicas já existente",
     "inputDataLabel": "Insira os dados em ordem: do certificado do dispositivo até a CA raiz. De acordo com o grau de importância.",
     "inputPlaceholder": "Insira aqui seu texto",
-    "generateCertificate": "OK"
+    "generateCertificate": "Gerar certificado"
   },
   "generatedCertificateResume": {
-    "downloadFilesMessage": "Para conectar um dispositivo, você precisa fazer download dos seguintes itens:",
+    "certificateAndKeysTitle": "Para conectar um dispositivo, você precisa fazer download dos seguintes itens:",
     "certificate": "Certificado",
     "privateKey": "Chave privada",
     "publicKey": "Chave pública (opcional)",

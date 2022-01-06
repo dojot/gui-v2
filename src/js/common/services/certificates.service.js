@@ -77,11 +77,10 @@ export const associateDevice = (fingerprint, deviceId) => {
 };
 
 export const createCertificateOneClick = commonName => {
-  console.log('common do service => ', commonName);
   return protectAPI({
     query: `
-      mutation createCertificate($commonName: String) {
-        createCertificate(commonName: $commonName) {
+      mutation createCertificateOneClick($commonName: String) {
+        createCertificateOneClick(commonName: $commonName) {
           certificatePem
           certificateFingerprint
           privateKeyPEM
@@ -96,6 +95,7 @@ export const createCertificateOneClick = commonName => {
 };
 
 export const createCertificateCSR = csrPEM => {
+  console.log(csrPEM);
   return protectAPI({
     query: `
       mutation createCertificateCSR($csrPEM: String!) {

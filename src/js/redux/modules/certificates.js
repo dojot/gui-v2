@@ -9,6 +9,7 @@ const DISASSOCIATE_DEVICE = 'app/certificates/DISASSOCIATE_DEVICE';
 const ASSOCIATE_DEVICE = 'app/certificates/ASSOCIATE_DEVICE';
 const CREATE_CERTIFICATE_ONE_CLICK = 'app/certificates/CREATE_CERTIFICATE_ONE_CLICK';
 const CREATE_CERTIFICATE_CSR = 'app/certificates/CREATE_CERTIFICATE_CSR';
+const SAVE_CERTIFICATE_DATA = 'app/certificates/SAVE_CERTIFICATE_DATA';
 
 export const constants = {
   GET_CERTIFICATES,
@@ -19,6 +20,7 @@ export const constants = {
   ASSOCIATE_DEVICE,
   CREATE_CERTIFICATE_ONE_CLICK,
   CREATE_CERTIFICATE_CSR,
+  SAVE_CERTIFICATE_DATA,
 };
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
@@ -59,11 +61,15 @@ export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
 }));
 
 export const createCertificateOneClick = createAction(CREATE_CERTIFICATE_ONE_CLICK, payload => ({
-  commonName: payload.commonName,
+  commonName: payload?.commonName,
 }));
 
 export const createCertificateCSR = createAction(CREATE_CERTIFICATE_CSR, payload => ({
   csrPEM: payload.csrPEM,
+}));
+
+export const saveCertificateData = createAction(SAVE_CERTIFICATE_DATA, payload => ({
+  certificateData: payload.certificateData,
 }));
 
 export const actions = {
@@ -75,10 +81,14 @@ export const actions = {
   associateDevice,
   createCertificateOneClick,
   createCertificateCSR,
+  saveCertificateData,
 };
 
 export const reducers = {
   [UPDATE_CERTIFICATES]: (state, { payload }) => {
+    return state.merge({ ...payload });
+  },
+  [SAVE_CERTIFICATE_DATA]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
 };
@@ -86,6 +96,7 @@ export const reducers = {
 export const initialState = () => {
   return Map({
     certificates: [],
+    certificateData: null,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,

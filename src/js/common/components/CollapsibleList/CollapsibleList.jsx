@@ -16,17 +16,23 @@ import useStyles from './style';
 
 const CollapsibleList = ({
   title,
+  subtitle,
   caption,
   children,
   isContentVisible,
   isCaptionHighlighted,
   handleToggleContent,
+  disabled,
 }) => {
   const classes = useStyles({ isContentVisible });
 
   return (
     <List className={classes.container}>
-      <ListItem className={classes.header} onClick={handleToggleContent} disableGutters>
+      <ListItem
+        className={classes.header}
+        onClick={disabled ? null : handleToggleContent}
+        disableGutters
+      >
         <ListItemText
           primary={
             <Typography className={classes.title} component='span'>
@@ -34,14 +40,23 @@ const CollapsibleList = ({
                 {title}
               </Box>
 
-              <Typography
-                component='i'
-                variant='caption'
-                color={isCaptionHighlighted ? 'primary' : 'inherit'}
-              >
-                {isCaptionHighlighted ? <strong>{caption}</strong> : caption}
-              </Typography>
+              {caption && (
+                <Typography
+                  component='i'
+                  variant='caption'
+                  color={isCaptionHighlighted ? 'primary' : 'inherit'}
+                >
+                  {isCaptionHighlighted ? <strong>{caption}</strong> : caption}
+                </Typography>
+              )}
             </Typography>
+          }
+          secondary={
+            subtitle && (
+              <Typography className={classes.title} variant='body2' color='textSecondary'>
+                {subtitle}
+              </Typography>
+            )
           }
         />
 
@@ -59,15 +74,20 @@ const CollapsibleList = ({
 
 CollapsibleList.propTypes = {
   title: PropTypes.string.isRequired,
-  caption: PropTypes.string.isRequired,
+  subtitle: PropTypes.string,
+  caption: PropTypes.string,
   children: PropTypes.node.isRequired,
   isContentVisible: PropTypes.bool.isRequired,
   isCaptionHighlighted: PropTypes.bool,
   handleToggleContent: PropTypes.func.isRequired,
+  disabled: PropTypes.bool,
 };
 
 CollapsibleList.defaultProps = {
   isCaptionHighlighted: false,
+  subtitle: '',
+  caption: '',
+  disabled: false,
 };
 
 export default CollapsibleList;

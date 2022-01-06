@@ -1,86 +1,99 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Box, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { actions } from '../../redux/modules/certificates';
+import { certificateDataSelector } from '../../redux/selectors/certificatesSelector';
 import { ViewContainer } from '../stateComponents';
 import { CONSTANTS } from './constants';
-import CollapsibleCard from './layout/CollapsibleCard';
+import CreateCertificateCA from './layout/CreateCertificateCA';
+import CreateCertificateCSR from './layout/CreateCertificateCSR';
+import CreateCertificateOneClick from './layout/CreateCertificateOneClick';
 import useStyles from './style';
 
 const CreateCertificate = () => {
   const { t } = useTranslation('createCertificate');
+  const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
 
-  const [expanded, setExpanded] = useState('');
-  const [isGeneratedCertificate, setIsGeneratedCertificate] = useState(false);
+  const certificateData = useSelector(certificateDataSelector);
 
-  const toggleCollapseCard = useCallback(
-    clicked => {
-      if (expanded === clicked) {
-        setExpanded('');
-      } else {
-        setExpanded(clicked);
-      }
-    },
-    [expanded],
-  );
+  const [expandedCard, setExpandedCard] = useState('');
+
+  useEffect(() => {
+    return () => {
+      dispatch(actions.saveCertificateData({ certificateData: null }));
+    };
+  }, []);
 
   const handleLeaveCertificateCreation = () => {
     if (history.length) history.goBack();
     else history.push('/certificates');
   };
 
+  const handleToggleContent = constant => () => {
+    if (certificateData) return;
+
+    if (expandedCard === constant) {
+      setExpandedCard('');
+    } else {
+      setExpandedCard(constant);
+    }
+  };
+
+  const handleCreateCertificateOneClick = () => {
+    if (expandedCard !== CONSTANTS.ONE_CLICK) {
+      dispatch(actions.createCertificateOneClick());
+    }
+    handleToggleContent(CONSTANTS.ONE_CLICK)();
+  };
+
+  const handleCreateCertificateCSR = csrPEM => () => {
+    dispatch(actions.createCertificateCSR({ csrPEM }));
+  };
+
   return (
     <ViewContainer headerTitle={t('Novo certificado')}>
       <Box className={classes.container}>
         <Box className={classes.content}>
-          {expanded !== CONSTANTS.CSR && expanded !== CONSTANTS.CA && (
-            <CollapsibleCard
-              expanded={expanded}
-              handleChange={toggleCollapseCard}
-              setIsGeneratedCertificate={setIsGeneratedCertificate}
-              isGeneratedCertificate={isGeneratedCertificate}
-              creationMethod={CONSTANTS.ONE_CLICK_CREATE}
-              title={t('createCertificateOneClick.title')}
-              subTitle={t('createCertificateOneClick.subTitle')}
+          <Box className={classes.collapsibleCardsWrapper}>
+            <CreateCertificateOneClick
+              isShowing={expandedCard === CONSTANTS.ONE_CLICK}
+              handleToggleContent={handleCreateCertificateOneClick}
+              certificateData={certificateData}
             />
-          )}
 
-          {expanded !== CONSTANTS.CA && (
-            <CollapsibleCard
-              expanded={expanded}
-              handleChange={toggleCollapseCard}
-              setIsGeneratedCertificate={setIsGeneratedCertificate}
-              isGeneratedCertificate={isGeneratedCertificate}
-              creationMethod={CONSTANTS.CSR}
-              title={t('createCertificateCSR.title')}
-              subTitle={t('createCertificateCSR.subTitle')}
+            <CreateCertificateCSR
+              isShowing={expandedCard === CONSTANTS.CSR}
+              handleToggleContent={handleToggleContent(CONSTANTS.CSR)}
+              handleCreateCertificateCSR={handleCreateCertificateCSR}
+              certificateData={certificateData}
             />
-          )}
 
-          {expanded !== CONSTANTS.CSR && (
-            <CollapsibleCard
-              expanded={expanded}
-              handleChange={toggleCollapseCard}
-              setIsGeneratedCertificate={setIsGeneratedCertificate}
-              isGeneratedCertificate={isGeneratedCertificate}
-              creationMethod={CONSTANTS.CA}
-              title={t('createCertificateCA.title')}
-              subTitle={t('createCertificateCA.subTitle')}
+            <CreateCertificateCA
+              isShowing={expandedCard === CONSTANTS.CA}
+              handleToggleContent={handleToggleContent(CONSTANTS.CA)}
+              certificateData={certificateData}
             />
-          )}
+          </Box>
         </Box>
 
         <Box className={classes.footer}>
-          <Button onClick={handleLeaveCertificateCreation} className={classes.cancelButton}>
-            {t('cancelButton')}
-          </Button>
-          <Button variant='contained' color='primary' disabled={!isGeneratedCertificate}>
-            {t('finishButton')}
-          </Button>
+          <Box className={classes.actionButtonsWrapper}>
+            {certificateData ? (
+              <Button variant='contained' color='primary' onClick={handleLeaveCertificateCreation}>
+                {t('finishButton')}
+              </Button>
+            ) : (
+              <Button className={classes.cancelButton} onClick={handleLeaveCertificateCreation}>
+                {t('cancelButton')}
+              </Button>
+            )}
+          </Box>
         </Box>
       </Box>
     </ViewContainer>

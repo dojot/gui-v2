@@ -50,4 +50,12 @@ export default makeStyles(theme => ({
     width: '40%',
     justifyContent: 'space-between',
   },
+  certificateData: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '& > :first-child': {
+      minWidth: '16rem',
+    },
+  },
 }));

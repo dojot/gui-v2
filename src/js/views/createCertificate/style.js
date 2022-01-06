@@ -9,18 +9,21 @@ export default makeStyles(theme => ({
   content: {
     flex: 1,
     display: 'flex',
-    alignItems: 'cener',
+    alignItems: 'center',
     justifyContent: 'center',
     flexDirection: 'column',
   },
   footer: {
-    width: '60vw',
-    alignSelf: 'center',
-    padding: theme.spacing(4, 0),
+    display: 'flex',
+    justifyContent: 'center',
+    padding: theme.spacing(4),
+  },
+  actionButtonsWrapper: {
+    width: '50%',
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  cancelButton: {
-    margin: theme.spacing(0, 4),
+  collapsibleCardsWrapper: {
+    width: '50%',
   },
 }));
