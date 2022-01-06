@@ -31,4 +31,20 @@ describe('useAttrTranslation', () => {
       });
     });
   });
+
+  it('should return the attr type if the translation was not found', () => {
+    const { result } = renderHook(() => useAttrTranslation());
+
+    act(() => {
+      expect(result.current.getAttrTypeTranslation('unknown')).toBe('unknown');
+    });
+  });
+
+  it('should return the attr value type if the translation was not found', () => {
+    const { result } = renderHook(() => useAttrTranslation());
+
+    act(() => {
+      expect(result.current.getAttrValueTypeTranslation('unknown')).toBe('unknown');
+    });
+  });
 });
