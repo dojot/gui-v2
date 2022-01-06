@@ -6,7 +6,7 @@ const loadingSelector = (...keys) => ({ loading: loadingReducer }) => {
 
   if (keys.length === 1) {
     const [key] = keys;
-    return !!loading && !!loading[key];
+    return !!loading[key];
   }
 
   if (keys.length > 1) {
@@ -15,7 +15,7 @@ const loadingSelector = (...keys) => ({ loading: loadingReducer }) => {
       return keyIsInKeysArray && !!loading[key];
     });
 
-    return !!loading && someKeysIsTruthy;
+    return someKeysIsTruthy;
   }
 
   return false;
