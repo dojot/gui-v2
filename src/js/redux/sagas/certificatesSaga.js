@@ -199,7 +199,6 @@ export function* handleCreateCertificateOneClick(action) {
     yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateOneClick }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
-    console.log(e);
     yield put(
       errorActions.addError({
         message: e.message,
