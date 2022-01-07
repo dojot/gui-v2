@@ -2,16 +2,17 @@ import React from 'react';
 
 import { Box, Button } from '@material-ui/core';
 import { CollapsibleList } from 'Components/CollapsibleList';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import GeneratedCertificateResume from './GeneratedCertificateResume';
 
-function CreateCertificateOneClick({
+const CreateCertificateOneClick = ({
   isShowing,
   handleToggleContent,
   handleCreateCertificateOneClick,
   certificateData,
-}) {
+}) => {
   const { t } = useTranslation('createCertificate');
 
   return (
@@ -40,10 +41,20 @@ function CreateCertificateOneClick({
       </Box>
     </CollapsibleList>
   );
-}
+};
 
-CreateCertificateOneClick.propTypes = {};
+CreateCertificateOneClick.propTypes = {
+  isShowing: PropTypes.bool,
+  handleToggleContent: PropTypes.func,
+  handleCreateCertificateOneClick: PropTypes.func,
+  certificateData: PropTypes.object,
+};
 
-CreateCertificateOneClick.defaultProps = {};
+CreateCertificateOneClick.defaultProps = {
+  isShowing: false,
+  handleToggleContent: null,
+  handleCreateCertificateOneClick: null,
+  certificateData: null,
+};
 
 export default CreateCertificateOneClick;

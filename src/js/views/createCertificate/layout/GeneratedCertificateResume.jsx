@@ -1,11 +1,12 @@
 import React from 'react';
 
 import { Link, Typography, Box } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import useStyles from './style';
 
-function GeneratedCertificateResume({ certificateData }) {
+const GeneratedCertificateResume = ({ certificateData }) => {
   const classes = useStyles();
   const { t } = useTranslation(['createCertificate', 'common']);
 
@@ -85,6 +86,14 @@ function GeneratedCertificateResume({ certificateData }) {
       )}
     </Box>
   );
-}
+};
+
+GeneratedCertificateResume.propTypes = {
+  certificateData: PropTypes.object,
+};
+
+GeneratedCertificateResume.defaultProps = {
+  certificateData: null,
+};
 
 export default GeneratedCertificateResume;

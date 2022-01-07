@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 
 import { Box, Collapse, Typography, TextField, Button } from '@material-ui/core';
 import { CollapsibleList } from 'Components/CollapsibleList';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import GeneratedCertificateResume from './GeneratedCertificateResume';
@@ -84,8 +85,18 @@ const CreateCertificateCSR = ({
   );
 };
 
-CreateCertificateCSR.propTypes = {};
+CreateCertificateCSR.propTypes = {
+  handleCreateCertificateCSR: PropTypes.func,
+  isShowing: PropTypes.bool,
+  handleToggleContent: PropTypes.func,
+  certificateData: PropTypes.object,
+};
 
-CreateCertificateCSR.defaultProps = {};
+CreateCertificateCSR.defaultProps = {
+  handleCreateCertificateCSR: null,
+  isShowing: false,
+  handleToggleContent: null,
+  certificateData: null,
+};
 
 export default CreateCertificateCSR;

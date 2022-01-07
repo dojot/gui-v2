@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import { Box, TextField, Typography, Button } from '@material-ui/core';
 import { CollapsibleList } from 'Components/CollapsibleList';
-import { PropTypes } from 'prop-types';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import GeneratedCertificateResume from './GeneratedCertificateResume';
@@ -67,11 +67,15 @@ const CreateCertificateCA = ({
 CreateCertificateCA.propTypes = {
   isShowing: PropTypes.bool,
   handleToggleContent: PropTypes.func,
+  certificateData: PropTypes.object,
+  handleRegisterExternalCertificate: PropTypes.func,
 };
 
 CreateCertificateCA.defaultProps = {
   isShowing: false,
   handleToggleContent: null,
+  certificateData: null,
+  handleRegisterExternalCertificate: PropTypes.null,
 };
 
 export default CreateCertificateCA;
