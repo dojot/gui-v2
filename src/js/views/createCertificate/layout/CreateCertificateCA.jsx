@@ -75,7 +75,7 @@ CreateCertificateCA.defaultProps = {
   isShowing: false,
   handleToggleContent: null,
   certificateData: null,
-  handleRegisterExternalCertificate: PropTypes.null,
+  handleRegisterExternalCertificate: null,
 };
 
 export default CreateCertificateCA;

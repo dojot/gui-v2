@@ -29,7 +29,7 @@
     "generateCertificate": "Gerar certificado"
   },
   "generatedCertificateResume": {
-    "certificateAndKeysTitle": "Para conectar um dispositivo, você precisa fazer download dos seguintes itens",
+    "certificateAndKeysTitle": "Para conectar um dispositivo você precisa fazer download dos seguintes itens:",
     "certificate": "Certificado",
     "privateKey": "Chave privada",
     "publicKey": "Chave pública (opcional)",
