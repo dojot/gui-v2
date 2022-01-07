@@ -2,7 +2,7 @@
   "headerTitle": "New certificate",
   "finishButton": "Finish",
   "cancelButton": "Cancel",
-  "createOtherCertificate": "Create other certificate",
+  "createAnotherCertificate": "Create another certificate",
   "createCertificateOneClick": {
     "title": "Create certificate with one click",
     "subTitle": "More practical: The platform generates the certificate and private key for the device",
@@ -29,7 +29,7 @@
     "generateCertificate": "Generate certificate"
   },
   "generatedCertificateResume": {
-    "certificateAndKeysTitle": "To connect a device, you need to download the following items:",
+    "certificateAndKeysTitle": "To connect a device, you need to download the following items",
     "certificate": "Certificate",
     "privateKey": "Private Key",
     "publicKey": "Public Key (optional)",
