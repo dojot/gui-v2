@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Link, Typography, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -8,10 +8,6 @@ import useStyles from './style';
 function GeneratedCertificateResume({ certificateData }) {
   const classes = useStyles();
   const { t } = useTranslation(['createCertificate', 'common']);
-
-  useEffect(() => {
-    console.log('$$$ =>', certificateData);
-  }, [certificateData]);
 
   const download = (filename, text) => {
     const element = document.createElement('a');
