@@ -29,7 +29,7 @@
     "generateCertificate": "Generate certificate"
   },
   "generatedCertificateResume": {
-    "certificateAndKeysTitle": "To connect a device, you need to download the following items",
+    "certificateAndKeysTitle": "To connect a device you need to download the following items",
     "certificate": "Certificate",
     "privateKey": "Private Key",
     "publicKey": "Public Key (optional)",
