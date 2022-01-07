@@ -1,21 +1,21 @@
 import { useSelector } from 'react-redux';
 
 const loadingSelector = (...keys) => ({ loading: loadingReducer }) => {
+  const loading = loadingReducer.get('loading');
+  if (!loading) return false;
+
   if (keys.length === 1) {
     const [key] = keys;
-    const loading = loadingReducer.get('loading');
-    return !!loading && !!loading[key];
+    return !!loading[key];
   }
 
   if (keys.length > 1) {
-    const loading = loadingReducer.get('loading');
-
-    const someKeysIsTruthy = Object.keys(loading || {}).some(key => {
+    const someKeysIsTruthy = Object.keys(loading).some(key => {
       const keyIsInKeysArray = keys.includes(key);
       return keyIsInKeysArray && !!loading[key];
     });
 
-    return !!loading && someKeysIsTruthy;
+    return someKeysIsTruthy;
   }
 
   return false;

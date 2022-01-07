@@ -18,8 +18,6 @@ export const useSearchParamState = ({ key, type = 'string', defaultValue, valueF
 
   const handleFormatValueType = useCallback(
     value => {
-      if (value === undefined) return value;
-
       switch (type) {
         case 'string':
           return String(value);
@@ -50,7 +48,7 @@ export const useSearchParamState = ({ key, type = 'string', defaultValue, valueF
     const searchParams = handleGetSearchParams();
     const paramValue = searchParams?.get(key);
 
-    if (searchParams && paramValue) {
+    if (paramValue) {
       const valueWithCorrectType = handleFormatValueType(paramValue);
       if (valueFormatter) return valueFormatter(valueWithCorrectType, handleGetDefaultValue());
       return valueWithCorrectType;

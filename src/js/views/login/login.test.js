@@ -19,12 +19,6 @@ jest.mock('react-router-dom', () => {
 const DEFAULT_JWT =
   'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJlNVV1Z1NleVIzcTVKM2ZJdGFtNFc5bWVZSkMzaUZSOCIsImlhdCI6MTYxNTQ5NTYwOCwiZXhwIjoxNjE1NDk2MDI4LCJwcm9maWxlIjoiYWRtaW4iLCJncm91cHMiOlsxXSwidXNlcmlkIjoyLCJqdGkiOiJlNzkwZTliMzcxYmRlOWJmZTFhZGUxMmNmNDU5NzI0MSIsInNlcnZpY2UiOiJhZG1pbiIsInVzZXJuYW1lIjoiY3BxZCJ9.cOZFIqPMydtaLX9gwxlR3WTmGbWkT18t2WsPaYpLu_g';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: key => key,
-  }),
-}));
-
 const updateFormikField = async (nativeFieldWrapper, targetName, value) => {
   await act(async () => {
     nativeFieldWrapper.simulate('change', {

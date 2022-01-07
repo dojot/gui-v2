@@ -11,12 +11,6 @@ jest.spyOn(auth, 'getUserInformation').mockReturnValueOnce({
   profile: 'profile',
 });
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: key => key,
-  }),
-}));
-
 describe('UserInfo', () => {
   beforeEach(() => {
     jest.clearAllMocks();

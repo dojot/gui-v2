@@ -5,12 +5,6 @@ import '@testing-library/jest-dom/extend-expect';
 
 import AppHeader from './AppHeader';
 
-jest.mock('react-i18next', () => ({
-  useTranslation: () => ({
-    t: key => key,
-  }),
-}));
-
 describe('AppHeader', () => {
   beforeEach(() => {
     jest.clearAllMocks();
