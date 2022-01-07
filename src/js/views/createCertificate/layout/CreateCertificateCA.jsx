@@ -9,15 +9,15 @@ import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
 const CreateCertificateCA = ({
-  isGeneratedCertificate,
   isShowing,
   handleToggleContent,
   certificateData,
+  handleRegisterExternalCertificate,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation('createCertificate');
 
-  const [caPEM, setCaPEM] = useState('');
+  const [certificateChain, setCertificateChain] = useState('');
 
   return (
     <CollapsibleList
@@ -26,30 +26,30 @@ const CreateCertificateCA = ({
       isContentVisible={isShowing}
       handleToggleContent={handleToggleContent}
       isCaptionHighlighted
-      disabled={certificateData}
+      disabled={!!certificateData && !isShowing}
+      canToggleContent={!certificateData}
     >
-      {!isGeneratedCertificate ? (
+      {!certificateData ? (
         <Box padding={4}>
-          <Typography marginBottom={3}>{t('createCertificateCA.inputDataLabel')}</Typography>
+          <Typography>{t('createCertificateCA.inputDataLabel')}</Typography>
 
           <TextField
-            value={caPEM}
-            onChange={e => setCaPEM(e.target.value)}
+            value={certificateChain}
+            onChange={e => setCertificateChain(e.target.value)}
             placeholder={t('createCertificateCA.inputPlaceholder')}
             multiline
             rows={10}
             variant='outlined'
             fullWidth
-            marginBottom={3}
           />
 
           <Typography align='right'>
             <Button
-              // onClick={generateCertificate}
+              onClick={handleRegisterExternalCertificate(certificateChain)}
               className={classes.generateCertificateButton}
-              variant='text'
+              variant='outlined'
               color='primary'
-              disabled={!caPEM}
+              disabled={!certificateChain}
             >
               {t('createCertificateCA.generateCertificate')}
             </Button>
@@ -65,13 +65,11 @@ const CreateCertificateCA = ({
 };
 
 CreateCertificateCA.propTypes = {
-  isGeneratedCertificate: PropTypes.bool,
   isShowing: PropTypes.bool,
   handleToggleContent: PropTypes.func,
 };
 
 CreateCertificateCA.defaultProps = {
-  isGeneratedCertificate: false,
   isShowing: false,
   handleToggleContent: null,
 };
