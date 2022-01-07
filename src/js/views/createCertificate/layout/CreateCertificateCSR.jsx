@@ -31,7 +31,8 @@ const CreateCertificateCSR = ({
       isContentVisible={isShowing}
       handleToggleContent={handleToggleContent}
       isCaptionHighlighted
-      disabled={certificateData}
+      disabled={!!certificateData && !isShowing}
+      canToggleContent={!certificateData}
     >
       {!certificateData ? (
         <Box padding={4}>
@@ -62,11 +63,11 @@ const CreateCertificateCSR = ({
             variant='outlined'
             fullWidth
           />
-          <Typography align='right' marginTop={4}>
+          <Typography align='right'>
             <Button
               onClick={handleCreateCertificateCSR(csrPEM)}
               className={classes.generateCertificateButton}
-              variant='text'
+              variant='outlined'
               color='primary'
               disabled={!csrPEM}
             >
