@@ -31,6 +31,7 @@ const CollapsibleList = ({
       <ListItem
         className={classes.header}
         onClick={disabled ? null : handleToggleContent}
+        data-testid='collapsible-list-header'
         disableGutters
       >
         <ListItemText

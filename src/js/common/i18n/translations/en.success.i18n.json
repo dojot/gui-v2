@@ -24,6 +24,7 @@
     "deleteMultipleCertificates": "All certificates were deleted",
     "disassociateDevice": "Certificate disassociated from device",
     "associateDevice": "Certificate associated with the device",
+    "createCertificate": "Certificate created",
 
     "deleteCertificationAuthority": "CA deletes",
     "deleteMultipleCertificationAuthorities": "All CAs were deleted",

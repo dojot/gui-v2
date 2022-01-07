@@ -4,6 +4,7 @@ import { Box, TablePagination, Typography } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { ROWS_PER_PAGE_OPTIONS } from '../../../../common/constants';
 import { usePaginationStyles } from './style';
 
 const Pagination = ({
@@ -25,6 +26,7 @@ const Pagination = ({
         rowsPerPage={rowsPerPage}
         onChangePage={handleChangePage}
         count={totalOfPages * rowsPerPage}
+        rowsPerPageOptions={ROWS_PER_PAGE_OPTIONS}
         onChangeRowsPerPage={handleChangeRowsPerPage}
         labelRowsPerPage={t('securityStep.labelRowsPerPage')}
         nextIconButtonText={t('securityStep.nextIconButtonText')}

@@ -2,7 +2,7 @@
   "security": "Security",
   "headerTitle": "CA",
   "createCertificationAuthority": "Create CA",
-  "searchInputPh": "Search CA",
+  "searchInputPh": "Search CA By Fingerprint",
   "totalOfPages": "Total of Pages: {{count}}",
   "nextIconButtonText": "Next Page",
   "backIconButtonText": "Previous Page",

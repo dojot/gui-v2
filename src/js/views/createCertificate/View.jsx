@@ -26,7 +26,7 @@ const CreateCertificate = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(actions.saveCertificateData({ certificateData: null }));
+      dispatch(actions.getNewGeneratedCertificate({ certificateData: null }));
     };
   }, []);
 

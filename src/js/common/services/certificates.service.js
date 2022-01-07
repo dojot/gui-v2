@@ -36,6 +36,56 @@ export const getCertificateList = (page, filter) => {
   });
 };
 
+export const getCertificate = (page, filter, id) => {
+  return protectAPI({
+    query: `
+      query getCertificateById($page: PageInput, $filter: FilterCertificateInput, $id: String!) {
+        getCertificateById(page: $page, filter: $filter, id: $id) {
+          pagination {
+            currentPage
+            totalPages
+          }
+          certificates {
+            subjectDN
+            fingerprint
+            pem
+            validity {
+              notBefore
+              notAfter
+            }
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      page,
+      filter,
+      id,
+    }),
+  });
+};
+
+export const getCertificateByFingerprint = fingerprint => {
+  return protectAPI({
+    query: `
+      query getCertificateByFingerprint($fingerprint: String!) {
+        getCertificateByFingerprint(fingerprint: $fingerprint) {
+          subjectDN
+          fingerprint
+          pem
+          validity {
+            notBefore
+            notAfter
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      fingerprint,
+    }),
+  });
+};
+
 export const deleteMultipleCertificates = fingerprints => {
   return protectAPI({
     query: `
@@ -95,7 +145,6 @@ export const createCertificateOneClick = commonName => {
 };
 
 export const createCertificateCSR = csrPEM => {
-  console.log(csrPEM);
   return protectAPI({
     query: `
       mutation createCertificateCSR($csrPEM: String!) {
@@ -112,13 +161,3 @@ export const createCertificateCSR = csrPEM => {
     }),
   });
 };
-
-// export const createCertificateCSR = () => {
-//   return protectAPI({
-//     query: `
-//       mutation createCertificate() {
-//         crea
-//       }
-//     `
-//   })
-// }

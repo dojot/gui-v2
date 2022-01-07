@@ -1,11 +1,11 @@
 import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
+import { constants, actions } from 'Redux/certificates';
+import { paginationControlSelector } from 'Selectors/certificatesSelector';
 import { Certificates } from 'Services';
 
-import { constants, actions } from '../modules/certificates';
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
 import { actions as successActions } from '../modules/success';
-import { paginationControlSelector } from '../selectors/certificatesSelector';
 
 export function* getCurrentCertificatesPageAgain() {
   const pagination = yield select(paginationControlSelector);
@@ -46,6 +46,69 @@ export function* handleGetCertificates(action) {
     );
   } finally {
     yield put(loadingActions.removeLoading(constants.GET_CERTIFICATES));
+  }
+}
+
+export function* handleGetCertificateById(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.GET_CERTIFICATES_BY_ID));
+    const { page, filter, id } = action.payload;
+    const { getCertificateById } = yield call(Certificates.getCertificate, page, filter, id);
+    if (getCertificateById) {
+      yield put(
+        actions.updateCertificates({
+          certificates: getCertificateById.certificates,
+          paginationControl: {
+            currentPage: getCertificateById.pagination.currentPage,
+            totalPages: getCertificateById.pagination.totalPages,
+            itemsPerPage: page?.size || 0,
+          },
+        }),
+      );
+    }
+  } catch (e) {
+    yield put(actions.updateCertificates({ certificates: [] }));
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'getCertificates',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.GET_CERTIFICATES_BY_ID));
+  }
+}
+
+export function* handleGetCertificateByFingerprint(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.GET_CERTIFICATES_BY_FINGERPRINT));
+    const { fingerprint, privateKey, publicKey } = action.payload;
+    const { getCertificateByFingerprint } = yield call(
+      Certificates.getCertificateByFingerprint,
+      fingerprint,
+    );
+    if (getCertificateByFingerprint) {
+      yield put(
+        actions.updateCertificates({
+          certificates: [{ ...getCertificateByFingerprint, privateKey, publicKey }],
+          paginationControl: {
+            currentPage: 1,
+            totalPages: 1,
+            itemsPerPage: 1,
+          },
+        }),
+      );
+    }
+  } catch (e) {
+    yield put(actions.updateCertificates({ certificates: [] }));
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'getCertificates',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.GET_CERTIFICATES_BY_ID));
   }
 }
 
@@ -133,7 +196,7 @@ export function* handleCreateCertificateOneClick(action) {
       Certificates.createCertificateOneClick,
       commonName,
     );
-    yield put(actions.saveCertificateData({ certificateData: createCertificateOneClick }));
+    yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateOneClick }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
     console.log(e);
@@ -154,7 +217,7 @@ export function* handleCreateCertificateCSR(action) {
     const { csrPEM } = action.payload;
     console.log('csrPEM da SAGA => ', csrPEM);
     const { createCertificateCSR } = yield call(Certificates.createCertificateCSR, csrPEM);
-    yield put(actions.saveCertificateData({ certificateData: createCertificateCSR }));
+    yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateCSR }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
     yield put(
@@ -173,7 +236,7 @@ export function* handleCreateCertificateCA(action) {
     yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_CSR));
     const { csrPEM } = action.payload;
     const { createCertificateCA } = yield call(Certificates.createCertificateCA, csrPEM);
-    yield put(actions.saveCertificateData({ certificateData: createCertificateCA }));
+    yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateCA }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
     yield put(
@@ -189,6 +252,14 @@ export function* handleCreateCertificateCA(action) {
 
 function* watchGetCertificates() {
   yield takeLatest(constants.GET_CERTIFICATES, handleGetCertificates);
+}
+
+function* watchGetCertificateById() {
+  yield takeLatest(constants.GET_CERTIFICATES_BY_ID, handleGetCertificateById);
+}
+
+function* watchGetCertificateByFingerprint() {
+  yield takeLatest(constants.GET_CERTIFICATES_BY_FINGERPRINT, handleGetCertificateByFingerprint);
 }
 
 function* watchDeleteCertificate() {
@@ -217,6 +288,8 @@ function* watchCreateCertificateCSR() {
 
 export const certificatesSaga = [
   fork(watchGetCertificates),
+  fork(watchGetCertificateById),
+  fork(watchGetCertificateByFingerprint),
   fork(watchDeleteCertificate),
   fork(watchDeleteMultipleCertificates),
   fork(watchDisassociateDevice),

@@ -9,6 +9,15 @@ export default makeStyles(theme => ({
   content: {
     flex: 1,
   },
+  actions: {
+    textAlign: 'right',
+  },
+  deleteAction: {
+    margin: '0 0 1rem 0',
+  },
+  editAction: {
+    margin: '0 0 1rem 1rem',
+  },
   containerCentered: {
     display: 'flex',
     flexDirection: 'column',

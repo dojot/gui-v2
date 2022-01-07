@@ -14,10 +14,3 @@ export const paginationControlSelector = createSelector(
   state => state.templates,
   map => map.get('paginationControl'),
 );
-
-export const templatesForDataTableSelector = createSelector(templatesSelector, templates => {
-  return templates.map(template => ({
-    ...template,
-    attrsLength: template.attrs?.length || 0,
-  }));
-});

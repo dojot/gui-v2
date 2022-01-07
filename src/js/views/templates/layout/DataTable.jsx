@@ -56,10 +56,25 @@ const DataTable = ({
     [t],
   );
 
+  const valueFormatters = useMemo(
+    () => ({
+      attrsLength(template) {
+        return template.attrs?.length || 0;
+      },
+    }),
+    [],
+  );
+
   const handleRequestSort = (_, property) => {
-    const isAsc = orderBy === property && order === DATA_ORDER.ASC;
-    setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
-    setOrderBy(property);
+    const isSameProperty = orderBy === property;
+    if (isSameProperty) {
+      const isAsc = order === DATA_ORDER.ASC;
+      setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
+      setOrderBy(isAsc ? property : '');
+    } else {
+      setOrder(DATA_ORDER.ASC);
+      setOrderBy(property);
+    }
   };
 
   const handleSelectAllClick = event => {
@@ -112,52 +127,60 @@ const DataTable = ({
           />
 
           <TableBody>
-            {templates.sort(getComparator(order === DATA_ORDER.DESC, orderBy)).map(template => {
-              const isSelected = selectedTemplates.indexOf(template.id) !== -1;
+            {templates
+              .slice()
+              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
+              .map(template => {
+                const isSelected = selectedTemplates.indexOf(template.id) !== -1;
+                const attrsLength = template.attrs?.length || 0;
 
-              const handleClickInThisTemplate = () => {
-                handleClickTemplate(template);
-              };
+                const handleClickInThisTemplate = () => {
+                  handleClickTemplate(template);
+                };
 
-              const handleSelectThisRow = () => {
-                handleSelectRow(template.id);
-              };
+                const handleSelectThisRow = () => {
+                  handleSelectRow(template.id);
+                };
 
-              const handleShowOptionsMenu = e => {
-                handleSetTemplateOptionsMenu({
-                  anchorElement: e.target,
-                  template,
-                });
-              };
+                const handleShowOptionsMenu = e => {
+                  handleSetTemplateOptionsMenu({
+                    anchorElement: e.target,
+                    template,
+                  });
+                };
 
-              return (
-                <TableRow
-                  key={template.label}
-                  tabIndex={-1}
-                  role='checkbox'
-                  selected={isSelected}
-                  aria-checked={isSelected}
-                  onClick={handleClickInThisTemplate}
-                  hover
-                >
-                  <TableCell onClick={handleStopPropagation}>
-                    <Checkbox color='primary' checked={isSelected} onChange={handleSelectThisRow} />
-                  </TableCell>
+                return (
+                  <TableRow
+                    key={template.id}
+                    tabIndex={-1}
+                    role='checkbox'
+                    selected={isSelected}
+                    aria-checked={isSelected}
+                    onClick={handleClickInThisTemplate}
+                    hover
+                  >
+                    <TableCell onClick={handleStopPropagation}>
+                      <Checkbox
+                        color='primary'
+                        checked={isSelected}
+                        onChange={handleSelectThisRow}
+                      />
+                    </TableCell>
 
-                  <TableCell className={classes.clickableCell}>{template.id}</TableCell>
+                    <TableCell className={classes.clickableCell}>{template.id}</TableCell>
 
-                  <TableCell className={classes.clickableCell}>{template.label}</TableCell>
+                    <TableCell className={classes.clickableCell}>{template.label}</TableCell>
 
-                  <TableCell className={classes.clickableCell}>{template.attrsLength}</TableCell>
+                    <TableCell className={classes.clickableCell}>{attrsLength}</TableCell>
 
-                  <TableCell onClick={handleStopPropagation}>
-                    <IconButton onClick={handleShowOptionsMenu}>
-                      <MoreHoriz />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
+                    <TableCell onClick={handleStopPropagation}>
+                      <IconButton onClick={handleShowOptionsMenu}>
+                        <MoreHoriz />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
           </TableBody>
         </Table>
       </TableContainer>

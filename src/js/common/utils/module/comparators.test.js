@@ -44,4 +44,12 @@ describe('Comparators Utils', () => {
     expect(comparator({ number: 2 }, { number: 1 })).toBe(1);
     expect(comparator({ number: 'cba' }, { number: 'abc' })).toBe(1);
   });
+
+  it('should use the formatter function to get primitive values to compare', () => {
+    const valueFormatter = jest.fn(data => data.object.value);
+    const comparator = getComparator(false, 'object', valueFormatter);
+    expect(comparator({ object: { value: 2 } }, { object: { value: 1 } })).toBe(1);
+    expect(comparator({ object: { value: 'cba' } }, { object: { value: 'abc' } })).toBe(1);
+    expect(valueFormatter).toBeCalledTimes(4);
+  });
 });

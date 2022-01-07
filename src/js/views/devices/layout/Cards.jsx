@@ -23,6 +23,8 @@ const Cards = ({
       <Grid spacing={2} container>
         {devices.map(device => {
           const lastUpdate = device.updated || device.created;
+          const attrsLength = device.attrs?.length || 0;
+          const hasCertificate = !!device.certificate?.fingerprint;
 
           const handleSeeDeviceDetails = () => {
             handleClickDevice(device);
@@ -51,54 +53,45 @@ const Cards = ({
                 headerTitle={<Typography className={classes.cardTitle}>{device.label}</Typography>}
                 footer={
                   <>
-                    <Tooltip
-                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
-                      placement='top'
-                      arrow
-                    >
-                      <div>
-                        <IconButton
-                          onClick={handleFavoriteThisDevice}
-                          size='small'
-                          disabled // TODO: Enable again when Backstage implement this action
-                        >
-                          {device.favorite ? (
-                            <Star style={{ color: '#F1B44C' }} />
-                          ) : (
-                            <StarBorderOutlined />
-                          )}
-                        </IconButton>
-                      </div>
-                    </Tooltip>
+                    {false && (
+                      // TODO: Show again when you can favorite devices
+                      <Tooltip
+                        title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                        placement='top'
+                        arrow
+                      >
+                        <div>
+                          <IconButton onClick={handleFavoriteThisDevice} size='small' disabled>
+                            {device.favorite ? (
+                              <Star style={{ color: '#F1B44C' }} />
+                            ) : (
+                              <StarBorderOutlined />
+                            )}
+                          </IconButton>
+                        </div>
+                      </Tooltip>
+                    )}
 
                     <Tooltip
-                      title={t(
-                        device.hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip',
-                      )}
+                      title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
                       placement='right'
                       arrow
                     >
                       <div>
                         <IconButton size='small' disabled>
-                          {device.hasCertificate ? (
-                            <Check color='primary' />
-                          ) : (
-                            <Close color='error' />
-                          )}
+                          {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
                         </IconButton>
                       </div>
                     </Tooltip>
                   </>
                 }
               >
-                {device.attrsLength >= 0 && (
-                  <Box marginBottom={1}>
-                    <Typography variant='body2'>
-                      <strong>{device.attrsLength}</strong>
-                    </Typography>
-                    <Typography variant='body2'>{t('cardData.properties')}</Typography>
-                  </Box>
-                )}
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>
+                    <strong>{attrsLength}</strong>
+                  </Typography>
+                  <Typography variant='body2'>{t('cardData.properties')}</Typography>
+                </Box>
 
                 {!!lastUpdate && (
                   <Box>

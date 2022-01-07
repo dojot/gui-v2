@@ -54,6 +54,8 @@ export const favoriteDevice = createAction(FAVORITE_DEVICE, payload => ({
 
 export const deleteDevice = createAction(DELETE_DEVICE, payload => ({
   deviceId: payload.deviceId,
+  successCallback: payload.successCallback,
+  shouldGetCurrentPageAgain: payload.shouldGetCurrentPageAgain ?? true,
 }));
 
 export const favoriteMultipleDevices = createAction(FAVORITE_MULTIPLE_DEVICES, payload => ({
@@ -76,7 +78,7 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
   label: payload.label,
   templates: payload.templates,
   attrs: payload.attrs,
-  certificate: payload.certificate,
+  fingerprint: payload.fingerprint,
   successCallback: payload.successCallback,
 }));
 

@@ -20,6 +20,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DialogHeader } from '../../../common/components/Dialogs';
+import { ROWS_PER_PAGE_OPTIONS } from '../../../common/constants';
 import { useIsLoading } from '../../../common/hooks';
 import { actions as certificateActions } from '../../../redux/modules/certificates';
 import { actions as deviceActions, constants } from '../../../redux/modules/devices';
@@ -41,8 +42,8 @@ const AssociateDevicesModal = ({ isOpen, certificate, handleHideDevicesToAssocia
   const { totalPages } = useSelector(paginationControlSelector);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
   const [selectedDeviceId, setSelectedDeviceId] = useState('');
+  const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
 
   const headCells = useMemo(
     () => [

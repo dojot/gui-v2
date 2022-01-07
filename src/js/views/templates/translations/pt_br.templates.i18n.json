@@ -1,6 +1,6 @@
 {
   "title": "Modelos",
-  "searchInputPh": "Pesquisar Modelo",
+  "searchInputPh": "Pesquisar Modelo Por Nome",
   "totalOfPages": "Total de Páginas: {{count}}",
   "nextIconButtonText": "Próxima Página",
   "backIconButtonText": "Página Anterior",

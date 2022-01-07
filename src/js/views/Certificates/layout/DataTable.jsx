@@ -60,15 +60,41 @@ const DataTable = ({
       {
         id: 'actions',
         label: t('dataLabels.actions'),
+        disableOrderBy: true,
       },
     ],
     [t],
   );
 
+  const valueFormatters = useMemo(
+    () => ({
+      deviceId(certificate) {
+        return certificate.belongsTo?.device || '';
+      },
+      validity(certificate) {
+        const { validityInitialDate, validityFinalDate } = handleGetCertificateComputedData(
+          certificate.validity,
+        );
+        return `${validityInitialDate} - ${validityFinalDate}`;
+      },
+      status(certificate) {
+        const { statusText } = handleGetCertificateComputedData(certificate.validity);
+        return statusText;
+      },
+    }),
+    [handleGetCertificateComputedData],
+  );
+
   const handleRequestSort = (_, property) => {
-    const isAsc = orderBy === property && order === DATA_ORDER.ASC;
-    setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
-    setOrderBy(property);
+    const isSameProperty = orderBy === property;
+    if (isSameProperty) {
+      const isAsc = order === DATA_ORDER.ASC;
+      setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
+      setOrderBy(isAsc ? property : '');
+    } else {
+      setOrder(DATA_ORDER.ASC);
+      setOrderBy(property);
+    }
   };
 
   const handleSelectAllClick = event => {
@@ -118,12 +144,12 @@ const DataTable = ({
             numSelected={selectedCertificates.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
-            disableOrderBy
           />
 
           <TableBody>
             {certificates
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy))
+              .slice()
+              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(certificate => {
                 const isSelected = selectedCertificates.indexOf(certificate.fingerprint) !== -1;
 
