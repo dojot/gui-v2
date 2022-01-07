@@ -2,9 +2,11 @@
   "headerTitle": "Novo Certificado",
   "finishButton": "Finalizar",
   "cancelButton": "Cancelar",
+  "createOtherCertificate": "Criar outro certificado",
   "createCertificateOneClick": {
     "title": "Criar certificado com um clique",
-    "subTitle": "Mais prático: A plataforma gera o certificado e a chave privada para o dispositivo"
+    "subTitle": "Mais prático: A plataforma gera o certificado e a chave privada para o dispositivo",
+    "createWithOneClick": "Criar certificado com um clique"
   },
   "createCertificateCSR": {
     "title": "Submeter uma Solicitação de Assinatura de Certificado (CSR)",

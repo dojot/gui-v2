@@ -23,6 +23,7 @@ const CollapsibleList = ({
   isCaptionHighlighted,
   handleToggleContent,
   disabled,
+  canToggleContent,
 }) => {
   const classes = useStyles({ isContentVisible });
 
@@ -30,7 +31,8 @@ const CollapsibleList = ({
     <List className={classes.container}>
       <ListItem
         className={classes.header}
-        onClick={disabled ? null : handleToggleContent}
+        disabled={disabled}
+        onClick={canToggleContent ? handleToggleContent : null}
         data-testid='collapsible-list-header'
         disableGutters
       >
@@ -82,6 +84,7 @@ CollapsibleList.propTypes = {
   isCaptionHighlighted: PropTypes.bool,
   handleToggleContent: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  canToggleContent: PropTypes.bool,
 };
 
 CollapsibleList.defaultProps = {
@@ -89,6 +92,7 @@ CollapsibleList.defaultProps = {
   subtitle: '',
   caption: '',
   disabled: false,
+  canToggleContent: true,
 };
 
 export default CollapsibleList;

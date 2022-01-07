@@ -26,4 +26,7 @@ export default makeStyles(theme => ({
   collapsibleCardsWrapper: {
     width: '50%',
   },
+  finishButton: {
+    marginLeft: theme.spacing(2),
+  },
 }));

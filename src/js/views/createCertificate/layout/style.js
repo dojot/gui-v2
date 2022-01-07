@@ -43,6 +43,7 @@ export default makeStyles(theme => ({
   },
   generateCertificateButton: {
     width: 200,
+    marginTop: theme.spacing(2),
   },
   filesWrapper: {
     display: 'flex',

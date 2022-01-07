@@ -161,3 +161,18 @@ export const createCertificateCSR = csrPEM => {
     }),
   });
 };
+
+export const registerExternalCertificate = certificateChain => {
+  return protectAPI({
+    query: `
+      mutation registerExternalCertificate($certificateChain: String!) {
+        registerExternalCertificate(certificateChain: $certificateChain) {
+          certificateFingerprint
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      certificateChain,
+    }),
+  });
+};

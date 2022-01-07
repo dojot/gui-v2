@@ -215,7 +215,6 @@ export function* handleCreateCertificateCSR(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_CSR));
     const { csrPEM } = action.payload;
-    console.log('csrPEM da SAGA => ', csrPEM);
     const { createCertificateCSR } = yield call(Certificates.createCertificateCSR, csrPEM);
     yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateCSR }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
@@ -231,12 +230,15 @@ export function* handleCreateCertificateCSR(action) {
   }
 }
 
-export function* handleCreateCertificateCA(action) {
+export function* handleRegisterExternalCertificate(action) {
   try {
-    yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_CSR));
-    const { csrPEM } = action.payload;
-    const { createCertificateCA } = yield call(Certificates.createCertificateCA, csrPEM);
-    yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateCA }));
+    yield put(loadingActions.addLoading(constants.REGISTER_EXTERNAL_CERTIFICATE));
+    const { certificateChain } = action.payload;
+    const { registerExternalCertificate } = yield call(
+      Certificates.registerExternalCertificate,
+      certificateChain,
+    );
+    yield put(actions.getNewGeneratedCertificate({ certificateData: registerExternalCertificate }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
     yield put(
@@ -246,7 +248,7 @@ export function* handleCreateCertificateCA(action) {
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.CREATE_CERTIFICATE_CSR));
+    yield put(loadingActions.removeLoading(constants.REGISTER_EXTERNAL_CERTIFICATE));
   }
 }
 
@@ -286,6 +288,10 @@ function* watchCreateCertificateCSR() {
   yield takeLatest(constants.CREATE_CERTIFICATE_CSR, handleCreateCertificateCSR);
 }
 
+function* watchRegisterExternalCertificate() {
+  yield takeLatest(constants.REGISTER_EXTERNAL_CERTIFICATE, handleRegisterExternalCertificate);
+}
+
 export const certificatesSaga = [
   fork(watchGetCertificates),
   fork(watchGetCertificateById),
@@ -296,4 +302,5 @@ export const certificatesSaga = [
   fork(watchAssociateDevice),
   fork(watchCreateCertificateOneClick),
   fork(watchCreateCertificateCSR),
+  fork(watchRegisterExternalCertificate),
 ];

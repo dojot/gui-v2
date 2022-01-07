@@ -13,6 +13,7 @@ const ASSOCIATE_DEVICE = 'app/certificates/ASSOCIATE_DEVICE';
 const CREATE_CERTIFICATE_ONE_CLICK = 'app/certificates/CREATE_CERTIFICATE_ONE_CLICK';
 const CREATE_CERTIFICATE_CSR = 'app/certificates/CREATE_CERTIFICATE_CSR';
 const GET_NEW_GENERATED_CERTIFICATE = 'app/certificates/GET_NEW_GENERATED_CERTIFICATE';
+const REGISTER_EXTERNAL_CERTIFICATE = 'app/certificates/REGISTER_EXTERNAL_CERTIFICATE';
 
 export const constants = {
   CREATE_ONE_CLICK,
@@ -27,6 +28,7 @@ export const constants = {
   CREATE_CERTIFICATE_ONE_CLICK,
   CREATE_CERTIFICATE_CSR,
   GET_NEW_GENERATED_CERTIFICATE,
+  REGISTER_EXTERNAL_CERTIFICATE,
 };
 
 export const createOneClick = createAction(CREATE_ONE_CLICK, payload => ({
@@ -93,6 +95,10 @@ export const createCertificateCSR = createAction(CREATE_CERTIFICATE_CSR, payload
   csrPEM: payload.csrPEM,
 }));
 
+export const registerExternalCertificate = createAction(REGISTER_EXTERNAL_CERTIFICATE, payload => ({
+  certificateChain: payload.certificateChain,
+}));
+
 export const getNewGeneratedCertificate = createAction(GET_NEW_GENERATED_CERTIFICATE, payload => ({
   certificateData: payload.certificateData,
 }));
@@ -110,6 +116,7 @@ export const actions = {
   createCertificateOneClick,
   createCertificateCSR,
   getNewGeneratedCertificate,
+  registerExternalCertificate,
 };
 
 export const reducers = {
