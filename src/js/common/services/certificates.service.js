@@ -126,13 +126,13 @@ export const associateDevice = (fingerprint, deviceId) => {
   });
 };
 
-export const createOneClickCertificate = commonName => {
+export const createCertificateOneClick = commonName => {
   return protectAPI({
     query: `
-      mutation createCertificate($commonName: String) {
-        createCertificate(commonName: $commonName) {
-          certificateFingerprint
+      mutation createCertificateOneClick($commonName: String) {
+        createCertificateOneClick(commonName: $commonName) {
           certificatePem
+          certificateFingerprint
           privateKeyPEM
           publicKeyPEM
         }
@@ -140,6 +140,39 @@ export const createOneClickCertificate = commonName => {
     `,
     variables: JSON.stringify({
       commonName,
+    }),
+  });
+};
+
+export const createCertificateCSR = csrPEM => {
+  return protectAPI({
+    query: `
+      mutation createCertificateCSR($csrPEM: String!) {
+        createCertificateCSR(csrPEM: $csrPEM) {
+          certificatePem
+          certificateFingerprint
+          privateKeyPEM
+          publicKeyPEM
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      csrPEM,
+    }),
+  });
+};
+
+export const registerExternalCertificate = certificateChain => {
+  return protectAPI({
+    query: `
+      mutation registerExternalCertificate($certificateChain: String!) {
+        registerExternalCertificate(certificateChain: $certificateChain) {
+          certificateFingerprint
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      certificateChain,
     }),
   });
 };

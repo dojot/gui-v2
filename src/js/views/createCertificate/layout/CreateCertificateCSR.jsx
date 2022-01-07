@@ -1,36 +1,48 @@
 import React, { useState } from 'react';
 
-import { AccordionDetails, Collapse, Typography, TextField, Button } from '@material-ui/core';
+import { Box, Collapse, Typography, TextField, Button } from '@material-ui/core';
+import { CollapsibleList } from 'Components/CollapsibleList';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
-// import { actions as certificateActions } from '../../../redux/modules/certificates';
 
 import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
-function CreateCertificateCSR() {
-  const classes = useStyles();
+const CreateCertificateCSR = ({
+  handleCreateCertificateCSR,
+  isShowing,
+  handleToggleContent,
+  certificateData,
+}) => {
   const { t } = useTranslation('createCertificate');
-
+  const classes = useStyles();
   const [csrHelp, setCsrHelp] = useState(false);
-  const [text, setText] = useState('');
-  const [isGeneratedCertificate, setIsGeneratedCertificate] = useState(false);
+  const [csrPEM, setCsrPEM] = useState('');
 
   const toggleCsrHelp = () => setCsrHelp(!csrHelp);
 
   const handleChangeText = e => {
-    setText(e.target.value);
-  };
-
-  const generateCertificate = () => {
-    setIsGeneratedCertificate(true);
+    setCsrPEM(e.target.value);
   };
 
   return (
-    <>
-      {!isGeneratedCertificate ? (
-        <AccordionDetails className={classes.createCertificateCSR}>
-          <Typography onClick={toggleCsrHelp} align='right' className={classes.csrHelpLink}>
+    <CollapsibleList
+      title={t('createCertificateCSR.title')}
+      subtitle={t('createCertificateCSR.subTitle')}
+      isContentVisible={isShowing}
+      handleToggleContent={handleToggleContent}
+      isCaptionHighlighted
+      disabled={!!certificateData && !isShowing}
+      canToggleContent={!certificateData}
+    >
+      {!certificateData ? (
+        <Box padding={4}>
+          <Typography
+            onClick={toggleCsrHelp}
+            align='right'
+            cursor='pointer'
+            className={classes.csrHelpLink}
+          >
             {t('createCertificateCSR.generateCsrHelp')}
           </Typography>
           <Collapse in={csrHelp}>
@@ -43,34 +55,48 @@ function CreateCertificateCSR() {
               {t('createCertificateCSR.csrHelpSteps.step2Text')}
             </Typography>
           </Collapse>
-          <br />
           <TextField
-            value={text}
+            value={csrPEM}
             onChange={handleChangeText}
             placeholder={t('createCertificateCSR.inputPlaceholder')}
             multiline
-            rows={20}
+            rows={10}
             variant='outlined'
             fullWidth
           />
-          <br />
           <Typography align='right'>
             <Button
-              onClick={generateCertificate}
+              onClick={handleCreateCertificateCSR(csrPEM)}
               className={classes.generateCertificateButton}
-              variant='text'
+              variant='outlined'
               color='primary'
-              disabled={!text}
+              disabled={!csrPEM}
             >
               {t('createCertificateCSR.generateCertificate')}
             </Button>
           </Typography>
-        </AccordionDetails>
+        </Box>
       ) : (
-        <GeneratedCertificateResume />
+        <Box padding={4}>
+          <GeneratedCertificateResume certificateData={certificateData} />
+        </Box>
       )}
-    </>
+    </CollapsibleList>
   );
-}
+};
+
+CreateCertificateCSR.propTypes = {
+  handleCreateCertificateCSR: PropTypes.func,
+  isShowing: PropTypes.bool,
+  handleToggleContent: PropTypes.func,
+  certificateData: PropTypes.object,
+};
+
+CreateCertificateCSR.defaultProps = {
+  handleCreateCertificateCSR: null,
+  isShowing: false,
+  handleToggleContent: null,
+  certificateData: null,
+};
 
 export default CreateCertificateCSR;

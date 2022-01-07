@@ -43,11 +43,20 @@ export default makeStyles(theme => ({
   },
   generateCertificateButton: {
     width: 200,
+    marginTop: theme.spacing(2),
   },
   filesWrapper: {
     display: 'flex',
     flexDirection: 'row',
     width: '40%',
     justifyContent: 'space-between',
+  },
+  certificateData: {
+    display: 'flex',
+    alignItems: 'center',
+    flexWrap: 'wrap',
+    '& > :first-child': {
+      minWidth: '16rem',
+    },
   },
 }));

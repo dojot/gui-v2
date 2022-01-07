@@ -1,10 +1,12 @@
 {
-  "headerTitle": "New Certificate",
+  "headerTitle": "New certificate",
   "finishButton": "Finish",
   "cancelButton": "Cancel",
+  "createAnotherCertificate": "Create another certificate",
   "createCertificateOneClick": {
     "title": "Create certificate with one click",
-    "subTitle": "More practical: The platform generates the certificate and private key for the device"
+    "subTitle": "More practical: The platform generates the certificate and private key for the device",
+    "createWithOneClick": "Create certificate with one click"
   },
   "createCertificateCSR": {
     "title": "Submit a Certificate Signing Request (CSR)",
@@ -24,10 +26,10 @@
     "subTitle": "Enables you to use your existing public key infrastructure",
     "inputDataLabel": "Enter the data in order: from device certificate to root CA. According to the degree of importance.",
     "inputPlaceholder": "Insert your text here",
-    "generateCertificate": "OK"
+    "generateCertificate": "Generate certificate"
   },
   "generatedCertificateResume": {
-    "downloadFilesMessage": "To connect a device, you need to download the following items:",
+    "certificateAndKeysTitle": "To connect a device you need to download the following items:",
     "certificate": "Certificate",
     "privateKey": "Private Key",
     "publicKey": "Public Key (optional)",

@@ -1,59 +1,81 @@
 import React, { useState } from 'react';
 
-import { AccordionDetails, Typography, TextField, Button } from '@material-ui/core';
+import { Box, TextField, Typography, Button } from '@material-ui/core';
+import { CollapsibleList } from 'Components/CollapsibleList';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
-function CreateCertificateCA() {
+const CreateCertificateCA = ({
+  isShowing,
+  handleToggleContent,
+  certificateData,
+  handleRegisterExternalCertificate,
+}) => {
   const classes = useStyles();
   const { t } = useTranslation('createCertificate');
 
-  const [text, setText] = useState('');
-  const [isGeneratedCertificate, setIsGeneratedCertificate] = useState(false);
-
-  const handleChangeText = e => {
-    setText(e.target.value);
-  };
-
-  const generateCertificate = () => {
-    setIsGeneratedCertificate(true);
-  };
+  const [certificateChain, setCertificateChain] = useState('');
 
   return (
-    <>
-      {!isGeneratedCertificate ? (
-        <AccordionDetails className={classes.createCertificateCA}>
+    <CollapsibleList
+      title={t('createCertificateCA.title')}
+      subtitle={t('createCertificateCA.subTitle')}
+      isContentVisible={isShowing}
+      handleToggleContent={handleToggleContent}
+      isCaptionHighlighted
+      disabled={!!certificateData && !isShowing}
+      canToggleContent={!certificateData}
+    >
+      {!certificateData ? (
+        <Box padding={4}>
           <Typography>{t('createCertificateCA.inputDataLabel')}</Typography>
-          <br />
+
           <TextField
-            value={text}
-            onChange={handleChangeText}
+            value={certificateChain}
+            onChange={e => setCertificateChain(e.target.value)}
             placeholder={t('createCertificateCA.inputPlaceholder')}
             multiline
-            rows={20}
+            rows={10}
             variant='outlined'
             fullWidth
           />
-          <br />
+
           <Typography align='right'>
             <Button
-              onClick={generateCertificate}
+              onClick={handleRegisterExternalCertificate(certificateChain)}
               className={classes.generateCertificateButton}
-              variant='text'
+              variant='outlined'
               color='primary'
-              disabled={!text}
+              disabled={!certificateChain}
             >
               {t('createCertificateCA.generateCertificate')}
             </Button>
           </Typography>
-        </AccordionDetails>
+        </Box>
       ) : (
-        <GeneratedCertificateResume />
+        <Box padding={4}>
+          <GeneratedCertificateResume certificateData={certificateData} />
+        </Box>
       )}
-    </>
+    </CollapsibleList>
   );
-}
+};
+
+CreateCertificateCA.propTypes = {
+  isShowing: PropTypes.bool,
+  handleToggleContent: PropTypes.func,
+  certificateData: PropTypes.object,
+  handleRegisterExternalCertificate: PropTypes.func,
+};
+
+CreateCertificateCA.defaultProps = {
+  isShowing: false,
+  handleToggleContent: null,
+  certificateData: null,
+  handleRegisterExternalCertificate: null,
+};
 
 export default CreateCertificateCA;

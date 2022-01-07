@@ -2,9 +2,11 @@
   "headerTitle": "Novo Certificado",
   "finishButton": "Finalizar",
   "cancelButton": "Cancelar",
+  "createAnotherCertificate": "Criar outro certificado",
   "createCertificateOneClick": {
     "title": "Criar certificado com um clique",
-    "subTitle": "Mais prático: A plataforma gera o certificado e a chave privada para o dispositivo"
+    "subTitle": "Mais prático: A plataforma gera o certificado e a chave privada para o dispositivo",
+    "createWithOneClick": "Criar certificado com um clique"
   },
   "createCertificateCSR": {
     "title": "Submeter uma Solicitação de Assinatura de Certificado (CSR)",
@@ -24,10 +26,10 @@
     "subTitle": "Possibilita utilizar a sua infraestrutura de chaves publicas já existente",
     "inputDataLabel": "Insira os dados em ordem: do certificado do dispositivo até a CA raiz. De acordo com o grau de importância.",
     "inputPlaceholder": "Insira aqui seu texto",
-    "generateCertificate": "OK"
+    "generateCertificate": "Gerar certificado"
   },
   "generatedCertificateResume": {
-    "downloadFilesMessage": "Para conectar um dispositivo, você precisa fazer download dos seguintes itens:",
+    "certificateAndKeysTitle": "Para conectar um dispositivo você precisa fazer download dos seguintes itens:",
     "certificate": "Certificado",
     "privateKey": "Chave privada",
     "publicKey": "Chave pública (opcional)",

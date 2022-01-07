@@ -10,6 +10,10 @@ const DELETE_CERTIFICATE = 'app/certificates/DELETE_CERTIFICATES';
 const DELETE_MULTIPLE_CERTIFICATES = 'app/certificates/DELETE_MULTIPLE_CERTIFICATES';
 const DISASSOCIATE_DEVICE = 'app/certificates/DISASSOCIATE_DEVICE';
 const ASSOCIATE_DEVICE = 'app/certificates/ASSOCIATE_DEVICE';
+const CREATE_CERTIFICATE_ONE_CLICK = 'app/certificates/CREATE_CERTIFICATE_ONE_CLICK';
+const CREATE_CERTIFICATE_CSR = 'app/certificates/CREATE_CERTIFICATE_CSR';
+const GET_NEW_GENERATED_CERTIFICATE = 'app/certificates/GET_NEW_GENERATED_CERTIFICATE';
+const REGISTER_EXTERNAL_CERTIFICATE = 'app/certificates/REGISTER_EXTERNAL_CERTIFICATE';
 
 export const constants = {
   CREATE_ONE_CLICK,
@@ -21,6 +25,10 @@ export const constants = {
   DELETE_MULTIPLE_CERTIFICATES,
   DISASSOCIATE_DEVICE,
   ASSOCIATE_DEVICE,
+  CREATE_CERTIFICATE_ONE_CLICK,
+  CREATE_CERTIFICATE_CSR,
+  GET_NEW_GENERATED_CERTIFICATE,
+  REGISTER_EXTERNAL_CERTIFICATE,
 };
 
 export const createOneClick = createAction(CREATE_ONE_CLICK, payload => ({
@@ -79,6 +87,22 @@ export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
   deviceId: payload.deviceId,
 }));
 
+export const createCertificateOneClick = createAction(CREATE_CERTIFICATE_ONE_CLICK, payload => ({
+  commonName: payload?.commonName,
+}));
+
+export const createCertificateCSR = createAction(CREATE_CERTIFICATE_CSR, payload => ({
+  csrPEM: payload.csrPEM,
+}));
+
+export const registerExternalCertificate = createAction(REGISTER_EXTERNAL_CERTIFICATE, payload => ({
+  certificateChain: payload.certificateChain,
+}));
+
+export const getNewGeneratedCertificate = createAction(GET_NEW_GENERATED_CERTIFICATE, payload => ({
+  certificateData: payload.certificateData,
+}));
+
 export const actions = {
   createOneClick,
   getCertificates,
@@ -89,10 +113,17 @@ export const actions = {
   deleteMultipleCertificates,
   disassociateDevice,
   associateDevice,
+  createCertificateOneClick,
+  createCertificateCSR,
+  getNewGeneratedCertificate,
+  registerExternalCertificate,
 };
 
 export const reducers = {
   [UPDATE_CERTIFICATES]: (state, { payload }) => {
+    return state.merge({ ...payload });
+  },
+  [GET_NEW_GENERATED_CERTIFICATE]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
 };
@@ -100,6 +131,7 @@ export const reducers = {
 export const initialState = () => {
   return Map({
     certificates: [],
+    certificateData: null,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,

@@ -19,16 +19,6 @@ export function* getCurrentCertificatesPageAgain() {
   );
 }
 
-export function* getOnlyNewCertificate(fingerprint, privateKeyPEM, publicKeyPEM) {
-  yield put(
-    actions.getCertificateByFingerprint({
-      fingerprint,
-      privateKeyPEM,
-      publicKeyPEM,
-    }),
-  );
-}
-
 export function* handleGetCertificates(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_CERTIFICATES));
@@ -198,14 +188,15 @@ export function* handleAssociateDevice(action) {
   }
 }
 
-export function* handleCreateOneClickCertificate(action) {
+export function* handleCreateCertificateOneClick(action) {
   try {
-    yield put(loadingActions.addLoading(constants.CREATE_ONE_CLICK));
+    yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_ONE_CLICK));
     const { commonName } = action.payload;
-    const {
-      createCertificate: { certificateFingerprint, privateKeyPEM, publicKeyPEM },
-    } = yield call(Certificates.createOneClickCertificate, commonName);
-    yield call(getOnlyNewCertificate, certificateFingerprint, privateKeyPEM, publicKeyPEM);
+    const { createCertificateOneClick } = yield call(
+      Certificates.createCertificateOneClick,
+      commonName,
+    );
+    yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateOneClick }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {
     yield put(
@@ -215,16 +206,53 @@ export function* handleCreateOneClickCertificate(action) {
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.CREATE_ONE_CLICK));
+    yield put(loadingActions.removeLoading(constants.CREATE_CERTIFICATE_ONE_CLICK));
+  }
+}
+
+export function* handleCreateCertificateCSR(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_CSR));
+    const { csrPEM } = action.payload;
+    const { createCertificateCSR } = yield call(Certificates.createCertificateCSR, csrPEM);
+    yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateCSR }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
+  } catch (e) {
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'createCertificate',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.CREATE_CERTIFICATE_CSR));
+  }
+}
+
+export function* handleRegisterExternalCertificate(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.REGISTER_EXTERNAL_CERTIFICATE));
+    const { certificateChain } = action.payload;
+    const { registerExternalCertificate } = yield call(
+      Certificates.registerExternalCertificate,
+      certificateChain,
+    );
+    yield put(actions.getNewGeneratedCertificate({ certificateData: registerExternalCertificate }));
+    yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
+  } catch (e) {
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'createCertificate',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.REGISTER_EXTERNAL_CERTIFICATE));
   }
 }
 
 function* watchGetCertificates() {
   yield takeLatest(constants.GET_CERTIFICATES, handleGetCertificates);
-}
-
-function* watchCreateOneClickCertificate() {
-  yield takeLatest(constants.CREATE_ONE_CLICK, handleCreateOneClickCertificate);
 }
 
 function* watchGetCertificateById() {
@@ -251,13 +279,27 @@ function* watchAssociateDevice() {
   yield takeLatest(constants.ASSOCIATE_DEVICE, handleAssociateDevice);
 }
 
+function* watchCreateCertificateOneClick() {
+  yield takeLatest(constants.CREATE_CERTIFICATE_ONE_CLICK, handleCreateCertificateOneClick);
+}
+
+function* watchCreateCertificateCSR() {
+  yield takeLatest(constants.CREATE_CERTIFICATE_CSR, handleCreateCertificateCSR);
+}
+
+function* watchRegisterExternalCertificate() {
+  yield takeLatest(constants.REGISTER_EXTERNAL_CERTIFICATE, handleRegisterExternalCertificate);
+}
+
 export const certificatesSaga = [
   fork(watchGetCertificates),
-  fork(watchCreateOneClickCertificate),
   fork(watchGetCertificateById),
   fork(watchGetCertificateByFingerprint),
   fork(watchDeleteCertificate),
   fork(watchDeleteMultipleCertificates),
   fork(watchDisassociateDevice),
   fork(watchAssociateDevice),
+  fork(watchCreateCertificateOneClick),
+  fork(watchCreateCertificateCSR),
+  fork(watchRegisterExternalCertificate),
 ];
