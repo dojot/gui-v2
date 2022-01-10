@@ -1,4 +1,4 @@
-FROM node:12.18.2 as basis
+FROM node:14-bullseye as basis
 
 WORKDIR /opt/app
 
@@ -6,7 +6,7 @@ ARG DOJOT_VERSION=undefined
 ENV GUI_VERSION $DOJOT_VERSION
 
 COPY package.json .
-RUN yarn
+RUN yarn install --silent
 COPY . .
 RUN yarn build
 
