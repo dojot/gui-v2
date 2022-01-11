@@ -19,7 +19,7 @@ const SummaryStep = ({
   handleGoToPreviousStep,
   handleCancelDeviceCreation,
 }) => {
-  const { t } = useTranslation('createDevice');
+  const { t } = useTranslation(['createDevice', 'common']);
   const classes = useSummaryStepStyles();
 
   const handleClearDeviceName = () => {
@@ -99,7 +99,7 @@ const SummaryStep = ({
                 component='button'
                 onClick={() => downloadTextFile('certificate.pem', selectedCertificate.pem)}
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
           )}
@@ -113,7 +113,7 @@ const SummaryStep = ({
                 component='button'
                 onClick={() => downloadTextFile('privateKey.pem', selectedCertificate.privateKey)}
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
           )}
@@ -128,7 +128,7 @@ const SummaryStep = ({
                 component='button'
                 onClick={() => downloadTextFile('publicKey.pem', selectedCertificate.publicKey)}
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
           )}
@@ -144,7 +144,7 @@ const SummaryStep = ({
                   downloadTextFile('caCertificate.pem', selectedCertificate.caCertificate)
                 }
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
           )}
