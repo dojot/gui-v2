@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-import { Box, IconButton, Typography } from '@material-ui/core';
+import { Box, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -16,7 +16,9 @@ import { useSecurityStepStyles } from './style';
 
 const SecurityStep = ({
   selectedCertificate,
+  createdCertificates,
   handleGoToNextStep,
+  setCreatedCertificates,
   setSelectedCertificate,
   handleCancelDeviceCreation,
   handleGoToPreviousStep,
@@ -46,6 +48,21 @@ const SecurityStep = ({
     dispatch(
       certificatesActions.createCertificateOneClick({
         shouldGetCurrentPageAgain: true,
+        successCallback(certificateData) {
+          const fingerprint = certificateData.certificateFingerprint;
+
+          setCreatedCertificates(currentCreatedCertificates => {
+            return { ...currentCreatedCertificates, [fingerprint]: certificateData };
+          });
+
+          setSelectedCertificate({
+            fingerprint,
+            caCertificate: undefined,
+            pem: certificateData.certificatePem,
+            publicKey: certificateData.publicKeyPEM,
+            privateKey: certificateData.privateKeyPEM,
+          });
+        },
       }),
     );
   };
@@ -78,17 +95,20 @@ const SecurityStep = ({
         <Box className={classes.header} marginBottom={2}>
           <Typography>{t('securityStep.hint')}</Typography>
 
-          <IconButton className={classes.headerButton} onClick={handleOnClickCreation}>
-            <Add />
-          </IconButton>
+          <Tooltip placement='left' title={t('securityStep.createCertificateWithOneClick')}>
+            <IconButton className={classes.headerButton} onClick={handleOnClickCreation}>
+              <Add />
+            </IconButton>
+          </Tooltip>
         </Box>
 
         <Box className={classes.stepComponent} marginBottom={2}>
           <SecurityTable
             page={page}
-            certificates={certificates}
             totalPages={totalPages}
             rowsPerPage={rowsPerPage}
+            certificates={certificates}
+            createdCertificates={createdCertificates}
             selectedCertificate={selectedCertificate}
             isLoading={isLoadingCertificates}
             handleChangePage={handleChangePage}
@@ -111,7 +131,9 @@ const SecurityStep = ({
 
 SecurityStep.propTypes = {
   selectedCertificate: PropTypes.object.isRequired,
+  createdCertificates: PropTypes.object.isRequired,
   handleGoToNextStep: PropTypes.func.isRequired,
+  setCreatedCertificates: PropTypes.func.isRequired,
   setSelectedCertificate: PropTypes.func.isRequired,
   handleCancelDeviceCreation: PropTypes.func.isRequired,
 };

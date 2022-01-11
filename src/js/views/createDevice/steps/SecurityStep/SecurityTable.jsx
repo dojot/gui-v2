@@ -25,8 +25,9 @@ const SecurityTable = ({
   totalPages,
   rowsPerPage,
   certificates,
-  handleChangePage,
+  createdCertificates,
   selectedCertificate,
+  handleChangePage,
   setSelectedCertificate,
   handleChangeRowsPerPage,
 }) => {
@@ -52,7 +53,16 @@ const SecurityTable = ({
   );
 
   const handleCertificateSelection = cert => {
-    setSelectedCertificate(cert);
+    const createdCertificate = createdCertificates[cert.fingerprint];
+    if (createdCertificate) {
+      setSelectedCertificate({
+        ...cert,
+        publicKey: createdCertificate.publicKeyPEM,
+        privateKey: createdCertificate.privateKeyPEM,
+      });
+    } else {
+      setSelectedCertificate(cert);
+    }
   };
 
   if (isLoading) {
@@ -80,19 +90,23 @@ const SecurityTable = ({
             {certificates.map(cert => {
               const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
 
+              const handleSelectThisCertificate = () => {
+                handleCertificateSelection(cert);
+              };
+
               return (
                 <TableRow
                   key={cert.fingerprint}
                   tabIndex={-1}
                   role='radio'
-                  onClick={() => handleCertificateSelection(cert)}
+                  onClick={handleSelectThisCertificate}
                   hover
                 >
                   <TableCell>
                     <Radio
                       color='primary'
                       checked={isSelected}
-                      onChange={() => handleCertificateSelection(cert)}
+                      onChange={handleSelectThisCertificate}
                     />
                   </TableCell>
 
@@ -139,8 +153,9 @@ SecurityTable.propTypes = {
   totalPages: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   certificates: PropTypes.array.isRequired,
-  handleChangePage: PropTypes.func.isRequired,
+  createdCertificates: PropTypes.object.isRequired,
   selectedCertificate: PropTypes.object.isRequired,
+  handleChangePage: PropTypes.func.isRequired,
   setSelectedCertificate: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
 };

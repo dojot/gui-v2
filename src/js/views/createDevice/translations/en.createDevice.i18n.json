@@ -37,7 +37,8 @@
     "labelRowsPerPage": "Items per Page:",
     "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
     "nextIconButtonText": "Next Page",
-    "backIconButtonText": "Previous Page"
+    "backIconButtonText": "Previous Page",
+    "createCertificateWithOneClick": "Create Certificate With One Click"
   },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",

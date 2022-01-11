@@ -37,7 +37,8 @@
     "labelRowsPerPage": "Itens por página:",
     "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
     "nextIconButtonText": "Próxima Página",
-    "backIconButtonText": "Página Anterior"
+    "backIconButtonText": "Página Anterior",
+    "createCertificateWithOneClick": "Criar Certificado Com Um Click"
   },
   "summaryStep": {
     "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",

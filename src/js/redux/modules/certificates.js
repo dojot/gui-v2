@@ -83,6 +83,7 @@ export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
 
 export const createCertificateOneClick = createAction(CREATE_CERTIFICATE_ONE_CLICK, payload => ({
   commonName: payload?.commonName,
+  successCallback: payload?.successCallback,
   shouldGetCurrentPageAgain: payload?.shouldGetCurrentPageAgain,
 }));
 
