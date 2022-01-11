@@ -2,6 +2,7 @@
   "title": "New Device",
   "cancelDeviceCreationTitle": "Cancel Device Creation",
   "cancelDeviceCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
   "stepper": {
     "templates": "Templates",
     "attrs": "Attributes",

@@ -191,11 +191,12 @@ export function* handleAssociateDevice(action) {
 export function* handleCreateCertificateOneClick(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_ONE_CLICK));
-    const { commonName } = action.payload;
+    const { commonName, shouldGetCurrentPageAgain } = action.payload;
     const { createCertificateOneClick } = yield call(
       Certificates.createCertificateOneClick,
       commonName,
     );
+    if (shouldGetCurrentPageAgain) yield call(getCurrentCertificatesPageAgain);
     yield put(actions.getNewGeneratedCertificate({ certificateData: createCertificateOneClick }));
     yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }));
   } catch (e) {

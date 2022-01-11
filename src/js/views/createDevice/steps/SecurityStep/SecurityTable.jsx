@@ -21,17 +21,18 @@ import { useSecurityTableStyles } from './style';
 
 const SecurityTable = ({
   page,
-  certificates,
+  isLoading,
   totalPages,
   rowsPerPage,
-  selectedCertificate,
-  isLoading,
+  certificates,
   handleChangePage,
+  selectedCertificate,
   setSelectedCertificate,
   handleChangeRowsPerPage,
 }) => {
   const { t } = useTranslation('createDevice');
   const classes = useSecurityTableStyles();
+
   const headCells = useMemo(
     () => [
       {
@@ -70,14 +71,15 @@ const SecurityTable = ({
             className={classes.tableHead}
             cells={headCells}
             rowCount={certificates.length}
+            startExtraCells={<TableCell />}
             disableCheckbox
             disableOrderBy
-            startExtraCells={<TableCell />}
           />
 
           <TableBody>
             {certificates.map(cert => {
               const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
+
               return (
                 <TableRow
                   key={cert.fingerprint}
@@ -93,10 +95,13 @@ const SecurityTable = ({
                       onChange={() => handleCertificateSelection(cert)}
                     />
                   </TableCell>
+
                   <TableCell className={classes.clickableCell}>{cert.fingerprint}</TableCell>
+
                   <TableCell className={classes.clickableCell}>
                     {formatDate(cert.validity.notBefore, 'DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
+
                   <TableCell className={classes.clickableCell} colSpan='2'>
                     {formatDate(cert.validity.notAfter, 'DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
@@ -130,12 +135,12 @@ const SecurityTable = ({
 
 SecurityTable.propTypes = {
   page: PropTypes.number.isRequired,
-  certificates: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   totalPages: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
-  selectedCertificate: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  certificates: PropTypes.array.isRequired,
   handleChangePage: PropTypes.func.isRequired,
+  selectedCertificate: PropTypes.object.isRequired,
   setSelectedCertificate: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
 };

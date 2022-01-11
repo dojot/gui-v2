@@ -44,8 +44,8 @@ const SecurityStep = ({
 
   const handleOnClickCreation = () => {
     dispatch(
-      certificatesActions.createOneClick({
-        commonName: undefined,
+      certificatesActions.createCertificateOneClick({
+        shouldGetCurrentPageAgain: true,
       }),
     );
   };
@@ -61,6 +61,16 @@ const SecurityStep = ({
       }),
     );
   }, [dispatch, page, rowsPerPage]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(
+        certificatesActions.getNewGeneratedCertificate({
+          certificateData: null,
+        }),
+      );
+    };
+  }, [dispatch]);
 
   return (
     <Box className={classes.container}>

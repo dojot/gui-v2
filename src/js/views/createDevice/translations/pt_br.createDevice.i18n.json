@@ -2,6 +2,7 @@
   "title": "Novo Dispositivo",
   "cancelDeviceCreationTitle": "Cancelar Criação de Dispositivo",
   "cancelDeviceCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
   "stepper": {
     "templates": "Modelos",
     "attrs": "Atributos",

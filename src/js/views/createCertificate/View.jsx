@@ -28,7 +28,7 @@ const CreateCertificate = () => {
     return () => {
       dispatch(actions.getNewGeneratedCertificate({ certificateData: null }));
     };
-  }, []);
+  }, [dispatch]);
 
   const handleLeaveCertificateCreation = () => {
     if (history.length) history.goBack();
@@ -63,56 +63,52 @@ const CreateCertificate = () => {
   };
 
   return (
-    <ViewContainer headerTitle={t('Novo certificado')}>
+    <ViewContainer headerTitle={t('headerTitle')}>
       <Box className={classes.container}>
         <Box className={classes.content}>
-          <Box className={classes.collapsibleCardsWrapper}>
-            <CreateCertificateOneClick
-              isShowing={expandedCard === CONSTANTS.ONE_CLICK}
-              handleToggleContent={handleToggleContent(CONSTANTS.ONE_CLICK)}
-              handleCreateCertificateOneClick={handleCreateCertificateOneClick}
-              certificateData={certificateData}
-            />
+          <CreateCertificateOneClick
+            isShowing={expandedCard === CONSTANTS.ONE_CLICK}
+            handleToggleContent={handleToggleContent(CONSTANTS.ONE_CLICK)}
+            handleCreateCertificateOneClick={handleCreateCertificateOneClick}
+            certificateData={certificateData}
+          />
 
-            <CreateCertificateCSR
-              isShowing={expandedCard === CONSTANTS.CSR}
-              handleToggleContent={handleToggleContent(CONSTANTS.CSR)}
-              handleCreateCertificateCSR={handleCreateCertificateCSR}
-              certificateData={certificateData}
-            />
+          <CreateCertificateCSR
+            isShowing={expandedCard === CONSTANTS.CSR}
+            handleToggleContent={handleToggleContent(CONSTANTS.CSR)}
+            handleCreateCertificateCSR={handleCreateCertificateCSR}
+            certificateData={certificateData}
+          />
 
-            <CreateCertificateCA
-              isShowing={expandedCard === CONSTANTS.CA}
-              handleToggleContent={handleToggleContent(CONSTANTS.CA)}
-              certificateData={certificateData}
-              handleRegisterExternalCertificate={handleRegisterExternalCertificate}
-            />
-          </Box>
+          <CreateCertificateCA
+            isShowing={expandedCard === CONSTANTS.CA}
+            handleToggleContent={handleToggleContent(CONSTANTS.CA)}
+            certificateData={certificateData}
+            handleRegisterExternalCertificate={handleRegisterExternalCertificate}
+          />
         </Box>
 
         <Box className={classes.footer}>
-          <Box className={classes.actionButtonsWrapper}>
-            {certificateData ? (
-              <>
-                <Button variant='text' color='primary' onClick={handleClearState}>
-                  {t('createOtherCertificate')}
-                </Button>
-
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleLeaveCertificateCreation}
-                  className={classes.finishButton}
-                >
-                  {t('finishButton')}
-                </Button>
-              </>
-            ) : (
-              <Button className={classes.cancelButton} onClick={handleLeaveCertificateCreation}>
-                {t('cancelButton')}
+          {certificateData ? (
+            <>
+              <Button variant='text' color='primary' onClick={handleClearState}>
+                {t('createOtherCertificate')}
               </Button>
-            )}
-          </Box>
+
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={handleLeaveCertificateCreation}
+                className={classes.finishButton}
+              >
+                {t('finishButton')}
+              </Button>
+            </>
+          ) : (
+            <Button className={classes.cancelButton} onClick={handleLeaveCertificateCreation}>
+              {t('cancelButton')}
+            </Button>
+          )}
         </Box>
       </Box>
     </ViewContainer>

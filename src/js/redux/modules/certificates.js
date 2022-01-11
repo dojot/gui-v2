@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
-const CREATE_ONE_CLICK = 'app/certificates/CREATE_ONE_CLICK';
 const GET_CERTIFICATES = 'app/certificates/GET_CERTIFICATES';
 const GET_CERTIFICATES_BY_ID = 'app/certificates/GET_CERTIFICATES_BY_ID';
 const GET_CERTIFICATES_BY_FINGERPRINT = 'app/certificates/GET_CERTIFICATES_BY_FINGERPRINT';
@@ -16,7 +15,6 @@ const GET_NEW_GENERATED_CERTIFICATE = 'app/certificates/GET_NEW_GENERATED_CERTIF
 const REGISTER_EXTERNAL_CERTIFICATE = 'app/certificates/REGISTER_EXTERNAL_CERTIFICATE';
 
 export const constants = {
-  CREATE_ONE_CLICK,
   GET_CERTIFICATES,
   GET_CERTIFICATES_BY_ID,
   GET_CERTIFICATES_BY_FINGERPRINT,
@@ -30,10 +28,6 @@ export const constants = {
   GET_NEW_GENERATED_CERTIFICATE,
   REGISTER_EXTERNAL_CERTIFICATE,
 };
-
-export const createOneClick = createAction(CREATE_ONE_CLICK, payload => ({
-  commonName: payload.commonName,
-}));
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
   page: payload.page,
@@ -89,6 +83,7 @@ export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
 
 export const createCertificateOneClick = createAction(CREATE_CERTIFICATE_ONE_CLICK, payload => ({
   commonName: payload?.commonName,
+  shouldGetCurrentPageAgain: payload?.shouldGetCurrentPageAgain,
 }));
 
 export const createCertificateCSR = createAction(CREATE_CERTIFICATE_CSR, payload => ({
@@ -104,7 +99,6 @@ export const getNewGeneratedCertificate = createAction(GET_NEW_GENERATED_CERTIFI
 }));
 
 export const actions = {
-  createOneClick,
   getCertificates,
   getCertificateById,
   getCertificateByFingerprint,
