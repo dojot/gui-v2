@@ -6,8 +6,7 @@
   "createCertificateOneClick": {
     "title": "Create Certificate Faster",
     "subTitle": "More practical: The platform generates the certificate and private key for the device.",
-    "createWithOneClick": "Create Certificate With one Click",
-    "recommended": "(Recommended)"
+    "createWithOneClick": "Create Certificate With one Click"
   },
   "createCertificateCSR": {
     "title": "Submit a Certificate Signing Request (CSR)",

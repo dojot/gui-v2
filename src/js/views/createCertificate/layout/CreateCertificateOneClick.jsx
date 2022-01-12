@@ -19,12 +19,10 @@ const CreateCertificateOneClick = ({
     <CollapsibleList
       title={t('createCertificateOneClick.title')}
       subtitle={t('createCertificateOneClick.subTitle')}
-      caption={t('createCertificateOneClick.recommended')}
       isContentVisible={isShowing}
       canToggleContent={!certificateData}
       disabled={!!certificateData && !isShowing}
       handleToggleContent={handleToggleContent}
-      isCaptionHighlighted
     >
       <Box padding={4} paddingTop={3}>
         {!certificateData ? (

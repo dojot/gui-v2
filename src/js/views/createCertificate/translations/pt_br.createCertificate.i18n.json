@@ -6,8 +6,7 @@
   "createCertificateOneClick": {
     "title": "Criar Certificado Rapidamente",
     "subTitle": "Mais prático: A plataforma gera o certificado e a chave privada para o dispositivo.",
-    "createWithOneClick": "Criar Certificado Com um Clique",
-    "recommended": "(Recomendado)"
+    "createWithOneClick": "Criar Certificado Com um Clique"
   },
   "createCertificateCSR": {
     "title": "Submeter uma Solicitação de Assinatura de Certificado (CSR)",
