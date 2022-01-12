@@ -13,6 +13,7 @@ const CREATE_CERTIFICATE_ONE_CLICK = 'app/certificates/CREATE_CERTIFICATE_ONE_CL
 const CREATE_CERTIFICATE_CSR = 'app/certificates/CREATE_CERTIFICATE_CSR';
 const GET_NEW_GENERATED_CERTIFICATE = 'app/certificates/GET_NEW_GENERATED_CERTIFICATE';
 const REGISTER_EXTERNAL_CERTIFICATE = 'app/certificates/REGISTER_EXTERNAL_CERTIFICATE';
+const SET_CERTIFICATE_DETAILS = 'app/certificates/SET_CERTIFICATE_DETAILS';
 
 export const constants = {
   GET_CERTIFICATES,
@@ -27,6 +28,7 @@ export const constants = {
   CREATE_CERTIFICATE_CSR,
   GET_NEW_GENERATED_CERTIFICATE,
   REGISTER_EXTERNAL_CERTIFICATE,
+  SET_CERTIFICATE_DETAILS,
 };
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
@@ -38,8 +40,6 @@ export const getCertificateByFingerprint = createAction(
   GET_CERTIFICATES_BY_FINGERPRINT,
   payload => ({
     fingerprint: payload.fingerprint,
-    privateKey: payload.privateKeyPEM,
-    publicKey: payload.publicKeyPEM,
   }),
 );
 
@@ -66,6 +66,7 @@ export const updateCertificates = createAction(UPDATE_CERTIFICATES, payload => {
 
 export const deleteCertificate = createAction(DELETE_CERTIFICATE, payload => ({
   fingerprint: payload.fingerprint,
+  successCallback: payload.successCallback,
 }));
 
 export const deleteMultipleCertificates = createAction(DELETE_MULTIPLE_CERTIFICATES, payload => ({
@@ -99,6 +100,10 @@ export const getNewGeneratedCertificate = createAction(GET_NEW_GENERATED_CERTIFI
   certificateData: payload.certificateData,
 }));
 
+export const setCertificateDetails = createAction(SET_CERTIFICATE_DETAILS, payload => ({
+  certificateDetails: payload.certificateDetails,
+}));
+
 export const actions = {
   getCertificates,
   getCertificateById,
@@ -112,6 +117,7 @@ export const actions = {
   createCertificateCSR,
   getNewGeneratedCertificate,
   registerExternalCertificate,
+  setCertificateDetails,
 };
 
 export const reducers = {
@@ -121,12 +127,16 @@ export const reducers = {
   [GET_NEW_GENERATED_CERTIFICATE]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
+  [SET_CERTIFICATE_DETAILS]: (state, { payload }) => {
+    return state.merge({ ...payload });
+  },
 };
 
 export const initialState = () => {
   return Map({
     certificates: [],
     certificateData: null,
+    certificateDetails: null,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,

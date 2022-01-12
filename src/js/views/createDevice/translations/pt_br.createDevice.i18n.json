@@ -28,7 +28,7 @@
     "noActuatorAttrs": "Nenhum atributo atuador para exibir"
   },
   "securityStep": {
-    "hint": "Nesta etapa você gera um certificado para tornar seu dispositivo mais seguro.",
+    "hint": "Nesta etapa você gera ou seleciona um certificado para tornar seu dispositivo mais seguro.",
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
     "creationDate": "Criação",
@@ -39,7 +39,10 @@
     "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
     "nextIconButtonText": "Próxima Página",
     "backIconButtonText": "Página Anterior",
-    "createCertificateWithOneClick": "Criar Certificado Com Um Clique"
+    "createCertificateWithOneClick": "Criar Certificado Com Um Clique",
+    "cannotCreateMoreCertificates": "Você pode criar apenas um certificado enquanto cria um dispositivo",
+    "hasSelectedCertificate": "Selecionou um Certificado",
+    "deleteCreatedCertificate": "Excluir Certificado Criado"
   },
   "summaryStep": {
     "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",

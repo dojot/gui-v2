@@ -23,10 +23,13 @@ export const useSecurityStepStyles = makeStyles(theme => ({
       background: theme.palette.primary.dark,
       color: theme.palette.primary.contrastText,
     },
-    '&:disabled': {
-      opacity: 0.4,
-      background: theme.palette.primary.dark,
+  },
+  headerButtonSuccess: {
+    color: theme.palette.primary.contrastText,
+    background: theme.palette.success.main,
+    '&:hover': {
       color: theme.palette.primary.contrastText,
+      background: theme.palette.success.main,
     },
   },
   stepComponent: {

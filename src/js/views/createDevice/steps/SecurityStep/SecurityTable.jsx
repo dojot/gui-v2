@@ -1,23 +1,22 @@
 import React, { useMemo } from 'react';
 
 import {
-  Radio,
   Table,
   TableBody,
   TableCell,
   TableContainer,
-  TableRow,
   CircularProgress,
   Typography,
   Box,
-  Tooltip,
+  Button,
 } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import { DataTableHead } from 'Components/DataTable';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { formatDate } from 'Utils';
 
 import Pagination from './Pagination';
+import SecurityTableRow from './SecurityTableRow';
 import { useSecurityTableStyles } from './style';
 
 const SecurityTable = ({
@@ -26,13 +25,16 @@ const SecurityTable = ({
   totalPages,
   rowsPerPage,
   certificates,
-  createdCertificates,
+  createdCertificate,
+  certificateDetails,
   selectedCertificate,
+  isDeletingCreatedCertificate,
   handleChangePage,
   setSelectedCertificate,
   handleChangeRowsPerPage,
+  handleDeleteCreatedCertificate,
 }) => {
-  const { t } = useTranslation('createDevice');
+  const { t } = useTranslation(['createDevice', 'common']);
   const classes = useSecurityTableStyles();
 
   const headCells = useMemo(
@@ -57,19 +59,6 @@ const SecurityTable = ({
     [t],
   );
 
-  const handleCertificateSelection = cert => {
-    const createdCertificate = createdCertificates[cert.fingerprint];
-    if (createdCertificate) {
-      setSelectedCertificate({
-        ...cert,
-        publicKey: createdCertificate.publicKeyPEM,
-        privateKey: createdCertificate.privateKeyPEM,
-      });
-    } else {
-      setSelectedCertificate(cert);
-    }
-  };
-
   if (isLoading) {
     return (
       <Box className={classes.loadingContainer} padding={2}>
@@ -87,84 +76,74 @@ const SecurityTable = ({
             cells={headCells}
             rowCount={certificates.length}
             startExtraCells={<TableCell />}
+            endExtraCells={<TableCell />}
             disableCheckbox
             disableOrderBy
           />
 
-          <TableBody>
-            {certificates.map(cert => {
-              const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
+          {createdCertificate && certificateDetails ? (
+            <TableBody>
+              <SecurityTableRow
+                isNew
+                isSelected
+                subjectDN={certificateDetails.subjectDN}
+                fingerprint={certificateDetails.fingerprint}
+                creationDate={certificateDetails.validity.notBefore}
+                expirationDate={certificateDetails.validity.notAfter}
+              />
+            </TableBody>
+          ) : (
+            <TableBody>
+              {certificates.map(cert => {
+                const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
 
-              const handleSelectThisCertificate = () => {
-                handleCertificateSelection(cert);
-              };
+                const handleSelectThisCertificate = () => {
+                  if (isSelected) setSelectedCertificate({});
+                  else setSelectedCertificate(cert);
+                };
 
-              return (
-                <TableRow
-                  key={cert.fingerprint}
-                  className={classes.clickable}
-                  tabIndex={-1}
-                  role='radio'
-                  onClick={handleSelectThisCertificate}
-                  hover
-                >
-                  <TableCell>
-                    <Radio
-                      color='primary'
-                      checked={isSelected}
-                      onChange={handleSelectThisCertificate}
-                    />
-                  </TableCell>
-
-                  <TableCell>
-                    <Tooltip
-                      title={cert.fingerprint}
-                      classes={{ tooltip: classes.tooltip }}
-                      placement='right'
-                      interactive
-                      arrow
-                    >
-                      <div className={classes.truncatedText}>{cert.fingerprint}</div>
-                    </Tooltip>
-                  </TableCell>
-
-                  <TableCell>
-                    <Tooltip
-                      title={cert.subjectDN}
-                      classes={{ tooltip: classes.tooltip }}
-                      placement='right'
-                      interactive
-                      arrow
-                    >
-                      <div className={classes.truncatedText}>{cert.subjectDN}</div>
-                    </Tooltip>
-                  </TableCell>
-
-                  <TableCell>
-                    {formatDate(cert.validity.notBefore, 'DD/MM/YYYY HH:mm:ss')}
-                  </TableCell>
-
-                  <TableCell colSpan='2'>
-                    {formatDate(cert.validity.notAfter, 'DD/MM/YYYY HH:mm:ss')}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
+                return (
+                  <SecurityTableRow
+                    key={cert.fingerprint}
+                    isSelected={isSelected}
+                    subjectDN={cert.subjectDN}
+                    fingerprint={cert.fingerprint}
+                    creationDate={cert.validity.notBefore}
+                    expirationDate={cert.validity.notAfter}
+                    handleSelectCertificate={handleSelectThisCertificate}
+                  />
+                );
+              })}
+            </TableBody>
+          )}
         </Table>
 
-        {!!certificates.length && (
+        {!!certificates.length && !createdCertificate && (
           <Pagination
             page={page}
             rowsPerPage={rowsPerPage}
             totalOfPages={totalPages}
+            hasSelectedCertificate={!!selectedCertificate?.fingerprint}
             handleChangePage={handleChangePage}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
           />
         )}
       </TableContainer>
 
-      {certificates.length === 0 && (
+      {!!createdCertificate && (
+        <Box py={2}>
+          <Button
+            variant='outlined'
+            disabled={isDeletingCreatedCertificate}
+            onClick={handleDeleteCreatedCertificate}
+            endIcon={isDeletingCreatedCertificate ? <CircularProgress size={14} /> : <Delete />}
+          >
+            {t('securityStep.deleteCreatedCertificate')}
+          </Button>
+        </Box>
+      )}
+
+      {certificates.length === 0 && !createdCertificate && (
         <Box className={classes.emptyList}>
           <Typography className={classes.emptyListText}>
             {t('securityStep.emptyCertificateList')}
@@ -181,11 +160,19 @@ SecurityTable.propTypes = {
   totalPages: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   certificates: PropTypes.array.isRequired,
-  createdCertificates: PropTypes.object.isRequired,
+  createdCertificate: PropTypes.object,
+  certificateDetails: PropTypes.object,
   selectedCertificate: PropTypes.object.isRequired,
+  isDeletingCreatedCertificate: PropTypes.bool.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   setSelectedCertificate: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleDeleteCreatedCertificate: PropTypes.func.isRequired,
+};
+
+SecurityTable.defaultProps = {
+  createdCertificate: null,
+  certificateDetails: null,
 };
 
 export default SecurityTable;

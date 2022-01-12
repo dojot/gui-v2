@@ -14,3 +14,8 @@ export const certificateDataSelector = createSelector(
   state => state.certificates,
   map => map.get('certificateData'),
 );
+
+export const certificateDetailsSelector = createSelector(
+  state => state.certificates,
+  map => map.get('certificateDetails'),
+);

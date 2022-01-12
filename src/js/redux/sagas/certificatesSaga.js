@@ -82,41 +82,37 @@ export function* handleGetCertificateById(action) {
 export function* handleGetCertificateByFingerprint(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_CERTIFICATES_BY_FINGERPRINT));
-    const { fingerprint, privateKey, publicKey } = action.payload;
+    const { fingerprint } = action.payload;
     const { getCertificateByFingerprint } = yield call(
       Certificates.getCertificateByFingerprint,
       fingerprint,
     );
     if (getCertificateByFingerprint) {
       yield put(
-        actions.updateCertificates({
-          certificates: [{ ...getCertificateByFingerprint, privateKey, publicKey }],
-          paginationControl: {
-            currentPage: 1,
-            totalPages: 1,
-            itemsPerPage: 1,
-          },
+        actions.setCertificateDetails({
+          certificateDetails: getCertificateByFingerprint,
         }),
       );
     }
   } catch (e) {
-    yield put(actions.updateCertificates({ certificates: [] }));
+    yield put(actions.setCertificateDetails({ certificateDetails: null }));
     yield put(
       errorActions.addError({
         message: e.message,
-        i18nMessage: 'getCertificates',
+        i18nMessage: 'getCertificateByFingerprint',
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.GET_CERTIFICATES_BY_ID));
+    yield put(loadingActions.removeLoading(constants.GET_CERTIFICATES_BY_FINGERPRINT));
   }
 }
 
 export function* handleDeleteCertificate(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_CERTIFICATE));
-    const { fingerprint } = action.payload;
+    const { fingerprint, successCallback } = action.payload;
     yield call(Certificates.deleteMultipleCertificates, [fingerprint]);
+    if (successCallback) yield call(successCallback);
     yield call(getCurrentCertificatesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteCertificate' }));
   } catch (e) {

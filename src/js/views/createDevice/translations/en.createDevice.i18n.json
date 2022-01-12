@@ -28,7 +28,7 @@
     "noActuatorAttrs": "No actuator attribute to show"
   },
   "securityStep": {
-    "hint": "In this step you generate a certificate to make your device more secure.",
+    "hint": "In this step you generate or select a certificate to make your device more secure.",
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
     "creationDate": "Creation",
@@ -39,7 +39,10 @@
     "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
     "nextIconButtonText": "Next Page",
     "backIconButtonText": "Previous Page",
-    "createCertificateWithOneClick": "Create Certificate With One Click"
+    "createCertificateWithOneClick": "Create Certificate With One Click",
+    "cannotCreateMoreCertificates": "You can only create one certificate while creating a device",
+    "hasSelectedCertificate": "Selected a Certificate",
+    "deleteCreatedCertificate": "Delete Created Certificate"
   },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",
