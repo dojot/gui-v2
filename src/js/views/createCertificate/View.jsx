@@ -51,11 +51,11 @@ const CreateCertificate = () => {
     dispatch(actions.createCertificateOneClick());
   };
 
-  const handleCreateCertificateCSR = () => () => {
+  const handleCreateCertificateCSR = () => {
     dispatch(actions.createCertificateCSR({ csrPEM }));
   };
 
-  const handleRegisterExternalCertificate = () => () => {
+  const handleRegisterExternalCertificate = () => {
     dispatch(actions.registerExternalCertificate({ certificateChain }));
   };
 
