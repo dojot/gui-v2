@@ -30,6 +30,7 @@
   "securityStep": {
     "hint": "In this step you generate a certificate to make your device more secure.",
     "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
     "creationDate": "Creation",
     "expirationDate": "Expire",
     "emptyCertificateList": "No Certificate Found",

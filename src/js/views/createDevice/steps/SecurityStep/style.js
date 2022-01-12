@@ -42,6 +42,7 @@ export const useSecurityStepStyles = makeStyles(theme => ({
 export const useSecurityTableStyles = makeStyles(theme => ({
   tableHead: {
     background: theme.palette.background.shade[500],
+    height: '60px',
   },
   searchTextField: {
     marginLeft: theme.spacing(1),
@@ -51,7 +52,7 @@ export const useSecurityTableStyles = makeStyles(theme => ({
     borderRadius: '50px',
     background: theme.palette.background.paper,
   },
-  clickableCell: {
+  clickable: {
     cursor: 'pointer',
   },
   emptyList: {
@@ -68,6 +69,15 @@ export const useSecurityTableStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  truncatedText: {
+    maxWidth: '200px',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
+  tooltip: {
+    fontSize: '1rem',
   },
 }));
 

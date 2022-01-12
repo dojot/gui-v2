@@ -28,8 +28,9 @@
     "noActuatorAttrs": "Nenhum atributo atuador para exibir"
   },
   "securityStep": {
-    "hint": "Nesta etapa você gera um certicado para tornar seu dispositivo mais seguro.",
+    "hint": "Nesta etapa você gera um certificado para tornar seu dispositivo mais seguro.",
     "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
     "creationDate": "Criação",
     "expirationDate": "Expiração",
     "emptyCertificateList": "Nenhum Certificado Encontrado",

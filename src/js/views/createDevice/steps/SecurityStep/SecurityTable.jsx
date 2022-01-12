@@ -10,6 +10,7 @@ import {
   CircularProgress,
   Typography,
   Box,
+  Tooltip,
 } from '@material-ui/core';
 import { DataTableHead } from 'Components/DataTable';
 import PropTypes from 'prop-types';
@@ -39,6 +40,10 @@ const SecurityTable = ({
       {
         id: 'fingerprint',
         label: t('securityStep.fingerprint'),
+      },
+      {
+        id: 'subjectDN',
+        label: t('securityStep.subjectDN'),
       },
       {
         id: 'creationDate',
@@ -76,7 +81,7 @@ const SecurityTable = ({
   return (
     <>
       <TableContainer>
-        <Table aria-labelledby='tableTitle'>
+        <Table aria-labelledby='tableTitle' size='small'>
           <DataTableHead
             className={classes.tableHead}
             cells={headCells}
@@ -97,6 +102,7 @@ const SecurityTable = ({
               return (
                 <TableRow
                   key={cert.fingerprint}
+                  className={classes.clickable}
                   tabIndex={-1}
                   role='radio'
                   onClick={handleSelectThisCertificate}
@@ -110,13 +116,35 @@ const SecurityTable = ({
                     />
                   </TableCell>
 
-                  <TableCell className={classes.clickableCell}>{cert.fingerprint}</TableCell>
+                  <TableCell>
+                    <Tooltip
+                      title={cert.fingerprint}
+                      classes={{ tooltip: classes.tooltip }}
+                      placement='right'
+                      interactive
+                      arrow
+                    >
+                      <div className={classes.truncatedText}>{cert.fingerprint}</div>
+                    </Tooltip>
+                  </TableCell>
 
-                  <TableCell className={classes.clickableCell}>
+                  <TableCell>
+                    <Tooltip
+                      title={cert.subjectDN}
+                      classes={{ tooltip: classes.tooltip }}
+                      placement='right'
+                      interactive
+                      arrow
+                    >
+                      <div className={classes.truncatedText}>{cert.subjectDN}</div>
+                    </Tooltip>
+                  </TableCell>
+
+                  <TableCell>
                     {formatDate(cert.validity.notBefore, 'DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
 
-                  <TableCell className={classes.clickableCell} colSpan='2'>
+                  <TableCell colSpan='2'>
                     {formatDate(cert.validity.notAfter, 'DD/MM/YYYY HH:mm:ss')}
                   </TableCell>
                 </TableRow>
