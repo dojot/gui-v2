@@ -95,7 +95,11 @@ const SecurityStep = ({
         <Box className={classes.header} marginBottom={2}>
           <Typography>{t('securityStep.hint')}</Typography>
 
-          <Tooltip placement='left' title={t('securityStep.createCertificateWithOneClick')}>
+          <Tooltip
+            placement='left'
+            classes={{ tooltip: classes.tooltip }}
+            title={t('securityStep.createCertificateWithOneClick')}
+          >
             <IconButton className={classes.headerButton} onClick={handleOnClickCreation}>
               <Add />
             </IconButton>

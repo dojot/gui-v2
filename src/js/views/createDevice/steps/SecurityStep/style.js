@@ -37,6 +37,9 @@ export const useSecurityStepStyles = makeStyles(theme => ({
   templateCreation: {
     flex: 1,
   },
+  tooltip: {
+    fontSize: '1rem',
+  },
 }));
 
 export const useSecurityTableStyles = makeStyles(theme => ({
