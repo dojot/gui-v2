@@ -37,16 +37,16 @@ const SecurityTable = ({
   const headCells = useMemo(
     () => [
       {
-        id: 'certificate',
-        label: t('securityStep.certificateName'),
+        id: 'fingerprint',
+        label: t('securityStep.fingerprint'),
       },
       {
-        id: 'creationTime',
-        label: t('securityStep.creationTime'),
+        id: 'creationDate',
+        label: t('securityStep.creationDate'),
       },
       {
-        id: 'expirationTime',
-        label: t('securityStep.expirationTime'),
+        id: 'expirationDate',
+        label: t('securityStep.expirationDate'),
       },
     ],
     [t],

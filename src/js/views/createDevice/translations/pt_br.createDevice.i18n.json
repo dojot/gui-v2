@@ -29,16 +29,16 @@
   },
   "securityStep": {
     "hint": "Nesta etapa você gera um certicado para tornar seu dispositivo mais seguro.",
-    "certificateName": "Certificado",
-    "creationTime": "Criação",
-    "expirationTime": "Expiração",
+    "fingerprint": "Fingerprint",
+    "creationDate": "Criação",
+    "expirationDate": "Expiração",
     "emptyCertificateList": "Nenhum Certificado Encontrado",
     "totalOfPages": "Total de Páginas: {{count}}",
     "labelRowsPerPage": "Itens por página:",
     "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
     "nextIconButtonText": "Próxima Página",
     "backIconButtonText": "Página Anterior",
-    "createCertificateWithOneClick": "Criar Certificado Com Um Click"
+    "createCertificateWithOneClick": "Criar Certificado Com Um Clique"
   },
   "summaryStep": {
     "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",
