@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Box, TextField, Typography, Button } from '@material-ui/core';
 import { CollapsibleList } from 'Components/CollapsibleList';
@@ -13,11 +13,11 @@ const CreateCertificateCA = ({
   handleToggleContent,
   certificateData,
   handleRegisterExternalCertificate,
+  certificateChain,
+  handleChangeCertificateChain,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation('createCertificate');
-
-  const [certificateChain, setCertificateChain] = useState('');
 
   return (
     <CollapsibleList
@@ -35,7 +35,7 @@ const CreateCertificateCA = ({
 
           <TextField
             value={certificateChain}
-            onChange={e => setCertificateChain(e.target.value)}
+            onChange={handleChangeCertificateChain}
             placeholder={t('createCertificateCA.inputPlaceholder')}
             multiline
             rows={10}
@@ -45,7 +45,7 @@ const CreateCertificateCA = ({
 
           <Typography align='right'>
             <Button
-              onClick={handleRegisterExternalCertificate(certificateChain)}
+              onClick={handleRegisterExternalCertificate}
               className={classes.generateCertificateButton}
               variant='outlined'
               color='primary'
@@ -69,6 +69,8 @@ CreateCertificateCA.propTypes = {
   handleToggleContent: PropTypes.func,
   certificateData: PropTypes.object,
   handleRegisterExternalCertificate: PropTypes.func,
+  certificateChain: PropTypes.string,
+  handleChangeCertificateChain: PropTypes.func,
 };
 
 CreateCertificateCA.defaultProps = {
@@ -76,6 +78,8 @@ CreateCertificateCA.defaultProps = {
   handleToggleContent: null,
   certificateData: null,
   handleRegisterExternalCertificate: null,
+  certificateChain: '',
+  handleChangeCertificateChain: null,
 };
 
 export default CreateCertificateCA;

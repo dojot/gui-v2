@@ -23,6 +23,8 @@ const CreateCertificate = () => {
   const certificateData = useSelector(certificateDataSelector);
 
   const [expandedCard, setExpandedCard] = useState('');
+  const [csrPEM, setCsrPEM] = useState('');
+  const [certificateChain, setCertificateChain] = useState('');
 
   useEffect(() => {
     return () => {
@@ -49,17 +51,27 @@ const CreateCertificate = () => {
     dispatch(actions.createCertificateOneClick());
   };
 
-  const handleCreateCertificateCSR = csrPEM => () => {
+  const handleCreateCertificateCSR = () => () => {
     dispatch(actions.createCertificateCSR({ csrPEM }));
   };
 
-  const handleRegisterExternalCertificate = certificateChain => () => {
+  const handleRegisterExternalCertificate = () => () => {
     dispatch(actions.registerExternalCertificate({ certificateChain }));
   };
 
   const handleClearState = () => {
     setExpandedCard('');
+    setCsrPEM('');
+    setCertificateChain('');
     dispatch(actions.getNewGeneratedCertificate({ certificateData: null }));
+  };
+
+  const handleChangeCsrPEM = e => {
+    setCsrPEM(e.target.value);
+  };
+
+  const handleChangeCertificateChain = e => {
+    setCertificateChain(e.target.value);
   };
 
   return (
@@ -79,6 +91,8 @@ const CreateCertificate = () => {
               handleToggleContent={handleToggleContent(CONSTANTS.CSR)}
               handleCreateCertificateCSR={handleCreateCertificateCSR}
               certificateData={certificateData}
+              csrPEM={csrPEM}
+              handleChangeCsrPEM={handleChangeCsrPEM}
             />
 
             <CreateCertificateCA
@@ -86,6 +100,8 @@ const CreateCertificate = () => {
               handleToggleContent={handleToggleContent(CONSTANTS.CA)}
               certificateData={certificateData}
               handleRegisterExternalCertificate={handleRegisterExternalCertificate}
+              certificateChain={certificateChain}
+              handleChangeCertificateChain={handleChangeCertificateChain}
             />
           </Box>
         </Box>
