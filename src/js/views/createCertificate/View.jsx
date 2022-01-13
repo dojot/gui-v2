@@ -23,6 +23,8 @@ const CreateCertificate = () => {
   const certificateData = useSelector(certificateDataSelector);
 
   const [expandedCard, setExpandedCard] = useState('');
+  const [csrPEM, setCsrPEM] = useState('');
+  const [certificateChain, setCertificateChain] = useState('');
 
   useEffect(() => {
     return () => {
@@ -49,17 +51,27 @@ const CreateCertificate = () => {
     dispatch(actions.createCertificateOneClick());
   };
 
-  const handleCreateCertificateCSR = csrPEM => () => {
+  const handleCreateCertificateCSR = () => {
     dispatch(actions.createCertificateCSR({ csrPEM }));
   };
 
-  const handleRegisterExternalCertificate = certificateChain => () => {
+  const handleRegisterExternalCertificate = () => {
     dispatch(actions.registerExternalCertificate({ certificateChain }));
   };
 
   const handleClearState = () => {
     setExpandedCard('');
+    setCsrPEM('');
+    setCertificateChain('');
     dispatch(actions.getNewGeneratedCertificate({ certificateData: null }));
+  };
+
+  const handleChangeCsrPEM = e => {
+    setCsrPEM(e.target.value);
+  };
+
+  const handleChangeCertificateChain = e => {
+    setCertificateChain(e.target.value);
   };
 
   return (
@@ -67,23 +79,27 @@ const CreateCertificate = () => {
       <Box className={classes.container}>
         <Box className={classes.content}>
           <CreateCertificateOneClick
+            certificateData={certificateData}
             isShowing={expandedCard === CONSTANTS.ONE_CLICK}
             handleToggleContent={handleToggleContent(CONSTANTS.ONE_CLICK)}
             handleCreateCertificateOneClick={handleCreateCertificateOneClick}
-            certificateData={certificateData}
           />
 
           <CreateCertificateCSR
+            csrPEM={csrPEM}
+            certificateData={certificateData}
             isShowing={expandedCard === CONSTANTS.CSR}
+            handleChangeCsrPEM={handleChangeCsrPEM}
             handleToggleContent={handleToggleContent(CONSTANTS.CSR)}
             handleCreateCertificateCSR={handleCreateCertificateCSR}
-            certificateData={certificateData}
           />
 
           <CreateCertificateCA
+            certificateData={certificateData}
+            certificateChain={certificateChain}
             isShowing={expandedCard === CONSTANTS.CA}
             handleToggleContent={handleToggleContent(CONSTANTS.CA)}
-            certificateData={certificateData}
+            handleChangeCertificateChain={handleChangeCertificateChain}
             handleRegisterExternalCertificate={handleRegisterExternalCertificate}
           />
         </Box>

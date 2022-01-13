@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Box, TextField, Typography, Button } from '@material-ui/core';
 import { CollapsibleList } from 'Components/CollapsibleList';
@@ -13,11 +13,11 @@ const CreateCertificateCA = ({
   certificateData,
   handleToggleContent,
   handleRegisterExternalCertificate,
+  certificateChain,
+  handleChangeCertificateChain,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation('createCertificate');
-
-  const [certificateChain, setCertificateChain] = useState('');
 
   return (
     <CollapsibleList
@@ -38,7 +38,7 @@ const CreateCertificateCA = ({
             rows={10}
             variant='outlined'
             value={certificateChain}
-            onChange={e => setCertificateChain(e.target.value)}
+            onChange={handleChangeCertificateChain}
             placeholder={t('createCertificateCA.inputPlaceholder')}
             multiline
             fullWidth
@@ -47,10 +47,10 @@ const CreateCertificateCA = ({
           <Typography align='right'>
             <Button
               className={classes.generateCertificateButton}
+              onClick={handleRegisterExternalCertificate}
               disabled={!certificateChain}
               variant='outlined'
               color='primary'
-              onClick={handleRegisterExternalCertificate(certificateChain)}
             >
               {t('createCertificateCA.generateCertificate')}
             </Button>
@@ -70,6 +70,8 @@ CreateCertificateCA.propTypes = {
   certificateData: PropTypes.object,
   handleToggleContent: PropTypes.func,
   handleRegisterExternalCertificate: PropTypes.func,
+  certificateChain: PropTypes.string,
+  handleChangeCertificateChain: PropTypes.func,
 };
 
 CreateCertificateCA.defaultProps = {
@@ -77,6 +79,8 @@ CreateCertificateCA.defaultProps = {
   certificateData: null,
   handleToggleContent: null,
   handleRegisterExternalCertificate: null,
+  certificateChain: '',
+  handleChangeCertificateChain: null,
 };
 
 export default CreateCertificateCA;

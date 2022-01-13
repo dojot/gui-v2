@@ -9,8 +9,10 @@ import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
 const CreateCertificateCSR = ({
+  csrPEM,
   isShowing,
   certificateData,
+  handleChangeCsrPEM,
   handleToggleContent,
   handleCreateCertificateCSR,
 }) => {
@@ -18,14 +20,9 @@ const CreateCertificateCSR = ({
   const classes = useStyles();
 
   const [csrHelp, setCsrHelp] = useState(false);
-  const [csrPEM, setCsrPEM] = useState('');
 
   const handleToggleCsrHelp = () => {
     setCsrHelp(!csrHelp);
-  };
-
-  const handleChangeText = e => {
-    setCsrPEM(e.target.value);
   };
 
   return (
@@ -65,8 +62,8 @@ const CreateCertificateCSR = ({
           <TextField
             value={csrPEM}
             variant='outlined'
+            onChange={handleChangeCsrPEM}
             placeholder={t('createCertificateCSR.inputPlaceholder')}
-            onChange={handleChangeText}
             rows={10}
             multiline
             fullWidth
@@ -74,11 +71,11 @@ const CreateCertificateCSR = ({
 
           <Typography align='right'>
             <Button
+              onClick={handleCreateCertificateCSR}
               className={classes.generateCertificateButton}
               disabled={!csrPEM}
               variant='outlined'
               color='primary'
-              onClick={handleCreateCertificateCSR(csrPEM)}
             >
               {t('createCertificateCSR.generateCertificate')}
             </Button>
@@ -94,15 +91,19 @@ const CreateCertificateCSR = ({
 };
 
 CreateCertificateCSR.propTypes = {
+  csrPEM: PropTypes.string,
   isShowing: PropTypes.bool,
   certificateData: PropTypes.object,
+  handleChangeCsrPEM: PropTypes.func,
   handleToggleContent: PropTypes.func,
   handleCreateCertificateCSR: PropTypes.func,
 };
 
 CreateCertificateCSR.defaultProps = {
+  csrPEM: '',
   isShowing: false,
   certificateData: null,
+  handleChangeCsrPEM: null,
   handleToggleContent: null,
   handleCreateCertificateCSR: null,
 };
