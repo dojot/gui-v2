@@ -46,6 +46,10 @@ const DataTable = ({
         label: t('dataLabels.fingerprint'),
       },
       {
+        id: 'subjectDN',
+        label: t('dataLabels.subjectDN'),
+      },
+      {
         id: 'deviceId',
         label: t('dataLabels.deviceId'),
       },
@@ -197,6 +201,18 @@ const DataTable = ({
                         arrow
                       >
                         <div className={classes.truncatedText}>{certificate.fingerprint}</div>
+                      </Tooltip>
+                    </TableCell>
+
+                    <TableCell>
+                      <Tooltip
+                        title={certificate.subjectDN}
+                        classes={{ tooltip: classes.tooltip }}
+                        placement='right'
+                        interactive
+                        arrow
+                      >
+                        <div className={classes.truncatedText}>{certificate.subjectDN}</div>
                       </Tooltip>
                     </TableCell>
 

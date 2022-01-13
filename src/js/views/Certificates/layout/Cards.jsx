@@ -46,6 +46,14 @@ const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
                 }
               >
                 <Box marginBottom={1}>
+                  <Typography variant='body2'>{t('dataLabels.subjectDN')}</Typography>
+
+                  <Typography variant='body2'>
+                    <strong>{certificate.subjectDN}</strong>
+                  </Typography>
+                </Box>
+
+                <Box marginBottom={1}>
                   <Typography variant='body2'>{t('dataLabels.deviceId')}</Typography>
 
                   {certificate.belongsTo?.device ? (
