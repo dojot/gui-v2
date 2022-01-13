@@ -13,17 +13,14 @@ const CreateCertificateCSR = ({
   isShowing,
   handleToggleContent,
   certificateData,
+  csrPEM,
+  handleChangeCsrPEM,
 }) => {
   const { t } = useTranslation('createCertificate');
   const classes = useStyles();
   const [csrHelp, setCsrHelp] = useState(false);
-  const [csrPEM, setCsrPEM] = useState('');
 
   const toggleCsrHelp = () => setCsrHelp(!csrHelp);
-
-  const handleChangeText = e => {
-    setCsrPEM(e.target.value);
-  };
 
   return (
     <CollapsibleList
@@ -57,7 +54,7 @@ const CreateCertificateCSR = ({
           </Collapse>
           <TextField
             value={csrPEM}
-            onChange={handleChangeText}
+            onChange={handleChangeCsrPEM}
             placeholder={t('createCertificateCSR.inputPlaceholder')}
             multiline
             rows={10}
@@ -66,7 +63,7 @@ const CreateCertificateCSR = ({
           />
           <Typography align='right'>
             <Button
-              onClick={handleCreateCertificateCSR(csrPEM)}
+              onClick={handleCreateCertificateCSR}
               className={classes.generateCertificateButton}
               variant='outlined'
               color='primary'
@@ -90,6 +87,8 @@ CreateCertificateCSR.propTypes = {
   isShowing: PropTypes.bool,
   handleToggleContent: PropTypes.func,
   certificateData: PropTypes.object,
+  csrPEM: PropTypes.string,
+  handleChangeCsrPEM: PropTypes.func,
 };
 
 CreateCertificateCSR.defaultProps = {
@@ -97,6 +96,8 @@ CreateCertificateCSR.defaultProps = {
   isShowing: false,
   handleToggleContent: null,
   certificateData: null,
+  csrPEM: '',
+  handleChangeCsrPEM: null,
 };
 
 export default CreateCertificateCSR;
