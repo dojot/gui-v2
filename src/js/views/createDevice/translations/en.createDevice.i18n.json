@@ -42,7 +42,8 @@
     "createCertificateWithOneClick": "Create Certificate With One Click",
     "cannotCreateMoreCertificates": "You can only create one certificate while creating a device",
     "hasSelectedCertificate": "Selected a Certificate",
-    "deleteCreatedCertificate": "Delete Created Certificate"
+    "deleteCreatedCertificate": "Delete Created Certificate",
+    "searchInputPh": "Search Certificate By Fingerprint"
   },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",

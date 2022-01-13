@@ -15,6 +15,7 @@ import {
   certificateDetailsSelector,
 } from '../../../../redux/selectors/certificatesSelector';
 import ActionButtons from '../../layout/ActionButtons';
+import SecuritySearchBar from './SecuritySearchBar';
 import SecurityTable from './SecurityTable';
 import { useSecurityStepStyles } from './style';
 
@@ -44,6 +45,7 @@ const SecurityStep = ({
   );
 
   const [page, setPage] = useState(0);
+  const [searchText, setSearchText] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const canCreateCertificate = useMemo(() => {
@@ -103,6 +105,10 @@ const SecurityStep = ({
     }
   };
 
+  const handleSearchCertificates = search => {
+    setSearchText(search);
+  };
+
   useEffect(() => {
     dispatch(
       certificatesActions.getCertificateById({
@@ -111,9 +117,12 @@ const SecurityStep = ({
           number: page + 1,
           size: rowsPerPage,
         },
+        filter: {
+          fingerprint: searchText,
+        },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (createdCertificate) {
@@ -158,6 +167,15 @@ const SecurityStep = ({
             </div>
           </Tooltip>
         </Box>
+
+        {canCreateCertificate && (
+          <Box mb={2}>
+            <SecuritySearchBar
+              lastSearchedText={searchText}
+              handleSearch={handleSearchCertificates}
+            />
+          </Box>
+        )}
 
         <Box className={classes.stepComponent} marginBottom={2}>
           <SecurityTable

@@ -94,3 +94,13 @@ export const usePaginationStyles = makeStyles(() => ({
     justifyContent: 'space-between',
   },
 }));
+
+export const useSearchBarStyles = makeStyles(theme => ({
+  searchTextField: {
+    marginLeft: theme.spacing(1),
+    width: '400px',
+  },
+  searchInput: {
+    borderRadius: '100px',
+  },
+}));
