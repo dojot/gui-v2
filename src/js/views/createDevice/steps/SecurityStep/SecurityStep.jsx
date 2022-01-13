@@ -66,6 +66,7 @@ const SecurityStep = ({
       certificatesActions.createCertificateOneClick({
         shouldGetCurrentPageAgain: true,
         successCallback(certificateData) {
+          setSearchText('');
           setSelectedCertificate({
             caCertificate: undefined,
             pem: certificateData.certificatePem,
