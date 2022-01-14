@@ -2,8 +2,8 @@ import React from 'react';
 
 import { render, act, fireEvent } from '@testing-library/react';
 
-import * as auth from '../../../common/utils/module/auth';
-import { UserInfo } from './index';
+import * as auth from '../../../../common/utils/module/auth';
+import { UserInfo } from '../index';
 
 jest.spyOn(auth, 'getUserInformation').mockReturnValueOnce({
   userName: 'user',
@@ -32,13 +32,11 @@ describe('UserInfo', () => {
     const tenant = getByTestId('tenant');
     const version = getByTestId('version');
     const darkMode = getByTestId('darkMode');
-    const changePassword = getByTestId('changePassword');
     const logout = getByTestId('logout');
 
     expect(tenant).toBeInTheDocument();
     expect(version).toBeInTheDocument();
     expect(darkMode).toBeInTheDocument();
-    expect(changePassword).toBeInTheDocument();
     expect(logout).toBeInTheDocument();
   });
 });

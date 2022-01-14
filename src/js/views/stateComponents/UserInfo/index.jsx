@@ -1,20 +1,7 @@
 import React, { useRef, useState, useMemo } from 'react';
 
-import {
-  Grow,
-  List,
-  Paper,
-  Button,
-  Popper,
-  Divider,
-  ListItem,
-  ListItemText,
-  ListItemIcon,
-  ClickAwayListener,
-  Switch,
-  Box,
-} from '@material-ui/core';
-import { ArrowDropDown, BookmarkBorder, ExitToApp, Language, Lock } from '@material-ui/icons';
+import { Button, Divider, Box } from '@material-ui/core';
+import { ArrowDropDown, Language } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
@@ -22,7 +9,9 @@ import { getUserInformation, logout } from 'Utils';
 
 import { AlertDialog } from '../../../common/components/Dialogs';
 import { LANGUAGE_KEYS } from '../../../common/constants';
+import LanguagesMenu from './LanguagesMenu';
 import { useStyles } from './style';
+import UserMenu from './UserMenu';
 
 const DEFAULT_USER_DATA = { userName: '', tenant: '', profile: '' };
 
@@ -34,7 +23,7 @@ export const UserInfo = () => {
   const menuButtonRef = useRef(null);
   const switchLanguageButtonRef = useRef(null);
 
-  const [isShowingMenu, setIsShowingMenu] = useState(false);
+  const [isShowingUserMenu, setIsShowingUserMenu] = useState(false);
   const [isDarkModeActivated, setIsDarkModeActivated] = useState(false);
   const [isShowingLogoutModal, setIsShowingLogoutModal] = useState(false);
   const [isShowingLanguagesMenu, setIsShowingLanguagesMenu] = useState(false);
@@ -47,13 +36,13 @@ export const UserInfo = () => {
     return [i18n.options.fallbackLng];
   }, [i18n.options.fallbackLng, i18n.options.resources]);
 
-  const handleToggleMenu = () => {
-    setIsShowingMenu(isShowing => !isShowing);
+  const handleToggleUserMenu = () => {
+    setIsShowingUserMenu(isShowing => !isShowing);
   };
 
-  const handleClickAwayMenu = event => {
+  const handleClickAwayUserMenu = event => {
     if (menuButtonRef.current?.contains(event.target)) return;
-    setIsShowingMenu(false);
+    setIsShowingUserMenu(false);
   };
 
   const handleToggleLanguagesMenu = () => {
@@ -65,9 +54,13 @@ export const UserInfo = () => {
     setIsShowingLanguagesMenu(false);
   };
 
+  const handleHideLanguagesMenu = () => {
+    setIsShowingLanguagesMenu(false);
+  };
+
   const handleShowLogoutModal = () => {
     setIsShowingLogoutModal(true);
-    setIsShowingMenu(false);
+    setIsShowingUserMenu(false);
   };
 
   const handleHideLogoutModal = () => {
@@ -83,7 +76,7 @@ export const UserInfo = () => {
     history.push('/');
   };
 
-  const handleChangeDarkMode = e => {
+  const handleChangeTheme = e => {
     setIsDarkModeActivated(e.target.checked);
   };
 
@@ -111,6 +104,27 @@ export const UserInfo = () => {
         handleClose={handleHideLogoutModal}
       />
 
+      <LanguagesMenu
+        languages={languages}
+        isShowingLanguagesMenu={isShowingLanguagesMenu}
+        anchorElement={switchLanguageButtonRef.current}
+        handleChangeLanguage={handleChangeLanguage}
+        handleHideLanguagesMenu={handleHideLanguagesMenu}
+        handleClickAwayLanguagesMenu={handleClickAwayLanguagesMenu}
+      />
+
+      <UserMenu
+        version={version}
+        tenant={user.tenant}
+        anchorElement={menuButtonRef.current}
+        isShowingUserMenu={isShowingUserMenu}
+        isDarkModeActivated={isDarkModeActivated}
+        handleChangeTheme={handleChangeTheme}
+        handleChangePassword={handleChangePassword}
+        handleShowLogoutModal={handleShowLogoutModal}
+        handleClickAwayUserMenu={handleClickAwayUserMenu}
+      />
+
       <Button
         ref={switchLanguageButtonRef}
         className={classes.buttonWithRightMargin}
@@ -120,7 +134,7 @@ export const UserInfo = () => {
         onClick={handleToggleLanguagesMenu}
         endIcon={<ArrowDropDown />}
         startIcon={<Language />}
-        aria-controls={isShowingMenu ? 'menu-list-grow' : undefined}
+        aria-controls={isShowingUserMenu ? 'menu-list-grow' : undefined}
       >
         {t(`languages:${i18n.language}`)}
       </Button>
@@ -131,125 +145,13 @@ export const UserInfo = () => {
         color='inherit'
         aria-haspopup='true'
         data-testid='menuButton'
-        onClick={handleToggleMenu}
+        onClick={handleToggleUserMenu}
         endIcon={<ArrowDropDown />}
         startIcon={<AccountCircle />}
-        aria-controls={isShowingMenu ? 'menu-list-grow' : undefined}
+        aria-controls={isShowingUserMenu ? 'menu-list-grow' : undefined}
       >
         {user.userName}
       </Button>
-
-      <Popper
-        open={isShowingLanguagesMenu}
-        anchorEl={switchLanguageButtonRef.current}
-        placement='bottom-end'
-        transition
-        disablePortal
-      >
-        {({ TransitionProps }) => (
-          <Grow {...TransitionProps}>
-            <Paper>
-              <ClickAwayListener onClickAway={handleClickAwayLanguagesMenu}>
-                <List className={classes.list}>
-                  {languages.map(language => {
-                    const isSelected = i18n.language === language;
-
-                    const handleSelectThisLanguage = () => {
-                      setIsShowingLanguagesMenu(false);
-                      handleChangeLanguage(language);
-                    };
-
-                    return (
-                      <ListItem
-                        key={language}
-                        className={
-                          isSelected ? classes.selectedListItem : classes.clickableListItem
-                        }
-                        data-testid={`language-item-${language}`}
-                        onClick={handleSelectThisLanguage}
-                      >
-                        <ListItemText>{t(`languages:${language}`)}</ListItemText>
-                      </ListItem>
-                    );
-                  })}
-                </List>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
-
-      <Popper
-        open={isShowingMenu}
-        anchorEl={menuButtonRef.current}
-        placement='bottom-end'
-        transition
-        disablePortal
-      >
-        {({ TransitionProps }) => (
-          <Grow {...TransitionProps}>
-            <Paper>
-              <ClickAwayListener onClickAway={handleClickAwayMenu}>
-                <List className={classes.list}>
-                  <ListItem data-testid='tenant'>
-                    <ListItemIcon className={classes.listItemIcon}>
-                      <BookmarkBorder />
-                    </ListItemIcon>
-                    <ListItemText>{t('tenant', { tenant: user.tenant })}</ListItemText>
-                  </ListItem>
-
-                  <ListItem data-testid='version'>
-                    <ListItemIcon className={classes.listItemIcon}>
-                      <BookmarkBorder />
-                    </ListItemIcon>
-                    <ListItemText>{t('version', { version })}</ListItemText>
-                  </ListItem>
-
-                  <ListItem data-testid='darkMode'>
-                    <ListItemIcon className={classes.listItemIcon}>
-                      <BookmarkBorder />
-                    </ListItemIcon>
-
-                    <ListItemText>{t('darkMode')}</ListItemText>
-
-                    <Switch
-                      className={classes.listItemSwitch}
-                      checked={isDarkModeActivated}
-                      onChange={handleChangeDarkMode}
-                      color='primary'
-                    />
-                  </ListItem>
-
-                  <ListItem
-                    data-testid='changePassword'
-                    className={classes.clickableListItem}
-                    onClick={handleChangePassword}
-                    // TODO: Enable again when possible
-                    style={{ pointerEvents: 'none' }}
-                    disabled
-                  >
-                    <ListItemIcon className={classes.listItemIcon}>
-                      <Lock />
-                    </ListItemIcon>
-                    <ListItemText>{t('changePassword')}</ListItemText>
-                  </ListItem>
-
-                  <ListItem
-                    data-testid='logout'
-                    className={classes.clickableListItem}
-                    onClick={handleShowLogoutModal}
-                  >
-                    <ListItemIcon className={classes.listItemIcon}>
-                      <ExitToApp />
-                    </ListItemIcon>
-                    <ListItemText>{t('logout')}</ListItemText>
-                  </ListItem>
-                </List>
-              </ClickAwayListener>
-            </Paper>
-          </Grow>
-        )}
-      </Popper>
     </Box>
   );
 };
