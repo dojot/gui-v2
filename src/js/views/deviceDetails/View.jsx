@@ -16,7 +16,15 @@ import {
   TableRow,
   Typography,
 } from '@material-ui/core';
-import { Delete, DevicesOther, Edit, FilterNone, History, Label } from '@material-ui/icons';
+import {
+  Delete,
+  DevicesOther,
+  Edit,
+  FilterNone,
+  History,
+  Label,
+  VerifiedUser,
+} from '@material-ui/icons';
 import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -202,6 +210,37 @@ const DeviceDetails = () => {
                   <ListItem divider>
                     <Box margin='auto'>
                       <ListItemText>{t('noStaticAttrs')}</ListItemText>
+                    </Box>
+                  </ListItem>
+                )}
+              </List>
+
+              <List className={classes.dataGroup} disablePadding>
+                <ListItem divider>
+                  <ListItemIcon className={classes.dataGroupTitleIcon}>
+                    <VerifiedUser fontSize='small' style={{ color: '#34C38F' }} />
+                  </ListItemIcon>
+                  <ListItemText>{t('sectionTitles.associatedCertificate')}</ListItemText>
+                </ListItem>
+
+                {deviceData.certificate?.fingerprint ? (
+                  <ListItem divider>
+                    <ListItemText
+                      style={{ wordBreak: 'break-all', paddingRight: '2rem' }}
+                      primary={
+                        <Box mb={1}>
+                          <RouterLink to={`/certificates?s=${deviceData.certificate.fingerprint}`}>
+                            {t('seeCertificate')}
+                          </RouterLink>
+                        </Box>
+                      }
+                      secondary={deviceData.certificate.fingerprint}
+                    />
+                  </ListItem>
+                ) : (
+                  <ListItem divider>
+                    <Box margin='auto'>
+                      <ListItemText>{t('noAssociatedCertificate')}</ListItemText>
                     </Box>
                   </ListItem>
                 )}
