@@ -112,27 +112,21 @@ const UserMenu = ({
 };
 
 UserMenu.propTypes = {
-  tenant: PropTypes.string,
-  version: PropTypes.string,
+  tenant: PropTypes.string.isRequired,
+  version: PropTypes.string.isRequired,
   anchorElement: PropTypes.object,
   isShowingUserMenu: PropTypes.bool,
   isDarkModeActivated: PropTypes.bool,
-  handleChangeTheme: PropTypes.func,
-  handleChangePassword: PropTypes.func,
-  handleShowLogoutModal: PropTypes.func,
-  handleClickAwayUserMenu: PropTypes.func,
+  handleChangeTheme: PropTypes.func.isRequired,
+  handleChangePassword: PropTypes.func.isRequired,
+  handleShowLogoutModal: PropTypes.func.isRequired,
+  handleClickAwayUserMenu: PropTypes.func.isRequired,
 };
 
 UserMenu.defaultProps = {
-  tenant: '',
-  version: '',
-  anchorElement: null,
+  anchorElement: document.body,
   isShowingUserMenu: false,
   isDarkModeActivated: false,
-  handleChangeTheme: null,
-  handleChangePassword: null,
-  handleShowLogoutModal: null,
-  handleClickAwayUserMenu: null,
 };
 
 export default UserMenu;

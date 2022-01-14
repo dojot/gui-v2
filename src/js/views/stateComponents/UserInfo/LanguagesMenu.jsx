@@ -67,21 +67,17 @@ const LanguagesMenu = ({
 };
 
 LanguagesMenu.propTypes = {
-  languages: PropTypes.array,
+  languages: PropTypes.array.isRequired,
   anchorElement: PropTypes.object,
   isShowingLanguagesMenu: PropTypes.bool,
-  handleChangeLanguage: PropTypes.func,
-  handleHideLanguagesMenu: PropTypes.func,
-  handleClickAwayLanguagesMenu: PropTypes.func,
+  handleChangeLanguage: PropTypes.func.isRequired,
+  handleHideLanguagesMenu: PropTypes.func.isRequired,
+  handleClickAwayLanguagesMenu: PropTypes.func.isRequired,
 };
 
 LanguagesMenu.defaultProps = {
-  languages: [],
-  anchorElement: null,
+  anchorElement: document.body,
   isShowingLanguagesMenu: false,
-  handleChangeLanguage: null,
-  handleHideLanguagesMenu: null,
-  handleClickAwayLanguagesMenu: null,
 };
 
 export default LanguagesMenu;

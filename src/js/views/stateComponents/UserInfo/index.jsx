@@ -30,7 +30,7 @@ export const UserInfo = () => {
   const [isShowingLogoutModal, setIsShowingLogoutModal] = useState(false);
   const [isShowingLanguagesMenu, setIsShowingLanguagesMenu] = useState(false);
 
-  const version = GUI_VERSION || t('notDefined');
+  const version = `${GUI_VERSION || t('notDefined')}`;
   const user = getUserInformation() || DEFAULT_USER_DATA;
 
   const handleToggleUserMenu = () => {
