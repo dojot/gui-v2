@@ -8,10 +8,13 @@
   "lastUpdateTableLabel": "Last Update Table",
   "editDevice": "Edit Device",
   "deleteDevice": "Delete Device",
+  "seeCertificate": "See Certificate",
+  "noAssociatedCertificate": "No Associated Certificate",
   "sectionTitles": {
     "templates": "Templates",
     "staticAttrs": "Static Attrs",
-    "lastUpdate": "Last Update Received"
+    "lastUpdate": "Last Update Received",
+    "associatedCertificate": "Associated Certificate"
   },
   "lastUpdateTable": {
     "date": "Date",

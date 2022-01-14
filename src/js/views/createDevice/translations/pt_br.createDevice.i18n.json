@@ -2,6 +2,7 @@
   "title": "Novo Dispositivo",
   "cancelDeviceCreationTitle": "Cancelar Criação de Dispositivo",
   "cancelDeviceCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
   "stepper": {
     "templates": "Modelos",
     "attrs": "Atributos",
@@ -27,16 +28,22 @@
     "noActuatorAttrs": "Nenhum atributo atuador para exibir"
   },
   "securityStep": {
-    "hint": "Nesta etapa você gera um certicado para tornar seu dispositivo mais seguro.",
-    "certificateName": "Certificado",
-    "creationTime": "Criação",
-    "expirationTime": "Expiração",
+    "hint": "Nesta etapa você gera ou seleciona um certificado para tornar seu dispositivo mais seguro.",
+    "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
+    "creationDate": "Criação",
+    "expirationDate": "Expiração",
     "emptyCertificateList": "Nenhum Certificado Encontrado",
     "totalOfPages": "Total de Páginas: {{count}}",
     "labelRowsPerPage": "Itens por página:",
     "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
     "nextIconButtonText": "Próxima Página",
-    "backIconButtonText": "Página Anterior"
+    "backIconButtonText": "Página Anterior",
+    "createCertificateWithOneClick": "Criar Certificado Com Um Clique",
+    "cannotCreateMoreCertificates": "Você pode criar apenas um certificado enquanto cria um dispositivo",
+    "hasSelectedCertificate": "Selecionou um Certificado",
+    "deleteCreatedCertificate": "Excluir Certificado Criado",
+    "searchInputPh": "Pesquisar Certificado Por Fingerprint"
   },
   "summaryStep": {
     "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",

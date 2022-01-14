@@ -10,8 +10,8 @@ import useStyles from './style';
 
 const CreateCertificateCA = ({
   isShowing,
-  handleToggleContent,
   certificateData,
+  handleToggleContent,
   handleRegisterExternalCertificate,
   certificateChain,
   handleChangeCertificateChain,
@@ -24,32 +24,33 @@ const CreateCertificateCA = ({
       title={t('createCertificateCA.title')}
       subtitle={t('createCertificateCA.subTitle')}
       isContentVisible={isShowing}
-      handleToggleContent={handleToggleContent}
-      isCaptionHighlighted
-      disabled={!!certificateData && !isShowing}
       canToggleContent={!certificateData}
+      disabled={!!certificateData && !isShowing}
+      handleToggleContent={handleToggleContent}
     >
       {!certificateData ? (
         <Box padding={4}>
-          <Typography>{t('createCertificateCA.inputDataLabel')}</Typography>
+          <Box mb={2}>
+            <Typography>{t('createCertificateCA.inputDataLabel')}</Typography>
+          </Box>
 
           <TextField
+            rows={10}
+            variant='outlined'
             value={certificateChain}
             onChange={handleChangeCertificateChain}
             placeholder={t('createCertificateCA.inputPlaceholder')}
             multiline
-            rows={10}
-            variant='outlined'
             fullWidth
           />
 
           <Typography align='right'>
             <Button
-              onClick={handleRegisterExternalCertificate}
               className={classes.generateCertificateButton}
+              onClick={handleRegisterExternalCertificate}
+              disabled={!certificateChain}
               variant='outlined'
               color='primary'
-              disabled={!certificateChain}
             >
               {t('createCertificateCA.generateCertificate')}
             </Button>
@@ -66,8 +67,8 @@ const CreateCertificateCA = ({
 
 CreateCertificateCA.propTypes = {
   isShowing: PropTypes.bool,
-  handleToggleContent: PropTypes.func,
   certificateData: PropTypes.object,
+  handleToggleContent: PropTypes.func,
   handleRegisterExternalCertificate: PropTypes.func,
   certificateChain: PropTypes.string,
   handleChangeCertificateChain: PropTypes.func,
@@ -75,8 +76,8 @@ CreateCertificateCA.propTypes = {
 
 CreateCertificateCA.defaultProps = {
   isShowing: false,
-  handleToggleContent: null,
   certificateData: null,
+  handleToggleContent: null,
   handleRegisterExternalCertificate: null,
   certificateChain: '',
   handleChangeCertificateChain: null,

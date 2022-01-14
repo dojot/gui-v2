@@ -1,58 +1,63 @@
 import React, { useMemo } from 'react';
 
 import {
-  Radio,
   Table,
   TableBody,
   TableCell,
   TableContainer,
-  TableRow,
   CircularProgress,
   Typography,
   Box,
+  Button,
 } from '@material-ui/core';
+import { Delete } from '@material-ui/icons';
 import { DataTableHead } from 'Components/DataTable';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { formatDate } from 'Utils';
 
 import Pagination from './Pagination';
+import SecurityTableRow from './SecurityTableRow';
 import { useSecurityTableStyles } from './style';
 
 const SecurityTable = ({
   page,
-  certificates,
+  isLoading,
   totalPages,
   rowsPerPage,
+  certificates,
+  createdCertificate,
+  certificateDetails,
   selectedCertificate,
-  isLoading,
+  isDeletingCreatedCertificate,
   handleChangePage,
   setSelectedCertificate,
   handleChangeRowsPerPage,
+  handleDeleteCreatedCertificate,
 }) => {
-  const { t } = useTranslation('createDevice');
+  const { t } = useTranslation(['createDevice', 'common']);
   const classes = useSecurityTableStyles();
+
   const headCells = useMemo(
     () => [
       {
-        id: 'certificate',
-        label: t('securityStep.certificateName'),
+        id: 'fingerprint',
+        label: t('securityStep.fingerprint'),
       },
       {
-        id: 'creationTime',
-        label: t('securityStep.creationTime'),
+        id: 'subjectDN',
+        label: t('securityStep.subjectDN'),
       },
       {
-        id: 'expirationTime',
-        label: t('securityStep.expirationTime'),
+        id: 'creationDate',
+        label: t('securityStep.creationDate'),
+      },
+      {
+        id: 'expirationDate',
+        label: t('securityStep.expirationDate'),
       },
     ],
     [t],
   );
-
-  const handleCertificateSelection = cert => {
-    setSelectedCertificate(cert);
-  };
 
   if (isLoading) {
     return (
@@ -65,59 +70,80 @@ const SecurityTable = ({
   return (
     <>
       <TableContainer>
-        <Table aria-labelledby='tableTitle'>
+        <Table aria-labelledby='tableTitle' size='small'>
           <DataTableHead
             className={classes.tableHead}
             cells={headCells}
             rowCount={certificates.length}
+            startExtraCells={<TableCell />}
+            endExtraCells={<TableCell />}
             disableCheckbox
             disableOrderBy
-            startExtraCells={<TableCell />}
           />
 
-          <TableBody>
-            {certificates.map(cert => {
-              const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
-              return (
-                <TableRow
-                  key={cert.fingerprint}
-                  tabIndex={-1}
-                  role='radio'
-                  onClick={() => handleCertificateSelection(cert)}
-                  hover
-                >
-                  <TableCell>
-                    <Radio
-                      color='primary'
-                      checked={isSelected}
-                      onChange={() => handleCertificateSelection(cert)}
-                    />
-                  </TableCell>
-                  <TableCell className={classes.clickableCell}>{cert.fingerprint}</TableCell>
-                  <TableCell className={classes.clickableCell}>
-                    {formatDate(cert.validity.notBefore, 'DD/MM/YYYY HH:mm:ss')}
-                  </TableCell>
-                  <TableCell className={classes.clickableCell} colSpan='2'>
-                    {formatDate(cert.validity.notAfter, 'DD/MM/YYYY HH:mm:ss')}
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
+          {createdCertificate && certificateDetails ? (
+            <TableBody>
+              <SecurityTableRow
+                isNew
+                isSelected
+                subjectDN={certificateDetails.subjectDN}
+                fingerprint={certificateDetails.fingerprint}
+                creationDate={certificateDetails.validity.notBefore}
+                expirationDate={certificateDetails.validity.notAfter}
+              />
+            </TableBody>
+          ) : (
+            <TableBody>
+              {certificates.map(cert => {
+                const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
+
+                const handleSelectThisCertificate = () => {
+                  if (isSelected) setSelectedCertificate({});
+                  else setSelectedCertificate(cert);
+                };
+
+                return (
+                  <SecurityTableRow
+                    key={cert.fingerprint}
+                    isSelected={isSelected}
+                    subjectDN={cert.subjectDN}
+                    fingerprint={cert.fingerprint}
+                    creationDate={cert.validity.notBefore}
+                    expirationDate={cert.validity.notAfter}
+                    handleSelectCertificate={handleSelectThisCertificate}
+                  />
+                );
+              })}
+            </TableBody>
+          )}
         </Table>
 
-        {!!certificates.length && (
+        {!!certificates.length && !createdCertificate && (
           <Pagination
             page={page}
             rowsPerPage={rowsPerPage}
             totalOfPages={totalPages}
+            hasSelectedCertificate={!!selectedCertificate?.fingerprint}
             handleChangePage={handleChangePage}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
           />
         )}
       </TableContainer>
 
-      {certificates.length === 0 && (
+      {!!createdCertificate && (
+        <Box py={2}>
+          <Button
+            variant='outlined'
+            disabled={isDeletingCreatedCertificate}
+            onClick={handleDeleteCreatedCertificate}
+            endIcon={isDeletingCreatedCertificate ? <CircularProgress size={14} /> : <Delete />}
+          >
+            {t('securityStep.deleteCreatedCertificate')}
+          </Button>
+        </Box>
+      )}
+
+      {certificates.length === 0 && !createdCertificate && (
         <Box className={classes.emptyList}>
           <Typography className={classes.emptyListText}>
             {t('securityStep.emptyCertificateList')}
@@ -130,14 +156,23 @@ const SecurityTable = ({
 
 SecurityTable.propTypes = {
   page: PropTypes.number.isRequired,
-  certificates: PropTypes.array.isRequired,
+  isLoading: PropTypes.bool.isRequired,
   totalPages: PropTypes.number.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
+  certificates: PropTypes.array.isRequired,
+  createdCertificate: PropTypes.object,
+  certificateDetails: PropTypes.object,
   selectedCertificate: PropTypes.object.isRequired,
-  isLoading: PropTypes.bool.isRequired,
+  isDeletingCreatedCertificate: PropTypes.bool.isRequired,
   handleChangePage: PropTypes.func.isRequired,
   setSelectedCertificate: PropTypes.func.isRequired,
   handleChangeRowsPerPage: PropTypes.func.isRequired,
+  handleDeleteCreatedCertificate: PropTypes.func.isRequired,
+};
+
+SecurityTable.defaultProps = {
+  createdCertificate: null,
+  certificateDetails: null,
 };
 
 export default SecurityTable;

@@ -2,6 +2,7 @@
   "title": "New Device",
   "cancelDeviceCreationTitle": "Cancel Device Creation",
   "cancelDeviceCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
   "stepper": {
     "templates": "Templates",
     "attrs": "Attributes",
@@ -27,16 +28,22 @@
     "noActuatorAttrs": "No actuator attribute to show"
   },
   "securityStep": {
-    "hint": "In this step you generate a certificate to make your device more secure.",
-    "certificateName": "Certificate",
-    "creationTime": "Creation",
-    "expirationTime": "Expire",
+    "hint": "In this step you generate or select a certificate to make your device more secure.",
+    "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
+    "creationDate": "Creation",
+    "expirationDate": "Expire",
     "emptyCertificateList": "No Certificate Found",
     "totalPages": "Total Pages: {{count}}",
     "labelRowsPerPage": "Items per Page:",
     "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
     "nextIconButtonText": "Next Page",
-    "backIconButtonText": "Previous Page"
+    "backIconButtonText": "Previous Page",
+    "createCertificateWithOneClick": "Create Certificate With One Click",
+    "cannotCreateMoreCertificates": "You can only create one certificate while creating a device",
+    "hasSelectedCertificate": "Selected a Certificate",
+    "deleteCreatedCertificate": "Delete Created Certificate",
+    "searchInputPh": "Search Certificate By Fingerprint"
   },
   "summaryStep": {
     "title": "Review the templates, certificates and the name your device",
