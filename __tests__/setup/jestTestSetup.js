@@ -14,12 +14,12 @@ jest.mock('react-i18next', () => ({
           en: {},
           'pt-BR': {},
         },
-        changeLanguage: (_, callback) => {
-          return new Promise(resolve => {
-            if (callback) callback();
-            resolve();
-          });
-        },
+      },
+      changeLanguage: (_, callback) => {
+        return new Promise(resolve => {
+          if (callback) callback();
+          resolve();
+        });
       },
     },
   }),

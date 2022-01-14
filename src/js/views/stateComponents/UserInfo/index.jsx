@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Button, Divider, Box } from '@material-ui/core';
 import { ArrowDropDown, Language } from '@material-ui/icons';
@@ -8,7 +8,7 @@ import { useHistory } from 'react-router';
 import { getUserInformation, logout } from 'Utils';
 
 import { AlertDialog } from '../../../common/components/Dialogs';
-import { LANGUAGE_KEYS } from '../../../common/constants';
+import { useChangeLanguage } from '../../../common/hooks';
 import LanguagesMenu from './LanguagesMenu';
 import { useStyles } from './style';
 import UserMenu from './UserMenu';
@@ -20,6 +20,8 @@ export const UserInfo = () => {
   const history = useHistory();
   const classes = useStyles();
 
+  const { languages, handleChangeLanguage } = useChangeLanguage();
+
   const menuButtonRef = useRef(null);
   const switchLanguageButtonRef = useRef(null);
 
@@ -30,11 +32,6 @@ export const UserInfo = () => {
 
   const version = GUI_VERSION || t('notDefined');
   const user = getUserInformation() || DEFAULT_USER_DATA;
-
-  const languages = useMemo(() => {
-    if (i18n.options.resources) return Object.keys(i18n.options.resources);
-    return [i18n.options.fallbackLng];
-  }, [i18n.options.fallbackLng, i18n.options.resources]);
 
   const handleToggleUserMenu = () => {
     setIsShowingUserMenu(isShowing => !isShowing);
@@ -78,16 +75,6 @@ export const UserInfo = () => {
 
   const handleChangeTheme = e => {
     setIsDarkModeActivated(e.target.checked);
-  };
-
-  const handleChangeLanguage = newLanguage => {
-    if (i18n.language === newLanguage) return;
-
-    // * i18n.changeLanguage is asynchronous, but since all resources are in the front-end (no need to download translations) the operation is very fast.
-
-    i18n.changeLanguage(newLanguage, () => {
-      localStorage.setItem(LANGUAGE_KEYS.LANGUAGE, newLanguage);
-    });
   };
 
   return (

@@ -1,5 +1,6 @@
 export * from './useDebounce';
 export * from './useIsLoading';
+export * from './useChangeLanguage';
 export * from './useAttrTranslation';
 export * from './usePersistentState';
 export * from './useSearchParamState';
