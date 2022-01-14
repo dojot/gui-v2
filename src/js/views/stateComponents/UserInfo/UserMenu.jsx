@@ -12,6 +12,7 @@ import {
   Switch,
 } from '@material-ui/core';
 import { BookmarkBorder, ExitToApp, Lock } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { useStyles } from './style';
@@ -108,6 +109,30 @@ const UserMenu = ({
       )}
     </Popper>
   );
+};
+
+UserMenu.propTypes = {
+  tenant: PropTypes.string,
+  version: PropTypes.string,
+  anchorElement: PropTypes.object,
+  isShowingUserMenu: PropTypes.bool,
+  isDarkModeActivated: PropTypes.bool,
+  handleChangeTheme: PropTypes.func,
+  handleChangePassword: PropTypes.func,
+  handleShowLogoutModal: PropTypes.func,
+  handleClickAwayUserMenu: PropTypes.func,
+};
+
+UserMenu.defaultProps = {
+  tenant: '',
+  version: '',
+  anchorElement: null,
+  isShowingUserMenu: false,
+  isDarkModeActivated: false,
+  handleChangeTheme: null,
+  handleChangePassword: null,
+  handleShowLogoutModal: null,
+  handleClickAwayUserMenu: null,
 };
 
 export default UserMenu;

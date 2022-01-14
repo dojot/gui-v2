@@ -9,6 +9,7 @@ import {
   ListItemText,
   ClickAwayListener,
 } from '@material-ui/core';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { useStyles } from './style';
@@ -63,6 +64,24 @@ const LanguagesMenu = ({
       )}
     </Popper>
   );
+};
+
+LanguagesMenu.propTypes = {
+  languages: PropTypes.array,
+  anchorElement: PropTypes.object,
+  isShowingLanguagesMenu: PropTypes.bool,
+  handleChangeLanguage: PropTypes.func,
+  handleHideLanguagesMenu: PropTypes.func,
+  handleClickAwayLanguagesMenu: PropTypes.func,
+};
+
+LanguagesMenu.defaultProps = {
+  languages: [],
+  anchorElement: null,
+  isShowingLanguagesMenu: false,
+  handleChangeLanguage: null,
+  handleHideLanguagesMenu: null,
+  handleClickAwayLanguagesMenu: null,
 };
 
 export default LanguagesMenu;
