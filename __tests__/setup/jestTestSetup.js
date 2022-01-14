@@ -8,5 +8,19 @@ configure({ adapter: new Adapter() });
 jest.mock('react-i18next', () => ({
   useTranslation: () => ({
     t: key => key,
+    i18n: {
+      options: {
+        resources: {
+          en: {},
+          'pt-BR': {},
+        },
+        changeLanguage: (_, callback) => {
+          return new Promise(resolve => {
+            if (callback) callback();
+            resolve();
+          });
+        },
+      },
+    },
   }),
 }));

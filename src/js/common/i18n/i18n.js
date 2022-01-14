@@ -41,17 +41,20 @@ import deviceIntegrationModalEn from '../components/TutorialModals/DeviceIntegra
 import deviceIntegrationModalPtBr from '../components/TutorialModals/DeviceIntegrationModal/translations/pt_br.deviceIntegrationModal.i18n.json';
 import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
 import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
+import { LANGUAGE_KEYS } from '../constants';
 import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
 import attrsEn from './translations/en.attrs.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
 import constantsEn from './translations/en.constants.i18n.json';
 import errorEn from './translations/en.error.i18n.json';
+import languagesEn from './translations/en.languages.i18n.json';
 import successEn from './translations/en.success.i18n.json';
 import attrsPtBr from './translations/pt_br.attrs.i18n.json';
 import commonPtBr from './translations/pt_br.common.i18n.json';
 import constantsPtBr from './translations/pt_br.constants.i18n.json';
 import errorPtBr from './translations/pt_br.error.i18n.json';
+import languagesPtBr from './translations/pt_br.languages.i18n.json';
 import successPtBr from './translations/pt_br.success.i18n.json';
 
 const resources = {
@@ -82,8 +85,9 @@ const resources = {
     editTemplate: editTemplateEn,
     createCertificate: createCertificateEn,
     constants: constantsEn,
+    languages: languagesEn,
   },
-  pt: {
+  'pt-BR': {
     login: loginPtBr,
     menu: menuPtBr,
     common: commonPtBr,
@@ -110,14 +114,17 @@ const resources = {
     editTemplate: editTemplatePtBr,
     createCertificate: createCertificatePtBr,
     constants: constantsPtBr,
+    languages: languagesPtBr,
   },
 };
 
-const lng = navigator.language || navigator.userLanguage;
+const preferredLanguage = localStorage.getItem(LANGUAGE_KEYS.LANGUAGE);
+const lng = preferredLanguage || navigator.language || navigator.userLanguage;
 
 i18n.use(initReactI18next).init({
   ns: ['login', 'menu', 'common', 'dashboard'],
   defaultNS: 'common',
+  fallbackLng: 'en',
   lng,
   resources,
   keySeparator: '.',
