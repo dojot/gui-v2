@@ -9,9 +9,9 @@ import GeneratedCertificateResume from './GeneratedCertificateResume';
 
 const CreateCertificateOneClick = ({
   isShowing,
+  certificateData,
   handleToggleContent,
   handleCreateCertificateOneClick,
-  certificateData,
 }) => {
   const { t } = useTranslation('createCertificate');
 
@@ -20,12 +20,11 @@ const CreateCertificateOneClick = ({
       title={t('createCertificateOneClick.title')}
       subtitle={t('createCertificateOneClick.subTitle')}
       isContentVisible={isShowing}
-      handleToggleContent={handleToggleContent}
-      isCaptionHighlighted
-      disabled={!!certificateData && !isShowing}
       canToggleContent={!certificateData}
+      disabled={!!certificateData && !isShowing}
+      handleToggleContent={handleToggleContent}
     >
-      <Box padding={4}>
+      <Box padding={4} paddingTop={3}>
         {!certificateData ? (
           <Button
             onClick={handleCreateCertificateOneClick}
@@ -45,16 +44,16 @@ const CreateCertificateOneClick = ({
 
 CreateCertificateOneClick.propTypes = {
   isShowing: PropTypes.bool,
+  certificateData: PropTypes.object,
   handleToggleContent: PropTypes.func,
   handleCreateCertificateOneClick: PropTypes.func,
-  certificateData: PropTypes.object,
 };
 
 CreateCertificateOneClick.defaultProps = {
   isShowing: false,
+  certificateData: null,
   handleToggleContent: null,
   handleCreateCertificateOneClick: null,
-  certificateData: null,
 };
 
 export default CreateCertificateOneClick;

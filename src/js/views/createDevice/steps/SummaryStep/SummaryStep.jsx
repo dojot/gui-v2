@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 
 import { Box, IconButton, InputAdornment, Link, TextField, Typography } from '@material-ui/core';
@@ -6,21 +5,9 @@ import { Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { downloadTextFile } from '../../../../common/utils';
 import ActionButtons from '../../layout/ActionButtons';
 import { useSummaryStepStyles } from './style';
-
-const download = (filename, text) => {
-  const element = document.createElement('a');
-  element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(text)}`);
-  element.setAttribute('download', filename);
-
-  element.style.display = 'none';
-  document.body.appendChild(element);
-
-  element.click();
-
-  document.body.removeChild(element);
-};
 
 const SummaryStep = ({
   deviceName,
@@ -32,7 +19,7 @@ const SummaryStep = ({
   handleGoToPreviousStep,
   handleCancelDeviceCreation,
 }) => {
-  const { t } = useTranslation('createDevice');
+  const { t } = useTranslation(['createDevice', 'common']);
   const classes = useSummaryStepStyles();
 
   const handleClearDeviceName = () => {
@@ -101,57 +88,66 @@ const SummaryStep = ({
               </Typography>
             </Box>
           </Box>
-          {selectedCertificate?.pem ? (
+
+          {!!selectedCertificate?.pem && (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.certificate')}</Typography>
 
               <Link
+                href='_'
                 tabIndex={0}
                 component='button'
-                onClick={() => download('certificate.pem', selectedCertificate.pem)}
+                onClick={() => downloadTextFile('certificate.pem', selectedCertificate.pem)}
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
-          ) : null}
-          {selectedCertificate?.privateKey ? (
+          )}
+
+          {!!selectedCertificate?.privateKey && (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.privateKey')}</Typography>
               <Link
+                href='_'
                 tabIndex={0}
                 component='button'
-                onClick={() => download('privateKey.pem', selectedCertificate.privateKey)}
+                onClick={() => downloadTextFile('privateKey.pem', selectedCertificate.privateKey)}
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
-          ) : null}
-          {selectedCertificate?.publicKey ? (
+          )}
+
+          {!!selectedCertificate?.publicKey && (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.publicKey')}</Typography>
 
               <Link
+                href='_'
                 tabIndex={0}
                 component='button'
-                onClick={() => download('publicKey.pem', selectedCertificate.publicKey)}
+                onClick={() => downloadTextFile('publicKey.pem', selectedCertificate.publicKey)}
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
-          ) : null}
+          )}
 
-          {selectedCertificate?.caCertificate ? (
+          {!!selectedCertificate?.caCertificate && (
             <Box className={classes.certificateData}>
               <Typography>{t('summaryStep.caCertificate')}</Typography>
               <Link
+                href='_'
                 tabIndex={0}
                 component='button'
-                onClick={() => download('caCertificate.pem', selectedCertificate.caCertificate)}
+                onClick={() =>
+                  downloadTextFile('caCertificate.pem', selectedCertificate.caCertificate)
+                }
               >
-                Link
+                {t('common:download')}
               </Link>
             </Box>
-          ) : null}
+          )}
         </Box>
       </Box>
 

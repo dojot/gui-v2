@@ -31,7 +31,8 @@
     "deleteMultipleCertificates": "Could not delete these certificates",
     "disassociateDevice": "Could not disassociate the certificate from this device",
     "associateDevice": "Could not associate the certificate with this device",
-    "createCertificate": "Unable to create a certificate",
+    "createCertificate": "Could not create a certificate",
+    "getCertificateByFingerprint": "Could not get the certificate by fingerprint",
 
     "getCertificationAuthorities": "Could not get CAs",
     "deleteCertificationAuthority": "Could not delete this CA",

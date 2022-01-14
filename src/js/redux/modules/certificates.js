@@ -1,7 +1,6 @@
 import { Map } from 'immutable';
 import { createAction, handleActions } from 'redux-actions';
 
-const CREATE_ONE_CLICK = 'app/certificates/CREATE_ONE_CLICK';
 const GET_CERTIFICATES = 'app/certificates/GET_CERTIFICATES';
 const GET_CERTIFICATES_BY_ID = 'app/certificates/GET_CERTIFICATES_BY_ID';
 const GET_CERTIFICATES_BY_FINGERPRINT = 'app/certificates/GET_CERTIFICATES_BY_FINGERPRINT';
@@ -14,9 +13,9 @@ const CREATE_CERTIFICATE_ONE_CLICK = 'app/certificates/CREATE_CERTIFICATE_ONE_CL
 const CREATE_CERTIFICATE_CSR = 'app/certificates/CREATE_CERTIFICATE_CSR';
 const GET_NEW_GENERATED_CERTIFICATE = 'app/certificates/GET_NEW_GENERATED_CERTIFICATE';
 const REGISTER_EXTERNAL_CERTIFICATE = 'app/certificates/REGISTER_EXTERNAL_CERTIFICATE';
+const SET_CERTIFICATE_DETAILS = 'app/certificates/SET_CERTIFICATE_DETAILS';
 
 export const constants = {
-  CREATE_ONE_CLICK,
   GET_CERTIFICATES,
   GET_CERTIFICATES_BY_ID,
   GET_CERTIFICATES_BY_FINGERPRINT,
@@ -29,11 +28,8 @@ export const constants = {
   CREATE_CERTIFICATE_CSR,
   GET_NEW_GENERATED_CERTIFICATE,
   REGISTER_EXTERNAL_CERTIFICATE,
+  SET_CERTIFICATE_DETAILS,
 };
-
-export const createOneClick = createAction(CREATE_ONE_CLICK, payload => ({
-  commonName: payload.commonName,
-}));
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
   page: payload.page,
@@ -44,8 +40,6 @@ export const getCertificateByFingerprint = createAction(
   GET_CERTIFICATES_BY_FINGERPRINT,
   payload => ({
     fingerprint: payload.fingerprint,
-    privateKey: payload.privateKeyPEM,
-    publicKey: payload.publicKeyPEM,
   }),
 );
 
@@ -72,6 +66,7 @@ export const updateCertificates = createAction(UPDATE_CERTIFICATES, payload => {
 
 export const deleteCertificate = createAction(DELETE_CERTIFICATE, payload => ({
   fingerprint: payload.fingerprint,
+  successCallback: payload.successCallback,
 }));
 
 export const deleteMultipleCertificates = createAction(DELETE_MULTIPLE_CERTIFICATES, payload => ({
@@ -89,6 +84,8 @@ export const associateDevice = createAction(ASSOCIATE_DEVICE, payload => ({
 
 export const createCertificateOneClick = createAction(CREATE_CERTIFICATE_ONE_CLICK, payload => ({
   commonName: payload?.commonName,
+  successCallback: payload?.successCallback,
+  shouldGetCurrentPageAgain: payload?.shouldGetCurrentPageAgain,
 }));
 
 export const createCertificateCSR = createAction(CREATE_CERTIFICATE_CSR, payload => ({
@@ -103,8 +100,11 @@ export const getNewGeneratedCertificate = createAction(GET_NEW_GENERATED_CERTIFI
   certificateData: payload.certificateData,
 }));
 
+export const setCertificateDetails = createAction(SET_CERTIFICATE_DETAILS, payload => ({
+  certificateDetails: payload.certificateDetails,
+}));
+
 export const actions = {
-  createOneClick,
   getCertificates,
   getCertificateById,
   getCertificateByFingerprint,
@@ -117,6 +117,7 @@ export const actions = {
   createCertificateCSR,
   getNewGeneratedCertificate,
   registerExternalCertificate,
+  setCertificateDetails,
 };
 
 export const reducers = {
@@ -126,12 +127,16 @@ export const reducers = {
   [GET_NEW_GENERATED_CERTIFICATE]: (state, { payload }) => {
     return state.merge({ ...payload });
   },
+  [SET_CERTIFICATE_DETAILS]: (state, { payload }) => {
+    return state.merge({ ...payload });
+  },
 };
 
 export const initialState = () => {
   return Map({
     certificates: [],
     certificateData: null,
+    certificateDetails: null,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,

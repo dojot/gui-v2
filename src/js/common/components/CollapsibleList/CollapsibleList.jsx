@@ -37,8 +37,9 @@ const CollapsibleList = ({
         disableGutters
       >
         <ListItemText
+          className={classes.title}
           primary={
-            <Typography className={classes.title} component='span'>
+            <Typography component='span'>
               <Box component='span' marginRight={1}>
                 {title}
               </Box>
@@ -56,7 +57,7 @@ const CollapsibleList = ({
           }
           secondary={
             subtitle && (
-              <Typography className={classes.title} variant='body2' color='textSecondary'>
+              <Typography variant='body2' color='textSecondary'>
                 {subtitle}
               </Typography>
             )
