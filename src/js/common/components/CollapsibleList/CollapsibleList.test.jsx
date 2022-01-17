@@ -46,6 +46,9 @@ describe('CollapsibleList', () => {
       >
         <div>Content</div>
       </CollapsibleList>,
+      {
+        wrapper: ThemeWrapper,
+      },
     );
 
     expect(getByText('TitleText')).toBeVisible();
@@ -69,6 +72,9 @@ describe('CollapsibleList', () => {
       >
         <div>Content</div>
       </CollapsibleList>,
+      {
+        wrapper: ThemeWrapper,
+      },
     );
 
     expect(getByText('CaptionText')).toBeVisible();
