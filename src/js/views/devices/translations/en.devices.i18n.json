@@ -15,7 +15,7 @@
   "favorite": "Add to Favorites",
   "numberOfSelectedDevices": "{{count}} Line Selected",
   "numberOfSelectedDevices_plural": "{{count}} Lines Selected",
-  "emptyListMessage": "No Device Found",
+  "emptyListMessage": "No Devices Found",
   "createNewDevice": "Create New Device",
   "dataTableHead": {
     "id": "ID",
