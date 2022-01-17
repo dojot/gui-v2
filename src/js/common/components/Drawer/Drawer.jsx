@@ -9,7 +9,7 @@ import {
   Collapse,
 } from '@material-ui/core';
 import { ExpandMore, ExpandLess } from '@material-ui/icons';
-import logo from 'Assets/images/dojotLogo.png';
+import logo from 'Assets/images/dojotLogoWhite.png';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Link, withRouter, useHistory } from 'react-router-dom';

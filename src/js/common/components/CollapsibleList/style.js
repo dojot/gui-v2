@@ -2,8 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
   container: {
-    border: `1px solid ${theme.palette.grey[300]}`,
-    background: theme.palette.grey[100],
+    background: theme.palette.background.shade[500],
     minHeight: '4rem',
     marginBottom: '1rem',
     paddingBottom: 0,

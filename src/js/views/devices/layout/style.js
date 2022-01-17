@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useSearchBarStyles = makeStyles(theme => ({
   searchContainer: {
-    background: theme.palette.grey[100],
+    background: theme.palette.background.shade[500],
     display: 'flex',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -67,7 +67,7 @@ export const usePaginationStyles = makeStyles(() => ({
 
 export const useMassActionsStyles = makeStyles(theme => ({
   massActionsContainer: {
-    background: theme.palette.primary.main,
+    background: theme.palette.secondary.main,
   },
   massActionsLabel: {
     color: theme.palette.background.default,
@@ -87,7 +87,7 @@ export const useMassActionsStyles = makeStyles(theme => ({
 
 export const useDataTableStyles = makeStyles(theme => ({
   tableHead: {
-    background: theme.palette.grey[100],
+    background: theme.palette.background.shade[500],
   },
   clickableCell: {
     cursor: 'pointer',

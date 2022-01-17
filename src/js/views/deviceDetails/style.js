@@ -30,13 +30,13 @@ export default makeStyles(theme => ({
     color: theme.palette.text.secondary,
   },
   dataGroup: {
-    background: '#f2f2f2',
+    background: theme.palette.background.shade[500],
     border: `1px solid ${theme.palette.divider}`,
     borderBottom: 'none',
     marginBottom: '1rem',
   },
   dataGroupWithBottomBorder: {
-    background: '#f2f2f2',
+    background: theme.palette.background.shade[500],
     border: `1px solid ${theme.palette.divider}`,
     marginBottom: '1rem',
   },
