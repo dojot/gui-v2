@@ -26,4 +26,16 @@ describe('Certificates module tests', () => {
     const newState = reducers[action.type](initialState(), action);
     expect(newState.get('paginationControl')).toEqual(fakePaginationControl);
   });
+
+  it('should set the certificate data', () => {
+    const action = actions.getNewGeneratedCertificate({ certificateData: fakeCertificate });
+    const newState = reducers[action.type](initialState(), action);
+    expect(newState.get('certificateData')).toEqual(fakeCertificate);
+  });
+
+  it('should set the certificate details', () => {
+    const action = actions.setCertificateDetails({ certificateDetails: fakeCertificate });
+    const newState = reducers[action.type](initialState(), action);
+    expect(newState.get('certificateDetails')).toEqual(fakeCertificate);
+  });
 });
