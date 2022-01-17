@@ -18,12 +18,13 @@
   "finish": "Finalizar",
   "noData": "Sem Dados",
   "required": "Obrigatório",
-  "min5characters": "Minimo de 5 caracteres",
+  "min5characters": "Mínimo de 5 caracteres",
   "save": "Salvar",
   "duplicate": "Duplicar",
   "none": "Nenhum",
   "no": "Não",
   "yesImSure": "Sim, tenho certeza",
   "download": "Download",
+  "change": "Alterar",
   "new": "Novo"
 }
