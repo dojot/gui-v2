@@ -6,7 +6,7 @@ import { SnackbarProvider } from 'notistack';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
 import { Router } from 'react-router-dom';
-import darkTheme from 'Themes/dark';
+import theme from 'Themes/index';
 
 import GlobalErrorToasts from './views/stateComponents/GlobalErrorToasts';
 import GlobalSuccessToast from './views/stateComponents/GlobalSuccessToast';
@@ -16,7 +16,7 @@ import 'fontsource-roboto';
 
 const Root = ({ Routes, history, store }) => {
   return (
-    <ThemeProvider theme={darkTheme}>
+    <ThemeProvider theme={theme}>
       <Provider store={store}>
         <Router history={history}>
           <Routes />
