@@ -23,12 +23,14 @@ const CreateCertificate = () => {
   const certificateData = useSelector(certificateDataSelector);
 
   const [expandedCard, setExpandedCard] = useState('');
+  const [csrPEM, setCsrPEM] = useState('');
+  const [certificateChain, setCertificateChain] = useState('');
 
   useEffect(() => {
     return () => {
       dispatch(actions.getNewGeneratedCertificate({ certificateData: null }));
     };
-  }, []);
+  }, [dispatch]);
 
   const handleLeaveCertificateCreation = () => {
     if (history.length) history.goBack();
@@ -49,70 +51,80 @@ const CreateCertificate = () => {
     dispatch(actions.createCertificateOneClick());
   };
 
-  const handleCreateCertificateCSR = csrPEM => () => {
+  const handleCreateCertificateCSR = () => {
     dispatch(actions.createCertificateCSR({ csrPEM }));
   };
 
-  const handleRegisterExternalCertificate = certificateChain => () => {
+  const handleRegisterExternalCertificate = () => {
     dispatch(actions.registerExternalCertificate({ certificateChain }));
   };
 
   const handleClearState = () => {
     setExpandedCard('');
+    setCsrPEM('');
+    setCertificateChain('');
     dispatch(actions.getNewGeneratedCertificate({ certificateData: null }));
   };
 
+  const handleChangeCsrPEM = e => {
+    setCsrPEM(e.target.value);
+  };
+
+  const handleChangeCertificateChain = e => {
+    setCertificateChain(e.target.value);
+  };
+
   return (
-    <ViewContainer headerTitle={t('Novo certificado')}>
+    <ViewContainer headerTitle={t('headerTitle')}>
       <Box className={classes.container}>
         <Box className={classes.content}>
-          <Box className={classes.collapsibleCardsWrapper}>
-            <CreateCertificateOneClick
-              isShowing={expandedCard === CONSTANTS.ONE_CLICK}
-              handleToggleContent={handleToggleContent(CONSTANTS.ONE_CLICK)}
-              handleCreateCertificateOneClick={handleCreateCertificateOneClick}
-              certificateData={certificateData}
-            />
+          <CreateCertificateOneClick
+            certificateData={certificateData}
+            isShowing={expandedCard === CONSTANTS.ONE_CLICK}
+            handleToggleContent={handleToggleContent(CONSTANTS.ONE_CLICK)}
+            handleCreateCertificateOneClick={handleCreateCertificateOneClick}
+          />
 
-            <CreateCertificateCSR
-              isShowing={expandedCard === CONSTANTS.CSR}
-              handleToggleContent={handleToggleContent(CONSTANTS.CSR)}
-              handleCreateCertificateCSR={handleCreateCertificateCSR}
-              certificateData={certificateData}
-            />
+          <CreateCertificateCSR
+            csrPEM={csrPEM}
+            certificateData={certificateData}
+            isShowing={expandedCard === CONSTANTS.CSR}
+            handleChangeCsrPEM={handleChangeCsrPEM}
+            handleToggleContent={handleToggleContent(CONSTANTS.CSR)}
+            handleCreateCertificateCSR={handleCreateCertificateCSR}
+          />
 
-            <CreateCertificateCA
-              isShowing={expandedCard === CONSTANTS.CA}
-              handleToggleContent={handleToggleContent(CONSTANTS.CA)}
-              certificateData={certificateData}
-              handleRegisterExternalCertificate={handleRegisterExternalCertificate}
-            />
-          </Box>
+          <CreateCertificateCA
+            certificateData={certificateData}
+            certificateChain={certificateChain}
+            isShowing={expandedCard === CONSTANTS.CA}
+            handleToggleContent={handleToggleContent(CONSTANTS.CA)}
+            handleChangeCertificateChain={handleChangeCertificateChain}
+            handleRegisterExternalCertificate={handleRegisterExternalCertificate}
+          />
         </Box>
 
         <Box className={classes.footer}>
-          <Box className={classes.actionButtonsWrapper}>
-            {certificateData ? (
-              <>
-                <Button variant='text' color='primary' onClick={handleClearState}>
-                  {t('createOtherCertificate')}
-                </Button>
-
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={handleLeaveCertificateCreation}
-                  className={classes.finishButton}
-                >
-                  {t('finishButton')}
-                </Button>
-              </>
-            ) : (
-              <Button className={classes.cancelButton} onClick={handleLeaveCertificateCreation}>
-                {t('cancelButton')}
+          {certificateData ? (
+            <>
+              <Button variant='text' color='primary' onClick={handleClearState}>
+                {t('createOtherCertificate')}
               </Button>
-            )}
-          </Box>
+
+              <Button
+                variant='contained'
+                color='primary'
+                onClick={handleLeaveCertificateCreation}
+                className={classes.finishButton}
+              >
+                {t('finishButton')}
+              </Button>
+            </>
+          ) : (
+            <Button className={classes.cancelButton} onClick={handleLeaveCertificateCreation}>
+              {t('cancelButton')}
+            </Button>
+          )}
         </Box>
       </Box>
     </ViewContainer>

@@ -21,6 +21,7 @@
   "validityNotDefined": "Validity Not Defined",
   "dataLabels": {
     "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
     "deviceId": "Device ID",
     "validity": "Validity Period",
     "status": "Status",

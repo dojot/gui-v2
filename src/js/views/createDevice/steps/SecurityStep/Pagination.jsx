@@ -11,6 +11,7 @@ const Pagination = ({
   page,
   rowsPerPage,
   totalOfPages,
+  hasSelectedCertificate,
   handleChangePage,
   handleChangeRowsPerPage,
 }) => {
@@ -19,6 +20,10 @@ const Pagination = ({
   return (
     <Box className={classes.pagination} paddingX={2} paddingY={1}>
       <Typography>{t('securityStep.totalOfPages', { count: totalOfPages })}</Typography>
+
+      {hasSelectedCertificate && (
+        <Typography>{t('securityStep.hasSelectedCertificate')}</Typography>
+      )}
 
       <TablePagination
         page={page}
@@ -43,6 +48,7 @@ Pagination.propTypes = {
   page: PropTypes.number,
   rowsPerPage: PropTypes.number,
   totalOfPages: PropTypes.number,
+  hasSelectedCertificate: PropTypes.bool,
   handleChangePage: PropTypes.func,
   handleChangeRowsPerPage: PropTypes.func,
 };
@@ -51,6 +57,7 @@ Pagination.defaultProps = {
   page: 0,
   rowsPerPage: 0,
   totalOfPages: 0,
+  hasSelectedCertificate: false,
   handleChangePage: null,
   handleChangeRowsPerPage: null,
 };

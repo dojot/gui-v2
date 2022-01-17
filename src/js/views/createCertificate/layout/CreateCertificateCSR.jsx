@@ -9,20 +9,20 @@ import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
 const CreateCertificateCSR = ({
-  handleCreateCertificateCSR,
+  csrPEM,
   isShowing,
-  handleToggleContent,
   certificateData,
+  handleChangeCsrPEM,
+  handleToggleContent,
+  handleCreateCertificateCSR,
 }) => {
   const { t } = useTranslation('createCertificate');
   const classes = useStyles();
+
   const [csrHelp, setCsrHelp] = useState(false);
-  const [csrPEM, setCsrPEM] = useState('');
 
-  const toggleCsrHelp = () => setCsrHelp(!csrHelp);
-
-  const handleChangeText = e => {
-    setCsrPEM(e.target.value);
+  const handleToggleCsrHelp = () => {
+    setCsrHelp(!csrHelp);
   };
 
   return (
@@ -30,47 +30,52 @@ const CreateCertificateCSR = ({
       title={t('createCertificateCSR.title')}
       subtitle={t('createCertificateCSR.subTitle')}
       isContentVisible={isShowing}
-      handleToggleContent={handleToggleContent}
-      isCaptionHighlighted
-      disabled={!!certificateData && !isShowing}
       canToggleContent={!certificateData}
+      disabled={!!certificateData && !isShowing}
+      handleToggleContent={handleToggleContent}
     >
       {!certificateData ? (
         <Box padding={4}>
           <Typography
-            onClick={toggleCsrHelp}
-            align='right'
-            cursor='pointer'
             className={classes.csrHelpLink}
+            cursor='pointer'
+            align='right'
+            onClick={handleToggleCsrHelp}
           >
             {t('createCertificateCSR.generateCsrHelp')}
           </Typography>
+
           <Collapse in={csrHelp}>
-            <Typography>
-              <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>
-              <u>{t('createCertificateCSR.csrHelpSteps.step1Text')}</u>
-            </Typography>
-            <Typography>
-              <b>{t('createCertificateCSR.csrHelpSteps.step2')}</b>
-              {t('createCertificateCSR.csrHelpSteps.step2Text')}
-            </Typography>
+            <Box mb={2}>
+              <Typography>
+                <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>
+                <u>{t('createCertificateCSR.csrHelpSteps.step1Text')}</u>
+              </Typography>
+
+              <Typography>
+                <b>{t('createCertificateCSR.csrHelpSteps.step2')}</b>
+                {t('createCertificateCSR.csrHelpSteps.step2Text')}
+              </Typography>
+            </Box>
           </Collapse>
+
           <TextField
             value={csrPEM}
-            onChange={handleChangeText}
-            placeholder={t('createCertificateCSR.inputPlaceholder')}
-            multiline
-            rows={10}
             variant='outlined'
+            onChange={handleChangeCsrPEM}
+            placeholder={t('createCertificateCSR.inputPlaceholder')}
+            rows={10}
+            multiline
             fullWidth
           />
+
           <Typography align='right'>
             <Button
-              onClick={handleCreateCertificateCSR(csrPEM)}
+              onClick={handleCreateCertificateCSR}
               className={classes.generateCertificateButton}
+              disabled={!csrPEM}
               variant='outlined'
               color='primary'
-              disabled={!csrPEM}
             >
               {t('createCertificateCSR.generateCertificate')}
             </Button>
@@ -86,17 +91,21 @@ const CreateCertificateCSR = ({
 };
 
 CreateCertificateCSR.propTypes = {
-  handleCreateCertificateCSR: PropTypes.func,
+  csrPEM: PropTypes.string,
   isShowing: PropTypes.bool,
-  handleToggleContent: PropTypes.func,
   certificateData: PropTypes.object,
+  handleChangeCsrPEM: PropTypes.func,
+  handleToggleContent: PropTypes.func,
+  handleCreateCertificateCSR: PropTypes.func,
 };
 
 CreateCertificateCSR.defaultProps = {
-  handleCreateCertificateCSR: null,
+  csrPEM: '',
   isShowing: false,
-  handleToggleContent: null,
   certificateData: null,
+  handleChangeCsrPEM: null,
+  handleToggleContent: null,
+  handleCreateCertificateCSR: null,
 };
 
 export default CreateCertificateCSR;
