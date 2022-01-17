@@ -102,6 +102,7 @@
     "react-hot-loader": "^4.13.0",
     "react-test-renderer": "^16.14.0",
     "redux-mock-store": "^1.5.4",
+    "redux-saga-test-plan": "^4.0.4",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4",
     "style-loader": "^2.0.0",
