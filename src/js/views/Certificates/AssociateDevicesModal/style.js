@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useAssociateDeviceModalStyles = makeStyles(theme => ({
   tableContainer: {
-    background: theme.palette.grey[50],
+    background: theme.palette.background.shade[500],
     border: `1px solid ${theme.palette.divider}`,
     borderBottom: 'none',
   },
@@ -14,7 +14,7 @@ export const useAssociateDeviceModalStyles = makeStyles(theme => ({
     cursor: 'pointer',
     userSelect: 'none',
     '&:hover': {
-      background: theme.palette.grey[100],
+      background: theme.palette.background.shade[500],
     },
   },
 }));
