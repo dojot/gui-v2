@@ -168,6 +168,7 @@
     "collectCoverage": true,
     "coverageDirectory": "test/unit/coverage",
     "verbose": true,
+    "testTimeout": 10000,
     "testPathIgnorePatterns": [
       "<rootDir>/__tests__/setup/",
       "<rootDir>/node_modules/",
