@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Box, TextField, Typography, Button } from '@material-ui/core';
 import { CollapsibleList } from 'Components/CollapsibleList';
@@ -10,46 +10,47 @@ import useStyles from './style';
 
 const CreateCertificateCA = ({
   isShowing,
-  handleToggleContent,
   certificateData,
+  handleToggleContent,
   handleRegisterExternalCertificate,
+  certificateChain,
+  handleChangeCertificateChain,
 }) => {
   const classes = useStyles();
   const { t } = useTranslation('createCertificate');
-
-  const [certificateChain, setCertificateChain] = useState('');
 
   return (
     <CollapsibleList
       title={t('createCertificateCA.title')}
       subtitle={t('createCertificateCA.subTitle')}
       isContentVisible={isShowing}
-      handleToggleContent={handleToggleContent}
-      isCaptionHighlighted
-      disabled={!!certificateData && !isShowing}
       canToggleContent={!certificateData}
+      disabled={!!certificateData && !isShowing}
+      handleToggleContent={handleToggleContent}
     >
       {!certificateData ? (
         <Box padding={4}>
-          <Typography>{t('createCertificateCA.inputDataLabel')}</Typography>
+          <Box mb={2}>
+            <Typography>{t('createCertificateCA.inputDataLabel')}</Typography>
+          </Box>
 
           <TextField
-            value={certificateChain}
-            onChange={e => setCertificateChain(e.target.value)}
-            placeholder={t('createCertificateCA.inputPlaceholder')}
-            multiline
             rows={10}
             variant='outlined'
+            value={certificateChain}
+            onChange={handleChangeCertificateChain}
+            placeholder={t('createCertificateCA.inputPlaceholder')}
+            multiline
             fullWidth
           />
 
           <Typography align='right'>
             <Button
-              onClick={handleRegisterExternalCertificate(certificateChain)}
               className={classes.generateCertificateButton}
+              onClick={handleRegisterExternalCertificate}
+              disabled={!certificateChain}
               variant='outlined'
               color='primary'
-              disabled={!certificateChain}
             >
               {t('createCertificateCA.generateCertificate')}
             </Button>
@@ -66,16 +67,20 @@ const CreateCertificateCA = ({
 
 CreateCertificateCA.propTypes = {
   isShowing: PropTypes.bool,
-  handleToggleContent: PropTypes.func,
   certificateData: PropTypes.object,
+  handleToggleContent: PropTypes.func,
   handleRegisterExternalCertificate: PropTypes.func,
+  certificateChain: PropTypes.string,
+  handleChangeCertificateChain: PropTypes.func,
 };
 
 CreateCertificateCA.defaultProps = {
   isShowing: false,
-  handleToggleContent: null,
   certificateData: null,
+  handleToggleContent: null,
   handleRegisterExternalCertificate: null,
+  certificateChain: '',
+  handleChangeCertificateChain: null,
 };
 
 export default CreateCertificateCA;

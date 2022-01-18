@@ -23,10 +23,13 @@ export const useSecurityStepStyles = makeStyles(theme => ({
       background: theme.palette.primary.dark,
       color: theme.palette.primary.contrastText,
     },
-    '&:disabled': {
-      opacity: 0.4,
-      background: theme.palette.primary.dark,
+  },
+  headerButtonSuccess: {
+    color: theme.palette.primary.contrastText,
+    background: theme.palette.success.main,
+    '&:hover': {
       color: theme.palette.primary.contrastText,
+      background: theme.palette.success.main,
     },
   },
   stepComponent: {
@@ -37,11 +40,15 @@ export const useSecurityStepStyles = makeStyles(theme => ({
   templateCreation: {
     flex: 1,
   },
+  tooltip: {
+    fontSize: '1rem',
+  },
 }));
 
 export const useSecurityTableStyles = makeStyles(theme => ({
   tableHead: {
     background: theme.palette.background.shade[500],
+    height: '60px',
   },
   searchTextField: {
     marginLeft: theme.spacing(1),
@@ -51,7 +58,7 @@ export const useSecurityTableStyles = makeStyles(theme => ({
     borderRadius: '50px',
     background: theme.palette.background.paper,
   },
-  clickableCell: {
+  clickable: {
     cursor: 'pointer',
   },
   emptyList: {
@@ -69,6 +76,15 @@ export const useSecurityTableStyles = makeStyles(theme => ({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  truncatedText: {
+    maxWidth: '200px',
+    whiteSpace: 'nowrap',
+    textOverflow: 'ellipsis',
+    overflow: 'hidden',
+  },
+  tooltip: {
+    fontSize: '1rem',
+  },
 }));
 
 export const usePaginationStyles = makeStyles(() => ({
@@ -76,5 +92,15 @@ export const usePaginationStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'space-between',
+  },
+}));
+
+export const useSearchBarStyles = makeStyles(theme => ({
+  searchTextField: {
+    marginLeft: theme.spacing(1),
+    width: '400px',
+  },
+  searchInput: {
+    borderRadius: '100px',
   },
 }));

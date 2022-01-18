@@ -1,10 +1,16 @@
 import React from 'react';
 
+import { ThemeProvider } from '@material-ui/core';
 import { fireEvent, render } from '@testing-library/react';
+import theme from 'Themes/index';
 
 import CollapsibleList from './CollapsibleList';
 
 describe('CollapsibleList', () => {
+  const ThemeWrapper = ({ children }) => {
+    return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  };
+
   it('should render with a title, caption and content', () => {
     const { container, getByText } = render(
       <CollapsibleList
@@ -15,6 +21,9 @@ describe('CollapsibleList', () => {
       >
         <div>Content</div>
       </CollapsibleList>,
+      {
+        wrapper: ThemeWrapper,
+      },
     );
 
     expect(container).toBeVisible();
@@ -37,6 +46,9 @@ describe('CollapsibleList', () => {
       >
         <div>Content</div>
       </CollapsibleList>,
+      {
+        wrapper: ThemeWrapper,
+      },
     );
 
     expect(getByText('TitleText')).toBeVisible();
@@ -60,6 +72,9 @@ describe('CollapsibleList', () => {
       >
         <div>Content</div>
       </CollapsibleList>,
+      {
+        wrapper: ThemeWrapper,
+      },
     );
 
     expect(getByText('CaptionText')).toBeVisible();

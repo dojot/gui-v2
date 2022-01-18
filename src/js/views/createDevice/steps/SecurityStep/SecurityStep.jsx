@@ -1,16 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 
-import { Box, IconButton, Typography } from '@material-ui/core';
-import { Add } from '@material-ui/icons';
+import { Box, CircularProgress, IconButton, Tooltip, Typography } from '@material-ui/core';
+import { Add, Check } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { constants } from 'Redux/certificates';
-import { certificatesSelector, paginationControlSelector } from 'Selectors/certificatesSelector';
 
 import { useIsLoading } from '../../../../common/hooks';
-import { actions as certificatesActions } from '../../../../redux/modules/certificates';
+import { constants, actions as certificatesActions } from '../../../../redux/modules/certificates';
+import {
+  certificatesSelector,
+  paginationControlSelector,
+  certificateDataSelector,
+  certificateDetailsSelector,
+} from '../../../../redux/selectors/certificatesSelector';
 import ActionButtons from '../../layout/ActionButtons';
+import SecuritySearchBar from './SecuritySearchBar';
 import SecurityTable from './SecurityTable';
 import { useSecurityStepStyles } from './style';
 
@@ -26,12 +31,26 @@ const SecurityStep = ({
   const dispatch = useDispatch();
 
   const certificates = useSelector(certificatesSelector);
+  const createdCertificate = useSelector(certificateDataSelector);
   const { totalPages = 0 } = useSelector(paginationControlSelector);
+  const certificateDetails = useSelector(certificateDetailsSelector);
 
   const isLoadingCertificates = useIsLoading(constants.GET_CERTIFICATES);
+  const isDeletingCreatedCertificate = useIsLoading(constants.DELETE_CERTIFICATE);
+
+  // The GET_CERTIFICATES_BY_FINGERPRINT action will be dispatched after creating a certificate
+  const isCreatingCertificate = useIsLoading(
+    constants.CREATE_CERTIFICATE_ONE_CLICK,
+    constants.GET_CERTIFICATES_BY_FINGERPRINT,
+  );
 
   const [page, setPage] = useState(0);
+  const [searchText, setSearchText] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(10);
+
+  const canCreateCertificate = useMemo(() => {
+    return !createdCertificate;
+  }, [createdCertificate]);
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -44,10 +63,51 @@ const SecurityStep = ({
 
   const handleOnClickCreation = () => {
     dispatch(
-      certificatesActions.createOneClick({
-        commonName: undefined,
+      certificatesActions.createCertificateOneClick({
+        shouldGetCurrentPageAgain: true,
+        successCallback(certificateData) {
+          setSearchText('');
+          setSelectedCertificate({
+            caCertificate: undefined,
+            pem: certificateData.certificatePem,
+            publicKey: certificateData.publicKeyPEM,
+            privateKey: certificateData.privateKeyPEM,
+            fingerprint: certificateData.certificateFingerprint,
+          });
+        },
       }),
     );
+  };
+
+  const handleDeleteCreatedCertificate = () => {
+    if (createdCertificate) {
+      const runAfterDeleteCertificate = () => {
+        setSelectedCertificate({});
+
+        dispatch(
+          certificatesActions.getNewGeneratedCertificate({
+            certificateData: null,
+          }),
+        );
+
+        dispatch(
+          certificatesActions.setCertificateDetails({
+            certificateDetails: null,
+          }),
+        );
+      };
+
+      dispatch(
+        certificatesActions.deleteCertificate({
+          fingerprint: createdCertificate.certificateFingerprint,
+          successCallback: runAfterDeleteCertificate,
+        }),
+      );
+    }
+  };
+
+  const handleSearchCertificates = search => {
+    setSearchText(search);
   };
 
   useEffect(() => {
@@ -58,9 +118,22 @@ const SecurityStep = ({
           number: page + 1,
           size: rowsPerPage,
         },
+        filter: {
+          fingerprint: searchText,
+        },
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, searchText]);
+
+  useEffect(() => {
+    if (createdCertificate) {
+      dispatch(
+        certificatesActions.getCertificateByFingerprint({
+          fingerprint: createdCertificate.certificateFingerprint,
+        }),
+      );
+    }
+  }, [createdCertificate, dispatch]);
 
   return (
     <Box className={classes.container}>
@@ -68,28 +141,64 @@ const SecurityStep = ({
         <Box className={classes.header} marginBottom={2}>
           <Typography>{t('securityStep.hint')}</Typography>
 
-          <IconButton className={classes.headerButton} onClick={handleOnClickCreation}>
-            <Add />
-          </IconButton>
+          <Tooltip
+            placement='left'
+            classes={{ tooltip: classes.tooltip }}
+            title={t(
+              canCreateCertificate
+                ? 'securityStep.createCertificateWithOneClick'
+                : 'securityStep.cannotCreateMoreCertificates',
+            )}
+            arrow
+          >
+            <div>
+              <IconButton
+                className={
+                  canCreateCertificate ? classes.headerButton : classes.headerButtonSuccess
+                }
+                onClick={canCreateCertificate ? handleOnClickCreation : null}
+                disabled={isCreatingCertificate}
+              >
+                {(() => {
+                  if (isCreatingCertificate) return <CircularProgress size={14} color='inherit' />;
+                  if (canCreateCertificate) return <Add />;
+                  return <Check />;
+                })()}
+              </IconButton>
+            </div>
+          </Tooltip>
         </Box>
+
+        {canCreateCertificate && (
+          <Box mb={2}>
+            <SecuritySearchBar
+              lastSearchedText={searchText}
+              handleSearch={handleSearchCertificates}
+            />
+          </Box>
+        )}
 
         <Box className={classes.stepComponent} marginBottom={2}>
           <SecurityTable
             page={page}
-            certificates={certificates}
             totalPages={totalPages}
             rowsPerPage={rowsPerPage}
+            certificates={certificates}
+            certificateDetails={certificateDetails}
+            createdCertificate={createdCertificate}
             selectedCertificate={selectedCertificate}
+            isDeletingCreatedCertificate={isDeletingCreatedCertificate}
             isLoading={isLoadingCertificates}
             handleChangePage={handleChangePage}
             setSelectedCertificate={setSelectedCertificate}
             handleChangeRowsPerPage={handleChangeRowsPerPage}
+            handleDeleteCreatedCertificate={handleDeleteCreatedCertificate}
           />
         </Box>
       </Box>
 
       <ActionButtons
-        isNextButtonDisabled={false}
+        isNextButtonDisabled={isCreatingCertificate || isDeletingCreatedCertificate}
         handleClickNextButton={handleGoToNextStep}
         handleClickBackButton={handleGoToPreviousStep}
         handleClickCancelButton={handleCancelDeviceCreation}

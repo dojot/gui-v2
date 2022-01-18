@@ -8,6 +8,7 @@ import { useHistory } from 'react-router';
 import { AlertDialog } from '../../common/components/Dialogs';
 import { TEMPLATE_ATTR_TYPES } from '../../common/constants';
 import { useIsLoading } from '../../common/hooks';
+import { actions as certificatesActions } from '../../redux/modules/certificates';
 import { actions, constants } from '../../redux/modules/devices';
 import { ViewContainer } from '../stateComponents';
 import { NUMBER_OF_STEPS } from './constants';
@@ -129,6 +130,23 @@ const CreateDevice = () => {
       });
     });
   }, [selectedTemplates]);
+
+  // Clear certificates state when unmount to prevent side effects on the CreateCertificate page
+  useEffect(() => {
+    return () => {
+      dispatch(
+        certificatesActions.setCertificateDetails({
+          certificateDetails: null,
+        }),
+      );
+
+      dispatch(
+        certificatesActions.getNewGeneratedCertificate({
+          certificateData: null,
+        }),
+      );
+    };
+  }, [dispatch]);
 
   return (
     <ViewContainer headerTitle={t('title')}>

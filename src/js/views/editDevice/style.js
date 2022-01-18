@@ -48,7 +48,7 @@ export const useEditDeviceStyles = makeStyles(() => ({
 export const useAttrsTableStyles = makeStyles(theme => ({
   tableHead: {
     textTransform: 'uppercase',
-    background: theme.palette.grey[200],
+    background: theme.palette.background.shade[500],
   },
   tableBody: {
     '& > tr:last-child td': {
