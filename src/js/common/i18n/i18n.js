@@ -27,6 +27,8 @@ import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
+import pageNotFoundEn from '../../views/pageNotFound/translations/en.pageNotFound.i18n.json';
+import pageNotFoundPtBr from '../../views/pageNotFound/translations/pt_br.pageNotFound.i18n.json';
 import userInfoEn from '../../views/stateComponents/UserInfo/translations/en_us.userInfo.i18n.json';
 import userInfoBr from '../../views/stateComponents/UserInfo/translations/pt_br.userInfo.i18n.json';
 import templateAttrsEn from '../../views/templateAttrs/translations/en.templateAttrs.i18n.json';
@@ -86,6 +88,7 @@ const resources = {
     createCertificate: createCertificateEn,
     constants: constantsEn,
     languages: languagesEn,
+    pageNotFound: pageNotFoundEn,
   },
   'pt-BR': {
     login: loginPtBr,
@@ -115,6 +118,7 @@ const resources = {
     createCertificate: createCertificatePtBr,
     constants: constantsPtBr,
     languages: languagesPtBr,
+    pageNotFound: pageNotFoundPtBr,
   },
 };
 
