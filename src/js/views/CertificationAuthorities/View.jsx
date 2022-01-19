@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
 import { isNumber } from 'lodash';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -191,6 +192,10 @@ const CertificationAuthorities = () => {
 
   return (
     <ViewContainer headerTitle={t('headerTitle')}>
+      <Helmet
+        title={`${t('certificationAuthorities:headerTitle')} • ${t('common:dojotPageTitle')}`}
+      />
+
       <AlertDialog
         isOpen={isShowingMultipleDeleteAlert}
         cancelButtonText={t('common:cancel')}

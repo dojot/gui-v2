@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { Box, Button } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -45,6 +46,8 @@ const CreateTemplate = () => {
 
   return (
     <ViewContainer headerTitle={t('title')}>
+      <Helmet title={`${t('createTemplate:title')} • ${t('common:dojotPageTitle')}`} />
+
       <Box className={classes.container} padding={4}>
         <Box className={classes.content}>
           <TemplateCreation

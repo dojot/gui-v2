@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import { Box, Button } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -76,6 +77,7 @@ const CreateCertificate = () => {
 
   return (
     <ViewContainer headerTitle={t('headerTitle')}>
+      <Helmet title={`${t('createCertificate:headerTitle')} • ${t('common:dojotPageTitle')}`} />
       <Box className={classes.container}>
         <Box className={classes.content}>
           <CreateCertificateOneClick

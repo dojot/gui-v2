@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { SOURCE, WIDGET } from 'Constants';
+import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
@@ -37,6 +39,8 @@ const WizardPage = ({
   uuid,
   id,
 }) => {
+  const { t } = useTranslation('common');
+
   const { createAreaWidget } = useArea(
     addWidget,
     addWidgetConfig,
@@ -74,26 +78,29 @@ const WizardPage = ({
     widgetType: WIDGET.AREA,
   };
   return (
-    <Wizard
-      initialValues={initialStateRecovered || initialState}
-      onSubmit={handleSubmit}
-      steps={stepsList}
-      headerTitle={title}
-    >
-      <General validate={generalValidates} name='general' />
-      <Devices validate={null} name='devices' />
-      <Attributes
-        validate={null}
-        name='attributes'
-        staticSupported={false}
-        acceptedTypes={[
-          TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
-          TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
-        ]}
-      />
-      <Filters validate={null} name='filters' />
-      <Summary />
-    </Wizard>
+    <>
+      <Helmet title={`${title} • ${t('dojotPageTitle')}`} />
+      <Wizard
+        initialValues={initialStateRecovered || initialState}
+        onSubmit={handleSubmit}
+        steps={stepsList}
+        headerTitle={title}
+      >
+        <General validate={generalValidates} name='general' />
+        <Devices validate={null} name='devices' />
+        <Attributes
+          validate={null}
+          name='attributes'
+          staticSupported={false}
+          acceptedTypes={[
+            TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+            TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+          ]}
+        />
+        <Filters validate={null} name='filters' />
+        <Summary />
+      </Wizard>
+    </>
   );
 };
 

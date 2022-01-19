@@ -4,6 +4,7 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBack from '@material-ui/icons/ArrowBack';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
@@ -56,6 +57,7 @@ const WidgetView = props => {
 
   return (
     <ViewContainer headerTitle={t('dashboard:widget')} headerContent={getHeaderContent}>
+      <Helmet title={`${t('dashboard:widget')} • ${t('common:dojotPageTitle')}`} />
       <Grid container justify='flex-start' className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />

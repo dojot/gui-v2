@@ -1,6 +1,8 @@
 import React from 'react';
 
 import { SOURCE, WIDGET } from 'Constants';
+import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
@@ -38,6 +40,8 @@ const LineWizard = ({
   uuid,
   id,
 }) => {
+  const { t } = useTranslation('common');
+
   const { createLineWidget } = useLine(
     addWidget,
     addWidgetConfig,
@@ -76,27 +80,30 @@ const LineWizard = ({
     widgetType: WIDGET.LINE,
   };
   return (
-    <Wizard
-      initialValues={initialStateRecovered || initialState}
-      onSubmit={handleSubmit}
-      steps={stepsList}
-      headerTitle={title}
-    >
-      <General validate={generalValidates} name='general' />
-      <Security validate={null} name='security' />
-      <Devices validate={null} name='devices' />
-      <Attributes
-        validate={null}
-        name='attributes'
-        staticSupported={false}
-        acceptedTypes={[
-          TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
-          TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
-        ]}
-      />
-      <Filters validate={null} name='filters' />
-      <Summary />
-    </Wizard>
+    <>
+      <Helmet title={`${title} • ${t('dojotPageTitle')}`} />
+      <Wizard
+        initialValues={initialStateRecovered || initialState}
+        onSubmit={handleSubmit}
+        steps={stepsList}
+        headerTitle={title}
+      >
+        <General validate={generalValidates} name='general' />
+        <Security validate={null} name='security' />
+        <Devices validate={null} name='devices' />
+        <Attributes
+          validate={null}
+          name='attributes'
+          staticSupported={false}
+          acceptedTypes={[
+            TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+            TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+          ]}
+        />
+        <Filters validate={null} name='filters' />
+        <Summary />
+      </Wizard>
+    </>
   );
 };
 

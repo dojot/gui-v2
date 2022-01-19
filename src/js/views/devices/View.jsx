@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { DevicesOther } from '@material-ui/icons';
 import { isNumber } from 'lodash';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -195,6 +196,7 @@ const Devices = () => {
 
   return (
     <ViewContainer headerTitle={t('devices:title')}>
+      <Helmet title={`${t('devices:title')} • ${t('common:dojotPageTitle')}`} />
       <DeviceOptionsMenu
         isShowingMenu={!!deviceOptionsMenu}
         anchorElement={deviceOptionsMenu?.anchorElement}

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { FilterNone } from '@material-ui/icons';
 import { isNumber } from 'lodash';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -35,7 +36,7 @@ import SearchBar from './layout/SearchBar';
 import useStyles from './style';
 
 const Templates = () => {
-  const { t } = useTranslation('templates');
+  const { t } = useTranslation(['templates', 'common']);
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -186,6 +187,8 @@ const Templates = () => {
 
   return (
     <ViewContainer headerTitle={t('title')}>
+      <Helmet title={`${t('templates:title')} • ${t('common:dojotPageTitle')}`} />
+
       <OptionsMenu
         isShowingMenu={!!templateOptionsMenu}
         anchorElement={templateOptionsMenu?.anchorElement}

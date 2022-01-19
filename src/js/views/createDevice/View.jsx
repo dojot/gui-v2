@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
 import { Box, Grid } from '@material-ui/core';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -149,7 +150,8 @@ const CreateDevice = () => {
   }, [dispatch]);
 
   return (
-    <ViewContainer headerTitle={t('title')}>
+    <ViewContainer headerTitle={t('createDevice:title')}>
+      <Helmet title={`${t('createDevice:title')} • ${t('common:dojotPageTitle')}`} />
       <AlertDialog
         isOpen={isShowingCancelModal}
         cancelButtonText={t('common:no')}

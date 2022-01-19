@@ -10,6 +10,7 @@ import {
   Typography,
 } from '@material-ui/core';
 import { Close, Edit } from '@material-ui/icons';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
@@ -198,6 +199,7 @@ const EditDevice = () => {
   if (isLoadingDeviceData) {
     return (
       <ViewContainer headerTitle={t('title')}>
+        <Helmet title={`${t('editDevice:title')} • ${t('common:dojotPageTitle')}`} />
         <Box className={classes.loadingContainer} padding={4}>
           <CircularProgress />
         </Box>
@@ -207,6 +209,7 @@ const EditDevice = () => {
 
   return (
     <ViewContainer headerTitle={t('title')}>
+      <Helmet title={`${t('editDevice:title')} • ${t('common:dojotPageTitle')}`} />
       <Box className={classes.container} padding={4}>
         <Box className={classes.content}>
           <Box className={classes.form}>

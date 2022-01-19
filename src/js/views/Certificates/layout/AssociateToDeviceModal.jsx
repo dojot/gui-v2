@@ -12,9 +12,11 @@ import {
   Radio,
   CircularProgress,
   TableContainer,
+  Typography,
 } from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -29,13 +31,13 @@ import {
   paginationControlSelector,
 } from '../../../redux/selectors/devicesSelector';
 import Pagination from './Pagination';
-import { useAssociateDeviceModalStyles } from './style';
+import { useAssociateToDeviceModalStyles } from './style';
 
-const AssociateDevicesModal = ({ isOpen, certificate, handleHideDevicesToAssociateModal }) => {
-  const { t } = useTranslation('certificates');
+const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssociateModal }) => {
+  const { t } = useTranslation(['certificates', 'common']);
 
   const dispatch = useDispatch();
-  const classes = useAssociateDeviceModalStyles();
+  const classes = useAssociateToDeviceModalStyles();
 
   const devices = useSelector(devicesSelector);
   const isLoadingDevices = useIsLoading(constants.GET_DEVICES);
@@ -50,17 +52,17 @@ const AssociateDevicesModal = ({ isOpen, certificate, handleHideDevicesToAssocia
       {
         id: 'id',
         className: classes.tableHeadCell,
-        label: t('associateDeviceModal.table.id'),
+        label: t('associateToDeviceModal.table.id'),
       },
       {
         id: 'label',
         className: classes.tableHeadCell,
-        label: t('associateDeviceModal.table.label'),
+        label: t('associateToDeviceModal.table.label'),
       },
       {
         id: 'lastUpdate',
         className: classes.tableHeadCell,
-        label: t('associateDeviceModal.table.lastUpdate'),
+        label: t('associateToDeviceModal.table.lastUpdate'),
       },
     ],
     [classes.tableHeadCell, t],
@@ -112,12 +114,14 @@ const AssociateDevicesModal = ({ isOpen, certificate, handleHideDevicesToAssocia
 
   return (
     <Dialog open={isOpen} onClose={handleHideDevicesToAssociateModal} maxWidth='lg' fullWidth>
+      <Helmet title={`${t('certificates:associateToDevice')} • ${t('common:dojotPageTitle')}`} />
       <DialogHeader
-        title={t('AssociateToDeviceModalTitle')}
+        title={t('certificates:associateToDevice')}
         handleHideDialog={handleHideDevicesToAssociateModal}
       />
 
       <Box padding={2}>
+        <Typography>{t('certificates:dataTableTitle')}</Typography>
         <TableContainer className={classes.tableContainer}>
           <Table aria-label='Table' size='small'>
             <DataTableHead
@@ -191,7 +195,7 @@ const AssociateDevicesModal = ({ isOpen, certificate, handleHideDevicesToAssocia
             color='primary'
             size='large'
           >
-            {t('associateDeviceModal.associate')}
+            {t('associateToDeviceModal.associate')}
           </Button>
         </Box>
       </DialogActions>
@@ -199,16 +203,16 @@ const AssociateDevicesModal = ({ isOpen, certificate, handleHideDevicesToAssocia
   );
 };
 
-AssociateDevicesModal.propTypes = {
+AssociateToDeviceModal.propTypes = {
   isOpen: PropTypes.bool,
   certificate: PropTypes.object,
   handleHideDevicesToAssociateModal: PropTypes.func,
 };
 
-AssociateDevicesModal.defaultProps = {
+AssociateToDeviceModal.defaultProps = {
   isOpen: false,
   certificate: {},
   handleHideDevicesToAssociateModal: null,
 };
 
-export default AssociateDevicesModal;
+export default AssociateToDeviceModal;
