@@ -5,8 +5,8 @@ const SHOW_SUCCESS_TOAST = 'app/success/SHOW_SUCCESS_TOAST';
 const HIDE_SUCCESS_TOAST = 'app/success/HIDE_SUCCESS_TOAST';
 
 export const constants = {
-  SHOW_SUCCESS: SHOW_SUCCESS_TOAST,
-  HIDE_SUCCESS: HIDE_SUCCESS_TOAST,
+  SHOW_SUCCESS_TOAST,
+  HIDE_SUCCESS_TOAST,
 };
 
 export const showSuccessToast = createAction(
