@@ -53,7 +53,7 @@ describe('devicesSaga', () => {
 
     const pagination = {
       currentPage: 1,
-      size: 10,
+      itemsPerPage: 10,
     };
 
     return expectSaga(getCurrentDevicesPageAgain)
