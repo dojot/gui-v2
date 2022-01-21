@@ -1,5 +1,5 @@
 {
-  "title": "Detalhamento do Dispositivo: {{name}}",
+  "title": "Detalhamento do Dispositivo: {{name}} ({{id}})",
   "titleWithoutName": "Detalhamento do Dispositivo",
   "noDeviceDataToShow": "Nenhuma Informação Para Exibir",
   "noLastUpdateData": "Nenhuma Atualização Para Exibir",
