@@ -18,6 +18,7 @@
     "actions": "Ações"
   },
   "cardData": {
+    "templateId": "ID do Modelo",
     "attrsLength": "Propriedade",
     "attrsLength_plural": "Propriedades"
   },
