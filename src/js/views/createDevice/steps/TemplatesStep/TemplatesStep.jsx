@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Box, IconButton, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
@@ -70,22 +70,12 @@ const TemplatesStep = ({
     setSearchText(search);
   };
 
-  const handleDiscardNewTemplate = () => {
+  const handleLeaveTemplateCreation = () => {
     setIsCreatingTemplate(false);
     handleClearState();
   };
 
-  const handleSaveNewTemplate = () => {
-    dispatch(
-      templateActions.createTemplate({
-        label: templateLabel,
-        attrs: getAttrsWithoutId(),
-        successCallback: handleDiscardNewTemplate,
-      }),
-    );
-  };
-
-  useEffect(() => {
+  const handleGetTemplates = useCallback(() => {
     dispatch(
       templateActions.getTemplates({
         page: {
@@ -98,6 +88,21 @@ const TemplatesStep = ({
       }),
     );
   }, [dispatch, page, rowsPerPage, searchText]);
+
+  const handleSaveNewTemplate = () => {
+    dispatch(
+      templateActions.createTemplate({
+        label: templateLabel,
+        attrs: getAttrsWithoutId(),
+        successCallback() {
+          handleGetTemplates();
+          handleLeaveTemplateCreation();
+        },
+      }),
+    );
+  };
+
+  useEffect(handleGetTemplates, [handleGetTemplates]);
 
   return (
     <Box className={classes.container}>
@@ -128,7 +133,7 @@ const TemplatesStep = ({
                 <TemplateCreationActions
                   canSaveNewTemplate={canSaveTemplate}
                   handleSaveNewTemplate={handleSaveNewTemplate}
-                  handleDiscardNewTemplate={handleDiscardNewTemplate}
+                  handleDiscardNewTemplate={handleLeaveTemplateCreation}
                 />
               }
             />
