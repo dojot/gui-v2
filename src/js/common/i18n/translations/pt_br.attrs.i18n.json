@@ -1,4 +1,5 @@
 {
+  "attrValueHint": "Você só pode definir o valor para atributos estáticos.",
   "attrLabel": {
     "attrLabel": "Nome do Atributo",
     "attrType": "Tipo do Atributo",

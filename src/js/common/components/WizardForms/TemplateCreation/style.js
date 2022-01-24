@@ -40,4 +40,7 @@ export const useStyles = makeStyles(theme => ({
     justifyContent: 'center',
     background: theme.palette.background.default,
   },
+  tooltip: {
+    fontSize: '1rem',
+  },
 }));
