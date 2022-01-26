@@ -1,4 +1,4 @@
 {
   "env": "development",
-  "publicPath": "/"
+  "publicPath": "/v2"
 }
