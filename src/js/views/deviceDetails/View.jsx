@@ -116,7 +116,12 @@ const DeviceDetails = () => {
   }
 
   return (
-    <ViewContainer headerTitle={t('title', { name: deviceData.label })}>
+    <ViewContainer
+      headerTitle={t('title', {
+        name: deviceData.label,
+        id: deviceData.id,
+      })}
+    >
       <AlertDialog
         isOpen={isShowingDeleteAlert}
         title={t('deleteDeviceAlert.title')}

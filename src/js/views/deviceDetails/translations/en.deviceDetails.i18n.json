@@ -1,5 +1,5 @@
 {
-  "title": "Device Details: {{name}}",
+  "title": "Device Details: {{name}} ({{id}})",
   "titleWithoutName": "Device Details",
   "noDeviceDataToShow": "Nothing To Show",
   "noLastUpdateData": "No Update To Show",

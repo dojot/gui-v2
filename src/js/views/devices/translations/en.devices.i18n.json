@@ -26,6 +26,7 @@
     "actions": "Actions"
   },
   "cardData": {
+    "deviceId": "Device ID",
     "properties": "Properties",
     "updated": "Last Update"
   },
