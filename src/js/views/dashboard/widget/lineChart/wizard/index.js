@@ -1,8 +1,6 @@
 import React from 'react';
 
 import { SOURCE, WIDGET } from 'Constants';
-import { Helmet } from 'react-helmet';
-import { useTranslation } from 'react-i18next';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
@@ -40,8 +38,6 @@ const LineWizard = ({
   uuid,
   id,
 }) => {
-  const { t } = useTranslation('common');
-
   const { createLineWidget } = useLine(
     addWidget,
     addWidgetConfig,
@@ -81,7 +77,6 @@ const LineWizard = ({
   };
   return (
     <>
-      <Helmet title={`${title} • ${t('dojotPageTitle')}`} />
       <Wizard
         initialValues={initialStateRecovered || initialState}
         onSubmit={handleSubmit}

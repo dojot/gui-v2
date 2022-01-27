@@ -10,7 +10,6 @@ import { DevelopmentContainer } from 'Components/Containers';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
@@ -245,7 +244,6 @@ const Dashboard = props => {
 
   return (
     <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={getHeaderContent}>
-      <Helmet title={`${t('dashboard:dashboard')} • ${t('common:dojotPageTitle')}`} />
       <ResponsiveReactGridLayout
         cols={cols}
         rowHeight={rowHeight}

@@ -16,7 +16,6 @@ import {
   VerifiedUser,
   ImportExport,
 } from '@material-ui/icons';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 
@@ -59,7 +58,6 @@ const Home = () => {
 
   return (
     <ViewContainer headerTitle={t('home:title')}>
-      <Helmet title={`${t('home:title')} • ${t('common:dojotPageTitle')}`} />
       <Box sx={{ flexGrow: 1 }} padding={2}>
         <Grid container wrap spacing={4}>
           {Object.entries(HOME_CARDS).map(([key, card]) => {

@@ -16,7 +16,6 @@ import {
 } from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 
@@ -34,7 +33,7 @@ import Pagination from './Pagination';
 import { useAssociateToDeviceModalStyles } from './style';
 
 const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssociateModal }) => {
-  const { t } = useTranslation(['certificates', 'common']);
+  const { t } = useTranslation('certificates');
 
   const dispatch = useDispatch();
   const classes = useAssociateToDeviceModalStyles();
@@ -114,7 +113,6 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
 
   return (
     <Dialog open={isOpen} onClose={handleHideDevicesToAssociateModal} maxWidth='lg' fullWidth>
-      <Helmet title={`${t('certificates:associateToDevice')} • ${t('common:dojotPageTitle')}`} />
       <DialogHeader
         title={t('certificates:associateToDevice')}
         handleHideDialog={handleHideDevicesToAssociateModal}

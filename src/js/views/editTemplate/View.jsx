@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 
 import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
 import { Edit, FilterNone } from '@material-ui/icons';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
@@ -83,7 +82,6 @@ const EditTemplate = () => {
   if (isLoadingTemplate) {
     return (
       <ViewContainer headerTitle={t('titleWithoutLabel')}>
-        <Helmet title={`${t('titleWithoutLabel')} • ${t('common:dojotPageTitle')}`} />
         <Box className={classes.containerCentered} padding={3}>
           <CircularProgress />
         </Box>
@@ -94,7 +92,6 @@ const EditTemplate = () => {
   if (!templateData) {
     return (
       <ViewContainer headerTitle={t('titleWithoutLabel')}>
-        <Helmet title={`${t('titleWithoutLabel')} • ${t('common:dojotPageTitle')}`} />
         <Box className={classes.containerCentered} padding={3}>
           <Box marginBottom={2}>
             <FilterNone size='large' />
@@ -107,11 +104,6 @@ const EditTemplate = () => {
 
   return (
     <ViewContainer headerTitle={t('title', { label: templateData.label })}>
-      <Helmet
-        title={`${t('editTemplate:title', { label: templateData.label })} • ${t(
-          'common:dojotPageTitle',
-        )}`}
-      />
       <Box className={classes.container} padding={4}>
         <Box className={classes.content}>
           <TemplateCreation

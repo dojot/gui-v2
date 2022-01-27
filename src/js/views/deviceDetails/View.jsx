@@ -26,7 +26,6 @@ import {
   VerifiedUser,
 } from '@material-ui/icons';
 import moment from 'moment';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router';
@@ -44,7 +43,7 @@ import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
 
 const DeviceDetails = () => {
-  const { t } = useTranslation(['deviceDetails', 'common']);
+  const { t } = useTranslation('deviceDetails');
   const { deviceId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -106,7 +105,6 @@ const DeviceDetails = () => {
   if (!deviceData) {
     return (
       <ViewContainer headerTitle={t('titleWithoutName')}>
-        <Helmet title={`${t('titleWithoutName')} • ${t('common:dojotPageTitle')}`} />
         <Box className={classes.containerCentered} padding={3}>
           <Box marginBottom={2}>
             <DevicesOther size='large' />
@@ -119,7 +117,6 @@ const DeviceDetails = () => {
 
   return (
     <ViewContainer headerTitle={t('title', { name: deviceData.label })}>
-      <Helmet title={`${t('title', { name: deviceData.label })} • ${t('common:dojotPageTitle')}`} />
       <AlertDialog
         isOpen={isShowingDeleteAlert}
         title={t('deleteDeviceAlert.title')}

@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowBack from '@material-ui/icons/ArrowBack';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 
@@ -27,7 +26,7 @@ const WidgetView = props => {
   const classes = useStyles();
   const { history } = props;
   const { line, area, bar, table, map } = __CONFIG__;
-  const { t } = useTranslation(['dashboard']);
+  const { t } = useTranslation(['dashboard', 'common']);
 
   const handleClick = useCallback(
     id => {
@@ -56,8 +55,7 @@ const WidgetView = props => {
   }, [handleClick]);
 
   return (
-    <ViewContainer headerTitle={t('dashboard:widget')} headerContent={getHeaderContent}>
-      <Helmet title={`${t('dashboard:widget')} • ${t('common:dojotPageTitle')}`} />
+    <ViewContainer headerTitle={t('widget')} headerContent={getHeaderContent}>
       <Grid container justify='flex-start' className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />

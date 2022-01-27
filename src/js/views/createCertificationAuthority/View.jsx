@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react';
 
 import { Box, TextField, Button } from '@material-ui/core';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
@@ -46,7 +45,6 @@ const CreateCertificationAuthority = () => {
 
   return (
     <ViewContainer headerTitle={t('createCertificateAuthority:title')}>
-      <Helmet title={`${t('createCertificateAuthority:title')} • ${t('common:dojotPageTitle')}`} />
       <Box className={classes.container}>
         <form className={classes.content} noValidate onSubmit={handleSubmit}>
           <TextField

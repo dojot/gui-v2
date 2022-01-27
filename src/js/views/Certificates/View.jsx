@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
 import { isNumber } from 'lodash';
-import { Helmet } from 'react-helmet';
 import { useTranslation } from 'react-i18next';
 import { useSelector, useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
@@ -37,7 +36,7 @@ import SearchBar from './layout/SearchBar';
 import useStyles from './style';
 
 const Certificates = () => {
-  const { t } = useTranslation(['certificates', 'common']);
+  const { t } = useTranslation('certificates');
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
@@ -211,8 +210,6 @@ const Certificates = () => {
 
   return (
     <ViewContainer headerTitle={t('headerTitle')}>
-      <Helmet title={`${t('certificates:headerTitle')} • ${t('common:dojotPageTitle')}`} />
-
       <AssociateToDeviceModal
         isOpen={isShowingDevicesToAssociate}
         certificate={certificatesOptionsMenu?.certificate || {}}

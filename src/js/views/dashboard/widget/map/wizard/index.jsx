@@ -2,8 +2,6 @@ import React from 'react';
 
 import { SOURCE, WIDGET } from 'Constants';
 import { makeValidate } from 'mui-rff';
-import { Helmet } from 'react-helmet';
-import { useTranslation } from 'react-i18next';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
@@ -35,8 +33,6 @@ const MapWizard = ({
   uuid,
   id,
 }) => {
-  const { t } = useTranslation('common');
-
   const { createMapWidget } = useMap(
     addWidget,
     addWidgetConfig,
@@ -87,7 +83,6 @@ const MapWizard = ({
   };
   return (
     <>
-      <Helmet title={`${title} • ${t('dojotPageTitle')}`} />
       <Wizard
         initialValues={initialStateRecovered || initialState}
         onSubmit={handleSubmit}

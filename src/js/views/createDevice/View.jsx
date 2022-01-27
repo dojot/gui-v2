@@ -151,7 +151,6 @@ const CreateDevice = () => {
 
   return (
     <ViewContainer headerTitle={t('createDevice:title')}>
-      <Helmet title={`${t('createDevice:title')} • ${t('common:dojotPageTitle')}`} />
       <AlertDialog
         isOpen={isShowingCancelModal}
         cancelButtonText={t('common:no')}
