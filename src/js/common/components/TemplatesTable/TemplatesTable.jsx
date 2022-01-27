@@ -140,9 +140,9 @@ const TemplatesTable = ({
                 defaultValue={lastSearchedText}
                 placeholder={t('searchTemplatePh')}
                 onChange={handleChangeSearchText}
-                onKeyDown={handlePreventEnterKey}
                 InputProps={{
                   className: classes.searchInput,
+                  onKeyDown: handlePreventEnterKey,
                   startAdornment: (
                     <InputAdornment position='start'>
                       {isTyping ? (
