@@ -44,11 +44,11 @@ const CreateCertificationAuthority = () => {
   };
 
   return (
-    <ViewContainer headerTitle={t('createCertificateAuthority:title')}>
+    <ViewContainer headerTitle={t('title')}>
       <Box className={classes.container}>
         <form className={classes.content} noValidate onSubmit={handleSubmit}>
           <TextField
-            placeholder={t('createCertificateAuthority:caPemLabel')}
+            placeholder={t('caPemLabel')}
             variant='outlined'
             value={caPem}
             rows={20}
