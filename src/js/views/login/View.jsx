@@ -13,10 +13,12 @@ import * as Yup from 'yup';
 import useStyles from './style';
 
 const validationSchema = Yup.object({
-  user: Yup.string('enter_username').required('user_required').min(2, '2 characters minimum'),
-  password: Yup.string('missing_password')
-    .required('password_required')
-    .min(2, 'characters_minimum'),
+  user: Yup.string('login:enter_username')
+    .required('login:user_required')
+    .min(2, 'login:2 characters minimum'),
+  password: Yup.string('login:missing_password')
+    .required('login:password_required')
+    .min(2, 'login:characters_minimum'),
 });
 
 const LoginView = ({ location, history }) => {
@@ -73,13 +75,13 @@ export const LoginForm = ({
         <Card className={classes.grid}>
           <form onSubmit={handleSubmit} autoComplete='off'>
             <Typography variant='h5' color='textPrimary'>
-              {t('login')}
+              {t('login:login')}
             </Typography>
             <TextField
               id='user'
               name='user'
               inputProps={{ 'data-testid': 'userTest' }}
-              label={t('user')}
+              label={t('login:user')}
               variant='outlined'
               size='medium'
               margin='normal'
@@ -95,7 +97,7 @@ export const LoginForm = ({
               id='password'
               name='password'
               inputProps={{ 'data-testid': 'passwordTest' }}
-              label={t('password')}
+              label={t('login:password')}
               type='password'
               autoComplete='current-password'
               variant='outlined'
@@ -111,7 +113,7 @@ export const LoginForm = ({
             />
             {hasError && (
               <Alert severity='error' size='medium' margin='normal'>
-                {t(`${msgError}`)}
+                {t(`login:${msgError}`)}
               </Alert>
             )}
             <Button
@@ -123,7 +125,7 @@ export const LoginForm = ({
               type='submit'
               data-testid='btnLogin'
             >
-              {t('do_login')}
+              {t('login:do_login')}
             </Button>
           </form>
         </Card>
