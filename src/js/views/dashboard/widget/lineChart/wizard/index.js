@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { SOURCE, WIDGET } from 'Constants';
+import { SOURCE, WIDGET, TEMPLATE_ATTR_VALUE_TYPES } from 'Constants';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
-import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../common/constants';
 import useLine from '../../wizard/hooks/useLine';
 import {
   Attributes,
@@ -15,7 +14,6 @@ import {
   General,
   Summary,
   Filters,
-  Security,
   generalValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
@@ -76,29 +74,26 @@ const LineWizard = ({
     widgetType: WIDGET.LINE,
   };
   return (
-    <>
-      <Wizard
-        initialValues={initialStateRecovered || initialState}
-        onSubmit={handleSubmit}
-        steps={stepsList}
-        headerTitle={title}
-      >
-        <General validate={generalValidates} name='general' />
-        <Security validate={null} name='security' />
-        <Devices validate={null} name='devices' />
-        <Attributes
-          validate={null}
-          name='attributes'
-          staticSupported={false}
-          acceptedTypes={[
-            TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
-            TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
-          ]}
-        />
-        <Filters validate={null} name='filters' />
-        <Summary />
-      </Wizard>
-    </>
+    <Wizard
+      initialValues={initialStateRecovered || initialState}
+      onSubmit={handleSubmit}
+      steps={stepsList}
+      headerTitle={title}
+    >
+      <General validate={generalValidates} name='general' />
+      <Devices validate={null} name='devices' />
+      <Attributes
+        validate={null}
+        name='attributes'
+        staticSupported={false}
+        acceptedTypes={[
+          TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+          TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+        ]}
+      />
+      <Filters validate={null} name='filters' />
+      <Summary />
+    </Wizard>
   );
 };
 

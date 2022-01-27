@@ -163,31 +163,31 @@ export function* handleDuplicateTemplate(action) {
   }
 }
 
-function* watchGetTemplates() {
+export function* watchGetTemplates() {
   yield takeLatest(constants.GET_TEMPLATES, handleGetTemplates);
 }
 
-function* watchGetTemplateById() {
+export function* watchGetTemplateById() {
   yield takeLatest(constants.GET_TEMPLATE_BY_ID, handleGetTemplateById);
 }
 
-function* watchDeleteTemplate() {
+export function* watchDeleteTemplate() {
   yield takeLatest(constants.DELETE_TEMPLATE, handleDeleteTemplate);
 }
 
-function* watchDeleteMultipleTemplates() {
+export function* watchDeleteMultipleTemplates() {
   yield takeLatest(constants.DELETE_MULTIPLE_TEMPLATES, handleDeleteMultipleTemplates);
 }
 
-function* watchCreateTemplate() {
+export function* watchCreateTemplate() {
   yield takeLatest(constants.CREATE_TEMPLATE, handleCreateTemplate);
 }
 
-function* watchEditTemplate() {
+export function* watchEditTemplate() {
   yield takeLatest(constants.EDIT_TEMPLATE, handleEditTemplate);
 }
 
-function* watchDuplicateTemplate() {
+export function* watchDuplicateTemplate() {
   yield takeLatest(constants.DUPLICATE_TEMPLATE, handleDuplicateTemplate);
 }
 

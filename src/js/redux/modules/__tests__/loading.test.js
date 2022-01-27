@@ -5,8 +5,8 @@ describe('Loading module tests', () => {
   const LOADING_KEY_2 = 'LOADING_KEY_2';
 
   it('should declare the constants in the correct format', () => {
-    Object.entries(constants).every(([name, value]) => {
-      return value === `app/base/${name}`;
+    Object.entries(constants).forEach(([key, value]) => {
+      expect(value).toBe(`app/loading/${key}`);
     });
   });
 
