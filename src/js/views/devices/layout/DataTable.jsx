@@ -150,6 +150,7 @@ const DataTable = ({
               .slice()
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(device => {
+                const lastUpdate = device.updated || device.created;
                 const isSelected = selectedDevices.indexOf(device.id) !== -1;
                 const hasCertificate = !!device.certificate?.fingerprint;
 
@@ -219,7 +220,7 @@ const DataTable = ({
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>
-                      {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
+                      {t('formattedData.updated', { date: lastUpdate })}
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>

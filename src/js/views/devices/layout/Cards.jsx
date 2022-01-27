@@ -2,7 +2,6 @@ import React from 'react';
 
 import { Box, Grid, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { Check, Close, DevicesOther, Star, StarBorderOutlined } from '@material-ui/icons';
-import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -103,7 +102,7 @@ const Cards = ({
                 {!!lastUpdate && (
                   <Box>
                     <Typography variant='body2'>
-                      <strong>{moment(lastUpdate).format('DD/MM/YYYY HH:mm:ss')}</strong>
+                      <strong>{t('formattedData.updated', { date: lastUpdate })}</strong>
                     </Typography>
                     <Typography variant='body2'>{t('cardData.updated')}</Typography>
                   </Box>
