@@ -19,6 +19,19 @@ const CreateCertificateCA = ({
   const classes = useStyles();
   const { t } = useTranslation('createCertificate');
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    handleRegisterExternalCertificate();
+  };
+
+  const handleSaveWithKeyboard = e => {
+    if (!certificateChain) return;
+    const event = e.nativeEvent;
+    const isEnterKey = event.keyCode === 13;
+    const isPressingAltOrCtrl = event.ctrlKey || event.altKey;
+    if (isEnterKey && isPressingAltOrCtrl) handleRegisterExternalCertificate();
+  };
+
   return (
     <CollapsibleList
       title={t('createCertificateCA.title')}
@@ -29,7 +42,7 @@ const CreateCertificateCA = ({
       handleToggleContent={handleToggleContent}
     >
       {!certificateData ? (
-        <Box padding={4}>
+        <Box padding={4} component='form' onSubmit={handleSubmit} noValidate>
           <Box mb={2}>
             <Typography>{t('createCertificateCA.inputDataLabel')}</Typography>
           </Box>
@@ -38,6 +51,7 @@ const CreateCertificateCA = ({
             rows={10}
             variant='outlined'
             value={certificateChain}
+            onKeyDown={handleSaveWithKeyboard}
             onChange={handleChangeCertificateChain}
             placeholder={t('createCertificateCA.inputPlaceholder')}
             multiline
@@ -47,10 +61,10 @@ const CreateCertificateCA = ({
           <Typography align='right'>
             <Button
               className={classes.generateCertificateButton}
-              onClick={handleRegisterExternalCertificate}
               disabled={!certificateChain}
               variant='outlined'
               color='primary'
+              type='submit'
             >
               {t('createCertificateCA.generateCertificate')}
             </Button>
