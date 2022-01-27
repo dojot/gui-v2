@@ -119,7 +119,9 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
       />
 
       <Box padding={2}>
-        <Typography>{t('certificates:dataTableTitle')}</Typography>
+        <Box marginBottom={2}>
+          <Typography>{t('certificates:dataTableTitle')}</Typography>
+        </Box>
         <TableContainer className={classes.tableContainer}>
           <Table aria-label='Table' size='small'>
             <DataTableHead
