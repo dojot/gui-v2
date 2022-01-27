@@ -70,67 +70,65 @@ export const LoginForm = ({
   const { t } = useTranslation('login');
 
   return (
-    <>
-      <Grid container justify='center' className={classes.root}>
-        <Card className={classes.grid}>
-          <form onSubmit={handleSubmit} autoComplete='off'>
-            <Typography variant='h5' color='textPrimary'>
-              {t('login:login')}
-            </Typography>
-            <TextField
-              id='user'
-              name='user'
-              inputProps={{ 'data-testid': 'userTest' }}
-              label={t('login:user')}
-              variant='outlined'
-              size='medium'
-              margin='normal'
-              value={values.user}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              helperText={errors.user && touched.user && t(errors.user)}
-              error={errors.user && touched.user}
-              fullWidth
-              data-testid='user'
-            />
-            <TextField
-              id='password'
-              name='password'
-              inputProps={{ 'data-testid': 'passwordTest' }}
-              label={t('login:password')}
-              type='password'
-              autoComplete='current-password'
-              variant='outlined'
-              size='medium'
-              fullWidth
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              helperText={errors.password && touched.password && t(errors.password)}
-              error={errors.password && touched.password}
-              margin='normal'
-              data-testid='password'
-            />
-            {hasError && (
-              <Alert severity='error' size='medium' margin='normal'>
-                {t(`login:${msgError}`)}
-              </Alert>
-            )}
-            <Button
-              variant='outlined'
-              color='secondary'
-              size='medium'
-              fullWidth
-              className={classes.margin}
-              type='submit'
-              data-testid='btnLogin'
-            >
-              {t('login:do_login')}
-            </Button>
-          </form>
-        </Card>
-      </Grid>
-    </>
+    <Grid container justify='center' className={classes.root}>
+      <Card className={classes.grid}>
+        <form onSubmit={handleSubmit} autoComplete='off'>
+          <Typography variant='h5' color='textPrimary'>
+            {t('login:login')}
+          </Typography>
+          <TextField
+            id='user'
+            name='user'
+            inputProps={{ 'data-testid': 'userTest' }}
+            label={t('login:user')}
+            variant='outlined'
+            size='medium'
+            margin='normal'
+            value={values.user}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            helperText={errors.user && touched.user && t(errors.user)}
+            error={errors.user && touched.user}
+            fullWidth
+            data-testid='user'
+          />
+          <TextField
+            id='password'
+            name='password'
+            inputProps={{ 'data-testid': 'passwordTest' }}
+            label={t('login:password')}
+            type='password'
+            autoComplete='current-password'
+            variant='outlined'
+            size='medium'
+            fullWidth
+            value={values.password}
+            onChange={handleChange}
+            onBlur={handleBlur}
+            helperText={errors.password && touched.password && t(errors.password)}
+            error={errors.password && touched.password}
+            margin='normal'
+            data-testid='password'
+          />
+          {hasError && (
+            <Alert severity='error' size='medium' margin='normal'>
+              {t(`login:${msgError}`)}
+            </Alert>
+          )}
+          <Button
+            variant='outlined'
+            color='secondary'
+            size='medium'
+            fullWidth
+            className={classes.margin}
+            type='submit'
+            data-testid='btnLogin'
+          >
+            {t('login:do_login')}
+          </Button>
+        </form>
+      </Card>
+    </Grid>
   );
 };
 

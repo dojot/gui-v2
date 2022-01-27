@@ -86,26 +86,24 @@ const TableWizard = ({
     widgetType: WIDGET.TABLE,
   };
   return (
-    <>
-      <Wizard
-        initialValues={initialStateRecovered || initialState}
-        onSubmit={handleSubmit}
-        steps={stepsList}
-        headerTitle={title}
-        menuState={isMenuOpen}
-      >
-        <General validate={generalValidates} name='general' />
-        <Selector validate={selectorValidates} />
-        <Attributes
-          validate={null}
-          name='attributes'
-          staticSupported={false}
-          acceptedTypes={Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(({ value }) => value)}
-        />
-        <RealtimeFilter validate={null} name='filters' />
-        <Summary />
-      </Wizard>
-    </>
+    <Wizard
+      initialValues={initialStateRecovered || initialState}
+      onSubmit={handleSubmit}
+      steps={stepsList}
+      headerTitle={title}
+      menuState={isMenuOpen}
+    >
+      <General validate={generalValidates} name='general' />
+      <Selector validate={selectorValidates} />
+      <Attributes
+        validate={null}
+        name='attributes'
+        staticSupported={false}
+        acceptedTypes={Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(({ value }) => value)}
+      />
+      <RealtimeFilter validate={null} name='filters' />
+      <Summary />
+    </Wizard>
   );
 };
 

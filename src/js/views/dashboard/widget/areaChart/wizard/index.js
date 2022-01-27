@@ -74,28 +74,26 @@ const WizardPage = ({
     widgetType: WIDGET.AREA,
   };
   return (
-    <>
-      <Wizard
-        initialValues={initialStateRecovered || initialState}
-        onSubmit={handleSubmit}
-        steps={stepsList}
-        headerTitle={title}
-      >
-        <General validate={generalValidates} name='general' />
-        <Devices validate={null} name='devices' />
-        <Attributes
-          validate={null}
-          name='attributes'
-          staticSupported={false}
-          acceptedTypes={[
-            TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
-            TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
-          ]}
-        />
-        <Filters validate={null} name='filters' />
-        <Summary />
-      </Wizard>
-    </>
+    <Wizard
+      initialValues={initialStateRecovered || initialState}
+      onSubmit={handleSubmit}
+      steps={stepsList}
+      headerTitle={title}
+    >
+      <General validate={generalValidates} name='general' />
+      <Devices validate={null} name='devices' />
+      <Attributes
+        validate={null}
+        name='attributes'
+        staticSupported={false}
+        acceptedTypes={[
+          TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+          TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+        ]}
+      />
+      <Filters validate={null} name='filters' />
+      <Summary />
+    </Wizard>
   );
 };
 

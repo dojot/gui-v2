@@ -75,25 +75,23 @@ const BarWizard = ({
   };
 
   return (
-    <>
-      <Wizard
-        initialValues={initialStateRecovered || initialState}
-        onSubmit={handleSubmit}
-        steps={stepsList}
-        headerTitle={title}
-      >
-        <General validate={generalValidates} name='general' />
-        <Devices validate={null} name='devices' />
-        <Attributes
-          validate={null}
-          name='attributes'
-          staticSupported={false}
-          acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.INTEGER, TEMPLATE_ATTR_VALUE_TYPES.FLOAT]}
-        />
-        <Filters validate={null} name='filters' />
-        <Summary />
-      </Wizard>
-    </>
+    <Wizard
+      initialValues={initialStateRecovered || initialState}
+      onSubmit={handleSubmit}
+      steps={stepsList}
+      headerTitle={title}
+    >
+      <General validate={generalValidates} name='general' />
+      <Devices validate={null} name='devices' />
+      <Attributes
+        validate={null}
+        name='attributes'
+        staticSupported={false}
+        acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.INTEGER, TEMPLATE_ATTR_VALUE_TYPES.FLOAT]}
+      />
+      <Filters validate={null} name='filters' />
+      <Summary />
+    </Wizard>
   );
 };
 

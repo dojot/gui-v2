@@ -82,24 +82,22 @@ const MapWizard = ({
     widgetType: WIDGET.MAP,
   };
   return (
-    <>
-      <Wizard
-        initialValues={initialStateRecovered || initialState}
-        onSubmit={handleSubmit}
-        steps={stepsList}
-        headerTitle={title}
-      >
-        <General validate={generalValidates} name='general' />
-        <Selector validate={selectorValidates} />
-        <Attributes
-          validate={null}
-          name='attributes'
-          acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.GEO_POINT.value]}
-        />
-        <RealtimeFilter validate={null} name='filters' />
-        <Summary />
-      </Wizard>
-    </>
+    <Wizard
+      initialValues={initialStateRecovered || initialState}
+      onSubmit={handleSubmit}
+      steps={stepsList}
+      headerTitle={title}
+    >
+      <General validate={generalValidates} name='general' />
+      <Selector validate={selectorValidates} />
+      <Attributes
+        validate={null}
+        name='attributes'
+        acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.GEO_POINT.value]}
+      />
+      <RealtimeFilter validate={null} name='filters' />
+      <Summary />
+    </Wizard>
   );
 };
 

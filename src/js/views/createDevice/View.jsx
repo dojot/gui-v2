@@ -149,7 +149,7 @@ const CreateDevice = () => {
   }, [dispatch]);
 
   return (
-    <ViewContainer headerTitle={t('createDevice:title')}>
+    <ViewContainer headerTitle={t('title')}>
       <AlertDialog
         isOpen={isShowingCancelModal}
         cancelButtonText={t('common:no')}
