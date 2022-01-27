@@ -1,8 +1,8 @@
 import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
-import { constants, actions } from 'Redux/certificates';
 import { paginationControlSelector } from 'Selectors/certificatesSelector';
 import { Certificates } from 'Services';
 
+import { constants, actions } from '../modules/certificates';
 import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
 import { actions as successActions } from '../modules/success';
@@ -249,43 +249,43 @@ export function* handleRegisterExternalCertificate(action) {
   }
 }
 
-function* watchGetCertificates() {
+export function* watchGetCertificates() {
   yield takeLatest(constants.GET_CERTIFICATES, handleGetCertificates);
 }
 
-function* watchGetCertificateById() {
+export function* watchGetCertificateById() {
   yield takeLatest(constants.GET_CERTIFICATES_BY_ID, handleGetCertificateById);
 }
 
-function* watchGetCertificateByFingerprint() {
+export function* watchGetCertificateByFingerprint() {
   yield takeLatest(constants.GET_CERTIFICATES_BY_FINGERPRINT, handleGetCertificateByFingerprint);
 }
 
-function* watchDeleteCertificate() {
+export function* watchDeleteCertificate() {
   yield takeLatest(constants.DELETE_CERTIFICATE, handleDeleteCertificate);
 }
 
-function* watchDeleteMultipleCertificates() {
+export function* watchDeleteMultipleCertificates() {
   yield takeLatest(constants.DELETE_MULTIPLE_CERTIFICATES, handleDeleteMultipleCertificates);
 }
 
-function* watchDisassociateDevice() {
+export function* watchDisassociateDevice() {
   yield takeLatest(constants.DISASSOCIATE_DEVICE, handleDisassociateDevice);
 }
 
-function* watchAssociateDevice() {
+export function* watchAssociateDevice() {
   yield takeLatest(constants.ASSOCIATE_DEVICE, handleAssociateDevice);
 }
 
-function* watchCreateCertificateOneClick() {
+export function* watchCreateCertificateOneClick() {
   yield takeLatest(constants.CREATE_CERTIFICATE_ONE_CLICK, handleCreateCertificateOneClick);
 }
 
-function* watchCreateCertificateCSR() {
+export function* watchCreateCertificateCSR() {
   yield takeLatest(constants.CREATE_CERTIFICATE_CSR, handleCreateCertificateCSR);
 }
 
-function* watchRegisterExternalCertificate() {
+export function* watchRegisterExternalCertificate() {
   yield takeLatest(constants.REGISTER_EXTERNAL_CERTIFICATE, handleRegisterExternalCertificate);
 }
 
