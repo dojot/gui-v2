@@ -89,7 +89,8 @@ const TemplatesStep = ({
     );
   }, [dispatch, page, rowsPerPage, searchText]);
 
-  const handleSaveNewTemplate = () => {
+  const handleSaveNewTemplate = e => {
+    e.preventDefault();
     dispatch(
       templateActions.createTemplate({
         label: templateLabel,
@@ -119,8 +120,14 @@ const TemplatesStep = ({
           </IconButton>
         </Box>
 
-        <Box className={classes.stepComponent} marginBottom={2}>
-          {isCreatingTemplate ? (
+        {isCreatingTemplate ? (
+          <Box
+            className={classes.stepComponent}
+            onSubmit={handleSaveNewTemplate}
+            marginBottom={2}
+            component='form'
+            noValidate
+          >
             <TemplateCreation
               className={classes.templateCreation}
               attrs={attrs}
@@ -132,12 +139,13 @@ const TemplatesStep = ({
               endExtraComponent={
                 <TemplateCreationActions
                   canSaveNewTemplate={canSaveTemplate}
-                  handleSaveNewTemplate={handleSaveNewTemplate}
                   handleDiscardNewTemplate={handleLeaveTemplateCreation}
                 />
               }
             />
-          ) : (
+          </Box>
+        ) : (
+          <Box className={classes.stepComponent} marginBottom={2}>
             <TemplatesTable
               page={page}
               templates={templates}
@@ -152,8 +160,8 @@ const TemplatesStep = ({
               handleChangeRowsPerPage={handleChangeRowsPerPage}
               handleSearchForTemplates={handleSearchForTemplates}
             />
-          )}
-        </Box>
+          </Box>
+        )}
       </Box>
 
       <ActionButtons
