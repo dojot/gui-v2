@@ -220,7 +220,7 @@ const DataTable = ({
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>
-                      {moment(lastUpdate).format('LLL')}
+                      {moment(lastUpdate).format('L LTS')}
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>
