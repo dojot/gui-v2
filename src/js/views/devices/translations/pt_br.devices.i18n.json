@@ -30,9 +30,6 @@
     "properties": "Propriedades",
     "updated": "Última Atualização"
   },
-  "formattedData": {
-    "updated": "{{date, moment:LLL}}"
-  },
   "deleteDeviceAlert": {
     "title": "Excluir Dispositivo",
     "message": "Tem certeza que deseja excluir este dispositivo?",

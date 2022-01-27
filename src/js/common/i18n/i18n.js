@@ -129,8 +129,6 @@ const resources = {
 const preferredLanguage = localStorage.getItem(LANGUAGE_KEYS.LANGUAGE);
 const lng = preferredLanguage || navigator.language || navigator.userLanguage;
 
-const MOMENT_IDENTIFIER = 'moment:';
-
 i18n.use(initReactI18next).init({
   ns: ['login', 'menu', 'common', 'dashboard'],
   defaultNS: 'common',
@@ -140,17 +138,6 @@ i18n.use(initReactI18next).init({
   keySeparator: '.',
   interpolation: {
     escapeValue: false,
-    format(value, format, lang) {
-      if (format.includes(MOMENT_IDENTIFIER)) {
-        const momentFormat = format.substring(MOMENT_IDENTIFIER.length);
-        if (!momentFormat) return value;
-        const momentInstance = moment(value);
-        if (lang) momentInstance.locale(lang.toLowerCase());
-        return momentInstance.format(momentFormat);
-      }
-
-      return value;
-    },
   },
 });
 
@@ -159,5 +146,6 @@ const handleLoadMomentLocale = lang => {
 };
 
 i18n.on('languageChanged', handleLoadMomentLocale);
+handleLoadMomentLocale(lng); // Load locale on app first render
 
 export default i18n;

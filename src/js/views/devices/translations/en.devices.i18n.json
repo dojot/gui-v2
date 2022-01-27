@@ -30,9 +30,6 @@
     "properties": "Properties",
     "updated": "Last Update"
   },
-  "formattedData": {
-    "updated": "{{date, moment:LLL}}"
-  },
   "deleteDeviceAlert": {
     "title": "Delete Device",
     "message": "Are you sure you want to delete this device?",
