@@ -115,6 +115,12 @@ const TemplatesTable = ({
     }
   };
 
+  const handlePreventEnterKey = e => {
+    if (e.keyCode === 13) {
+      e.preventDefault();
+    }
+  };
+
   return (
     <TableContainer>
       <Table aria-labelledby='tableTitle' size='small'>
@@ -134,6 +140,7 @@ const TemplatesTable = ({
                 defaultValue={lastSearchedText}
                 placeholder={t('searchTemplatePh')}
                 onChange={handleChangeSearchText}
+                onKeyDown={handlePreventEnterKey}
                 InputProps={{
                   className: classes.searchInput,
                   startAdornment: (

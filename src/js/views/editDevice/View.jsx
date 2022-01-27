@@ -122,7 +122,9 @@ const EditDevice = () => {
     });
   };
 
-  const handleEditDevice = () => {
+  const handleEditDevice = e => {
+    e.preventDefault();
+
     const attrsToSave = attrs.map(attr => {
       const attrClone = { ...attr, id: Number(attr.id) };
       delete attrClone.isDynamic;
@@ -208,7 +210,7 @@ const EditDevice = () => {
   return (
     <ViewContainer headerTitle={t('title')}>
       <Box className={classes.container} padding={4}>
-        <Box className={classes.content}>
+        <Box className={classes.content} component='form' onSubmit={handleEditDevice} noValidate>
           <Box className={classes.form}>
             <Box marginBottom={4}>
               <TextField
@@ -276,9 +278,9 @@ const EditDevice = () => {
 
             <Button
               size='large'
+              type='submit'
               color='primary'
               variant='contained'
-              onClick={handleEditDevice}
               disabled={!canSaveChanges || isEditingDevice}
               endIcon={isEditingDevice ? <CircularProgress color='inherit' size={14} /> : <Edit />}
             >
