@@ -33,7 +33,8 @@ const CreateTemplate = () => {
     else history.push('/templates');
   };
 
-  const handleSaveTemplate = () => {
+  const handleSaveTemplate = e => {
+    e.preventDefault();
     dispatch(
       templateActions.createTemplate({
         label: templateLabel,
@@ -46,7 +47,7 @@ const CreateTemplate = () => {
   return (
     <ViewContainer headerTitle={t('title')}>
       <Box className={classes.container} padding={4}>
-        <Box className={classes.content}>
+        <Box className={classes.content} component='form' onSubmit={handleSaveTemplate} noValidate>
           <TemplateCreation
             className={classes.templateCreation}
             attrs={attrs}
@@ -64,10 +65,10 @@ const CreateTemplate = () => {
 
             <Button
               size='large'
+              type='submit'
               color='primary'
               variant='contained'
               disabled={!canSaveTemplate}
-              onClick={handleSaveTemplate}
             >
               {t('common:save')}
             </Button>
