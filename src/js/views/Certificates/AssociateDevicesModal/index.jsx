@@ -163,7 +163,7 @@ const AssociateDevicesModal = ({ isOpen, certificate, handleHideDevicesToAssocia
                       <TableCell>{device.label}</TableCell>
 
                       <TableCell>
-                        {moment(device.updated || device.created).format('DD/MM/YYYY HH:mm:ss')}
+                        {moment(device.updated || device.created).format('L LTS')}
                       </TableCell>
                     </TableRow>
                   );
