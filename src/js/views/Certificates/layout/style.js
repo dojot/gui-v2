@@ -98,3 +98,22 @@ export const useDataTableStyles = makeStyles(theme => ({
     fontSize: '1rem',
   },
 }));
+
+export const useAssociateToDeviceModalStyles = makeStyles(theme => ({
+  tableContainer: {
+    background: theme.palette.background.shade[500],
+    border: `1px solid ${theme.palette.divider}`,
+    borderBottom: 'none',
+  },
+  tableHeadCell: {
+    fontWeight: 'bold',
+    textTransform: 'uppercase',
+  },
+  selectableTableRow: {
+    cursor: 'pointer',
+    userSelect: 'none',
+    '&:hover': {
+      background: theme.palette.background.shade[500],
+    },
+  },
+}));

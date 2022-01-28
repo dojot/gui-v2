@@ -67,7 +67,7 @@ export const LoginForm = ({
   msgError,
 }) => {
   const classes = useStyles();
-  const { t } = useTranslation(['login', 'common']);
+  const { t } = useTranslation('login');
 
   return (
     <Grid container justify='center' className={classes.root}>

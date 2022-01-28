@@ -144,7 +144,7 @@
     "react-dom": "^16.14.0",
     "react-final-form": "^6.5.3",
     "react-grid-layout": "^1.2.4",
-    "react-helmet": "^5.2.1",
+    "react-helmet": "^6.1.0",
     "react-i18next": "^11.8.7",
     "react-leaflet": "^2.8.0",
     "react-leaflet-markercluster": "^2.0.0",

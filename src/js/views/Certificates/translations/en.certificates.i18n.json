@@ -10,7 +10,6 @@
   "associateToDevice": "Associate to a device",
   "disassociateDevice": "Disassociate device",
   "changeAssociation": "Change association",
-  "AssociateToDeviceModalTitle": "Devices",
   "searchInputPh": "Search Certificate By Fingerprint",
   "createNewCertificate": "Create New Certificate",
   "emptyListMessage": "No Certificates found",
@@ -19,6 +18,7 @@
   "noAssociatedDeviceTooltip": "No associated device",
   "lastUpdateTooltip": "Last update",
   "validityNotDefined": "Validity Not Defined",
+  "dataTableTitle": "Devices",
   "dataLabels": {
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
@@ -30,7 +30,7 @@
   "dataTableBody": {
     "noDeviceAssociated": "No Device Associated"
   },
-  "associateDeviceModal": {
+  "associateToDeviceModal": {
     "table": {
       "id": "Id",
       "label": "Device Name",
