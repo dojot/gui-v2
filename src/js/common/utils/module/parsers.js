@@ -41,7 +41,7 @@ const generateCSV = (rows, columns) => {
   csvContent += `\r\n`;
   if (Array.isArray(rows)) {
     rows.forEach(row => {
-      csvContent += `${formatDate(row.timestamp, 'DD/MM/YYYY HH:mm:ss')},`;
+      csvContent += `${formatDate(row.timestamp, 'L LTS')},`;
       columns.forEach((column, index, array) => {
         csvContent += row[column.id] ? `${row[column.id]}` : '-';
         if (index !== array.length - 1) {
@@ -51,7 +51,7 @@ const generateCSV = (rows, columns) => {
       csvContent += `\r\n`;
     });
   } else {
-    csvContent += `${formatDate(rows.timestamp, 'DD/MM/YYYY HH:mm:ss')},`;
+    csvContent += `${formatDate(rows.timestamp, 'L LTS')},`;
     columns.forEach((column, index, array) => {
       csvContent += rows[column.id] ? `"${rows[column.id].value}"` : '-';
       if (index !== array.length - 1) {

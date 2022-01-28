@@ -281,9 +281,7 @@ const DeviceDetails = () => {
                   <TableBody>
                     {deviceData.lastUpdate?.map(row => (
                       <TableRow key={row.label} className={classes.tableRow}>
-                        <TableCell>
-                          {row.date ? moment(row.date).format('DD/MM/YYYY HH:mm:ss') : ''}
-                        </TableCell>
+                        <TableCell>{row.date ? moment(row.date).format('L LTS') : ''}</TableCell>
                         <TableCell>{row.label}</TableCell>
                         <TableCell>{row.value}</TableCell>
                       </TableRow>
