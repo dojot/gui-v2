@@ -43,6 +43,14 @@ const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu })
               >
                 <Box marginBottom={1}>
                   <Typography variant='body2'>
+                    <strong>{template.id}</strong>
+                  </Typography>
+
+                  <Typography variant='body2'>{t('cardData.templateId')}</Typography>
+                </Box>
+
+                <Box>
+                  <Typography variant='body2'>
                     <strong>{attrsLength}</strong>
                   </Typography>
 

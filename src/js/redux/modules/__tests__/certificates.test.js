@@ -10,8 +10,8 @@ describe('Certificates module tests', () => {
   };
 
   it('should declare the constants in the correct format', () => {
-    Object.entries(constants).every(([name, value]) => {
-      return value === `app/base/${name}`;
+    Object.entries(constants).forEach(([key, value]) => {
+      expect(value).toBe(`app/certificates/${key}`);
     });
   });
 
@@ -25,5 +25,17 @@ describe('Certificates module tests', () => {
     const action = actions.updateCertificates({ paginationControl: fakePaginationControl });
     const newState = reducers[action.type](initialState(), action);
     expect(newState.get('paginationControl')).toEqual(fakePaginationControl);
+  });
+
+  it('should set the certificate data', () => {
+    const action = actions.getNewGeneratedCertificate({ certificateData: fakeCertificate });
+    const newState = reducers[action.type](initialState(), action);
+    expect(newState.get('certificateData')).toEqual(fakeCertificate);
+  });
+
+  it('should set the certificate details', () => {
+    const action = actions.setCertificateDetails({ certificateDetails: fakeCertificate });
+    const newState = reducers[action.type](initialState(), action);
+    expect(newState.get('certificateDetails')).toEqual(fakeCertificate);
   });
 });

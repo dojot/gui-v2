@@ -88,6 +88,13 @@ const Cards = ({
               >
                 <Box marginBottom={1}>
                   <Typography variant='body2'>
+                    <strong>{device.id}</strong>
+                  </Typography>
+                  <Typography variant='body2'>{t('cardData.deviceId')}</Typography>
+                </Box>
+
+                <Box marginBottom={1}>
+                  <Typography variant='body2'>
                     <strong>{attrsLength}</strong>
                   </Typography>
                   <Typography variant='body2'>{t('cardData.properties')}</Typography>

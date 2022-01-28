@@ -82,19 +82,19 @@ export function* handleEditAttr(action) {
   }
 }
 
-function* watchDeleteAttr() {
+export function* watchDeleteAttr() {
   yield takeLatest(constants.DELETE_ATTR, handleDeleteAttr);
 }
 
-function* watchDeleteMultipleAttrs() {
+export function* watchDeleteMultipleAttrs() {
   yield takeLatest(constants.DELETE_MULTIPLE_ATTRS, handleDeleteMultipleAttrs);
 }
 
-function* watchCreateAttr() {
+export function* watchCreateAttr() {
   yield takeLatest(constants.CREATE_ATTR, handleCreateAttr);
 }
 
-function* watchEditAttr() {
+export function* watchEditAttr() {
   yield takeLatest(constants.EDIT_ATTR, handleEditAttr);
 }
 
