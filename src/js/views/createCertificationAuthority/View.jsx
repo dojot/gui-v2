@@ -5,6 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
+import { AlertDialog } from '../../common/components/Dialogs';
 import { useIsLoading } from '../../common/hooks';
 import { actions, constants } from '../../redux/modules/certificationAuthorities';
 import { ViewContainer } from '../stateComponents';
@@ -17,6 +18,7 @@ const CreateCertificationAuthority = () => {
   const classes = useStyles();
 
   const [caPem, setCaPem] = useState('');
+  const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
 
   const canSave = useMemo(() => {
     return !!caPem;
@@ -26,6 +28,14 @@ const CreateCertificationAuthority = () => {
 
   const handleChangeValue = setValueFn => {
     return e => setValueFn(e.target.value);
+  };
+
+  const handleLeaveCertificationAuthorityCreation = () => {
+    setIsShowingCancelModal(true);
+  };
+
+  const handleHideCancelModal = () => {
+    setIsShowingCancelModal(false);
   };
 
   const handleGoBack = () => {
@@ -45,6 +55,17 @@ const CreateCertificationAuthority = () => {
 
   return (
     <ViewContainer headerTitle={t('title')}>
+      <AlertDialog
+        isOpen={isShowingCancelModal}
+        cancelButtonText={t('common:no')}
+        autoFocusConfirmationButton={false}
+        title={t('cancelCaCreationTitle')}
+        confirmButtonText={t('common:yesImSure')}
+        message={t('cancelCaCreationMessage')}
+        handleConfirm={handleGoBack}
+        handleClose={handleHideCancelModal}
+      />
+
       <Box className={classes.container}>
         <form className={classes.content} noValidate onSubmit={handleSubmit}>
           <TextField
@@ -58,7 +79,7 @@ const CreateCertificationAuthority = () => {
           />
 
           <Box className={classes.bottomButtonsWrapper}>
-            <Button size='large' onClick={handleGoBack}>
+            <Button size='large' onClick={handleLeaveCertificationAuthorityCreation}>
               {t('common:cancel')}
             </Button>
 

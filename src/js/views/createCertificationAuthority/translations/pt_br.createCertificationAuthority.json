@@ -1,4 +1,6 @@
 {
   "title": "Nova CA",
-  "caPemLabel": "Insira o texto aqui"
+  "caPemLabel": "Insira o texto aqui",
+  "cancelCaCreationTitle": "Cancelar Criação de CA",
+  "cancelCaCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!"
 }
