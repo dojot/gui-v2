@@ -63,7 +63,7 @@ const CreateCertificateCSR = ({
             value={csrPEM}
             variant='outlined'
             onChange={handleChangeCsrPEM}
-            placeholder={t('createCertificateCSR.inputPlaceholder')}
+            label={t('createCertificateCSR.inputPlaceholder')}
             rows={10}
             multiline
             fullWidth

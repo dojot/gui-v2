@@ -39,7 +39,7 @@ const CreateCertificateCA = ({
             variant='outlined'
             value={certificateChain}
             onChange={handleChangeCertificateChain}
-            placeholder={t('createCertificateCA.inputPlaceholder')}
+            label={t('createCertificateCA.inputPlaceholder')}
             multiline
             fullWidth
           />
