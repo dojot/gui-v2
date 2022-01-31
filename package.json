@@ -210,11 +210,6 @@
       "GUI_VERSION": true
     }
   },
-  "husky": {
-    "hooks": {
-      "pre-push": "yarn test && yarn check-licenses"
-    }
-  },
   "keywords": [
     "react",
     "redux",
