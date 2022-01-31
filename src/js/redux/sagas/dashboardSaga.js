@@ -26,7 +26,6 @@ const getStoreContent = (state, key) => state.dashboard.get(key);
 export const getQueriesFromSchema = schema => {
   const realTimeQueries = [];
   const staticQueries = [];
-
   // eslint-disable-next-line no-restricted-syntax
   for (const key in schema) {
     if (schema[key].isRealTime) {
@@ -70,10 +69,9 @@ export function* pollData(queries, interval) {
 }
 
 export function* pollDashboard({ payload }) {
-  const { staticQueries = [], realTimeQueries = [] } = call(getQueriesFromSchema, payload);
+  const { staticQueries = [], realTimeQueries = [] } = yield call(getQueriesFromSchema, payload);
 
   yield call(pollData, staticQueries, 0);
-
   while (true) {
     const { end } = yield race({
       // TODO: Make the timing adjustable.

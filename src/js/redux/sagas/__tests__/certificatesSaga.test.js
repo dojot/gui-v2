@@ -4,7 +4,6 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import { Certificates } from 'Services';
 
 import { constants, actions } from '../../modules/certificates';
-import { actions as errorActions } from '../../modules/errors';
 import { actions as loadingActions } from '../../modules/loading';
 import { actions as successActions } from '../../modules/success';
 import { paginationControlSelector } from '../../selectors/certificatesSelector';
@@ -313,13 +312,6 @@ describe('certificatesSaga', () => {
         [apiRequest, throwError(new Error('Failed'))],
         [getCurrentPageCall, null],
       ])
-      .put(loadingActions.addLoading(constants.DISASSOCIATE_DEVICE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'disassociateDevice',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DISASSOCIATE_DEVICE))
       .run();
   });
@@ -467,12 +459,7 @@ describe('certificatesSaga', () => {
 
     return expectSaga(handleRegisterExternalCertificate, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'createCertificate',
-        }),
-      )
+      .put(loadingActions.removeLoading(constants.REGISTER_EXTERNAL_CERTIFICATE))
       .run();
   });
 
