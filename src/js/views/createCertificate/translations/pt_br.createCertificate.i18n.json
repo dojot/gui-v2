@@ -19,13 +19,13 @@
       "step2Text": "Copie e cole o conteúdo do arquivo csr.pem para a area de texto abaixo."
     },
     "generateCertificate": "Gerar Certificado",
-    "inputPlaceholder": "Copie e cole o conteúdo do arquivo .pem aqui."
+    "inputPlaceholder": "Cole o conteúdo do arquivo .pem aqui."
   },
   "createCertificateCA": {
     "title": "Usar Meu Certificado",
     "subTitle": "Possibilita utilizar a sua infraestrutura de chaves publicas já existente.",
     "inputDataLabel": "Insira os dados em ordem: do certificado do dispositivo até a CA raiz. De acordo com o grau de importância.",
-    "inputPlaceholder": "Copie e cole o conteúdo do arquivo .pem aqui.",
+    "inputPlaceholder": "Cole o conteúdo do arquivo .pem aqui.",
     "generateCertificate": "Gerar Certificado"
   },
   "generatedCertificateResume": {
