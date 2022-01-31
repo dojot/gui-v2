@@ -1,4 +1,5 @@
 import { act, renderHook } from '@testing-library/react-hooks';
+import moment from 'moment';
 
 import { useCertificateComputedData } from '..';
 import { CERTIFICATE_STATUS, CERTIFICATE_STATUS_COLORS } from '../../constants';
@@ -10,8 +11,8 @@ describe('useCertificateComputedData', () => {
   };
 
   const formattedDates = {
-    initialDate: '01/01/2021',
-    finalDate: '01/01/2022',
+    initialDate: moment(fakeValidity.notBefore).format('L'),
+    finalDate: moment(fakeValidity.notAfter).format('L'),
   };
 
   const statusDates = {
@@ -57,7 +58,7 @@ describe('useCertificateComputedData', () => {
     });
   });
 
-  it('should the dates be in this format: DD/MM/YYYY', () => {
+  it('should the dates be formatted', () => {
     const { result } = renderHook(() => useCertificateComputedData());
 
     act(() => {

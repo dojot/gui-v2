@@ -56,6 +56,7 @@ const htmlPlugins = html.map(
       template: `src/assets/template/${page.template}`,
       inject: 'body',
       filename: page.filename,
+      favicon: './favicon.ico',
     }),
 );
 

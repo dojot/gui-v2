@@ -1,4 +1,5 @@
 import i18n from 'i18next';
+import moment from 'moment';
 import { initReactI18next } from 'react-i18next';
 
 import certificatesEn from '../../views/Certificates/translations/en.certificates.i18n.json';
@@ -58,6 +59,9 @@ import constantsPtBr from './translations/pt_br.constants.i18n.json';
 import errorPtBr from './translations/pt_br.error.i18n.json';
 import languagesPtBr from './translations/pt_br.languages.i18n.json';
 import successPtBr from './translations/pt_br.success.i18n.json';
+
+// Import moment locales here. The default locale is english (en).
+import 'moment/locale/pt-br';
 
 const resources = {
   en: {
@@ -136,5 +140,12 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
+
+const handleLoadMomentLocale = lang => {
+  if (lang) moment.locale(lang.toLowerCase());
+};
+
+i18n.on('languageChanged', handleLoadMomentLocale);
+handleLoadMomentLocale(lng); // Load locale on app first render
 
 export default i18n;

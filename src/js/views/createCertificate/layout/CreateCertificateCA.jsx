@@ -53,7 +53,7 @@ const CreateCertificateCA = ({
             value={certificateChain}
             onKeyDown={handleSaveWithKeyboard}
             onChange={handleChangeCertificateChain}
-            placeholder={t('createCertificateCA.inputPlaceholder')}
+            label={t('createCertificateCA.inputPlaceholder')}
             multiline
             fullWidth
           />

@@ -1,3 +1,5 @@
 {
-  "title": "New Model"
+  "title": "New Model",
+  "cancelTemplateCreationTitle": "Cancel Template Creation",
+  "cancelTemplateCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!"
 }

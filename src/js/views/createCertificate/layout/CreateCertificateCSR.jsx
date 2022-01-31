@@ -77,7 +77,7 @@ const CreateCertificateCSR = ({
             variant='outlined'
             onChange={handleChangeCsrPEM}
             onKeyDown={handleSaveWithKeyboard}
-            placeholder={t('createCertificateCSR.inputPlaceholder')}
+            label={t('createCertificateCSR.inputPlaceholder')}
             rows={10}
             multiline
             fullWidth

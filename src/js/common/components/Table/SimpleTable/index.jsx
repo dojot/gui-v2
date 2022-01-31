@@ -135,7 +135,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
               })}
               {hasTimestamp ? (
                 <TableCell key={`timestamp_${uuidv4()}`} classes={{ body: lines }} align='right'>
-                  {formatDate(row.timestamp, 'DD/MM/YYYY HH:mm:ss')}
+                  {formatDate(row.timestamp, 'L LTS')}
                 </TableCell>
               ) : null}
             </TableRow>

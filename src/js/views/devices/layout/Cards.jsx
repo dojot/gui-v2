@@ -103,7 +103,7 @@ const Cards = ({
                 {!!lastUpdate && (
                   <Box>
                     <Typography variant='body2'>
-                      <strong>{moment(lastUpdate).format('DD/MM/YYYY HH:mm:ss')}</strong>
+                      <strong>{moment(lastUpdate).format('L LTS')}</strong>
                     </Typography>
                     <Typography variant='body2'>{t('cardData.updated')}</Typography>
                   </Box>
