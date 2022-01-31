@@ -146,10 +146,10 @@ const TemplateCreation = ({
                     <TextField
                       className={classes.input}
                       size='small'
+                      value={label}
                       variant='outlined'
-                      defaultValue={label}
                       placeholder={t('attrs:attrLabel.attrLabel')}
-                      onBlur={e => handleUpdateLabel(e.target.value)}
+                      onChange={e => handleUpdateLabel(e.target.value)}
                     />
                   </TableCell>
 
@@ -195,9 +195,9 @@ const TemplateCreation = ({
                         className={classes.input}
                         size='small'
                         variant='outlined'
-                        defaultValue={staticValue}
+                        value={staticValue}
                         placeholder={t('attrs:attrLabel.attrValue')}
-                        onBlur={e => handleUpdateValue(e.target.value)}
+                        onChange={e => handleUpdateValue(e.target.value)}
                       />
                     )}
                   </TableCell>

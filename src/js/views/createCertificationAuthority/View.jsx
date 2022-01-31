@@ -43,14 +43,26 @@ const CreateCertificationAuthority = () => {
     else history.push('/certification-authorities');
   };
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const handleSaveCertificationAuthority = () => {
     dispatch(
       actions.createCertificationAuthority({
         caPem,
         successCallback: handleGoBack,
       }),
     );
+  };
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    handleSaveCertificationAuthority();
+  };
+
+  const handleSaveWithKeyboard = e => {
+    if (!canSave) return;
+    const event = e.nativeEvent;
+    const isEnterKey = event.key === 'Enter';
+    const isPressingAltOrCtrl = event.ctrlKey || event.altKey;
+    if (isEnterKey && isPressingAltOrCtrl) handleSaveCertificationAuthority();
   };
 
   return (
@@ -73,16 +85,13 @@ const CreateCertificationAuthority = () => {
             variant='outlined'
             value={caPem}
             rows={20}
+            onKeyDown={handleSaveWithKeyboard}
             onChange={handleChangeValue(setCaPem)}
             multiline
             fullWidth
           />
 
           <Box className={classes.bottomButtonsWrapper}>
-            <Button size='large' onClick={handleLeaveCertificationAuthorityCreation}>
-              {t('common:cancel')}
-            </Button>
-
             <Button
               className={classes.saveButton}
               disabled={isSaving || !canSave}
@@ -92,6 +101,10 @@ const CreateCertificationAuthority = () => {
               size='large'
             >
               {t('common:save')}
+            </Button>
+
+            <Button size='large' onClick={handleLeaveCertificationAuthorityCreation}>
+              {t('common:cancel')}
             </Button>
           </Box>
         </form>

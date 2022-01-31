@@ -44,12 +44,13 @@ const CreateTemplate = () => {
     setIsShowingCancelModal(false);
   };
 
-  const handleSaveTemplate = () => {
+  const handleSaveTemplate = e => {
+    e.preventDefault();
     dispatch(
       templateActions.createTemplate({
         label: templateLabel,
         attrs: getAttrsWithoutId(),
-        successCallback: handleLeaveTemplateCreation,
+        successCallback: handleGoBack,
       }),
     );
   };
@@ -68,7 +69,7 @@ const CreateTemplate = () => {
       />
 
       <Box className={classes.container} padding={4}>
-        <Box className={classes.content}>
+        <Box className={classes.content} component='form' onSubmit={handleSaveTemplate} noValidate>
           <TemplateCreation
             className={classes.templateCreation}
             attrs={attrs}
@@ -86,10 +87,10 @@ const CreateTemplate = () => {
 
             <Button
               size='large'
+              type='submit'
               color='primary'
               variant='contained'
               disabled={!canSaveTemplate}
-              onClick={handleSaveTemplate}
             >
               {t('common:save')}
             </Button>
