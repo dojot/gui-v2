@@ -1,5 +1,7 @@
 {
   "dashboard": "Dashboard",
+  "addWidget": "Adicionar Widget",
+  "emptyMessage": "Nenhum Widget Para Exibir",
   "steps": {
     "general": "Geral",
     "devices": "Dispositivos",
@@ -50,9 +52,7 @@
     "search": "Digite o nome do dispositivo",
     "notFound": "Nenhum dispositivo encontrado para o filtro informado"
   },
-  "security": {
-
-  },
+  "security": {},
   "filters": {
     "recover": "Recuperar registros por:",
     "real time": "Tempo Real",
