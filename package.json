@@ -212,7 +212,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-push": "npm test && npm run check-licenses"
+      "pre-push": "yarn test && yarn check-licenses"
     }
   },
   "keywords": [
