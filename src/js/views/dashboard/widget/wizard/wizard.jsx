@@ -12,17 +12,29 @@ import { Form } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 
+import { AlertDialog } from '../../../../common/components/Dialogs';
 import { ViewContainer } from '../../../stateComponents';
 import useStyles from './style';
 
 const Wizard = ({ initialValues, ...props }) => {
   const { steps, onSubmit, headerTitle, children } = props;
+
   const [page, setPage] = useState(0);
   const [formValues, setValues] = useState(initialValues || {});
+  const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
+
   const history = useHistory();
 
   const cancel = () => {
-    history.goBack();
+    setIsShowingCancelModal(true);
+  };
+
+  const handleHideCancelModal = () => {
+    setIsShowingCancelModal(false);
+  };
+
+  const handleGoBack = () => {
+    history.push('/dashboard');
   };
 
   const next = value => {
@@ -62,6 +74,17 @@ const Wizard = ({ initialValues, ...props }) => {
   const { t } = useTranslation(['common', 'dashboard']);
   return (
     <ViewContainer headerTitle={headerTitle}>
+      <AlertDialog
+        isOpen={isShowingCancelModal}
+        cancelButtonText={t('common:no')}
+        autoFocusConfirmationButton={false}
+        title={t('dashboard:cancelDashboardCreationTitle')}
+        confirmButtonText={t('common:yesImSure')}
+        message={t('dashboard:cancelDashboardCreationMessage')}
+        handleConfirm={handleGoBack}
+        handleClose={handleHideCancelModal}
+      />
+
       <div className={classes.root}>
         <Stepper activeStep={page} orientation='vertical' connector={<StepLine />}>
           {steps.map(({ label, key }) => (
