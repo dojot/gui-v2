@@ -69,7 +69,7 @@ const CreateCertificationAuthority = () => {
       <Box className={classes.container}>
         <form className={classes.content} noValidate onSubmit={handleSubmit}>
           <TextField
-            placeholder={t('caPemLabel')}
+            label={t('caPemLabel')}
             variant='outlined'
             value={caPem}
             rows={20}

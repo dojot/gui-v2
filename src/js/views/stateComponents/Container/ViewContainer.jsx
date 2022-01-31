@@ -2,6 +2,8 @@ import React from 'react';
 
 import { AppHeader } from 'Components/Header';
 import PropTypes from 'prop-types';
+import { Helmet } from 'react-helmet';
+import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
 import { actions as layoutActions } from 'Redux/base';
 import { menuSelector } from 'Selectors/baseSelector';
@@ -9,8 +11,10 @@ import { menuSelector } from 'Selectors/baseSelector';
 import { UserInfo } from '../UserInfo';
 
 const ViewContainer = ({ headerTitle, headerContent, updateIsMenuOpen, isMenuOpen, children }) => {
+  const { t } = useTranslation('common');
   return (
     <>
+      <Helmet title={`${headerTitle} · ${t('dojotPageTitle')}`} />
       <AppHeader isOpen={isMenuOpen} handleClick={updateIsMenuOpen} title={headerTitle}>
         {headerContent && headerContent()}
         <UserInfo />

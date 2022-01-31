@@ -2,6 +2,8 @@
   "dashboard": "Dashboard",
   "cancelDashboardCreationTitle": "Cancel Dashboard Creation",
   "cancelDashboardCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
+  "addWidget": "Add Widget",
+  "emptyMessage": "No Widget To Show",
   "steps": {
     "general": "General",
     "devices": "Devices",
