@@ -4,7 +4,6 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import { CertificationAuthority } from 'Services';
 
 import { constants, actions } from '../../modules/certificationAuthorities';
-import { actions as errorActions } from '../../modules/errors';
 import { actions as loadingActions } from '../../modules/loading';
 import { actions as successActions } from '../../modules/success';
 import { paginationControlSelector } from '../../selectors/certificationAuthoritiesSelector';
@@ -22,16 +21,6 @@ import {
 } from '../certificationAuthoritiesSaga';
 
 describe('certificationAuthoritiesSaga', () => {
-  beforeAll(() => {
-    // Using fake timers because errorActions.addError uses Date.now()
-    jest.useFakeTimers('modern');
-    jest.setSystemTime(Date.now());
-  });
-
-  afterAll(() => {
-    jest.useRealTimers();
-  });
-
   const fakeCertificationAuthority = {
     allowAutoRegistration: false,
     caFingerprint: '123456',
@@ -114,14 +103,6 @@ describe('certificationAuthoritiesSaga', () => {
 
     return expectSaga(handleGetCertificationAuthorities, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
-      .put(loadingActions.addLoading(constants.GET_CERTIFICATION_AUTHORITIES))
-      .put(actions.updateCertificationAuthorities({ certificationAuthorities: [] }))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'getCertificationAuthorities',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.GET_CERTIFICATION_AUTHORITIES))
       .run();
   });
@@ -167,13 +148,6 @@ describe('certificationAuthoritiesSaga', () => {
 
     return expectSaga(handleDeleteCertificationAuthority, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
-      .put(loadingActions.addLoading(constants.DELETE_CERTIFICATION_AUTHORITY))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteCertificationAuthority',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_CERTIFICATION_AUTHORITY))
       .run();
@@ -219,13 +193,6 @@ describe('certificationAuthoritiesSaga', () => {
         [apiRequest, throwError(new Error('Failed'))],
         [getCurrentPageCall, null],
       ])
-      .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteMultipleCertificationAuthorities',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES))
       .run();
   });
@@ -265,13 +232,6 @@ describe('certificationAuthoritiesSaga', () => {
 
     return expectSaga(handleCreateCertificationAuthority, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
-      .put(loadingActions.addLoading(constants.CREATE_CERTIFICATION_AUTHORITY))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'createCertificationAuthority',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.CREATE_CERTIFICATION_AUTHORITY))
       .run();

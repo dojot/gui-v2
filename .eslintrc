@@ -10,11 +10,11 @@
     "__CONFIG__": true,
     "__ENV__": true
   },
-  "extends": ["airbnb", "prettier", "prettier/react"],
+  "extends": ["airbnb", "prettier"],
   "plugins": ["flowtype", "react", "react-hooks", "prettier"],
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "parserOptions": {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "ecmaFeatures": {
       // Enabled object spread
       "experimentalObjectRestSpread": true
