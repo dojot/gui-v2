@@ -116,7 +116,8 @@ const TemplatesTable = ({
   };
 
   const handlePreventEnterKey = e => {
-    if (e.keyCode === 13) {
+    const event = e.nativeEvent;
+    if (event.key === 'Enter') {
       e.preventDefault();
     }
   };

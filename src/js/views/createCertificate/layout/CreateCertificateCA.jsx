@@ -27,7 +27,7 @@ const CreateCertificateCA = ({
   const handleSaveWithKeyboard = e => {
     if (!certificateChain) return;
     const event = e.nativeEvent;
-    const isEnterKey = event.keyCode === 13;
+    const isEnterKey = event.key === 'Enter';
     const isPressingAltOrCtrl = event.ctrlKey || event.altKey;
     if (isEnterKey && isPressingAltOrCtrl) handleRegisterExternalCertificate();
   };

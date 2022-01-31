@@ -33,7 +33,7 @@ const CreateCertificateCSR = ({
   const handleSaveWithKeyboard = e => {
     if (!csrPEM) return;
     const event = e.nativeEvent;
-    const isEnterKey = event.keyCode === 13;
+    const isEnterKey = event.key === 'Enter';
     const isPressingAltOrCtrl = event.ctrlKey || event.altKey;
     if (isEnterKey && isPressingAltOrCtrl) handleCreateCertificateCSR();
   };
