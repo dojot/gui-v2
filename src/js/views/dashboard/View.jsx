@@ -3,6 +3,7 @@ import 'react-resizable/css/styles.css';
 import React, { useCallback, useEffect } from 'react';
 
 import Button from '@material-ui/core/Button';
+import { Dashboard as DashboardIcon } from '@material-ui/icons';
 import AddIcon from '@material-ui/icons/Add';
 import PauseIcon from '@material-ui/icons/Pause';
 import PlayIcon from '@material-ui/icons/PlayArrow';
@@ -21,6 +22,7 @@ import {
 } from 'Selectors/dashboardSelector';
 import { widgetToCSV } from 'Utils/module/parsers';
 
+import { EmptyPlaceholder } from '../../common/components/EmptyPlaceholder';
 import { ViewContainer } from '../stateComponents';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
@@ -240,24 +242,33 @@ const Dashboard = props => {
         </Button>
       </>
     );
-  }, [handleClick, startPolling, stopPolling, sagaConfig]);
+  }, [t, startPolling, sagaConfig, stopPolling, handleClick]);
 
   return (
     <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={getHeaderContent}>
-      <ResponsiveReactGridLayout
-        cols={cols}
-        rowHeight={rowHeight}
-        className={className}
-        layouts={{ lg: layout }}
-        onLayoutChange={onLayoutChange}
-        measureBeforeMount={false}
-        compactType='vertical'
-        verticalCompact
-        preventCollision={false}
-        draggableHandle='.MuiCardHeader-root'
-      >
-        {_.map(layout, element => createElement(element))}
-      </ResponsiveReactGridLayout>
+      {layout && layout.length > 0 ? (
+        <ResponsiveReactGridLayout
+          cols={cols}
+          rowHeight={rowHeight}
+          className={className}
+          layouts={{ lg: layout }}
+          onLayoutChange={onLayoutChange}
+          measureBeforeMount={false}
+          compactType='vertical'
+          verticalCompact
+          preventCollision={false}
+          draggableHandle='.MuiCardHeader-root'
+        >
+          {_.map(layout, element => createElement(element))}
+        </ResponsiveReactGridLayout>
+      ) : (
+        <EmptyPlaceholder
+          textButton={t('addWidget')}
+          emptyListMessage={t('emptyMessage')}
+          icon={<DashboardIcon fontSize='large' />}
+          handleButtonClick={handleClick}
+        />
+      )}
     </ViewContainer>
   );
 };
