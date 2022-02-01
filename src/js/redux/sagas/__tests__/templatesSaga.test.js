@@ -3,6 +3,7 @@ import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
 import { Template } from 'Services';
 
+import { actions as errorActions } from '../../modules/errors';
 import { actions as loadingActions } from '../../modules/loading';
 import { actions as successActions } from '../../modules/success';
 import { constants, actions } from '../../modules/templates';
@@ -27,6 +28,16 @@ import {
 } from '../templatesSaga';
 
 describe('templatesSaga', () => {
+  beforeAll(() => {
+    // Using fake timers because errorActions.addError uses Date.now()
+    jest.useFakeTimers('modern');
+    jest.setSystemTime(Date.now());
+  });
+
+  afterAll(() => {
+    jest.useRealTimers();
+  });
+
   const fakeTemplate = {
     id: '1',
     label: 'Template 1',
@@ -98,6 +109,14 @@ describe('templatesSaga', () => {
 
     return expectSaga(handleGetTemplates, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
+      .put(loadingActions.addLoading(constants.GET_TEMPLATES))
+      .put(actions.updateTemplates({ templates: [] }))
+      .put(
+        errorActions.addError({
+          message: 'Failed',
+          i18nMessage: 'getTemplates',
+        }),
+      )
       .put(loadingActions.removeLoading(constants.GET_TEMPLATES))
       .run();
   });
@@ -134,6 +153,14 @@ describe('templatesSaga', () => {
 
     return expectSaga(handleGetTemplateById, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
+      .put(loadingActions.addLoading(constants.GET_TEMPLATE_BY_ID))
+      .put(actions.updateTemplates({ templateData: null }))
+      .put(
+        errorActions.addError({
+          message: 'Failed',
+          i18nMessage: 'getTemplateById',
+        }),
+      )
       .put(loadingActions.removeLoading(constants.GET_TEMPLATE_BY_ID))
       .run();
   });
@@ -166,6 +193,13 @@ describe('templatesSaga', () => {
 
     return expectSaga(handleDeleteTemplate, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
+      .put(loadingActions.addLoading(constants.DELETE_TEMPLATE))
+      .put(
+        errorActions.addError({
+          message: 'Failed',
+          i18nMessage: 'deleteTemplate',
+        }),
+      )
       .put(loadingActions.removeLoading(constants.DELETE_TEMPLATE))
       .run();
   });
@@ -198,6 +232,13 @@ describe('templatesSaga', () => {
 
     return expectSaga(handleDeleteMultipleTemplates, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
+      .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_TEMPLATES))
+      .put(
+        errorActions.addError({
+          message: 'Failed',
+          i18nMessage: 'deleteMultipleTemplates',
+        }),
+      )
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_TEMPLATES))
       .run();
   });
@@ -235,6 +276,13 @@ describe('templatesSaga', () => {
 
     return expectSaga(handleCreateTemplate, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
+      .put(loadingActions.addLoading(constants.CREATE_TEMPLATE))
+      .put(
+        errorActions.addError({
+          message: 'Failed',
+          i18nMessage: 'createTemplate',
+        }),
+      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.CREATE_TEMPLATE))
       .run();
@@ -275,6 +323,13 @@ describe('templatesSaga', () => {
 
     return expectSaga(handleEditTemplate, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
+      .put(loadingActions.addLoading(constants.EDIT_TEMPLATE))
+      .put(
+        errorActions.addError({
+          message: 'Failed',
+          i18nMessage: 'editTemplate',
+        }),
+      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.EDIT_TEMPLATE))
       .run();
@@ -308,6 +363,13 @@ describe('templatesSaga', () => {
 
     return expectSaga(handleDuplicateTemplate, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
+      .put(loadingActions.addLoading(constants.DUPLICATE_TEMPLATE))
+      .put(
+        errorActions.addError({
+          message: 'Failed',
+          i18nMessage: 'duplicateTemplate',
+        }),
+      )
       .put(loadingActions.removeLoading(constants.DUPLICATE_TEMPLATE))
       .run();
   });

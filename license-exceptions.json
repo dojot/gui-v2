@@ -12,10 +12,16 @@
     "harmony-reflect@1.6.1": {
       "reason": "It allows to choose between MPL-1.1 and Apache-2.0"
     },
-    "type-fest@0.20.2": {
+    "type-fest@0.6.0": {
+      "reason": "MIT and/or CC0-1.0 are compatible with Apache-2.0"
+    },
+    "type-fest@0.8.1": {
       "reason": "MIT and/or CC0-1.0 are compatible with Apache-2.0"
     },
     "type-fest@0.11.0": {
+      "reason": "MIT and/or CC0-1.0 are compatible with Apache-2.0"
+    },
+    "type-fest@0.20.2": {
       "reason": "MIT and/or CC0-1.0 are compatible with Apache-2.0"
     },
     "pako@1.0.11": {
