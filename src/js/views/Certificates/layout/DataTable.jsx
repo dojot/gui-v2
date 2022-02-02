@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 
 import {
+  Box,
   Checkbox,
   Chip,
   IconButton,
@@ -193,16 +194,18 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell className={classes.fingerprintCell}>
-                      <Tooltip
-                        title={certificate.fingerprint}
-                        classes={{ tooltip: classes.tooltip }}
-                        placement='right'
-                        arrow
-                      >
-                        <div className={classes.truncatedText}>{certificate.fingerprint}</div>
-                      </Tooltip>
-                      <CopyTextToClipboardButton textToCopy={certificate.fingerprint} />
+                    <TableCell>
+                      <Box className={classes.fingerprintField}>
+                        <Tooltip
+                          title={certificate.fingerprint}
+                          classes={{ tooltip: classes.tooltip }}
+                          placement='right'
+                          arrow
+                        >
+                          <div className={classes.truncatedText}>{certificate.fingerprint}</div>
+                        </Tooltip>
+                        <CopyTextToClipboardButton textToCopy={certificate.fingerprint} />
+                      </Box>
                     </TableCell>
 
                     <TableCell>

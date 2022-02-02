@@ -85,6 +85,10 @@ export const useSecurityTableStyles = makeStyles(theme => ({
   tooltip: {
     fontSize: '1rem',
   },
+  fingerprintField: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));
 
 export const usePaginationStyles = makeStyles(() => ({

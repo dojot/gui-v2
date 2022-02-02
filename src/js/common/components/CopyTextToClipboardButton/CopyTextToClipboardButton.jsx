@@ -22,7 +22,7 @@ const CopyTextToClipboardButton = ({ textToCopy }) => {
     <Tooltip open={isShowingSuccessTooltip} title={t('copiedToClipboard')} arrow placement='top'>
       <IconButton
         color={isShowingSuccessTooltip ? 'secondary' : 'default'}
-        onClick={copyToClipboard}
+        onClick={isShowingSuccessTooltip ? null : copyToClipboard}
         size='small'
       >
         {isShowingSuccessTooltip ? <Done /> : <FileCopyOutlined />}

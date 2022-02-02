@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Chip, Radio, TableCell, TableRow, Tooltip } from '@material-ui/core';
+import { Chip, Radio, TableCell, TableRow, Tooltip, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { CopyTextToClipboardButton } from '../../../../common/components/CopyTextToClipboardButton';
 import { formatDate } from '../../../../common/utils';
 import { useSecurityTableStyles } from './style';
 
@@ -37,15 +38,18 @@ const SecurityTableRow = ({
       </TableCell>
 
       <TableCell>
-        <Tooltip
-          title={fingerprint}
-          classes={{ tooltip: classes.tooltip }}
-          placement='right'
-          interactive
-          arrow
-        >
-          <div className={classes.truncatedText}>{fingerprint}</div>
-        </Tooltip>
+        <Box className={classes.fingerprintField}>
+          <Tooltip
+            title={fingerprint}
+            classes={{ tooltip: classes.tooltip }}
+            placement='right'
+            interactive
+            arrow
+          >
+            <div className={classes.truncatedText}>{fingerprint}</div>
+          </Tooltip>
+          {isNew ? null : <CopyTextToClipboardButton textToCopy={fingerprint} />}
+        </Box>
       </TableCell>
 
       <TableCell>
