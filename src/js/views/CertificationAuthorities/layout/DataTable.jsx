@@ -189,7 +189,6 @@ const DataTable = ({
                         title={certificationAuthority.caFingerprint}
                         classes={{ tooltip: classes.tooltip }}
                         placement='right'
-                        interactive
                         arrow
                       >
                         <div className={classes.truncatedText}>
