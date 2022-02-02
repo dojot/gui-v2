@@ -21,7 +21,8 @@ export default makeStyles(theme => ({
   },
   bottomButtonsWrapper: {
     display: 'flex',
-    justifyContent: 'flex-end',
+    flexDirection: 'row-reverse',
+    justifyContent: 'flex-start',
     width: '100%',
     marginTop: theme.spacing(4),
   },

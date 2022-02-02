@@ -60,11 +60,9 @@ const SecurityTableRow = ({
         </Tooltip>
       </TableCell>
 
-      <TableCell>{formatDate(creationDate, 'DD/MM/YYYY HH:mm:ss')}</TableCell>
+      <TableCell>{formatDate(creationDate, 'L LTS')}</TableCell>
 
-      <TableCell colSpan={isNew ? 1 : 2}>
-        {formatDate(expirationDate, 'DD/MM/YYYY HH:mm:ss')}
-      </TableCell>
+      <TableCell colSpan={isNew ? 1 : 2}>{formatDate(expirationDate, 'L LTS')}</TableCell>
 
       {isNew && (
         <TableCell>

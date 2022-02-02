@@ -1,4 +1,6 @@
 {
   "title": "New CA",
-  "caPemLabel": "Insert the text here"
+  "caPemLabel": "Paste the content of the .pem file here.",
+  "cancelCaCreationTitle": "Cancel CA Creation",
+  "cancelCaCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!"
 }

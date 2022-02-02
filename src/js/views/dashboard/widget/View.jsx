@@ -26,7 +26,7 @@ const WidgetView = props => {
   const classes = useStyles();
   const { history } = props;
   const { line, area, bar, table, map } = __CONFIG__;
-  const { t } = useTranslation(['dashboard']);
+  const { t } = useTranslation(['dashboard', 'common']);
 
   const handleClick = useCallback(
     id => {
@@ -55,7 +55,7 @@ const WidgetView = props => {
   }, [handleClick]);
 
   return (
-    <ViewContainer headerTitle={t('dashboard:widget')} headerContent={getHeaderContent}>
+    <ViewContainer headerTitle={t('widget')} headerContent={getHeaderContent}>
       <Grid container justify='flex-start' className={classes.root}>
         <LineChartCard onClick={() => handleClick(line)} />
         <AreaChartCard onClick={() => handleClick(area)} />

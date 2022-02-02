@@ -1,4 +1,5 @@
 import i18n from 'i18next';
+import moment from 'moment';
 import { initReactI18next } from 'react-i18next';
 
 import certificatesEn from '../../views/Certificates/translations/en.certificates.i18n.json';
@@ -27,6 +28,8 @@ import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
 import loginEn from '../../views/login/translations/en.login.i18n.json';
 import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
+import pageNotFoundEn from '../../views/pageNotFound/translations/en.pageNotFound.i18n.json';
+import pageNotFoundPtBr from '../../views/pageNotFound/translations/pt_br.pageNotFound.i18n.json';
 import userInfoEn from '../../views/stateComponents/UserInfo/translations/en_us.userInfo.i18n.json';
 import userInfoBr from '../../views/stateComponents/UserInfo/translations/pt_br.userInfo.i18n.json';
 import templateAttrsEn from '../../views/templateAttrs/translations/en.templateAttrs.i18n.json';
@@ -41,18 +44,24 @@ import deviceIntegrationModalEn from '../components/TutorialModals/DeviceIntegra
 import deviceIntegrationModalPtBr from '../components/TutorialModals/DeviceIntegrationModal/translations/pt_br.deviceIntegrationModal.i18n.json';
 import templateCreationEn from '../components/WizardForms/TemplateCreation/translations/en.templateCreation.i18n.json';
 import templateCreationPtBr from '../components/WizardForms/TemplateCreation/translations/pt_br.templateCreation.i18n.json';
+import { LANGUAGE_KEYS } from '../constants';
 import menuEn from '../menu/translations/en.menu.i18n.json';
 import menuPtBr from '../menu/translations/pt_br.menu.i18n.json';
 import attrsEn from './translations/en.attrs.i18n.json';
 import commonEn from './translations/en.common.i18n.json';
 import constantsEn from './translations/en.constants.i18n.json';
 import errorEn from './translations/en.error.i18n.json';
+import languagesEn from './translations/en.languages.i18n.json';
 import successEn from './translations/en.success.i18n.json';
 import attrsPtBr from './translations/pt_br.attrs.i18n.json';
 import commonPtBr from './translations/pt_br.common.i18n.json';
 import constantsPtBr from './translations/pt_br.constants.i18n.json';
 import errorPtBr from './translations/pt_br.error.i18n.json';
+import languagesPtBr from './translations/pt_br.languages.i18n.json';
 import successPtBr from './translations/pt_br.success.i18n.json';
+
+// Import moment locales here. The default locale is english (en).
+import 'moment/locale/pt-br';
 
 const resources = {
   en: {
@@ -82,8 +91,10 @@ const resources = {
     editTemplate: editTemplateEn,
     createCertificate: createCertificateEn,
     constants: constantsEn,
+    languages: languagesEn,
+    pageNotFound: pageNotFoundEn,
   },
-  pt: {
+  'pt-BR': {
     login: loginPtBr,
     menu: menuPtBr,
     common: commonPtBr,
@@ -110,14 +121,18 @@ const resources = {
     editTemplate: editTemplatePtBr,
     createCertificate: createCertificatePtBr,
     constants: constantsPtBr,
+    languages: languagesPtBr,
+    pageNotFound: pageNotFoundPtBr,
   },
 };
 
-const lng = navigator.language || navigator.userLanguage;
+const preferredLanguage = localStorage.getItem(LANGUAGE_KEYS.LANGUAGE);
+const lng = preferredLanguage || navigator.language || navigator.userLanguage;
 
 i18n.use(initReactI18next).init({
   ns: ['login', 'menu', 'common', 'dashboard'],
   defaultNS: 'common',
+  fallbackLng: 'en',
   lng,
   resources,
   keySeparator: '.',
@@ -125,5 +140,12 @@ i18n.use(initReactI18next).init({
     escapeValue: false,
   },
 });
+
+const handleLoadMomentLocale = lang => {
+  if (lang) moment.locale(lang.toLowerCase());
+};
+
+i18n.on('languageChanged', handleLoadMomentLocale);
+handleLoadMomentLocale(lng); // Load locale on app first render
 
 export default i18n;

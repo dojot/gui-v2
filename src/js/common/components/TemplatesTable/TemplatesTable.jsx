@@ -115,6 +115,13 @@ const TemplatesTable = ({
     }
   };
 
+  const handlePreventEnterKey = e => {
+    const event = e.nativeEvent;
+    if (event.key === 'Enter') {
+      e.preventDefault();
+    }
+  };
+
   return (
     <TableContainer>
       <Table aria-labelledby='tableTitle' size='small'>
@@ -136,6 +143,7 @@ const TemplatesTable = ({
                 onChange={handleChangeSearchText}
                 InputProps={{
                   className: classes.searchInput,
+                  onKeyDown: handlePreventEnterKey,
                   startAdornment: (
                     <InputAdornment position='start'>
                       {isTyping ? (

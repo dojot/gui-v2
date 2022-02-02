@@ -1,6 +1,10 @@
 import { Map } from 'immutable';
 
-import { templatesSelector, paginationControlSelector } from '../templatesSelector';
+import {
+  templatesSelector,
+  templateDataSelector,
+  paginationControlSelector,
+} from '../templatesSelector';
 
 describe('Templates selector tests', () => {
   const fakeTemplateData = {
@@ -20,6 +24,7 @@ describe('Templates selector tests', () => {
   const fakeState = {
     templates: Map({
       templates: fakeTemplates,
+      templateData: fakeTemplateData,
       paginationControl: fakePaginationControl,
     }),
   };
@@ -30,5 +35,9 @@ describe('Templates selector tests', () => {
 
   it('should return the pagination control data', () => {
     expect(paginationControlSelector(fakeState)).toEqual(fakePaginationControl);
+  });
+
+  it('should return the template data', () => {
+    expect(templateDataSelector(fakeState)).toEqual(fakeTemplateData);
   });
 });

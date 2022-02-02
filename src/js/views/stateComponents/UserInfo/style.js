@@ -10,7 +10,6 @@ export const useStyles = makeStyles(theme => ({
     borderRadius: '5px',
   },
   clickableListItem: {
-    transition: 'background .2s ease-in-out',
     cursor: 'pointer',
     '&:hover': {
       background: theme.palette.action.hover,
@@ -30,5 +29,12 @@ export const useStyles = makeStyles(theme => ({
   button: {
     textTransform: 'initial',
   },
-  paper: {},
+  buttonWithRightMargin: {
+    textTransform: 'initial',
+    marginRight: theme.spacing(2),
+  },
+  selectedListItem: {
+    background: theme.palette.primary.main,
+    color: theme.palette.common.white,
+  },
 }));

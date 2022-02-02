@@ -13,9 +13,10 @@ import {
   TableHead,
   TableRow,
   TextField,
+  Tooltip,
   Typography,
 } from '@material-ui/core';
-import { Close, Delete } from '@material-ui/icons';
+import { Close, Delete, InfoOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -74,7 +75,7 @@ const TemplateCreation = ({
         <Button
           className={classes.createAttButton}
           variant='outlined'
-          color='primary'
+          color='secondary'
           size='large'
           onClick={handleCreateAttr}
         >
@@ -99,7 +100,17 @@ const TemplateCreation = ({
               </TableCell>
 
               <TableCell>
-                <strong>{t('attrs:attrLabel.attrValue')}</strong>
+                <Tooltip
+                  classes={{ tooltip: classes.tooltip }}
+                  title={t('attrs:attrValueHint')}
+                  placement='top-start'
+                >
+                  <Box display='flex' alignItems='center'>
+                    <strong>{t('attrs:attrLabel.attrValue')}</strong>
+                    &nbsp;
+                    <InfoOutlined fontSize='small' />
+                  </Box>
+                </Tooltip>
               </TableCell>
 
               <TableCell />
@@ -108,11 +119,16 @@ const TemplateCreation = ({
 
           <TableBody>
             {attrs.map(({ id, label, type, valueType, staticValue }, index) => {
+              const isStaticAttr = type === TEMPLATE_ATTR_TYPES.STATIC.value;
+
               const handleUpdateLabel = newLabel => {
                 handleUpdateAttr(index, 'label', newLabel);
               };
 
               const handleUpdateType = newType => {
+                if (isStaticAttr && newType !== type) {
+                  handleUpdateAttr(index, 'staticValue', '');
+                }
                 handleUpdateAttr(index, 'type', newType);
               };
 
@@ -130,10 +146,10 @@ const TemplateCreation = ({
                     <TextField
                       className={classes.input}
                       size='small'
+                      value={label}
                       variant='outlined'
-                      defaultValue={label}
                       placeholder={t('attrs:attrLabel.attrLabel')}
-                      onBlur={e => handleUpdateLabel(e.target.value)}
+                      onChange={e => handleUpdateLabel(e.target.value)}
                     />
                   </TableCell>
 
@@ -174,15 +190,16 @@ const TemplateCreation = ({
                   </TableCell>
 
                   <TableCell>
-                    <TextField
-                      className={classes.input}
-                      size='small'
-                      variant='outlined'
-                      defaultValue={staticValue}
-                      placeholder={t('attrs:attrLabel.attrValue')}
-                      disabled={type !== TEMPLATE_ATTR_TYPES.STATIC.value}
-                      onBlur={e => handleUpdateValue(e.target.value)}
-                    />
+                    {isStaticAttr && (
+                      <TextField
+                        className={classes.input}
+                        size='small'
+                        variant='outlined'
+                        value={staticValue}
+                        placeholder={t('attrs:attrLabel.attrValue')}
+                        onChange={e => handleUpdateValue(e.target.value)}
+                      />
+                    )}
                   </TableCell>
 
                   <TableCell align='right'>

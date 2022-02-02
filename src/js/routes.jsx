@@ -28,6 +28,7 @@ const CreateCertificationAuthority = LazyLoading(() =>
   import('views/createCertificationAuthority'),
 );
 const EditDevice = LazyLoading(() => import('views/editDevice'));
+const PageNotFound = LazyLoading(() => import('views/pageNotFound'));
 const redirectToHome = () => <Redirect to={{ pathname: '/home' }} />;
 
 const Routes = props => (
@@ -66,7 +67,7 @@ const Routes = props => (
       attrs={props}
       exact
     />
-    <Route path='*' component={redirectToHome} attrs={props} />
+    <Route path='*' component={PageNotFound} attrs={props} />
   </Switch>
 );
 

@@ -25,7 +25,7 @@ import {
   paginationControlSelector,
 } from '../../redux/selectors/certificatesSelector';
 import { ViewContainer } from '../stateComponents';
-import AssociateDevicesModal from './AssociateDevicesModal';
+import AssociateToDeviceModal from './layout/AssociateToDeviceModal';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
 import Loading from './layout/Loading';
@@ -210,7 +210,7 @@ const Certificates = () => {
 
   return (
     <ViewContainer headerTitle={t('headerTitle')}>
-      <AssociateDevicesModal
+      <AssociateToDeviceModal
         isOpen={isShowingDevicesToAssociate}
         certificate={certificatesOptionsMenu?.certificate || {}}
         handleHideDevicesToAssociateModal={handleHideDevicesToAssociateModal}

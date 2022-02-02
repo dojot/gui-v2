@@ -18,6 +18,7 @@
     "actions": "Actions"
   },
   "cardData": {
+    "templateId": "Template ID",
     "attrsLength": "Property",
     "attrsLength_plural": "Properties"
   },

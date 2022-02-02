@@ -32,9 +32,9 @@
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
     "creationDate": "Creation",
-    "expirationDate": "Expire",
+    "expirationDate": "Expiration",
     "emptyCertificateList": "No Certificate Found",
-    "totalPages": "Total Pages: {{count}}",
+    "totalOfPages": "Total Of Pages: {{count}}",
     "labelRowsPerPage": "Items per Page:",
     "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
     "nextIconButtonText": "Next Page",
@@ -46,7 +46,7 @@
     "searchInputPh": "Search Certificate By Fingerprint"
   },
   "summaryStep": {
-    "title": "Review the templates, certificates and the name your device",
+    "title": "Review the templates, certificates and give a name to your device",
     "hint": "If you notice that something is missing, just go back, correct and continue!",
     "deviceNameHint": "We're almost there, finally, give your device a name!",
     "deviceNamePh": "Device Name",

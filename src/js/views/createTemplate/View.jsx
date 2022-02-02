@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { Box, Button } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 
+import { AlertDialog } from '../../common/components/Dialogs';
 import { TemplateCreation } from '../../common/components/WizardForms';
 import { useTemplateCreationState } from '../../common/hooks';
 import { actions as templateActions } from '../../redux/modules/templates';
@@ -16,6 +17,8 @@ const CreateTemplate = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
+
+  const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
 
   const {
     attrs,
@@ -29,24 +32,44 @@ const CreateTemplate = () => {
   } = useTemplateCreationState();
 
   const handleLeaveTemplateCreation = () => {
+    setIsShowingCancelModal(true);
+  };
+
+  const handleGoBack = () => {
     if (history.length) history.goBack();
     else history.push('/templates');
   };
 
-  const handleSaveTemplate = () => {
+  const handleHideCancelModal = () => {
+    setIsShowingCancelModal(false);
+  };
+
+  const handleSaveTemplate = e => {
+    e.preventDefault();
     dispatch(
       templateActions.createTemplate({
         label: templateLabel,
         attrs: getAttrsWithoutId(),
-        successCallback: handleLeaveTemplateCreation,
+        successCallback: handleGoBack,
       }),
     );
   };
 
   return (
     <ViewContainer headerTitle={t('title')}>
+      <AlertDialog
+        isOpen={isShowingCancelModal}
+        cancelButtonText={t('common:no')}
+        autoFocusConfirmationButton={false}
+        title={t('cancelTemplateCreationTitle')}
+        confirmButtonText={t('common:yesImSure')}
+        message={t('cancelTemplateCreationMessage')}
+        handleConfirm={handleGoBack}
+        handleClose={handleHideCancelModal}
+      />
+
       <Box className={classes.container} padding={4}>
-        <Box className={classes.content}>
+        <Box className={classes.content} component='form' onSubmit={handleSaveTemplate} noValidate>
           <TemplateCreation
             className={classes.templateCreation}
             attrs={attrs}
@@ -64,10 +87,10 @@ const CreateTemplate = () => {
 
             <Button
               size='large'
+              type='submit'
               color='primary'
               variant='contained'
               disabled={!canSaveTemplate}
-              onClick={handleSaveTemplate}
             >
               {t('common:save')}
             </Button>

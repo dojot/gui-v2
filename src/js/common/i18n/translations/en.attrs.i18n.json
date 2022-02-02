@@ -1,4 +1,5 @@
 {
+  "attrValueHint": "You can only set the value for static attributes.",
   "attrLabel": {
     "attrLabel": "Attribute Name",
     "attrType": "Attribute Type",

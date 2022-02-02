@@ -19,7 +19,8 @@ const preventNegativeNumber = event => {
 const Filters = ({ validate, name, ...otherProps }) => {
   const { dateTo, dateFrom } = otherProps.values[name];
   const classes = useStyles();
-  const { t } = useTranslation(['dashboard']);
+
+  const { t, i18n } = useTranslation(['dashboard']);
 
   const [data, setData] = useState({
     isFilterValid: false,
@@ -135,7 +136,8 @@ const Filters = ({ validate, name, ...otherProps }) => {
                       label={t('filters.initial date')}
                       name={`${name}.dateFrom`}
                       inputVariant='outlined'
-                      format='DD/MM/YYYY HH:mm'
+                      format='L LT'
+                      locale={i18n.language}
                       helperText={data.invalidPeriod ? ' ' : ''}
                       error={data.invalidPeriod}
                       dateFunsUtils={MomentUtils}
@@ -147,7 +149,8 @@ const Filters = ({ validate, name, ...otherProps }) => {
                       label={t('filters.final date')}
                       name={`${name}.dateTo`}
                       inputVariant='outlined'
-                      format='DD/MM/YYYY HH:mm'
+                      format='L LT'
+                      locale={i18n.language}
                       minDate={otherProps.values[name].dateFrom}
                       minDateMessage=''
                       helperText={data.invalidPeriod ? t('filters.invalid interval') : ''}

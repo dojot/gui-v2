@@ -28,6 +28,7 @@ export const useStyles = makeStyles(theme => ({
     boxShadow:
       '0px 1px 10px rgba(0, 0, 0, 0.2), 0px 4px 5px rgba(0, 0, 0, 0.12), 0px 2px 4px rgba(0, 0, 0, 0.14)',
     overflow: 'hidden',
+    borderRight: 'none',
   },
   menuList: {
     overflowY: 'auto',
@@ -63,7 +64,7 @@ export const useStyles = makeStyles(theme => ({
     display: 'none',
   },
   subItemSelected: {
-    backgroundColor: 'white !important',
+    backgroundColor: 'transparent !important',
     color: theme.palette.primary.main,
   },
   icon: {

@@ -22,8 +22,8 @@ export const useCertificateComputedData = () => {
 
       const { notBefore, notAfter } = validity;
 
-      const validityInitialDate = notBefore ? moment(notBefore).format('DD/MM/YYYY') : '';
-      const validityFinalDate = notAfter ? moment(notAfter).format('DD/MM/YYYY') : '';
+      const validityInitialDate = notBefore ? moment(notBefore).format('L') : '';
+      const validityFinalDate = notAfter ? moment(notAfter).format('L') : '';
 
       const isExpired = notAfter ? moment().isAfter(notAfter, 'days') : false;
       const isAboutToExpire = notAfter ? moment(notAfter).isSame(moment(), 'days') : false;
