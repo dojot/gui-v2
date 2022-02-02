@@ -12,7 +12,6 @@ import {
   checkData,
   dashboardSaga,
   delay,
-  getQueriesFromSchema,
   pollDashboard,
   pollData,
   updateData,
@@ -65,28 +64,13 @@ describe('dashboardSaga', () => {
     const action = dashboardActions.startPolling({
       test: 'test',
     });
-
-    const pollDataCall = matchers.call.fn(pollData);
-
-    const getQueriesFromSchemaCall = matchers.call.fn(getQueriesFromSchema);
-
-    const queriesFromSchema = {
-      staticQueries: [],
-      realTimeQueries: [],
+    const deviceHistoryCall = matchers.call.fn(Device.getDevicesHistoryParsed);
+    const deviceHistoryData = {
+      getDeviceHistoryForDashboard: '{}',
     };
-
     return expectSaga(pollDashboard, action)
-      .provide([
-        [pollDataCall, null],
-        [getQueriesFromSchemaCall, queriesFromSchema],
-      ])
-      .provide({
-        race: () => ({
-          poll: null,
-          end: true,
-        }),
-      })
-      .call.fn(pollData)
+      .provide([[deviceHistoryCall, deviceHistoryData]])
+      .dispatch({ type: dashboardConstants.STOP_POLLING })
       .run();
   });
 
