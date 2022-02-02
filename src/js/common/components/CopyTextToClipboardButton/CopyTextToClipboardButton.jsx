@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
 import { IconButton, Tooltip } from '@material-ui/core';
-import { Done, FileCopy } from '@material-ui/icons';
+import { Done, FileCopyOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -19,12 +19,13 @@ const CopyTextToClipboardButton = ({ textToCopy }) => {
   };
 
   return (
-    <Tooltip open={isShowingSuccessTooltip} title={t('copiedToClipboard')} arrow placement='down'>
+    <Tooltip open={isShowingSuccessTooltip} title={t('copiedToClipboard')} arrow placement='top'>
       <IconButton
         color={isShowingSuccessTooltip ? 'secondary' : 'default'}
         onClick={copyToClipboard}
+        size='small'
       >
-        {isShowingSuccessTooltip ? <Done /> : <FileCopy />}
+        {isShowingSuccessTooltip ? <Done /> : <FileCopyOutlined />}
       </IconButton>
     </Tooltip>
   );
