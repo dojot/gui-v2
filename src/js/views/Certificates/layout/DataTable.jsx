@@ -18,6 +18,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { Link as RouterLink } from 'react-router-dom';
 
+import { CopyTextToClipboardButton } from '../../../common/components/CopyTextToClipboardButton';
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
 import { useCertificateComputedData } from '../../../common/hooks';
@@ -192,7 +193,7 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell className={classes.fingerprintCell}>
                       <Tooltip
                         title={certificate.fingerprint}
                         classes={{ tooltip: classes.tooltip }}
@@ -202,6 +203,7 @@ const DataTable = ({
                       >
                         <div className={classes.truncatedText}>{certificate.fingerprint}</div>
                       </Tooltip>
+                      <CopyTextToClipboardButton textToCopy={certificate.fingerprint} />
                     </TableCell>
 
                     <TableCell>

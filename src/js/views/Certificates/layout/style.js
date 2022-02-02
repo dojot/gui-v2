@@ -97,6 +97,11 @@ export const useDataTableStyles = makeStyles(theme => ({
   tooltip: {
     fontSize: '1rem',
   },
+  fingerprintCell: {
+    display: 'flex',
+    alignItems: 'center',
+    height: 61,
+  },
 }));
 
 export const useAssociateToDeviceModalStyles = makeStyles(theme => ({
