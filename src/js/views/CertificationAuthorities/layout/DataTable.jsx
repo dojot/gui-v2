@@ -16,6 +16,7 @@ import { MoreHoriz } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { CopyTextToClipboardButton } from '../../../common/components/CopyTextToClipboardButton';
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
 import { useCertificateComputedData } from '../../../common/hooks';
@@ -183,7 +184,7 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell className={classes.fingerprintCell}>
                       <Tooltip
                         title={certificationAuthority.caFingerprint}
                         classes={{ tooltip: classes.tooltip }}
@@ -195,6 +196,9 @@ const DataTable = ({
                           {certificationAuthority.caFingerprint}
                         </div>
                       </Tooltip>
+                      <CopyTextToClipboardButton
+                        textToCopy={certificationAuthority.caFingerprint}
+                      />
                     </TableCell>
 
                     <TableCell>
