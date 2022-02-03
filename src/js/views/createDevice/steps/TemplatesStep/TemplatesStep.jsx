@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 
 import { Box, IconButton, Typography } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
@@ -70,22 +70,12 @@ const TemplatesStep = ({
     setSearchText(search);
   };
 
-  const handleDiscardNewTemplate = () => {
+  const handleLeaveTemplateCreation = () => {
     setIsCreatingTemplate(false);
     handleClearState();
   };
 
-  const handleSaveNewTemplate = () => {
-    dispatch(
-      templateActions.createTemplate({
-        label: templateLabel,
-        attrs: getAttrsWithoutId(),
-        successCallback: handleDiscardNewTemplate,
-      }),
-    );
-  };
-
-  useEffect(() => {
+  const handleGetTemplates = useCallback(() => {
     dispatch(
       templateActions.getTemplates({
         page: {
@@ -98,6 +88,22 @@ const TemplatesStep = ({
       }),
     );
   }, [dispatch, page, rowsPerPage, searchText]);
+
+  const handleSaveNewTemplate = e => {
+    e.preventDefault();
+    dispatch(
+      templateActions.createTemplate({
+        label: templateLabel,
+        attrs: getAttrsWithoutId(),
+        successCallback() {
+          handleGetTemplates();
+          handleLeaveTemplateCreation();
+        },
+      }),
+    );
+  };
+
+  useEffect(handleGetTemplates, [handleGetTemplates]);
 
   return (
     <Box className={classes.container}>
@@ -114,8 +120,14 @@ const TemplatesStep = ({
           </IconButton>
         </Box>
 
-        <Box className={classes.stepComponent} marginBottom={2}>
-          {isCreatingTemplate ? (
+        {isCreatingTemplate ? (
+          <Box
+            className={classes.stepComponent}
+            onSubmit={handleSaveNewTemplate}
+            marginBottom={2}
+            component='form'
+            noValidate
+          >
             <TemplateCreation
               className={classes.templateCreation}
               attrs={attrs}
@@ -127,12 +139,13 @@ const TemplatesStep = ({
               endExtraComponent={
                 <TemplateCreationActions
                   canSaveNewTemplate={canSaveTemplate}
-                  handleSaveNewTemplate={handleSaveNewTemplate}
-                  handleDiscardNewTemplate={handleDiscardNewTemplate}
+                  handleDiscardNewTemplate={handleLeaveTemplateCreation}
                 />
               }
             />
-          ) : (
+          </Box>
+        ) : (
+          <Box className={classes.stepComponent} marginBottom={2}>
             <TemplatesTable
               page={page}
               templates={templates}
@@ -147,8 +160,8 @@ const TemplatesStep = ({
               handleChangeRowsPerPage={handleChangeRowsPerPage}
               handleSearchForTemplates={handleSearchForTemplates}
             />
-          )}
-        </Box>
+          </Box>
+        )}
       </Box>
 
       <ActionButtons

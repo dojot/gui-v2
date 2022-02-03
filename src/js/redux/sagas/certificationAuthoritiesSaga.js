@@ -114,22 +114,22 @@ export function* handleCreateCertificationAuthority(action) {
   }
 }
 
-function* watchGetCertificationAuthorities() {
+export function* watchGetCertificationAuthorities() {
   yield takeLatest(constants.GET_CERTIFICATION_AUTHORITIES, handleGetCertificationAuthorities);
 }
 
-function* watchDeleteCertificationAuthority() {
+export function* watchDeleteCertificationAuthority() {
   yield takeLatest(constants.DELETE_CERTIFICATION_AUTHORITY, handleDeleteCertificationAuthority);
 }
 
-function* watchDeleteMultipleCertificationAuthorities() {
+export function* watchDeleteMultipleCertificationAuthorities() {
   yield takeLatest(
     constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES,
     handleDeleteMultipleCertificationAuthorities,
   );
 }
 
-function* watchCreateCertificationAuthority() {
+export function* watchCreateCertificationAuthority() {
   yield takeLatest(constants.CREATE_CERTIFICATION_AUTHORITY, handleCreateCertificationAuthority);
 }
 

@@ -49,6 +49,13 @@ const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
                 headerTitle={<Typography className={classes.cardTitle}>{attr.label}</Typography>}
               >
                 <Box marginBottom={1}>
+                  <Typography variant='body2'>{t('attrData.id')}</Typography>
+                  <Typography variant='body2'>
+                    <strong>{attr.id}</strong>
+                  </Typography>
+                </Box>
+
+                <Box marginBottom={1}>
                   <Typography variant='body2'>{t('attrData.type')}</Typography>
                   <Typography variant='body2'>
                     <strong>{t(attrTypeTranslation)}</strong>
@@ -63,7 +70,7 @@ const Cards = ({ page, attrs, rowsPerPage, handleSetAttrOptionsMenu }) => {
                 </Box>
 
                 {attr.staticValue && (
-                  <Box marginBottom={1}>
+                  <Box>
                     <Typography variant='body2'>{t('attrData.staticValue')}</Typography>
                     <Typography variant='body2'>
                       <strong>{attr.staticValue}</strong>

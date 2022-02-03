@@ -7,9 +7,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import { menuSelector } from 'Selectors/baseSelector';
 
 // This is show case how you can lazy loading component
-const ExampleRouteHandler = LazyLoading(() => import('views/example'));
 const GridTest = LazyLoading(() => import('views/gridTest'));
-const TestRouteHandler = LazyLoading(() => import('views/test'));
 const Dashboard = LazyLoading(() => import('views/dashboard'));
 const Home = LazyLoading(() => import('views/home'));
 const Widget = LazyLoading(() => import('views/dashboard/widget'));
@@ -30,6 +28,7 @@ const CreateCertificationAuthority = LazyLoading(() =>
   import('views/createCertificationAuthority'),
 );
 const EditDevice = LazyLoading(() => import('views/editDevice'));
+const PageNotFound = LazyLoading(() => import('views/pageNotFound'));
 const redirectToHome = () => <Redirect to={{ pathname: '/home' }} />;
 
 const Routes = props => (
@@ -37,7 +36,6 @@ const Routes = props => (
     <Route exact path='/' component={redirectToHome} />
     <Route path='/login' component={LogIn} />
     <Route path='/logout' component={LogOut} />
-    <Route path='/help' component={ExampleRouteHandler} />
     <PrivateRoute
       path='/dashboard/widget/wizard/:id/:uuid?'
       component={WizardManager}
@@ -54,9 +52,6 @@ const Routes = props => (
     <PrivateRoute path='/templates/new' component={CreateTemplate} attrs={props} exact />
     <PrivateRoute path='/templates/:templateId' component={TemplateAttrs} attrs={props} exact />
     <PrivateRoute path='/templates/edit/:templateId' component={EditTemplate} attrs={props} exact />
-    <PrivateRoute path='/flow' component={TestRouteHandler} attrs={props} />
-    <PrivateRoute path='/notification' component={TestRouteHandler} attrs={props} />
-    <PrivateRoute path='/users' component={TestRouteHandler} attrs={props} />
     <PrivateRoute path='/profiles' component={GridTest} attrs={props} />
     <PrivateRoute path='/certificates' component={Certificates} attrs={props} exact />
     <PrivateRoute path='/certificates/new' component={CreateCertificate} attrs={props} exact />
@@ -72,7 +67,7 @@ const Routes = props => (
       attrs={props}
       exact
     />
-    <Route path='*' component={ExampleRouteHandler} attrs={props} />
+    <Route path='*' component={PageNotFound} attrs={props} />
   </Switch>
 );
 

@@ -17,10 +17,10 @@ switch (option) {
     shell.exec('cross-env eslint --fix src/js/** --format node_modules/eslint-friendly-formatter . --ext .js --ext .jsx  --cache; exit 0');
     break;
   case 'dev':
-    shell.exec(`cross-env webpack-dev-server --config webpack.config.dev-server.babel.js --hot --progress --no-info --inline --colors`);
+    shell.exec(`cross-env webpack-dev-server --config webpack.config.dev-server.babel.js --hot --progress`);
     break;
   case 'build':
-    shell.exec(`cross-env rimraf docroot && webpack --config webpack.config.build.babel.js --display-error-details`);
+    shell.exec(`cross-env rimraf docroot && webpack --config webpack.config.build.babel.js`);
     break;
   default:
     // If the app type is invalid, stop execution of the file.

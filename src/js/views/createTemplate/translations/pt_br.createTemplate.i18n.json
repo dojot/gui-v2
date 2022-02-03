@@ -1,3 +1,5 @@
 {
-  "title": "Novo Modelo"
+  "title": "Novo Modelo",
+  "cancelTemplateCreationTitle": "Cancelar Criação de Modelo",
+  "cancelTemplateCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!"
 }

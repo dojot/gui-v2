@@ -16,7 +16,7 @@ const APP_ENTRY_POINT = `${JS_SOURCE}/main`;
 
 const webpackDevOutput = {
   publicPath: config.get('publicPath'),
-  filename: 'bundle.js',
+  filename: '[name].[hash:8].js',
 };
 
 // webpack 4 mode
@@ -34,13 +34,15 @@ webpackConfig.devServer = {
   // If you would like to switch back to browser history,
   // you can turn this to true, and modify app-history accordingly.
   historyApiFallback: false,
-  disableHostCheck: true,
-  clientLogLevel: 'error',
+  allowedHosts: 'all',
   compress: true,
-  noInfo: true,
-  quiet: true,
   open: true,
-  stats: 'errors-only',
+  client: {
+    overlay: {
+      errors: true,
+      warnings: false,
+    },
+  }
 };
 
 // This is your testing container, we did
@@ -56,6 +58,7 @@ const htmlPlugins = html.map(
       template: `src/assets/template/${page.template}`,
       inject: 'body',
       filename: page.filename,
+      favicon: './favicon.ico',
     }),
 );
 
@@ -123,7 +126,7 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
 webpackConfig.plugins = webpackConfig.plugins.concat(htmlPlugins);
 
 // webpack 4, if you set mode = 'development', it will set this value
-webpackConfig.devtool = 'cheap-module-eval-source-map';
+// webpackConfig.devtool = 'cheap-module-eval-source-map';
 
 webpackConfig.entry = [
   '@babel/polyfill',

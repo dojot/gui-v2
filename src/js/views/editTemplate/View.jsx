@@ -45,7 +45,9 @@ const EditTemplate = () => {
     else history.push('/templates');
   };
 
-  const handleEditTemplate = () => {
+  const handleEditTemplate = e => {
+    e.preventDefault();
+
     const formattedAttrs = attrs.map(attr => {
       const attrClone = { ...attr };
       delete attrClone.id;
@@ -105,7 +107,7 @@ const EditTemplate = () => {
   return (
     <ViewContainer headerTitle={t('title', { label: templateData.label })}>
       <Box className={classes.container} padding={4}>
-        <Box className={classes.content}>
+        <Box className={classes.content} component='form' onSubmit={handleEditTemplate} noValidate>
           <TemplateCreation
             className={classes.templateCreation}
             attrs={attrs}
@@ -125,13 +127,13 @@ const EditTemplate = () => {
 
             <Button
               size='large'
+              type='submit'
               color='primary'
               variant='contained'
               disabled={!canSaveTemplate || isEditingTemplate}
               endIcon={
                 isEditingTemplate ? <CircularProgress color='inherit' size={14} /> : <Edit />
               }
-              onClick={handleEditTemplate}
             >
               {t('common:edit')}
             </Button>

@@ -141,6 +141,7 @@ export default {
       chunks: "all"
     }
   },
+  stats: 'errors-only',
   resolve: {
     extensions: [".js", ".jsx", ".css"],
     modules: [
@@ -162,20 +163,20 @@ export default {
       Types: path.resolve(__dirname, "src/js/common/types"),
       Utils: path.resolve(__dirname, "src/js/common/utils"),
       leaflet_css: path.resolve(__dirname, "/node_modules/leaflet/dist/leaflet.css")
-    }
+    },
+    fallback: {
+      console: false,
+      fs: false,
+      net: false,
+      tls: false
+    },
   },
   plugins: [
-    new webpack.IgnorePlugin(/vertx/), // https://github.com/webpack/webpack/issues/353
+    new webpack.IgnorePlugin({resourceRegExp: /vertx/}), // https://github.com/webpack/webpack/issues/353
     new CaseSensitivePathsPlugin()
   ],
   module: {
     rules: COMMON_LOADERS
-  },
-  node: {
-    console: true,
-    fs: "empty",
-    net: "empty",
-    tls: "empty"
   },
   externals: {
     console: true,

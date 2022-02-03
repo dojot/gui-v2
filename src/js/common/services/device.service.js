@@ -86,30 +86,15 @@ export const deleteDevices = deviceIds => {
   });
 };
 
-export const favoriteDevice = ({ deviceId, user, tenant }) => {
+export const favoriteDevices = ({ deviceIds, user, tenant }) => {
   return protectAPI({
     query: `
-      mutation favoriteDevice($deviceId: String!, $user: String, $tenant: String!) {
-        favoriteDevice(deviceId: $deviceId, user: $user, tenant: $tenant)
+      mutation favoriteDevices($deviceIds: [String]!, $user: String, $tenant: String!) {
+        favoriteDevices(deviceIds: $deviceIds, user: $user, tenant: $tenant)
       }
     `,
     variables: JSON.stringify({
-      deviceId,
-      user,
-      tenant,
-    }),
-  });
-};
-
-export const favoriteMultipleDevices = ({ deviceIdArray, user, tenant }) => {
-  return protectAPI({
-    query: `
-      mutation favoriteMultipleDevices($deviceIdArray: [String]!, $user: String, $tenant: String!) {
-        favoriteMultipleDevices(deviceIdArray: $deviceIdArray, user: $user, tenant: $tenant)
-      }
-    `,
-    variables: JSON.stringify({
-      deviceIdArray,
+      deviceIds,
       user,
       tenant,
     }),

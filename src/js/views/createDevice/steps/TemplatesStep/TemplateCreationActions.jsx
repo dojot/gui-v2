@@ -6,11 +6,7 @@ import { useTranslation } from 'react-i18next';
 
 import { useTemplateCreationActionsStyles } from './style';
 
-const TemplateCreationActions = ({
-  canSaveNewTemplate,
-  handleSaveNewTemplate,
-  handleDiscardNewTemplate,
-}) => {
+const TemplateCreationActions = ({ canSaveNewTemplate, handleDiscardNewTemplate }) => {
   const { t } = useTranslation('createDevice');
   const classes = useTemplateCreationActionsStyles();
 
@@ -22,9 +18,9 @@ const TemplateCreationActions = ({
 
       <Button
         size='large'
-        color='primary'
+        type='submit'
         variant='text'
-        onClick={handleSaveNewTemplate}
+        color='primary'
         disabled={!canSaveNewTemplate}
       >
         {t('templatesStep.saveNewTemplate')}
@@ -35,13 +31,11 @@ const TemplateCreationActions = ({
 
 TemplateCreationActions.propTypes = {
   canSaveNewTemplate: PropTypes.bool,
-  handleSaveNewTemplate: PropTypes.func,
   handleDiscardNewTemplate: PropTypes.func,
 };
 
 TemplateCreationActions.defaultProps = {
   canSaveNewTemplate: false,
-  handleSaveNewTemplate: null,
   handleDiscardNewTemplate: null,
 };
 

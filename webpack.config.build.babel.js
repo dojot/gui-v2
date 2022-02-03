@@ -1,7 +1,6 @@
 import path from 'path';
 
 import SaveAssetsJson from 'assets-webpack-plugin';
-import AWS from 'aws-sdk';
 import config from 'config';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -12,8 +11,7 @@ import webpackConfig, { JS_SOURCE } from './webpack.config.common';
 // ----------------------------------------------------------
 //  CONSTANT DECLARATION
 // ----------------------------------------------------------
-const IS_S3_DEPLOY = Boolean(process.env.S3_DEPLOY);
-const PUBLIC_PATH = IS_S3_DEPLOY ? process.env.AWS_CDN_URL : config.get('publicPath');
+const PUBLIC_PATH = config.get('publicPath');
 const APP_ENTRY_POINT = `${JS_SOURCE}/main`;
 
 // webpack 4 mode
@@ -22,8 +20,8 @@ webpackConfig.mode = 'production';
 
 const webpackProdOutput = {
   publicPath: PUBLIC_PATH,
-  filename: `${config.get('assetPath')}/[name]-[hash].js`,
-  chunkFilename: `${config.get('assetPath')}/[id].[hash].js`,
+  filename: `${config.get('assetPath')}/[name]-[fullhash].js`,
+  chunkFilename: `${config.get('assetPath')}/[id].[fullhash].js`,
 };
 
 const html = config.get('html');
@@ -39,6 +37,7 @@ const htmlPlugins = html.map(
       template: `src/assets/template/${page.template}`,
       inject: 'body',
       filename: page.filename,
+      favicon: './favicon.ico',
       minify: {
         removeComments: true,
         collapseWhitespace: true,
@@ -73,45 +72,11 @@ webpackConfig.module.rules = webpackConfig.module.rules.concat({
   ],
 });
 
-webpackConfig.devtool = 'source-map';
+// webpackConfig.devtool = 'source-map';
 
 webpackConfig.entry = {
   app: ['@babel/polyfill', path.resolve(__dirname, APP_ENTRY_POINT)],
 };
-
-if (IS_S3_DEPLOY) {
-  const S3Plugin = require('webpack-s3-plugin');
-
-  // Please read README if you have no idea where
-  // `process.env.AWS_ACCESS_KEY` is coming from
-  let s3Options = {};
-  if (process.env.AWS_PROFILE) {
-    s3Options = new AWS.SharedIniFileCredentials({
-      profile: process.env.AWS_PROFILE,
-    });
-  }
-  if (process.env.AWS_ACCESS_KEY) {
-    s3Options.accessKeyId = process.env.AWS_ACCESS_KEY_ID;
-  }
-  if (process.env.AWS_SECRET_KEY) {
-    s3Options.secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
-  }
-  const s3Config = new S3Plugin({
-    // Only upload css and js
-    // include: /.*\.(css|js)/,
-    // s3Options are required
-    ...s3Options,
-    s3UploadOptions: {
-      Bucket: process.env.AWS_BUCKET,
-    },
-    cdnizerCss: {
-      test: /images/,
-      cdnUrl: process.env.AWS_CDN_URL,
-    },
-  });
-
-  webpackConfig.plugins = webpackConfig.plugins.concat(s3Config);
-}
 
 if (config.get('optimization.analyzeMode') === true) {
   const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
@@ -137,7 +102,7 @@ webpackConfig.plugins.push(
   }),
   // how you want your code to be optimized
   // all configurable
-  new webpack.IgnorePlugin(/un~$/),
+  new webpack.IgnorePlugin({ resourceRegExp: /un~$/ }),
 
   new SaveAssetsJson({
     path: path.join(__dirname, 'docroot'),
@@ -150,8 +115,8 @@ webpackConfig.plugins.push(
   new MiniCssExtractPlugin({
     // Options similar to the same options in webpackOptions.output
     // both options are optional
-    filename: `${config.get('assetPath')}/[name]-[hash].css`,
-    chunkFilename: `${config.get('assetPath')}/[id]-[hash].css`,
+    filename: `${config.get('assetPath')}/[name]-[fullhash].css`,
+    chunkFilename: `${config.get('assetPath')}/[id]-[fullhash].css`,
   }),
 );
 

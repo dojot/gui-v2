@@ -225,7 +225,7 @@ const TemplateAttrs = () => {
   }, [viewMode]);
 
   return (
-    <ViewContainer headerTitle={t('title', { template: templateData?.label || templateId })}>
+    <ViewContainer headerTitle={t('title', { template: templateData?.label, id: templateId })}>
       <OptionsMenu
         isShowingMenu={!!attrOptionsMenu}
         anchorElement={attrOptionsMenu?.anchorElement}

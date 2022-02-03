@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import { act } from '@testing-library/react';
 import { mount } from 'enzyme';
+import moment from 'moment';
 import theme from 'Themes';
 import '@testing-library/jest-dom/extend-expect';
 
@@ -18,30 +19,33 @@ const mockColumns = [
   { dataKey: '5a709btemp', name: 'temperatura' },
   { dataKey: '4f0e72hum', name: 'umidade' },
 ];
+
+const timestamp = '2020-08-10T17:46:26';
+
 const mockRows = [
   {
-    timestamp: '2020-08-10T17:46:26',
+    timestamp,
     deviceLabel: 'Local',
     '5a709bletters': 'j',
     '5a709btemp': null,
     '4f0e72hum': '50',
   },
   {
-    timestamp: '2020-08-10T17:46:11',
+    timestamp,
     deviceLabel: 'Local',
     '5a709bletters': 'ç',
     '5a709btemp': '15',
     '4f0e72hum': '43',
   },
   {
-    timestamp: '2020-08-10T17:45:56',
+    timestamp,
     deviceLabel: 'Local',
     '5a709bletters': 'd',
     '5a709btemp': '17',
     '4f0e72hum': '40',
   },
   {
-    timestamp: '2020-08-10T17:45:41',
+    timestamp,
     deviceLabel: 'Local',
     '5a709bletters': 'Z',
     '5a709btemp': '21',
@@ -77,13 +81,17 @@ describe('Simple Table', () => {
       wrapper.find(TableHead).find(TableCell).at(4).find('button').simulate('click');
     });
     wrapper.update();
-    expect(wrapper.find(TableBody).find(TableCell).at(4).text()).toEqual('10/08/2020 17:45:41');
+    expect(wrapper.find(TableBody).find(TableCell).at(4).text()).toEqual(
+      moment(timestamp).format('L LTS'),
+    );
 
     act(() => {
       wrapper.find(TableHead).find(TableCell).at(4).find('button').simulate('click');
     });
     wrapper.update();
-    expect(wrapper.find(TableBody).find(TableCell).at(4).text()).toEqual('10/08/2020 17:46:26');
+    expect(wrapper.find(TableBody).find(TableCell).at(4).text()).toEqual(
+      moment(timestamp).format('L LTS'),
+    );
   });
 
   it('should be able sorting to asc and desc order the string column', () => {

@@ -25,6 +25,19 @@ const CreateCertificateCSR = ({
     setCsrHelp(!csrHelp);
   };
 
+  const handleSubmit = e => {
+    e.preventDefault();
+    handleCreateCertificateCSR();
+  };
+
+  const handleSaveWithKeyboard = e => {
+    if (!csrPEM) return;
+    const event = e.nativeEvent;
+    const isEnterKey = event.key === 'Enter';
+    const isPressingAltOrCtrl = event.ctrlKey || event.altKey;
+    if (isEnterKey && isPressingAltOrCtrl) handleCreateCertificateCSR();
+  };
+
   return (
     <CollapsibleList
       title={t('createCertificateCSR.title')}
@@ -35,7 +48,7 @@ const CreateCertificateCSR = ({
       handleToggleContent={handleToggleContent}
     >
       {!certificateData ? (
-        <Box padding={4}>
+        <Box padding={4} component='form' onSubmit={handleSubmit} noValidate>
           <Typography
             className={classes.csrHelpLink}
             cursor='pointer'
@@ -63,7 +76,8 @@ const CreateCertificateCSR = ({
             value={csrPEM}
             variant='outlined'
             onChange={handleChangeCsrPEM}
-            placeholder={t('createCertificateCSR.inputPlaceholder')}
+            onKeyDown={handleSaveWithKeyboard}
+            label={t('createCertificateCSR.inputPlaceholder')}
             rows={10}
             multiline
             fullWidth
@@ -71,11 +85,11 @@ const CreateCertificateCSR = ({
 
           <Typography align='right'>
             <Button
-              onClick={handleCreateCertificateCSR}
               className={classes.generateCertificateButton}
               disabled={!csrPEM}
               variant='outlined'
               color='primary'
+              type='submit'
             >
               {t('createCertificateCSR.generateCertificate')}
             </Button>

@@ -1,5 +1,9 @@
 {
   "dashboard": "Dashboard",
+  "cancelDashboardCreationTitle": "Cancel Dashboard Creation",
+  "cancelDashboardCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
+  "addWidget": "Add Widget",
+  "emptyMessage": "No Widget To Show",
   "steps": {
     "general": "General",
     "devices": "Devices",
@@ -50,9 +54,7 @@
     "search": "Enter the device name",
     "notFound": "No devices found for the given filter"
   },
-  "security": {
-
-  },
+  "security": {},
   "filters": {
     "recover": "Recuperar registros por:",
     "real time": "Real Time",
