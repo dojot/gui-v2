@@ -111,7 +111,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
                   </div>
                   <div className='itemInput'>
                     <TextField
-                      label='Nº Registros'
+                      label={t('filters.numberOfRecords')}
                       name={`${name}.lastDynamicsValue`}
                       variant='outlined'
                       margin='none'

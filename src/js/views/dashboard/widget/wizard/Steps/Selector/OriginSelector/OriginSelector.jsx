@@ -6,6 +6,7 @@ import Tab from '@material-ui/core/Tab';
 import { FormTabs } from 'Components/Tabs';
 import PropTypes from 'prop-types';
 import { Field } from 'react-final-form';
+import { useTranslation } from 'react-i18next';
 
 import Wizard from '../../../wizard';
 import Devices from '../../Devices/DevicesPageOnly';
@@ -46,9 +47,11 @@ const a11yProps = index => {
 };
 
 const Selector = ({ validate, values, form }) => {
+  const { t } = useTranslation('dashboard');
+
   const tabItems = [
-    <Tab label='Devices' {...a11yProps(0)} key='Devices' />,
-    <Tab label='Templates' {...a11yProps(1)} key='Templates' />,
+    <Tab label={t('devices.devicesTabLabel')} {...a11yProps(0)} key='Devices' />,
+    <Tab label={t('devices.templatesTabLabel')} key='Templates' />,
   ];
 
   return (
