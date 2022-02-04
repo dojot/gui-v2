@@ -1,14 +1,9 @@
 {
+  "home": "Home",
+  "dashboard": "Dashboard",
   "devices": "Devices",
   "templates": "Templates",
-  "flows": "Flows",
-  "notifications": "Notifications",
-  "users": "Users",
-  "profiles": "Profiles",
-  "dashboard": "Dashboard",
-  "home": "Home",
-  "help": "Help",
-  "certificates": "Certificates",
   "security": "Security",
-  "exit": "Exit"
+  "certificates": "Certificates",
+  "CA": "CA"
 }

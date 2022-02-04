@@ -12,13 +12,15 @@ import { ExpandMore, ExpandLess } from '@material-ui/icons';
 import logo from 'Assets/images/dojotLogo.png';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import { Link, withRouter, useHistory } from 'react-router-dom';
 
 import { useStyles } from './style';
 
 const DrawerComponent = ({ isOpen, menuItems, location }) => {
-  const classes = useStyles();
+  const { t } = useTranslation('menu');
   const history = useHistory();
+  const classes = useStyles();
 
   const [collapsedItems, setCollapsedItems] = useState({});
 
@@ -63,14 +65,14 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
           if (!item.visible) return null;
 
           if (item.collapsible && item.subItems) {
-            const isCollapsed = collapsedItems[item.label];
+            const isCollapsed = collapsedItems[item.name];
 
             const hasSelectedSubItem = item.subItems.find(subItem => {
               return getActiveRoute(subItem.path);
             });
 
             const handleToggleCollapsibleItems = () => {
-              handleToggleCollapsibleItem(item.label);
+              handleToggleCollapsibleItem(item.name);
             };
 
             const handleGoToSubItems = () => {
@@ -82,7 +84,7 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
             };
 
             return (
-              <div key={item.label}>
+              <div key={item.name}>
                 <MenuItem
                   selected={!!hasSelectedSubItem}
                   onClick={isOpen ? handleToggleCollapsibleItems : handleGoToSubItems}
@@ -96,7 +98,7 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
                       className={hasSelectedSubItem ? classes.iconSelected : classes.icon}
                     />
                   </ListItemIcon>
-                  <ListItemText primary={item.label} />
+                  <ListItemText primary={t(item.name)} />
                   {isCollapsed ? <ExpandLess /> : <ExpandMore />}
                 </MenuItem>
 
@@ -105,7 +107,7 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
                     const isSubItemSelected = getActiveRoute(subItem.path);
 
                     return (
-                      <Link key={subItem.label} to={subItem.path} className={classes.menuLink}>
+                      <Link key={subItem.name} to={subItem.path} className={classes.menuLink}>
                         <MenuItem
                           selected={isSubItemSelected}
                           classes={{
@@ -113,7 +115,7 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
                             selected: classes.subItemSelected,
                           }}
                         >
-                          <ListItemText primary={subItem.label} />
+                          <ListItemText primary={t(subItem.name)} />
                         </MenuItem>
                       </Link>
                     );
@@ -126,7 +128,7 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
           const isSelected = getActiveRoute(item.path);
 
           return (
-            <Link key={item.label} to={item.path} className={classes.menuLink}>
+            <Link key={item.name} to={item.path} className={classes.menuLink}>
               <MenuItem
                 selected={isSelected}
                 classes={{
@@ -137,7 +139,7 @@ const DrawerComponent = ({ isOpen, menuItems, location }) => {
                 <ListItemIcon>
                   <item.icon className={isSelected ? classes.iconSelected : classes.icon} />
                 </ListItemIcon>
-                <ListItemText primary={item.label} />
+                <ListItemText primary={t(item.name)} />
               </MenuItem>
             </Link>
           );
