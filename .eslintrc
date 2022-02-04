@@ -36,6 +36,7 @@
     "react/jsx-filename-extension": [0],
     "import/extensions": "off",
     "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": "off",
     "comma-dangle": [2, "always-multiline"],
     // "arrow-parens": [
     //   "warn",
