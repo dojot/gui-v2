@@ -37,6 +37,8 @@
     "getCertificationAuthorities": "Não foi possível obter as CAs",
     "deleteCertificationAuthority": "Não foi possível excluir esta CA",
     "deleteMultipleCertificationAuthorities": "Não foi possível excluir estas CAs",
-    "createCertificationAuthority": "Não foi possível criar uma CA"
+    "createCertificationAuthority": "Não foi possível criar uma CA",
+
+    "failedToCopy": "Falhou ao copiar"
   }
 }
