@@ -95,4 +95,8 @@ export const useDataTableStyles = makeStyles(theme => ({
   tooltip: {
     fontSize: '1rem',
   },
+  fingerprintField: {
+    display: 'flex',
+    alignItems: 'center',
+  },
 }));

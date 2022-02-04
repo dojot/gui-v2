@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react';
 
 import {
+  Box,
   Checkbox,
   IconButton,
   Paper,
@@ -16,6 +17,7 @@ import { MoreHoriz } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { CopyTextToClipboardButton } from '../../../common/components/CopyTextToClipboardButton';
 import { DataTableHead } from '../../../common/components/DataTable';
 import { DATA_ORDER } from '../../../common/constants';
 import { useCertificateComputedData } from '../../../common/hooks';
@@ -184,17 +186,21 @@ const DataTable = ({
                     </TableCell>
 
                     <TableCell>
-                      <Tooltip
-                        title={certificationAuthority.caFingerprint}
-                        classes={{ tooltip: classes.tooltip }}
-                        placement='right'
-                        interactive
-                        arrow
-                      >
-                        <div className={classes.truncatedText}>
-                          {certificationAuthority.caFingerprint}
-                        </div>
-                      </Tooltip>
+                      <Box className={classes.fingerprintField}>
+                        <Tooltip
+                          title={certificationAuthority.caFingerprint}
+                          classes={{ tooltip: classes.tooltip }}
+                          placement='right'
+                          arrow
+                        >
+                          <div className={classes.truncatedText}>
+                            {certificationAuthority.caFingerprint}
+                          </div>
+                        </Tooltip>
+                        <CopyTextToClipboardButton
+                          textToCopy={certificationAuthority.caFingerprint}
+                        />
+                      </Box>
                     </TableCell>
 
                     <TableCell>
