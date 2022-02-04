@@ -8,7 +8,11 @@ import { useHistory } from 'react-router';
 import { AlertDialog } from '../../common/components/Dialogs';
 import { TemplateCreation } from '../../common/components/WizardForms';
 import { useTemplateCreationState } from '../../common/hooks';
-import { actions as templateActions } from '../../redux/modules/templates';
+import { useIsLoading } from '../../common/hooks/useIsLoading';
+import {
+  actions as templateActions,
+  constants as templateConstants,
+} from '../../redux/modules/templates';
 import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
 
@@ -17,6 +21,8 @@ const CreateTemplate = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const classes = useStyles();
+
+  const isLoadingCreateTemplate = useIsLoading(templateConstants.CREATE_TEMPLATE);
 
   const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
 
@@ -90,7 +96,7 @@ const CreateTemplate = () => {
               type='submit'
               color='primary'
               variant='contained'
-              disabled={!canSaveTemplate}
+              disabled={!canSaveTemplate || isLoadingCreateTemplate}
             >
               {t('common:save')}
             </Button>
