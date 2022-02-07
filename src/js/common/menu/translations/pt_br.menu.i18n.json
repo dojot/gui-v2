@@ -1,14 +1,9 @@
 {
+  "home": "Home",
+  "dashboard": "Dashboard",
   "devices": "Dispositivos",
   "templates": "Modelos",
-  "flows": "Fluxos",
-  "notifications": "Notificações",
-  "users": "Usuários",
-  "profiles": "Perfis",
-  "dashboard": "Dashboard",
-  "home": "Home",
-  "help": "Ajuda",
-  "certificates": "Certificados",
   "security": "Segurança",
-  "exit": "Sair"
+  "certificates": "Certificados",
+  "CA": "CA"
 }

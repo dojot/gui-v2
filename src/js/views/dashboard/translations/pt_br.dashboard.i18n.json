@@ -52,7 +52,9 @@
   },
   "devices": {
     "search": "Digite o nome do dispositivo",
-    "notFound": "Nenhum dispositivo encontrado para o filtro informado"
+    "notFound": "Nenhum dispositivo encontrado para o filtro informado",
+    "devicesTabLabel": "Dispositivos",
+    "templatesTabLabel": "Modelos"
   },
   "security": {},
   "filters": {
@@ -62,6 +64,7 @@
     "last": "Últimos",
     "records": "No. Registros",
     "order": "Ordem",
+    "numberOfRecords": "Nº Registros",
     "select an option": "Selecione uma opção",
     "last minutes": "Últimos minutos",
     "last hours": "Últimas horas",

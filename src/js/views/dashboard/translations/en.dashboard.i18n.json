@@ -52,16 +52,19 @@
   },
   "devices": {
     "search": "Enter the device name",
-    "notFound": "No devices found for the given filter"
+    "notFound": "No devices found for the given filter",
+    "devicesTabLabel": "Devices",
+    "templatesTabLabel": "Templates"
   },
   "security": {},
   "filters": {
-    "recover": "Recuperar registros por:",
+    "recover": "Retrieve records by:",
     "real time": "Real Time",
     "historic": "Historic",
     "last": "Last",
     "records": "No. Records",
     "order": "Order",
+    "numberOfRecords": "Number Of Records",
     "select an option": "Select an option",
     "last minutes": "Last minutes",
     "last hours": "Last hours",

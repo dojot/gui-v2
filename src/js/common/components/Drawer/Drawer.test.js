@@ -7,22 +7,23 @@ import { Router } from 'react-router-dom';
 
 import { Drawer } from '.';
 
+const devicesMenuItem = {
+  visible: true,
+  name: 'devices',
+  path: '/devices',
+  icon: DevicesOther,
+};
+
+const templatesMenuItem = {
+  visible: true,
+  name: 'templates',
+  path: '/templates',
+  icon: FilterNone,
+};
+
 const initialProps = {
   isOpen: false,
-  menuItems: [
-    {
-      visible: true,
-      label: 'Dispositivos',
-      path: '/devices',
-      icon: DevicesOther,
-    },
-    {
-      visible: true,
-      label: 'Modelos',
-      path: '/templates',
-      icon: FilterNone,
-    },
-  ],
+  menuItems: [devicesMenuItem, templatesMenuItem],
 };
 
 describe('DrawerComponent', () => {
@@ -44,7 +45,7 @@ describe('DrawerComponent', () => {
 
   it('should be able simple render with device menu selected', () => {
     const history = createMemoryHistory();
-    history.location.pathname = '/devices';
+    history.location.pathname = devicesMenuItem.path;
 
     const { container } = render(
       <Router history={history}>
@@ -57,12 +58,12 @@ describe('DrawerComponent', () => {
       .querySelectorAll('div')[1]
       .querySelector('span');
 
-    expect(selectedItem.innerHTML).toEqual('Dispositivos');
+    expect(selectedItem.innerHTML).toEqual(devicesMenuItem.name);
   });
 
   it('should be able simple render with template menu selected', () => {
     const history = createMemoryHistory();
-    history.location.pathname = '/templates';
+    history.location.pathname = templatesMenuItem.path;
 
     const { container } = render(
       <Router history={history}>
@@ -75,7 +76,7 @@ describe('DrawerComponent', () => {
       .querySelectorAll('div')[1]
       .querySelector('span');
 
-    expect(selectedItem.innerHTML).toEqual('Modelos');
+    expect(selectedItem.innerHTML).toEqual(templatesMenuItem.name);
   });
 
   it('should be able simple render opened drawer', () => {
@@ -103,15 +104,15 @@ describe('DrawerComponent', () => {
     const menuItems = menuList.querySelectorAll('a');
 
     expect(menuItems.length).toBe(2);
-    expect(menuItems[0].href).toContain('/devices');
-    expect(menuItems[1].href).toContain('/templates');
+    expect(menuItems[0].href).toContain(devicesMenuItem.path);
+    expect(menuItems[1].href).toContain(templatesMenuItem.path);
 
     expect(
       menuItems[0].querySelector('li').querySelectorAll('div')[1].querySelector('span').innerHTML,
-    ).toBe('Dispositivos');
+    ).toBe(devicesMenuItem.name);
 
     expect(
       menuItems[1].querySelector('li').querySelectorAll('div')[1].querySelector('span').innerHTML,
-    ).toBe('Modelos');
+    ).toBe(templatesMenuItem.name);
   });
 });
