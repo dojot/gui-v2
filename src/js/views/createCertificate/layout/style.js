@@ -6,6 +6,9 @@ export default makeStyles(theme => ({
     textDecoration: 'underline',
     padding: theme.spacing(2),
   },
+  csrHelpSteps: {
+    userSelect: 'text',
+  },
   generateCertificateButton: {
     width: 200,
     marginTop: theme.spacing(2),

@@ -59,7 +59,7 @@ const CreateCertificateCSR = ({
           </Typography>
 
           <Collapse in={csrHelp}>
-            <Box mb={2}>
+            <Box className={classes.csrHelpSteps}>
               <Typography>
                 <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>
                 <u>{t('createCertificateCSR.csrHelpSteps.step1Text')}</u>
