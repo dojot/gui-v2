@@ -11,7 +11,14 @@ import * as Yup from 'yup';
 
 import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../common/constants';
 import { useMap } from '../../wizard/hooks';
-import { Attributes, General, Summary, RealtimeFilter, generalValidates } from '../../wizard/Steps';
+import {
+  Attributes,
+  General,
+  Summary,
+  RealtimeFilter,
+  generalValidates,
+  attrValidates,
+} from '../../wizard/Steps';
 import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
 import Wizard from '../../wizard/wizard';
 
@@ -91,7 +98,7 @@ const MapWizard = ({
       <General validate={generalValidates} name='general' />
       <Selector validate={selectorValidates} />
       <Attributes
-        validate={null}
+        validate={attrValidates}
         name='attributes'
         acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.GEO_POINT.value]}
       />
