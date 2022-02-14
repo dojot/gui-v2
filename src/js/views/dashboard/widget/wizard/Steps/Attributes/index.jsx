@@ -28,6 +28,16 @@ import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../../common/constants';
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
+export const attrValidates = values => {
+  const errors = {};
+  if (!values.attributes) {
+    errors.attributes = 'Required';
+  } else if (Object.keys(values.attributes).length < 1) {
+    errors.attributes = 'Choose more';
+  }
+  return errors;
+};
+
 const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
   const classes = useStyles();
   const { t } = useTranslation(['dashboard']);
