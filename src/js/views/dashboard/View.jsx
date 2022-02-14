@@ -113,7 +113,7 @@ const Dashboard = props => {
 
   const createElement = useCallback(
     element => {
-      const { i } = element;
+      const { i, static: isStatic } = element;
       const [type] = i.split('/');
       switch (type) {
         case line:
@@ -127,6 +127,7 @@ const Dashboard = props => {
                 onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
+                isStatic={isStatic}
               />
             </div>
           );
@@ -141,6 +142,7 @@ const Dashboard = props => {
                 onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
+                isStatic={isStatic}
               />
             </div>
           );
@@ -155,6 +157,7 @@ const Dashboard = props => {
                 onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
+                isStatic={isStatic}
               />
             </div>
           );
@@ -169,6 +172,7 @@ const Dashboard = props => {
                 onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
+                isStatic={isStatic}
               />
             </div>
           );
@@ -183,6 +187,7 @@ const Dashboard = props => {
                 onExport={handleExport}
                 data={data[i]}
                 config={configs[i]}
+                isStatic={isStatic}
               />
             </div>
           );
