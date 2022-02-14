@@ -14,7 +14,7 @@ import { useTranslation } from 'react-i18next';
 
 import useStyles from './style';
 
-const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport }) => {
+const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport, isStatic }) => {
   const classes = useStyles();
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -30,6 +30,7 @@ const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport })
     setAnchorEl(null);
     callback(id);
   };
+
   return (
     <Card className={classes.card} variant='outlined'>
       <CardHeader
@@ -57,7 +58,7 @@ const WidgetCard = ({ id, onDelete, onPin, config, children, onEdit, onExport })
                 <ListItemText primary={t('common:edit')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onPin)}>
-                <ListItemText primary={t('common:pin')} />
+                <ListItemText primary={isStatic ? t('common:unpin') : t('common:pin')} />
               </MenuItem>
               <MenuItem onClick={() => handleClose(onExport)}>
                 <ListItemText primary={t('common:export')} />

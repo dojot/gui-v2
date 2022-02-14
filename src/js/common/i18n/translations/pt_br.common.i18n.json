@@ -11,6 +11,7 @@
   "next": "Avançar",
   "back": "Voltar",
   "pin": "Fixar",
+  "unpin": "Desafixar",
   "edit": "Editar",
   "export": "Exportar CSV",
   "delete": "Remover",
