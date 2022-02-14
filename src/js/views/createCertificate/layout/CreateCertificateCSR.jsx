@@ -63,9 +63,9 @@ const CreateCertificateCSR = ({
             <Box className={classes.csrHelpSteps}>
               <Box display='flex' alignItems='center'>
                 <Typography>
-                  <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>
+                  <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>{' '}
+                  {t('createCertificateCSR.csrHelpSteps.runTheCommand')}
                 </Typography>
-                <Typography>{t('createCertificateCSR.csrHelpSteps.runTheCommand')}</Typography>
                 <Input
                   value={t('createCertificateCSR.csrHelpSteps.generateCsrCommand')}
                   className={classes.inputCommand}
@@ -78,9 +78,9 @@ const CreateCertificateCSR = ({
 
               <Box display='flex' alignItems='center' marginTop={1}>
                 <Typography>
-                  <b>{t('createCertificateCSR.csrHelpSteps.step2')}</b>
+                  <b>{t('createCertificateCSR.csrHelpSteps.step2')}</b>{' '}
+                  {t('createCertificateCSR.csrHelpSteps.step2Text')}
                 </Typography>
-                <Typography>{t('createCertificateCSR.csrHelpSteps.step2Text')}</Typography>
               </Box>
             </Box>
           </Collapse>

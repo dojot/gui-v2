@@ -25,7 +25,8 @@ export default makeStyles(theme => ({
   },
   inputCommand: {
     fontSize: 14,
+    marginRight: theme.spacing(1),
     marginLeft: theme.spacing(1),
-    flex: 1,
+    width: 400,
   },
 }));

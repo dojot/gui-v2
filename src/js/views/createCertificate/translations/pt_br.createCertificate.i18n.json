@@ -13,10 +13,10 @@
     "subTitle": "Mais seguro: A plataforma gera um certificado, mas não tem conhecimento da chave privada.",
     "generateCsrHelp": "Como Gerar um CSR?",
     "csrHelpSteps": {
-      "step1": "Passo 1: ",
-      "runTheCommand": "Execute o comando",
+      "step1": "Passo 1:",
+      "runTheCommand": "Execute o comando:",
       "generateCsrCommand": "openssl req  -newkey 'rsa:2048'  -nodes  -sha256  -keyout 'privatekey.pem'  -out 'csr.pem'  -subj '/CN=Any value'",
-      "step2": "Passo 2: ",
+      "step2": "Passo 2:",
       "step2Text": "Copie e cole o conteúdo do arquivo csr.pem para a area de texto abaixo."
     },
     "generateCertificate": "Gerar Certificado",
