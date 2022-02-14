@@ -5,9 +5,11 @@ export default makeStyles(theme => ({
     color: '#F1B44C',
     textDecoration: 'underline',
     padding: theme.spacing(2),
+    cursor: 'pointer',
   },
   csrHelpSteps: {
     userSelect: 'text',
+    marginBottom: theme.spacing(2),
   },
   generateCertificateButton: {
     width: 200,
@@ -20,5 +22,10 @@ export default makeStyles(theme => ({
     '& > :first-child': {
       minWidth: '16rem',
     },
+  },
+  inputCommand: {
+    fontSize: 14,
+    marginLeft: theme.spacing(1),
+    flex: 1,
   },
 }));

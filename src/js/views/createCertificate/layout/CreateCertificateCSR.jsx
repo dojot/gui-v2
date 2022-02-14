@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 
-import { Box, Collapse, Typography, TextField, Button } from '@material-ui/core';
+import { Box, Collapse, Typography, TextField, Button, Input } from '@material-ui/core';
 import { CollapsibleList } from 'Components/CollapsibleList';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
+import { CopyTextToClipboardButton } from '../../../common/components/CopyTextToClipboardButton';
 import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
@@ -60,15 +61,27 @@ const CreateCertificateCSR = ({
 
           <Collapse in={csrHelp}>
             <Box className={classes.csrHelpSteps}>
-              <Typography>
-                <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>
-                <u>{t('createCertificateCSR.csrHelpSteps.step1Text')}</u>
-              </Typography>
+              <Box display='flex' alignItems='center'>
+                <Typography>
+                  <b>{t('createCertificateCSR.csrHelpSteps.step1')}</b>
+                </Typography>
+                <Typography>{t('createCertificateCSR.csrHelpSteps.runTheCommand')}</Typography>
+                <Input
+                  value={t('createCertificateCSR.csrHelpSteps.generateCsrCommand')}
+                  className={classes.inputCommand}
+                  readOnly
+                />
+                <CopyTextToClipboardButton
+                  textToCopy={t('createCertificateCSR.csrHelpSteps.generateCsrCommand')}
+                />
+              </Box>
 
-              <Typography>
-                <b>{t('createCertificateCSR.csrHelpSteps.step2')}</b>
-                {t('createCertificateCSR.csrHelpSteps.step2Text')}
-              </Typography>
+              <Box display='flex' alignItems='center' marginTop={1}>
+                <Typography>
+                  <b>{t('createCertificateCSR.csrHelpSteps.step2')}</b>
+                </Typography>
+                <Typography>{t('createCertificateCSR.csrHelpSteps.step2Text')}</Typography>
+              </Box>
             </Box>
           </Collapse>
 

@@ -14,7 +14,8 @@
     "generateCsrHelp": "How to Generate a CSR?",
     "csrHelpSteps": {
       "step1": "Step 1: ",
-      "step1Text": "Run the command: openssl req  -newkey 'rsa:2048'  -nodes  -sha256  -keyout 'privatekey.pem'  -out 'csr.pem'  -subj '/CN=Any value'",
+      "runTheCommand": "Run the command:",
+      "generateCsrCommand": "openssl req  -newkey 'rsa:2048'  -nodes  -sha256  -keyout 'privatekey.pem'  -out 'csr.pem'  -subj '/CN=Any value'",
       "step2": "Step 2: ",
       "step2Text": "Copy the contents of the csr.pem file into the text area below."
     },
