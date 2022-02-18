@@ -251,22 +251,23 @@ const Dashboard = props => {
 
   return (
     <ViewContainer headerTitle={t('dashboard:dashboard')} headerContent={getHeaderContent}>
-      {layout && layout.length > 0 ? (
-        <ResponsiveReactGridLayout
-          cols={cols}
-          rowHeight={rowHeight}
-          className={className}
-          layouts={{ lg: layout }}
-          onLayoutChange={onLayoutChange}
-          measureBeforeMount={false}
-          compactType='vertical'
-          verticalCompact
-          preventCollision={false}
-          draggableHandle='.MuiCardHeader-root'
-        >
-          {_.map(layout, element => createElement(element))}
-        </ResponsiveReactGridLayout>
-      ) : (
+      <ResponsiveReactGridLayout
+        style={{ display: layout?.length ? 'initial' : 'none' }}
+        cols={cols}
+        rowHeight={rowHeight}
+        className={className}
+        layouts={{ lg: layout }}
+        onLayoutChange={onLayoutChange}
+        measureBeforeMount={false}
+        compactType='vertical'
+        verticalCompact
+        preventCollision={false}
+        draggableHandle='.MuiCardHeader-root'
+      >
+        {_.map(layout, element => createElement(element))}
+      </ResponsiveReactGridLayout>
+
+      {!layout?.length && (
         <EmptyPlaceholder
           textButton={t('addWidget')}
           emptyListMessage={t('emptyMessage')}
