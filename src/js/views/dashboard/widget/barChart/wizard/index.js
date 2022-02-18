@@ -87,7 +87,10 @@ const BarWizard = ({
         validate={null}
         name='attributes'
         staticSupported={false}
-        acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.INTEGER, TEMPLATE_ATTR_VALUE_TYPES.FLOAT]}
+        acceptedTypes={[
+          TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+          TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+        ]}
       />
       <Filters validate={null} name='filters' />
       <Summary />
