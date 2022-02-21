@@ -30,7 +30,7 @@ const LoginView = ({ location, history }) => {
         user,
         password,
       });
-      history.push('/dashboard');
+      history.push('/home');
     } catch ({ message }) {
       setHasError(true);
       setMsgError(message.indexOf('404') !== -1 ? 'network_error' : 'login_error');
@@ -42,7 +42,7 @@ const LoginView = ({ location, history }) => {
   };
 
   if (isAuthenticated()) {
-    return <Redirect to={{ pathname: '/dashboard', state: { from: location } }} />;
+    return <Redirect to={{ pathname: '/home', state: { from: location } }} />;
   }
 
   return (
