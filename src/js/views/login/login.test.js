@@ -108,7 +108,7 @@ describe('Login', () => {
 
     const wrapper = mount(<Login />);
     await setUserAndSubmit(wrapper, DEFAULT_USER, DEFAULT_PASS);
-    expect(wrapper.find('div').text()).toEqual('/dashboard');
+    expect(wrapper.find('div').text()).toEqual('/home');
     wrapper.unmount();
   });
 });
