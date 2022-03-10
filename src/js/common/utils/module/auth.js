@@ -28,7 +28,7 @@ export const redirectToLogin = (tenant, returnPath) => {
     returnPath,
   });
 
-  window.location.href = `/backstage/auth/authenticate?${params.toString()}`;
+  window.location.href = `/backstage/v1/auth?${params.toString()}`;
 };
 
 export const redirectToLogout = returnPath => {
@@ -36,5 +36,5 @@ export const redirectToLogout = returnPath => {
     returnPath,
   });
 
-  window.location.href = `/backstage/auth/revoke?${params.toString()}`;
+  window.location.href = `/backstage/v1/auth/revoke?${params.toString()}`;
 };

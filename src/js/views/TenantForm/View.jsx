@@ -16,7 +16,7 @@ const TenantForm = () => {
   const handleSubmit = async e => {
     e.preventDefault();
     if (tenant.trim() === '') return;
-    redirectToLogin(tenant, '/home');
+    redirectToLogin(tenant, '/v2/#/home');
   };
 
   return (
