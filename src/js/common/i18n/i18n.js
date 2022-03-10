@@ -26,8 +26,6 @@ import editTemplateEn from '../../views/editTemplate/translations/en.editTemplat
 import editTemplatePtBr from '../../views/editTemplate/translations/pt_br.editTemplate.i18n.json';
 import homeEn from '../../views/home/translations/en.home.i18n.json';
 import homePtBr from '../../views/home/translations/pt_br.home.i18n.json';
-import loginEn from '../../views/login/translations/en.login.i18n.json';
-import loginPtBr from '../../views/login/translations/pt_br.login.i18n.json';
 import pageNotFoundEn from '../../views/pageNotFound/translations/en.pageNotFound.i18n.json';
 import pageNotFoundPtBr from '../../views/pageNotFound/translations/pt_br.pageNotFound.i18n.json';
 import userInfoEn from '../../views/stateComponents/UserInfo/translations/en_us.userInfo.i18n.json';
@@ -36,6 +34,8 @@ import templateAttrsEn from '../../views/templateAttrs/translations/en.templateA
 import templateAttrsPtBr from '../../views/templateAttrs/translations/pt_br.templateAttrs.i18n.json';
 import templatesEn from '../../views/templates/translations/en.templates.i18n.json';
 import templatesPtBr from '../../views/templates/translations/pt_br.templates.i18n.json';
+import tenantFormEn from '../../views/TenantForm/translations/en.tenantForm.i18n.json';
+import tenantFormPtBr from '../../views/TenantForm/translations/pt_br.tenantForm.i18n.json';
 import paginatorEn from '../components/Paginator/translations/en.paginator.i18n.json';
 import paginatorPtBr from '../components/Paginator/translations/pt_br.paginator.i18n.json';
 import templatesTableEn from '../components/TemplatesTable/translations/en.templatesTable.i18n.json';
@@ -65,7 +65,7 @@ import 'moment/locale/pt-br';
 
 const resources = {
   en: {
-    login: loginEn,
+    tenantForm: tenantFormEn,
     menu: menuEn,
     common: commonEn,
     paginator: paginatorEn,
@@ -95,7 +95,7 @@ const resources = {
     pageNotFound: pageNotFoundEn,
   },
   'pt-BR': {
-    login: loginPtBr,
+    tenantForm: tenantFormPtBr,
     menu: menuPtBr,
     common: commonPtBr,
     paginator: paginatorPtBr,

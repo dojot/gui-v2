@@ -12,8 +12,8 @@ const Dashboard = LazyLoading(() => import('views/dashboard'));
 const Home = LazyLoading(() => import('views/home'));
 const Widget = LazyLoading(() => import('views/dashboard/widget'));
 const WizardManager = LazyLoading(() => import('./common/managers/WizardManager'));
-const LogOut = LazyLoading(() => import('views/logout'));
-const LogIn = LazyLoading(() => import('views/login'));
+const Logout = LazyLoading(() => import('views/logout'));
+const TenantForm = LazyLoading(() => import('views/TenantForm'));
 const Devices = LazyLoading(() => import('views/devices'));
 const DeviceDetails = LazyLoading(() => import('views/deviceDetails'));
 const CreateDevice = LazyLoading(() => import('views/createDevice'));
@@ -34,8 +34,8 @@ const redirectToHome = () => <Redirect to={{ pathname: '/home' }} />;
 const Routes = props => (
   <Switch>
     <Route exact path='/' component={redirectToHome} />
-    <Route path='/login' component={LogIn} />
-    <Route path='/logout' component={LogOut} />
+    <Route path='/login' component={TenantForm} />
+    <Route path='/logout' component={Logout} />
     <PrivateRoute
       path='/dashboard/widget/wizard/:id/:uuid?'
       component={WizardManager}

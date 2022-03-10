@@ -6,6 +6,7 @@ import { dashboardSaga } from './dashboardSaga';
 import { deviceSaga } from './devicesSaga';
 import { templateAttrsSaga } from './templateAttrsSaga';
 import { templateSaga } from './templatesSaga';
+import { userSaga } from './usersSaga';
 
 export default function* sagas() {
   yield all([
@@ -15,5 +16,6 @@ export default function* sagas() {
     ...templateAttrsSaga,
     ...certificationAuthoritySaga,
     ...certificatesSaga,
+    ...userSaga,
   ]);
 }

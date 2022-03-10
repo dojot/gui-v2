@@ -1,4 +1,5 @@
 export { default as base } from './base';
+export { default as users } from './users';
 export { default as errors } from './errors';
 export { default as devices } from './devices';
 export { default as loading } from './loading';

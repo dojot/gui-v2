@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
-import { connect } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { actions as dashboardActions } from 'Redux/dashboard';
-import { Authentication } from 'Services';
+import { useDispatch } from 'react-redux';
+import { actions } from 'Redux/dashboard';
+import { clearUserInformation, redirectToLogout } from 'Utils';
 
-const Logout = ({ location, clearData }) => {
+const Logout = () => {
+  const dispatch = useDispatch();
+
   useEffect(() => {
-    clearData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    dispatch(actions.clearData());
+    clearUserInformation();
+    redirectToLogout();
+  }, [dispatch]);
 
-  Authentication.logout();
-
-  return <Redirect to={{ pathname: '/login', state: { from: location } }} />;
+  return null;
 };
 
-const mapDispatchToProps = {
-  ...dashboardActions,
-};
-
-export default connect(null, mapDispatchToProps)(Logout);
+export default Logout;
