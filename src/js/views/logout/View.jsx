@@ -10,7 +10,7 @@ const Logout = () => {
   useEffect(() => {
     dispatch(actions.clearData());
     clearUserInformation();
-    redirectToLogout();
+    redirectToLogout('/v2/#/home');
   }, [dispatch]);
 
   return null;

@@ -10,8 +10,8 @@ export function* handleGetUserData() {
   try {
     yield put(loadingActions.addLoading(constants.GET_USER_DATA));
     const { data } = yield call(User.getUserData);
-    const { tenant, username, profile } = data;
-    setUserInformation(tenant, username, profile);
+    const { tenant, userName, profile } = data;
+    setUserInformation({ tenant, userName, profile });
   } catch (e) {
     yield put(
       errorActions.addError({

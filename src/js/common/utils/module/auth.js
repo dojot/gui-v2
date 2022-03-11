@@ -3,11 +3,10 @@ export const isAuthenticated = () => {
   return !!userName;
 };
 
-export const setUserInformation = userInfo => {
-  const { tenant, username, profile } = userInfo;
+export const setUserInformation = ({ tenant, userName, profile }) => {
   sessionStorage.setItem('USER_PROFILE', profile);
   sessionStorage.setItem('USER_TENANT', tenant);
-  sessionStorage.setItem('USER_NAME', username);
+  sessionStorage.setItem('USER_NAME', userName);
 };
 
 export const getUserInformation = () => {

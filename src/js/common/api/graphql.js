@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { clearUserInformation } from 'Utils';
-
-import { history } from '../../app-history';
+import { clearUserInformation, redirectToLogout } from 'Utils';
 
 const { apiUrl } = __CONFIG__;
 
@@ -19,7 +17,7 @@ graphql.interceptors.response.use(
   error => {
     if (error.response.status === 401) {
       clearUserInformation();
-      history.push('/login');
+      redirectToLogout('/v2/#/login');
     }
 
     return Promise.reject(error);

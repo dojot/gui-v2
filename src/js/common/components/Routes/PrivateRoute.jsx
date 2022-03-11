@@ -5,17 +5,20 @@ import { useDispatch } from 'react-redux';
 import { Route } from 'react-router-dom';
 import { isAuthenticated } from 'Utils';
 
-import { actions } from '../../../redux/modules/users';
+import { actions, constants } from '../../../redux/modules/users';
+import { useIsLoading } from '../../hooks';
 
 export default ({ component: Component, attrs, ...rest }) => {
-  // <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-
   const dispatch = useDispatch();
+
+  const isFetchingUserData = useIsLoading(constants.GET_USER_DATA);
 
   useEffect(() => {
     if (isAuthenticated()) return;
     dispatch(actions.getUserData());
   }, [dispatch]);
+
+  if (isFetchingUserData) return null;
 
   return (
     <Route
