@@ -3,8 +3,12 @@ import { clearUserInformation, redirectToLogout } from 'Utils';
 
 const { apiUrl } = __CONFIG__;
 
+const endsWithSlash = apiUrl.endsWith('/');
+const backstageUrl = 'backstage/graphql';
+const baseURL = `${apiUrl}${endsWithSlash ? '' : '/'}${backstageUrl}`;
+
 const graphql = axios.create({
-  baseURL: apiUrl,
+  baseURL,
   withCredentials: true,
 });
 
@@ -25,5 +29,5 @@ graphql.interceptors.response.use(
 );
 
 export const protectAPI = query => {
-  return graphql.post('graphql?', query);
+  return graphql.post('/', query);
 };

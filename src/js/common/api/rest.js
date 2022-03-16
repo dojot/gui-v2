@@ -4,7 +4,7 @@ import { clearUserInformation, redirectToLogout } from 'Utils';
 const { apiUrl } = __CONFIG__;
 
 const endsWithSlash = apiUrl.endsWith('/');
-const backstageUrl = 'backstage/v1';
+const backstageUrl = 'backstage/';
 const baseURL = `${apiUrl}${endsWithSlash ? '' : '/'}${backstageUrl}`;
 
 const rest = axios.create({

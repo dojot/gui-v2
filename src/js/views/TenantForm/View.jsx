@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import { Grid, Button, Typography, TextField } from '@material-ui/core';
 import Card from '@material-ui/core/Card';
 import { useTranslation } from 'react-i18next';
-import { redirectToLogin } from 'Utils';
+import { Redirect } from 'react-router-dom';
+import { redirectToLogin, isAuthenticated } from 'Utils';
 
 import useStyles from './styles';
 
@@ -18,6 +19,10 @@ const TenantForm = () => {
     if (tenant.trim() === '') return;
     redirectToLogin(tenant, '/v2/#/home');
   };
+
+  if (isAuthenticated()) {
+    return <Redirect to='/home' />;
+  }
 
   return (
     <Grid container justify='center' className={classes.root}>
