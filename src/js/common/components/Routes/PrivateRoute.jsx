@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useLayoutEffect } from 'react';
 
 import { MainLayout } from 'Components/Layouts';
 import { useDispatch } from 'react-redux';
@@ -13,7 +13,7 @@ export default ({ component: Component, attrs, ...rest }) => {
 
   const isFetchingUserData = useIsLoading(constants.GET_USER_DATA);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (isAuthenticated()) return;
     dispatch(actions.getUserData());
   }, [dispatch]);
