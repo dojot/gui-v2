@@ -3,7 +3,7 @@ import { clearUserInformation, redirectToLogout } from 'Utils';
 
 const { apiUrl } = __CONFIG__;
 
-const endsWithSlash = apiUrl.endsWith('/');
+const endsWithSlash = apiUrl?.endsWith('/') || false;
 const backstageUrl = 'backstage/graphql';
 const baseURL = `${apiUrl}${endsWithSlash ? '' : '/'}${backstageUrl}`;
 
