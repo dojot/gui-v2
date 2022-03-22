@@ -14,6 +14,7 @@ describe('UserMenu', () => {
       <UserMenu
         tenant='tenant'
         version='version'
+        profile='https://google.com'
         handleChangeTheme={jest.fn()}
         handleChangePassword={jest.fn()}
         handleShowLogoutModal={jest.fn()}
@@ -27,6 +28,7 @@ describe('UserMenu', () => {
     expect(container).toBeInTheDocument();
     expect(getByText('tenant')).toBeVisible();
     expect(getByText('version')).toBeVisible();
+    expect(getByText('profile')).toBeVisible();
   });
 
   it('should show nothing because the user menu is hidden', () => {
@@ -34,6 +36,7 @@ describe('UserMenu', () => {
       <UserMenu
         tenant='tenant'
         version='version'
+        profile='https://google.com'
         handleChangeTheme={jest.fn()}
         handleChangePassword={jest.fn()}
         handleShowLogoutModal={jest.fn()}
@@ -45,6 +48,7 @@ describe('UserMenu', () => {
 
     expect(() => getByText('tenant')).toThrow();
     expect(() => getByText('version')).toThrow();
+    expect(() => getByText('profile')).toThrow();
   });
 
   it('should call the click away function', () => {
@@ -56,6 +60,7 @@ describe('UserMenu', () => {
         <UserMenu
           tenant='tenant'
           version='version'
+          profile='https://google.com'
           handleChangeTheme={jest.fn()}
           handleChangePassword={jest.fn()}
           handleShowLogoutModal={jest.fn()}

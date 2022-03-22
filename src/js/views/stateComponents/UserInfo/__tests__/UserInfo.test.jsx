@@ -37,11 +37,13 @@ describe('UserInfo', () => {
     const tenant = getByTestId('tenant');
     const version = getByTestId('version');
     const darkMode = getByTestId('darkMode');
+    const profile = getByTestId('profile');
     const logout = getByTestId('logout');
 
     expect(tenant).toBeVisible();
     expect(version).toBeVisible();
     expect(darkMode).toBeVisible();
+    expect(profile).toBeVisible();
     expect(logout).toBeVisible();
   });
 

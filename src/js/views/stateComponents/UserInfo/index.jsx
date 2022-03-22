@@ -102,6 +102,7 @@ export const UserInfo = () => {
       <UserMenu
         version={version}
         tenant={user.tenant}
+        profile={user.profile}
         anchorElement={menuButtonRef.current}
         isShowingUserMenu={isShowingUserMenu}
         isDarkModeActivated={isDarkModeActivated}
