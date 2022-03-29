@@ -34,11 +34,6 @@ export const getDeviceById = createAction(GET_DEVICE_BY_ID, payload => ({
   deviceId: payload.deviceId,
 }));
 
-export const getFavoriteDevices = createAction(GET_FAVORITE_DEVICES, payload => ({
-  page: payload.page,
-  filter: payload.filter,
-}));
-
 export const updateDevices = createAction(UPDATE_DEVICES, payload => {
   const actionPayload = {
     devices: payload.devices,
@@ -92,7 +87,6 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
 export const actions = {
   getDevices,
   getDeviceById,
-  getFavoriteDevices,
   updateDevices,
   favoriteDevice,
   deleteDevice,

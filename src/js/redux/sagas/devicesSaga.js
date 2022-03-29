@@ -48,35 +48,6 @@ export function* handleGetDevices(action) {
   }
 }
 
-export function* handleGetFavoriteDevices(action) {
-  try {
-    yield put(loadingActions.addLoading(constants.GET_FAVORITE_DEVICES));
-    const { page, filter } = action.payload;
-    const { getFavoriteDevices } = yield call(Device.getDevicesList, page, filter);
-    if (getFavoriteDevices)
-      yield put(
-        actions.updateDevices({
-          devices: getFavoriteDevices.devices,
-          paginationControl: {
-            currentPage: getFavoriteDevices.currentPage,
-            totalPages: getFavoriteDevices.totalPages,
-            itemsPerPage: page?.size || 0,
-          },
-        }),
-      );
-  } catch (e) {
-    yield put(actions.updateDevices({ devices: [] }));
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'getFavoriteDevices',
-      }),
-    );
-  } finally {
-    yield put(loadingActions.removeLoading(constants.GET_FAVORITE_DEVICES));
-  }
-}
-
 export function* handleGetDeviceById(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_DEVICE_BY_ID));
@@ -215,10 +186,6 @@ export function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
 
-export function* watchGetFavoriteDevices() {
-  yield takeLatest(constants.GET_FAVORITE_DEVICES, handleGetFavoriteDevices);
-}
-
 export function* watchGetDeviceById() {
   yield takeLatest(constants.GET_DEVICE_BY_ID, handleGetDeviceById);
 }
@@ -249,7 +216,6 @@ export function* watchCreateDevice() {
 
 export const deviceSaga = [
   fork(watchGetDevices),
-  fork(watchGetFavoriteDevices),
   fork(watchGetDeviceById),
   fork(watchDeleteDevice),
   fork(watchDeleteMultipleDevices),

@@ -36,42 +36,6 @@ export const getDevicesList = (page, filter) => {
   });
 };
 
-export const getFavoriteDevicesList = (page, filter) => {
-  return protectAPI({
-    query: `
-      query getFavoriteDevices($page: PageInput, $filter: FilterDeviceInput) {
-        getFavoriteDevices(page: $page, filter: $filter) {
-          totalPages
-          currentPage
-          devices {
-            id
-            label
-            created
-            updated
-            favorite
-            certificate {
-              fingerprint
-            }
-            attrs {
-              id
-              type
-              label
-              valueType
-              isDynamic
-              templateId
-              staticValue
-            }
-          }
-        }
-      }
-    `,
-    variables: JSON.stringify({
-      page,
-      filter,
-    }),
-  });
-};
-
 export const getDeviceById = deviceId => {
   return protectAPI({
     query: `
