@@ -24,14 +24,12 @@ const MassActions = ({
         </Grid>
 
         {false && (
-          // TODO: Show again when you can favorite devices
           <Grid item xs='auto'>
             <Button
               className={classes.massActionsButton}
               onClick={handleFavoriteMultipleDevices}
               startIcon={<Star />}
-              variant='contained'
-              disabled
+              variant='text'
             >
               {t('favorite')}
             </Button>
@@ -43,7 +41,7 @@ const MassActions = ({
             className={classes.massActionsButton}
             onClick={handleCreateCertificates}
             startIcon={<VerifiedUser />}
-            variant='contained'
+            variant='text'
           >
             {t('createCertificates')}
           </Button>
@@ -54,7 +52,7 @@ const MassActions = ({
             className={classes.massActionsButton}
             onClick={handleDeleteMultipleDevices}
             startIcon={<Delete />}
-            variant='contained'
+            variant='text'
           >
             {t('common:exclude')}
           </Button>

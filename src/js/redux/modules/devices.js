@@ -3,6 +3,7 @@ import { createAction, handleActions } from 'redux-actions';
 
 const GET_DEVICES = 'app/devices/GET_DEVICES';
 const GET_DEVICE_BY_ID = 'app/devices/GET_DEVICE_BY_ID';
+const GET_FAVORITE_DEVICES = 'app/devices/GET_FAVORITE_DEVICES';
 const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';
 const FAVORITE_DEVICE = 'app/devices/FAVORITE_DEVICE';
 const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
@@ -14,6 +15,7 @@ const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
 export const constants = {
   GET_DEVICES,
   GET_DEVICE_BY_ID,
+  GET_FAVORITE_DEVICES,
   UPDATE_DEVICES,
   FAVORITE_DEVICE,
   DELETE_DEVICE,
@@ -30,6 +32,11 @@ export const getDevices = createAction(GET_DEVICES, payload => ({
 
 export const getDeviceById = createAction(GET_DEVICE_BY_ID, payload => ({
   deviceId: payload.deviceId,
+}));
+
+export const getFavoriteDevices = createAction(GET_FAVORITE_DEVICES, payload => ({
+  page: payload.page,
+  filter: payload.filter,
 }));
 
 export const updateDevices = createAction(UPDATE_DEVICES, payload => {
@@ -85,6 +92,7 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
 export const actions = {
   getDevices,
   getDeviceById,
+  getFavoriteDevices,
   updateDevices,
   favoriteDevice,
   deleteDevice,

@@ -12,6 +12,43 @@ export const getDevicesList = (page, filter) => {
             label
             created
             updated
+            favorite
+            certificate {
+              fingerprint
+            }
+            attrs {
+              id
+              type
+              label
+              valueType
+              isDynamic
+              templateId
+              staticValue
+            }
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      page,
+      filter,
+    }),
+  });
+};
+
+export const getFavoriteDevicesList = (page, filter) => {
+  return protectAPI({
+    query: `
+      query getFavoriteDevices($page: PageInput, $filter: FilterDeviceInput) {
+        getFavoriteDevices(page: $page, filter: $filter) {
+          totalPages
+          currentPage
+          devices {
+            id
+            label
+            created
+            updated
+            favorite
             certificate {
               fingerprint
             }
@@ -86,17 +123,15 @@ export const deleteDevices = deviceIds => {
   });
 };
 
-export const favoriteDevices = ({ deviceIds, user, tenant }) => {
+export const favoriteDevices = ({ deviceIds }) => {
   return protectAPI({
     query: `
-      mutation favoriteDevices($deviceIds: [String]!, $user: String, $tenant: String!) {
-        favoriteDevices(deviceIds: $deviceIds, user: $user, tenant: $tenant)
+      mutation favoriteDevices($deviceIds: [String]!) {
+        favoriteDevices(deviceIds: $deviceIds)
       }
     `,
     variables: JSON.stringify({
       deviceIds,
-      user,
-      tenant,
     }),
   });
 };

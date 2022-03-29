@@ -129,6 +129,8 @@ const DataTable = ({
     e.stopPropagation();
   };
 
+  console.log(devices);
+
   return (
     <Paper elevation={0}>
       <TableContainer>
@@ -139,7 +141,7 @@ const DataTable = ({
             orderBy={orderBy}
             cells={headCells}
             rowCount={devices.length}
-            startExtraCells={false && <TableCell />} // TODO: Show again when you can favorite devices
+            startExtraCells={<TableCell />} // TODO: Show again when you can favorite devices
             numSelected={selectedDevices.length}
             onRequestSort={handleRequestSort}
             onSelectAllClick={handleSelectAllClick}
@@ -191,27 +193,22 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    {false && (
-                      // TODO: Show again when you can favorite devices
-                      <TableCell onClick={handleStopPropagation}>
-                        <Tooltip
-                          title={t(
-                            device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip',
-                          )}
-                          placement='right'
-                          arrow
-                        >
-                          <Checkbox
-                            color='default'
-                            checked={device.favorite}
-                            icon={<StarBorderOutlined />}
-                            checkedIcon={<Star style={{ color: '#F1B44C' }} />}
-                            onChange={handleFavoriteThisDevice}
-                            disabled
-                          />
-                        </Tooltip>
-                      </TableCell>
-                    )}
+                    <TableCell onClick={handleStopPropagation}>
+                      <Tooltip
+                        title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                        placement='right'
+                        arrow
+                      >
+                        <Checkbox
+                          color='default'
+                          icon={<StarBorderOutlined />}
+                          checkedIcon={<Star style={{ color: '#F1B44C' }} />}
+                          defaultChecked={device.favorite}
+                          onChange={handleFavoriteThisDevice}
+                          // disabled
+                        />
+                      </Tooltip>
+                    </TableCell>
 
                     <TableCell className={classes.clickableCell}>{device.id}</TableCell>
                     <TableCell className={classes.clickableCell}>{device.label}</TableCell>
