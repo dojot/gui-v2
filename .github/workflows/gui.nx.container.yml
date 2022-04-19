@@ -29,7 +29,8 @@ jobs:
 
       - name: yarn install, build, lint and test
         run: |
-          yarn install
+          cd MFE/container
+          yarn install --immutable --immutable-cache --check-cache
           yarn run build
           yarn run lint
           yarn run test:coverage
@@ -37,7 +38,7 @@ jobs:
         uses: codecov/codecov-action@v1
         with:
           # Created when 'npm test' was executed
-          file: MFE/container/test/unit/coverage/lcov.info # create when run npm test
+          file: MFE/container/test/unit/coverage/lcov.info # create when run yarn test
           # Flags allow you to isolate coverage reports for different tests
           flags: guiNxContainer
           # Custom name for the upload
