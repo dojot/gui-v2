@@ -1,0 +1,44 @@
+{
+  "errorModal": {
+    "title": "An error has occurred",
+    "closeButton": "Ok"
+  },
+  "messages": {
+    "getDevices": "Could not get devices",
+    "getDeviceById": "Could not get the device data",
+    "deleteDevice": "Could not delete this device",
+    "deleteMultipleDevices": "Could not delete these devices",
+    "favoriteDevice": "Could not favorite this device",
+    "favoriteMultipleDevices": "Could not favorite these devices",
+    "editDevice": "Could not edit this device",
+    "createDevice": "Could not create a device",
+
+    "getTemplates": "Could not get templates",
+    "getTemplateById": "Could not get the template data",
+    "deleteTemplate": "Could not delete this template",
+    "deleteMultipleTemplates": "Could not delete these templates",
+    "createTemplate": "Could not create a template",
+    "editTemplate": "Could not edit this template",
+    "duplicateTemplate": "Could not duplicate this template",
+
+    "deleteAttr": "Could not delete this attribute",
+    "deleteMultipleAttrs": "Could not delete these attributes",
+    "createAttr": "Could not create a attribute",
+    "editAttr": "Could not edit this attribute",
+
+    "getCertificates": "Could not get certificates",
+    "deleteCertificate": "Could not delete this certificate",
+    "deleteMultipleCertificates": "Could not delete these certificates",
+    "disassociateDevice": "Could not disassociate the certificate from this device",
+    "associateDevice": "Could not associate the certificate with this device",
+    "createCertificate": "Could not create a certificate",
+    "getCertificateByFingerprint": "Could not get the certificate by fingerprint",
+
+    "getCertificationAuthorities": "Could not get CAs",
+    "deleteCertificationAuthority": "Could not delete this CA",
+    "deleteMultipleCertificationAuthorities": "Could not delete these CAs",
+    "createCertificationAuthority": "Could not create a CA",
+
+    "failedToCopy": "Failed to copy"
+  }
+}

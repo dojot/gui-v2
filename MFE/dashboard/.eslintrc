@@ -1,0 +1,87 @@
+{
+  "env": {
+    "browser": true,
+    "commonjs": true,
+    "es6": true,
+    "jest": true
+  },
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["react", "react-hooks", "prettier"],
+  "parser": "@babel/eslint-parser",
+  "parserOptions": {
+    "parser": "@babel/eslint-parser",
+    "ecmaFeatures": {
+      // Enabled object spread
+      "experimentalObjectRestSpread": true
+    }
+  },
+
+  // Exception for Webpack files
+  "overrides": [
+    {
+      "files": ["config/webpack.*.js"],
+      "rules": {
+        "import/no-extraneous-dependencies": ["error",{"devDependencies": true}]
+      }
+    }
+  ],
+
+  // Rule changes from Airbnb's eslint config
+  "rules": {
+    "import/no-unresolved": 0,
+    "new-cap": 0,
+    "semi": 0,
+    "global-require": 0,
+    "no-underscore-dangle": 0,
+    "arrow-body-style": 0,
+    "no-console": 0,
+    "react/forbid-prop-types": 0,
+    "jsx-a11y/href-no-hash": 0,
+    "import/prefer-default-export": 0,
+    "react/prop-types": 0,
+    "react/jsx-filename-extension": [0],
+    "import/extensions": "off",
+    "react/jsx-props-no-spreading": "off",
+    "react/function-component-definition": "off",
+    "comma-dangle": [2, "always-multiline"],
+    // "arrow-parens": [
+    //   "warn",
+    //   "always"
+    // ],
+    "jsx-a11y/anchor-is-valid": [
+      "error",
+      {
+        "components": ["Link"],
+        "specialLink": ["to", "hrefLeft", "hrefRight"],
+        "aspects": ["noHref", "invalidHref", "preferButton"]
+      }
+    ],
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "import/order": [
+      "error",
+      {
+        "groups": ["builtin", "external", "internal"],
+        "pathGroups": [
+          {
+            "pattern": "react",
+            "group": "external",
+            "position": "before"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["react"],
+        "newlines-between": "always",
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "attrValueHint": "You can only set the value for static attributes.",
+  "attrLabel": {
+    "attrLabel": "Attribute Name",
+    "attrType": "Attribute Type",
+    "attrValueType": "Value Type",
+    "attrValue": "Value"
+  },
+  "attrType": {
+    "dynamic": "Dynamic Value",
+    "static": "Static Value",
+    "actuator": "Actuator"
+  },
+  "attrValueType": {
+    "bool": "Boolean",
+    "geo_point": "Geo",
+    "float": "Float",
+    "integer": "Integer",
+    "string": "Text",
+    "object": "Object",
+    "json": "JSON"
+  }
+}

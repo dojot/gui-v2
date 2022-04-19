@@ -1,0 +1,7 @@
+{
+  "certificateStatus": {
+    "VALID": "Valid",
+    "EXPIRED": "Expired",
+    "ABOUT_TO_EXPIRE": "About To Expire"
+  }
+}

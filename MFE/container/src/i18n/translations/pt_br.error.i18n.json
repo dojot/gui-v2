@@ -1,0 +1,44 @@
+{
+  "errorModal": {
+    "title": "Ocorreu um erro",
+    "closeButton": "Ok"
+  },
+  "messages": {
+    "getDevices": "Não foi possível obter os dispositivos",
+    "getDeviceById": "Não foi possível obter os dados do dispositivo",
+    "deleteDevice": "Não foi possível excluir este dispositivo",
+    "deleteMultipleDevices": "Não foi possível excluir estes dispositivos",
+    "favoriteDevice": "Não foi possível favoritar este dispositivo",
+    "favoriteMultipleDevices": "Não foi possível favoritar estes dispositivos",
+    "editDevice": "Não foi possível editar este dispositivo",
+    "createDevice": "Não foi possível criar um dispositivo",
+
+    "getTemplates": "Não foi possível obter os modelos",
+    "getTemplateById": "Não foi possível obter os dados do modelo",
+    "deleteTemplate": "Não foi possível excluir este modelo",
+    "deleteMultipleTemplates": "Não foi possível excluir estes modelos",
+    "createTemplate": "Não foi possível criar o modelo",
+    "editTemplate": "Não foi possível editar este modelo",
+    "duplicateTemplate": "Não foi possível duplicar este modelo",
+
+    "deleteAttr": "Não foi possível excluir este atributo",
+    "deleteMultipleAttrs": "Não foi possível excluir estes atributos",
+    "createAttr": "Não foi possível criar um atributo",
+    "editAttr": "Não foi possível editar este atributo",
+
+    "getCertificates": "Não foi possível obter os certificados",
+    "deleteCertificate": "Não foi possível excluir este certificado",
+    "deleteMultipleCertificates": "Não foi possível excluir estes certificados",
+    "disassociateDevice": "Não foi possível desassociar o certificado deste dispositivo",
+    "associateDevice": "Não foi possível associar o certificado com este dispositivo",
+    "createCertificate": "Não foi possível criar o certificado",
+    "getCertificateByFingerprint": "Não foi possível obter o certificado pelo fingerprint",
+
+    "getCertificationAuthorities": "Não foi possível obter as CAs",
+    "deleteCertificationAuthority": "Não foi possível excluir esta CA",
+    "deleteMultipleCertificationAuthorities": "Não foi possível excluir estas CAs",
+    "createCertificationAuthority": "Não foi possível criar uma CA",
+
+    "failedToCopy": "Falhou ao copiar"
+  }
+}

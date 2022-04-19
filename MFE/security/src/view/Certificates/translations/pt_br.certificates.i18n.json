@@ -1,0 +1,59 @@
+{
+  "headerTitle": "Certificados",
+  "numberOfSelectedCertificates": "{{count}} Linha Selecionada",
+  "numberOfSelectedCertificates_plural": "{{count}} Linhas Selecionadas",
+  "totalOfPages": "Total de Páginas: {{count}}",
+  "nextIconButtonText": "Próxima Página",
+  "backIconButtonText": "Página Anterior",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
+  "labelRowsPerPage": "Itens por página:",
+  "associateToDevice": "Associar a um Dispositivo",
+  "disassociateDevice": "Desassociar Dispositivo",
+  "changeAssociation": "Trocar Associação",
+  "searchInputPh": "Pesquisar Certificado Por Fingerprint",
+  "createNewCertificate": "Criar Novo Certificado",
+  "emptyListMessage": "Nenhum Certificado Encontrado",
+  "massActions": "Ações em massa:",
+  "hasAssociatedDeviceTooltip": "Possui dispositivo associado",
+  "noAssociatedDeviceTooltip": "Não possui dispositivo associado",
+  "lastUpdateTooltip": "Última atualização",
+  "validityNotDefined": "Validade Não Definida",
+  "dataTableTitle": "Dispositivos",
+  "dataLabels": {
+    "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
+    "deviceId": "ID do Dispositivo",
+    "validity": "Período de Validade",
+    "status": "Status",
+    "actions": "Ações"
+  },
+  "dataTableBody": {
+    "noDeviceAssociated": "Nenhum Dispositivo Associado"
+  },
+  "associateToDeviceModal": {
+    "table": {
+      "id": "Id",
+      "label": "Nome do Dispositivo",
+      "lastUpdate": "Última atualização"
+    },
+    "associate": "Associar"
+  },
+  "deleteCertificateAlert": {
+    "title": "Excluir Certificado",
+    "message": "Tem certeza que deseja excluir este certificado?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "deleteMultipleCertificatesAlert": {
+    "title": "Excluir Certificados Selecionados",
+    "message": "Tem certeza que deseja excluir todos os certificados selecionados?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "disassociateDeviceAlert": {
+    "title": "Desassociar Dispositivo ({{deviceId}})",
+    "message": "Tem certeza que deseja desassociar o dispositivo ({{deviceId}}) deste certificado?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Desassociar"
+  }
+}

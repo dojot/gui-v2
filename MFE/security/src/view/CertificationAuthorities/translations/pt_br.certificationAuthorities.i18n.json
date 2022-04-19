@@ -1,0 +1,41 @@
+{
+  "security": "Segurança",
+  "headerTitle": "CA",
+  "createCertificationAuthority": "Criar CA",
+  "searchInputPh": "Pesquisar CA Por Fingerprint",
+  "totalOfPages": "Total de Páginas: {{count}}",
+  "nextIconButtonText": "Próxima Página",
+  "backIconButtonText": "Página Anterior",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
+  "numberOfSelectedItems": "{{count}} Linha Selecionada",
+  "numberOfSelectedItems_plural": "{{count}} Linhas Selecionadas",
+  "labelRowsPerPage": "Itens por página:",
+  "emptyListMessage": "Nenhuma CA Encontrada",
+  "validityNotDefined": "Validade Não Definida",
+  "dataTableHead": {
+    "caFingerprint": "CA Fingerprint",
+    "subjectDN": "Subject DN",
+    "validity": "Período de Validade",
+    "status": "Status",
+    "actions": "Ações"
+  },
+  "dataTableBody": {
+    "status": {
+      "valid": "Válido",
+      "expired": "Expirado",
+      "to_expire": "A expirar"
+    }
+  },
+  "deleteMultipleAlertModal": {
+    "title": "Excluir CA's Selecionadas",
+    "message": "Tem certeza que deseja excluir todas as CA's selecionadas?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "deleteAlertModal": {
+    "title": "Excluir CA",
+    "message": "Tem certeza que deseja excluir esta CA?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  }
+}

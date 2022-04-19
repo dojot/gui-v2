@@ -1,0 +1,59 @@
+{
+  "headerTitle": "Certificates",
+  "numberOfSelectedCertificates": "{{count}} Line Selected",
+  "numberOfSelectedCertificates_plural": "{{count}} Lines Selected",
+  "totalOfPages": "Total of Pages: {{count}}",
+  "nextIconButtonText": "Next Page",
+  "backIconButtonText": "Previous Page",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
+  "labelRowsPerPage": "Items per page:",
+  "associateToDevice": "Associate to a device",
+  "disassociateDevice": "Disassociate device",
+  "changeAssociation": "Change association",
+  "searchInputPh": "Search Certificate By Fingerprint",
+  "createNewCertificate": "Create New Certificate",
+  "emptyListMessage": "No Certificates found",
+  "massActions": "Mass actions:",
+  "hasAssociatedDeviceTooltip": "Has associated device",
+  "noAssociatedDeviceTooltip": "No associated device",
+  "lastUpdateTooltip": "Last update",
+  "validityNotDefined": "Validity Not Defined",
+  "dataTableTitle": "Devices",
+  "dataLabels": {
+    "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
+    "deviceId": "Device ID",
+    "validity": "Validity Period",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "dataTableBody": {
+    "noDeviceAssociated": "No Device Associated"
+  },
+  "associateToDeviceModal": {
+    "table": {
+      "id": "Id",
+      "label": "Device Name",
+      "lastUpdate": "Last update"
+    },
+    "associate": "Associate"
+  },
+  "deleteCertificateAlert": {
+    "title": "Delete Certificate",
+    "message": "Are you sure you want to delete this certificate?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "deleteMultipleCertificatesAlert": {
+    "title": "Delete Selected Certificates",
+    "message": "Are you sure you want to delete all selected certificates?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "disassociateDeviceAlert": {
+    "title": "Disassociate Device ({{deviceId}})",
+    "message": "Are you sure you want to disassociate ({{deviceId}}) from this certificate?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Disassociate"
+  }
+}

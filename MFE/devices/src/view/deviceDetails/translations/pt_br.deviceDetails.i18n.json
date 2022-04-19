@@ -1,0 +1,30 @@
+{
+  "title": "Detalhamento do Dispositivo: {{name}} ({{id}})",
+  "titleWithoutName": "Detalhamento do Dispositivo",
+  "noDeviceDataToShow": "Nenhuma Informação Para Exibir",
+  "noLastUpdateData": "Nenhuma Atualização Para Exibir",
+  "noTemplates": "Nenhum Modelo Para Exibir",
+  "noStaticAttrs": "Nenhum Atributo Estático Para Exibir",
+  "lastUpdateTableLabel": "Tabela de última Atualização",
+  "editDevice": "Editar Dispositivo",
+  "deleteDevice": "Excluir Dispositivo",
+  "seeCertificate": "Ver Certificado",
+  "noAssociatedCertificate": "Nenhum Certificado Associado",
+  "sectionTitles": {
+    "templates": "Modelos",
+    "staticAttrs": "Atributos Estáticos",
+    "lastUpdate": "Última Atualização Recebida",
+    "associatedCertificate": "Certificado Associado"
+  },
+  "lastUpdateTable": {
+    "date": "Data",
+    "key": "Chave",
+    "value": "Valor"
+  },
+  "deleteDeviceAlert": {
+    "title": "Excluir Dispositivo",
+    "message": "Tem certeza que deseja excluir este dispositivo?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  }
+}

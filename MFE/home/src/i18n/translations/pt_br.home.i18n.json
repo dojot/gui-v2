@@ -1,0 +1,10 @@
+{
+  "title": "Home",
+  "createDevice": "Criar Dispositivo",
+  "createDashboard": "Criar Dashboard",
+  "createTemplate": "Criar Modelo",
+  "createCertificate": "Criar Certificado",
+  "importExport": "Importar/Exportar",
+  "deviceTest": "Device Test",
+  "notAvailableAtTheMoment": "Não Disponível no Momento"
+}

@@ -1,0 +1,6 @@
+{
+  "title": "Nova CA",
+  "caPemLabel": "Cole o conteúdo do arquivo .pem aqui.",
+  "cancelCaCreationTitle": "Cancelar Criação de CA",
+  "cancelCaCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!"
+}

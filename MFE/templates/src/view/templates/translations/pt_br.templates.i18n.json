@@ -1,0 +1,37 @@
+{
+  "title": "Modelos",
+  "searchInputPh": "Pesquisar Modelo Por Nome",
+  "totalOfPages": "Total de Páginas: {{count}}",
+  "nextIconButtonText": "Próxima Página",
+  "backIconButtonText": "Página Anterior",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
+  "labelRowsPerPage": "Itens por página:",
+  "massActions": "Ações em massa:",
+  "numberOfSelectedTemplates": "{{count}} Linha Selecionada",
+  "numberOfSelectedTemplates_plural": "{{count}} Linhas Selecionadas",
+  "emptyListMessage": "Nenhum Modelo Encontrado",
+  "createNewTemplate": "Criar Novo Modelo",
+  "dataTableHead": {
+    "id": "ID",
+    "label": "Nome",
+    "attrsLength": "Nº de Propriedades",
+    "actions": "Ações"
+  },
+  "cardData": {
+    "templateId": "ID do Modelo",
+    "attrsLength": "Propriedade",
+    "attrsLength_plural": "Propriedades"
+  },
+  "deleteTemplateAlert": {
+    "title": "Excluir Modelo",
+    "message": "Tem certeza que deseja excluir este modelo?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "deleteMultipleTemplateAlert": {
+    "title": "Excluir Modelos Selecionados",
+    "message": "Tem certeza que deseja excluir todos os modelos selecionados?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  }
+}

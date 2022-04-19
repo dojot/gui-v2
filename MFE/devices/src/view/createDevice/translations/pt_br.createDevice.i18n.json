@@ -1,0 +1,61 @@
+{
+  "title": "Novo Dispositivo",
+  "cancelDeviceCreationTitle": "Cancelar Criação de Dispositivo",
+  "cancelDeviceCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
+  "stepper": {
+    "templates": "Modelos",
+    "attrs": "Atributos",
+    "certificates": "Certificados",
+    "summary": "Resumo"
+  },
+  "templatesStep": {
+    "hint": "Para começar, selecione na lista ou crie um modelo para o seu dispositivo!",
+    "discardNewTemplate": "Descartar Modelo",
+    "saveNewTemplate": "Salvar Modelo",
+    "emptyTemplateList": "Nenhum Modelo Encontrado"
+  },
+  "attrsStep": {
+    "hint": "Agora você pode definir os valores dos atributos estáticos para o seu dispositivo!",
+    "staticAttrs": "Atributos Estáticos ({{count}})",
+    "dynamicAttrs": "Atributos Dinâmicos ({{count}})",
+    "actuators": "Atuadores ({{count}})",
+    "editable": "(Editável)",
+    "nonEditable": "(Não Editável)",
+    "templateName": "Nome do Modelo",
+    "noStaticAttrs": "Nenhum atributo estático para exibir",
+    "noDynamicAttrs": "Nenhum atributo dinâmico para exibir",
+    "noActuatorAttrs": "Nenhum atributo atuador para exibir"
+  },
+  "securityStep": {
+    "hint": "Nesta etapa você gera ou seleciona um certificado para tornar seu dispositivo mais seguro.",
+    "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
+    "creationDate": "Criação",
+    "expirationDate": "Expiração",
+    "emptyCertificateList": "Nenhum Certificado Encontrado",
+    "totalOfPages": "Total de Páginas: {{count}}",
+    "labelRowsPerPage": "Itens por página:",
+    "labelDisplayedRows": "{{from}}-{{to}} de {{count}}",
+    "nextIconButtonText": "Próxima Página",
+    "backIconButtonText": "Página Anterior",
+    "createCertificateWithOneClick": "Criar Certificado Com Um Clique",
+    "cannotCreateMoreCertificates": "Você pode criar apenas um certificado enquanto cria um dispositivo",
+    "hasSelectedCertificate": "Selecionou um Certificado",
+    "deleteCreatedCertificate": "Excluir Certificado Criado",
+    "searchInputPh": "Pesquisar Certificado Por Fingerprint"
+  },
+  "summaryStep": {
+    "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",
+    "hint": "Se notar que faltou alguma coisa é só voltar, corrigir e continuar!",
+    "deviceNameHint": "Estamos quase lá, pra finalizar, dê um nome ao seu dispositivo!",
+    "deviceNamePh": "Nome do Dispositivo",
+    "templatesListTitle": "Modelos Selecionados",
+    "certificateAndKeysTitle": "Certificado e Chaves",
+    "certificateAndKeysHint": "(IMPORTANTE: as chaves não serão armazenadas, por isso é necessário baixá-las)",
+    "certificate": "Certificado",
+    "privateKey": "Chave Privada",
+    "publicKey": "Chave Pública (Opcional)",
+    "caCertificate": "Certificado de CA"
+  }
+}

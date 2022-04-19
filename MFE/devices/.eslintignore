@@ -1,0 +1,15 @@
+/docroot
+/node_modules/
+npm-debug.log
+/__tests__
+/blueprints
+preprocessor.js
+/vendor/
+/bower_components/
+/src/assets
+/src/style
+/bin
+/dist
+/dist-server
+/config/webpack/dist
+*.md

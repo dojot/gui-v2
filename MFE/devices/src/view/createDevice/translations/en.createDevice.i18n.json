@@ -1,0 +1,61 @@
+{
+  "title": "New Device",
+  "cancelDeviceCreationTitle": "Cancel Device Creation",
+  "cancelDeviceCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
+  "stepper": {
+    "templates": "Templates",
+    "attrs": "Attributes",
+    "certificates": "Certificates",
+    "summary": "Summary"
+  },
+  "templatesStep": {
+    "hint": "To get started, select a template in the list below or create a new one!",
+    "discardNewTemplate": "Discard Template",
+    "saveNewTemplate": "Save Template",
+    "emptyTemplateList": "No Template Found"
+  },
+  "attrsStep": {
+    "hint": "Now you can set static attribute values for your device!",
+    "staticAttrs": "Static Attributes ({{count}})",
+    "dynamicAttrs": "Dynamic Attributes ({{count}})",
+    "actuators": "Actuators ({{count}})",
+    "editable": "(Editable)",
+    "nonEditable": "(Not Editable)",
+    "templateName": "Template Name",
+    "noStaticAttrs": "No static attribute to show",
+    "noDynamicAttrs": "No dynamic attribute to show",
+    "noActuatorAttrs": "No actuator attribute to show"
+  },
+  "securityStep": {
+    "hint": "In this step you generate or select a certificate to make your device more secure.",
+    "fingerprint": "Fingerprint",
+    "subjectDN": "Subject DN",
+    "creationDate": "Creation",
+    "expirationDate": "Expiration",
+    "emptyCertificateList": "No Certificate Found",
+    "totalOfPages": "Total Of Pages: {{count}}",
+    "labelRowsPerPage": "Items per Page:",
+    "labelDisplayedRows": "{{from}}-{{to}} of {{count}}",
+    "nextIconButtonText": "Next Page",
+    "backIconButtonText": "Previous Page",
+    "createCertificateWithOneClick": "Create Certificate With One Click",
+    "cannotCreateMoreCertificates": "You can only create one certificate while creating a device",
+    "hasSelectedCertificate": "Selected a Certificate",
+    "deleteCreatedCertificate": "Delete Created Certificate",
+    "searchInputPh": "Search Certificate By Fingerprint"
+  },
+  "summaryStep": {
+    "title": "Review the templates, certificates and give a name to your device",
+    "hint": "If you notice that something is missing, just go back, correct and continue!",
+    "deviceNameHint": "We're almost there, finally, give your device a name!",
+    "deviceNamePh": "Device Name",
+    "templatesListTitle": "Selected Templates",
+    "certificateAndKeysTitle": "Certificate and Keys",
+    "certificateAndKeysHint": "(IMPORTANT: the keys will not be stored, so it is necessary to download them)",
+    "certificate": "Certificate",
+    "privateKey": "Private Key",
+    "publicKey": "Public Key (Optional)",
+    "caCertificate": "CA Certificate"
+  }
+}

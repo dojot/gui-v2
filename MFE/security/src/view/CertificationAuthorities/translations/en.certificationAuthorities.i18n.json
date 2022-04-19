@@ -1,0 +1,41 @@
+{
+  "security": "Security",
+  "headerTitle": "CA",
+  "createCertificationAuthority": "Create CA",
+  "searchInputPh": "Search CA By Fingerprint",
+  "totalOfPages": "Total of Pages: {{count}}",
+  "nextIconButtonText": "Next Page",
+  "backIconButtonText": "Previous Page",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
+  "numberOfSelectedItems": "{{count}} Selected Row",
+  "numberOfSelectedItems_plural": "{{count}} Selected Rows",
+  "labelRowsPerPage": "Items per page:",
+  "emptyListMessage": "No CA Found",
+  "validityNotDefined": "Validity Not Defined",
+  "dataTableHead": {
+    "caFingerprint": "CA Fingerprint",
+    "subjectDN": "Subject DN",
+    "validity": "Validity Period",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "dataTableBody": {
+    "status": {
+      "valid": "Valid",
+      "expired": "Expired",
+      "to_expire": "To expire"
+    }
+  },
+  "deleteMultipleAlertModal": {
+    "title": "Delete Selected CA's",
+    "message": "Are you sure you want to delete all selected CA's?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "deleteAlertModal": {
+    "title": "Delete CA",
+    "message": "Are you sure you want to delete this CA?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  }
+}

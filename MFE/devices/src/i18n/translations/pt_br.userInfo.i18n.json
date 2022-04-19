@@ -1,0 +1,13 @@
+{
+  "tenant": "Tenant: {{tenant}}",
+  "version": "Versão: {{version}}",
+  "darkMode": "Modo Escuro",
+  "changePassword": "Alterar Senha",
+  "logout": "Sair",
+  "logoutModal": {
+    "title": "Sair da conta",
+    "message": "Tem certeza que deseja sair?",
+    "confirmButton": "Sair",
+    "cancelButton": "Cancelar"
+  }
+}

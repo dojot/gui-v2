@@ -1,0 +1,37 @@
+{
+  "title": "Templates",
+  "searchInputPh": "Search Template By Name",
+  "totalOfPages": "Total of Pages: {{count}}",
+  "nextIconButtonText": "Next Page",
+  "backIconButtonText": "Previous Page",
+  "pageInfo": "Page {{page}} of {{totalOfPages}}",
+  "labelRowsPerPage": "Items per page:",
+  "massActions": "Mass actions:",
+  "numberOfSelectedTemplates": "{{count}} Line Selected",
+  "numberOfSelectedTemplates_plural": "{{count}} Lines Selected",
+  "emptyListMessage": "No Template Found",
+  "createNewTemplate": "Create New Template",
+  "dataTableHead": {
+    "id": "ID",
+    "label": "Name",
+    "attrsLength": "Number of Properties",
+    "actions": "Actions"
+  },
+  "cardData": {
+    "templateId": "Template ID",
+    "attrsLength": "Property",
+    "attrsLength_plural": "Properties"
+  },
+  "deleteTemplateAlert": {
+    "title": "Delete Template",
+    "message": "Are you sure you want to delete this template?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "deleteMultipleTemplateAlert": {
+    "title": "Delete Selected Templates",
+    "message": "Are you sure you want to delete all selected templates?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  }
+}

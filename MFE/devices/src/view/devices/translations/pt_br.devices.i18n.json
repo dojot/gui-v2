@@ -1,0 +1,45 @@
+{
+  "title": "Dispositivos",
+  "searchInputPh": "Pesquisar Dispositivo Por Nome",
+  "totalOfPages": "Total de Páginas: {{count}}",
+  "nextIconButtonText": "Próxima Página",
+  "backIconButtonText": "Página Anterior",
+  "pageInfo": "Página {{page}} de {{totalOfPages}}",
+  "hasCertificateTooltip": "Possui Certificado",
+  "noCertificateTooltip": "Nenhum Certificado Associado",
+  "favoriteTooltip": "Adicionar aos Favoritos",
+  "removeFromFavoriteTooltip": "Remover dos Favoritos",
+  "labelRowsPerPage": "Itens por página:",
+  "massActions": "Ações em massa:",
+  "createCertificates": "Criar Certificados",
+  "favorite": "Adicionar aos Favoritos",
+  "numberOfSelectedDevices": "{{count}} Linha Selecionada",
+  "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
+  "emptyListMessage": "Nenhum Dispositivo Encontrado",
+  "createNewDevice": "Criar Novo Dispositivo",
+  "dataTableHead": {
+    "id": "ID",
+    "label": "Nome",
+    "attrsLength": "Nº de Propriedades",
+    "updated": "Última Atualização",
+    "hasCertificate": "Tem Certificado",
+    "actions": "Ações"
+  },
+  "cardData": {
+    "deviceId": "ID do Dispositivo",
+    "properties": "Propriedades",
+    "updated": "Última Atualização"
+  },
+  "deleteDeviceAlert": {
+    "title": "Excluir Dispositivo",
+    "message": "Tem certeza que deseja excluir este dispositivo?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  },
+  "deleteMultipleDeviceAlert": {
+    "title": "Excluir Dispositivos Selecionados",
+    "message": "Tem certeza que deseja excluir todos os dispositivos selecionados?",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Excluir"
+  }
+}
