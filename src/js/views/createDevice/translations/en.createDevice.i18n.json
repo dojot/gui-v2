@@ -48,7 +48,7 @@
   "summaryStep": {
     "title": "Review the templates, certificates and give a name to your device",
     "hint": "If you notice that something is missing, just go back, correct and continue!",
-    "deviceNameHint": "We're almost there, finally, give your device a name!",
+    "deviceNameHint": "We're almost there, give your device a name!",
     "deviceNamePh": "Device Name",
     "templatesListTitle": "Selected Templates",
     "certificateAndKeysTitle": "Certificate and Keys",

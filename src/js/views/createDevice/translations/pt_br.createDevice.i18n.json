@@ -48,8 +48,12 @@
   "summaryStep": {
     "title": "Revise os modelos, certificados e dê um nome para o seu dispositivo",
     "hint": "Se notar que faltou alguma coisa é só voltar, corrigir e continuar!",
-    "deviceNameHint": "Estamos quase lá, pra finalizar, dê um nome ao seu dispositivo!",
+    "deviceNameHint": "Estamos quase lá, dê um nome ao seu dispositivo!",
     "deviceNamePh": "Nome do Dispositivo",
+    "deviceIdField": "Para finalizar, defina um Id para o seu dispositivo",
+    "deviceIdHint": "Opcional. Caso não seja preenchido, o Id do dispositivo será gerado automaticamente pela dojot.",
+    "deviceIdPh": "Id do Dispositivo (opcional)",
+    "deviceIdHelperText": "O Id do dispositivo deve ter de 2-6 caracteres e precisa ser hexadecimal (0-9, a-f, A-F)",
     "templatesListTitle": "Modelos Selecionados",
     "certificateAndKeysTitle": "Certificado e Chaves",
     "certificateAndKeysHint": "(IMPORTANTE: as chaves não serão armazenadas, por isso é necessário baixá-las)",
