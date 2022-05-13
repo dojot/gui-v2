@@ -23,18 +23,16 @@ const MassActions = ({
           <Typography className={classes.massActionsLabel}>{t('massActions')}</Typography>
         </Grid>
 
-        {false && (
-          <Grid item xs='auto'>
-            <Button
-              className={classes.massActionsButton}
-              onClick={handleFavoriteMultipleDevices}
-              startIcon={<Star />}
-              variant='text'
-            >
-              {t('favorite')}
-            </Button>
-          </Grid>
-        )}
+        <Grid item xs='auto'>
+          <Button
+            className={classes.massActionsButton}
+            onClick={handleFavoriteMultipleDevices}
+            startIcon={<Star />}
+            variant='text'
+          >
+            {t('favorite')}
+          </Button>
+        </Grid>
 
         <Grid item xs='auto'>
           <Button

@@ -1,5 +1,6 @@
 import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { Device } from 'Services';
+import { getUserInformation } from 'Utils';
 
 import { constants, actions } from '../modules/devices';
 import { actions as errorActions } from '../modules/errors';
@@ -45,6 +46,28 @@ export function* handleGetDevices(action) {
     );
   } finally {
     yield put(loadingActions.removeLoading(constants.GET_DEVICES));
+  }
+}
+
+export function* handleGetFavoriteDevicesList() {
+  try {
+    const { userName, tenant } = yield call(getUserInformation);
+    yield put(loadingActions.addLoading(constants.GET_FAVORITE_DEVICES));
+    const { getFavoriteDevicesList } = yield call(Device.getFavoriteDevicesList, userName, tenant);
+    if (getFavoriteDevicesList) {
+      yield put(actions.updateDevices({ favoriteDevices: getFavoriteDevicesList }));
+    }
+  } catch (e) {
+    console.log('error do catch da saga => ', e);
+    yield put(actions.updateDevices({ favoriteDevices: [] }));
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'getFavoriteDevices',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.GET_DEVICE_BY_ID));
   }
 }
 
@@ -109,10 +132,10 @@ export function* handleDeleteMultipleDevices(action) {
 export function* handleFavoriteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
+    const { userName, tenant } = yield call(getUserInformation);
     const { deviceId } = action.payload;
-    yield call(Device.favoriteDevices, { deviceIds: [deviceId] });
+    yield call(Device.favoriteDevices, { deviceIds: [deviceId], userName, tenant });
     yield call(getCurrentDevicesPageAgain);
-    // yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteDevice' }));
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -128,8 +151,9 @@ export function* handleFavoriteDevice(action) {
 export function* handleFavoriteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES));
+    const { userName, tenant } = yield call(getUserInformation);
     const { deviceIdArray } = action.payload;
-    yield call(Device.favoriteDevices, { deviceIds: deviceIdArray });
+    yield call(Device.favoriteDevices, { deviceIds: deviceIdArray, userName, tenant });
     yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteMultipleDevices' }));
   } catch (e) {
@@ -186,6 +210,10 @@ export function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
 
+export function* watchGetFavoriteDevices() {
+  yield takeLatest(constants.GET_FAVORITE_DEVICES, handleGetFavoriteDevicesList);
+}
+
 export function* watchGetDeviceById() {
   yield takeLatest(constants.GET_DEVICE_BY_ID, handleGetDeviceById);
 }
@@ -216,6 +244,7 @@ export function* watchCreateDevice() {
 
 export const deviceSaga = [
   fork(watchGetDevices),
+  fork(watchGetFavoriteDevices),
   fork(watchGetDeviceById),
   fork(watchDeleteDevice),
   fork(watchDeleteMultipleDevices),

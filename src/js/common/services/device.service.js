@@ -36,6 +36,23 @@ export const getDevicesList = (page, filter) => {
   });
 };
 
+export const getFavoriteDevicesList = (user, tenant) => {
+  return protectAPI({
+    query: `
+      query getFavoriteDevicesList($user: String!, $tenant: String!) {
+        getFavoriteDevicesList(user: $user, tenant: $tenant) {
+          id
+          label
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      user,
+      tenant,
+    }),
+  });
+};
+
 export const getDeviceById = deviceId => {
   return protectAPI({
     query: `
@@ -87,15 +104,17 @@ export const deleteDevices = deviceIds => {
   });
 };
 
-export const favoriteDevices = ({ deviceIds }) => {
+export const favoriteDevices = ({ deviceIds, userName, tenant }) => {
   return protectAPI({
     query: `
-      mutation favoriteDevices($deviceIds: [String]!) {
-        favoriteDevices(deviceIds: $deviceIds)
+      mutation favoriteDevices($deviceIds: [String]!, $userName: String!, $tenant: String!) {
+        favoriteDevices(deviceIds: $deviceIds, userName: $userName, tenant: $tenant)
       }
     `,
     variables: JSON.stringify({
       deviceIds,
+      userName,
+      tenant,
     }),
   });
 };

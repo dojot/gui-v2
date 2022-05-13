@@ -22,7 +22,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router';
 
 import { actions as deviceActions } from '../../redux/modules/devices';
-import { devicesSelector } from '../../redux/selectors/devicesSelector';
+import { favoriteDeviceSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from '../stateComponents';
 import useStyles from './style';
 
@@ -31,26 +31,14 @@ const Home = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const devices = useSelector(devicesSelector);
+  const favoriteDevices = useSelector(favoriteDeviceSelector);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(
-      deviceActions.getDevices({
-        page: {
-          number: 0 + 1,
-          size: 10,
-        },
-        filter: {
-          label: '',
-        },
-      }),
-    );
+    dispatch(deviceActions.getFavoriteDevices());
   }, [dispatch]);
 
-  useEffect(() => {
-    console.log('devices => ', devices);
-  }, [devices]);
+  console.log(favoriteDevices);
 
   const HOME_CARDS = {
     CREATE_DEVICE: {
@@ -112,24 +100,21 @@ const Home = () => {
             );
           })}
 
-          {devices.map(
-            device =>
-              device.favorite && (
-                <Grid xs={12} sm={6} md={3} item>
-                  <Card className={classes.card}>
-                    <CardActionArea
-                      style={{ height: '100%' }}
-                      onClick={() => history.push(`/devices/${device.id}`)}
-                    >
-                      <CardContent className={classes.cardContent}>
-                        <Star style={{ color: '#F1B44C' }} />
-                        <Typography>{device.label}</Typography>
-                      </CardContent>
-                    </CardActionArea>
-                  </Card>
-                </Grid>
-              ),
-          )}
+          {favoriteDevices.map(device => (
+            <Grid xs={12} sm={6} md={3} item>
+              <Card className={classes.card}>
+                <CardActionArea
+                  style={{ height: '100%' }}
+                  onClick={() => history.push(`/devices/${device.id}`)}
+                >
+                  <CardContent className={classes.cardContent}>
+                    <Star style={{ color: '#F1B44C' }} />
+                    <Typography>{device.label}</Typography>
+                  </CardContent>
+                </CardActionArea>
+              </Card>
+            </Grid>
+          ))}
         </Grid>
       </Box>
     </ViewContainer>
