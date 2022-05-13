@@ -205,6 +205,7 @@ SummaryStep.propTypes = {
   isCreatingDevice: PropTypes.bool.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   setDeviceName: PropTypes.func.isRequired,
+  setDeviceId: PropTypes.func.isRequired,
   handleCreateService: PropTypes.func.isRequired,
   handleGoToPreviousStep: PropTypes.func.isRequired,
   handleCancelDeviceCreation: PropTypes.func.isRequired,
