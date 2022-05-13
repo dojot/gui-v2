@@ -51,7 +51,7 @@
     "deviceNameHint": "Estamos quase lá, dê um nome ao seu dispositivo!",
     "deviceNamePh": "Nome do Dispositivo",
     "deviceIdField": "Para finalizar, defina um Id para o seu dispositivo",
-    "deviceIdHint": "Opcional. Caso não seja preenchido, o Id do dispositivo será gerado automaticamente pela dojot.",
+    "deviceIdHint": "Opcional. Caso não seja preenchido, o Id do dispositivo será gerado automaticamente.",
     "deviceIdPh": "Id do Dispositivo (opcional)",
     "deviceIdHelperText": "O Id do dispositivo deve ter de 2-6 caracteres e precisa ser hexadecimal (0-9, a-f, A-F)",
     "templatesListTitle": "Modelos Selecionados",
