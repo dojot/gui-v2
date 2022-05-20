@@ -5,9 +5,7 @@ import { Device } from 'Services';
 import { getUserInformation } from 'sharedComponents/Utils';
 
 import { constants, actions } from '../../modules/devices';
-import { actions as errorActions } from '../../modules/errors';
 import { actions as loadingActions } from '../../modules/loading';
-import { actions as successActions } from '../../modules/success';
 import { paginationControlSelector } from '../../selectors/devicesSelector';
 import {
   deviceSaga,
@@ -115,12 +113,6 @@ describe('devicesSaga', () => {
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.GET_DEVICES))
       .put(actions.updateDevices({ devices: [] }))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'getDevices',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.GET_DEVICES))
       .run();
   });
@@ -159,12 +151,6 @@ describe('devicesSaga', () => {
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.GET_DEVICE_BY_ID))
       .put(actions.updateDevices({ deviceData: null }))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'getDeviceById',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.GET_DEVICE_BY_ID))
       .run();
   });
@@ -183,11 +169,6 @@ describe('devicesSaga', () => {
     return expectSaga(handleDeleteDevice, action)
       .provide([[apiRequest, null]])
       .put(loadingActions.addLoading(constants.DELETE_DEVICE))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'deleteDevice',
-        }),
-      )
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_DEVICE))
       .run();
@@ -207,12 +188,6 @@ describe('devicesSaga', () => {
     return expectSaga(handleDeleteDevice, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.DELETE_DEVICE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteDevice',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_DEVICE))
       .run();
@@ -232,11 +207,6 @@ describe('devicesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'deleteMultipleDevices',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_DEVICES))
       .run();
   });
@@ -255,12 +225,6 @@ describe('devicesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteMultipleDevices',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_DEVICES))
       .run();
   });
@@ -285,11 +249,6 @@ describe('devicesSaga', () => {
         [getUserInformationCall, userInformation],
       ])
       .put(loadingActions.addLoading(constants.FAVORITE_DEVICE))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'favoriteDevice',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.FAVORITE_DEVICE))
       .run();
   });
@@ -311,12 +270,6 @@ describe('devicesSaga', () => {
         [getUserInformationCall, userInformation],
       ])
       .put(loadingActions.addLoading(constants.FAVORITE_DEVICE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'favoriteDevice',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.FAVORITE_DEVICE))
       .run();
   });
@@ -341,11 +294,6 @@ describe('devicesSaga', () => {
         [getUserInformationCall, userInformation],
       ])
       .put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'favoriteMultipleDevices',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.FAVORITE_MULTIPLE_DEVICES))
       .run();
   });
@@ -367,12 +315,6 @@ describe('devicesSaga', () => {
         [getUserInformationCall, userInformation],
       ])
       .put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'favoriteMultipleDevices',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.FAVORITE_MULTIPLE_DEVICES))
       .run();
   });
@@ -393,11 +335,6 @@ describe('devicesSaga', () => {
     return expectSaga(handleEditDevice, action)
       .provide([[apiRequest, null]])
       .put(loadingActions.addLoading(constants.EDIT_DEVICE))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'editDevice',
-        }),
-      )
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.EDIT_DEVICE))
       .run();
@@ -419,12 +356,6 @@ describe('devicesSaga', () => {
     return expectSaga(handleEditDevice, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.EDIT_DEVICE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'editDevice',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.EDIT_DEVICE))
       .run();
@@ -446,11 +377,6 @@ describe('devicesSaga', () => {
     return expectSaga(handleCreateDevice, action)
       .provide([[apiRequest, null]])
       .put(loadingActions.addLoading(constants.CREATE_DEVICE))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'createDevice',
-        }),
-      )
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.CREATE_DEVICE))
       .run();
@@ -472,12 +398,6 @@ describe('devicesSaga', () => {
     return expectSaga(handleCreateDevice, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.CREATE_DEVICE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'createDevice',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.CREATE_DEVICE))
       .run();

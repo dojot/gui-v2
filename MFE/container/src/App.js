@@ -5,6 +5,7 @@ import { Switch, Router, Route, Redirect } from 'react-router-dom';
 import { EVENT } from 'sharedComponents/Constants';
 import { EventContainer } from 'sharedComponents/Containers';
 import { PrivateRoute } from 'sharedComponents/PrivateRoute';
+import GlobalToast  from './stateComponents/GlobalToast'
 
 import { getMenuState, setMenuState } from './adapters/localStorage/config.localStorage';
 import { history } from './history';
@@ -56,6 +57,7 @@ export default () => {
   return (
     <EventContainer i18n={i18n}>
       <CssBaseline />
+      <GlobalToast />
       <Router history={history}>
         <Switch>
           <Route exact path='/' component={redirectToHome} />

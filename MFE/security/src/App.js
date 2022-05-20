@@ -4,7 +4,6 @@ import CertificationAuthorities from './view/CertificationAuthorities';
 import CreateCertificate from './view/createCertificate';
 import CreateCertificationAuthority from './view/createCertificationAuthority';
 import configureStore from './redux/configureStore';
-import light from './themes';
 import { Provider } from 'react-redux';
 import { Switch, Route, Router } from 'react-router-dom';
 import i18n from './i18n';
@@ -15,7 +14,7 @@ const store = configureStore({});
 export default ({ history }) => {
     return (
         <Provider store={store}>
-            <EventContainer i18n={i18n} theme={light}>
+            <EventContainer i18n={i18n}>
                 <Router history={history}>
                     <Switch>
                         <Route path="/certification-authorities/new" component={CreateCertificationAuthority}/>

@@ -1,9 +1,9 @@
 import { put, fork, takeLatest, call } from 'redux-saga/effects';
 import { TemplateAttr } from 'Services';
+import { dispatchEvent } from 'sharedComponents/Hooks';
+import { EVENT } from 'sharedComponents/Constants';
 
-import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
-import { actions as successActions } from '../modules/success';
 import { constants } from '../modules/templateAttrs';
 
 export function* handleDeleteAttr(action) {
@@ -12,14 +12,14 @@ export function* handleDeleteAttr(action) {
     const { templateId, attrId, successCallback } = action.payload;
     yield call(TemplateAttr.deleteTemplateAttrs, templateId, [attrId]);
     if (successCallback) yield call(successCallback);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'deleteAttr' }));
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteAttr", type: "success", });
   } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'deleteAttr',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "deleteAttr",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_ATTR));
   }
@@ -31,14 +31,14 @@ export function* handleDeleteMultipleAttrs(action) {
     const { templateId, attrIds, successCallback } = action.payload;
     yield call(TemplateAttr.deleteTemplateAttrs, templateId, attrIds);
     if (successCallback) yield call(successCallback);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleAttrs' }));
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteMultipleAttrs", type: "success", });
   } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'deleteMultipleAttrs',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "deleteMultipleAttrs",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_ATTRS));
   }
@@ -50,14 +50,14 @@ export function* handleCreateAttr(action) {
     const { templateId, attr, successCallback } = action.payload;
     yield call(TemplateAttr.createTemplateAttr, templateId, attr);
     if (successCallback) yield call(successCallback);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'createAttr' }));
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "createAttr", type: "success", });
   } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'createAttr',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "createAttr",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.CREATE_ATTR));
   }
@@ -69,14 +69,14 @@ export function* handleEditAttr(action) {
     const { templateId, attrId, attr, successCallback } = action.payload;
     yield call(TemplateAttr.editTemplateAttr, templateId, attrId, attr);
     if (successCallback) yield call(successCallback);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'editAttr' }));
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "editAttr", type: "success", });
   } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'editAttr',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "editAttr",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.EDIT_ATTR));
   }

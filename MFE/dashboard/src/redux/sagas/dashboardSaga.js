@@ -12,6 +12,8 @@ import {
 } from 'redux-saga/effects';
 import { Configuration, Device } from '../../adapters/services';
 import { getUserInformation } from '../../adapters/localStorage/login.localStorage';
+import { dispatchEvent } from 'sharedComponents/Hooks';
+import { EVENT } from 'sharedComponents/Constants';
 
 import { actions as dashboardActions, constants as dashboardConstants } from '../modules/dashboard';
 
@@ -62,9 +64,13 @@ export function* pollData(queries, interval) {
     }
     yield call(delay, interval);
   } catch (error) {
-    console.error(error);
     yield put(dashboardActions.errorPolling(error));
     yield put(dashboardActions.stopPolling());
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: error.message,
+      type: "error",
+    });
   }
 }
 
@@ -93,8 +99,12 @@ export function* checkData() {
     if (!_.isEmpty(parserObject)) {
       yield put(dashboardActions.restoreData(parserObject));
     }
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: error.message,
+      type: "error",
+    });
   }
 }
 
@@ -110,8 +120,12 @@ export function* updateData({ payload: { layout } }) {
     });
     yield call(Configuration.updateDashboardConfig, userName, tenant, exportConfig);
     yield put(dashboardActions.updateLayout(layout));
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: error.message,
+      type: "error",
+    });
   }
 }
 
@@ -126,8 +140,12 @@ export function* updateWizard({ payload: { state } }) {
       wizardContext: { ...wizardContext, ...state },
     });
     yield call(Configuration.updateDashboardConfig, userName, tenant, exportConfig);
-  } catch (e) {
-    console.error(e);
+  } catch (error) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: error.message,
+      type: "error",
+    });
   }
 }
 

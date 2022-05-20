@@ -4,9 +4,7 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import { TemplateAttr } from 'Services';
 
 import { TEMPLATE_ATTR_TYPES, TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
-import { actions as errorActions } from '../../modules/errors';
 import { actions as loadingActions } from '../../modules/loading';
-import { actions as successActions } from '../../modules/success';
 import { constants, actions } from '../../modules/templateAttrs';
 import {
   handleCreateAttr,
@@ -54,7 +52,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleDeleteAttr, action)
       .provide([[apiRequest, null]])
       .put(loadingActions.addLoading(constants.DELETE_ATTR))
-      .put(successActions.showSuccessToast({ i18nMessage: 'deleteAttr' }))
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_ATTR))
       .run();
@@ -74,12 +71,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleDeleteAttr, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.DELETE_ATTR))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteAttr',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_ATTR))
       .run();
@@ -99,7 +90,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleDeleteMultipleAttrs, action)
       .provide([[apiRequest, null]])
       .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_ATTRS))
-      .put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleAttrs' }))
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_ATTRS))
       .run();
@@ -119,12 +109,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleDeleteMultipleAttrs, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_ATTRS))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteMultipleAttrs',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_ATTRS))
       .run();
@@ -144,7 +128,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleCreateAttr, action)
       .provide([[apiRequest, null]])
       .put(loadingActions.addLoading(constants.CREATE_ATTR))
-      .put(successActions.showSuccessToast({ i18nMessage: 'createAttr' }))
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.CREATE_ATTR))
       .run();
@@ -164,12 +147,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleCreateAttr, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.CREATE_ATTR))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'createAttr',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.CREATE_ATTR))
       .run();
@@ -190,7 +167,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleEditAttr, action)
       .provide([[apiRequest, null]])
       .put(loadingActions.addLoading(constants.EDIT_ATTR))
-      .put(successActions.showSuccessToast({ i18nMessage: 'editAttr' }))
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.EDIT_ATTR))
       .run();
@@ -211,12 +187,6 @@ describe('templatesSaga', () => {
     return expectSaga(handleEditAttr, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.EDIT_ATTR))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'editAttr',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.EDIT_ATTR))
       .run();

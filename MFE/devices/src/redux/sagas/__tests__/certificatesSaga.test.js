@@ -4,9 +4,7 @@ import { throwError } from 'redux-saga-test-plan/providers';
 import { Certificates } from 'Services';
 
 import { constants, actions } from '../../modules/certificates';
-import { actions as errorActions } from '../../modules/errors';
 import { actions as loadingActions } from '../../modules/loading';
-import { actions as successActions } from '../../modules/success';
 import { paginationControlSelector } from '../../selectors/certificatesSelector';
 import {
   certificatesSaga,
@@ -128,12 +126,6 @@ describe('certificatesSaga', () => {
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.GET_CERTIFICATES))
       .put(actions.updateCertificates({ certificates: [] }))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'getCertificates',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.GET_CERTIFICATES))
       .run();
   });
@@ -208,12 +200,6 @@ describe('certificatesSaga', () => {
           certificates: [],
         }),
       )
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'getCertificates',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.GET_CERTIFICATES_BY_ID))
       .run();
   });
@@ -257,12 +243,6 @@ describe('certificatesSaga', () => {
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.GET_CERTIFICATES_BY_FINGERPRINT))
       .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'getCertificateByFingerprint',
-        }),
-      )
-      .put(
         actions.setCertificateDetails({
           certificateDetails: null,
         }),
@@ -286,11 +266,6 @@ describe('certificatesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.DELETE_CERTIFICATE))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'deleteCertificate',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DELETE_CERTIFICATE))
       .run();
   });
@@ -309,12 +284,6 @@ describe('certificatesSaga', () => {
     return expectSaga(handleDeleteCertificate, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.DELETE_CERTIFICATE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteCertificate',
-        }),
-      )
       .not.call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_CERTIFICATE))
       .run();
@@ -334,11 +303,6 @@ describe('certificatesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_CERTIFICATES))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'deleteMultipleCertificates',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_CERTIFICATES))
       .run();
   });
@@ -357,12 +321,6 @@ describe('certificatesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.DELETE_MULTIPLE_CERTIFICATES))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'deleteMultipleCertificates',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_CERTIFICATES))
       .run();
   });
@@ -380,7 +338,6 @@ describe('certificatesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.DISASSOCIATE_DEVICE))
-      .put(successActions.showSuccessToast({ i18nMessage: 'disassociateDevice' }))
       .put(loadingActions.removeLoading(constants.DISASSOCIATE_DEVICE))
       .run();
   });
@@ -398,12 +355,6 @@ describe('certificatesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.DISASSOCIATE_DEVICE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'disassociateDevice',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.DISASSOCIATE_DEVICE))
       .run();
   });
@@ -424,7 +375,6 @@ describe('certificatesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.ASSOCIATE_DEVICE))
-      .put(successActions.showSuccessToast({ i18nMessage: 'associateDevice' }))
       .put(loadingActions.removeLoading(constants.ASSOCIATE_DEVICE))
       .run();
   });
@@ -445,12 +395,6 @@ describe('certificatesSaga', () => {
         [getCurrentPageCall, null],
       ])
       .put(loadingActions.addLoading(constants.ASSOCIATE_DEVICE))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'associateDevice',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.ASSOCIATE_DEVICE))
       .run();
   });
@@ -482,7 +426,6 @@ describe('certificatesSaga', () => {
           certificateData: responseData.createCertificateOneClick,
         }),
       )
-      .put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }))
       .put(loadingActions.removeLoading(constants.CREATE_CERTIFICATE_ONE_CLICK))
       .run();
   });
@@ -507,7 +450,6 @@ describe('certificatesSaga', () => {
       .put(
         actions.getNewGeneratedCertificate({ certificateData: responseData.createCertificateCSR }),
       )
-      .put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }))
       .put(loadingActions.removeLoading(constants.CREATE_CERTIFICATE_CSR))
       .run();
   });
@@ -520,12 +462,6 @@ describe('certificatesSaga', () => {
     return expectSaga(handleCreateCertificateCSR, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
       .put(loadingActions.addLoading(constants.CREATE_CERTIFICATE_CSR))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'createCertificate',
-        }),
-      )
       .put(loadingActions.removeLoading(constants.CREATE_CERTIFICATE_CSR))
       .run();
   });
@@ -551,7 +487,6 @@ describe('certificatesSaga', () => {
           certificateData: responseData.registerExternalCertificate,
         }),
       )
-      .put(successActions.showSuccessToast({ i18nMessage: 'createCertificate' }))
       .put(loadingActions.removeLoading(constants.REGISTER_EXTERNAL_CERTIFICATE))
       .run();
   });
@@ -565,12 +500,6 @@ describe('certificatesSaga', () => {
 
     return expectSaga(handleRegisterExternalCertificate, action)
       .provide([[apiRequest, throwError(new Error('Failed'))]])
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'createCertificate',
-        }),
-      )
       .run();
   });
 

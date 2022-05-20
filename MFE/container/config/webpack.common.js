@@ -1,6 +1,6 @@
-const path = require('path');
-
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const path = require('path');
 const { EnvironmentPlugin } = require('webpack');
 
 module.exports = {
@@ -17,6 +17,24 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.css$/,
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              modules: {
+                localIdentName: '[local]',
+              },
+              sourceMap: true,
+              importLoaders: 1,
+            },
+          },
+        ],
+      },
     ],
   },
   resolve: {
@@ -27,8 +45,10 @@ module.exports = {
     extensions: ['.js', '.jsx'],
   },
   plugins: [
+    new MiniCssExtractPlugin(),
     new HtmlWebpackPlugin({
       template: './public/index.html',
+      favicon: './public/favicon.ico',
     }),
     new EnvironmentPlugin({ GUI_VERSION: 'local' }),
   ],

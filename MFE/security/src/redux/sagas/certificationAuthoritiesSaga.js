@@ -2,10 +2,10 @@ import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { CertificationAuthority } from 'Services';
 
 import { constants, actions } from '../modules/certificationAuthorities';
-import { actions as errorActions } from '../modules/errors';
 import { actions as loadingActions } from '../modules/loading';
-import { actions as successActions } from '../modules/success';
 import { paginationControlSelector } from '../selectors/certificationAuthoritiesSelector';
+import { dispatchEvent } from 'sharedComponents/Hooks';
+import { EVENT } from 'sharedComponents/Constants';
 
 export function* getCurrentCertificationAuthoritiesPageAgain() {
   const pagination = yield select(paginationControlSelector);
@@ -44,12 +44,12 @@ export function* handleGetCertificationAuthorities(action) {
     }
   } catch (e) {
     yield put(actions.updateCertificationAuthorities({ certificationAuthorities: [] }));
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'getCertificationAuthorities',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "getCertificationAuthorities",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.GET_CERTIFICATION_AUTHORITIES));
   }
@@ -61,14 +61,14 @@ export function* handleDeleteCertificationAuthority(action) {
     const { fingerprint } = action.payload;
     yield call(CertificationAuthority.deleteMultipleCertificationAuthorities, [fingerprint]);
     yield call(getCurrentCertificationAuthoritiesPageAgain);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'deleteCertificationAuthority' }));
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteCertificationAuthority", type: "success", });
   } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'deleteCertificationAuthority',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "deleteCertificationAuthority",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_CERTIFICATION_AUTHORITY));
   }
@@ -80,16 +80,14 @@ export function* handleDeleteMultipleCertificationAuthorities(action) {
     const { fingerprints } = action.payload;
     yield call(CertificationAuthority.deleteMultipleCertificationAuthorities, fingerprints);
     yield call(getCurrentCertificationAuthoritiesPageAgain);
-    yield put(
-      successActions.showSuccessToast({ i18nMessage: 'deleteMultipleCertificationAuthorities' }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteMultipleCertificationAuthorities", type: "success", });
   } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'deleteMultipleCertificationAuthorities',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "deleteMultipleCertificationAuthorities",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES));
   }
@@ -101,14 +99,14 @@ export function* handleCreateCertificationAuthority(action) {
     const { caPem, successCallback } = action.payload;
     yield call(CertificationAuthority.createCertificationAuthority, { caPem });
     if (successCallback) yield call(successCallback);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'createCertificationAuthority' }));
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "createCertificationAuthority", type: "success", });
   } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'createCertificationAuthority',
-      }),
-    );
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: "createCertificationAuthority",
+      type: "error",
+    });
   } finally {
     yield put(loadingActions.removeLoading(constants.CREATE_CERTIFICATION_AUTHORITY));
   }

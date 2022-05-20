@@ -135,6 +135,7 @@ export const createCertificateOneClick = commonName => {
           certificateFingerprint
           privateKeyPEM
           publicKeyPEM
+          caPem
         }
       }
     `,
@@ -151,8 +152,7 @@ export const createCertificateCSR = csrPEM => {
         createCertificateCSR(csrPEM: $csrPEM) {
           certificatePem
           certificateFingerprint
-          privateKeyPEM
-          publicKeyPEM
+          caPem
         }
       }
     `,

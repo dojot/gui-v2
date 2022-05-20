@@ -60,7 +60,7 @@ const GeneratedCertificateResume = ({ certificateData }) => {
         </Box>
       )}
 
-      {!!certificateData?.caCertificate && (
+      {!!certificateData?.caPem && (
         <Box className={classes.certificateData}>
           <Typography>{t('generatedCertificateResume.caCertificate')}</Typography>
           <Link

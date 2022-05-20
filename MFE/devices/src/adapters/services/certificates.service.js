@@ -135,6 +135,7 @@ export const createCertificateOneClick = commonName => {
           certificateFingerprint
           privateKeyPEM
           publicKeyPEM
+          caPem
         }
       }
     `,

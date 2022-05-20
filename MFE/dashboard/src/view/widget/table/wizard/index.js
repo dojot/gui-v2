@@ -4,7 +4,6 @@ import { SOURCE, WIDGET } from 'sharedComponents/Constants';
 import { makeValidate } from 'mui-rff';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
-import { menuSelector } from 'Selectors/baseSelector';
 import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'sharedComponents/Utils';
 import { v4 as uuidv4 } from 'uuid';
@@ -118,8 +117,4 @@ const mapDispatchToProps = {
   ...dashboardActions,
 };
 
-const mapStateToProps = state => ({
-  ...menuSelector(state),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(TableWizard);
+export default connect(mapDispatchToProps)(TableWizard);
