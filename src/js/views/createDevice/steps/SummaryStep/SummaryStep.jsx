@@ -80,7 +80,7 @@ const SummaryStep = ({
           <TextField
             className={classes.input}
             variant='outlined'
-            value={deviceId}
+            value={deviceId || ''}
             label={t('summaryStep.deviceIdPh')}
             helperText={t('summaryStep.deviceIdHelperText')}
             onChange={e => setDeviceId(e.target.value)}
@@ -199,9 +199,13 @@ const SummaryStep = ({
   );
 };
 
+SumaryStep.defaultProps = {
+  deviceId: null,
+}
+
 SummaryStep.propTypes = {
   deviceName: PropTypes.string.isRequired,
-  deviceId: PropTypes.string.isRequired,
+  deviceId: PropTypes.string,
   isCreatingDevice: PropTypes.bool.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   setDeviceName: PropTypes.func.isRequired,
