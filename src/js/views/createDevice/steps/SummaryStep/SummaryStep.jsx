@@ -29,7 +29,7 @@ const SummaryStep = ({
   };
 
   const handleClearDeviceId = () => {
-    setDeviceId('');
+    setDeviceId(null);
   };
 
   return (

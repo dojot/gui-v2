@@ -34,7 +34,7 @@ const CreateDevice = () => {
   const [selectedCertificate, setSelectedCertificate] = useState({});
   const [staticAttrValues, setStaticAttrValues] = useState({});
   const [deviceName, setDeviceName] = useState('');
-  const [deviceId, setDeviceId] = useState('');
+  const [deviceId, setDeviceId] = useState(null);
 
   const { staticAttrs, dynamicAttrs, actuatorAttrs } = useMemo(() => {
     const staticAttrsArray = [];
@@ -110,7 +110,7 @@ const CreateDevice = () => {
       actions.createDevice({
         fingerprint: selectedCertificate?.fingerprint || '',
         label: deviceName,
-        id: deviceId.trim() === '' ? null : deviceId,
+        id: deviceId,
         attrs: attrsToSave,
         templates: templateIds,
         successCallback: handleGoBack,
