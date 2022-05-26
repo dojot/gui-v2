@@ -11,10 +11,12 @@ import { useSummaryStepStyles } from './style';
 
 const SummaryStep = ({
   deviceName,
+  deviceId,
   isCreatingDevice,
   selectedTemplates,
   selectedCertificate,
   setDeviceName,
+  setDeviceId,
   handleCreateService,
   handleGoToPreviousStep,
   handleCancelDeviceCreation,
@@ -24,6 +26,10 @@ const SummaryStep = ({
 
   const handleClearDeviceName = () => {
     setDeviceName('');
+  };
+
+  const handleClearDeviceId = () => {
+    setDeviceId(null);
   };
 
   return (
@@ -54,6 +60,34 @@ const SummaryStep = ({
               endAdornment: deviceName ? (
                 <InputAdornment position='end'>
                   <IconButton onClick={handleClearDeviceName}>
+                    <Close />
+                  </IconButton>
+                </InputAdornment>
+              ) : null,
+            }}
+          />
+        </Box>
+
+        <Box marginBottom={3}>
+          <Box marginBottom={1.5}>
+            <Typography>{t('summaryStep.deviceIdField')}</Typography>
+
+            <Typography variant='body2'>
+              <i>{t('summaryStep.deviceIdHint')}</i>
+            </Typography>
+          </Box>
+
+          <TextField
+            className={classes.input}
+            variant='outlined'
+            value={deviceId || ''}
+            label={t('summaryStep.deviceIdPh')}
+            helperText={t('summaryStep.deviceIdHelperText')}
+            onChange={e => setDeviceId(e.target.value)}
+            InputProps={{
+              endAdornment: deviceId ? (
+                <InputAdornment position='end'>
+                  <IconButton onClick={handleClearDeviceId}>
                     <Close />
                   </IconButton>
                 </InputAdornment>
@@ -165,11 +199,17 @@ const SummaryStep = ({
   );
 };
 
+SumaryStep.defaultProps = {
+  deviceId: null,
+}
+
 SummaryStep.propTypes = {
   deviceName: PropTypes.string.isRequired,
+  deviceId: PropTypes.string,
   isCreatingDevice: PropTypes.bool.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   setDeviceName: PropTypes.func.isRequired,
+  setDeviceId: PropTypes.func.isRequired,
   handleCreateService: PropTypes.func.isRequired,
   handleGoToPreviousStep: PropTypes.func.isRequired,
   handleCancelDeviceCreation: PropTypes.func.isRequired,

@@ -81,6 +81,7 @@ export const editDevice = createAction(EDIT_DEVICE, payload => ({
 
 export const createDevice = createAction(CREATE_DEVICE, payload => ({
   label: payload.label,
+  id: payload.id,
   templates: payload.templates,
   attrs: payload.attrs,
   fingerprint: payload.fingerprint,
