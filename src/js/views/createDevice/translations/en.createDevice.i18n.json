@@ -48,8 +48,12 @@
   "summaryStep": {
     "title": "Review the templates, certificates and give a name to your device",
     "hint": "If you notice that something is missing, just go back, correct and continue!",
-    "deviceNameHint": "We're almost there, finally, give your device a name!",
+    "deviceNameHint": "We're almost there, give your device a name!",
     "deviceNamePh": "Device Name",
+    "deviceIdField": "Finally, set an Id for your device",
+    "deviceIdHint": "Optional. If not filled in, the device ID will be generated automatically.",
+    "deviceIdPh": "Device Id (optional)",
+    "deviceIdHelperText": "Device Id must be 2-6 characters long and must be hexadecimal (0-9, a-f, A-F)",
     "templatesListTitle": "Selected Templates",
     "certificateAndKeysTitle": "Certificate and Keys",
     "certificateAndKeysHint": "(IMPORTANT: the keys will not be stored, so it is necessary to download them)",
