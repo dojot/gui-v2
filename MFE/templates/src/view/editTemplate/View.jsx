@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 
 import { Box, Button, CircularProgress, Typography } from '@material-ui/core';
-import { Edit, FilterNone } from '@material-ui/icons';
+import { Check, FilterNone } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -132,10 +132,10 @@ const EditTemplate = () => {
               variant='contained'
               disabled={!canSaveTemplate || isEditingTemplate}
               endIcon={
-                isEditingTemplate ? <CircularProgress color='inherit' size={14} /> : <Edit />
+                isEditingTemplate ? <CircularProgress color='inherit' size={14} /> : <Check />
               }
             >
-              {t('common:edit')}
+              {t('common:save')}
             </Button>
           </Box>
         </Box>

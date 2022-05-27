@@ -9,7 +9,7 @@ import {
   TextField,
   Typography,
 } from '@material-ui/core';
-import { Close, Edit } from '@material-ui/icons';
+import { Close, Check } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -282,9 +282,9 @@ const EditDevice = () => {
               color='primary'
               variant='contained'
               disabled={!canSaveChanges || isEditingDevice}
-              endIcon={isEditingDevice ? <CircularProgress color='inherit' size={14} /> : <Edit />}
+              endIcon={isEditingDevice ? <CircularProgress color='inherit' size={14} /> : <Check />}
             >
-              {t('common:edit')}
+              {t('common:save')}
             </Button>
           </Box>
         </Box>
