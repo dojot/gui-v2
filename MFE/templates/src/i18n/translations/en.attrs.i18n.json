@@ -17,7 +17,6 @@
     "float": "Float",
     "integer": "Integer",
     "string": "Text",
-    "object": "Object",
     "json": "JSON"
   }
 }
