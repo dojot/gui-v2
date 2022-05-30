@@ -62,6 +62,7 @@ const devConfig = {
             shared: {
                 ...dependencies,
                 react: {
+                    eager: true,
                     singleton: true,
                     requiredVersion: dependencies.react,
                 },
@@ -70,17 +71,44 @@ const devConfig = {
                     requiredVersion: dependencies['react-dom'],
                 },
                 '@material-ui/styles': {
-                    eager: false,
+                    eager: true,
                     singleton: true,
                     requiredVersion: dependencies['@material-ui/styles'],
                 },
                 '@material-ui/core': {
+                    eager: true,
                     singleton: true,
                     requiredVersion: dependencies['@material-ui/core'],
                 },
                 '@material-ui/icons': {
+                    eager: true,
                     singleton: true,
                     requiredVersion: dependencies['@material-ui/icons'],
+                },
+                '@material-ui/lab': {
+                    eager: true,
+                    singleton: true,
+                    requiredVersion: dependencies['@material-ui/lab'],
+                },
+                '@material-ui/pickers': {
+                    eager: true,
+                    singleton: true,
+                    requiredVersion: dependencies['@material-ui/pickers'],
+                },
+                'prop-types': {
+                    eager: true,
+                    singleton: true,
+                    requiredVersion: dependencies['prop-types'],
+                },
+                'react-transition-group': {
+                    eager: true,
+                    singleton: true,
+                    requiredVersion: dependencies['react-transition-group'],
+                },
+                'clsx': {
+                    eager: true,
+                    singleton: true,
+                    requiredVersion: dependencies['clsx'],
                 },
             },
         }),

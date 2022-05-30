@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, MenuItem, Select } from '@material-ui/core';
-import Pagination from '@material-ui/lab/Pagination';
+import { Pagination } from '@material-ui/lab';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -26,7 +26,7 @@ const Paginator = props => {
   const { t } = useTranslation(['paginator']);
 
   return (
-      <Grid container direction='row' justify='center' alignItems='center' className={classes.root}>
+      <Grid container direction='row' justifyContent='center' alignItems='center' className={classes.root}>
         <Pagination
             variant='outlined'
             shape='rounded'

@@ -54,6 +54,10 @@ export const useStyles = makeStyles(theme => ({
       backgroundColor: 'rgba(var(--red), var(--green), var(--blue), 0.94)',
       textDecoration: 'none',
     },
+
+    '&:disabled': {
+      backgroundColor: 'transparent'
+    }
   },
   picker: {
     position: 'absolute',
