@@ -34,10 +34,6 @@ export const TEMPLATE_ATTR_VALUE_TYPES = Object.freeze({
     value: 'string',
     translation: 'attrs:attrValueType.string',
   },
-  OBJECT: {
-    value: 'object',
-    translation: 'attrs:attrValueType.object',
-  },
   JSON: {
     value: 'json',
     translation: 'attrs:attrValueType.json',
