@@ -51,8 +51,8 @@ export function* handleGetDevices(action) {
 
 export function* handleGetFavoriteDevicesList() {
   try {
-    const { userName, tenant } = yield call(getUserInformation);
     yield put(loadingActions.addLoading(constants.GET_FAVORITE_DEVICES));
+    const { userName, tenant } = yield call(getUserInformation);
     const { getFavoriteDevicesList } = yield call(Device.getFavoriteDevicesList, userName, tenant);
     if (getFavoriteDevicesList) {
       yield put(actions.updateDevices({ favoriteDevices: getFavoriteDevicesList }));
@@ -93,8 +93,9 @@ export function* handleGetDeviceById(action) {
 export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
+    const { userName, tenant } = yield call(getUserInformation);
     const { deviceId, successCallback, shouldGetCurrentPageAgain } = action.payload;
-    yield call(Device.deleteDevices, [deviceId]);
+    yield call(Device.deleteDevices, [deviceId], userName, tenant);
     if (successCallback) yield call(successCallback);
     if (shouldGetCurrentPageAgain) yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteDevice' }));
@@ -113,8 +114,9 @@ export function* handleDeleteDevice(action) {
 export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
+    const { userName, tenant } = yield call(getUserInformation);
     const { deviceIdArray } = action.payload;
-    yield call(Device.deleteDevices, deviceIdArray);
+    yield call(Device.deleteDevices, deviceIdArray, userName, tenant);
     yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleDevices' }));
   } catch (e) {
@@ -134,7 +136,18 @@ export function* handleFavoriteDevice(action) {
     yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
     const { userName, tenant } = yield call(getUserInformation);
     const { deviceId } = action.payload;
-    yield call(Device.favoriteDevices, { deviceIds: [deviceId], userName, tenant });
+    const { favoriteDevices } = yield call(Device.favoriteDevices, {
+      deviceIds: [deviceId],
+      userName,
+      tenant,
+    });
+
+    if (favoriteDevices)
+      yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteDevice' }));
+
+    if (!favoriteDevices)
+      yield put(successActions.showSuccessToast({ i18nMessage: 'removedFavoriteDevice' }));
+
     yield call(getCurrentDevicesPageAgain);
   } catch (e) {
     yield put(

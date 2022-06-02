@@ -4,6 +4,7 @@
     "deleteDevice": "Dispositivo excluído",
     "deleteMultipleDevices": "Todos os dispositivos foram excluídos",
     "favoriteDevice": "Dispositivo adicionado aos favoritos",
+    "removedFavoriteDevice": "Dispositivo removido dos favoritos",
     "favoriteMultipleDevices": "Todos os dispositivos foram adicionados aos favoritos",
     "editDevice": "Dispositivo editado",
     "createDevice": "Dispositivo criado",
@@ -24,7 +25,6 @@
     "deleteMultipleCertificates": "Todos os certificados foram excluídos",
     "disassociateDevice": "Certificado desassociado do dispositivo",
     "associateDevice": "Certificado associado ao dispositivo",
-    "createCertificate": "Certificado criado",
 
     "deleteCertificationAuthority": "CA excluída",
     "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
