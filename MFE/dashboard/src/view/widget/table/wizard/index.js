@@ -1,13 +1,11 @@
 import React from 'react';
 
 import { SOURCE, WIDGET } from 'sharedComponents/Constants';
-import { makeValidate } from 'mui-rff';
-import { connect, useSelector } from 'react-redux';
-import { actions as dashboardActions } from 'Redux/dashboard';
+import { connect, useSelector } from "react-redux";
 import { getWizardContext } from 'Selectors/dashboardSelector';
+import { actions as dashboardActions } from 'Redux/dashboard';
 import { generateScheme } from 'sharedComponents/Utils';
 import { v4 as uuidv4 } from 'uuid';
-import * as Yup from 'yup';
 
 import { TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import useTable from '../../wizard/hooks/useTable';
@@ -19,7 +17,7 @@ import {
   generalValidates,
   attrValidates,
 } from '../../wizard/Steps';
-import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
+import Selector, { selectorValidates } from "../../wizard/Steps/Selector/OriginSelector/OriginSelector";
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [
@@ -56,24 +54,6 @@ const TableWizard = ({
     createTableWidget(values, widgetID);
     toDashboard();
   };
-
-  // TODO: Put the schema in a better place
-  const schema = Yup.object().shape({
-    devices: Yup.object().when('selector', {
-      is: value => value === 0,
-      then: Yup.object().required(),
-      otherwise: Yup.object().default(null).nullable(),
-    }),
-    templates: Yup.object().when('selector', {
-      is: value => value === 1,
-      then: Yup.object().required(),
-      otherwise: Yup.object().default(null).nullable(),
-    }),
-  });
-
-  const selectorValidates = makeValidate(schema, error => {
-    return error.message;
-  });
 
   const initialState = {
     general: {
@@ -117,4 +97,4 @@ const mapDispatchToProps = {
   ...dashboardActions,
 };
 
-export default connect(mapDispatchToProps)(TableWizard);
+export default connect(null, mapDispatchToProps)(TableWizard);

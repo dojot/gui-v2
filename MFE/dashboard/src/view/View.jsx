@@ -19,6 +19,7 @@ import {
   dashboardSaga,
 } from '../redux/selectors/dashboardSelector';
 import { widgetToCSV } from 'sharedComponents/Utils';
+import { EVENT } from 'sharedComponents/Constants';
 
 import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
 import { ViewContainer } from 'sharedComponents/Containers';
@@ -48,7 +49,12 @@ const Dashboard = props => {
     checkData,
   } = props;
   const { BAR, LINE, AREA, TABLE, MAP } = WIDGET;
-
+const errors = {
+  duration: 5000,
+  message: 'mensagem se erro personalizada',
+  i18nMessage: 'deleteCertificate',
+  type: 'error'
+}
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
   }, [history]);
@@ -231,6 +237,46 @@ const Dashboard = props => {
             onClick={() => stopPolling()}
           >
             {t('common:stop')}
+          </Button>
+          <Button
+            style={{ marginLeft: 10 }}
+            size='small'
+            variant='outlined'
+            color='inherit'
+            startIcon={<PlayArrow />}
+            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: errors }))}
+          >
+            Erro
+          </Button>
+          <Button
+            style={{ marginLeft: 10 }}
+            size='small'
+            variant='outlined'
+            color='inherit'
+            startIcon={<PlayArrow />}
+            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: { ...errors, type: 'warning' } }))}
+          >
+            Atenção
+          </Button>
+          <Button
+            style={{ marginLeft: 10 }}
+            size='small'
+            variant='outlined'
+            color='inherit'
+            startIcon={<PlayArrow />}
+            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: { ...errors, type: 'success' } }))}
+          >
+            Sucesso
+          </Button>
+          <Button
+            style={{ marginLeft: 10 }}
+            size='small'
+            variant='outlined'
+            color='inherit'
+            startIcon={<PlayArrow />}
+            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: { ...errors, type: 'info' } }))}
+          >
+            Informação
           </Button>
         </DevelopmentContainer>
         <Button

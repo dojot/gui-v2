@@ -8,6 +8,8 @@ import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
+import { EVENT } from 'sharedComponents/Constants';
+import { dispatchEvent } from 'sharedComponents/Hooks';
 
 import { AlertDialog } from 'sharedComponents/Dialogs';
 import { ViewContainer } from 'sharedComponents/Containers';
@@ -59,8 +61,11 @@ const Wizard = ({ initialValues, ...props }) => {
 
     const checkErrorsBeforeSubmit = (event, invalid, error, callback) => {
         if(invalid) {
-            // TODO: Create mechanism to display form errors
-            console.error(error);
+            dispatchEvent(EVENT.GLOBAL_TOAST, {
+                duration: 10000,
+                i18nMessage: error.msg || 'requiredFiled',
+                type: "warning",
+            });
         }
         callback(event);
     };
@@ -104,10 +109,12 @@ const Wizard = ({ initialValues, ...props }) => {
                             },
                             clearAttributesByDevice: ([id, locale], state, { changeValue, getIn }) => {
                                 const data = getIn(state, `formState.values.${locale}`);
-                                const keysToBeDeleted = Object.keys(data).filter(v => v.startsWith(id));
-                                keysToBeDeleted.forEach(e => {
-                                    delete data[e];
-                                });
+                                if(data){
+                                    const keysToBeDeleted = Object.keys(data).filter(v => v.startsWith(id));
+                                    keysToBeDeleted.forEach(e => {
+                                        delete data[e];
+                                    });
+                                }
                                 changeValue(state, locale, () => data);
                             },
                         }}

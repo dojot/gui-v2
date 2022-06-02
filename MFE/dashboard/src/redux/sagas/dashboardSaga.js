@@ -109,6 +109,7 @@ export function* checkData() {
 }
 
 export function* updateData({ payload: { layout } }) {
+  console.log("updateData");
   const { userName, tenant } = yield call(getUserInformation);
 
   try {
@@ -130,7 +131,7 @@ export function* updateData({ payload: { layout } }) {
 }
 
 export function* updateWizard({ payload: { state } }) {
-  const { userName, tenant } = call(getUserInformation);
+  const { userName, tenant } = yield call(getUserInformation);
   const wizardContext = yield select(store => getStoreContent(store, 'wizardContext'));
   try {
     const exportConfig = JSON.stringify({

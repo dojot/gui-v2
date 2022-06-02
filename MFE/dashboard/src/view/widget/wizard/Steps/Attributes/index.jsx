@@ -20,9 +20,9 @@ import { useStyles } from './style';
 export const attrValidates = values => {
   const errors = {};
   if (!values.attributes) {
-    errors.attributes = 'Required';
+    errors.msg = 'requiredDevice';
   } else if (Object.keys(values.attributes).length < 1) {
-    errors.attributes = 'Choose more';
+    errors.msg = 'chooseAtLeastOne';
   }
   return errors;
 };

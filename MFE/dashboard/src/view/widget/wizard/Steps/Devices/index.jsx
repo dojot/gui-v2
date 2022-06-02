@@ -11,6 +11,16 @@ import { useDebounce } from 'use-debounce';
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
+export const deviceValidates = values => {
+  const errors = {};
+  if (!values.devices) {
+    errors.msg = 'requiredDevice';
+  } else if (Object.keys(values.devices).length < 1) {
+    errors.msg = 'chooseAtLeastOne';
+  }
+  return errors;
+};
+
 const Devices = ({ validate, ...otherProps }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [searchTermDebounced] = useDebounce(searchTerm, 1000);

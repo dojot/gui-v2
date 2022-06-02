@@ -1,0 +1,8 @@
+{
+  "messages": {
+    "requiredDevice": "Dispositivo é obrigatório",
+    "requiredTemplate": "Modelo é obrigatório",
+    "chooseAtLeastOne": "Escolha ao menos um item",
+    "requiredFiled": "Campo Obrigatório"
+  }
+}

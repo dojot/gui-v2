@@ -15,6 +15,8 @@ import {
   Summary,
   Filters,
   generalValidates,
+  deviceValidates,
+  attrValidates
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
 
@@ -81,9 +83,9 @@ const LineWizard = ({
       headerTitle={title}
     >
       <General validate={generalValidates} name='general' />
-      <Devices validate={null} name='devices' />
+      <Devices validate={deviceValidates} name='devices' />
       <Attributes
-        validate={null}
+        validate={attrValidates}
         name='attributes'
         staticSupported={false}
         acceptedTypes={[

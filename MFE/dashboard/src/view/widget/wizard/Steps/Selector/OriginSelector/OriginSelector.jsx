@@ -10,6 +10,24 @@ import Wizard from '../../../wizard';
 import Devices from '../../Devices/DevicesPageOnly';
 import Templates from '../../Templates/TemplatePageOnly/templatePageOnly';
 
+export const selectorValidates = values => {
+  const errors = {};
+  if(values.selector === 0) {
+    if(!values.devices) {
+      errors.msg = "requiredDevice";
+    } else if(Object.keys(values.devices).length < 1) {
+      errors.msg = "chooseAtLeastOne";
+    }
+  } else {
+    if(!values.templates) {
+      errors.msg = "requiredTemplate";
+    } else if(Object.keys(values.templates).length < 1) {
+      errors.msg = "chooseAtLeastOne";
+    }
+  }
+  return errors;
+};
+
 const TabPanel = props => {
   const { children, value, index, ...other } = props;
 

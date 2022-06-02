@@ -81,7 +81,7 @@ const Templates = ({ validate, ...otherProps }) => {
                       format={item => (item ? item.id === id : false)}
                       parse={item => (item ? value : undefined)}
                       callback={() =>
-                        otherProps.form.mutators.clearAttributesByDevice(id, 'attributes')
+                        otherProps.form.mutators.clearAttributesByDevice(id, 'templates')
                       }
                     />
                   </ListItemIcon>
