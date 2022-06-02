@@ -79,6 +79,11 @@ const prodConfig = {
                     singleton: true,
                     requiredVersion: dependencies['@material-ui/icons'],
                 },
+                '@material-ui/lab': {
+                    eager: false,
+                    singleton: true,
+                    requiredVersion: dependencies['@material-ui/lab'],
+                },
             },
         }),
     ]

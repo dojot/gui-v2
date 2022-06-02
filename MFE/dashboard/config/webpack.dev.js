@@ -52,7 +52,6 @@ const devConfig = {
                     requiredVersion: dependencies['react-dom'],
                 },
                 '@material-ui/styles': {
-                    eager: false,
                     singleton: true,
                     requiredVersion: dependencies['@material-ui/styles'],
                 },
@@ -63,6 +62,14 @@ const devConfig = {
                 '@material-ui/icons': {
                     singleton: true,
                     requiredVersion: dependencies['@material-ui/icons'],
+                },
+                '@material-ui/lab': {
+                    singleton: true,
+                    requiredVersion: dependencies['@material-ui/lab'],
+                },
+                '@material-ui/pickers': {
+                    singleton: true,
+                    requiredVersion: dependencies['@material-ui/pickers'],
                 },
             },
             remotes: {

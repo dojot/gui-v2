@@ -70,7 +70,7 @@ export const LoginForm = ({
   const { t } = useTranslation('login');
 
   return (
-    <Grid container justify='center' className={classes.root}>
+    <Grid container justifyContent='center' className={classes.root}>
       <Card className={classes.grid}>
         <form onSubmit={handleSubmit} autoComplete='off'>
           <Typography variant='h5' color='textPrimary'>
