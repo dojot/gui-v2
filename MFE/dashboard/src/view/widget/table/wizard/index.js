@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { SOURCE, WIDGET } from 'sharedComponents/Constants';
-import { connect, useSelector } from "react-redux";
-import { getWizardContext } from 'Selectors/dashboardSelector';
+import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
+import { getWizardContext } from 'Selectors/dashboardSelector';
+import { SOURCE, WIDGET, TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import { generateScheme } from 'sharedComponents/Utils';
 import { v4 as uuidv4 } from 'uuid';
 
-import { TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import useTable from '../../wizard/hooks/useTable';
 import {
   Attributes,
@@ -17,7 +16,9 @@ import {
   generalValidates,
   attrValidates,
 } from '../../wizard/Steps';
-import Selector, { selectorValidates } from "../../wizard/Steps/Selector/OriginSelector/OriginSelector";
+import Selector, {
+  selectorValidates,
+} from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [

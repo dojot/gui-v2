@@ -1,19 +1,31 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
-import { Button, Divider, Grid, InputAdornment, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, TextField, Tooltip } from '@material-ui/core';
+import {
+  Button,
+  Divider,
+  Grid,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemSecondaryAction,
+  ListItemText,
+  TextField,
+  Tooltip,
+} from '@material-ui/core';
 import { Comment, Search } from '@material-ui/icons';
-import { FormCheckBox } from 'sharedComponents/Checkbox';
-import { Paginator, usePaginator } from 'sharedComponents/Paginator';
 import _ from 'lodash';
 import { TextField as FormTextField } from 'mui-rff';
 import PropTypes from 'prop-types';
 import { GithubPicker } from 'react-color';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
-import { useDebounce } from 'use-debounce';
-import { object2Array, hexToRgb } from 'sharedComponents/Utils';
-
+import { FormCheckBox } from 'sharedComponents/Checkbox';
 import { TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
+import { Paginator, usePaginator } from 'sharedComponents/Paginator';
+import { object2Array, hexToRgb } from 'sharedComponents/Utils';
+import { useDebounce } from 'use-debounce';
+
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 

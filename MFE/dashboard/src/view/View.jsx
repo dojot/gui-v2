@@ -4,13 +4,16 @@ import React, { useCallback, useEffect } from 'react';
 
 import { Button } from '@material-ui/core';
 import { Dashboard as DashboardIcon, Add, Pause, PlayArrow } from '@material-ui/icons';
-import { DevelopmentContainer } from 'sharedComponents/Containers';
-import { WIDGET } from 'sharedComponents/Constants';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { WIDGET } from 'sharedComponents/Constants';
+import { DevelopmentContainer, ViewContainer } from 'sharedComponents/Containers';
+import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
+import { widgetToCSV } from 'sharedComponents/Utils';
+
 import { actions as dashboardActions } from '../redux/modules/dashboard';
 import {
   dashboardConfig,
@@ -18,11 +21,6 @@ import {
   dashboardLayout,
   dashboardSaga,
 } from '../redux/selectors/dashboardSelector';
-import { widgetToCSV } from 'sharedComponents/Utils';
-import { EVENT } from 'sharedComponents/Constants';
-
-import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
-import { ViewContainer } from 'sharedComponents/Containers';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
@@ -49,12 +47,7 @@ const Dashboard = props => {
     checkData,
   } = props;
   const { BAR, LINE, AREA, TABLE, MAP } = WIDGET;
-const errors = {
-  duration: 5000,
-  message: 'mensagem se erro personalizada',
-  i18nMessage: 'deleteCertificate',
-  type: 'error'
-}
+
   const handleClick = useCallback(() => {
     history.push('/dashboard/widget');
   }, [history]);
@@ -119,8 +112,8 @@ const errors = {
     element => {
       const { i, static: isStatic } = element;
       const [type] = i.split('/');
-        switch (type) {
-        case LINE+'':
+      switch (type) {
+        case `${LINE}`:
           return (
             <div key={i}>
               <LineChartWidget
@@ -135,7 +128,7 @@ const errors = {
               />
             </div>
           );
-        case AREA+'':
+        case `${AREA}`:
           return (
             <div key={i}>
               <AreaChartWidget
@@ -150,7 +143,7 @@ const errors = {
               />
             </div>
           );
-        case BAR+'':
+        case `${BAR}`:
           return (
             <div key={i}>
               <BarChartWidget
@@ -165,7 +158,7 @@ const errors = {
               />
             </div>
           );
-        case TABLE+'':
+        case `${TABLE}`:
           return (
             <div key={i}>
               <TableWidget
@@ -180,7 +173,7 @@ const errors = {
               />
             </div>
           );
-        case MAP+'':
+        case `${MAP}`:
           return (
             <div key={i}>
               <MapWidget
@@ -237,46 +230,6 @@ const errors = {
             onClick={() => stopPolling()}
           >
             {t('common:stop')}
-          </Button>
-          <Button
-            style={{ marginLeft: 10 }}
-            size='small'
-            variant='outlined'
-            color='inherit'
-            startIcon={<PlayArrow />}
-            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: errors }))}
-          >
-            Erro
-          </Button>
-          <Button
-            style={{ marginLeft: 10 }}
-            size='small'
-            variant='outlined'
-            color='inherit'
-            startIcon={<PlayArrow />}
-            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: { ...errors, type: 'warning' } }))}
-          >
-            Atenção
-          </Button>
-          <Button
-            style={{ marginLeft: 10 }}
-            size='small'
-            variant='outlined'
-            color='inherit'
-            startIcon={<PlayArrow />}
-            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: { ...errors, type: 'success' } }))}
-          >
-            Sucesso
-          </Button>
-          <Button
-            style={{ marginLeft: 10 }}
-            size='small'
-            variant='outlined'
-            color='inherit'
-            startIcon={<PlayArrow />}
-            onClick={() => window.dispatchEvent(new CustomEvent(EVENT.GLOBAL_TOAST, { detail: { ...errors, type: 'info' } }))}
-          >
-            Informação
           </Button>
         </DevelopmentContainer>
         <Button

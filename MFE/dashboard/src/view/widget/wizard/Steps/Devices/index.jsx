@@ -1,11 +1,21 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
-import { Grid, Divider, InputAdornment, List, ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
+
+import {
+  Grid,
+  Divider,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+} from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import { FormCheckBox } from 'sharedComponents/Checkbox';
-import { Paginator, usePaginator } from 'sharedComponents/Paginator';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { Device as DeviceService } from 'Services';
+import { FormCheckBox } from 'sharedComponents/Checkbox';
+import { Paginator, usePaginator } from 'sharedComponents/Paginator';
 import { useDebounce } from 'use-debounce';
 
 import Wizard from '../../wizard';

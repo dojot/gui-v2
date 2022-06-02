@@ -1,13 +1,12 @@
 import React from 'react';
 
-import { SOURCE, WIDGET } from 'sharedComponents/Constants';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
+import { SOURCE, WIDGET, TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import { generateScheme } from 'sharedComponents/Utils';
 import { v4 as uuidv4 } from 'uuid';
 
-import { TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import useBar from '../../wizard/hooks/useBar';
 import {
   Attributes,
@@ -17,7 +16,7 @@ import {
   Filters,
   generalValidates,
   attrValidates,
-  deviceValidates
+  deviceValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
 
