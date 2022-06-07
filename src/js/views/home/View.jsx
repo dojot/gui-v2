@@ -101,7 +101,7 @@ const Home = () => {
           })}
 
           {favoriteDevices.map(device => (
-            <Grid xs={12} sm={6} md={3} item>
+            <Grid key={device.id} xs={12} sm={6} md={3} item>
               <Card className={classes.card}>
                 <CardActionArea
                   style={{ height: '100%' }}
