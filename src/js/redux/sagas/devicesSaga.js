@@ -58,7 +58,6 @@ export function* handleGetFavoriteDevicesList() {
       yield put(actions.updateDevices({ favoriteDevices: getFavoriteDevicesList }));
     }
   } catch (e) {
-    console.log('error do catch da saga => ', e);
     yield put(actions.updateDevices({ favoriteDevices: [] }));
     yield put(
       errorActions.addError({
