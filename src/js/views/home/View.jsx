@@ -38,8 +38,6 @@ const Home = () => {
     dispatch(deviceActions.getFavoriteDevices());
   }, [dispatch]);
 
-  console.log(favoriteDevices);
-
   const HOME_CARDS = {
     CREATE_DEVICE: {
       icon: <DevicesOther style={{ color: '#34C38F' }} fontSize='large' />,
