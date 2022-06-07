@@ -129,8 +129,6 @@ const DataTable = ({
     e.stopPropagation();
   };
 
-  console.log(devices);
-
   return (
     <Paper elevation={0}>
       <TableContainer>
