@@ -265,12 +265,14 @@ describe('devicesSaga', () => {
       .run();
   });
 
-  it('should favorite a device', async () => {
+  it('should add device to favorites', async () => {
     const action = actions.favoriteDevice({
       deviceId: fakeDevice.id,
     });
 
     const apiRequest = matchers.call.fn(Device.favoriteDevices);
+
+    const apiResponse = { favoriteDevices: true };
 
     const getCurrentPageCall = matchers.call.fn(getCurrentDevicesPageAgain);
 
@@ -280,7 +282,7 @@ describe('devicesSaga', () => {
 
     return expectSaga(handleFavoriteDevice, action)
       .provide([
-        [apiRequest, null],
+        [apiRequest, apiResponse],
         [getCurrentPageCall, null],
         [getUserInformationCall, userInformation],
       ])
@@ -288,6 +290,37 @@ describe('devicesSaga', () => {
       .put(
         successActions.showSuccessToast({
           i18nMessage: 'favoriteDevice',
+        }),
+      )
+      .put(loadingActions.removeLoading(constants.FAVORITE_DEVICE))
+      .run();
+  });
+
+  it('should remove device of favorites', async () => {
+    const action = actions.favoriteDevice({
+      deviceId: fakeDevice.id,
+    });
+
+    const apiRequest = matchers.call.fn(Device.favoriteDevices);
+
+    const apiResponse = { favoriteDevices: false };
+
+    const getCurrentPageCall = matchers.call.fn(getCurrentDevicesPageAgain);
+
+    const getUserInformationCall = matchers.call.fn(getUserInformation);
+
+    const userInformation = { userName: 'admin', tenant: 'admin' };
+
+    return expectSaga(handleFavoriteDevice, action)
+      .provide([
+        [apiRequest, apiResponse],
+        [getCurrentPageCall, null],
+        [getUserInformationCall, userInformation],
+      ])
+      .put(loadingActions.addLoading(constants.FAVORITE_DEVICE))
+      .put(
+        successActions.showSuccessToast({
+          i18nMessage: 'removedFavoriteDevice',
         }),
       )
       .put(loadingActions.removeLoading(constants.FAVORITE_DEVICE))
