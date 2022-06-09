@@ -56,6 +56,7 @@ const CreateCertificateCA = ({
             label={t('createCertificateCA.inputPlaceholder')}
             multiline
             fullWidth
+            required
           />
 
           <Typography align='right'>

@@ -59,6 +59,7 @@ const SummaryStep = ({
                 </InputAdornment>
               ) : null,
             }}
+            required
           />
         </Box>
 

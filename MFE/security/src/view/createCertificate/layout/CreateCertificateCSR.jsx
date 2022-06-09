@@ -94,6 +94,7 @@ const CreateCertificateCSR = ({
             rows={10}
             multiline
             fullWidth
+            required
           />
 
           <Typography align='right'>
