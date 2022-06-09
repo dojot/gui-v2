@@ -57,10 +57,6 @@ export const favoriteDevice = createAction(FAVORITE_DEVICE, payload => ({
   deviceId: payload.deviceId,
 }));
 
-export const favoriteMultipleDevices = createAction(FAVORITE_MULTIPLE_DEVICES, payload => ({
-  deviceIdArray: payload.deviceIdArray,
-}));
-
 export const deleteDevice = createAction(DELETE_DEVICE, payload => ({
   deviceId: payload.deviceId,
   successCallback: payload.successCallback,
@@ -95,7 +91,6 @@ export const actions = {
   updateDevices,
   favoriteDevice,
   deleteDevice,
-  favoriteMultipleDevices,
   deleteMultipleDevices,
   editDevice,
   createDevice,

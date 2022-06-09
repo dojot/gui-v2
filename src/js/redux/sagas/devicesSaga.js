@@ -66,7 +66,7 @@ export function* handleGetFavoriteDevicesList() {
       }),
     );
   } finally {
-    yield put(loadingActions.removeLoading(constants.GET_DEVICE_BY_ID));
+    yield put(loadingActions.removeLoading(constants.GET_FAVORITE_DEVICES));
   }
 }
 
@@ -141,13 +141,11 @@ export function* handleFavoriteDevice(action) {
       tenant,
     });
 
-    if (favoriteDevices)
+    if (favoriteDevices) {
       yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteDevice' }));
-
-    if (!favoriteDevices)
+    } else {
       yield put(successActions.showSuccessToast({ i18nMessage: 'removedFavoriteDevice' }));
-
-    yield call(getCurrentDevicesPageAgain);
+    }
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -157,26 +155,6 @@ export function* handleFavoriteDevice(action) {
     );
   } finally {
     yield put(loadingActions.removeLoading(constants.FAVORITE_DEVICE));
-  }
-}
-
-export function* handleFavoriteMultipleDevices(action) {
-  try {
-    yield put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES));
-    const { userName, tenant } = yield call(getUserInformation);
-    const { deviceIdArray } = action.payload;
-    yield call(Device.favoriteDevices, { deviceIds: deviceIdArray, userName, tenant });
-    yield call(getCurrentDevicesPageAgain);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteMultipleDevices' }));
-  } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'favoriteMultipleDevices',
-      }),
-    );
-  } finally {
-    yield put(loadingActions.removeLoading(constants.FAVORITE_MULTIPLE_DEVICES));
   }
 }
 
@@ -242,10 +220,6 @@ export function* watchFavoriteDevice() {
   yield takeLatest(constants.FAVORITE_DEVICE, handleFavoriteDevice);
 }
 
-export function* watchFavoriteMultipleDevices() {
-  yield takeLatest(constants.FAVORITE_MULTIPLE_DEVICES, handleFavoriteMultipleDevices);
-}
-
 export function* watchEditDevice() {
   yield takeLatest(constants.EDIT_DEVICE, handleEditDevice);
 }
@@ -261,7 +235,6 @@ export const deviceSaga = [
   fork(watchDeleteDevice),
   fork(watchDeleteMultipleDevices),
   fork(watchFavoriteDevice),
-  fork(watchFavoriteMultipleDevices),
   fork(watchEditDevice),
   fork(watchCreateDevice),
 ];

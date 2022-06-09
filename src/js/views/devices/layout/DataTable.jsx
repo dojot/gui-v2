@@ -203,7 +203,6 @@ const DataTable = ({
                           checkedIcon={<Star style={{ color: '#F1B44C' }} />}
                           defaultChecked={device.favorite}
                           onChange={handleFavoriteThisDevice}
-                          // disabled
                         />
                       </Tooltip>
                     </TableCell>
