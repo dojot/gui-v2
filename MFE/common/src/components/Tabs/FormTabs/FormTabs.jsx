@@ -16,13 +16,13 @@ export const FormTabs = (props, children, form) => {
     // eslint-disable-next-line default-case
     switch (value) {
       case SOURCE.DEVICE:
-        form.mutators.clearField('devices', undefined);
+        form.mutators.clearField('devices', {});
         break;
       case SOURCE.TEMPLATE:
-        form.mutators.clearField('templates', undefined);
+        form.mutators.clearField('templates', {});
         break;
     }
-    form.mutators.clearField('attributes', undefined);
+    form.mutators.clearField('attributes', {});
     onChange(newValue);
   };
   return (

@@ -1,0 +1,7 @@
+{
+  "messages": {
+    "requiredDevice": "Device deleted",
+    "chooseAtLeastOne": "All devices were deleted",
+    "requiredFiled": "Device added to favorites"
+  }
+}

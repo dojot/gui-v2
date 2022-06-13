@@ -4,13 +4,16 @@ import React, { useCallback, useEffect } from 'react';
 
 import { Button } from '@material-ui/core';
 import { Dashboard as DashboardIcon, Add, Pause, PlayArrow } from '@material-ui/icons';
-import { DevelopmentContainer } from 'sharedComponents/Containers';
-import { WIDGET } from 'sharedComponents/Constants';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 import { useTranslation } from 'react-i18next';
 import { connect } from 'react-redux';
+import { WIDGET } from 'sharedComponents/Constants';
+import { DevelopmentContainer, ViewContainer } from 'sharedComponents/Containers';
+import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
+import { widgetToCSV } from 'sharedComponents/Utils';
+
 import { actions as dashboardActions } from '../redux/modules/dashboard';
 import {
   dashboardConfig,
@@ -18,10 +21,6 @@ import {
   dashboardLayout,
   dashboardSaga,
 } from '../redux/selectors/dashboardSelector';
-import { widgetToCSV } from 'sharedComponents/Utils';
-
-import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
-import { ViewContainer } from 'sharedComponents/Containers';
 import { AreaChartWidget } from './widget/areaChart';
 import { BarChartWidget } from './widget/barChart';
 import { LineChartWidget } from './widget/lineChart';
@@ -113,8 +112,8 @@ const Dashboard = props => {
     element => {
       const { i, static: isStatic } = element;
       const [type] = i.split('/');
-        switch (type) {
-        case LINE+'':
+      switch (type) {
+        case `${LINE}`:
           return (
             <div key={i}>
               <LineChartWidget
@@ -129,7 +128,7 @@ const Dashboard = props => {
               />
             </div>
           );
-        case AREA+'':
+        case `${AREA}`:
           return (
             <div key={i}>
               <AreaChartWidget
@@ -144,7 +143,7 @@ const Dashboard = props => {
               />
             </div>
           );
-        case BAR+'':
+        case `${BAR}`:
           return (
             <div key={i}>
               <BarChartWidget
@@ -159,7 +158,7 @@ const Dashboard = props => {
               />
             </div>
           );
-        case TABLE+'':
+        case `${TABLE}`:
           return (
             <div key={i}>
               <TableWidget
@@ -174,7 +173,7 @@ const Dashboard = props => {
               />
             </div>
           );
-        case MAP+'':
+        case `${MAP}`:
           return (
             <div key={i}>
               <MapWidget

@@ -10,11 +10,11 @@ import {
   takeLatest,
   select,
 } from 'redux-saga/effects';
-import { Configuration, Device } from '../../adapters/services';
-import { getUserInformation } from '../../adapters/localStorage/login.localStorage';
-import { dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
+import { dispatchEvent } from 'sharedComponents/Hooks';
 
+import { getUserInformation } from '../../adapters/localStorage/login.localStorage';
+import { Configuration, Device } from '../../adapters/services';
 import { actions as dashboardActions, constants as dashboardConstants } from '../modules/dashboard';
 
 export const delay = duration => {
@@ -69,7 +69,7 @@ export function* pollData(queries, interval) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: error.message,
-      type: "error",
+      type: 'error',
     });
   }
 }
@@ -103,12 +103,13 @@ export function* checkData() {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: error.message,
-      type: "error",
+      type: 'error',
     });
   }
 }
 
 export function* updateData({ payload: { layout } }) {
+  console.log('updateData');
   const { userName, tenant } = yield call(getUserInformation);
 
   try {
@@ -124,13 +125,13 @@ export function* updateData({ payload: { layout } }) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: error.message,
-      type: "error",
+      type: 'error',
     });
   }
 }
 
 export function* updateWizard({ payload: { state } }) {
-  const { userName, tenant } = call(getUserInformation);
+  const { userName, tenant } = yield call(getUserInformation);
   const wizardContext = yield select(store => getStoreContent(store, 'wizardContext'));
   try {
     const exportConfig = JSON.stringify({
@@ -144,7 +145,7 @@ export function* updateWizard({ payload: { state } }) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: error.message,
-      type: "error",
+      type: 'error',
     });
   }
 }

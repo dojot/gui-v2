@@ -1,15 +1,12 @@
 import React from 'react';
 
-import { SOURCE, WIDGET } from 'sharedComponents/Constants';
-import { makeValidate } from 'mui-rff';
 import { connect, useSelector } from 'react-redux';
 import { actions as dashboardActions } from 'Redux/dashboard';
 import { getWizardContext } from 'Selectors/dashboardSelector';
+import { SOURCE, WIDGET, TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import { generateScheme } from 'sharedComponents/Utils';
 import { v4 as uuidv4 } from 'uuid';
-import * as Yup from 'yup';
 
-import { TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import { useMap } from '../../wizard/hooks';
 import {
   Attributes,
@@ -19,7 +16,9 @@ import {
   generalValidates,
   attrValidates,
 } from '../../wizard/Steps';
-import Selector from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
+import Selector, {
+  selectorValidates,
+} from '../../wizard/Steps/Selector/OriginSelector/OriginSelector';
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [
@@ -56,30 +55,14 @@ const MapWizard = ({
     toDashboard();
   };
 
-  // TODO: Put the schema in a better place
-  const schema = Yup.object().shape({
-    devices: Yup.object().when('selector', {
-      is: value => value === 0,
-      then: Yup.object().required(),
-      otherwise: Yup.object().default(null).nullable(),
-    }),
-    templates: Yup.object().when('selector', {
-      is: value => value === 1,
-      then: Yup.object().required(),
-      otherwise: Yup.object().default(null).nullable(),
-    }),
-  });
-
-  const selectorValidates = makeValidate(schema, error => {
-    return error.message;
-  });
-
   const initialState = {
     general: {
       name: '',
       description: '',
     },
     selector: SOURCE.DEVICE,
+    devices: {},
+    templates: {},
     attributes: {},
     filters: {
       filterType: '3',
@@ -96,7 +79,7 @@ const MapWizard = ({
       headerTitle={title}
     >
       <General validate={generalValidates} name='general' />
-      <Selector validate={null} />
+      <Selector validate={selectorValidates} />
       <Attributes
         validate={attrValidates}
         name='attributes'

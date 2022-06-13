@@ -1,12 +1,12 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import { Grid, Divider, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { FormCheckBox } from 'sharedComponents/Checkbox';
-import { CircularIndeterminate } from 'sharedComponents/Loading';
-import { Paginator, usePaginator } from 'sharedComponents/Paginator';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { Template as TemplateService } from 'Services/index';
+import { FormCheckBox } from 'sharedComponents/Checkbox';
+import { CircularIndeterminate } from 'sharedComponents/Loading';
+import { Paginator, usePaginator } from 'sharedComponents/Paginator';
 
 import { useStyles } from './style';
 
@@ -81,7 +81,7 @@ const Templates = ({ validate, ...otherProps }) => {
                       format={item => (item ? item.id === id : false)}
                       parse={item => (item ? value : undefined)}
                       callback={() =>
-                        otherProps.form.mutators.clearAttributesByDevice(id, 'attributes')
+                        otherProps.form.mutators.clearAttributesByDevice(id, 'templates')
                       }
                     />
                   </ListItemIcon>
