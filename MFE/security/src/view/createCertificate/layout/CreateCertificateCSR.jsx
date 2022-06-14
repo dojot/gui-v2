@@ -99,8 +99,8 @@ const CreateCertificateCSR = ({
           <Typography align='right'>
             <Button
               className={classes.generateCertificateButton}
+              variant='contained'
               disabled={!csrPEM}
-              variant='outlined'
               color='primary'
               type='submit'
             >
