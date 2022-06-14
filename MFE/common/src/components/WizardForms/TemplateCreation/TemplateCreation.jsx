@@ -34,6 +34,7 @@ const TemplateCreation = ({
   handleDeleteAttr,
   handleUpdateAttr,
   endExtraComponent,
+  showRequiredHint,
 }) => {
   const { t } = useTranslation(['templateCreation', 'attrs']);
   const classes = useStyles();
@@ -50,6 +51,8 @@ const TemplateCreation = ({
         </Typography>
 
         <Typography variant='subtitle2'>{subtitle || t('subtitle')}</Typography>
+
+        {showRequiredHint && <Typography variant='subtitle2'>{t('requiredHint')}</Typography>}
       </Box>
 
       <Box marginBottom={2}>
@@ -68,6 +71,7 @@ const TemplateCreation = ({
               </InputAdornment>
             ) : null,
           }}
+          required
         />
       </Box>
 
@@ -89,14 +93,20 @@ const TemplateCreation = ({
             <TableRow>
               <TableCell>
                 <strong>{t('attrs:attrLabel.attrLabel')}</strong>
+                &nbsp;
+                <span>*</span>
               </TableCell>
 
               <TableCell>
                 <strong>{t('attrs:attrLabel.attrType')}</strong>
+                &nbsp;
+                <span>*</span>
               </TableCell>
 
               <TableCell>
                 <strong>{t('attrs:attrLabel.attrValueType')}</strong>
+                &nbsp;
+                <span>*</span>
               </TableCell>
 
               <TableCell>
@@ -232,6 +242,7 @@ TemplateCreation.propTypes = {
   attrs: PropTypes.array.isRequired,
   templateLabel: PropTypes.string.isRequired,
   endExtraComponent: PropTypes.node,
+  showRequiredHint: PropTypes.bool,
   setTemplateLabel: PropTypes.func.isRequired,
   handleCreateAttr: PropTypes.func.isRequired,
   handleDeleteAttr: PropTypes.func.isRequired,
@@ -243,6 +254,7 @@ TemplateCreation.defaultProps = {
   title: '',
   subtitle: '',
   endExtraComponent: null,
+  showRequiredHint: true,
 };
 
 export default TemplateCreation;
