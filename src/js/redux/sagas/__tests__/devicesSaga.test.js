@@ -17,7 +17,6 @@ import {
   handleDeleteMultipleDevices,
   handleEditDevice,
   handleFavoriteDevice,
-  handleFavoriteMultipleDevices,
   handleGetDeviceById,
   handleGetDevices,
   watchCreateDevice,
@@ -25,7 +24,6 @@ import {
   watchDeleteMultipleDevices,
   watchEditDevice,
   watchFavoriteDevice,
-  watchFavoriteMultipleDevices,
   watchGetDeviceById,
   watchGetDevices,
 } from '../devicesSaga';
@@ -265,12 +263,14 @@ describe('devicesSaga', () => {
       .run();
   });
 
-  it('should favorite a device', async () => {
+  it('should add device to favorites', async () => {
     const action = actions.favoriteDevice({
       deviceId: fakeDevice.id,
     });
 
     const apiRequest = matchers.call.fn(Device.favoriteDevices);
+
+    const apiResponse = { favoriteDevices: true };
 
     const getCurrentPageCall = matchers.call.fn(getCurrentDevicesPageAgain);
 
@@ -280,7 +280,7 @@ describe('devicesSaga', () => {
 
     return expectSaga(handleFavoriteDevice, action)
       .provide([
-        [apiRequest, null],
+        [apiRequest, apiResponse],
         [getCurrentPageCall, null],
         [getUserInformationCall, userInformation],
       ])
@@ -288,6 +288,37 @@ describe('devicesSaga', () => {
       .put(
         successActions.showSuccessToast({
           i18nMessage: 'favoriteDevice',
+        }),
+      )
+      .put(loadingActions.removeLoading(constants.FAVORITE_DEVICE))
+      .run();
+  });
+
+  it('should remove device of favorites', async () => {
+    const action = actions.favoriteDevice({
+      deviceId: fakeDevice.id,
+    });
+
+    const apiRequest = matchers.call.fn(Device.favoriteDevices);
+
+    const apiResponse = { favoriteDevices: false };
+
+    const getCurrentPageCall = matchers.call.fn(getCurrentDevicesPageAgain);
+
+    const getUserInformationCall = matchers.call.fn(getUserInformation);
+
+    const userInformation = { userName: 'admin', tenant: 'admin' };
+
+    return expectSaga(handleFavoriteDevice, action)
+      .provide([
+        [apiRequest, apiResponse],
+        [getCurrentPageCall, null],
+        [getUserInformationCall, userInformation],
+      ])
+      .put(loadingActions.addLoading(constants.FAVORITE_DEVICE))
+      .put(
+        successActions.showSuccessToast({
+          i18nMessage: 'removedFavoriteDevice',
         }),
       )
       .put(loadingActions.removeLoading(constants.FAVORITE_DEVICE))
@@ -318,62 +349,6 @@ describe('devicesSaga', () => {
         }),
       )
       .put(loadingActions.removeLoading(constants.FAVORITE_DEVICE))
-      .run();
-  });
-
-  it('should favorite multiple devices', async () => {
-    const action = actions.favoriteMultipleDevices({
-      deviceIdArray: [fakeDevice.id],
-    });
-
-    const apiRequest = matchers.call.fn(Device.favoriteDevices);
-
-    const getCurrentPageCall = matchers.call.fn(getCurrentDevicesPageAgain);
-
-    const getUserInformationCall = matchers.call.fn(getUserInformation);
-
-    const userInformation = { userName: 'admin', tenant: 'admin' };
-
-    return expectSaga(handleFavoriteMultipleDevices, action)
-      .provide([
-        [apiRequest, null],
-        [getCurrentPageCall, null],
-        [getUserInformationCall, userInformation],
-      ])
-      .put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES))
-      .put(
-        successActions.showSuccessToast({
-          i18nMessage: 'favoriteMultipleDevices',
-        }),
-      )
-      .put(loadingActions.removeLoading(constants.FAVORITE_MULTIPLE_DEVICES))
-      .run();
-  });
-
-  it('should handle errors if fails to favorite multiple devices', async () => {
-    const action = actions.favoriteMultipleDevices({
-      deviceIdArray: [fakeDevice.id],
-    });
-
-    const apiRequest = matchers.call.fn(Device.favoriteDevices);
-
-    const getUserInformationCall = matchers.call.fn(getUserInformation);
-
-    const userInformation = { userName: 'admin', tenant: 'admin' };
-
-    return expectSaga(handleFavoriteMultipleDevices, action)
-      .provide([
-        [apiRequest, throwError(new Error('Failed'))],
-        [getUserInformationCall, userInformation],
-      ])
-      .put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES))
-      .put(
-        errorActions.addError({
-          message: 'Failed',
-          i18nMessage: 'favoriteMultipleDevices',
-        }),
-      )
-      .put(loadingActions.removeLoading(constants.FAVORITE_MULTIPLE_DEVICES))
       .run();
   });
 
@@ -519,14 +494,6 @@ describe('devicesSaga', () => {
     return testSaga(watchFavoriteDevice)
       .next()
       .takeLatest(constants.FAVORITE_DEVICE, handleFavoriteDevice)
-      .next()
-      .isDone();
-  });
-
-  it('should watch for an action to favorite multiple devices', async () => {
-    return testSaga(watchFavoriteMultipleDevices)
-      .next()
-      .takeLatest(constants.FAVORITE_MULTIPLE_DEVICES, handleFavoriteMultipleDevices)
       .next()
       .isDone();
   });

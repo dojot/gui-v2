@@ -1,6 +1,11 @@
 import { Map } from 'immutable';
 
-import { devicesSelector, paginationControlSelector, deviceDataSelector } from '../devicesSelector';
+import {
+  devicesSelector,
+  favoriteDeviceSelector,
+  paginationControlSelector,
+  deviceDataSelector,
+} from '../devicesSelector';
 
 describe('Devices selector tests', () => {
   const fakeDeviceData = {
@@ -11,6 +16,8 @@ describe('Devices selector tests', () => {
 
   const fakeDevices = [fakeDeviceData];
 
+  const fakeFavoriteDevices = [{ label: 'device', id: 'id123' }];
+
   const fakePaginationControl = {
     totalPages: 150,
     currentPage: 27,
@@ -20,6 +27,7 @@ describe('Devices selector tests', () => {
   const fakeState = {
     devices: Map({
       devices: fakeDevices,
+      favoriteDevices: fakeFavoriteDevices,
       deviceData: fakeDeviceData,
       paginationControl: fakePaginationControl,
     }),
@@ -27,6 +35,10 @@ describe('Devices selector tests', () => {
 
   it('should return the list of devices', () => {
     expect(devicesSelector(fakeState)).toEqual(fakeDevices);
+  });
+
+  it('should return the list of favorite devices', () => {
+    expect(favoriteDeviceSelector(fakeState)).toEqual(fakeFavoriteDevices);
   });
 
   it('should return the data of a device', () => {

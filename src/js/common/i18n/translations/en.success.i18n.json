@@ -4,7 +4,7 @@
     "deleteDevice": "Device deleted",
     "deleteMultipleDevices": "All devices were deleted",
     "favoriteDevice": "Device added to favorites",
-    "favoriteMultipleDevices": "All devices were added to favorites",
+    "removedFavoriteDevice": "Device removed from favorites",
     "editDevice": "Device edited",
     "createDevice": "Device created",
 
@@ -24,7 +24,6 @@
     "deleteMultipleCertificates": "All certificates were deleted",
     "disassociateDevice": "Certificate disassociated from device",
     "associateDevice": "Certificate associated with the device",
-    "createCertificate": "Certificate created",
 
     "deleteCertificationAuthority": "CA deletes",
     "deleteMultipleCertificationAuthorities": "All CAs were deleted",

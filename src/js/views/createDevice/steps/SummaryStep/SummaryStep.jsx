@@ -199,9 +199,9 @@ const SummaryStep = ({
   );
 };
 
-SumaryStep.defaultProps = {
+SummaryStep.defaultProps = {
   deviceId: null,
-}
+};
 
 SummaryStep.propTypes = {
   deviceName: PropTypes.string.isRequired,

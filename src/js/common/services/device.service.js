@@ -12,6 +12,7 @@ export const getDevicesList = (page, filter) => {
             label
             created
             updated
+            favorite
             certificate {
               fingerprint
             }
@@ -31,6 +32,23 @@ export const getDevicesList = (page, filter) => {
     variables: JSON.stringify({
       page,
       filter,
+    }),
+  });
+};
+
+export const getFavoriteDevicesList = (user, tenant) => {
+  return protectAPI({
+    query: `
+      query getFavoriteDevicesList($user: String!, $tenant: String!) {
+        getFavoriteDevicesList(user: $user, tenant: $tenant) {
+          id
+          label
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      user,
+      tenant,
     }),
   });
 };
@@ -73,29 +91,31 @@ export const getDeviceById = deviceId => {
   });
 };
 
-export const deleteDevices = deviceIds => {
+export const deleteDevices = (deviceIds, userName, tenant) => {
   return protectAPI({
     query: `
-      mutation deleteDevices($deviceIds: [String]!) {
-        deleteDevices(deviceIds: $deviceIds)
+      mutation deleteDevices($deviceIds: [String]!, $userName: String!, $tenant: String!) {
+        deleteDevices(deviceIds: $deviceIds, userName: $userName, tenant: $tenant)
       }
     `,
     variables: JSON.stringify({
       deviceIds,
+      userName,
+      tenant,
     }),
   });
 };
 
-export const favoriteDevices = ({ deviceIds, user, tenant }) => {
+export const favoriteDevices = ({ deviceIds, userName, tenant }) => {
   return protectAPI({
     query: `
-      mutation favoriteDevices($deviceIds: [String]!, $user: String, $tenant: String!) {
-        favoriteDevices(deviceIds: $deviceIds, user: $user, tenant: $tenant)
+      mutation favoriteDevices($deviceIds: [String]!, $userName: String!, $tenant: String!) {
+        favoriteDevices(deviceIds: $deviceIds, userName: $userName, tenant: $tenant)
       }
     `,
     variables: JSON.stringify({
       deviceIds,
-      user,
+      userName,
       tenant,
     }),
   });

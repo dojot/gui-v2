@@ -49,6 +49,27 @@ export function* handleGetDevices(action) {
   }
 }
 
+export function* handleGetFavoriteDevicesList() {
+  try {
+    yield put(loadingActions.addLoading(constants.GET_FAVORITE_DEVICES));
+    const { userName, tenant } = yield call(getUserInformation);
+    const { getFavoriteDevicesList } = yield call(Device.getFavoriteDevicesList, userName, tenant);
+    if (getFavoriteDevicesList) {
+      yield put(actions.updateDevices({ favoriteDevices: getFavoriteDevicesList }));
+    }
+  } catch (e) {
+    yield put(actions.updateDevices({ favoriteDevices: [] }));
+    yield put(
+      errorActions.addError({
+        message: e.message,
+        i18nMessage: 'getFavoriteDevices',
+      }),
+    );
+  } finally {
+    yield put(loadingActions.removeLoading(constants.GET_FAVORITE_DEVICES));
+  }
+}
+
 export function* handleGetDeviceById(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_DEVICE_BY_ID));
@@ -71,8 +92,9 @@ export function* handleGetDeviceById(action) {
 export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
+    const { userName, tenant } = yield call(getUserInformation);
     const { deviceId, successCallback, shouldGetCurrentPageAgain } = action.payload;
-    yield call(Device.deleteDevices, [deviceId]);
+    yield call(Device.deleteDevices, [deviceId], userName, tenant);
     if (successCallback) yield call(successCallback);
     if (shouldGetCurrentPageAgain) yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteDevice' }));
@@ -91,8 +113,9 @@ export function* handleDeleteDevice(action) {
 export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
+    const { userName, tenant } = yield call(getUserInformation);
     const { deviceIdArray } = action.payload;
-    yield call(Device.deleteDevices, deviceIdArray);
+    yield call(Device.deleteDevices, deviceIdArray, userName, tenant);
     yield call(getCurrentDevicesPageAgain);
     yield put(successActions.showSuccessToast({ i18nMessage: 'deleteMultipleDevices' }));
   } catch (e) {
@@ -110,11 +133,19 @@ export function* handleDeleteMultipleDevices(action) {
 export function* handleFavoriteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
-    const { deviceId } = action.payload;
     const { userName, tenant } = yield call(getUserInformation);
-    yield call(Device.favoriteDevices, { deviceIds: [deviceId], user: userName, tenant });
-    yield call(getCurrentDevicesPageAgain);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteDevice' }));
+    const { deviceId } = action.payload;
+    const { favoriteDevices } = yield call(Device.favoriteDevices, {
+      deviceIds: [deviceId],
+      userName,
+      tenant,
+    });
+
+    if (favoriteDevices) {
+      yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteDevice' }));
+    } else {
+      yield put(successActions.showSuccessToast({ i18nMessage: 'removedFavoriteDevice' }));
+    }
   } catch (e) {
     yield put(
       errorActions.addError({
@@ -124,26 +155,6 @@ export function* handleFavoriteDevice(action) {
     );
   } finally {
     yield put(loadingActions.removeLoading(constants.FAVORITE_DEVICE));
-  }
-}
-
-export function* handleFavoriteMultipleDevices(action) {
-  try {
-    yield put(loadingActions.addLoading(constants.FAVORITE_MULTIPLE_DEVICES));
-    const { deviceIdArray } = action.payload;
-    const { userName, tenant } = yield call(getUserInformation);
-    yield call(Device.favoriteDevices, { deviceIds: deviceIdArray, user: userName, tenant });
-    yield call(getCurrentDevicesPageAgain);
-    yield put(successActions.showSuccessToast({ i18nMessage: 'favoriteMultipleDevices' }));
-  } catch (e) {
-    yield put(
-      errorActions.addError({
-        message: e.message,
-        i18nMessage: 'favoriteMultipleDevices',
-      }),
-    );
-  } finally {
-    yield put(loadingActions.removeLoading(constants.FAVORITE_MULTIPLE_DEVICES));
   }
 }
 
@@ -189,6 +200,10 @@ export function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
 
+export function* watchGetFavoriteDevices() {
+  yield takeLatest(constants.GET_FAVORITE_DEVICES, handleGetFavoriteDevicesList);
+}
+
 export function* watchGetDeviceById() {
   yield takeLatest(constants.GET_DEVICE_BY_ID, handleGetDeviceById);
 }
@@ -205,10 +220,6 @@ export function* watchFavoriteDevice() {
   yield takeLatest(constants.FAVORITE_DEVICE, handleFavoriteDevice);
 }
 
-export function* watchFavoriteMultipleDevices() {
-  yield takeLatest(constants.FAVORITE_MULTIPLE_DEVICES, handleFavoriteMultipleDevices);
-}
-
 export function* watchEditDevice() {
   yield takeLatest(constants.EDIT_DEVICE, handleEditDevice);
 }
@@ -219,11 +230,11 @@ export function* watchCreateDevice() {
 
 export const deviceSaga = [
   fork(watchGetDevices),
+  fork(watchGetFavoriteDevices),
   fork(watchGetDeviceById),
   fork(watchDeleteDevice),
   fork(watchDeleteMultipleDevices),
   fork(watchFavoriteDevice),
-  fork(watchFavoriteMultipleDevices),
   fork(watchEditDevice),
   fork(watchCreateDevice),
 ];

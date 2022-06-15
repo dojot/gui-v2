@@ -53,24 +53,21 @@ const Cards = ({
                 headerTitle={<Typography className={classes.cardTitle}>{device.label}</Typography>}
                 footer={
                   <>
-                    {false && (
-                      // TODO: Show again when you can favorite devices
-                      <Tooltip
-                        title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
-                        placement='top'
-                        arrow
-                      >
-                        <div>
-                          <IconButton onClick={handleFavoriteThisDevice} size='small' disabled>
-                            {device.favorite ? (
-                              <Star style={{ color: '#F1B44C' }} />
-                            ) : (
-                              <StarBorderOutlined />
-                            )}
-                          </IconButton>
-                        </div>
-                      </Tooltip>
-                    )}
+                    <Tooltip
+                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                      placement='top'
+                      arrow
+                    >
+                      <div>
+                        <IconButton onClick={handleFavoriteThisDevice} size='small'>
+                          {device.favorite ? (
+                            <Star style={{ color: '#F1B44C' }} />
+                          ) : (
+                            <StarBorderOutlined />
+                          )}
+                        </IconButton>
+                      </div>
+                    </Tooltip>
 
                     <Tooltip
                       title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}

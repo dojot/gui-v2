@@ -5,6 +5,11 @@ export const devicesSelector = createSelector(
   map => map.get('devices'),
 );
 
+export const favoriteDeviceSelector = createSelector(
+  state => state.devices,
+  map => map.get('favoriteDevices'),
+);
+
 export const paginationControlSelector = createSelector(
   state => state.devices,
   map => map.get('paginationControl'),
