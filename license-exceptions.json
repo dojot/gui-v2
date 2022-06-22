@@ -21,6 +21,9 @@
     "type-fest@0.11.0": {
       "reason": "MIT and/or CC0-1.0 are compatible with Apache-2.0"
     },
+    "type-fest@0.20.2": {
+      "reason": "MIT and/or CC0-1.0 are compatible with Apache-2.0"
+    },
     "pako@1.0.11": {
       "reason": "MIT and Zlib are compatible with Apache-2.0"
     },
@@ -36,7 +39,13 @@
     "tslib@2.1.0": {
       "reason": "0BSD is public-domain-equivalent license, so it should be compatible with Apache-2.0."
     },
+    "tslib@2.4.0": {
+      "reason": "0BSD is public-domain-equivalent license, so it should be compatible with Apache-2.0."
+    },
     "axe-core@4.1.2": {
+      "reason": "It's licensed under the MPL-2.0 License and no code changes, what makes compatible with Apache-2.0"
+    },
+    "axe-core@4.3.5": {
       "reason": "It's licensed under the MPL-2.0 License and no code changes, what makes compatible with Apache-2.0"
     },
     "css-select@1.2.0": {
@@ -49,6 +58,12 @@
       "reason": "It's licensed under the CC-BY-4.0 License, appropriately labelled in package.json and no code changes, what makes compatible with Apache-2.0"
     },
     "caniuse-lite@1.0.30001191": {
+      "reason": "It's licensed under the CC-BY-4.0 License, appropriately labelled in package.json and no code changes, what makes compatible with Apache-2.0"
+    },
+    "caniuse-lite@1.0.30001271": {
+      "reason": "It's licensed under the CC-BY-4.0 License, appropriately labelled in package.json and no code changes, what makes compatible with Apache-2.0"
+    },
+    "caniuse-lite@1.0.30001303": {
       "reason": "It's licensed under the CC-BY-4.0 License, appropriately labelled in package.json and no code changes, what makes compatible with Apache-2.0"
     },
     "pngquant-bin@6.0.0": {
