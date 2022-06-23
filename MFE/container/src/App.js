@@ -5,13 +5,13 @@ import { Switch, Router, Route, Redirect } from 'react-router-dom';
 import { EVENT } from 'sharedComponents/Constants';
 import { EventContainer } from 'sharedComponents/Containers';
 import { PrivateRoute } from 'sharedComponents/PrivateRoute';
-import GlobalToast  from './stateComponents/GlobalToast'
+import GlobalToast from './stateComponents/GlobalToast';
 
 import { getMenuState, setMenuState } from './adapters/localStorage/config.localStorage';
 import { history } from './history';
 import useWindowEventListener from './hooks/useWindowEvent';
 import i18n from './i18n';
-import LoginView from './view/login';
+import TenantForm from './view/tenantForm';
 import PageNotFound from './view/pageNotFound';
 
 const redirectToHome = () => <Redirect to={{ pathname: '/home' }} />;
@@ -61,7 +61,7 @@ export default () => {
       <Router history={history}>
         <Switch>
           <Route exact path='/' component={redirectToHome} />
-          <Route path='/login' component={LoginView} />
+          <Route path='/login' component={TenantForm} />
           <PrivateRoute path='/home' component={Home} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/dashboard' component={Dashboard} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/devices' component={Devices} attrs={{ isMenuOpen }} />

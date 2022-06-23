@@ -19,7 +19,8 @@ const devConfig = {
             Utils: path.resolve("./src/utils"),
             Constants: path.resolve("./src/constants"),
             Hooks: path.resolve("./src/hooks"),
-            Services: path.resolve("./src/adapters/services")
+            Services: path.resolve("./src/adapters/services"),
+            APIs: path.resolve('./src/adapters/api'),
         },
         extensions: [".js", ".jsx"],
     },
