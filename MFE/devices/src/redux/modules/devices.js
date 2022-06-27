@@ -3,10 +3,10 @@ import { createAction, handleActions } from 'redux-actions';
 
 const GET_DEVICES = 'app/devices/GET_DEVICES';
 const GET_DEVICE_BY_ID = 'app/devices/GET_DEVICE_BY_ID';
+const GET_FAVORITE_DEVICES = 'app/devices/GET_FAVORITE_DEVICES';
 const UPDATE_DEVICES = 'app/devices/UPDATE_DEVICES';
 const FAVORITE_DEVICE = 'app/devices/FAVORITE_DEVICE';
 const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
-const FAVORITE_MULTIPLE_DEVICES = 'app/devices/FAVORITE_MULTIPLE_DEVICES';
 const DELETE_MULTIPLE_DEVICES = 'app/devices/DELETE_MULTIPLE_DEVICES';
 const EDIT_DEVICE = 'app/devices/EDIT_DEVICE';
 const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
@@ -14,10 +14,10 @@ const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
 export const constants = {
   GET_DEVICES,
   GET_DEVICE_BY_ID,
+  GET_FAVORITE_DEVICES,
   UPDATE_DEVICES,
   FAVORITE_DEVICE,
   DELETE_DEVICE,
-  FAVORITE_MULTIPLE_DEVICES,
   DELETE_MULTIPLE_DEVICES,
   EDIT_DEVICE,
   CREATE_DEVICE,
@@ -32,10 +32,13 @@ export const getDeviceById = createAction(GET_DEVICE_BY_ID, payload => ({
   deviceId: payload.deviceId,
 }));
 
+export const getFavoriteDevices = createAction(GET_FAVORITE_DEVICES, () => ({}));
+
 export const updateDevices = createAction(UPDATE_DEVICES, payload => {
   const actionPayload = {
     devices: payload.devices,
     deviceData: payload.deviceData,
+    favoriteDevices: payload.favoriteDevices,
     paginationControl: payload.paginationControl,
   };
 
@@ -56,10 +59,6 @@ export const deleteDevice = createAction(DELETE_DEVICE, payload => ({
   deviceId: payload.deviceId,
   successCallback: payload.successCallback,
   shouldGetCurrentPageAgain: payload.shouldGetCurrentPageAgain ?? true,
-}));
-
-export const favoriteMultipleDevices = createAction(FAVORITE_MULTIPLE_DEVICES, payload => ({
-  deviceIdArray: payload.deviceIdArray,
 }));
 
 export const deleteMultipleDevices = createAction(DELETE_MULTIPLE_DEVICES, payload => ({
@@ -85,10 +84,10 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
 export const actions = {
   getDevices,
   getDeviceById,
+  getFavoriteDevices,
   updateDevices,
   favoriteDevice,
   deleteDevice,
-  favoriteMultipleDevices,
   deleteMultipleDevices,
   editDevice,
   createDevice,
@@ -104,6 +103,7 @@ export const initialState = () => {
   return Map({
     devices: [],
     deviceData: null,
+    favoriteDevices: [],
     paginationControl: {
       totalPages: 0,
       currentPage: 1,
