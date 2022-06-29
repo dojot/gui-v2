@@ -18,12 +18,9 @@ import {
   Star,
 } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
-import { actions as deviceActions, constants } from '../redux/modules/devices';
+import { actions as deviceActions } from '../redux/modules/devices';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import useWindowEventListener from '../hooks/useWindowEvent';
-import { getMenuState } from '../adapters/localStorage/config.localStorage';
-
 import { ViewContainer } from 'sharedComponents/Containers';
 import useStyles from './style';
 import { favoriteDeviceSelector } from '../../../devices/src/redux/selectors/devicesSelector';

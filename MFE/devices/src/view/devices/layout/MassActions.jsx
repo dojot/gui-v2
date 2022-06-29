@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, Box, Typography, Button, IconButton } from '@material-ui/core';
-import { VerifiedUser, Close, Delete, Star } from '@material-ui/icons';
+import { VerifiedUser, Close, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
