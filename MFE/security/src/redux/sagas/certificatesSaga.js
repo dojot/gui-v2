@@ -236,7 +236,7 @@ export function* handleRegisterExternalCertificate(action) {
       certificateChain,
     );
     yield put(actions.getNewGeneratedCertificate({ certificateData: registerExternalCertificate }));
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "createCertificate", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "addedCertificate", type: "success", });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
