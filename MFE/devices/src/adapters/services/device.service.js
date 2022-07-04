@@ -73,15 +73,17 @@ export const getDeviceById = deviceId => {
   });
 };
 
-export const deleteDevices = deviceIds => {
+export const deleteDevices = (deviceIds, userName, tenant) => {
   return protectAPI({
     query: `
-      mutation deleteDevices($deviceIds: [String]!) {
-        deleteDevices(deviceIds: $deviceIds)
+      mutation deleteDevices($deviceIds: [String]!, $userName: String!, $tenant: String!) {
+        deleteDevices(deviceIds: $deviceIds, userName: $userName, tenant: $tenant)
       }
     `,
     variables: JSON.stringify({
       deviceIds,
+      userName,
+      tenant
     }),
   });
 };
