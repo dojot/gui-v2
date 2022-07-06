@@ -33,7 +33,7 @@
     "associateDevice": "Não foi possível associar o certificado com este dispositivo",
     "createCertificate": "Não foi possível criar o certificado",
     "getCertificateByFingerprint": "Não foi possível obter o certificado pelo fingerprint",
-    "addedCertificate": "Não foi possível adicionar o Certificado",
+    "addedCertificate": "Não foi possível adicionar o certificado",
 
     "getCertificationAuthorities": "Não foi possível obter as CAs",
     "deleteCertificationAuthority": "Não foi possível excluir esta CA",
