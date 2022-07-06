@@ -4,8 +4,8 @@ import { Box, TextField, Typography, Button } from '@material-ui/core';
 import { CollapsibleList } from 'sharedComponents/CollapsibleList';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { CheckCircle } from '@material-ui/icons';
 
-import GeneratedCertificateResume from './GeneratedCertificateResume';
 import useStyles from './style';
 
 const CreateCertificateCA = ({
@@ -72,8 +72,11 @@ const CreateCertificateCA = ({
           </Typography>
         </Box>
       ) : (
-        <Box padding={4}>
-          <GeneratedCertificateResume certificateData={certificateData} />
+        <Box display='flex' alignItems='center' padding={4}>
+          <CheckCircle className={classes.successIcon} />
+          <Typography className={classes.successMessage}>
+            {t('createCertificateCA.certificateAddedMessage')}
+          </Typography>
         </Box>
       )}
     </CollapsibleList>
