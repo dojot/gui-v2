@@ -143,7 +143,6 @@ const SecurityStep = ({
 
           <Tooltip
             placement='left'
-            classes={{ tooltip: classes.tooltip }}
             title={t(
               canCreateCertificate
                 ? 'securityStep.createCertificateWithOneClick'

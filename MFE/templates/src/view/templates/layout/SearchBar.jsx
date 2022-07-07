@@ -1,6 +1,13 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@material-ui/core';
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Tooltip,
+} from '@material-ui/core';
 import { ViewModule, List, Search, Add, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -102,14 +109,16 @@ const SearchBar = ({ viewMode, lastSearchedText, handleSearchTemplate, handleCha
         />
       </Box>
 
-      <IconButton
-        className={classes.createButton}
-        color='primary'
-        aria-label='Create'
-        onClick={handleCreateTemplate}
-      >
-        <Add />
-      </IconButton>
+      <Tooltip placement='left' title={t('createNewTemplate')} arrow>
+        <IconButton
+          className={classes.createButton}
+          color='primary'
+          aria-label={t('createNewTemplate')}
+          onClick={handleCreateTemplate}
+        >
+          <Add />
+        </IconButton>
+      </Tooltip>
     </Box>
   );
 };
