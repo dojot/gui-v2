@@ -27,7 +27,8 @@
     "subTitle": "Possibilita utilizar a sua infraestrutura de chaves publicas já existente.",
     "inputDataLabel": "Insira os dados em ordem: do certificado do dispositivo até a CA raiz. De acordo com o grau de importância.",
     "inputPlaceholder": "Cole o conteúdo do arquivo .pem aqui.",
-    "generateCertificate": "Gerar Certificado"
+    "generateCertificate": "Gerar Certificado",
+    "certificateAddedMessage": "O certificado foi adicionado com sucesso e já poder ser utilizado!"
   },
   "generatedCertificateResume": {
     "certificateAndKeysTitle": "Para conectar um dispositivo você precisa fazer download dos seguintes itens:",
