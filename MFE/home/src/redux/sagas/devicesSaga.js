@@ -93,8 +93,7 @@ export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
     const { deviceId, successCallback, shouldGetCurrentPageAgain } = action.payload;
-    const { userName, tenant } = yield call(getUserInformation);
-    yield call(Device.deleteDevices, [deviceId], userName, tenant);
+    yield call(Device.deleteDevices, [deviceId]);
     if (successCallback) yield call(successCallback);
     if (shouldGetCurrentPageAgain) yield call(getCurrentDevicesPageAgain);
     dispatchEvent(EVENT.GLOBAL_TOAST, {
@@ -118,8 +117,7 @@ export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
     const { deviceIdArray } = action.payload;
-    const { userName, tenant } = yield call(getUserInformation);
-    yield call(Device.deleteDevices, deviceIdArray, userName, tenant);
+    yield call(Device.deleteDevices, deviceIdArray);
     yield call(getCurrentDevicesPageAgain);
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
@@ -135,30 +133,6 @@ export function* handleDeleteMultipleDevices(action) {
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_DEVICES));
-  }
-}
-
-export function* handleFavoriteDevice(action) {
-  try {
-    yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
-    const { deviceId } = action.payload;
-    const { userName, tenant } = yield call(getUserInformation);
-    yield call(Device.favoriteDevices, { deviceIds: [deviceId], user: userName, tenant });
-    yield call(getCurrentDevicesPageAgain);
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      i18nMessage: 'favoriteDevice',
-      type: 'success',
-    });
-  } catch (e) {
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      message: e.message,
-      i18nMessage: 'favoriteDevice',
-      type: 'error',
-    });
-  } finally {
-    yield put(loadingActions.removeLoading(constants.FAVORITE_DEVICE));
   }
 }
 

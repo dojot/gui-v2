@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, Box, Typography, Button, IconButton } from '@material-ui/core';
-import { VerifiedUser, Close, Delete, Star } from '@material-ui/icons';
+import { VerifiedUser, Close, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +11,6 @@ const MassActions = ({
   handleHideMassActions,
   handleCreateCertificates,
   handleDeleteMultipleDevices,
-  handleFavoriteMultipleDevices,
 }) => {
   const { t } = useTranslation(['devices', 'common']);
   const classes = useMassActionsStyles();
@@ -22,21 +21,6 @@ const MassActions = ({
         <Grid item xs='auto'>
           <Typography className={classes.massActionsLabel}>{t('massActions')}</Typography>
         </Grid>
-
-        {false && (
-          // TODO: Show again when you can favorite devices
-          <Grid item xs='auto'>
-            <Button
-              className={classes.massActionsButton}
-              onClick={handleFavoriteMultipleDevices}
-              startIcon={<Star />}
-              variant='contained'
-              disabled
-            >
-              {t('favorite')}
-            </Button>
-          </Grid>
-        )}
 
         <Grid item xs='auto'>
           <Button
@@ -78,14 +62,12 @@ MassActions.propTypes = {
   handleHideMassActions: PropTypes.func,
   handleCreateCertificates: PropTypes.func,
   handleDeleteMultipleDevices: PropTypes.func,
-  handleFavoriteMultipleDevices: PropTypes.func,
 };
 
 MassActions.defaultProps = {
   handleHideMassActions: null,
   handleCreateCertificates: null,
   handleDeleteMultipleDevices: null,
-  handleFavoriteMultipleDevices: null,
 };
 
 export default MassActions;
