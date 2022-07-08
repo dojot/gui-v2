@@ -98,9 +98,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
                       variant='outlined'
                       disabled={otherProps.values[name].filterType !== '1'}
                     >
-                      <MenuItem value={0}>
-                        <em>&nbsp;</em>
-                      </MenuItem>
+                      <MenuItem value={0}>{t('filters.orderNotDefined')}</MenuItem>
                       <MenuItem value={1}>{t('filters.last minutes')}</MenuItem>
                       <MenuItem value={2}>{t('filters.last hours')}</MenuItem>
                       <MenuItem value={3}>{t('filters.last days')}</MenuItem>
