@@ -4,7 +4,7 @@
     "deleteDevice": "Device deleted",
     "deleteMultipleDevices": "All devices were deleted",
     "favoriteDevice": "Device added to favorites",
-    "favoriteMultipleDevices": "All devices were added to favorites",
+    "removedFavoriteDevice": "Device removed from favorites",
     "editDevice": "Device edited",
     "createDevice": "Device created",
 

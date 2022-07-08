@@ -27,7 +27,8 @@
     "subTitle": "Enables you to use your existing public key infrastructure.",
     "inputDataLabel": "Enter the data in order: from device certificate to root CA. According to the degree of importance.",
     "inputPlaceholder": "Paste the content of the .pem file here.",
-    "generateCertificate": "Generate certificate"
+    "generateCertificate": "Generate certificate",
+    "certificateAddedMessage": "The certificate was added with success and you can already use it!"
   },
   "generatedCertificateResume": {
     "certificateAndKeysTitle": "To connect a device you need to download the following items:",

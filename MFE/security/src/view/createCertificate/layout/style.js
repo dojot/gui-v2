@@ -29,4 +29,10 @@ export default makeStyles(theme => ({
     marginLeft: theme.spacing(1),
     width: 400,
   },
+  successIcon: {
+    color: theme.palette.success.main,
+  },
+  successMessage: {
+    marginLeft: 8,
+  },
 }));
