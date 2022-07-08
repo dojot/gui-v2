@@ -110,11 +110,6 @@ const Devices = () => {
         setSelectedDevices([]);
     };
 
-    const handleFavoriteMultipleDevices = () => {
-        dispatch(deviceActions.favoriteMultipleDevices({ deviceIdArray: selectedDevices }));
-        handleHideMassActions();
-    };
-
     const handleCreateCertificates = () => {
         history.push('/certificates');
     };
@@ -237,7 +232,6 @@ const Devices = () => {
                             handleHideMassActions={handleHideMassActions}
                             handleCreateCertificates={handleCreateCertificates}
                             handleDeleteMultipleDevices={handleDeleteMultipleDevices}
-                            handleFavoriteMultipleDevices={handleFavoriteMultipleDevices}
                         />
                     )}
 

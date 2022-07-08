@@ -1,6 +1,6 @@
-import { clearUserData, isAuthenticated, setUserData } from "../localStorage/login.localStorage";
+import { clearUserData, isAuthenticated, setUserData } from '../localStorage/login.localStorage';
 
-import { unprotectedAPI } from "./http.api";
+import { unprotectedAPI } from '../api';
 
 const GQL_USER_TOKEN = `
   mutation login($username: String, $passwd: String) {
@@ -29,7 +29,7 @@ export const login = async ({ user, password }) => {
   const response = await unprotectedAPI(getUserTokenQuery(user, password));
   // TODO treat this with i18n
   if (!response.login) {
-    throw new Error("Erro ao efetuar login");
+    throw new Error('Erro ao efetuar login');
   }
   setUserData(response.login.jwt);
   return isAuthenticated();
