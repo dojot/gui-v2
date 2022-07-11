@@ -66,6 +66,7 @@
     "order": "Order",
     "numberOfRecords": "Number Of Records",
     "select an option": "Select an option",
+    "orderNotDefined": "Order Not Defined",
     "last minutes": "Last minutes",
     "last hours": "Last hours",
     "last days": "Last days",
