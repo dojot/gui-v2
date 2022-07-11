@@ -32,6 +32,7 @@
     "associateDevice": "Could not associate the certificate with this device",
     "createCertificate": "Could not create a certificate",
     "getCertificateByFingerprint": "Could not get the certificate by fingerprint",
+    "addedCertificate": "Could not add the certificate",
 
     "getCertificationAuthorities": "Could not get CAs",
     "deleteCertificationAuthority": "Could not delete this CA",
