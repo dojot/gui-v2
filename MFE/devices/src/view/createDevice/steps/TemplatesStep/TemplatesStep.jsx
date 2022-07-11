@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 
-import { Box, IconButton, Typography } from '@material-ui/core';
+import { Box, IconButton, Typography, Tooltip } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -111,13 +111,16 @@ const TemplatesStep = ({
         <Box className={classes.header} marginBottom={2}>
           <Typography>{t('templatesStep.hint')}</Typography>
 
-          <IconButton
-            className={classes.headerButton}
-            onClick={handleCreateNewTemplate}
-            disabled={isCreatingTemplate}
-          >
-            <Add />
-          </IconButton>
+          <Tooltip placement='left' title={t('templatesStep.createNewTemplate')} arrow>
+            <IconButton
+              className={classes.headerButton}
+              disabled={isCreatingTemplate}
+              aria-label={t('templatesStep.createNewTemplate')}
+              onClick={handleCreateNewTemplate}
+            >
+              <Add />
+            </IconButton>
+          </Tooltip>
         </Box>
 
         {isCreatingTemplate ? (

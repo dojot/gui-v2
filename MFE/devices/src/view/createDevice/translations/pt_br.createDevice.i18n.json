@@ -13,7 +13,8 @@
     "hint": "Para começar, selecione na lista ou crie um modelo para o seu dispositivo!",
     "discardNewTemplate": "Descartar Modelo",
     "saveNewTemplate": "Salvar Modelo",
-    "emptyTemplateList": "Nenhum Modelo Encontrado"
+    "emptyTemplateList": "Nenhum Modelo Encontrado",
+    "createNewTemplate": "Criar Novo Modelo"
   },
   "attrsStep": {
     "hint": "Agora você pode definir os valores dos atributos estáticos para o seu dispositivo!",

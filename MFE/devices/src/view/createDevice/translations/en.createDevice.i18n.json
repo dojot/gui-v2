@@ -13,7 +13,8 @@
     "hint": "To get started, select a template in the list below or create a new one!",
     "discardNewTemplate": "Discard Template",
     "saveNewTemplate": "Save Template",
-    "emptyTemplateList": "No Template Found"
+    "emptyTemplateList": "No Template Found",
+    "createNewTemplate": "Create New Template"
   },
   "attrsStep": {
     "hint": "Now you can set static attribute values for your device!",
