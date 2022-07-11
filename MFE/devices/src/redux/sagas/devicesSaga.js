@@ -138,30 +138,6 @@ export function* handleDeleteMultipleDevices(action) {
   }
 }
 
-export function* handleFavoriteDevice(action) {
-  try {
-    yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
-    const { deviceId } = action.payload;
-    const { userName, tenant } = yield call(getUserInformation);
-    yield call(Device.favoriteDevices, { deviceIds: [deviceId], user: userName, tenant });
-    yield call(getCurrentDevicesPageAgain);
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      i18nMessage: 'favoriteDevice',
-      type: 'success',
-    });
-  } catch (e) {
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      message: e.message,
-      i18nMessage: 'favoriteDevice',
-      type: 'error',
-    });
-  } finally {
-    yield put(loadingActions.removeLoading(constants.FAVORITE_DEVICE));
-  }
-}
-
 export function* handleEditDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.EDIT_DEVICE));
