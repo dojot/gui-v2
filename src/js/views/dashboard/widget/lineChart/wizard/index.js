@@ -7,6 +7,7 @@ import { getWizardContext } from 'Selectors/dashboardSelector';
 import { generateScheme } from 'Utils';
 import { v4 as uuidv4 } from 'uuid';
 
+import { TEMPLATE_ATTR_VALUE_TYPES } from '../../../../../common/constants/templateAttrs';
 import useLine from '../../wizard/hooks/useLine';
 import {
   Attributes,
@@ -86,7 +87,10 @@ const LineWizard = ({
         validate={null}
         name='attributes'
         staticSupported={false}
-        acceptedTypes={['NUMBER']}
+        acceptedTypes={[
+          TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+          TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+        ]}
       />
       <Filters validate={null} name='filters' />
       <Summary />
