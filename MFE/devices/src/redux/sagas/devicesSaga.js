@@ -93,7 +93,8 @@ export function* handleDeleteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_DEVICE));
     const { deviceId, successCallback, shouldGetCurrentPageAgain } = action.payload;
-    yield call(Device.deleteDevices, [deviceId]);
+    const { userName, tenant } = yield call(getUserInformation);
+    yield call(Device.deleteDevices, [deviceId], userName, tenant);
     if (successCallback) yield call(successCallback);
     if (shouldGetCurrentPageAgain) yield call(getCurrentDevicesPageAgain);
     dispatchEvent(EVENT.GLOBAL_TOAST, {
@@ -117,7 +118,8 @@ export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
     const { deviceIdArray } = action.payload;
-    yield call(Device.deleteDevices, deviceIdArray);
+    const { userName, tenant } = yield call(getUserInformation);
+    yield call(Device.deleteDevices, deviceIdArray, userName, tenant);
     yield call(getCurrentDevicesPageAgain);
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
