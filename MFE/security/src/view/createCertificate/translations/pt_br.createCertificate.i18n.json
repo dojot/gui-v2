@@ -1,6 +1,6 @@
 {
   "headerTitle": "Novo Certificado",
-  "finishButton": "Finalizar",
+  "goToCertificatesButton": "Ir Para Certificados",
   "cancelButton": "Cancelar",
   "createOtherCertificate": "Criar Outro Certificado",
   "createCertificateOneClick": {
