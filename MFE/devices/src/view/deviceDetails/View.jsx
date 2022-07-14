@@ -63,8 +63,7 @@ const DeviceDetails = () => {
     }, [deviceData?.attrs]);
 
     const handleGoBack = () => {
-        if(history.length) history.goBack();
-        else history.push('/devices');
+        history.push('/devices');
     };
 
     const handleShowDeleteDeviceAlert = () => {
