@@ -36,12 +36,12 @@ const DataTable = ({
   const headCells = useMemo(
     () => [
       {
-        id: 'id',
-        label: t('dataTableHead.id'),
-      },
-      {
         id: 'label',
         label: t('dataTableHead.label'),
+      },
+      {
+        id: 'id',
+        label: t('dataTableHead.id'),
       },
       {
         id: 'attrsLength',
@@ -167,9 +167,9 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{template.id}</TableCell>
-
                     <TableCell className={classes.clickableCell}>{template.label}</TableCell>
+
+                    <TableCell className={classes.clickableCell}>{template.id}</TableCell>
 
                     <TableCell className={classes.clickableCell}>{attrsLength}</TableCell>
 
