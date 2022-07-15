@@ -12,6 +12,9 @@ export const useSummaryStepStyles = makeStyles(() => ({
   input: {
     width: '100%',
   },
+  deviceNameHint: {
+    fontSize: '18px',
+  },
   certificateData: {
     display: 'flex',
     alignItems: 'center',

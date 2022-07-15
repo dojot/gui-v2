@@ -15,7 +15,7 @@ import {
 import { Close } from '@material-ui/icons';
 import { CollapsibleList } from 'sharedComponents/CollapsibleList';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { useAttrTranslation } from 'sharedComponents/Hooks';
 import ActionButtons from '../../layout/ActionButtons';
@@ -64,7 +64,9 @@ const AttrsStep = ({
     <Box className={classes.container}>
       <Box className={classes.content}>
         <Box className={classes.header} marginBottom={2}>
-          <Typography>{t('attrsStep.hint')}</Typography>
+          <Typography className={classes.stepHint}>
+            <Trans t={t} i18nKey='attrsStep.hint' />
+          </Typography>
         </Box>
 
         <CollapsibleList

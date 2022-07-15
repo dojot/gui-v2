@@ -3,7 +3,7 @@ import React from 'react';
 import { Box, IconButton, InputAdornment, Link, TextField, Typography } from '@material-ui/core';
 import { Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { downloadTextFile } from 'sharedComponents/Utils';
 import ActionButtons from '../../layout/ActionButtons';
@@ -41,7 +41,9 @@ const SummaryStep = ({
 
         <Box marginBottom={3}>
           <Box marginBottom={1.5}>
-            <Typography>{t('summaryStep.deviceNameHint')}</Typography>
+            <Typography className={classes.deviceNameHint}>
+              <Trans t={t} i18nKey='summaryStep.deviceNameHint' />
+            </Typography>
           </Box>
 
           <TextField

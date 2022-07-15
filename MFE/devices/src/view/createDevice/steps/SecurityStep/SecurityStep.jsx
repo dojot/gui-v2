@@ -3,7 +3,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Box, CircularProgress, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { Add, Check } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useIsLoading } from 'sharedComponents/Hooks';
@@ -139,7 +139,9 @@ const SecurityStep = ({
     <Box className={classes.container}>
       <Box className={classes.content}>
         <Box className={classes.header} marginBottom={2}>
-          <Typography>{t('securityStep.hint')}</Typography>
+          <Typography className={classes.stepHint}>
+            <Trans t={t} i18nKey='securityStep.hint' />
+          </Typography>
 
           <Tooltip
             placement='left'

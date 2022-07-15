@@ -29,6 +29,9 @@ export const useTemplatesStepStyles = makeStyles(theme => ({
       color: theme.palette.primary.contrastText,
     },
   },
+  stepHint: {
+    fontSize: '18px',
+  },
   stepComponent: {
     flex: 1,
     display: 'flex',

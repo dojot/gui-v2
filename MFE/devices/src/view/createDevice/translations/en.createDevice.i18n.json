@@ -10,14 +10,14 @@
     "summary": "Summary"
   },
   "templatesStep": {
-    "hint": "To get started, select a template in the list below or create a new one!",
+    "hint": "To get started, <strong>select a template in the list below</strong> or <strong>create a new one</strong>!",
     "discardNewTemplate": "Discard Template",
     "saveNewTemplate": "Save Template",
     "emptyTemplateList": "No Template Found",
     "createNewTemplate": "Create New Template"
   },
   "attrsStep": {
-    "hint": "Now you can set static attribute values for your device!",
+    "hint": "Now you can <strong>set static attribute values</strong> for your device!",
     "staticAttrs": "Static Attributes ({{count}})",
     "dynamicAttrs": "Dynamic Attributes ({{count}})",
     "actuators": "Actuators ({{count}})",
@@ -29,7 +29,7 @@
     "noActuatorAttrs": "No actuator attribute to show"
   },
   "securityStep": {
-    "hint": "In this step you generate or select a certificate to make your device more secure.",
+    "hint": "In this step you can <strong>generate</strong> or <strong>select a certificate</strong> to make your device more secure.",
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
     "creationDate": "Creation",
@@ -49,7 +49,7 @@
   "summaryStep": {
     "title": "Review the templates, certificates and give a name to your device",
     "hint": "If you notice that something is missing, just go back, correct and continue!",
-    "deviceNameHint": "We're almost there, finally, give your device a name!",
+    "deviceNameHint": "We're almost there, finally, <strong>give your device a name!</strong>",
     "deviceNamePh": "Device Name",
     "templatesListTitle": "Selected Templates",
     "certificateAndKeysTitle": "Certificate and Keys",
