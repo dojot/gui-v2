@@ -34,7 +34,7 @@ const Manager = props => {
       case BAR+'':
         return t(['bar.title', 'Bar Chart']);
       case MAP+'':
-        return t(['map.title', 'Mapa']);
+        return t(['map.title', 'Map']);
       case TABLE+'':
         return t(['table.title', 'Table Chart']);
       default:
