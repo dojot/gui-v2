@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Box,
@@ -36,9 +36,15 @@ const AttrsStep = ({
 
   const { getAttrValueTypeTranslation } = useAttrTranslation();
 
-  const [isShowingStaticAttrs, setIsShowingStaticAttrs] = useState(true);
+  const [isShowingStaticAttrs, setIsShowingStaticAttrs] = useState(false);
   const [isShowingDynamicAttrs, setIsShowingDynamicAttrs] = useState(false);
   const [isShowingActuators, setIsShowingActuators] = useState(false);
+
+  useEffect(() => {
+    if (staticAttrs.length > 0) setIsShowingStaticAttrs(true);
+    if (dynamicAttrs.length > 0) setIsShowingDynamicAttrs(true);
+    if (actuatorAttrs.length > 0) setIsShowingActuators(true);
+  }, []);
 
   const handleToggleStaticAttrs = () => {
     setIsShowingStaticAttrs(isShowing => !isShowing);
