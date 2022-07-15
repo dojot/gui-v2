@@ -44,7 +44,7 @@ const AttrsStep = ({
     if (staticAttrs.length > 0) setIsShowingStaticAttrs(true);
     if (dynamicAttrs.length > 0) setIsShowingDynamicAttrs(true);
     if (actuatorAttrs.length > 0) setIsShowingActuators(true);
-  }, []);
+  }, [staticAttrs, dynamicAttrs, actuatorAttrs]);
 
   const handleToggleStaticAttrs = () => {
     setIsShowingStaticAttrs(isShowing => !isShowing);
