@@ -1,28 +1,35 @@
-import { login, getUserInformation, logout } from 'Utils/module/auth';
+import {
+  setUserInformation,
+  getUserInformation,
+  clearUserInformation,
+  isAuthenticated,
+} from 'Utils';
 
-describe('checking login', () => {
-  const jwtSample =
-    'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJBQk9MVkVadVZWV0VLdW5sRzQ1SnBjWUdyTEFSa1BKVCIsImlhdCI6MTYxMTMyMzQwMywiZXhwIjoxNjExMzIzODIzLCJwcm9maWxlIjoidXNlciIsImdyb3VwcyI6WzJdLCJ1c2VyaWQiOjIsImp0aSI6IjgwYzFjMDA5ZDI5OGNiMTM0OTg2NWRlYWE0YjI5NTEwIiwic2VydmljZSI6ImFkbWluIiwidXNlcm5hbWUiOiJ1c2VyX3Rlc3QifQ.sNoRKsIuZrrKWtnuG0WFQqg812he_cQBhJ67SPzCBOw';
+describe('auth utils', () => {
+  it('should verify if user does not have a session', () => {
+    const auth = isAuthenticated();
+    expect(auth).toEqual(false);
+  });
+
+  it('should verify if user has a session', () => {
+    setUserInformation({ tenant: 'admin', userName: 'user_test', profile: null });
+    const auth = isAuthenticated();
+    expect(auth).toEqual(true);
+  });
 
   it('should split the jwt token and save in localStorage', () => {
-    login(jwtSample);
+    setUserInformation({ tenant: 'admin', userName: 'user_test', profile: null });
     const { profile, tenant, userName } = getUserInformation();
-    const token = localStorage.getItem('TOKEN_KEY');
-    expect(profile).toEqual('user');
+    expect(profile).toEqual('null');
     expect(tenant).toEqual('admin');
     expect(userName).toEqual('user_test');
-    expect(token).toEqual(jwtSample);
   });
-});
 
-describe('checking logout', () => {
-  it('should remove user from localStorage', () => {
-    logout();
-    const { profile, tenant, userName } = getUserInformation();
-    const token = localStorage.getItem('TOKEN_KEY');
+  it('should remove user from sessionStorage', () => {
+    clearUserInformation();
+    const { userName, tenant, profile } = getUserInformation();
     expect(profile).toEqual(null);
     expect(tenant).toEqual(null);
     expect(userName).toEqual(null);
-    expect(token).toEqual(null);
   });
 });

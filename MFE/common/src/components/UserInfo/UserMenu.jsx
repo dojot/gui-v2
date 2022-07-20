@@ -11,7 +11,7 @@ import {
   ClickAwayListener,
   Switch,
 } from '@material-ui/core';
-import { BookmarkBorder, ExitToApp, Lock } from '@material-ui/icons';
+import { AccountCircle, BookmarkBorder, ExitToApp, Lock } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -20,6 +20,7 @@ import { useStyles } from './style';
 const UserMenu = ({
   tenant,
   version,
+  profile,
   anchorElement,
   isShowingUserMenu,
   isDarkModeActivated,
@@ -30,6 +31,10 @@ const UserMenu = ({
 }) => {
   const { t } = useTranslation('userInfo');
   const classes = useStyles();
+
+  const handleOpenProfileLink = () => {
+    window.open(profile, '_blank');
+  };
 
   return (
     <Popper
@@ -60,7 +65,7 @@ const UserMenu = ({
                   <ListItemText>{t('version', { version })}</ListItemText>
                 </ListItem>
 
-                <ListItem data-testid='darkMode'>
+                <ListItem data-testid='darkMode' divider>
                   <ListItemIcon className={classes.listItemIcon}>
                     <BookmarkBorder />
                   </ListItemIcon>
@@ -73,6 +78,18 @@ const UserMenu = ({
                     onChange={handleChangeTheme}
                     color='primary'
                   />
+                </ListItem>
+
+                <ListItem
+                  className={classes.clickableListItem}
+                  data-testid='profile'
+                  onClick={handleOpenProfileLink}
+                >
+                  <ListItemIcon className={classes.listItemIcon}>
+                    <AccountCircle />
+                  </ListItemIcon>
+
+                  <ListItemText>{t('profile')}</ListItemText>
                 </ListItem>
 
                 {false && (
@@ -114,6 +131,7 @@ const UserMenu = ({
 UserMenu.propTypes = {
   tenant: PropTypes.string.isRequired,
   version: PropTypes.string.isRequired,
+  profile: PropTypes.string.isRequired,
   anchorElement: PropTypes.object,
   isShowingUserMenu: PropTypes.bool,
   isDarkModeActivated: PropTypes.bool,

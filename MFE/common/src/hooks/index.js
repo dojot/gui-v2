@@ -8,3 +8,4 @@ export * from './useGetURLSearchParams';
 export * from './useTemplateCreationState';
 export * from './useCertificateComputedData';
 export * from './useWindowEvent';
+export * from './useCheckAuthentication';

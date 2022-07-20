@@ -5,14 +5,13 @@ import { ArrowDropDown, Language } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { getUserInformation, logout } from 'Utils';
+import { getUserInformation } from 'Utils';
 
 import { AlertDialog } from 'Components/Dialogs';
 import { useChangeLanguage, dispatchEvent } from 'Hooks';
 import LanguagesMenu from './LanguagesMenu';
 import { useStyles } from './style';
 import UserMenu from './UserMenu';
-import { LANGUAGE_KEYS } from '../../constants';
 
 const DEFAULT_USER_DATA = { userName: '', tenant: '', profile: '' };
 
@@ -27,7 +26,9 @@ export const UserInfo = () => {
   const switchLanguageButtonRef = useRef(null);
 
   const [isShowingUserMenu, setIsShowingUserMenu] = useState(false);
-  const [isDarkModeActivated, setIsDarkModeActivated] = (useState(localStorage.getItem("THEME") === 'dark'));
+  const [isDarkModeActivated, setIsDarkModeActivated] = useState(
+    localStorage.getItem('THEME') === 'dark',
+  );
   const [isShowingLogoutModal, setIsShowingLogoutModal] = useState(false);
   const [isShowingLanguagesMenu, setIsShowingLanguagesMenu] = useState(false);
 
@@ -70,13 +71,12 @@ export const UserInfo = () => {
   };
 
   const handleLogout = () => {
-    logout();
     history.push('/');
   };
 
-  const handleChangeTheme = ({ target: {checked} }) => {
-    dispatchEvent('CHANGE_THEME', checked)
-      localStorage.setItem('THEME', (checked ? 'dark' : 'light'));
+  const handleChangeTheme = ({ target: { checked } }) => {
+    dispatchEvent('CHANGE_THEME', checked);
+    localStorage.setItem('THEME', checked ? 'dark' : 'light');
     setIsDarkModeActivated(checked);
   };
 
@@ -106,6 +106,7 @@ export const UserInfo = () => {
       <UserMenu
         version={version}
         tenant={user.tenant}
+        profile={user.profile}
         anchorElement={menuButtonRef.current}
         isShowingUserMenu={isShowingUserMenu}
         isDarkModeActivated={isDarkModeActivated}

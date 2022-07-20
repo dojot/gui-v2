@@ -1,6 +1,7 @@
 {
   "tenant": "Tenant: {{tenant}}",
   "version": "Versão: {{version}}",
+  "profile": "Ver Perfil",
   "darkMode": "Modo Escuro",
   "changePassword": "Alterar Senha",
   "logout": "Sair",

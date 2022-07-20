@@ -2,7 +2,7 @@ import { expectSaga, testSaga } from 'redux-saga-test-plan';
 import * as matchers from 'redux-saga-test-plan/matchers';
 import { throwError } from 'redux-saga-test-plan/providers';
 import { Device } from 'Services';
-import { getUserInformation } from 'Utils';
+import { getUserInformation } from 'sharedComponents/Utils';
 
 import { constants, actions } from '../../modules/devices';
 import { actions as errorActions } from '../../modules/errors';

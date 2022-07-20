@@ -13,7 +13,7 @@ import {
 import { EVENT } from 'sharedComponents/Constants';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 
-import { getUserInformation } from '../../adapters/localStorage/login.localStorage';
+import { getUserInformation } from 'sharedComponents/Utils';
 import { Configuration, Device } from '../../adapters/services';
 import { actions as dashboardActions, constants as dashboardConstants } from '../modules/dashboard';
 
