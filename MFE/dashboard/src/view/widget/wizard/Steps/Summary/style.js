@@ -2,12 +2,11 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export const useStyles = makeStyles(theme => ({
   item: {
-    maxWidth: 700,
     width: '100%',
+    marginBottom: '16px',
   },
   root: {
     alignItems: 'center',
-    marginBottom: 52,
   },
   footer: {
     position: 'fixed',

@@ -43,7 +43,7 @@ const Filters = ({ validate, name, ...otherProps }) => {
     <Wizard.Page validate={validate}>
       <Grid container direction='column' className={classes.root}>
         <Grid item>
-          <h2>{t('filters.recover')}</h2>
+          <h2 className={classes.title}>{t('filters.recover')}</h2>
           <Divider />
         </Grid>
 

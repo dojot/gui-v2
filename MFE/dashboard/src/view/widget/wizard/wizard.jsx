@@ -87,7 +87,12 @@ const Wizard = ({ initialValues, ...props }) => {
       />
 
       <div className={classes.root}>
-        <Stepper activeStep={page} orientation='vertical' connector={<StepLine />}>
+        <Stepper
+          className={classes.stepper}
+          activeStep={page}
+          orientation='vertical'
+          connector={<StepLine />}
+        >
           {steps.map(({ label, key }) => (
             <Step key={key}>
               <StepLabel StepIconComponent={StepIcon}>
@@ -125,15 +130,19 @@ const Wizard = ({ initialValues, ...props }) => {
                 {React.cloneElement(activePage, { values, form }, null)}
 
                 <DevelopmentContainer>
-                  <pre>{JSON.stringify(values, null, 2)}</pre>
+                  <div className={classes.developmentContainer}>
+                    {JSON.stringify(values, null, 2)}
+                  </div>
                 </DevelopmentContainer>
               </div>
 
               <div className={classes.footer}>
                 <Button
+                  className={classes.footerButton}
                   type='button'
                   color='primary'
                   variant='text'
+                  size='large'
                   disableElevation
                   onClick={cancel}
                 >
@@ -143,9 +152,11 @@ const Wizard = ({ initialValues, ...props }) => {
                 <div>
                   {page > 0 && (
                     <Button
+                      className={classes.footerButton}
                       type='button'
                       color='primary'
                       variant='outlined'
+                      size='large'
                       disableElevation
                       onClick={previous}
                     >
@@ -153,16 +164,25 @@ const Wizard = ({ initialValues, ...props }) => {
                     </Button>
                   )}
                   {!isLastPage && (
-                    <Button type='submit' color='primary' variant='contained' disableElevation>
+                    <Button
+                      className={classes.footerButton}
+                      type='submit'
+                      size='large'
+                      color='primary'
+                      variant='contained'
+                      disableElevation
+                    >
                       {t('next')}
                     </Button>
                   )}
                   {isLastPage && (
                     <Button
+                      className={classes.footerButton}
                       type='submit'
                       disabled={submitting}
                       color='primary'
                       variant='contained'
+                      size='large'
                       disableElevation
                     >
                       {t('finish')}

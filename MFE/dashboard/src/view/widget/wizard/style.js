@@ -22,6 +22,10 @@ export default makeStyles(theme => ({
     display: 'flex',
     flex: 1,
     flexDirection: 'column',
+    width: '100%',
+    maxWidth: '1268px',
+    margin: '0 auto',
+    padding: '16px',
   },
   formContent: {
     display: 'flex',
@@ -30,11 +34,9 @@ export default makeStyles(theme => ({
   footer: {
     display: 'flex',
     justifyContent: 'space-between',
-    padding: '10px 0',
-
-    '& button': {
-      margin: '0 10px',
-    },
+  },
+  footerButton: {
+    marginLeft: '16px',
   },
   expanded: {
     marginLeft: 215,
@@ -49,5 +51,14 @@ export default makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
+  },
+  stepper: {
+    background: theme.palette.background.default,
+  },
+  developmentContainer: {
+    padding: '0 0 0 24px',
+    maxWidth: '400px',
+    wordBreak: 'break-all',
+    whiteSpace: 'pre-wrap',
   },
 }));

@@ -47,7 +47,6 @@ const SummaryStep = ({
           </Box>
 
           <TextField
-            className={classes.input}
             variant='outlined'
             value={deviceName}
             label={t('summaryStep.deviceNamePh')}
@@ -62,6 +61,7 @@ const SummaryStep = ({
               ) : null,
             }}
             required
+            fullWidth
           />
         </Box>
 
