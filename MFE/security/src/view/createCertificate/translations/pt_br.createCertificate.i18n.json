@@ -31,10 +31,11 @@
     "certificateAddedMessage": "O certificado foi adicionado com sucesso e já poder ser utilizado!"
   },
   "generatedCertificateResume": {
-    "certificateAndKeysTitle": "Para conectar um dispositivo você precisa fazer download dos seguintes itens:",
+    "certificateAndKeysTitle": "(<strong>Importante:</strong> as <strong>chaves não serão armazenadas,</strong> por isso é <strong>necessário baixá-las</strong>)",
     "certificate": "Certificado",
     "privateKey": "Chave Privada",
     "publicKey": "Chave Pública (opcional)",
-    "caCertificate": "Certificado de CA"
+    "caCertificate": "Certificado de CA",
+    "certificateAndKeys": "Certificado e chaves"
   }
 }
