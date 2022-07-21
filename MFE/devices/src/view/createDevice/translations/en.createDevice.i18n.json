@@ -57,6 +57,8 @@
     "certificate": "Certificate",
     "privateKey": "Private Key",
     "publicKey": "Public Key (Optional)",
-    "caCertificate": "CA Certificate"
+    "caCertificate": "CA Certificate",
+    "certificateAndKeysWarning": "(<strong>Important:</strong> the <strong>keys will not be stored</strong>, so it is <strong>necessary to download them</strong)",
+    "certificateAndKeys": "Certificate and keys"
   }
 }
