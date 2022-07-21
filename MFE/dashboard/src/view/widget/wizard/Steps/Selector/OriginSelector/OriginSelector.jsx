@@ -38,7 +38,7 @@ const TabPanel = props => {
       style={{ flex: 1 }}
       {...other}
     >
-      {value === index && <Box p={3}>{children}</Box>}
+      {value === index && <Box px={3}>{children}</Box>}
     </div>
   );
 };
