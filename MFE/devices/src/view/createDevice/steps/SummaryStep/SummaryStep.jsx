@@ -108,7 +108,7 @@ const SummaryStep = ({
               </Box>
             </Box>
 
-            {!!selectedCertificate?.certificateAndKeys && (
+            {!!selectedCertificate.certificateAndKeys && (
               <Box>
                 <Link
                   className={classes.certificateData}
@@ -122,7 +122,7 @@ const SummaryStep = ({
               </Box>
             )}
 
-            {!!selectedCertificate?.pem && (
+            {!!selectedCertificate.pem && (
               <Box>
                 <Link
                   className={classes.certificateData}
