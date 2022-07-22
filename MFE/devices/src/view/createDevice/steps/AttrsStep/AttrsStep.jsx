@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   Box,
@@ -15,7 +15,7 @@ import {
 import { Close } from '@material-ui/icons';
 import { CollapsibleList } from 'sharedComponents/CollapsibleList';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { useAttrTranslation } from 'sharedComponents/Hooks';
 import ActionButtons from '../../layout/ActionButtons';
@@ -36,9 +36,15 @@ const AttrsStep = ({
 
   const { getAttrValueTypeTranslation } = useAttrTranslation();
 
-  const [isShowingStaticAttrs, setIsShowingStaticAttrs] = useState(true);
+  const [isShowingStaticAttrs, setIsShowingStaticAttrs] = useState(false);
   const [isShowingDynamicAttrs, setIsShowingDynamicAttrs] = useState(false);
   const [isShowingActuators, setIsShowingActuators] = useState(false);
+
+  useEffect(() => {
+    if (staticAttrs.length > 0) setIsShowingStaticAttrs(true);
+    if (dynamicAttrs.length > 0) setIsShowingDynamicAttrs(true);
+    if (actuatorAttrs.length > 0) setIsShowingActuators(true);
+  }, [staticAttrs, dynamicAttrs, actuatorAttrs]);
 
   const handleToggleStaticAttrs = () => {
     setIsShowingStaticAttrs(isShowing => !isShowing);
@@ -64,7 +70,9 @@ const AttrsStep = ({
     <Box className={classes.container}>
       <Box className={classes.content}>
         <Box className={classes.header} marginBottom={2}>
-          <Typography>{t('attrsStep.hint')}</Typography>
+          <Typography className={classes.stepHint}>
+            <Trans t={t} i18nKey='attrsStep.hint' />
+          </Typography>
         </Box>
 
         <CollapsibleList

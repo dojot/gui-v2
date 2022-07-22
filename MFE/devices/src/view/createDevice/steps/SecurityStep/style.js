@@ -32,6 +32,9 @@ export const useSecurityStepStyles = makeStyles(theme => ({
       background: theme.palette.success.main,
     },
   },
+  stepHint: {
+    fontSize: '18px',
+  },
   stepComponent: {
     flex: 1,
     display: 'flex',

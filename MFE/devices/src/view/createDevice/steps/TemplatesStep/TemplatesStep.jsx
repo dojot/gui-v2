@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Box, IconButton, Typography, Tooltip } from '@material-ui/core';
 import { Add } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { TemplateCreation } from 'sharedComponents/WizardForms';
@@ -109,7 +109,9 @@ const TemplatesStep = ({
     <Box className={classes.container}>
       <Box className={classes.content}>
         <Box className={classes.header} marginBottom={2}>
-          <Typography>{t('templatesStep.hint')}</Typography>
+          <Typography className={classes.stepHint}>
+            {<Trans t={t} i18nKey='templatesStep.hint' />}
+          </Typography>
 
           <Tooltip placement='left' title={t('templatesStep.createNewTemplate')} arrow>
             <IconButton

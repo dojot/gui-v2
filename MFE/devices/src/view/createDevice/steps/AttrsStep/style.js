@@ -14,6 +14,9 @@ export const useAttrsStepStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  stepHint: {
+    fontSize: '18px',
+  },
   tableHead: {
     textTransform: 'uppercase',
     background: theme.palette.background.shade[500],
