@@ -23,7 +23,7 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import { ViewContainer } from 'sharedComponents/Containers';
 import useStyles from './style';
-import { favoriteDeviceSelector } from '../../../devices/src/redux/selectors/devicesSelector';
+import { favoriteDeviceSelector } from '../redux/selectors/devicesSelector';
 
 const Home = ({ isMenuOpen }) => {
   const { t } = useTranslation('home');
