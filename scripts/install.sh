@@ -1,3 +1,5 @@
+#!/bin/bash
+
 cd MFE
 
 cd common
