@@ -114,9 +114,9 @@ const CreateCertificate = () => {
                 variant='contained'
                 color='primary'
                 onClick={handleLeaveCertificateCreation}
-                className={classes.finishButton}
+                className={classes.goToCertificatesButton}
               >
-                {t('finishButton')}
+                {t('goToCertificatesButton')}
               </Button>
             </>
           ) : (
