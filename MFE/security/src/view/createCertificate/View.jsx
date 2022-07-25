@@ -33,8 +33,7 @@ const CreateCertificate = () => {
   }, [dispatch]);
 
   const handleLeaveCertificateCreation = () => {
-    if (history.length) history.goBack();
-    else history.push('/certificates');
+    history.push('/certificates');
   };
 
   const handleToggleContent = constant => () => {

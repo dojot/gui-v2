@@ -110,8 +110,10 @@ const EditDevice = () => {
   };
 
   const handleGoBack = () => {
-    if (history.length) history.goBack();
-    else history.push('/devices');
+    // That's not possible to use the location state or search to check if
+    // should return to /devices or /devices/{id}
+    // Since we use hash router, the state and query params don't work.
+    history.push('/devices');
   };
 
   const handleSetAttrValue = (attrId, value) => {

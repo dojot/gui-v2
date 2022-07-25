@@ -43,8 +43,7 @@ const CreateTemplate = () => {
   };
 
   const handleGoBack = () => {
-    if (history.length) history.goBack();
-    else history.push('/templates');
+    history.push('/templates');
   };
 
   const handleHideCancelModal = () => {

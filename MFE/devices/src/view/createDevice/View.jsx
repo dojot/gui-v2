@@ -83,8 +83,7 @@ const CreateDevice = () => {
   };
 
   const handleGoBack = () => {
-    if (history.length) history.goBack();
-    else history.push('/devices');
+    history.push('/devices');
   };
 
   const handleCreateService = () => {

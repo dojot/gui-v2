@@ -39,8 +39,7 @@ const CreateCertificationAuthority = () => {
   };
 
   const handleGoBack = () => {
-    if (history.length) history.goBack();
-    else history.push('/certification-authorities');
+    history.push('/certification-authorities');
   };
 
   const handleSaveCertificationAuthority = () => {

@@ -41,8 +41,7 @@ const EditTemplate = () => {
   } = useTemplateCreationState();
 
   const handleLeaveTemplateEdition = () => {
-    if (history.length) history.goBack();
-    else history.push('/templates');
+    history.push('/templates');
   };
 
   const handleEditTemplate = e => {
