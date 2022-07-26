@@ -50,4 +50,11 @@ export default makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  step: {
+    cursor: 'pointer',
+
+    '&:hover': {
+      opacity: 0.8,
+    },
+  },
 }));
