@@ -88,8 +88,8 @@ const Wizard = ({ initialValues, ...props }) => {
 
       <div className={classes.root}>
         <Stepper activeStep={page} orientation='vertical' connector={<StepLine />}>
-          {steps.map(({ label, key }) => (
-            <Step key={key}>
+          {steps.map(({ label, key }, index) => (
+            <Step key={key} onClick={() => index < page && setPage(index)}>
               <StepLabel StepIconComponent={StepIcon}>
                 {t([`dashboard:${label}`, 'undefined'])}
               </StepLabel>
