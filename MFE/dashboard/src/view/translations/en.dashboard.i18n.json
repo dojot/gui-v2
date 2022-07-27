@@ -2,8 +2,8 @@
   "dashboard": "Dashboard",
   "cancelDashboardCreationTitle": "Cancel Dashboard Creation",
   "cancelDashboardCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
-  "addWidget": "Add Widget",
-  "emptyMessage": "No Widget To Show",
+  "addWidget": "Add Panel",
+  "emptyMessage": "No Panel To Show",
   "steps": {
     "general": "General",
     "devices": "Devices",
@@ -11,7 +11,7 @@
     "filters": "Filters",
     "overview": "Overview"
   },
-  "widget": "Widget",
+  "widget": "Add Panel",
   "line": {
     "title": "Line Chart",
     "description": "This graph, by default, uses time as a measure of the abscissa"
@@ -79,7 +79,7 @@
     "name": "Name",
     "description": "Description",
     "nameRequired": "Name is required",
-    "enterName": "Enter the name of the widget"
+    "enterName": "Enter the name of the panel"
   },
   "summary": {
     "attributes": "Attributes"

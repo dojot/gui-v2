@@ -51,12 +51,12 @@ const DataTable = ({
   const headCells = useMemo(
     () => [
       {
-        id: 'id',
-        label: t('attrData.id'),
-      },
-      {
         id: 'label',
         label: t('attrData.label'),
+      },
+      {
+        id: 'id',
+        label: t('attrData.id'),
       },
       {
         id: 'type',
@@ -182,8 +182,8 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell>{attr.id}</TableCell>
                     <TableCell>{attr.label}</TableCell>
+                    <TableCell>{attr.id}</TableCell>
                     <TableCell>{attrTypeTranslation}</TableCell>
                     <TableCell>{valueTypeTranslation}</TableCell>
                     <TableCell>{attr.staticValue}</TableCell>

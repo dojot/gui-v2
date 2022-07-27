@@ -2,8 +2,8 @@
   "dashboard": "Dashboard",
   "cancelDashboardCreationTitle": "Cancelar Criação de Dashboard",
   "cancelDashboardCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!",
-  "addWidget": "Adicionar Widget",
-  "emptyMessage": "Nenhum Widget Para Exibir",
+  "addWidget": "Adicionar Painel",
+  "emptyMessage": "Nenhum Painel Para Exibir",
   "steps": {
     "general": "Geral",
     "devices": "Dispositivos",
@@ -11,7 +11,7 @@
     "filters": "Filtros",
     "overview": "Resumo"
   },
-  "widget": "Widget",
+  "widget": "Adicionar Painel",
   "line": {
     "title": "Gráfico de Linha",
     "description": "Esse gráfico, por padrão, utiliza o tempo como medida da abscissa"
@@ -80,7 +80,7 @@
     "name": "Nome",
     "description": "Descrição",
     "nameRequired": "Nome é obrigatório",
-    "enterName": "Insira o nome do widget"
+    "enterName": "Insira o nome do painel"
   },
   "summary": {
     "attributes": "Atributos"

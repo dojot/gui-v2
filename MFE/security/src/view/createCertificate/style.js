@@ -24,7 +24,7 @@ export default makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'flex-end',
   },
-  finishButton: {
+  goToCertificatesButton: {
     marginLeft: theme.spacing(2),
   },
 }));

@@ -33,8 +33,7 @@ const CreateCertificate = () => {
   }, [dispatch]);
 
   const handleLeaveCertificateCreation = () => {
-    if (history.length) history.goBack();
-    else history.push('/certificates');
+    history.push('/certificates');
   };
 
   const handleToggleContent = constant => () => {
@@ -115,9 +114,9 @@ const CreateCertificate = () => {
                 variant='contained'
                 color='primary'
                 onClick={handleLeaveCertificateCreation}
-                className={classes.finishButton}
+                className={classes.goToCertificatesButton}
               >
-                {t('finishButton')}
+                {t('goToCertificatesButton')}
               </Button>
             </>
           ) : (
