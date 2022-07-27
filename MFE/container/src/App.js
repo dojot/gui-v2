@@ -13,7 +13,6 @@ import useWindowEventListener from './hooks/useWindowEvent';
 import i18n from './i18n';
 import TenantForm from './view/tenantForm';
 import PageNotFound from './view/pageNotFound';
-import Logout from './view/logout/View';
 
 const redirectToHome = () => <Redirect to={{ pathname: '/home' }} />;
 
@@ -63,7 +62,6 @@ export default () => {
         <Switch>
           <Route exact path='/' component={redirectToHome} />
           <Route path='/login' component={TenantForm} />
-          <Route path='/logout' component={Logout} />
           <PrivateRoute path='/home' component={Home} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/dashboard' component={Dashboard} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/devices' component={Devices} attrs={{ isMenuOpen }} />

@@ -5,7 +5,7 @@ import { ArrowDropDown, Language } from '@material-ui/icons';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import { getUserInformation } from 'Utils';
+import { getUserInformation, clearUserInformation, redirectToLogout } from 'Utils';
 
 import { AlertDialog } from 'Components/Dialogs';
 import { useChangeLanguage, dispatchEvent } from 'Hooks';
@@ -71,7 +71,8 @@ export const UserInfo = () => {
   };
 
   const handleLogout = () => {
-    history.push('/logout');
+    clearUserInformation();
+    redirectToLogout('/v2/#/login');
   };
 
   const handleChangeTheme = ({ target: { checked } }) => {
