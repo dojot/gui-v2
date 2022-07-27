@@ -71,7 +71,7 @@ export const UserInfo = () => {
   };
 
   const handleLogout = () => {
-    history.push('/');
+    history.push('/logout');
   };
 
   const handleChangeTheme = ({ target: { checked } }) => {
