@@ -5,7 +5,6 @@ import {
   Checkbox,
   Chip,
   IconButton,
-  Link,
   Paper,
   Table,
   TableBody,
@@ -21,9 +20,9 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { CopyTextToClipboardButton } from 'sharedComponents/CopyTextToClipboardButton';
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER } from 'sharedComponents/Constants';
+import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCertificateComputedData } from 'sharedComponents/Hooks';
-import { getComparator } from 'sharedComponents/Utils';
+import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -36,7 +35,7 @@ const DataTable = ({
   handleSelectCertificate,
   handleSetCertificateOptionsMenu,
 }) => {
-  const { t } = useTranslation('certificates');
+  const { t } = useTranslation(['certificates', 'common']);
   const classes = useDataTableStyles();
 
   const handleGetCertificateComputedData = useCertificateComputedData();
@@ -158,13 +157,10 @@ const DataTable = ({
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(certificate => {
                 const isSelected = selectedCertificates.indexOf(certificate.fingerprint) !== -1;
+                const isNew = isSomeHoursAgo(certificate.createdAt, NEW_CHIP_HOURS_AGO);
 
-                const {
-                  statusText,
-                  statusColor,
-                  validityInitialDate,
-                  validityFinalDate,
-                } = handleGetCertificateComputedData(certificate.validity);
+                const { statusText, statusColor, validityInitialDate, validityFinalDate } =
+                  handleGetCertificateComputedData(certificate.validity);
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(certificate.fingerprint);
@@ -204,7 +200,18 @@ const DataTable = ({
                         >
                           <div className={classes.truncatedText}>{certificate.fingerprint}</div>
                         </Tooltip>
+
                         <CopyTextToClipboardButton textToCopy={certificate.fingerprint} />
+
+                        {isNew && (
+                          <Box ml={0.5}>
+                            <Chip
+                              style={{ background: '#34C38F', color: 'white' }}
+                              label={t('common:new')}
+                              size='small'
+                            />
+                          </Box>
+                        )}
                       </Box>
                     </TableCell>
 

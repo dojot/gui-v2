@@ -6,6 +6,8 @@ import { DataCard } from 'sharedComponents/Cards';
 import { Link as RouterLink } from 'react-router-dom';
 import { VerifiedUserOutlined } from '@material-ui/icons';
 import { useCardsStyles } from './style';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
+import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCertificateComputedData } from 'sharedComponents/Hooks';
 import { useTranslation } from 'react-i18next';
 
@@ -19,12 +21,10 @@ const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
     <Box padding={2}>
       <Grid spacing={2} container>
         {certificates.map(certificate => {
-          const {
-            statusText,
-            statusColor,
-            validityInitialDate,
-            validityFinalDate,
-          } = handleGetCertificateComputedData(certificate.validity);
+          const isNew = isSomeHoursAgo(certificate.createdAt, NEW_CHIP_HOURS_AGO);
+
+          const { statusText, statusColor, validityInitialDate, validityFinalDate } =
+            handleGetCertificateComputedData(certificate.validity);
 
           const handleShowOptionsMenu = e => {
             e.stopPropagation();
@@ -42,6 +42,15 @@ const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
                 headerIcon={<VerifiedUserOutlined className={classes.cardIcon} />}
                 headerTitle={
                   <Typography className={classes.cardTitle}>{certificate.fingerprint}</Typography>
+                }
+                footer={
+                  isNew ? (
+                    <Chip
+                      style={{ background: '#34C38F', color: 'white' }}
+                      label={t('common:new')}
+                      size='small'
+                    />
+                  ) : null
                 }
               >
                 <Box marginBottom={1}>
