@@ -165,7 +165,20 @@ export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
     const { label, templates, attrs, fingerprint, successCallback } = action.payload;
-    yield call(Device.createDevice, { label, templates, attrs, fingerprint });
+    const { createDevice } = yield call(Device.createDevice, {
+      label,
+      templates,
+      attrs,
+      fingerprint,
+    });
+    if (createDevice && Array.isArray(createDevice)) {
+      const [createdDevice] = createDevice;
+      yield put(
+        actions.updateDevices({
+          latestDevice: { id: createdDevice.id, label },
+        }),
+      );
+    }
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'createDevice',

@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 
 import {
+  Box,
   Checkbox,
+  Chip,
   IconButton,
   Paper,
   Table,
@@ -25,6 +27,7 @@ const DataTable = ({
   order,
   orderBy,
   devices,
+  latestDevice,
   selectedDevices,
   setOrder,
   setOrderBy,
@@ -33,7 +36,7 @@ const DataTable = ({
   handleFavoriteDevice,
   handleSetDeviceOptionsMenu,
 }) => {
-  const { t } = useTranslation('devices');
+  const { t } = useTranslation(['devices', 'common']);
   const classes = useDataTableStyles();
 
   const headCells = useMemo(
@@ -207,7 +210,20 @@ const DataTable = ({
                       </Tooltip>
                     </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{device.label}</TableCell>
+                    <TableCell className={classes.clickableCell}>
+                      <Box mr={1} component='span'>
+                        {device.label}
+                      </Box>
+
+                      {latestDevice?.id === device.id && (
+                        <Chip
+                          style={{ background: '#34C38F', color: 'white' }}
+                          label={t('common:new')}
+                          size='small'
+                        />
+                      )}
+                    </TableCell>
+
                     <TableCell className={classes.clickableCell}>{device.id}</TableCell>
                     <TableCell className={classes.clickableCell}>
                       {device.attrs?.length || 0}
@@ -246,6 +262,7 @@ DataTable.propTypes = {
   order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
   orderBy: PropTypes.string.isRequired,
   devices: PropTypes.array.isRequired,
+  latestDevice: PropTypes.object,
   selectedDevices: PropTypes.array.isRequired,
   setOrder: PropTypes.func.isRequired,
   setOrderBy: PropTypes.func.isRequired,

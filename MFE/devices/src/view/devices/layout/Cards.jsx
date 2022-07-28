@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Box, Grid, IconButton, Tooltip, Typography } from '@material-ui/core';
+import { Box, Chip, Grid, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { Check, Close, DevicesOther, Star, StarBorderOutlined } from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -11,6 +11,7 @@ import { useCardsStyles } from './style';
 
 const Cards = ({
   devices,
+  latestDevice,
   handleClickDevice,
   handleFavoriteDevice,
   handleSetDeviceOptionsMenu,
@@ -101,11 +102,21 @@ const Cards = ({
                 </Box>
 
                 {!!lastUpdate && (
-                  <Box>
+                  <Box marginBottom={1}>
                     <Typography variant='body2'>
                       <strong>{moment(lastUpdate).format('L LTS')}</strong>
                     </Typography>
                     <Typography variant='body2'>{t('cardData.updated')}</Typography>
+                  </Box>
+                )}
+
+                {latestDevice?.id === device.id && (
+                  <Box>
+                    <Chip
+                      style={{ background: '#34C38F', color: 'white' }}
+                      label={t('common:new')}
+                      size='small'
+                    />
                   </Box>
                 )}
               </DataCard>
@@ -119,6 +130,7 @@ const Cards = ({
 
 Cards.propTypes = {
   devices: PropTypes.array,
+  latestDevice: PropTypes.object,
   handleClickDevice: PropTypes.func,
   handleFavoriteDevice: PropTypes.func,
   handleSetDeviceOptionsMenu: PropTypes.func,

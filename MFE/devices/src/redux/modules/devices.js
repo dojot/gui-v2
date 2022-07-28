@@ -38,6 +38,7 @@ export const updateDevices = createAction(UPDATE_DEVICES, payload => {
   const actionPayload = {
     devices: payload.devices,
     deviceData: payload.deviceData,
+    latestDevice: payload.latestDevice,
     favoriteDevices: payload.favoriteDevices,
     paginationControl: payload.paginationControl,
   };
@@ -104,6 +105,7 @@ export const initialState = () => {
     devices: [],
     deviceData: null,
     favoriteDevices: [],
+    latestDevice: null,
     paginationControl: {
       totalPages: 0,
       currentPage: 1,
