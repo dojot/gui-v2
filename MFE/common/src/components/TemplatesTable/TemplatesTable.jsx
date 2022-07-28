@@ -12,14 +12,17 @@ import {
   CircularProgress,
   IconButton,
   Box,
+  Chip,
 } from '@material-ui/core';
 import { Close, Search } from '@material-ui/icons';
 import { DataTableHead } from 'Components/DataTable';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { useDebounce } from '../../hooks';
 import Pagination from './Pagination';
+import { isSomeHoursAgo } from 'Utils';
+import { useDebounce } from '../../hooks';
+import { NEW_CHIP_HOURS_AGO } from 'Constants';
 import { useTemplatesTableStyles } from './style';
 
 const TemplatesTable = ({
@@ -173,6 +176,7 @@ const TemplatesTable = ({
           {templates.map(template => {
             const isSelected = !!selectedTemplates[template.id];
             const attrsLength = template.attrs?.length || 0;
+            const isNew = isSomeHoursAgo(template.created, NEW_CHIP_HOURS_AGO);
 
             const handleSelectThisTemplate = () => {
               handleSelectTemplate(template);
@@ -196,7 +200,19 @@ const TemplatesTable = ({
                   />
                 </TableCell>
 
-                <TableCell className={classes.clickableCell}>{template.label}</TableCell>
+                <TableCell className={classes.clickableCell}>
+                  <Box mr={isNew ? 1 : 0} component='span'>
+                    {template.label}
+                  </Box>
+
+                  {isNew && (
+                    <Chip
+                      style={{ background: '#34C38F', color: 'white' }}
+                      label={t('common:new')}
+                      size='small'
+                    />
+                  )}
+                </TableCell>
 
                 <TableCell className={classes.clickableCell} colSpan='2'>
                   {attrsLength}

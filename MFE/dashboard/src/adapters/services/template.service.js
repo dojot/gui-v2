@@ -10,6 +10,7 @@ export const getTemplatesList = (page, filter) => {
         templates {
           id
           label
+          created
           attrs {
             id
             type
@@ -37,6 +38,7 @@ export const getTemplateById = templateId => {
       getTemplateById(templateId: $templateId) {
         id
         label
+        created
         attrs {
           id
           type
