@@ -45,13 +45,7 @@ const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
                   </Typography>
                 }
                 footer={
-                  isNew ? (
-                    <Chip
-                      style={{ background: '#34C38F', color: 'white' }}
-                      label={t('common:new')}
-                      size='small'
-                    />
-                  ) : null
+                  isNew ? <Chip color='primary' label={t('common:new')} size='small' /> : null
                 }
                 onOptionsClick={handleShowOptionsMenu}
               >

@@ -171,13 +171,7 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
                           {device.label}
                         </Box>
 
-                        {isNew && (
-                          <Chip
-                            style={{ background: '#34C38F', color: 'white' }}
-                            label={t('common:new')}
-                            size='small'
-                          />
-                        )}
+                        {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
                       </TableCell>
 
                       <TableCell>{device.id}</TableCell>

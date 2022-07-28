@@ -205,11 +205,7 @@ const DataTable = ({
 
                         {isNew && (
                           <Box ml={0.5}>
-                            <Chip
-                              style={{ background: '#34C38F', color: 'white' }}
-                              label={t('common:new')}
-                              size='small'
-                            />
+                            <Chip color='primary' label={t('common:new')} size='small' />
                           </Box>
                         )}
                       </Box>

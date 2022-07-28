@@ -56,13 +56,7 @@ const Cards = ({
                 headerTitle={<Typography className={classes.cardTitle}>{device.label}</Typography>}
                 footer={
                   <Box className={classes.cardFooter} display='flex' alignItems='center'>
-                    {isNew && (
-                      <Chip
-                        style={{ background: '#34C38F', color: 'white' }}
-                        label={t('common:new')}
-                        size='small'
-                      />
-                    )}
+                    {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
 
                     <Tooltip
                       title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}

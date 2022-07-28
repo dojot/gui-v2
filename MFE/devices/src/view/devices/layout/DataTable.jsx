@@ -215,13 +215,7 @@ const DataTable = ({
                         {device.label}
                       </Box>
 
-                      {isNew && (
-                        <Chip
-                          style={{ background: '#34C38F', color: 'white' }}
-                          label={t('common:new')}
-                          size='small'
-                        />
-                      )}
+                      {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>{device.id}</TableCell>
