@@ -19,8 +19,3 @@ export const deviceDataSelector = createSelector(
   state => state.devices,
   map => map.get('deviceData'),
 );
-
-export const latestDeviceSelector = createSelector(
-  state => state.devices,
-  map => map.get('latestDevice'),
-);

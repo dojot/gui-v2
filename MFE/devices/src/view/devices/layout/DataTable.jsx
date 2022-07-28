@@ -19,15 +19,14 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER } from 'sharedComponents/Constants';
-import { getComparator } from 'sharedComponents/Utils';
+import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
   order,
   orderBy,
   devices,
-  latestDevice,
   selectedDevices,
   setOrder,
   setOrderBy,
@@ -156,6 +155,7 @@ const DataTable = ({
                 const lastUpdate = device.updated || device.created;
                 const isSelected = selectedDevices.indexOf(device.id) !== -1;
                 const hasCertificate = !!device.certificate?.fingerprint;
+                const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
 
                 const handleClickInThisDevice = () => {
                   handleClickDevice(device);
@@ -211,11 +211,11 @@ const DataTable = ({
                     </TableCell>
 
                     <TableCell className={classes.clickableCell}>
-                      <Box mr={1} component='span'>
+                      <Box mr={isNew ? 1 : 0} component='span'>
                         {device.label}
                       </Box>
 
-                      {latestDevice?.id === device.id && (
+                      {isNew && (
                         <Chip
                           style={{ background: '#34C38F', color: 'white' }}
                           label={t('common:new')}
@@ -262,7 +262,6 @@ DataTable.propTypes = {
   order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
   orderBy: PropTypes.string.isRequired,
   devices: PropTypes.array.isRequired,
-  latestDevice: PropTypes.object,
   selectedDevices: PropTypes.array.isRequired,
   setOrder: PropTypes.func.isRequired,
   setOrderBy: PropTypes.func.isRequired,

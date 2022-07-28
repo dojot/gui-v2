@@ -17,11 +17,7 @@ import {
 } from 'sharedComponents/Constants';
 import { useIsLoading, usePersistentState, useSearchParamState } from 'sharedComponents/Hooks';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
-import {
-  devicesSelector,
-  latestDeviceSelector,
-  paginationControlSelector,
-} from '../../redux/selectors/devicesSelector';
+import { devicesSelector, paginationControlSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from 'sharedComponents/Containers';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
@@ -39,7 +35,6 @@ const Devices = () => {
   const classes = useStyles();
 
   const devices = useSelector(devicesSelector);
-  const latestDevice = useSelector(latestDeviceSelector);
   const isLoadingDevices = useIsLoading(constants.GET_DEVICES);
   const { totalPages } = useSelector(paginationControlSelector);
 
@@ -250,7 +245,6 @@ const Devices = () => {
                     order={order}
                     orderBy={orderBy}
                     devices={devices}
-                    latestDevice={latestDevice}
                     selectedDevices={selectedDevices}
                     setOrder={setOrder}
                     setOrderBy={setOrderBy}
@@ -266,7 +260,6 @@ const Devices = () => {
                     page={page}
                     devices={devices}
                     rowsPerPage={rowsPerPage}
-                    latestDevice={latestDevice}
                     handleClickDevice={handleClickDevice}
                     handleFavoriteDevice={handleFavoriteDevice}
                     handleSetDeviceOptionsMenu={setDeviceOptionsMenu}
