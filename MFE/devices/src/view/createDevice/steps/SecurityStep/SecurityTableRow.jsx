@@ -15,6 +15,7 @@ const SecurityTableRow = ({
   expirationDate,
   isNew,
   isSelected,
+  disableFingerprintCopy,
   handleSelectCertificate,
 }) => {
   const { t } = useTranslation(['createDevice', 'common']);
@@ -48,7 +49,7 @@ const SecurityTableRow = ({
           >
             <div className={classes.truncatedText}>{fingerprint}</div>
           </Tooltip>
-          {isNew ? null : <CopyTextToClipboardButton textToCopy={fingerprint} />}
+          {disableFingerprintCopy ? null : <CopyTextToClipboardButton textToCopy={fingerprint} />}
         </Box>
       </TableCell>
 
@@ -84,12 +85,14 @@ SecurityTableRow.propTypes = {
   expirationDate: PropTypes.string.isRequired,
   isNew: PropTypes.bool,
   isSelected: PropTypes.bool.isRequired,
+  disableFingerprintCopy: PropTypes.bool,
   handleSelectCertificate: PropTypes.func,
 };
 
 SecurityTableRow.defaultProps = {
   isNew: false,
   handleSelectCertificate: null,
+  disableFingerprintCopy: false,
 };
 
 export default SecurityTableRow;

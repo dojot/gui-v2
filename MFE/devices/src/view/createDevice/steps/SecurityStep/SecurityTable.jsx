@@ -12,6 +12,8 @@ import {
 } from '@material-ui/core';
 import { Delete } from '@material-ui/icons';
 import { DataTableHead } from 'sharedComponents/DataTable';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
+import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -86,6 +88,7 @@ const SecurityTable = ({
               <SecurityTableRow
                 isNew
                 isSelected
+                disableFingerprintCopy
                 subjectDN={certificateDetails.subjectDN}
                 fingerprint={certificateDetails.fingerprint}
                 creationDate={certificateDetails.validity.notBefore}
@@ -96,6 +99,7 @@ const SecurityTable = ({
             <TableBody>
               {certificates.map(cert => {
                 const isSelected = selectedCertificate?.fingerprint === cert.fingerprint;
+                const isNew = isSomeHoursAgo(cert.createdAt, NEW_CHIP_HOURS_AGO);
 
                 const handleSelectThisCertificate = () => {
                   if (isSelected) setSelectedCertificate({});
@@ -105,6 +109,7 @@ const SecurityTable = ({
                 return (
                   <SecurityTableRow
                     key={cert.fingerprint}
+                    isNew={isNew}
                     isSelected={isSelected}
                     subjectDN={cert.subjectDN}
                     fingerprint={cert.fingerprint}

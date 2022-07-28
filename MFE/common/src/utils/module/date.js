@@ -8,6 +8,7 @@ export const formatToISO = date => {
 };
 
 export const isSomeHoursAgo = (date, numberOfHoursAgo = 1) => {
+  if (!date) return false;
   const xHoursAgo = moment().subtract(numberOfHoursAgo, 'h');
   return moment(date).isSameOrAfter(xHoursAgo);
 };

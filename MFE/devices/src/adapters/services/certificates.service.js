@@ -49,6 +49,7 @@ export const getCertificate = (page, filter, id) => {
             subjectDN
             fingerprint
             pem
+            createdAt
             validity {
               notBefore
               notAfter
