@@ -19,9 +19,9 @@ import { useTranslation } from 'react-i18next';
 
 import { CopyTextToClipboardButton } from 'sharedComponents/CopyTextToClipboardButton';
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER } from 'sharedComponents/Constants';
+import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCertificateComputedData } from 'sharedComponents/Hooks';
-import { getComparator } from 'sharedComponents/Utils';
+import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -34,7 +34,7 @@ const DataTable = ({
   handleSetOptionsMenu,
   handleSelectCertificationAuthority,
 }) => {
-  const { t } = useTranslation('certificationAuthorities');
+  const { t } = useTranslation(['certificationAuthorities', 'common']);
   const classes = useDataTableStyles();
 
   const handleGetCertificateComputedData = useCertificateComputedData();
@@ -149,13 +149,10 @@ const DataTable = ({
               .map(certificationAuthority => {
                 const { caFingerprint, validity } = certificationAuthority;
                 const isSelected = selectedCertificationAuthorities.indexOf(caFingerprint) !== -1;
+                const isNew = isSomeHoursAgo(certificationAuthority.createdAt, NEW_CHIP_HOURS_AGO);
 
-                const {
-                  statusColor,
-                  statusText,
-                  validityFinalDate,
-                  validityInitialDate,
-                } = handleGetCertificateComputedData(validity);
+                const { statusColor, statusText, validityFinalDate, validityInitialDate } =
+                  handleGetCertificateComputedData(validity);
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(caFingerprint);
@@ -197,9 +194,20 @@ const DataTable = ({
                             {certificationAuthority.caFingerprint}
                           </div>
                         </Tooltip>
+
                         <CopyTextToClipboardButton
                           textToCopy={certificationAuthority.caFingerprint}
                         />
+
+                        {isNew && (
+                          <Box ml={0.5}>
+                            <Chip
+                              style={{ background: '#34C38F', color: 'white' }}
+                              label={t('common:new')}
+                              size='small'
+                            />
+                          </Box>
+                        )}
                       </Box>
                     </TableCell>
 
