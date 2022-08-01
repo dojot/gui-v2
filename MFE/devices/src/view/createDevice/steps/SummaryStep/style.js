@@ -9,9 +9,6 @@ export const useSummaryStepStyles = makeStyles(() => ({
   content: {
     flex: 1,
   },
-  input: {
-    width: '100%',
-  },
   deviceNameHint: {
     fontSize: '18px',
   },

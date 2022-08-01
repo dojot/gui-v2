@@ -167,7 +167,7 @@ const CreateDevice = () => {
           </Grid>
 
           <Grid className={classes.step} xs item>
-            <Box className={classes.stepContent} paddingY={2}>
+            <Box className={classes.stepContent} padding={2}>
               {currentStep === 0 && (
                 <TemplatesStep
                   selectedTemplates={selectedTemplates}

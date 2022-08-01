@@ -126,7 +126,7 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
             }}
           />
         </Grid>
-        <List className={classes.listContainer}>
+        <List>
           {!paginatorData.pageData.length ? (
             <ListItem className={classes.notFound}>
               <ListItemText primary={t('attributes.notFound')} />
