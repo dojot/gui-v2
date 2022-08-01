@@ -18,10 +18,15 @@ export default makeStyles(theme => ({
   certificateData: {
     display: 'flex',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    '& > :first-child': {
-      minWidth: '16rem',
-    },
+    textDecoration: 'underline',
+    gap: 10,
+    fontSize: 16,
+  },
+  certificateAndKeysTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    fontSize: 16,
   },
   inputCommand: {
     fontSize: 14,
@@ -34,5 +39,8 @@ export default makeStyles(theme => ({
   },
   successMessage: {
     marginLeft: 8,
+  },
+  warningIcon: {
+    color: '#F1B44C',
   },
 }));

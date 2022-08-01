@@ -68,10 +68,7 @@ const SecurityStep = ({
         successCallback(certificateData) {
           setSearchText('');
           setSelectedCertificate({
-            caCertificate: certificateData.caPem,
-            pem: certificateData.certificatePem,
-            publicKey: certificateData.publicKeyPEM,
-            privateKey: certificateData.privateKeyPEM,
+            certificateAndKeys: certificateData.certAndKeysAs64,
             fingerprint: certificateData.certificateFingerprint,
           });
         },
