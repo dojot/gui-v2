@@ -11,9 +11,6 @@ export const useStyles = makeStyles(theme => ({
   title: {
     fontWeight: 'bold',
   },
-  createAttButton: {
-    background: theme.palette.background.paper,
-  },
   tableWrapper: {
     flex: '1',
     display: 'flex',

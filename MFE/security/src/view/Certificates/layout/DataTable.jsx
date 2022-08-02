@@ -159,12 +159,8 @@ const DataTable = ({
               .map(certificate => {
                 const isSelected = selectedCertificates.indexOf(certificate.fingerprint) !== -1;
 
-                const {
-                  statusText,
-                  statusColor,
-                  validityInitialDate,
-                  validityFinalDate,
-                } = handleGetCertificateComputedData(certificate.validity);
+                const { statusText, statusColor, validityInitialDate, validityFinalDate } =
+                  handleGetCertificateComputedData(certificate.validity);
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(certificate.fingerprint);
@@ -222,7 +218,10 @@ const DataTable = ({
 
                     <TableCell>
                       {certificate.belongsTo?.device ? (
-                        <RouterLink to={`/devices/${certificate.belongsTo.device}`}>
+                        <RouterLink
+                          to={`/devices/${certificate.belongsTo.device}`}
+                          className={classes.deviceIdLink}
+                        >
                           {certificate.belongsTo.device}
                         </RouterLink>
                       ) : (
@@ -238,7 +237,7 @@ const DataTable = ({
 
                     <TableCell>
                       <Chip
-                        style={{ background: statusColor, color: 'white' }}
+                        style={{ background: statusColor, color: '#22252F' }}
                         label={statusText}
                         size='small'
                       />

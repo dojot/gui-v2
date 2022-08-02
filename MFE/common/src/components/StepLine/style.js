@@ -14,7 +14,7 @@ export default makeStyles(theme => ({
     '& div': {
       height: '90%',
       borderLeft: '2px solid',
-      borderLeftColor: theme.palette.primary.main,
+      borderLeftColor: theme.palette.secondary.dark,
       marginLeft: '12px',
     },
   },

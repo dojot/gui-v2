@@ -57,7 +57,7 @@ const CollapsibleList = ({
           }
           secondary={
             subtitle && (
-              <Typography variant='body2' color='textSecondary'>
+              <Typography variant='body2' color='primary'>
                 {subtitle}
               </Typography>
             )
