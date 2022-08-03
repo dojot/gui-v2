@@ -22,7 +22,7 @@ const ActionButtons = ({
   return (
     <Box className={classes.container}>
       <Button
-        className={withBackButton ? classes.cancelButtonLeftAligned : null}
+        className={classes.cancelButton}
         size='large'
         variant='text'
         disabled={isCancelButtonDisabled}
@@ -33,6 +33,7 @@ const ActionButtons = ({
 
       {withBackButton && (
         <Button
+          className={classes.backButton}
           size='large'
           color='primary'
           variant='outlined'
@@ -44,6 +45,7 @@ const ActionButtons = ({
       )}
 
       <Button
+        className={classes.nextButton}
         size='large'
         color='primary'
         variant='contained'

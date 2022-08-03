@@ -30,20 +30,22 @@ const General = ({ validate, name }) => {
   return (
     <Wizard.Page validate={validate}>
       <Grid container direction='column' className={classes.root}>
-        <Grid item className={classes.item}>
+        <Grid className={classes.item} item>
           <TextField
             label={t('general.name')}
             name={`${name}.name`}
             variant='outlined'
-            margin='normal'
+            margin='none'
+            fullWidth
           />
         </Grid>
-        <Grid item className={classes.item}>
+        <Grid className={classes.item} item>
           <TextField
             label={t('general.description')}
             name={`${name}.description`}
             variant='outlined'
-            margin='normal'
+            margin='none'
+            fullWidth
           />
         </Grid>
       </Grid>

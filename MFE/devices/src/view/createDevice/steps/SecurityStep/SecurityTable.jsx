@@ -72,7 +72,7 @@ const SecurityTable = ({
   return (
     <>
       <TableContainer>
-        <Table aria-labelledby='tableTitle' size='small'>
+        <Table className={classes.table} aria-labelledby='tableTitle' size='small'>
           <DataTableHead
             className={classes.tableHead}
             cells={headCells}

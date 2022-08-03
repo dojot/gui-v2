@@ -6,3 +6,4 @@ export * from './mapImagery';
 export * from './certificates';
 export * from './events';
 export * from './lists';
+export * from './colors';

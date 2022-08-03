@@ -3,8 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useStyles = makeStyles(() => ({
   root: {
     width: '100%',
-    marginTop: 20,
-    padding: '0 40px',
 
     '& .items': {
       display: 'flex',
@@ -102,5 +100,8 @@ export const useStyles = makeStyles(() => ({
         },
       },
     },
+  },
+  title: {
+    marginTop: 0,
   },
 }));

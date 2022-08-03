@@ -17,11 +17,7 @@ export const useStyles = makeStyles(theme => ({
   },
   searchContainer: {
     width: '100%',
-    padding: '0 20px',
-    margin: '20px auto',
-  },
-  listContainer: {
-    padding: '0 20px',
+    marginBottom: '24px',
   },
   notFound: {
     width: '100%',
@@ -56,8 +52,8 @@ export const useStyles = makeStyles(theme => ({
     },
 
     '&:disabled': {
-      backgroundColor: 'transparent'
-    }
+      backgroundColor: 'transparent',
+    },
   },
   picker: {
     position: 'absolute',

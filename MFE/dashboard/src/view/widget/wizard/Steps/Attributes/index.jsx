@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useState } from 'react';
+import React, { Fragment, useCallback, useEffect, useState, useMemo } from 'react';
 
 import {
   Button,
@@ -21,9 +21,9 @@ import { GithubPicker } from 'react-color';
 import { Field } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
 import { FormCheckBox } from 'sharedComponents/Checkbox';
-import { TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
+import { TEMPLATE_ATTR_VALUE_TYPES, DEFAULT_COLORS } from 'sharedComponents/Constants';
 import { Paginator, usePaginator } from 'sharedComponents/Paginator';
-import { object2Array, hexToRgb } from 'sharedComponents/Utils';
+import { object2Array, hexToRgb, randomHexColor } from 'sharedComponents/Utils';
 import { useDebounce } from 'use-debounce';
 
 import Wizard from '../../wizard';
@@ -126,13 +126,13 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
             }}
           />
         </Grid>
-        <List className={classes.listContainer}>
+        <List>
           {!paginatorData.pageData.length ? (
             <ListItem className={classes.notFound}>
               <ListItemText primary={t('attributes.notFound')} />
             </ListItem>
           ) : (
-            paginatorData.pageData.map(item => {
+            paginatorData.pageData.map((item, index) => {
               const {
                 deviceId,
                 deviceLabel,
@@ -144,6 +144,7 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
 
               return (
                 <ItemRow
+                  index={index}
                   value={{
                     label: attributeLabel,
                     valueType: attributeValueType,
@@ -184,6 +185,7 @@ const ColorPickerAdapter = ({ input: { onChange, value }, changeColor }) => {
   return (
     <GithubPicker
       triangle='top-right'
+      colors={DEFAULT_COLORS}
       onChange={props => {
         changeColor(props);
         onChange(props.hex);
@@ -193,25 +195,34 @@ const ColorPickerAdapter = ({ input: { onChange, value }, changeColor }) => {
   );
 };
 
-const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDynamic, name }) => {
+const ItemRow = ({
+  index,
+  value,
+  meta,
+  attributes,
+  acceptedTypes,
+  staticSupported,
+  isDynamic,
+  name,
+}) => {
   const { id, label, attributeId } = meta;
+
+  const { t } = useTranslation(['dashboard']);
   const classes = useStyles();
+
   const labelId = `checkbox-list-label-${attributeId}`;
 
-  const colorBlue = {
-    rgb: { r: 0, g: 77, b: 207 },
-    hex: '#004dcf',
-  };
-  const colorBlueDisabled = {
+  const disabledColor = {
     rgb: { r: 250, g: 250, b: 250 },
-    hex: '#004dcf',
+    hex: '#FAFAFA',
   };
 
   const [isOpen, setIsOpen] = useState(false);
-  const [color, setColor] = useState(colorBlueDisabled);
+  const [color, setColor] = useState(disabledColor);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const { t } = useTranslation(['dashboard']);
+  const randomHex = useMemo(() => randomHexColor(), []);
+
   const attributeItem = {
     deviceID: id,
     attributeID: `${attributeId}`,
@@ -230,8 +241,12 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
 
   useEffect(() => {
     if (attributes && attributes[attributeId] && !isDisabled) {
-      if (attributes[attributeId].color === '#FAFAFA') {
-        setColor(colorBlue);
+      if (attributes[attributeId].color === disabledColor.hex) {
+        const attrColor = DEFAULT_COLORS[index] || randomHex;
+        setColor({
+          rgb: hexToRgb(attrColor),
+          hex: attrColor,
+        });
       } else {
         setColor({
           rgb: hexToRgb(attributes[attributeId].color),
@@ -239,7 +254,7 @@ const ItemRow = ({ value, meta, attributes, acceptedTypes, staticSupported, isDy
         });
       }
     } else {
-      setColor(colorBlueDisabled);
+      setColor(disabledColor);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisabled, attributes, setColor]);
