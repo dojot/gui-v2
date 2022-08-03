@@ -1,11 +1,13 @@
 import React from 'react';
 
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid, Typography, Chip } from '@material-ui/core';
 import { FilterNone } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataCard } from 'sharedComponents/Cards';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
+import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCardsStyles } from './style';
 
 const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu }) => {
@@ -17,6 +19,7 @@ const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu })
       <Grid spacing={2} container>
         {templates.map(template => {
           const attrsLength = template.attrs?.length || 0;
+          const isNew = isSomeHoursAgo(template.created, NEW_CHIP_HOURS_AGO);
 
           const handleSeeTemplateDetails = () => {
             handleClickTemplate(template);
@@ -39,6 +42,9 @@ const Cards = ({ templates, handleClickTemplate, handleSetTemplateOptionsMenu })
                 headerIcon={<FilterNone className={classes.cardIcon} />}
                 headerTitle={
                   <Typography className={classes.cardTitle}>{template.label}</Typography>
+                }
+                footer={
+                  isNew ? <Chip color='primary' label={t('common:new')} size='small' /> : null
                 }
               >
                 <Box marginBottom={1}>

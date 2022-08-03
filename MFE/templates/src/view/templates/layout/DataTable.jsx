@@ -9,14 +9,17 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Chip,
+  Box,
 } from '@material-ui/core';
 import { MoreHoriz } from '@material-ui/icons';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER } from 'sharedComponents/Constants';
-import { getComparator } from 'sharedComponents/Utils';
+import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -30,7 +33,7 @@ const DataTable = ({
   handleSelectTemplate,
   handleSetTemplateOptionsMenu,
 }) => {
-  const { t } = useTranslation('templates');
+  const { t } = useTranslation(['templates', 'common']);
   const classes = useDataTableStyles();
 
   const headCells = useMemo(
@@ -46,6 +49,10 @@ const DataTable = ({
       {
         id: 'attrsLength',
         label: t('dataTableHead.attrsLength'),
+      },
+      {
+        id: 'created',
+        label: t('dataTableHead.created'),
       },
       {
         id: 'actions',
@@ -133,6 +140,7 @@ const DataTable = ({
               .map(template => {
                 const isSelected = selectedTemplates.indexOf(template.id) !== -1;
                 const attrsLength = template.attrs?.length || 0;
+                const isNew = isSomeHoursAgo(template.created, NEW_CHIP_HOURS_AGO);
 
                 const handleClickInThisTemplate = () => {
                   handleClickTemplate(template);
@@ -167,11 +175,21 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{template.label}</TableCell>
+                    <TableCell className={classes.clickableCell}>
+                      <Box mr={isNew ? 1 : 0} component='span'>
+                        {template.label}
+                      </Box>
+
+                      {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
+                    </TableCell>
 
                     <TableCell className={classes.clickableCell}>{template.id}</TableCell>
 
                     <TableCell className={classes.clickableCell}>{attrsLength}</TableCell>
+
+                    <TableCell className={classes.clickableCell}>
+                      {moment(template.created).format('L LTS')}
+                    </TableCell>
 
                     <TableCell onClick={handleStopPropagation}>
                       <IconButton onClick={handleShowOptionsMenu}>

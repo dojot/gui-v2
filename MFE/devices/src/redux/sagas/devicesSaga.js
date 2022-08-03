@@ -165,7 +165,12 @@ export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
     const { label, templates, attrs, fingerprint, successCallback } = action.payload;
-    yield call(Device.createDevice, { label, templates, attrs, fingerprint });
+    yield call(Device.createDevice, {
+      label,
+      templates,
+      attrs,
+      fingerprint,
+    });
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'createDevice',

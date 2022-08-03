@@ -9,6 +9,8 @@ import {
   TableCell,
   TableContainer,
   TableRow,
+  Box,
+  Chip,
 } from '@material-ui/core';
 import { MoreHoriz } from '@material-ui/icons';
 import PropTypes from 'prop-types';
@@ -17,10 +19,11 @@ import { useTranslation } from 'react-i18next';
 import { DataTableHead } from 'sharedComponents/DataTable';
 import {
   DATA_ORDER,
+  NEW_CHIP_HOURS_AGO,
   TEMPLATE_ATTR_TYPES,
   TEMPLATE_ATTR_VALUE_TYPES,
 } from 'sharedComponents/Constants';
-import { getComparator } from 'sharedComponents/Utils';
+import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const ATTR_TYPE_TRANSLATIONS = {};
@@ -45,7 +48,7 @@ const DataTable = ({
   handleSelectAttr,
   handleSetAttrOptionsMenu,
 }) => {
-  const { t } = useTranslation('templateAttrs');
+  const { t } = useTranslation(['templateAttrs', 'common']);
   const classes = useDataTableStyles();
 
   const headCells = useMemo(
@@ -160,6 +163,7 @@ const DataTable = ({
                 const isSelected = selectedAttrs.indexOf(attr.id) !== -1;
                 const attrTypeTranslation = valueFormatters.type(attr);
                 const valueTypeTranslation = valueFormatters.valueType(attr);
+                const isNew = isSomeHoursAgo(attr.created, NEW_CHIP_HOURS_AGO);
 
                 const handleSelectThisRow = () => {
                   handleSelectRow(attr.id);
@@ -182,7 +186,14 @@ const DataTable = ({
                       />
                     </TableCell>
 
-                    <TableCell>{attr.label}</TableCell>
+                    <TableCell>
+                      <Box mr={isNew ? 1 : 0} component='span'>
+                        {attr.label}
+                      </Box>
+
+                      {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
+                    </TableCell>
+
                     <TableCell>{attr.id}</TableCell>
                     <TableCell>{attrTypeTranslation}</TableCell>
                     <TableCell>{valueTypeTranslation}</TableCell>
