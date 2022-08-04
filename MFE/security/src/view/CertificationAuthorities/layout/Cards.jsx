@@ -6,11 +6,13 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataCard } from 'sharedComponents/Cards';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
+import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCertificateComputedData } from 'sharedComponents/Hooks';
 import { useCardsStyles } from './style';
 
 const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
-  const { t } = useTranslation('certificationAuthorities');
+  const { t } = useTranslation(['certificationAuthorities', 'common']);
   const classes = useCardsStyles();
 
   const handleGetCertificateComputedData = useCertificateComputedData();
@@ -19,12 +21,10 @@ const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
     <Box padding={2}>
       <Grid spacing={2} container>
         {certificationAuthorities.map(certificationAuthority => {
-          const {
-            statusText,
-            statusColor,
-            validityInitialDate,
-            validityFinalDate,
-          } = handleGetCertificateComputedData(certificationAuthority.validity);
+          const isNew = isSomeHoursAgo(certificationAuthority.createdAt, NEW_CHIP_HOURS_AGO);
+
+          const { statusText, statusColor, validityInitialDate, validityFinalDate } =
+            handleGetCertificateComputedData(certificationAuthority.validity);
 
           const handleShowOptionsMenu = e => {
             e.stopPropagation();
@@ -43,6 +43,9 @@ const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
                   <Typography className={classes.cardTitle}>
                     {certificationAuthority.caFingerprint}
                   </Typography>
+                }
+                footer={
+                  isNew ? <Chip color='primary' label={t('common:new')} size='small' /> : null
                 }
                 onOptionsClick={handleShowOptionsMenu}
               >
