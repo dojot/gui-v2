@@ -13,6 +13,7 @@ import {
   CircularProgress,
   TableContainer,
   Typography,
+  Chip,
 } from '@material-ui/core';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -21,8 +22,9 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { DialogHeader } from 'sharedComponents/Dialogs';
-import { ROWS_PER_PAGE_OPTIONS } from 'sharedComponents/Constants';
+import { ROWS_PER_PAGE_OPTIONS, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useIsLoading } from 'sharedComponents/Hooks';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
 import { actions as certificateActions } from '../../../redux/modules/certificates';
 import { actions as deviceActions, constants } from '../../../redux/modules/devices';
 import {
@@ -33,7 +35,7 @@ import Pagination from './Pagination';
 import { useAssociateToDeviceModalStyles } from './style';
 
 const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssociateModal }) => {
-  const { t } = useTranslation('certificates');
+  const { t } = useTranslation(['certificates', 'common']);
 
   const dispatch = useDispatch();
   const classes = useAssociateToDeviceModalStyles();
@@ -49,14 +51,14 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
   const headCells = useMemo(
     () => [
       {
-        id: 'id',
-        className: classes.tableHeadCell,
-        label: t('associateToDeviceModal.table.id'),
-      },
-      {
         id: 'label',
         className: classes.tableHeadCell,
         label: t('associateToDeviceModal.table.label'),
+      },
+      {
+        id: 'id',
+        className: classes.tableHeadCell,
+        label: t('associateToDeviceModal.table.id'),
       },
       {
         id: 'lastUpdate',
@@ -144,6 +146,8 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
             ) : (
               <TableBody>
                 {devices.map(device => {
+                  const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
+
                   const handleSelectThisDevice = () => {
                     setSelectedDeviceId(device.id);
                   };
@@ -162,9 +166,15 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
                         />
                       </TableCell>
 
-                      <TableCell>{device.id}</TableCell>
+                      <TableCell>
+                        <Box mr={isNew ? 1 : 0} component='span'>
+                          {device.label}
+                        </Box>
 
-                      <TableCell>{device.label}</TableCell>
+                        {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
+                      </TableCell>
+
+                      <TableCell>{device.id}</TableCell>
 
                       <TableCell>
                         {moment(device.updated || device.created).format('L LTS')}

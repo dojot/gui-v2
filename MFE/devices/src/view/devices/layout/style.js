@@ -45,6 +45,11 @@ export const useCardsStyles = makeStyles(theme => ({
     fontSize: '16px',
     fontWeight: 'bold',
   },
+  cardFooter: {
+    '& > *:not(:first-child)': {
+      marginLeft: 4,
+    },
+  },
 }));
 
 export const useDeviceOptionsStyles = makeStyles(theme => ({
