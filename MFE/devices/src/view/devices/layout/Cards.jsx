@@ -22,7 +22,6 @@ const Cards = ({
     <Box padding={2}>
       <Grid spacing={2} container>
         {devices.map(device => {
-          const lastUpdate = device.updated || device.created;
           const attrsLength = device.attrs?.length || 0;
           const hasCertificate = !!device.certificate?.fingerprint;
 
@@ -100,10 +99,19 @@ const Cards = ({
                   <Typography variant='body2'>{t('cardData.properties')}</Typography>
                 </Box>
 
-                {!!lastUpdate && (
+                {!!device.created && (
+                  <Box marginBottom={1}>
+                    <Typography variant='body2'>
+                      <strong>{moment(device.created).format('L LTS')}</strong>
+                    </Typography>
+                    <Typography variant='body2'>{t('cardData.created')}</Typography>
+                  </Box>
+                )}
+
+                {!!device.updated && (
                   <Box>
                     <Typography variant='body2'>
-                      <strong>{moment(lastUpdate).format('L LTS')}</strong>
+                      <strong>{moment(device.updated).format('L LTS')}</strong>
                     </Typography>
                     <Typography variant='body2'>{t('cardData.updated')}</Typography>
                   </Box>
