@@ -21,6 +21,7 @@
     "id": "ID",
     "label": "Name",
     "attrsLength": "Number of Properties",
+    "created": "Creation Date",
     "updated": "Last Update",
     "hasCertificate": "Has Certificate",
     "actions": "Actions"
@@ -28,6 +29,7 @@
   "cardData": {
     "deviceId": "Device ID",
     "properties": "Properties",
+    "created": "Creation Date",
     "updated": "Last Update"
   },
   "deleteDeviceAlert": {
