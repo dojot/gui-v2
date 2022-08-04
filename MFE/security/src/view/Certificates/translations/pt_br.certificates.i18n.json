@@ -16,7 +16,6 @@
   "massActions": "Ações em massa:",
   "hasAssociatedDeviceTooltip": "Possui dispositivo associado",
   "noAssociatedDeviceTooltip": "Não possui dispositivo associado",
-  "lastUpdateTooltip": "Última atualização",
   "validityNotDefined": "Validade Não Definida",
   "dataTableTitle": "Dispositivos",
   "dataLabels": {
@@ -34,7 +33,8 @@
     "table": {
       "id": "Id",
       "label": "Nome do Dispositivo",
-      "lastUpdate": "Última atualização"
+      "created": "Data de Criação",
+      "updated": "Última Modificação"
     },
     "associate": "Associar"
   },

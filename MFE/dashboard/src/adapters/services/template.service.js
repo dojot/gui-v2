@@ -1,10 +1,10 @@
 import { protectAPI } from '../api';
 
-export const getTemplatesList = (page, filter) => {
+export const getTemplatesList = (page, filter, sortBy) => {
   return protectAPI({
     query: `
-    query getTemplates($page: PageInput, $filter: FilterTemplateInput) {
-      getTemplates(page: $page, filter: $filter) {
+    query getTemplates($page: PageInput, $filter: FilterTemplateInput, $sortBy: String) {
+      getTemplates(page: $page, filter: $filter, sortBy: $sortBy) {
         totalPages
         currentPage
         templates {
@@ -28,6 +28,7 @@ export const getTemplatesList = (page, filter) => {
     variables: JSON.stringify({
       page,
       filter,
+      sortBy,
     }),
   });
 };

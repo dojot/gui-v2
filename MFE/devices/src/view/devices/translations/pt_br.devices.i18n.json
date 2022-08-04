@@ -22,7 +22,7 @@
     "label": "Nome",
     "attrsLength": "Nº de Propriedades",
     "created": "Data de Criação",
-    "updated": "Última Atualização",
+    "updated": "Última Modificação",
     "hasCertificate": "Tem Certificado",
     "actions": "Ações"
   },
@@ -30,7 +30,7 @@
     "deviceId": "ID do Dispositivo",
     "properties": "Propriedades",
     "created": "Data de Criação",
-    "updated": "Última Atualização"
+    "updated": "Última Modificação"
   },
   "deleteDeviceAlert": {
     "title": "Excluir Dispositivo",

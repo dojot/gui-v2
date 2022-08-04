@@ -16,7 +16,6 @@
   "massActions": "Mass actions:",
   "hasAssociatedDeviceTooltip": "Has associated device",
   "noAssociatedDeviceTooltip": "No associated device",
-  "lastUpdateTooltip": "Last update",
   "validityNotDefined": "Validity Not Defined",
   "dataTableTitle": "Devices",
   "dataLabels": {
@@ -34,7 +33,8 @@
     "table": {
       "id": "Id",
       "label": "Device Name",
-      "lastUpdate": "Last update"
+      "created": "Creation Date",
+      "updated": "Last Modification"
     },
     "associate": "Associate"
   },

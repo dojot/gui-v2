@@ -22,8 +22,8 @@ export function* getCurrentTemplatesPageAgain() {
 export function* handleGetTemplates(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_TEMPLATES));
-    const { page, filter } = action.payload;
-    const { getTemplates } = yield call(Template.getTemplatesList, page, filter);
+    const { page, filter, sortBy } = action.payload;
+    const { getTemplates } = yield call(Template.getTemplatesList, page, filter, sortBy);
     if (getTemplates) {
       yield put(
         actions.updateTemplates({
@@ -41,8 +41,8 @@ export function* handleGetTemplates(action) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "getTemplates",
-      type: "error",
+      i18nMessage: 'getTemplates',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.GET_TEMPLATES));
@@ -60,8 +60,8 @@ export function* handleGetTemplateById(action) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "getTemplateById",
-      type: "error",
+      i18nMessage: 'getTemplateById',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.GET_TEMPLATE_BY_ID));
@@ -74,13 +74,17 @@ export function* handleDeleteTemplate(action) {
     const { templateId } = action.payload;
     yield call(Template.deleteTemplates, [templateId]);
     yield call(getCurrentTemplatesPageAgain);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteTemplate", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'deleteTemplate',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "deleteTemplate",
-      type: "error",
+      i18nMessage: 'deleteTemplate',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_TEMPLATE));
@@ -93,13 +97,17 @@ export function* handleDeleteMultipleTemplates(action) {
     const { templateIds } = action.payload;
     yield call(Template.deleteTemplates, templateIds);
     yield call(getCurrentTemplatesPageAgain);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteMultipleTemplates", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'deleteMultipleTemplates',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "deleteMultipleTemplates",
-      type: "error",
+      i18nMessage: 'deleteMultipleTemplates',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_TEMPLATES));
@@ -112,13 +120,17 @@ export function* handleCreateTemplate(action) {
     const { label, attrs, successCallback } = action.payload;
     yield call(Template.createTemplate, { label, attrs });
     if (successCallback) yield call(successCallback);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "createTemplate", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'createTemplate',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "createTemplate",
-      type: "error",
+      i18nMessage: 'createTemplate',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.CREATE_TEMPLATE));
@@ -131,13 +143,17 @@ export function* handleEditTemplate(action) {
     const { id, label, attrs, successCallback } = action.payload;
     yield call(Template.editTemplate, { id, label, attrs });
     if (successCallback) yield call(successCallback);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "editTemplate", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'editTemplate',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "editTemplate",
-      type: "error",
+      i18nMessage: 'editTemplate',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.EDIT_TEMPLATE));
@@ -150,13 +166,17 @@ export function* handleDuplicateTemplate(action) {
     const { templateId } = action.payload;
     yield call(Template.duplicateTemplate, templateId);
     yield call(getCurrentTemplatesPageAgain);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "duplicateTemplate", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'duplicateTemplate',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "duplicateTemplate",
-      type: "error",
+      i18nMessage: 'duplicateTemplate',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.DUPLICATE_TEMPLATE));

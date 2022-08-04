@@ -22,7 +22,7 @@
     "label": "Name",
     "attrsLength": "Number of Properties",
     "created": "Creation Date",
-    "updated": "Last Update",
+    "updated": "Last Modification",
     "hasCertificate": "Has Certificate",
     "actions": "Actions"
   },
@@ -30,7 +30,7 @@
     "deviceId": "Device ID",
     "properties": "Properties",
     "created": "Creation Date",
-    "updated": "Last Update"
+    "updated": "Last Modification"
   },
   "deleteDeviceAlert": {
     "title": "Delete Device",
