@@ -255,7 +255,11 @@ const CertificationAuthorities = () => {
 
               {viewMode === VIEW_MODE.CARD && certificationAuthorities.length > 0 && (
                 <Cards
+                  order={order}
+                  orderBy={orderBy}
                   certificationAuthorities={certificationAuthorities}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSetOptionsMenu={setCertificationAuthorityOptionsMenu}
                 />
               )}

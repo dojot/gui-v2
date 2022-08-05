@@ -55,5 +55,9 @@
     "message": "Tem certeza que deseja desassociar o dispositivo ({{deviceId}}) deste certificado?",
     "cancelButton": "Cancelar",
     "confirmButton": "Desassociar"
+  },
+  "sorting": {
+    "order": "Ordem",
+    "orderBy": "Ordenar Por"
   }
 }

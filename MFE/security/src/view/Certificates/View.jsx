@@ -304,7 +304,11 @@ const Certificates = () => {
 
               {viewMode === VIEW_MODE.CARD && certificates.length > 0 && (
                 <Cards
+                  order={order}
+                  orderBy={orderBy}
                   certificates={certificates}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSetCertificateOptionsMenu={setCertificatesOptionsMenu}
                   handleShowDevicesToAssociate={handleShowDevicesToAssociate}
                 />

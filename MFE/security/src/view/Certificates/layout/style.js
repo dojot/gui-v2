@@ -32,6 +32,7 @@ export const useSearchBarStyles = makeStyles(theme => ({
 
 export const useCardsStyles = makeStyles(() => ({
   card: {
+    height: '100%',
     cursor: 'default',
   },
   cardIcon: {

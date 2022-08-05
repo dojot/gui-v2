@@ -1,17 +1,24 @@
 import React from 'react';
 
-import { Box, Chip, Grid, Typography } from '@material-ui/core';
+import { Box, Chip, Grid, Typography, TextField, MenuItem } from '@material-ui/core';
 import { VerifiedUserOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataCard } from 'sharedComponents/Cards';
 import { isSomeHoursAgo } from 'sharedComponents/Utils';
-import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { NEW_CHIP_HOURS_AGO, DATA_ORDER } from 'sharedComponents/Constants';
 import { useCertificateComputedData } from 'sharedComponents/Hooks';
 import { useCardsStyles } from './style';
 
-const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
+const Cards = ({
+  order,
+  orderBy,
+  certificationAuthorities,
+  setOrder,
+  setOrderBy,
+  handleSetOptionsMenu,
+}) => {
   const { t } = useTranslation(['certificationAuthorities', 'common']);
   const classes = useCardsStyles();
 
@@ -19,6 +26,50 @@ const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
 
   return (
     <Box padding={2}>
+      <Box mb={1}>
+        <Grid spacing={2} container>
+          <Grid xs={2} item>
+            <TextField
+              value={orderBy}
+              variant='outlined'
+              label={t('sorting.orderBy')}
+              onChange={e => setOrderBy(e.target.value)}
+              fullWidth
+              select
+            >
+              <MenuItem value=''>{t('common:none')}</MenuItem>
+
+              {['caFingerprint', 'subjectDN'].map(orderByItem => {
+                return (
+                  <MenuItem key={orderByItem} value={orderByItem}>
+                    {t(`dataTableHead.${orderByItem}`)}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+          </Grid>
+
+          <Grid xs={2} item>
+            <TextField
+              value={order}
+              variant='outlined'
+              label={t('sorting.order')}
+              onChange={e => setOrder(e.target.value)}
+              fullWidth
+              select
+            >
+              {Object.values(DATA_ORDER).map(dataOrder => {
+                return (
+                  <MenuItem key={dataOrder} value={dataOrder}>
+                    {t(`common:${dataOrder.toLowerCase()}`)}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+          </Grid>
+        </Grid>
+      </Box>
+
       <Grid spacing={2} container>
         {certificationAuthorities.map(certificationAuthority => {
           const isNew = isSomeHoursAgo(certificationAuthority.createdAt, NEW_CHIP_HOURS_AGO);
@@ -86,12 +137,20 @@ const Cards = ({ certificationAuthorities, handleSetOptionsMenu }) => {
 };
 
 Cards.propTypes = {
+  order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]),
+  orderBy: PropTypes.string,
   certificationAuthorities: PropTypes.array,
+  setOrder: PropTypes.func,
+  setOrderBy: PropTypes.func,
   handleSetOptionsMenu: PropTypes.func,
 };
 
 Cards.defaultProps = {
+  order: DATA_ORDER.ASC,
+  orderBy: '',
   certificationAuthorities: [],
+  setOrder: null,
+  setOrderBy: null,
   handleSetOptionsMenu: null,
 };
 

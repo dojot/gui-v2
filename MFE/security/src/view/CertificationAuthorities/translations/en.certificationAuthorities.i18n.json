@@ -37,5 +37,9 @@
     "message": "Are you sure you want to delete this CA?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
+  },
+  "sorting": {
+    "order": "Order",
+    "orderBy": "Order By"
   }
 }

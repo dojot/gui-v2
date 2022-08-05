@@ -55,5 +55,9 @@
     "message": "Are you sure you want to disassociate ({{deviceId}}) from this certificate?",
     "cancelButton": "Cancel",
     "confirmButton": "Disassociate"
+  },
+  "sorting": {
+    "order": "Order",
+    "orderBy": "Order By"
   }
 }
