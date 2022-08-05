@@ -252,7 +252,11 @@ const Templates = () => {
 
               {viewMode === VIEW_MODE.CARD && templates.length > 0 && (
                 <Cards
+                  order={order}
+                  orderBy={orderBy}
                   templates={templates}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleClickTemplate={handleClickTemplate}
                   handleSetTemplateOptionsMenu={setTemplateOptionsMenu}
                 />

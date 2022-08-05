@@ -34,5 +34,9 @@
     "message": "Tem certeza que deseja excluir todos os modelos selecionados?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "sorting": {
+    "order": "Ordem",
+    "orderBy": "Ordenar Por"
   }
 }

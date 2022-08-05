@@ -35,5 +35,9 @@
     "newAttr": "Criar Novo Atributo",
     "editAttr": "Editar Atributo",
     "errorMessage": "Preencha os campos obrigatórios para salvar!"
+  },
+  "sorting": {
+    "order": "Ordem",
+    "orderBy": "Ordenar Por"
   }
 }

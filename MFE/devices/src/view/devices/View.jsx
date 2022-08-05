@@ -258,9 +258,11 @@ const Devices = () => {
 
                 {viewMode === VIEW_MODE.CARD && devices.length > 0 && (
                   <Cards
-                    page={page}
+                    order={order}
+                    orderBy={orderBy}
                     devices={devices}
-                    rowsPerPage={rowsPerPage}
+                    setOrder={setOrder}
+                    setOrderBy={setOrderBy}
                     handleClickDevice={handleClickDevice}
                     handleFavoriteDevice={handleFavoriteDevice}
                     handleSetDeviceOptionsMenu={setDeviceOptionsMenu}

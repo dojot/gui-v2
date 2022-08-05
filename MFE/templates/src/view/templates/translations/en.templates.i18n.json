@@ -34,5 +34,9 @@
     "message": "Are you sure you want to delete all selected templates?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
+  },
+  "sorting": {
+    "order": "Order",
+    "orderBy": "Order By"
   }
 }

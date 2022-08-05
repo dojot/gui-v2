@@ -28,7 +28,7 @@
   },
   "cardData": {
     "deviceId": "ID do Dispositivo",
-    "properties": "Propriedades",
+    "properties": "Nº de Propriedades",
     "created": "Data de Criação",
     "updated": "Última Modificação"
   },
@@ -43,5 +43,9 @@
     "message": "Tem certeza que deseja excluir todos os dispositivos selecionados?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "sorting": {
+    "order": "Ordem",
+    "orderBy": "Ordenar Por"
   }
 }

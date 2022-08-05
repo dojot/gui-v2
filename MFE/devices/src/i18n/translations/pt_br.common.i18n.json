@@ -29,5 +29,7 @@
   "change": "Alterar",
   "new": "Novo",
   "dojotPageTitle": "Dojot - Do IoT",
-  "copiedToClipboard": "Copiado"
+  "copiedToClipboard": "Copiado",
+  "asc": "Ascendente",
+  "desc": "Descendente"
 }
