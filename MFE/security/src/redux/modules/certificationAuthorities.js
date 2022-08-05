@@ -22,6 +22,7 @@ export const constants = {
 export const getCertificationAuthorities = createAction(GET_CERTIFICATION_AUTHORITIES, payload => ({
   page: payload.page,
   filter: payload.filter,
+  sortBy: payload.sortBy,
 }));
 
 export const updateCertificationAuthorities = createAction(

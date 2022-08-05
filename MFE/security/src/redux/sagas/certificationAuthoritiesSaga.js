@@ -22,12 +22,13 @@ export function* getCurrentCertificationAuthoritiesPageAgain() {
 export function* handleGetCertificationAuthorities(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_CERTIFICATION_AUTHORITIES));
-    const { page, filter } = action.payload;
+    const { page, filter, sortBy } = action.payload;
 
     const { getCertificationAuthorities } = yield call(
       CertificationAuthority.getCertificationAuthoritiesList,
       page,
       filter,
+      sortBy,
     );
 
     if (getCertificationAuthorities) {
@@ -47,8 +48,8 @@ export function* handleGetCertificationAuthorities(action) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "getCertificationAuthorities",
-      type: "error",
+      i18nMessage: 'getCertificationAuthorities',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.GET_CERTIFICATION_AUTHORITIES));
@@ -61,13 +62,17 @@ export function* handleDeleteCertificationAuthority(action) {
     const { fingerprint } = action.payload;
     yield call(CertificationAuthority.deleteMultipleCertificationAuthorities, [fingerprint]);
     yield call(getCurrentCertificationAuthoritiesPageAgain);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteCertificationAuthority", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'deleteCertificationAuthority',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "deleteCertificationAuthority",
-      type: "error",
+      i18nMessage: 'deleteCertificationAuthority',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_CERTIFICATION_AUTHORITY));
@@ -80,13 +85,17 @@ export function* handleDeleteMultipleCertificationAuthorities(action) {
     const { fingerprints } = action.payload;
     yield call(CertificationAuthority.deleteMultipleCertificationAuthorities, fingerprints);
     yield call(getCurrentCertificationAuthoritiesPageAgain);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "deleteMultipleCertificationAuthorities", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'deleteMultipleCertificationAuthorities',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "deleteMultipleCertificationAuthorities",
-      type: "error",
+      i18nMessage: 'deleteMultipleCertificationAuthorities',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_CERTIFICATION_AUTHORITIES));
@@ -99,13 +108,17 @@ export function* handleCreateCertificationAuthority(action) {
     const { caPem, successCallback } = action.payload;
     yield call(CertificationAuthority.createCertificationAuthority, { caPem });
     if (successCallback) yield call(successCallback);
-    dispatchEvent(EVENT.GLOBAL_TOAST, { duration: 15000, i18nMessage: "createCertificationAuthority", type: "success", });
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'createCertificationAuthority',
+      type: 'success',
+    });
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,
-      i18nMessage: "createCertificationAuthority",
-      type: "error",
+      i18nMessage: 'createCertificationAuthority',
+      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.CREATE_CERTIFICATION_AUTHORITY));

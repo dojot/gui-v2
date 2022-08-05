@@ -194,9 +194,10 @@ const Certificates = () => {
         filter: {
           fingerprint: searchText,
         },
+        sortBy: orderBy ? `${order}:${orderBy}` : undefined,
       }),
     );
-  }, [dispatch, page, rowsPerPage, searchText]);
+  }, [dispatch, order, orderBy, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (viewMode) setSelectedCertificates([]);
