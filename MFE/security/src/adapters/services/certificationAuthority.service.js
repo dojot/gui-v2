@@ -4,7 +4,7 @@ export const getCertificationAuthoritiesList = (page, filter, sortBy) => {
   return protectAPI({
     query: `
       query getCertificationAuthorities($page: PageInput, $filter: FilterCertificationAuthoritiesInput, $sortBy: String) {
-        getCertificationAuthorities(page: $page, filter: $filter) {
+        getCertificationAuthorities(page: $page, filter: $filter, sortBy: $sortBy) {
           pagination {
             totalPages
             currentPage
