@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import {
   Box,
@@ -18,7 +18,7 @@ import {
 } from '@material-ui/core';
 import { Close, Delete, InfoOutlined } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import { Trans, useTranslation } from 'react-i18next';
 
 import { TEMPLATE_ATTR_TYPES, TEMPLATE_ATTR_VALUE_TYPES } from '../../../constants';
 import { useStyles } from './style';
@@ -38,6 +38,8 @@ const TemplateCreation = ({
 }) => {
   const { t } = useTranslation(['templateCreation', 'attrs']);
   const classes = useStyles();
+
+  const [attrLabelError, setAttrLabelError] = useState(false);
 
   const handleClearTemplateLabel = () => {
     setTemplateLabel('');
@@ -88,140 +90,181 @@ const TemplateCreation = ({
       </Box>
 
       <Box className={classes.tableWrapper}>
-        <Table size='small'>
-          <TableHead className={classes.tableHead}>
-            <TableRow>
-              <TableCell>
-                <strong>{t('attrs:attrLabel.attrLabel')}</strong>
-                &nbsp;
-                <span>*</span>
-              </TableCell>
+        {attrs.length > 0 && (
+          <Table size='small'>
+            <TableHead className={classes.tableHead}>
+              <TableRow>
+                <TableCell>
+                  <Tooltip
+                    classes={{ tooltip: classes.tooltip }}
+                    title={<Trans t={t} i18nKey='attrs:attrLabelHint' />}
+                    placement='top-start'
+                  >
+                    <Box display='flex' alignItems='center'>
+                      <strong>{t('attrs:attrLabel.attrLabel')}</strong>
+                      &nbsp;
+                      <span>*</span>
+                      &nbsp;
+                      <InfoOutlined fontSize='small' />
+                    </Box>
+                  </Tooltip>
+                </TableCell>
 
-              <TableCell>
-                <strong>{t('attrs:attrLabel.attrType')}</strong>
-                &nbsp;
-                <span>*</span>
-              </TableCell>
+                <TableCell>
+                  <Tooltip
+                    classes={{ tooltip: classes.tooltip }}
+                    title={<Trans t={t} i18nKey='attrs:attrTypeHint' />}
+                    placement='top-start'
+                  >
+                    <Box display='flex' alignItems='center'>
+                      <strong>{t('attrs:attrLabel.attrType')}</strong>
+                      &nbsp;
+                      <span>*</span>
+                      &nbsp;
+                      <InfoOutlined fontSize='small' />
+                    </Box>
+                  </Tooltip>
+                </TableCell>
 
-              <TableCell>
-                <strong>{t('attrs:attrLabel.attrValueType')}</strong>
-                &nbsp;
-                <span>*</span>
-              </TableCell>
+                <TableCell>
+                  <Tooltip
+                    classes={{ tooltip: classes.tooltip }}
+                    title={t('attrs:valueTypeHint')}
+                    placement='top-start'
+                  >
+                    <Box display='flex' alignItems='center'>
+                      <strong>{t('attrs:attrLabel.attrValueType')}</strong>
+                      &nbsp;
+                      <span>*</span>
+                      &nbsp;
+                      <InfoOutlined fontSize='small' />
+                    </Box>
+                  </Tooltip>
+                </TableCell>
 
-              <TableCell>
-                <Tooltip
-                  classes={{ tooltip: classes.tooltip }}
-                  title={t('attrs:attrValueHint')}
-                  placement='top-start'
-                >
-                  <Box display='flex' alignItems='center'>
-                    <strong>{t('attrs:attrLabel.attrValue')}</strong>
-                    &nbsp;
-                    <InfoOutlined fontSize='small' />
-                  </Box>
-                </Tooltip>
-              </TableCell>
+                <TableCell>
+                  <Tooltip
+                    classes={{ tooltip: classes.tooltip }}
+                    title={t('attrs:attrValueHint')}
+                    placement='top-start'
+                  >
+                    <Box display='flex' alignItems='center'>
+                      <strong>{t('attrs:attrLabel.attrValue')}</strong>
+                      &nbsp;
+                      <InfoOutlined fontSize='small' />
+                    </Box>
+                  </Tooltip>
+                </TableCell>
 
-              <TableCell />
-            </TableRow>
-          </TableHead>
+                <TableCell />
+              </TableRow>
+            </TableHead>
 
-          <TableBody>
-            {attrs.map(({ id, label, type, valueType, staticValue }, index) => {
-              const isStaticAttr = type === TEMPLATE_ATTR_TYPES.STATIC.value;
+            <TableBody>
+              {attrs.map(({ id, label, type, valueType, staticValue }, index) => {
+                const isStaticAttr = type === TEMPLATE_ATTR_TYPES.STATIC.value;
 
-              const handleUpdateLabel = newLabel => {
-                handleUpdateAttr(index, 'label', newLabel);
-              };
+                const handleUpdateLabel = newLabel => {
+                  const reAttrLabel = /^[0-9a-zA-Z-_]+$/;
 
-              const handleUpdateType = newType => {
-                if (isStaticAttr && newType !== type) {
-                  handleUpdateAttr(index, 'staticValue', '');
-                }
-                handleUpdateAttr(index, 'type', newType);
-              };
+                  if (newLabel.match(reAttrLabel)) {
+                    setAttrLabelError(false);
+                  } else {
+                    setAttrLabelError(true);
+                  }
 
-              const handleUpdateValueType = newValueType => {
-                handleUpdateAttr(index, 'valueType', newValueType);
-              };
+                  handleUpdateAttr(index, 'label', newLabel);
+                };
 
-              const handleUpdateValue = newStaticValue => {
-                handleUpdateAttr(index, 'staticValue', newStaticValue);
-              };
+                const handleUpdateType = newType => {
+                  if (isStaticAttr && newType !== type) {
+                    handleUpdateAttr(index, 'staticValue', '');
+                  }
+                  handleUpdateAttr(index, 'type', newType);
+                };
 
-              return (
-                <TableRow key={id}>
-                  <TableCell>
-                    <TextField
-                      className={classes.input}
-                      size='small'
-                      value={label}
-                      variant='outlined'
-                      placeholder={t('attrs:attrLabel.attrLabel')}
-                      onChange={e => handleUpdateLabel(e.target.value)}
-                    />
-                  </TableCell>
+                const handleUpdateValueType = newValueType => {
+                  handleUpdateAttr(index, 'valueType', newValueType);
+                };
 
-                  <TableCell>
-                    <Select
-                      className={classes.select}
-                      value={type}
-                      variant='outlined'
-                      onChange={e => handleUpdateType(e.target.value)}
-                      autoWidth
-                    >
-                      {Object.values(TEMPLATE_ATTR_TYPES).map(attrType => {
-                        return (
-                          <MenuItem key={attrType.value} value={attrType.value}>
-                            {t(attrType.translation)}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </TableCell>
+                const handleUpdateValue = newStaticValue => {
+                  handleUpdateAttr(index, 'staticValue', newStaticValue);
+                };
 
-                  <TableCell>
-                    <Select
-                      className={classes.select}
-                      value={valueType}
-                      variant='outlined'
-                      onChange={e => handleUpdateValueType(e.target.value)}
-                      autoWidth
-                    >
-                      {Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(attrValueType => {
-                        return (
-                          <MenuItem key={attrValueType.value} value={attrValueType.value}>
-                            {t(attrValueType.translation)}
-                          </MenuItem>
-                        );
-                      })}
-                    </Select>
-                  </TableCell>
-
-                  <TableCell>
-                    {isStaticAttr && (
+                return (
+                  <TableRow key={id}>
+                    <TableCell>
                       <TextField
                         className={classes.input}
+                        error={attrLabelError}
                         size='small'
+                        value={label}
                         variant='outlined'
-                        value={staticValue}
-                        placeholder={t('attrs:attrLabel.attrValue')}
-                        onChange={e => handleUpdateValue(e.target.value)}
+                        placeholder={t('attrs:attrLabel.attrLabel')}
+                        onChange={e => handleUpdateLabel(e.target.value)}
                       />
-                    )}
-                  </TableCell>
+                    </TableCell>
 
-                  <TableCell align='right'>
-                    <IconButton onClick={() => handleDeleteAttr(index)}>
-                      <Delete />
-                    </IconButton>
-                  </TableCell>
-                </TableRow>
-              );
-            })}
-          </TableBody>
-        </Table>
+                    <TableCell>
+                      <Select
+                        className={classes.select}
+                        value={type}
+                        variant='outlined'
+                        onChange={e => handleUpdateType(e.target.value)}
+                        autoWidth
+                      >
+                        {Object.values(TEMPLATE_ATTR_TYPES).map(attrType => {
+                          return (
+                            <MenuItem key={attrType.value} value={attrType.value}>
+                              {t(attrType.translation)}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </TableCell>
+
+                    <TableCell>
+                      <Select
+                        className={classes.select}
+                        value={valueType}
+                        variant='outlined'
+                        onChange={e => handleUpdateValueType(e.target.value)}
+                        autoWidth
+                      >
+                        {Object.values(TEMPLATE_ATTR_VALUE_TYPES).map(attrValueType => {
+                          return (
+                            <MenuItem key={attrValueType.value} value={attrValueType.value}>
+                              {t(attrValueType.translation)}
+                            </MenuItem>
+                          );
+                        })}
+                      </Select>
+                    </TableCell>
+
+                    <TableCell>
+                      {isStaticAttr && (
+                        <TextField
+                          className={classes.input}
+                          size='small'
+                          variant='outlined'
+                          value={staticValue}
+                          placeholder={t('attrs:attrLabel.attrValue')}
+                          onChange={e => handleUpdateValue(e.target.value)}
+                        />
+                      )}
+                    </TableCell>
+
+                    <TableCell align='right'>
+                      <IconButton onClick={() => handleDeleteAttr(index)}>
+                        <Delete />
+                      </IconButton>
+                    </TableCell>
+                  </TableRow>
+                );
+              })}
+            </TableBody>
+          </Table>
+        )}
 
         {attrs.length === 0 && (
           <Box className={classes.noAttr}>

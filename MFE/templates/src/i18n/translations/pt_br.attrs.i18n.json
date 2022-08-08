@@ -1,5 +1,8 @@
 {
   "attrValueHint": "Você só pode definir o valor para atributos estáticos.",
+  "attrLabelHint": "Não pode conter espaços em brancos ou caracteres especiais",
+  "attrTypeHint": "<strong>Dinâmico:</strong> <i>Os dados são enviados dos dispositivos para a dojot.</i><br /><strong>Atuador:</strong> <i>Os dados são enviados da dojot para os dispositivos.</i><br /><strong>Estático:</strong> <i>Apenas informativo</i>",
+  "valueTypeHint": "Use Booleano para verdadeiro/falso, Inteiro ou Float para valores numéricos, Texto ou JSON para textos e Geo para geolocalização",
   "attrLabel": {
     "attrLabel": "Nome do Atributo",
     "attrType": "Tipo do Atributo",
