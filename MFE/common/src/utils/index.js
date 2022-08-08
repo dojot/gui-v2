@@ -4,6 +4,6 @@ export * from './module/number';
 export * from './module/compare';
 export * from './module/array';
 export * from './module/schema';
-export * from './module/converters';
+export * from './module/color';
 export * from './module/comparators';
 export * from './module/download';

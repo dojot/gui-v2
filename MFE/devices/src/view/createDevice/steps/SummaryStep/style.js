@@ -9,18 +9,23 @@ export const useSummaryStepStyles = makeStyles(() => ({
   content: {
     flex: 1,
   },
-  input: {
-    width: '100%',
-  },
   deviceNameHint: {
     fontSize: '18px',
+  },
+  warningIcon: {
+    color: '#F1B44C',
   },
   certificateData: {
     display: 'flex',
     alignItems: 'center',
-    flexWrap: 'wrap',
-    '& > :first-child': {
-      minWidth: '16rem',
-    },
+    textDecoration: 'underline',
+    gap: 10,
+    fontSize: 16,
+  },
+  certificateAndKeysTitle: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: 10,
+    fontSize: 16,
   },
 }));

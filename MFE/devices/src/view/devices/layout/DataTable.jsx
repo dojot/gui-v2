@@ -1,7 +1,9 @@
 import React, { useMemo } from 'react';
 
 import {
+  Box,
   Checkbox,
+  Chip,
   IconButton,
   Paper,
   Table,
@@ -17,8 +19,8 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER } from 'sharedComponents/Constants';
-import { getComparator } from 'sharedComponents/Utils';
+import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -33,7 +35,7 @@ const DataTable = ({
   handleFavoriteDevice,
   handleSetDeviceOptionsMenu,
 }) => {
-  const { t } = useTranslation('devices');
+  const { t } = useTranslation(['devices', 'common']);
   const classes = useDataTableStyles();
 
   const headCells = useMemo(
@@ -153,6 +155,7 @@ const DataTable = ({
                 const lastUpdate = device.updated || device.created;
                 const isSelected = selectedDevices.indexOf(device.id) !== -1;
                 const hasCertificate = !!device.certificate?.fingerprint;
+                const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
 
                 const handleClickInThisDevice = () => {
                   handleClickDevice(device);
@@ -207,7 +210,14 @@ const DataTable = ({
                       </Tooltip>
                     </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{device.label}</TableCell>
+                    <TableCell className={classes.clickableCell}>
+                      <Box mr={isNew ? 1 : 0} component='span'>
+                        {device.label}
+                      </Box>
+
+                      {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
+                    </TableCell>
+
                     <TableCell className={classes.clickableCell}>{device.id}</TableCell>
                     <TableCell className={classes.clickableCell}>
                       {device.attrs?.length || 0}

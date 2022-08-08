@@ -49,6 +49,11 @@ export const useSecurityStepStyles = makeStyles(theme => ({
 }));
 
 export const useSecurityTableStyles = makeStyles(theme => ({
+  table: {
+    '@media only screen and (max-width: 1164px)': {
+      tableLayout: 'fixed',
+    },
+  },
   tableHead: {
     background: theme.palette.background.shade[500],
     height: '60px',

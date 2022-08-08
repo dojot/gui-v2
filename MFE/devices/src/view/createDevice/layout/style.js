@@ -5,13 +5,15 @@ export const useActionButtonStyles = makeStyles(() => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'flex-end',
-    margin: '0 -1rem',
-    '& > *': {
-      margin: '0 1rem',
-    },
   },
-  cancelButtonLeftAligned: {
+  cancelButton: {
     marginRight: 'auto',
+  },
+  backButton: {
+    marginLeft: '1rem',
+  },
+  nextButton: {
+    marginLeft: '1rem',
   },
 }));
 

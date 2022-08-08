@@ -10,10 +10,12 @@ export const getTemplatesList = (page, filter) => {
         templates {
           id
           label
+          created
           attrs {
             id
             type
             label
+            created
             valueType
             isDynamic
             templateId
@@ -37,10 +39,12 @@ export const getTemplateById = templateId => {
       getTemplateById(templateId: $templateId) {
         id
         label
+        created
         attrs {
           id
           type
           label
+          created
           valueType
           isDynamic
           templateId

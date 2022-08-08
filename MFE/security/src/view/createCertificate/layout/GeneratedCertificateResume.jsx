@@ -1,77 +1,50 @@
 import React from 'react';
 
 import { Link, Typography, Box } from '@material-ui/core';
+import { CloudDownloadTwoTone, WarningTwoTone } from '@material-ui/icons';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
+import b64ToBlob from 'b64-to-blob';
+import fileSaver from 'file-saver';
+import { Trans, useTranslation } from 'react-i18next';
 
-import { downloadTextFile } from 'sharedComponents/Utils';
 import useStyles from './style';
 
 const GeneratedCertificateResume = ({ certificateData }) => {
   const { t } = useTranslation(['createCertificate', 'common']);
   const classes = useStyles();
 
+  const downloadCertificateAndKeys = () => {
+    const blob = b64ToBlob(certificateData.certAndKeysAs64, 'application/zip');
+    fileSaver.saveAs(blob, `${t('generatedCertificateResume.certificateAndKeys')}.zip`);
+  };
+
   return (
     <Box marginBottom={2}>
       <Box marginBottom={3}>
-        <Box component='span' marginRight={1}>
+        <Box
+          component='span'
+          className={classes.certificateAndKeysTitle}
+          marginRight={1}
+          display='flex'
+          alignItems='center'
+          flexGap
+        >
+          <WarningTwoTone className={classes.warningIcon} />
           <Typography component='span'>
-            {t('generatedCertificateResume.certificateAndKeysTitle')}
+            <Trans t={t} i18nKey='generatedCertificateResume.certificateAndKeysTitle' />
           </Typography>
         </Box>
       </Box>
 
-      {!!certificateData?.certificatePem && (
-        <Box className={classes.certificateData}>
-          <Typography>{t('generatedCertificateResume.certificate')}</Typography>
-          <Link
-            href='_'
-            component='button'
-            onClick={() => downloadTextFile('certificate.pem', certificateData.certificatePem)}
-          >
-            {t('common:download')}
-          </Link>
-        </Box>
-      )}
-
-      {!!certificateData?.privateKeyPEM && (
-        <Box className={classes.certificateData}>
-          <Typography>{t('generatedCertificateResume.privateKey')}</Typography>
-          <Link
-            href='_'
-            component='button'
-            onClick={() => downloadTextFile('privateKey.pem', certificateData.privateKeyPEM)}
-          >
-            {t('common:download')}
-          </Link>
-        </Box>
-      )}
-
-      {!!certificateData?.publicKeyPEM && (
-        <Box className={classes.certificateData}>
-          <Typography>{t('generatedCertificateResume.publicKey')}</Typography>
-          <Link
-            href='_'
-            component='button'
-            onClick={() => downloadTextFile('publicKey.pem', certificateData.publicKeyPEM)}
-          >
-            {t('common:download')}
-          </Link>
-        </Box>
-      )}
-
-      {!!certificateData?.caPem && (
-        <Box className={classes.certificateData}>
-          <Typography>{t('generatedCertificateResume.caCertificate')}</Typography>
-          <Link
-            href='_'
-            component='button'
-            onClick={() => downloadTextFile('ca.pem', certificateData.caPem)}
-          >
-            {t('common:download')}
-          </Link>
-        </Box>
-      )}
+      <Link
+        className={classes.certificateData}
+        href='_'
+        component='button'
+        onClick={() => downloadCertificateAndKeys()}
+      >
+        <CloudDownloadTwoTone />
+        <strong>{t('generatedCertificateResume.certificateAndKeys')}.zip</strong>
+      </Link>
     </Box>
   );
 };

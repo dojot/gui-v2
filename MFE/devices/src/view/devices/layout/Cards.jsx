@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { Box, Grid, IconButton, Tooltip, Typography } from '@material-ui/core';
+import { Box, Checkbox, Chip, Grid, IconButton, Tooltip, Typography } from '@material-ui/core';
 import { Check, Close, DevicesOther, Star, StarBorderOutlined } from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataCard } from 'sharedComponents/Cards';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
+import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCardsStyles } from './style';
 
 const Cards = ({
@@ -25,6 +27,7 @@ const Cards = ({
           const lastUpdate = device.updated || device.created;
           const attrsLength = device.attrs?.length || 0;
           const hasCertificate = !!device.certificate?.fingerprint;
+          const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
 
           const handleSeeDeviceDetails = () => {
             handleClickDevice(device);
@@ -52,25 +55,23 @@ const Cards = ({
                 headerIcon={<DevicesOther className={classes.cardIcon} />}
                 headerTitle={<Typography className={classes.cardTitle}>{device.label}</Typography>}
                 footer={
-                  <>
-                    {false && (
-                      // TODO: Show again when you can favorite devices
-                      <Tooltip
-                        title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
-                        placement='top'
-                        arrow
-                      >
-                        <div>
-                          <IconButton onClick={handleFavoriteThisDevice} size='small' disabled>
-                            {device.favorite ? (
-                              <Star style={{ color: '#F1B44C' }} />
-                            ) : (
-                              <StarBorderOutlined />
-                            )}
-                          </IconButton>
-                        </div>
-                      </Tooltip>
-                    )}
+                  <Box className={classes.cardFooter} display='flex' alignItems='center'>
+                    {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
+
+                    <Tooltip
+                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                      placement='top'
+                      arrow
+                    >
+                      <Checkbox
+                        color='default'
+                        size='small'
+                        icon={<StarBorderOutlined />}
+                        checkedIcon={<Star style={{ color: '#F1B44C' }} />}
+                        defaultChecked={device.favorite}
+                        onClick={handleFavoriteThisDevice}
+                      />
+                    </Tooltip>
 
                     <Tooltip
                       title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
@@ -83,7 +84,7 @@ const Cards = ({
                         </IconButton>
                       </div>
                     </Tooltip>
-                  </>
+                  </Box>
                 }
               >
                 <Box marginBottom={1}>
@@ -101,7 +102,7 @@ const Cards = ({
                 </Box>
 
                 {!!lastUpdate && (
-                  <Box>
+                  <Box marginBottom={1}>
                     <Typography variant='body2'>
                       <strong>{moment(lastUpdate).format('L LTS')}</strong>
                     </Typography>
