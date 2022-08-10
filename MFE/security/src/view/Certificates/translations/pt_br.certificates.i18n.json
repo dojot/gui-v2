@@ -16,13 +16,16 @@
   "massActions": "Ações em massa:",
   "hasAssociatedDeviceTooltip": "Possui dispositivo associado",
   "noAssociatedDeviceTooltip": "Não possui dispositivo associado",
-  "validityNotDefined": "Validade Não Definida",
   "dataTableTitle": "Dispositivos",
   "dataLabels": {
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
     "deviceId": "ID do Dispositivo",
-    "validity": "Período de Validade",
+    "validity": {
+      "both": "Período de Validade",
+      "notBefore": "Validade Inicial",
+      "notAfter": "Validade Final"
+    },
     "status": "Status",
     "actions": "Ações"
   },

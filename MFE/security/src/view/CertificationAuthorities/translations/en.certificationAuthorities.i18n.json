@@ -11,11 +11,14 @@
   "numberOfSelectedItems_plural": "{{count}} Selected Rows",
   "labelRowsPerPage": "Items per page:",
   "emptyListMessage": "No CA Found",
-  "validityNotDefined": "Validity Not Defined",
   "dataTableHead": {
     "caFingerprint": "CA Fingerprint",
     "subjectDN": "Subject DN",
-    "validity": "Validity Period",
+    "validity": {
+      "both": "Validity Period",
+      "notBefore": "Initial Validity",
+      "notAfter": "Final Validity"
+    },
     "status": "Status",
     "actions": "Actions"
   },

@@ -39,13 +39,15 @@ const Cards = ({
             >
               <MenuItem value=''>{t('common:none')}</MenuItem>
 
-              {['caFingerprint', 'subjectDN'].map(orderByItem => {
-                return (
-                  <MenuItem key={orderByItem} value={orderByItem}>
-                    {t(`dataTableHead.${orderByItem}`)}
-                  </MenuItem>
-                );
-              })}
+              {['caFingerprint', 'subjectDN', 'validity.notBefore', 'validity.notAfter'].map(
+                orderByItem => {
+                  return (
+                    <MenuItem key={orderByItem} value={orderByItem}>
+                      {t(`dataTableHead.${orderByItem}`)}
+                    </MenuItem>
+                  );
+                },
+              )}
             </TextField>
           </Grid>
 
@@ -108,17 +110,17 @@ const Cards = ({
                   </Typography>
                 </Box>
 
-                <Box marginBottom={1}>
-                  <Typography variant='body2'>{t('dataTableHead.validity')}</Typography>
+                {validityInitialDate && validityFinalDate && (
+                  <Box marginBottom={1}>
+                    <Typography variant='body2'>{t('dataTableHead.validity.both')}</Typography>
 
-                  <Typography variant='body2'>
-                    <strong>
-                      {validityInitialDate && validityFinalDate
-                        ? `${validityInitialDate} - ${validityFinalDate}`
-                        : t('validityNotDefined')}
-                    </strong>
-                  </Typography>
-                </Box>
+                    <Typography variant='body2'>
+                      <strong>
+                        {validityInitialDate} - {validityFinalDate}
+                      </strong>
+                    </Typography>
+                  </Box>
+                )}
 
                 <Box marginBottom={1}>
                   <Chip

@@ -56,9 +56,12 @@ const DataTable = ({
         disableOrderBy: true,
       },
       {
-        id: 'validity',
-        label: t('dataLabels.validity'),
-        disableOrderBy: true,
+        id: 'validity.notBefore',
+        label: t('dataLabels.validity.notBefore'),
+      },
+      {
+        id: 'validity.notAfter',
+        label: t('dataLabels.validity.notAfter'),
       },
       {
         id: 'status',
@@ -210,11 +213,9 @@ const DataTable = ({
                     )}
                   </TableCell>
 
-                  <TableCell>
-                    {validityInitialDate && validityFinalDate
-                      ? `${validityInitialDate} - ${validityFinalDate}`
-                      : t('validityNotDefined')}
-                  </TableCell>
+                  <TableCell>{validityInitialDate}</TableCell>
+
+                  <TableCell>{validityFinalDate}</TableCell>
 
                   <TableCell>
                     <Chip

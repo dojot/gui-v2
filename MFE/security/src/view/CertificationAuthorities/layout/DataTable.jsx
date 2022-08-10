@@ -50,9 +50,12 @@ const DataTable = ({
         label: t('dataTableHead.subjectDN'),
       },
       {
-        id: 'validity',
-        label: t('dataTableHead.validity'),
-        disableOrderBy: true,
+        id: 'validity.notBefore',
+        label: t('dataTableHead.validity.notBefore'),
+      },
+      {
+        id: 'validity.notAfter',
+        label: t('dataTableHead.validity.notAfter'),
       },
       {
         id: 'status',
@@ -200,11 +203,9 @@ const DataTable = ({
                     </Tooltip>
                   </TableCell>
 
-                  <TableCell>
-                    {validityInitialDate && validityFinalDate
-                      ? `${validityInitialDate} - ${validityFinalDate}`
-                      : t('validityNotDefined')}
-                  </TableCell>
+                  <TableCell>{validityInitialDate}</TableCell>
+
+                  <TableCell>{validityFinalDate}</TableCell>
 
                   <TableCell>
                     <Chip

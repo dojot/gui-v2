@@ -85,7 +85,7 @@ export const useSecurityTableStyles = makeStyles(theme => ({
     justifyContent: 'center',
   },
   truncatedText: {
-    maxWidth: '200px',
+    maxWidth: '125px',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',

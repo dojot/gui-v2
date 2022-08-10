@@ -16,13 +16,16 @@
   "massActions": "Mass actions:",
   "hasAssociatedDeviceTooltip": "Has associated device",
   "noAssociatedDeviceTooltip": "No associated device",
-  "validityNotDefined": "Validity Not Defined",
   "dataTableTitle": "Devices",
   "dataLabels": {
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
     "deviceId": "Device ID",
-    "validity": "Validity Period",
+    "validity": {
+      "both": "Validity Period",
+      "notBefore": "Initial Validity",
+      "notAfter": "Final Validity"
+    },
     "status": "Status",
     "actions": "Actions"
   },
