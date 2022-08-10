@@ -64,15 +64,6 @@ const DataTable = ({
     [t],
   );
 
-  const valueFormatters = useMemo(
-    () => ({
-      attrsLength(template) {
-        return template.attrs?.length || 0;
-      },
-    }),
-    [],
-  );
-
   const handleRequestSort = (_, property) => {
     const isSameProperty = orderBy === property;
     if (isSameProperty) {
