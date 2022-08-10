@@ -20,7 +20,7 @@ export const FormCheckBox = ({ input: { onChange, checked }, disabled, callback 
       disableRipple
       onChange={onChangeInternal}
       inputProps={{ 'aria-labelledby': 'checkbox' }}
-      color='primary'
+      color='secondary'
     />
   );
 };

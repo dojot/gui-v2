@@ -76,6 +76,7 @@ const Templates = ({ validate, ...otherProps }) => {
                   <ListItemIcon>
                     <Field
                       type='checkbox'
+                      color='secondary'
                       name={`${otherProps.name}.chk-${id}`}
                       component={FormCheckBox}
                       format={item => (item ? item.id === id : false)}

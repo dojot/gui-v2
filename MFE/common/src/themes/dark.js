@@ -5,7 +5,7 @@ const dark = createTheme({
     type: 'dark',
     primary: {
       light: '#5B73E8',
-      main: '#5B73E8',
+      main: '#005bd1',
       dark: '#5B73E8',
     },
     secondary: {

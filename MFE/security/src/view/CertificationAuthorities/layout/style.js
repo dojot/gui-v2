@@ -28,6 +28,9 @@ export const useSearchBarStyles = makeStyles(theme => ({
       color: theme.palette.primary.contrastText,
     },
   },
+  tooltip: {
+    fontSize: '1rem',
+  },
 }));
 
 export const useCardsStyles = makeStyles(() => ({

@@ -11,13 +11,8 @@ import Wizard from '../../../wizard';
 import { useStyles } from './style';
 
 const Templates = ({ validate, ...otherProps }) => {
-  const {
-    paginatorData,
-    setPaginatorData,
-    setCurrentPage,
-    setPageSize,
-    setDisablePaginator,
-  } = usePaginator();
+  const { paginatorData, setPaginatorData, setCurrentPage, setPageSize, setDisablePaginator } =
+    usePaginator();
 
   useEffect(() => {
     setDisablePaginator(true);
@@ -75,6 +70,7 @@ const Templates = ({ validate, ...otherProps }) => {
                     <ListItemIcon>
                       <Field
                         type='checkbox'
+                        color='secondary'
                         name={`${otherProps.name}.chk-${id}`}
                         component={FormCheckBox}
                         format={item => (item ? item.id === id : false)}
