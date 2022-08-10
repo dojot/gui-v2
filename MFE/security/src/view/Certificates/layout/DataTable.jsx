@@ -225,7 +225,10 @@ const DataTable = ({
 
                     <TableCell>
                       {certificate.belongsTo?.device ? (
-                        <RouterLink to={`/devices/${certificate.belongsTo.device}`}>
+                        <RouterLink
+                          to={`/devices/${certificate.belongsTo.device}`}
+                          className={classes.deviceIdLink}
+                        >
                           {certificate.belongsTo.device}
                         </RouterLink>
                       ) : (
@@ -241,7 +244,7 @@ const DataTable = ({
 
                     <TableCell>
                       <Chip
-                        style={{ background: statusColor, color: 'white' }}
+                        style={{ background: statusColor, color: '#22252F' }}
                         label={statusText}
                         size='small'
                       />

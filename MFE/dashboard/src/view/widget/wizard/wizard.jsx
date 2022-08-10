@@ -140,7 +140,7 @@ const Wizard = ({ initialValues, ...props }) => {
                 <Button
                   className={classes.footerButton}
                   type='button'
-                  color='primary'
+                  color='secondary'
                   variant='text'
                   size='large'
                   disableElevation
@@ -154,7 +154,7 @@ const Wizard = ({ initialValues, ...props }) => {
                     <Button
                       className={classes.footerButton}
                       type='button'
-                      color='primary'
+                      color='secondary'
                       variant='outlined'
                       size='large'
                       disableElevation
@@ -168,7 +168,7 @@ const Wizard = ({ initialValues, ...props }) => {
                       className={classes.footerButton}
                       type='submit'
                       size='large'
-                      color='primary'
+                      color='secondary'
                       variant='contained'
                       disableElevation
                     >

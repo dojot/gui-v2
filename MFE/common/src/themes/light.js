@@ -4,14 +4,14 @@ import red from '@material-ui/core/colors/red';
 const light = createTheme({
   palette: {
     primary: {
-      light: '#4788dc',
-      main: '#4788dc',
-      dark: '#4788dc',
+      light: '#002e99',
+      main: '#00226f',
+      dark: '#00174d',
     },
     secondary: {
       main: '#19857b',
-      light: '#19857b',
-      dark: '#19857b',
+      light: '#21ab9d',
+      dark: '#146b62',
     },
     error: {
       main: red.A400,
