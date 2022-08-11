@@ -76,13 +76,11 @@
     "final date": "Data Final",
     "invalid interval": "Período inválido"
   },
-  "general": {
+  "summary": {
+    "attributes": "Atributos",
     "name": "Nome",
     "description": "Descrição",
     "nameRequired": "Nome é obrigatório",
     "enterName": "Insira o nome do painel"
-  },
-  "summary": {
-    "attributes": "Atributos"
   }
 }
