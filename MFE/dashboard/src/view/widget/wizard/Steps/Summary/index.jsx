@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
 import { Divider, Grid } from '@material-ui/core';
 import { TextField, makeValidate } from 'mui-rff';
