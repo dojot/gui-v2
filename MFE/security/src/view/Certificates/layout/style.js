@@ -101,6 +101,9 @@ export const useDataTableStyles = makeStyles(theme => ({
     display: 'flex',
     alignItems: 'center',
   },
+  deviceIdLink: {
+    color: theme.palette.primary.main,
+  },
 }));
 
 export const useAssociateToDeviceModalStyles = makeStyles(theme => ({

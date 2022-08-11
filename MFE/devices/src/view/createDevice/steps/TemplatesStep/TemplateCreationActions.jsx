@@ -20,7 +20,7 @@ const TemplateCreationActions = ({ canSaveNewTemplate, handleDiscardNewTemplate 
         size='large'
         type='submit'
         variant='text'
-        color='primary'
+        color='secondary'
         disabled={!canSaveNewTemplate}
       >
         {t('templatesStep.saveNewTemplate')}
