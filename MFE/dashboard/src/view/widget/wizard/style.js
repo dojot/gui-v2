@@ -6,7 +6,7 @@ export default makeStyles(theme => ({
     marginBottom: 50,
     minHeight: '100%',
     display: 'flex',
-    flexDirection: 'row',
+    flexDirection: 'column',
   },
   backButton: {
     marginRight: theme.spacing(1),
@@ -52,7 +52,15 @@ export default makeStyles(theme => ({
       duration: theme.transitions.duration.enteringScreen,
     }),
   },
+  stepperWrapper: {
+    width: '100%',
+    maxWidth: '1268px',
+    margin: '0 auto',
+    marginBottom: '24px',
+    padding: '16px 0',
+  },
   stepper: {
+    padding: 0,
     background: theme.palette.background.default,
   },
   developmentContainer: {

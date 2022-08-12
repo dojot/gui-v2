@@ -162,7 +162,7 @@ const CreateDevice = () => {
 
       <Box className={classes.container}>
         <Grid className={classes.content} alignItems='stretch' wrap='nowrap' container>
-          <Grid item xs='auto'>
+          <Grid item xs='auto' className={classes.stepperWrapper}>
             <DeviceWizardStepper currentStep={currentStep} />
           </Grid>
 

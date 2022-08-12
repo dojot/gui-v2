@@ -9,12 +9,13 @@ export default makeStyles(theme => ({
     '&.shorted': {
       opacity: 1,
       flex: 'none',
-      height: 20,
+      width: 20,
+      height: 2,
     },
     '& div': {
-      height: '90%',
-      borderLeft: '2px solid',
-      borderLeftColor: theme.palette.primary.main,
+      width: '90% !important',
+      height: 2,
+      backgroundColor: theme.palette.primary.main,
       marginLeft: '12px',
     },
   },
