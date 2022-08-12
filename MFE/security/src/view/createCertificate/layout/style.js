@@ -2,7 +2,7 @@ import { makeStyles } from '@material-ui/core/styles';
 
 export default makeStyles(theme => ({
   csrHelpLink: {
-    color: '#F1B44C',
+    color: theme.palette.secondary.main,
     textDecoration: 'underline',
     padding: theme.spacing(2),
     cursor: 'pointer',

@@ -8,11 +8,11 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
   const tableID = WIDGET.TABLE;
 
   const generateTableConfig = useCallback(state => {
-    const { attributes, general: generalState } = state;
+    const { attributes, name, description } = state;
 
     const meta = {
-      title: generalState.name || '',
-      subTitle: generalState.description || '',
+      title: name || '',
+      subTitle: description || '',
     };
 
     const table = object2Array(attributes).map(item => ({

@@ -15,7 +15,7 @@ export default makeStyles(theme => ({
     '& div': {
       width: '90% !important',
       height: 2,
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.dark,
       marginLeft: '12px',
     },
   },

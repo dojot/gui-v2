@@ -76,13 +76,7 @@ const TemplateCreation = ({
       </Box>
 
       <Box marginBottom={2}>
-        <Button
-          className={classes.createAttButton}
-          variant='outlined'
-          color='secondary'
-          size='large'
-          onClick={handleCreateAttr}
-        >
+        <Button color='secondary' variant='outlined' size='large' onClick={handleCreateAttr}>
           {t('createAttrButton')}
         </Button>
       </Box>
