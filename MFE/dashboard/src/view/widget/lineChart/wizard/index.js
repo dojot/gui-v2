@@ -11,17 +11,15 @@ import useLine from '../../wizard/hooks/useLine';
 import {
   Attributes,
   Devices,
-  General,
   Summary,
   Filters,
-  generalValidates,
   deviceValidates,
   attrValidates,
+  summaryValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [
-  { label: 'steps.general', key: uuidv4() },
   { label: 'steps.devices', key: uuidv4() },
   { label: 'steps.attributes', key: uuidv4() },
   { label: 'steps.filters', key: uuidv4() },
@@ -55,10 +53,8 @@ const LineWizard = ({
   };
 
   const initialState = {
-    general: {
-      name: '',
-      description: '',
-    },
+    name: '',
+    description: '',
     selector: SOURCE.DEVICE,
     devices: {},
     templates: {},
@@ -82,7 +78,6 @@ const LineWizard = ({
       steps={stepsList}
       headerTitle={title}
     >
-      <General validate={generalValidates} name='general' />
       <Devices validate={deviceValidates} name='devices' />
       <Attributes
         validate={attrValidates}
@@ -94,7 +89,7 @@ const LineWizard = ({
         ]}
       />
       <Filters validate={null} name='filters' />
-      <Summary />
+      <Summary validate={summaryValidates} name='summary' />
     </Wizard>
   );
 };
