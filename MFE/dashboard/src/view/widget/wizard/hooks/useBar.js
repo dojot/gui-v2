@@ -8,11 +8,11 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
   const barID = WIDGET.BAR;
 
   const generateBarConfig = useCallback(state => {
-    const { attributes, general: generalState } = state;
+    const { attributes, name, description } = state;
 
     const meta = {
-      title: generalState.name || '',
-      subTitle: generalState.description || '',
+      title: name || '',
+      subTitle: description || '',
     };
 
     const bar = object2Array(attributes).map(item => ({

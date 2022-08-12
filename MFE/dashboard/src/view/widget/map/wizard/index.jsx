@@ -10,11 +10,10 @@ import { v4 as uuidv4 } from 'uuid';
 import { useMap } from '../../wizard/hooks';
 import {
   Attributes,
-  General,
   Summary,
   RealtimeFilter,
-  generalValidates,
   attrValidates,
+  summaryValidates,
 } from '../../wizard/Steps';
 import Selector, {
   selectorValidates,
@@ -22,7 +21,6 @@ import Selector, {
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [
-  { label: 'steps.general', key: uuidv4() },
   { label: 'steps.devices', key: uuidv4() },
   { label: 'steps.attributes', key: uuidv4() },
   { label: 'steps.filters', key: uuidv4() },
@@ -78,7 +76,6 @@ const MapWizard = ({
       steps={stepsList}
       headerTitle={title}
     >
-      <General validate={generalValidates} name='general' />
       <Selector validate={selectorValidates} />
       <Attributes
         validate={attrValidates}
@@ -86,7 +83,7 @@ const MapWizard = ({
         acceptedTypes={[TEMPLATE_ATTR_VALUE_TYPES.GEO_POINT.value]}
       />
       <RealtimeFilter validate={null} name='filters' />
-      <Summary />
+      <Summary validate={summaryValidates} name='summary' />
     </Wizard>
   );
 };

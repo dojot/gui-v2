@@ -35,7 +35,7 @@ const ActionButtons = ({
         <Button
           className={classes.backButton}
           size='large'
-          color='primary'
+          color='secondary'
           variant='outlined'
           disabled={isBackButtonDisabled}
           onClick={handleClickBackButton}
@@ -47,7 +47,7 @@ const ActionButtons = ({
       <Button
         className={classes.nextButton}
         size='large'
-        color='primary'
+        color='secondary'
         variant='contained'
         onClick={handleClickNextButton}
         disabled={isNextButtonDisabled}
