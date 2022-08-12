@@ -100,9 +100,9 @@ const CreateCertificateCSR = ({
           <Typography align='right'>
             <Button
               className={classes.generateCertificateButton}
-              variant='contained'
+              variant='outlined'
               disabled={!csrPEM}
-              color='primary'
+              color='secondary'
               type='submit'
             >
               {t('createCertificateCSR.generateCertificate')}

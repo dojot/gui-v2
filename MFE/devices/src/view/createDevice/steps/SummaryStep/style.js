@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core/styles';
 
-export const useSummaryStepStyles = makeStyles(() => ({
+export const useSummaryStepStyles = makeStyles(theme => ({
   container: {
     display: 'flex',
     flexDirection: 'column',
@@ -21,6 +21,7 @@ export const useSummaryStepStyles = makeStyles(() => ({
     textDecoration: 'underline',
     gap: 10,
     fontSize: 16,
+    color: theme.palette.primary.light,
   },
   certificateAndKeysTitle: {
     display: 'flex',
