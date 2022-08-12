@@ -52,8 +52,8 @@ export const useStyles = makeStyles(theme => {
     menuClosedItem: {
       borderRadius: 100,
       margin: theme.spacing(0, 1.31, 1, 1.31),
-      paddingRight: 12,
-      paddingLeft: 12,
+      paddingRight: 10,
+      paddingLeft: 10,
       transition: theme.transitions.create(['borderRadius', 'margin'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
