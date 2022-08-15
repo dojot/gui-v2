@@ -22,6 +22,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import { TEMPLATE_ATTR_TYPES, TEMPLATE_ATTR_VALUE_TYPES } from '../../../constants';
 import { useStyles } from './style';
+import AttributeInputLabel from './AttributeInputLabel';
 
 const TemplateCreation = ({
   className,
@@ -38,8 +39,6 @@ const TemplateCreation = ({
 }) => {
   const { t } = useTranslation(['templateCreation', 'attrs']);
   const classes = useStyles();
-
-  const [attrLabelError, setAttrLabelError] = useState(false);
 
   const handleClearTemplateLabel = () => {
     setTemplateLabel('');
@@ -90,6 +89,7 @@ const TemplateCreation = ({
               <TableRow>
                 <TableCell>
                   <Tooltip
+                    arrow
                     classes={{ tooltip: classes.tooltip }}
                     title={<Trans t={t} i18nKey='attrs:attrLabelHint' />}
                     placement='top-start'
@@ -106,6 +106,7 @@ const TemplateCreation = ({
 
                 <TableCell>
                   <Tooltip
+                    arrow
                     classes={{ tooltip: classes.tooltip }}
                     title={<Trans t={t} i18nKey='attrs:attrTypeHint' />}
                     placement='top-start'
@@ -122,6 +123,7 @@ const TemplateCreation = ({
 
                 <TableCell>
                   <Tooltip
+                    arrow
                     classes={{ tooltip: classes.tooltip }}
                     title={t('attrs:valueTypeHint')}
                     placement='top-start'
@@ -138,6 +140,7 @@ const TemplateCreation = ({
 
                 <TableCell>
                   <Tooltip
+                    arrow
                     classes={{ tooltip: classes.tooltip }}
                     title={t('attrs:attrValueHint')}
                     placement='top-start'
@@ -159,14 +162,6 @@ const TemplateCreation = ({
                 const isStaticAttr = type === TEMPLATE_ATTR_TYPES.STATIC.value;
 
                 const handleUpdateLabel = newLabel => {
-                  const reAttrLabel = /^[0-9a-zA-Z-_]+$/;
-
-                  if (newLabel.match(reAttrLabel)) {
-                    setAttrLabelError(false);
-                  } else {
-                    setAttrLabelError(true);
-                  }
-
                   handleUpdateAttr(index, 'label', newLabel);
                 };
 
@@ -187,19 +182,17 @@ const TemplateCreation = ({
 
                 return (
                   <TableRow key={id}>
-                    <TableCell>
-                      <TextField
+                    <TableCell className={classes.tableCell}>
+                      <AttributeInputLabel
                         className={classes.input}
-                        error={attrLabelError}
-                        size='small'
                         value={label}
-                        variant='outlined'
                         placeholder={t('attrs:attrLabel.attrLabel')}
-                        onChange={e => handleUpdateLabel(e.target.value)}
+                        handleUpdateLabel={handleUpdateLabel}
+                        helperText={t('attrs:attrLabelHint')}
                       />
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Select
                         className={classes.select}
                         value={type}
@@ -217,7 +210,7 @@ const TemplateCreation = ({
                       </Select>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       <Select
                         className={classes.select}
                         value={valueType}
@@ -235,7 +228,7 @@ const TemplateCreation = ({
                       </Select>
                     </TableCell>
 
-                    <TableCell>
+                    <TableCell className={classes.tableCell}>
                       {isStaticAttr && (
                         <TextField
                           className={classes.input}
