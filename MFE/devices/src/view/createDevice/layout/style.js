@@ -22,6 +22,6 @@ export const useDeviceWizardStepperStyles = makeStyles(theme => ({
     height: '100%',
     maxHeight: '100vh',
     background: theme.palette.background.default,
-    padding: '8px',
+    padding: '24px 8px',
   },
 }));
