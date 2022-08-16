@@ -58,7 +58,7 @@ export default makeStyles(theme => ({
     margin: '0 auto',
   },
   stepper: {
-    padding: '8px',
+    padding: '24px 8px',
     background: theme.palette.background.default,
   },
   developmentContainer: {
