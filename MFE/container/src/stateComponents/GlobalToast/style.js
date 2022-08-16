@@ -30,8 +30,8 @@ export const useStyles = makeStyles(theme => ({
     paddingLeft: 16,
   },
   text: { padding: '8px 0' },
-  info: { background: '#85baff' },
-  success: { background: '#78de7d' },
-  warning: { background: '#ffdf6b' },
-  error: { background: '#ff807a' },
+  info: { background: theme.palette.info.main },
+  success: { background: theme.palette.success.main },
+  warning: { background: theme.palette.warning.main },
+  error: { background: theme.palette.error.main },
 }));

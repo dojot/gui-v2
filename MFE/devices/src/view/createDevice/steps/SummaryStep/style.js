@@ -13,7 +13,7 @@ export const useSummaryStepStyles = makeStyles(theme => ({
     fontSize: '18px',
   },
   warningIcon: {
-    color: '#F1B44C',
+    color: theme.palette.warning.dark,
   },
   certificateData: {
     display: 'flex',

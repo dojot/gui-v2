@@ -73,7 +73,7 @@ export const useStyles = makeStyles(theme => {
     },
     subItemSelected: {
       backgroundColor: 'transparent !important',
-      color: theme.palette.primary.main,
+      color: theme.palette.primary.light,
     },
     icon: {
       color: theme.palette.text.secondary,

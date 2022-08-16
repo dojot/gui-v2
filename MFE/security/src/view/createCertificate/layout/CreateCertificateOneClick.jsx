@@ -28,7 +28,7 @@ const CreateCertificateOneClick = ({
         {!certificateData ? (
           <Button
             onClick={handleCreateCertificateOneClick}
-            variant='outlined'
+            variant='contained'
             color='secondary'
             size='large'
           >
