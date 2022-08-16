@@ -15,8 +15,6 @@ export default makeStyles(() => ({
     width: '100%',
     maxWidth: '1268px',
     margin: '0 auto',
-    marginBottom: '24px',
-    padding: '16px 0',
   },
   step: {
     display: 'flex',

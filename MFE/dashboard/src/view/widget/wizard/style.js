@@ -56,11 +56,9 @@ export default makeStyles(theme => ({
     width: '100%',
     maxWidth: '1268px',
     margin: '0 auto',
-    marginBottom: '24px',
-    padding: '16px 0',
   },
   stepper: {
-    padding: 0,
+    padding: '8px',
     background: theme.palette.background.default,
   },
   developmentContainer: {
