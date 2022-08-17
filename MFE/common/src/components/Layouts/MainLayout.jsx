@@ -6,10 +6,10 @@ import { Drawer } from 'Components/Drawer';
 import { MENU_ITEMS } from '../../menu';
 
 export default ({ isMenuOpen, children }) => {
-    return (
-        <RootContainer>
-            <Drawer isOpen={isMenuOpen} menuItems={MENU_ITEMS}/>
-            <ContentContainer>{children}</ContentContainer>
-        </RootContainer>
-    );
+  return (
+    <RootContainer>
+      {/* <Drawer isOpen={isMenuOpen} menuItems={MENU_ITEMS}/> */}
+      <ContentContainer isMenuOpen={isMenuOpen}>{children}</ContentContainer>
+    </RootContainer>
+  );
 };
