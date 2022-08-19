@@ -40,4 +40,15 @@ export const useStyles = makeStyles(theme => ({
   tooltip: {
     fontSize: '1rem',
   },
+  attrLabelHelperText: {
+    backgroundColor: theme.palette.background.default,
+    color: `${theme.palette.error.main} !important`,
+    margin: 0,
+  },
+  tableCell: {
+    height: 'auto',
+    verticalAlign: 'top',
+    paddingTop: 10,
+    paddingBottom: 10,
+  },
 }));
