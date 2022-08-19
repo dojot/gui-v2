@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const drawerWidth = 215;
+const appHeaderHeight = 64;
 
 export const useStyles = makeStyles(theme => {
   return {
@@ -10,9 +11,15 @@ export const useStyles = makeStyles(theme => {
       whiteSpace: 'nowrap',
       zIndex: theme.zIndex.drawer + 1,
       overflowX: 'hidden',
+      height: `calc(100vh - ${appHeaderHeight}px)`,
+      bottom: '0px',
+      top: `${appHeaderHeight}px`,
     },
     drawerOpen: {
       width: drawerWidth,
+      height: `calc(100vh - ${appHeaderHeight}px)`,
+      bottom: '0px',
+      top: `${appHeaderHeight}px`,
       transition: theme.transitions.create(['width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.enteringScreen,
@@ -20,6 +27,9 @@ export const useStyles = makeStyles(theme => {
     },
     drawerClose: {
       width: theme.spacing(8) + 1,
+      height: `calc(100vh - ${appHeaderHeight}px)`,
+      bottom: '0px',
+      top: `${appHeaderHeight}px`,
       transition: theme.transitions.create(['width'], {
         easing: theme.transitions.easing.sharp,
         duration: theme.transitions.duration.leavingScreen,
