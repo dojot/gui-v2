@@ -28,7 +28,7 @@ const DataTableHead = ({
         {!disableCheckbox && (
           <TableCell>
             <Checkbox
-              color='primary'
+              color='secondary'
               onChange={onSelectAllClick}
               checked={rowCount > 0 && numSelected === rowCount}
               indeterminate={numSelected > 0 && numSelected < rowCount}

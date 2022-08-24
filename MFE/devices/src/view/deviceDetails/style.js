@@ -56,4 +56,7 @@ export default makeStyles(theme => ({
     fontWeight: 'bold',
     textTransform: 'uppercase',
   },
+  link: {
+    color: theme.palette.primary.light,
+  },
 }));

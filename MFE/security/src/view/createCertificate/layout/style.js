@@ -21,6 +21,7 @@ export default makeStyles(theme => ({
     textDecoration: 'underline',
     gap: 10,
     fontSize: 16,
+    color: theme.palette.primary.light,
   },
   certificateAndKeysTitle: {
     display: 'flex',
@@ -41,6 +42,6 @@ export default makeStyles(theme => ({
     marginLeft: 8,
   },
   warningIcon: {
-    color: '#F1B44C',
+    color: theme.palette.warning.dark,
   },
 }));

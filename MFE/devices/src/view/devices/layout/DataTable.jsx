@@ -188,7 +188,7 @@ const DataTable = ({
                   >
                     <TableCell onClick={handleStopPropagation}>
                       <Checkbox
-                        color='primary'
+                        color='secondary'
                         checked={isSelected}
                         onChange={handleSelectThisRow}
                       />

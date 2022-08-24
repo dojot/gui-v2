@@ -115,4 +115,7 @@ export const useSearchBarStyles = makeStyles(theme => ({
   searchInput: {
     borderRadius: '100px',
   },
+  tooltip: {
+    fontSize: '1rem',
+  },
 }));

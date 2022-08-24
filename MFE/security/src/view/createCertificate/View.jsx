@@ -106,13 +106,13 @@ const CreateCertificate = () => {
         <Box className={classes.footer}>
           {certificateData ? (
             <>
-              <Button variant='text' color='primary' onClick={handleClearState}>
+              <Button variant='text' color='secondary' onClick={handleClearState}>
                 {t('createOtherCertificate')}
               </Button>
 
               <Button
                 variant='contained'
-                color='primary'
+                color='secondary'
                 onClick={handleLeaveCertificateCreation}
                 className={classes.goToCertificatesButton}
               >

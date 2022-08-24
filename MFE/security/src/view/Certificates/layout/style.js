@@ -28,9 +28,12 @@ export const useSearchBarStyles = makeStyles(theme => ({
       color: theme.palette.primary.contrastText,
     },
   },
+  tooltip: {
+    fontSize: '1rem',
+  },
 }));
 
-export const useCardsStyles = makeStyles(() => ({
+export const useCardsStyles = makeStyles(theme => ({
   card: {
     cursor: 'default',
   },
@@ -42,6 +45,9 @@ export const useCardsStyles = makeStyles(() => ({
     fontWeight: 'bold',
     wordBreak: 'break-all',
     paddingRight: '1.4rem',
+  },
+  link: {
+    color: theme.palette.primary.light,
   },
 }));
 
@@ -102,7 +108,7 @@ export const useDataTableStyles = makeStyles(theme => ({
     alignItems: 'center',
   },
   deviceIdLink: {
-    color: theme.palette.primary.main,
+    color: theme.palette.primary.light,
   },
 }));
 

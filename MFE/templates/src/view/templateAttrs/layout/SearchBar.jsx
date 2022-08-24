@@ -23,7 +23,7 @@ const SearchBar = ({
   handleCreateAttr,
   handleChangeViewMode,
 }) => {
-  const { t } = useTranslation('templateAttrs');
+  const { t } = useTranslation(['templateAttrs', 'common']);
   const classes = useSearchBarStyles();
 
   const searchInputRef = useRef(null);
@@ -63,19 +63,23 @@ const SearchBar = ({
   return (
     <Box className={classes.searchContainer} paddingY={1} paddingX={2} margin={0}>
       <Box className={classes.leftSide}>
-        <IconButton
-          color={viewMode === VIEW_MODE.TABLE ? 'primary' : 'default'}
-          onClick={() => handleChangeViewMode(VIEW_MODE.TABLE)}
-        >
-          <List />
-        </IconButton>
+        <Tooltip title={t('common:viewList')} arrow className={classes.tooltip}>
+          <IconButton
+            color={viewMode === VIEW_MODE.TABLE ? 'primary' : 'default'}
+            onClick={() => handleChangeViewMode(VIEW_MODE.TABLE)}
+          >
+            <List />
+          </IconButton>
+        </Tooltip>
 
-        <IconButton
-          color={viewMode === VIEW_MODE.CARD ? 'primary' : 'default'}
-          onClick={() => handleChangeViewMode(VIEW_MODE.CARD)}
-        >
-          <ViewModule />
-        </IconButton>
+        <Tooltip title={t('common:viewGrid')} arrow className={classes.tooltip}>
+          <IconButton
+            color={viewMode === VIEW_MODE.CARD ? 'primary' : 'default'}
+            onClick={() => handleChangeViewMode(VIEW_MODE.CARD)}
+          >
+            <ViewModule />
+          </IconButton>
+        </Tooltip>
 
         <TextField
           inputRef={searchInputRef}

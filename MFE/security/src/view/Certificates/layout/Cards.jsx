@@ -59,7 +59,10 @@ const Cards = ({ certificates, handleSetCertificateOptionsMenu }) => {
                   <Typography variant='body2'>{t('dataLabels.deviceId')}</Typography>
 
                   {certificate.belongsTo?.device ? (
-                    <RouterLink to={`/devices/${certificate.belongsTo.device}`}>
+                    <RouterLink
+                      to={`/devices/${certificate.belongsTo.device}`}
+                      className={classes.link}
+                    >
                       {certificate.belongsTo.device}
                     </RouterLink>
                   ) : (

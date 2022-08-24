@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Link, Typography, Box } from '@material-ui/core';
-import { CloudDownloadTwoTone, WarningTwoTone } from '@material-ui/icons';
+import { CloudDownloadTwoTone, Warning } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import b64ToBlob from 'b64-to-blob';
 import fileSaver from 'file-saver';
@@ -29,7 +29,7 @@ const GeneratedCertificateResume = ({ certificateData }) => {
           alignItems='center'
           flexGap
         >
-          <WarningTwoTone className={classes.warningIcon} />
+          <Warning className={classes.warningIcon} />
           <Typography component='span'>
             <Trans t={t} i18nKey='generatedCertificateResume.certificateAndKeysTitle' />
           </Typography>

@@ -29,7 +29,7 @@ const CreateCertificateOneClick = ({
           <Button
             onClick={handleCreateCertificateOneClick}
             variant='contained'
-            color='primary'
+            color='secondary'
             size='large'
           >
             {t('createCertificateOneClick.createWithOneClick')}

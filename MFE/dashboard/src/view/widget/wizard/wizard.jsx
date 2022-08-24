@@ -182,7 +182,7 @@ const Wizard = ({ initialValues, ...props }) => {
                       className={classes.footerButton}
                       type='submit'
                       disabled={submitting}
-                      color='primary'
+                      color='secondary'
                       variant='contained'
                       size='large'
                       disableElevation
