@@ -16,7 +16,7 @@ const DeviceWizardStepper = ({ currentStep }) => {
     <Stepper
       className={classes.stepper}
       activeStep={currentStep}
-      orientation='vertical'
+      orientation='horizontal'
       connector={<StepLine />}
     >
       {STEPS.map(step => {

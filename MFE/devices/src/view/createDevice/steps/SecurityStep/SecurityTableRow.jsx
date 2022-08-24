@@ -31,7 +31,7 @@ const SecurityTableRow = ({
     >
       <TableCell>
         <Radio
-          color='primary'
+          color='secondary'
           checked={isSelected}
           onChange={handleSelectCertificate}
           disabled={!handleSelectCertificate}

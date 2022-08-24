@@ -102,7 +102,7 @@ const CreateCertificateCSR = ({
               className={classes.generateCertificateButton}
               variant='contained'
               disabled={!csrPEM}
-              color='primary'
+              color='secondary'
               type='submit'
             >
               {t('createCertificateCSR.generateCertificate')}

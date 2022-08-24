@@ -14,6 +14,12 @@ export default makeStyles(theme => ({
   title: {
     padding: theme.spacing(0, 2),
   },
+  subTitle: {
+    color: theme.palette.primary.light,
+  },
+  caption: {
+    color: theme.palette.primary.light,
+  },
   icon: {
     transition: 'transform .2s ease-in-out',
     transform: ({ isContentVisible }) => {

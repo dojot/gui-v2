@@ -8,11 +8,11 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
   const areaID = WIDGET.AREA;
 
   const generateAreaConfig = useCallback(state => {
-    const { attributes, general: generalState } = state;
+    const { attributes, name, description } = state;
 
     const meta = {
-      title: generalState.name || '',
-      subTitle: generalState.description || '',
+      title: name || '',
+      subTitle: description || '',
     };
 
     const areaProps = object2Array(attributes).map(item => ({

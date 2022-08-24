@@ -288,6 +288,7 @@ const ItemRow = ({
         <ListItemIcon>
           <Field
             type='checkbox'
+            color='secondary'
             name={`${name}.${attributeId}`}
             component={FormCheckBox}
             format={handleFormat}

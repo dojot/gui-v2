@@ -5,13 +5,10 @@ const drawerWidth = 215;
 export const useStyles = makeStyles(theme => ({
   appBar: {
     backgroundColor: theme.palette.header,
-    zIndex: theme.zIndex.drawer,
+    zIndex: theme.zIndex.drawer + 2,
     boxShadow: 'none',
-    width: `calc(100% - ${theme.spacing(8) + 1}px)`,
-    transition: theme.transitions.create(['width', 'margin'], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+    width: '100%',
+    borderBottom: theme.palette.type === 'dark' ? `solid 1px ${theme.palette.divider}` : 'none',
   },
   appBarShift: {
     backgroundColor: theme.palette.primary,
@@ -38,6 +35,6 @@ export const useStyles = makeStyles(theme => ({
     ...theme.mixins.toolbar,
   },
   title: {
-    flexGrow: 1,
+    marginLeft: '8px',
   },
 }));

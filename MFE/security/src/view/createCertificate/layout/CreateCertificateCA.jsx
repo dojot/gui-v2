@@ -64,7 +64,7 @@ const CreateCertificateCA = ({
               className={classes.generateCertificateButton}
               disabled={!certificateChain}
               variant='contained'
-              color='primary'
+              color='secondary'
               type='submit'
             >
               {t('createCertificateCA.generateCertificate')}

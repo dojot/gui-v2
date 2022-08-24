@@ -4,7 +4,7 @@ export default makeStyles(theme => ({
   CustomStepIcon: {
     backgroundColor: 'transparent',
     border: '2px solid',
-    borderColor: theme.palette.primary.main,
+    borderColor: theme.palette.secondary.dark,
     borderRadius: '50%',
     width: 24,
     height: 24,
@@ -15,13 +15,13 @@ export default makeStyles(theme => ({
     opacity: '0.5',
 
     '&.completed': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.dark,
       color: theme.palette.primary.contrastText,
       borderColor: 'transparent',
       opacity: '1',
     },
     '&.active': {
-      backgroundColor: theme.palette.primary.main,
+      backgroundColor: theme.palette.secondary.dark,
       color: theme.palette.primary.contrastText,
       borderColor: 'transparent',
       transform: 'scale(1.2)',
