@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Button, Step, StepLabel, Stepper } from '@material-ui/core';
+import { Button, Step, StepLabel, Stepper, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { Form } from 'react-final-form';
 import { useTranslation } from 'react-i18next';
@@ -87,20 +87,22 @@ const Wizard = ({ initialValues, ...props }) => {
       />
 
       <div className={classes.root}>
-        <Stepper
-          className={classes.stepper}
-          activeStep={page}
-          orientation='vertical'
-          connector={<StepLine />}
-        >
-          {steps.map(({ label, key }) => (
-            <Step key={key}>
-              <StepLabel StepIconComponent={StepIcon}>
-                {t([`dashboard:${label}`, 'undefined'])}
-              </StepLabel>
-            </Step>
-          ))}
-        </Stepper>
+        <Box className={classes.stepperWrapper}>
+          <Stepper
+            className={classes.stepper}
+            activeStep={page}
+            orientation='horizontal'
+            connector={<StepLine />}
+          >
+            {steps.map(({ label, key }) => (
+              <Step key={key}>
+                <StepLabel StepIconComponent={StepIcon}>
+                  {t([`dashboard:${label}`, 'undefined'])}
+                </StepLabel>
+              </Step>
+            ))}
+          </Stepper>
+        </Box>
 
         <Form
           initialValues={formValues}
@@ -140,7 +142,7 @@ const Wizard = ({ initialValues, ...props }) => {
                 <Button
                   className={classes.footerButton}
                   type='button'
-                  color='primary'
+                  color='secondary'
                   variant='text'
                   size='large'
                   disableElevation
@@ -154,7 +156,7 @@ const Wizard = ({ initialValues, ...props }) => {
                     <Button
                       className={classes.footerButton}
                       type='button'
-                      color='primary'
+                      color='secondary'
                       variant='outlined'
                       size='large'
                       disableElevation
@@ -168,7 +170,7 @@ const Wizard = ({ initialValues, ...props }) => {
                       className={classes.footerButton}
                       type='submit'
                       size='large'
-                      color='primary'
+                      color='secondary'
                       variant='contained'
                       disableElevation
                     >
@@ -180,7 +182,7 @@ const Wizard = ({ initialValues, ...props }) => {
                       className={classes.footerButton}
                       type='submit'
                       disabled={submitting}
-                      color='primary'
+                      color='secondary'
                       variant='contained'
                       size='large'
                       disableElevation

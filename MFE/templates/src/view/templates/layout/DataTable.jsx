@@ -157,7 +157,11 @@ const DataTable = ({
                   hover
                 >
                   <TableCell onClick={handleStopPropagation}>
-                    <Checkbox color='primary' checked={isSelected} onChange={handleSelectThisRow} />
+                    <Checkbox
+                      color='secondary'
+                      checked={isSelected}
+                      onChange={handleSelectThisRow}
+                    />
                   </TableCell>
 
                   <TableCell className={classes.clickableCell}>

@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Box, IconButton, InputAdornment, Link, TextField, Typography } from '@material-ui/core';
-import { Close, WarningTwoTone, CloudDownloadTwoTone } from '@material-ui/icons';
+import { Close, Warning, CloudDownloadTwoTone } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import b64ToBlob from 'b64-to-blob';
 import fileSaver from 'file-saver';
@@ -101,7 +101,7 @@ const SummaryStep = ({
                 alignItems='center'
                 flexGap
               >
-                <WarningTwoTone className={classes.warningIcon} />
+                <Warning className={classes.warningIcon} />
                 <Typography component='span'>
                   <Trans t={t} i18nKey='summaryStep.certificateAndKeysWarning' />
                 </Typography>

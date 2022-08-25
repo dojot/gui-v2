@@ -1,6 +1,15 @@
 import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
-import { Grid, Divider, InputAdornment, List, ListItem, ListItemIcon, ListItemText, TextField } from '@material-ui/core';
+import {
+  Grid,
+  Divider,
+  InputAdornment,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  TextField,
+} from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import { FormCheckBox } from 'sharedComponents/Checkbox';
 import { CircularIndeterminate } from 'sharedComponents/Loading';
@@ -105,6 +114,7 @@ const Devices = ({ validate, ...otherProps }) => {
                   <ListItemIcon>
                     <Field
                       type='checkbox'
+                      color='secondary'
                       name={`${otherProps.name}.chk-${id}`}
                       component={FormCheckBox}
                       format={item => (item ? item.id === id : false)}

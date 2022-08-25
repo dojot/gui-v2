@@ -1,40 +1,40 @@
 import { createTheme } from '@material-ui/core';
 
-const theme = createTheme({
+const dark = createTheme({
   palette: {
     type: 'dark',
     primary: {
-      light: '#5B73E8',
-      main: '#5B73E8',
-      dark: '#5B73E8',
+      light: '#85BAFF',
+      main: '#005bd1',
+      dark: '#004db3',
     },
     secondary: {
-      main: '#34C38F',
-      light: '#34C38F',
-      dark: '#34C38F',
+      main: '#72dab4',
+      light: '#56D2A5',
+      dark: '#36c993',
     },
     error: {
-      light: '#e57373',
-      main: '#f44336',
-      dark: '#d32f2f',
+      light: '#ff9e99',
+      main: '#ff807a',
+      dark: '#ff554d',
       contrastText: '#fff',
     },
     warning: {
-      light: '#ffb74d',
-      main: '#ff9800',
-      dark: '#f57c00',
+      light: '#ffe999',
+      main: '#ffdf6b',
+      dark: '#ffd84d',
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
     info: {
-      light: '#64b5f6',
-      main: '#2196f3',
-      dark: '#1976d2',
+      light: '#b3d4ff',
+      main: '#85baff',
+      dark: '#66a8ff',
       contrastText: '#fff',
     },
     success: {
-      light: '#81c784',
-      main: '#4caf50',
-      dark: '#388e3c',
+      light: '#98e69c',
+      main: '#78de7d',
+      dark: '#5bd761',
       contrastText: 'rgba(0, 0, 0, 0.87)',
     },
     grey: {
@@ -130,4 +130,4 @@ const theme = createTheme({
   },
 });
 
-export default theme;
+export default dark;

@@ -11,17 +11,15 @@ import useBar from '../../wizard/hooks/useBar';
 import {
   Attributes,
   Devices,
-  General,
   Summary,
   Filters,
-  generalValidates,
   attrValidates,
   deviceValidates,
+  summaryValidates,
 } from '../../wizard/Steps';
 import Wizard from '../../wizard/wizard';
 
 const stepsList = [
-  { label: 'steps.general', key: uuidv4() },
   { label: 'steps.devices', key: uuidv4() },
   { label: 'steps.attributes', key: uuidv4() },
   { label: 'steps.filters', key: uuidv4() },
@@ -82,7 +80,6 @@ const BarWizard = ({
       steps={stepsList}
       headerTitle={title}
     >
-      <General validate={generalValidates} name='general' />
       <Devices validate={deviceValidates} name='devices' />
       <Attributes
         validate={attrValidates}
@@ -94,7 +91,7 @@ const BarWizard = ({
         ]}
       />
       <Filters validate={null} name='filters' />
-      <Summary />
+      <Summary validate={summaryValidates} name='summary' />
     </Wizard>
   );
 };

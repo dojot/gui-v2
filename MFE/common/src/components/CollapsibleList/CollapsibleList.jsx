@@ -48,6 +48,7 @@ const CollapsibleList = ({
                 <Typography
                   component='i'
                   variant='caption'
+                  className={classes.caption}
                   color={isCaptionHighlighted ? 'primary' : 'inherit'}
                 >
                   {isCaptionHighlighted ? <strong>{caption}</strong> : caption}
@@ -57,7 +58,7 @@ const CollapsibleList = ({
           }
           secondary={
             subtitle && (
-              <Typography variant='body2' color='textSecondary'>
+              <Typography variant='body2' className={classes.subTitle}>
                 {subtitle}
               </Typography>
             )

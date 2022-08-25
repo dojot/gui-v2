@@ -194,7 +194,7 @@ const TemplatesTable = ({
               >
                 <TableCell>
                   <Checkbox
-                    color='primary'
+                    color='secondary'
                     checked={isSelected}
                     onChange={handleSelectThisTemplate}
                   />

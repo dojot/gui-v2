@@ -9,11 +9,11 @@ export default (addWidget, addWidgetConfig, addWidgetSaga, generateScheme, addWi
   const mapID = WIDGET.MAP;
 
   const generateMapConfig = useCallback(state => {
-    const { attributes, general: generalState, selector } = state;
+    const { attributes, name, description, selector } = state;
 
     const meta = {
-      title: generalState.name || '',
-      subTitle: generalState.description || '',
+      title: name || '',
+      subTitle: description || '',
     };
 
     let map;

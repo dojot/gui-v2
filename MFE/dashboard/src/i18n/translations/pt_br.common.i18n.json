@@ -31,5 +31,7 @@
   "dojotPageTitle": "Dojot - Do IoT",
   "copiedToClipboard": "Copiado",
   "asc": "Ascendente",
-  "desc": "Descendente"
+  "desc": "Descendente",
+  "viewGrid": "Visualizar em grade",
+  "viewList": "Visualizar em lista"
 }

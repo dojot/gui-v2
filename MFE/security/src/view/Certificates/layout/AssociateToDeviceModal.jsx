@@ -165,6 +165,7 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
                     >
                       <TableCell>
                         <Radio
+                          color='secondary'
                           value={device.id}
                           checked={selectedDeviceId === device.id}
                           onChange={handleChangeSelectedDevice}
