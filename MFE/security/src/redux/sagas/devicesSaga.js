@@ -95,23 +95,18 @@ export function* handleDeleteDevice(action) {
 export function* handleDeleteMultipleDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_DEVICES));
-    const { deviceIdArray, failCallback } = action.payload;
+    const { deviceIdArray } = action.payload;
     const { userName, tenant } = yield call(getUserInformation);
-    const { devicesWithError } = yield call(Device.deleteDevices, deviceIdArray, userName, tenant);
+    yield call(Device.deleteDevices, deviceIdArray, userName, tenant);
     yield call(getCurrentDevicesPageAgain);
-    if (devicesWithError) failCallback(devicesWithError);
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'deleteMultipleDevices',
       type: 'success',
     });
   } catch (e) {
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      message: e.message,
-      i18nMessage: 'deleteMultipleDevices',
-      type: 'error',
-    });
+    const { failCallback } = action.payload;
+    if (e.devices_error) failCallback(e.devices_error);
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_DEVICES));
   }
