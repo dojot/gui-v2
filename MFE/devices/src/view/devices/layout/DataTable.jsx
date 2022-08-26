@@ -99,7 +99,7 @@ const DataTable = ({
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelectedDevices = devices.map(row => row.id);
+      const newSelectedDevices = devices.map(row => row);
       handleSelectDevice(newSelectedDevices);
       return;
     }
@@ -107,12 +107,12 @@ const DataTable = ({
     handleSelectDevice([]);
   };
 
-  const handleSelectRow = id => {
-    const selectedIndex = selectedDevices.indexOf(id);
+  const handleSelectRow = device => {
+    const selectedIndex = selectedDevices.indexOf(device);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selectedDevices, id);
+      newSelected = newSelected.concat(selectedDevices, device);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selectedDevices.slice(1));
     } else if (selectedIndex === selectedDevices.length - 1) {
@@ -153,7 +153,9 @@ const DataTable = ({
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(device => {
                 const lastUpdate = device.updated || device.created;
-                const isSelected = selectedDevices.indexOf(device.id) !== -1;
+                const isSelected = selectedDevices.some(
+                  selectedDevice => selectedDevice.id === device.id,
+                );
                 const hasCertificate = !!device.certificate?.fingerprint;
                 const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
 
@@ -162,7 +164,7 @@ const DataTable = ({
                 };
 
                 const handleSelectThisRow = () => {
-                  handleSelectRow(device.id);
+                  handleSelectRow(device);
                 };
 
                 const handleFavoriteThisDevice = () => {
