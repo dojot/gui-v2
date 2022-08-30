@@ -64,6 +64,7 @@ export const favoriteMultipleDevices = createAction(FAVORITE_MULTIPLE_DEVICES, p
 
 export const deleteMultipleDevices = createAction(DELETE_MULTIPLE_DEVICES, payload => ({
   deviceIdArray: payload.deviceIdArray,
+  failCallback: payload.failCallback,
 }));
 
 export const editDevice = createAction(EDIT_DEVICE, payload => ({

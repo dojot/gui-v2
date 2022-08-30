@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { AlertDialog } from 'sharedComponents/Dialogs';
+import { AlertDialog, WarningDialog } from 'sharedComponents/Dialogs';
 import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
 import {
   DATA_ORDER,
@@ -27,6 +27,7 @@ import MassActions from './layout/MassActions';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
+import DeleteMultipleDevicesConfirmation from './layout/DeleteMultipleDevicesConfirmation';
 
 const Devices = () => {
   const { t } = useTranslation('devices');
@@ -91,6 +92,10 @@ const Devices = () => {
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
+  const [multipleDevicesDeletion, setMultipleDevicesDeletion] = useState({
+    showing: false,
+    devices: [],
+  });
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -118,8 +123,20 @@ const Devices = () => {
     setIsShowingMultipleDeleteAlert(true);
   };
 
+  const handleShowMultipleDevicesDeletionError = devices => () => {
+    console.log(devices);
+    setMultipleDevicesDeletion({ showing: true, devices: devices });
+  };
+
   const handleConfirmMultipleDevicesDeletion = () => {
-    dispatch(deviceActions.deleteMultipleDevices({ deviceIdArray: selectedDevices }));
+    const deviceIdsToDelete = selectedDevices.map(({ id }) => id);
+
+    dispatch(
+      deviceActions.deleteMultipleDevices({
+        deviceIdArray: deviceIdsToDelete,
+        failCallback: handleShowMultipleDevicesDeletionError,
+      }),
+    );
     handleHideMassActions();
   };
 
@@ -162,6 +179,10 @@ const Devices = () => {
   const handleSearchDevice = search => {
     setPage(0);
     setSearchText(search);
+  };
+
+  const handleCloseMultipleDevicesDeletionErrorAlert = () => {
+    setMultipleDevicesDeletion({ ...multipleDevicesDeletion, showing: false, devices: [] });
   };
 
   useEffect(() => {
@@ -209,14 +230,22 @@ const Devices = () => {
           confirmButtonText={t('deleteDeviceAlert.confirmButton')}
         />
 
-        <AlertDialog
+        <DeleteMultipleDevicesConfirmation
           isOpen={isShowingMultipleDeleteAlert}
-          title={t('deleteMultipleDeviceAlert.title')}
-          message={t('deleteMultipleDeviceAlert.message')}
+          title={t('deleteMultipleDeviceAlert.message', { count: selectedDevices.length })}
           handleConfirm={handleConfirmMultipleDevicesDeletion}
           handleClose={handleCloseMultipleDeviceDeletionAlert}
           cancelButtonText={t('deleteMultipleDeviceAlert.cancelButton')}
           confirmButtonText={t('deleteMultipleDeviceAlert.confirmButton')}
+          selectedDevices={selectedDevices}
+        />
+
+        <WarningDialog
+          isOpen={multipleDevicesDeletion.showing}
+          devices={multipleDevicesDeletion.devices}
+          message={t('deleteMultipleDevicesErrorAlert.message')}
+          handleClose={handleCloseMultipleDevicesDeletionErrorAlert}
+          cancelButtonText={t('deleteMultipleDevicesErrorAlert.cancelButtonText')}
         />
 
         <Box className={classes.container}>

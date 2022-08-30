@@ -127,12 +127,8 @@ export function* handleDeleteMultipleDevices(action) {
       type: 'success',
     });
   } catch (e) {
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      message: e.message,
-      i18nMessage: 'deleteMultipleDevices',
-      type: 'error',
-    });
+    const { failCallback } = action.payload;
+    if (e.devices_error) failCallback(e.devices_error);
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_DEVICES));
   }

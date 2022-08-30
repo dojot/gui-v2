@@ -38,8 +38,12 @@
   },
   "deleteMultipleDeviceAlert": {
     "title": "Delete Selected Devices",
-    "message": "Are you sure you want to delete all selected devices?",
+    "message": "Are you sure you want to delete all the {{count}} selected devices?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
+  },
+  "deleteMultipleDevicesErrorAlert": {
+    "message": "The devices below could not be deleted:",
+    "cancelButtonText": "Ok, i got it"
   }
 }
