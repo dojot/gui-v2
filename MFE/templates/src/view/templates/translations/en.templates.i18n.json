@@ -30,8 +30,7 @@
     "confirmButton": "Delete"
   },
   "deleteMultipleTemplateAlert": {
-    "title": "Delete Selected Templates",
-    "message": "Are you sure you want to delete all selected templates?",
+    "title": "Do you want to delete the {{count}} models mentioned below?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
   }

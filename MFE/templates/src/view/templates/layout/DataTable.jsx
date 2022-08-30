@@ -86,7 +86,7 @@ const DataTable = ({
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelectedTemplates = templates.map(row => row.id);
+      const newSelectedTemplates = templates.map(row => row);
       handleSelectTemplate(newSelectedTemplates);
       return;
     }
@@ -94,12 +94,12 @@ const DataTable = ({
     handleSelectTemplate([]);
   };
 
-  const handleSelectRow = id => {
-    const selectedIndex = selectedTemplates.indexOf(id);
+  const handleSelectRow = template => {
+    const selectedIndex = selectedTemplates.indexOf(template);
     let newSelected = [];
 
     if (selectedIndex === -1) {
-      newSelected = newSelected.concat(selectedTemplates, id);
+      newSelected = newSelected.concat(selectedTemplates, template);
     } else if (selectedIndex === 0) {
       newSelected = newSelected.concat(selectedTemplates.slice(1));
     } else if (selectedIndex === selectedTemplates.length - 1) {
@@ -138,7 +138,9 @@ const DataTable = ({
               .slice()
               .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
               .map(template => {
-                const isSelected = selectedTemplates.indexOf(template.id) !== -1;
+                const isSelected = selectedTemplates.some(
+                  selectedTemplate => selectedTemplate.id === template.id,
+                );
                 const attrsLength = template.attrs?.length || 0;
                 const isNew = isSomeHoursAgo(template.created, NEW_CHIP_HOURS_AGO);
 
@@ -147,7 +149,7 @@ const DataTable = ({
                 };
 
                 const handleSelectThisRow = () => {
-                  handleSelectRow(template.id);
+                  handleSelectRow(template);
                 };
 
                 const handleShowOptionsMenu = e => {

@@ -30,8 +30,7 @@
     "confirmButton": "Excluir"
   },
   "deleteMultipleTemplateAlert": {
-    "title": "Excluir Modelos Selecionados",
-    "message": "Tem certeza que deseja excluir todos os modelos selecionados?",
+    "title": "Deseja excluir os {{count}} modelos citados abaixo?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
   }
