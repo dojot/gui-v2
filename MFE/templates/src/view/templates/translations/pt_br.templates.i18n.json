@@ -15,7 +15,7 @@
     "id": "ID",
     "label": "Nome",
     "attrsLength": "Nº de Propriedades",
-    "created": "Criado Em",
+    "created": "Data de Criação",
     "actions": "Ações"
   },
   "cardData": {
@@ -34,5 +34,9 @@
     "message": "Tem certeza que deseja excluir todos os modelos selecionados?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "sorting": {
+    "order": "Ordem",
+    "orderBy": "Ordenar Por"
   }
 }

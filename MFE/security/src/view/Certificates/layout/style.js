@@ -35,6 +35,7 @@ export const useSearchBarStyles = makeStyles(theme => ({
 
 export const useCardsStyles = makeStyles(theme => ({
   card: {
+    height: '100%',
     cursor: 'default',
   },
   cardIcon: {
@@ -95,7 +96,7 @@ export const useDataTableStyles = makeStyles(theme => ({
     textDecoration: 'underline',
   },
   truncatedText: {
-    maxWidth: '200px',
+    maxWidth: '125px',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',

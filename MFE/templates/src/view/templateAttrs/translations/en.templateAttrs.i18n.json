@@ -35,5 +35,9 @@
     "newAttr": "Create New Attribute",
     "editAttr": "Edit Attribute",
     "errorMessage": "Fill the required fields to save!"
+  },
+  "sorting": {
+    "order": "Order",
+    "orderBy": "Order By"
   }
 }

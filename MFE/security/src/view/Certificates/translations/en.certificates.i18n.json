@@ -16,14 +16,16 @@
   "massActions": "Mass actions:",
   "hasAssociatedDeviceTooltip": "Has associated device",
   "noAssociatedDeviceTooltip": "No associated device",
-  "lastUpdateTooltip": "Last update",
-  "validityNotDefined": "Validity Not Defined",
   "dataTableTitle": "Devices",
   "dataLabels": {
     "fingerprint": "Fingerprint",
     "subjectDN": "Subject DN",
     "deviceId": "Device ID",
-    "validity": "Validity Period",
+    "validity": {
+      "both": "Validity Period",
+      "notBefore": "Initial Validity",
+      "notAfter": "Final Validity"
+    },
     "status": "Status",
     "actions": "Actions"
   },
@@ -34,7 +36,8 @@
     "table": {
       "id": "Id",
       "label": "Device Name",
-      "lastUpdate": "Last update"
+      "created": "Creation Date",
+      "updated": "Last Modification"
     },
     "associate": "Associate"
   },
@@ -55,5 +58,9 @@
     "message": "Are you sure you want to disassociate ({{deviceId}}) from this certificate?",
     "cancelButton": "Cancel",
     "confirmButton": "Disassociate"
+  },
+  "sorting": {
+    "order": "Order",
+    "orderBy": "Order By"
   }
 }

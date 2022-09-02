@@ -15,7 +15,7 @@
     "id": "ID",
     "label": "Name",
     "attrsLength": "Number of Properties",
-    "created": "Created At",
+    "created": "Creation Date",
     "actions": "Actions"
   },
   "cardData": {
@@ -34,5 +34,9 @@
     "message": "Are you sure you want to delete all selected templates?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
+  },
+  "sorting": {
+    "order": "Order",
+    "orderBy": "Order By"
   }
 }

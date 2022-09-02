@@ -23,8 +23,8 @@ export function* getCurrentDevicesPageAgain() {
 export function* handleGetDevices(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_DEVICES));
-    const { page, filter } = action.payload;
-    const { getDevices } = yield call(Device.getDevicesList, page, filter);
+    const { page, filter, sortBy } = action.payload;
+    const { getDevices } = yield call(Device.getDevicesList, page, filter, sortBy);
     if (getDevices)
       yield put(
         actions.updateDevices({

@@ -26,6 +26,7 @@ export const constants = {
 export const getDevices = createAction(GET_DEVICES, payload => ({
   page: payload.page,
   filter: payload.filter,
+  sortBy: payload.sortBy,
 }));
 
 export const getDeviceById = createAction(GET_DEVICE_BY_ID, payload => ({

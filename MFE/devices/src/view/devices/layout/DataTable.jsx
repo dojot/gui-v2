@@ -20,7 +20,7 @@ import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
-import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -49,16 +49,22 @@ const DataTable = ({
         label: t('dataTableHead.id'),
       },
       {
-        id: 'attrsLength',
-        label: t('dataTableHead.attrsLength'),
+        id: 'created',
+        label: t('dataTableHead.created'),
       },
       {
         id: 'updated',
         label: t('dataTableHead.updated'),
       },
       {
+        id: 'attrsLength',
+        label: t('dataTableHead.attrsLength'),
+        disableOrderBy: true,
+      },
+      {
         id: 'hasCertificate',
         label: t('dataTableHead.hasCertificate'),
+        disableOrderBy: true,
       },
       {
         id: 'actions',
@@ -67,22 +73,6 @@ const DataTable = ({
       },
     ],
     [t],
-  );
-
-  const valueFormatters = useMemo(
-    () => ({
-      attrsLength(device) {
-        return device.attrs?.length || 0;
-      },
-      hasCertificate(device) {
-        return !!device.certificate?.fingerprint;
-      },
-      updated(device) {
-        const date = device.updated || device.created;
-        return date ? moment(date).unix() : 0;
-      },
-    }),
-    [],
   );
 
   const handleRequestSort = (_, property) => {
@@ -148,103 +138,104 @@ const DataTable = ({
           />
 
           <TableBody>
-            {devices
-              .slice()
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
-              .map(device => {
-                const lastUpdate = device.updated || device.created;
-                const isSelected = selectedDevices.indexOf(device.id) !== -1;
-                const hasCertificate = !!device.certificate?.fingerprint;
-                const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
+            {devices.map(device => {
+              const isSelected = selectedDevices.indexOf(device.id) !== -1;
+              const hasCertificate = !!device.certificate?.fingerprint;
+              const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
 
-                const handleClickInThisDevice = () => {
-                  handleClickDevice(device);
-                };
+              const handleClickInThisDevice = () => {
+                handleClickDevice(device);
+              };
 
-                const handleSelectThisRow = () => {
-                  handleSelectRow(device.id);
-                };
+              const handleSelectThisRow = () => {
+                handleSelectRow(device.id);
+              };
 
-                const handleFavoriteThisDevice = () => {
-                  handleFavoriteDevice(device);
-                };
+              const handleFavoriteThisDevice = () => {
+                handleFavoriteDevice(device);
+              };
 
-                const handleShowOptionsMenu = e => {
-                  handleSetDeviceOptionsMenu({
-                    anchorElement: e.target,
-                    device,
-                  });
-                };
+              const handleShowOptionsMenu = e => {
+                handleSetDeviceOptionsMenu({
+                  anchorElement: e.target,
+                  device,
+                });
+              };
 
-                return (
-                  <TableRow
-                    key={device.id}
-                    tabIndex={-1}
-                    role='checkbox'
-                    selected={isSelected}
-                    aria-checked={isSelected}
-                    onClick={handleClickInThisDevice}
-                    hover
-                  >
-                    <TableCell onClick={handleStopPropagation}>
+              return (
+                <TableRow
+                  key={device.id}
+                  tabIndex={-1}
+                  role='checkbox'
+                  selected={isSelected}
+                  aria-checked={isSelected}
+                  onClick={handleClickInThisDevice}
+                  hover
+                >
+                  <TableCell onClick={handleStopPropagation}>
+                    <Checkbox
+                      color='secondary'
+                      checked={isSelected}
+                      onChange={handleSelectThisRow}
+                    />
+                  </TableCell>
+
+                  <TableCell onClick={handleStopPropagation}>
+                    <Tooltip
+                      title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
+                      placement='right'
+                      arrow
+                    >
                       <Checkbox
-                        color='secondary'
-                        checked={isSelected}
-                        onChange={handleSelectThisRow}
+                        color='default'
+                        icon={<StarBorderOutlined />}
+                        checkedIcon={<Star style={{ color: '#F1B44C' }} />}
+                        defaultChecked={device.favorite}
+                        onChange={handleFavoriteThisDevice}
                       />
-                    </TableCell>
+                    </Tooltip>
+                  </TableCell>
 
-                    <TableCell onClick={handleStopPropagation}>
-                      <Tooltip
-                        title={t(device.favorite ? 'removeFromFavoriteTooltip' : 'favoriteTooltip')}
-                        placement='right'
-                        arrow
-                      >
-                        <Checkbox
-                          color='default'
-                          icon={<StarBorderOutlined />}
-                          checkedIcon={<Star style={{ color: '#F1B44C' }} />}
-                          defaultChecked={device.favorite}
-                          onChange={handleFavoriteThisDevice}
-                        />
-                      </Tooltip>
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    <Box mr={isNew ? 1 : 0} component='span'>
+                      {device.label}
+                    </Box>
 
-                    <TableCell className={classes.clickableCell}>
-                      <Box mr={isNew ? 1 : 0} component='span'>
-                        {device.label}
-                      </Box>
+                    {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
+                  </TableCell>
 
-                      {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>{device.id}</TableCell>
 
-                    <TableCell className={classes.clickableCell}>{device.id}</TableCell>
-                    <TableCell className={classes.clickableCell}>
-                      {device.attrs?.length || 0}
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    {device.created ? moment(device.created).format('L LTS') : ''}
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>
-                      {moment(lastUpdate).format('L LTS')}
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    {device.updated ? moment(device.updated).format('L LTS') : ''}
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>
-                      <Tooltip
-                        title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
-                        placement='right'
-                        arrow
-                      >
-                        {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
-                      </Tooltip>
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    {device.attrs?.length || 0}
+                  </TableCell>
 
-                    <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={handleShowOptionsMenu}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  <TableCell className={classes.clickableCell}>
+                    <Tooltip
+                      title={t(hasCertificate ? 'hasCertificateTooltip' : 'noCertificateTooltip')}
+                      placement='right'
+                      arrow
+                    >
+                      {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
+                    </Tooltip>
+                  </TableCell>
+
+                  <TableCell onClick={handleStopPropagation}>
+                    <IconButton onClick={handleShowOptionsMenu}>
+                      <MoreHoriz />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

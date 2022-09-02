@@ -23,8 +23,8 @@ export function* getCurrentTemplatesPageAgain() {
 export function* handleGetTemplates(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_TEMPLATES));
-    const { page, filter } = action.payload;
-    const { getTemplates } = yield call(Template.getTemplatesList, page, filter);
+    const { page, filter, sortBy } = action.payload;
+    const { getTemplates } = yield call(Template.getTemplatesList, page, filter, sortBy);
     if (getTemplates) {
       yield put(
         actions.updateTemplates({

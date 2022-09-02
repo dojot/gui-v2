@@ -171,9 +171,10 @@ const CertificationAuthorities = () => {
         filter: {
           caFingerprint: searchText,
         },
+        sortBy: orderBy ? `${order}:${orderBy}` : undefined,
       }),
     );
-  }, [dispatch, page, rowsPerPage, searchText]);
+  }, [dispatch, order, orderBy, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (viewMode) setSelectedCertificationAuthorities([]);
@@ -255,7 +256,11 @@ const CertificationAuthorities = () => {
 
               {viewMode === VIEW_MODE.CARD && certificationAuthorities.length > 0 && (
                 <Cards
+                  order={order}
+                  orderBy={orderBy}
                   certificationAuthorities={certificationAuthorities}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSetOptionsMenu={setCertificationAuthorityOptionsMenu}
                 />
               )}

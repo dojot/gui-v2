@@ -21,7 +21,7 @@ import { CopyTextToClipboardButton } from 'sharedComponents/CopyTextToClipboardB
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCertificateComputedData } from 'sharedComponents/Hooks';
-import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -42,7 +42,7 @@ const DataTable = ({
   const headCells = useMemo(
     () => [
       {
-        id: 'cafingerprint',
+        id: 'caFingerprint',
         label: t('dataTableHead.caFingerprint'),
       },
       {
@@ -50,12 +50,17 @@ const DataTable = ({
         label: t('dataTableHead.subjectDN'),
       },
       {
-        id: 'validity',
-        label: t('dataTableHead.validity'),
+        id: 'validity.notBefore',
+        label: t('dataTableHead.validity.notBefore'),
+      },
+      {
+        id: 'validity.notAfter',
+        label: t('dataTableHead.validity.notAfter'),
       },
       {
         id: 'status',
         label: t('dataTableHead.status'),
+        disableOrderBy: true,
       },
       {
         id: 'actions',
@@ -64,22 +69,6 @@ const DataTable = ({
       },
     ],
     [t],
-  );
-
-  const valueFormatters = useMemo(
-    () => ({
-      validity(certificationAuthority) {
-        const { validityInitialDate, validityFinalDate } = handleGetCertificateComputedData(
-          certificationAuthority.validity,
-        );
-        return `${validityInitialDate} - ${validityFinalDate}`;
-      },
-      status(certificationAuthority) {
-        const { statusText } = handleGetCertificateComputedData(certificationAuthority.validity);
-        return statusText;
-      },
-    }),
-    [handleGetCertificateComputedData],
   );
 
   const handleRequestSort = (_, property) => {
@@ -143,106 +132,101 @@ const DataTable = ({
           />
 
           <TableBody>
-            {certificationAuthorities
-              .slice()
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
-              .map(certificationAuthority => {
-                const { caFingerprint, validity } = certificationAuthority;
-                const isSelected = selectedCertificationAuthorities.indexOf(caFingerprint) !== -1;
-                const isNew = isSomeHoursAgo(certificationAuthority.createdAt, NEW_CHIP_HOURS_AGO);
+            {certificationAuthorities.map(certificationAuthority => {
+              const { caFingerprint, validity } = certificationAuthority;
+              const isSelected = selectedCertificationAuthorities.indexOf(caFingerprint) !== -1;
+              const isNew = isSomeHoursAgo(certificationAuthority.createdAt, NEW_CHIP_HOURS_AGO);
 
-                const { statusColor, statusText, validityFinalDate, validityInitialDate } =
-                  handleGetCertificateComputedData(validity);
+              const { statusColor, statusText, validityFinalDate, validityInitialDate } =
+                handleGetCertificateComputedData(validity);
 
-                const handleSelectThisRow = () => {
-                  handleSelectRow(caFingerprint);
-                };
+              const handleSelectThisRow = () => {
+                handleSelectRow(caFingerprint);
+              };
 
-                const handleShowOptionsMenu = e => {
-                  handleSetOptionsMenu({
-                    anchorElement: e.target,
-                    certificationAuthority,
-                  });
-                };
+              const handleShowOptionsMenu = e => {
+                handleSetOptionsMenu({
+                  anchorElement: e.target,
+                  certificationAuthority,
+                });
+              };
 
-                return (
-                  <TableRow
-                    key={caFingerprint}
-                    tabIndex={-1}
-                    role='checkbox'
-                    selected={isSelected}
-                    aria-checked={isSelected}
-                    hover
-                  >
-                    <TableCell onClick={handleStopPropagation}>
-                      <Checkbox
-                        color='secondary'
-                        checked={isSelected}
-                        onChange={handleSelectThisRow}
-                      />
-                    </TableCell>
+              return (
+                <TableRow
+                  key={caFingerprint}
+                  tabIndex={-1}
+                  role='checkbox'
+                  selected={isSelected}
+                  aria-checked={isSelected}
+                  hover
+                >
+                  <TableCell onClick={handleStopPropagation}>
+                    <Checkbox
+                      color='secondary'
+                      checked={isSelected}
+                      onChange={handleSelectThisRow}
+                    />
+                  </TableCell>
 
-                    <TableCell>
-                      <Box className={classes.fingerprintField}>
-                        <Tooltip
-                          title={certificationAuthority.caFingerprint}
-                          classes={{ tooltip: classes.tooltip }}
-                          placement='right'
-                          arrow
-                        >
-                          <div className={classes.truncatedText}>
-                            {certificationAuthority.caFingerprint}
-                          </div>
-                        </Tooltip>
-
-                        <CopyTextToClipboardButton
-                          textToCopy={certificationAuthority.caFingerprint}
-                        />
-
-                        {isNew && (
-                          <Box ml={0.5}>
-                            <Chip color='primary' label={t('common:new')} size='small' />
-                          </Box>
-                        )}
-                      </Box>
-                    </TableCell>
-
-                    <TableCell>
+                  <TableCell>
+                    <Box className={classes.fingerprintField}>
                       <Tooltip
-                        title={certificationAuthority.subjectDN}
+                        title={certificationAuthority.caFingerprint}
                         classes={{ tooltip: classes.tooltip }}
                         placement='right'
-                        interactive
                         arrow
                       >
                         <div className={classes.truncatedText}>
-                          {certificationAuthority.subjectDN}
+                          {certificationAuthority.caFingerprint}
                         </div>
                       </Tooltip>
-                    </TableCell>
 
-                    <TableCell>
-                      {validityInitialDate && validityFinalDate
-                        ? `${validityInitialDate} - ${validityFinalDate}`
-                        : t('validityNotDefined')}
-                    </TableCell>
-
-                    <TableCell>
-                      <Chip
-                        style={{ background: statusColor, color: 'white' }}
-                        label={statusText}
-                        size='small'
+                      <CopyTextToClipboardButton
+                        textToCopy={certificationAuthority.caFingerprint}
                       />
-                    </TableCell>
 
-                    <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={handleShowOptionsMenu}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                      {isNew && (
+                        <Box ml={0.5}>
+                          <Chip color='primary' label={t('common:new')} size='small' />
+                        </Box>
+                      )}
+                    </Box>
+                  </TableCell>
+
+                  <TableCell>
+                    <Tooltip
+                      title={certificationAuthority.subjectDN}
+                      classes={{ tooltip: classes.tooltip }}
+                      placement='right'
+                      interactive
+                      arrow
+                    >
+                      <div className={classes.truncatedText}>
+                        {certificationAuthority.subjectDN}
+                      </div>
+                    </Tooltip>
+                  </TableCell>
+
+                  <TableCell>{validityInitialDate}</TableCell>
+
+                  <TableCell>{validityFinalDate}</TableCell>
+
+                  <TableCell>
+                    <Chip
+                      style={{ background: statusColor, color: 'white' }}
+                      label={statusText}
+                      size='small'
+                    />
+                  </TableCell>
+
+                  <TableCell onClick={handleStopPropagation}>
+                    <IconButton onClick={handleShowOptionsMenu}>
+                      <MoreHoriz />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

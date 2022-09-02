@@ -17,24 +17,9 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
-import {
-  DATA_ORDER,
-  NEW_CHIP_HOURS_AGO,
-  TEMPLATE_ATTR_TYPES,
-  TEMPLATE_ATTR_VALUE_TYPES,
-} from 'sharedComponents/Constants';
+import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
-
-const ATTR_TYPE_TRANSLATIONS = {};
-Object.values(TEMPLATE_ATTR_TYPES).forEach(({ value, translation }) => {
-  ATTR_TYPE_TRANSLATIONS[value] = translation;
-});
-
-const ATTR_VALUE_TYPE_TRANSLATIONS = {};
-Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
-  ATTR_VALUE_TYPE_TRANSLATIONS[value] = translation;
-});
 
 const DataTable = ({
   page,
@@ -43,6 +28,7 @@ const DataTable = ({
   orderBy,
   rowsPerPage,
   selectedAttrs,
+  valueFormatters,
   setOrder,
   setOrderBy,
   handleSelectAttr,
@@ -79,18 +65,6 @@ const DataTable = ({
         disableOrderBy: true,
       },
     ],
-    [t],
-  );
-
-  const valueFormatters = useMemo(
-    () => ({
-      type(attr) {
-        return t(ATTR_TYPE_TRANSLATIONS[attr.type]) || attr.type;
-      },
-      valueType(attr) {
-        return t(ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType]) || attr.valueType;
-      },
-    }),
     [t],
   );
 
@@ -221,6 +195,7 @@ DataTable.propTypes = {
   orderBy: PropTypes.string.isRequired,
   rowsPerPage: PropTypes.number.isRequired,
   selectedAttrs: PropTypes.array.isRequired,
+  valueFormatters: PropTypes.object.isRequired,
   setOrder: PropTypes.func.isRequired,
   setOrderBy: PropTypes.func.isRequired,
   handleSelectAttr: PropTypes.func.isRequired,
