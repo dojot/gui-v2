@@ -7,3 +7,4 @@ export { generateScheme } from './module/schema';
 export { hexToRgb, rgbToHex, randomHexColor } from './module/color';
 export { descendingComparator, getComparator } from './module/comparators';
 export { downloadTextFile } from './module/download';
+export { getErrorTranslation } from './module/error';

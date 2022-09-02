@@ -5,6 +5,7 @@ import { actions as loadingActions } from '../modules/loading';
 import { constants, actions } from '../modules/templates';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
+import { getErrorTranslation } from 'sharedComponents/Utils';
 import { paginationControlSelector } from '../selectors/templatesSelector';
 
 export function* getCurrentTemplatesPageAgain() {
@@ -126,11 +127,16 @@ export function* handleCreateTemplate(action) {
       type: 'success',
     });
   } catch (e) {
+    const i18nMessage = getErrorTranslation(e, 'createTemplate', {
+      templates_label_key: 'templateUniqueLabel',
+      attrs_template_id_type_label_key: 'attrUnique',
+    });
+
     dispatchEvent(EVENT.GLOBAL_TOAST, {
+      i18nMessage,
+      type: 'error',
       duration: 15000,
       message: e.message,
-      i18nMessage: 'createTemplate',
-      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.CREATE_TEMPLATE));
@@ -149,11 +155,16 @@ export function* handleEditTemplate(action) {
       type: 'success',
     });
   } catch (e) {
+    const i18nMessage = getErrorTranslation(e, 'editTemplate', {
+      templates_label_key: 'templateUniqueLabel',
+      attrs_template_id_type_label_key: 'attrUnique',
+    });
+
     dispatchEvent(EVENT.GLOBAL_TOAST, {
+      i18nMessage,
+      type: 'error',
       duration: 15000,
       message: e.message,
-      i18nMessage: 'editTemplate',
-      type: 'error',
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.EDIT_TEMPLATE));
