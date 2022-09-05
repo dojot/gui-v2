@@ -33,5 +33,13 @@
     "title": "Deseja excluir os {{count}} modelos citados abaixo?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
-  }
+  },
+  "multipleTemplatesDeletionError": {
+    "message": "Os modelos abaixo não puderam ser excluídos:",
+    "cancelButtonText": "Entendi"
+  },
+  "templateNotFound": "Modelo não encontrado",
+  "templateNotFoundMessage": "Parece que este modelo não existe mais na nossa base de dados.",
+  "hasAssociatedDevice": "{{count}} dispositivos associados",
+  "theOtherTemplatesWereExcluded": "Os demais modelos foram excluídos"
 }

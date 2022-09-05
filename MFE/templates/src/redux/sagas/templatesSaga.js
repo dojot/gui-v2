@@ -7,6 +7,150 @@ import { actions as loadingActions } from '../modules/loading';
 import { constants, actions } from '../modules/templates';
 import { paginationControlSelector } from '../selectors/templatesSelector';
 
+const fakeTemplates = [
+  {
+    id: 21,
+    name: 'modelo_test_3',
+    type: 'NOT_FOUND',
+    message: 'Template not found',
+    associateDevices: ['string'],
+  },
+  {
+    id: 1,
+    name: 'modelo_1',
+    type: 'HAS_ASSOCIATED_DEVICES',
+    message: 'The template has associated devices',
+    associateDevices: [
+      {
+        id: 'a1d6f5',
+        name: 'Device 1',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 2',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 3',
+      },
+    ],
+  },
+  {
+    id: 21,
+    name: 'modelo_test_3',
+    type: 'NOT_FOUND',
+    message: 'Template not found',
+    associateDevices: ['string'],
+  },
+  {
+    id: 1,
+    name: 'modelo_1',
+    type: 'HAS_ASSOCIATED_DEVICES',
+    message: 'The template has associated devices',
+    associateDevices: [
+      {
+        id: 'a1d6f5',
+        name: 'Device 1',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 2',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 3',
+      },
+    ],
+  },
+  {
+    id: 21,
+    name: 'modelo_test_3',
+    type: 'NOT_FOUND',
+    message: 'Template not found',
+    associateDevices: ['string'],
+  },
+  {
+    id: 1,
+    name: 'modelo_1',
+    type: 'HAS_ASSOCIATED_DEVICES',
+    message: 'The template has associated devices',
+    associateDevices: [
+      {
+        id: 'a1d6f5',
+        name: 'Device 1',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 2',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 3',
+      },
+    ],
+  },
+  {
+    id: 1,
+    name: 'modelo_1',
+    type: 'HAS_ASSOCIATED_DEVICES',
+    message: 'The template has associated devices',
+    associateDevices: [
+      {
+        id: 'a1d6f5',
+        name: 'Device 1',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 2',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 3',
+      },
+    ],
+  },
+  {
+    id: 1,
+    name: 'modelo_1',
+    type: 'HAS_ASSOCIATED_DEVICES',
+    message: 'The template has associated devices',
+    associateDevices: [
+      {
+        id: 'a1d6f5',
+        name: 'Device 2',
+      },
+      {
+        id: 'a1d6f5',
+        name: 'Device 3',
+      },
+    ],
+  },
+  {
+    id: 21,
+    name: 'modelo_test_3',
+    type: 'NOT_FOUND',
+    message: 'Template not found',
+    associateDevices: ['string'],
+  },
+  {
+    id: 1,
+    name: 'modelo_1',
+    type: 'HAS_ASSOCIATED_DEVICES',
+    message: 'The template has associated devices',
+    associateDevices: [
+      {
+        id: 'a1d6f5',
+        name: 'Device 1',
+      },
+
+      {
+        id: 'a1d6f5',
+        name: 'Device 3',
+      },
+    ],
+  },
+];
+
 export function* getCurrentTemplatesPageAgain() {
   const pagination = yield select(paginationControlSelector);
   yield put(
@@ -94,17 +238,12 @@ export function* handleDeleteTemplate(action) {
 export function* handleDeleteMultipleTemplates(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_TEMPLATES));
-    const { templateIds, failCallback } = action.payload;
-    const { templatesError } = yield call(Template.deleteTemplates, templateIds);
-    if (templatesError) failCallback(templatesError);
+    const { templateIds } = action.payload;
+    yield call(Template.deleteTemplates, templateIds);
     yield call(getCurrentTemplatesPageAgain);
   } catch (e) {
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      message: e.message,
-      i18nMessage: 'deleteMultipleTemplates',
-      type: 'error',
-    });
+    const { failCallback } = action.payload;
+    failCallback(fakeTemplates);
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_TEMPLATES));
   }

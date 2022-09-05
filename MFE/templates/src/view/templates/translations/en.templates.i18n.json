@@ -33,5 +33,13 @@
     "title": "Do you want to delete the {{count}} models mentioned below?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
-  }
+  },
+  "multipleTemplatesDeletionError": {
+    "message": "The models below are not excluded:",
+    "cancelButtonText": "I got it"
+  },
+  "templateNotFound": "Template not found",
+  "templateNotFoundMessage": "It seems that this template no longer exists in our database.",
+  "hasAssociatedDevice": "{{count}} associated devices",
+  "theOtherTemplatesWereExcluded": "The other templates were excluded"
 }

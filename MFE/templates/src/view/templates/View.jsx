@@ -7,7 +7,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { AlertDialog } from 'sharedComponents/Dialogs';
+import { AlertDialog, WarningDialog } from 'sharedComponents/Dialogs';
 import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
 import {
   DATA_ORDER,
@@ -122,11 +122,10 @@ const Templates = () => {
   };
 
   const handleDeleteMultipleTemplates = () => {
-    console.log(selectedTemplates);
     setIsShowingMultipleDeleteAlert(true);
   };
 
-  const handleShowMultipleTemplatesDeletionError = templates => () => {
+  const handleShowMultipleTemplatesDeletionError = templates => {
     setMultiplTemplatesDeletion({ showing: true, templates: templates });
   };
 
@@ -233,6 +232,15 @@ const Templates = () => {
         cancelButtonText={t('deleteMultipleTemplateAlert.cancelButton')}
         confirmButtonText={t('deleteMultipleTemplateAlert.confirmButton')}
         selectedTemplates={selectedTemplates}
+      />
+
+      <WarningDialog
+        isOpen={multipleTemplatesDeletion.showing}
+        // isOpen={true}
+        templates={multipleTemplatesDeletion.templates}
+        message={t('multipleTemplatesDeletionError.message')}
+        handleClose={handleCloseMultipleTemplatesDeletionError}
+        cancelButtonText={t('multipleTemplatesDeletionError.cancelButtonText')}
       />
 
       <Box className={classes.container}>
