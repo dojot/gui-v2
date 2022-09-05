@@ -94,17 +94,12 @@ export function* handleDeleteTemplate(action) {
 export function* handleDeleteMultipleTemplates(action) {
   try {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_TEMPLATES));
-    const { templateIds, failCallback } = action.payload;
-    const { templatesError } = yield call(Template.deleteTemplates, templateIds);
-    if (templatesError) failCallback(templatesError);
+    const { templateIds } = action.payload;
+    yield call(Template.deleteTemplates, templateIds);
     yield call(getCurrentTemplatesPageAgain);
   } catch (e) {
-    dispatchEvent(EVENT.GLOBAL_TOAST, {
-      duration: 15000,
-      message: e.message,
-      i18nMessage: 'deleteMultipleTemplates',
-      type: 'error',
-    });
+    const { failCallback } = action.payload;
+    failCallback(e.templates);
   } finally {
     yield put(loadingActions.removeLoading(constants.DELETE_MULTIPLE_TEMPLATES));
   }
