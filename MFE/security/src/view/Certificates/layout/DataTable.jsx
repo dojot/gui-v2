@@ -22,7 +22,7 @@ import { CopyTextToClipboardButton } from 'sharedComponents/CopyTextToClipboardB
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { useCertificateComputedData } from 'sharedComponents/Hooks';
-import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -53,14 +53,20 @@ const DataTable = ({
       {
         id: 'deviceId',
         label: t('dataLabels.deviceId'),
+        disableOrderBy: true,
       },
       {
-        id: 'validity',
-        label: t('dataLabels.validity'),
+        id: 'validity.notBefore',
+        label: t('dataLabels.validity.notBefore'),
+      },
+      {
+        id: 'validity.notAfter',
+        label: t('dataLabels.validity.notAfter'),
       },
       {
         id: 'status',
         label: t('dataLabels.status'),
+        disableOrderBy: true,
       },
       {
         id: 'actions',
@@ -69,25 +75,6 @@ const DataTable = ({
       },
     ],
     [t],
-  );
-
-  const valueFormatters = useMemo(
-    () => ({
-      deviceId(certificate) {
-        return certificate.belongsTo?.device || '';
-      },
-      validity(certificate) {
-        const { validityInitialDate, validityFinalDate } = handleGetCertificateComputedData(
-          certificate.validity,
-        );
-        return `${validityInitialDate} - ${validityFinalDate}`;
-      },
-      status(certificate) {
-        const { statusText } = handleGetCertificateComputedData(certificate.validity);
-        return statusText;
-      },
-    }),
-    [handleGetCertificateComputedData],
   );
 
   const handleRequestSort = (_, property) => {
@@ -152,112 +139,107 @@ const DataTable = ({
           />
 
           <TableBody>
-            {certificates
-              .slice()
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
-              .map(certificate => {
-                const isSelected = selectedCertificates.indexOf(certificate.fingerprint) !== -1;
-                const isNew = isSomeHoursAgo(certificate.createdAt, NEW_CHIP_HOURS_AGO);
+            {certificates.map(certificate => {
+              const isSelected = selectedCertificates.indexOf(certificate.fingerprint) !== -1;
+              const isNew = isSomeHoursAgo(certificate.createdAt, NEW_CHIP_HOURS_AGO);
 
-                const { statusText, statusColor, validityInitialDate, validityFinalDate } =
-                  handleGetCertificateComputedData(certificate.validity);
+              const { statusText, statusColor, validityInitialDate, validityFinalDate } =
+                handleGetCertificateComputedData(certificate.validity);
 
-                const handleSelectThisRow = () => {
-                  handleSelectRow(certificate.fingerprint);
-                };
+              const handleSelectThisRow = () => {
+                handleSelectRow(certificate.fingerprint);
+              };
 
-                const handleShowOptionsMenu = e => {
-                  handleSetCertificateOptionsMenu({
-                    anchorElement: e.target,
-                    certificate,
-                  });
-                };
+              const handleShowOptionsMenu = e => {
+                handleSetCertificateOptionsMenu({
+                  anchorElement: e.target,
+                  certificate,
+                });
+              };
 
-                return (
-                  <TableRow
-                    key={certificate.fingerprint}
-                    tabIndex={-1}
-                    role='checkbox'
-                    selected={isSelected}
-                    aria-checked={isSelected}
-                    hover
-                  >
-                    <TableCell onClick={handleStopPropagation}>
-                      <Checkbox
-                        color='secondary'
-                        checked={isSelected}
-                        onChange={handleSelectThisRow}
-                      />
-                    </TableCell>
+              return (
+                <TableRow
+                  key={certificate.fingerprint}
+                  tabIndex={-1}
+                  role='checkbox'
+                  selected={isSelected}
+                  aria-checked={isSelected}
+                  hover
+                >
+                  <TableCell onClick={handleStopPropagation}>
+                    <Checkbox
+                      color='secondary'
+                      checked={isSelected}
+                      onChange={handleSelectThisRow}
+                    />
+                  </TableCell>
 
-                    <TableCell>
-                      <Box className={classes.fingerprintField}>
-                        <Tooltip
-                          title={certificate.fingerprint}
-                          classes={{ tooltip: classes.tooltip }}
-                          placement='right'
-                          arrow
-                        >
-                          <div className={classes.truncatedText}>{certificate.fingerprint}</div>
-                        </Tooltip>
-
-                        <CopyTextToClipboardButton textToCopy={certificate.fingerprint} />
-
-                        {isNew && (
-                          <Box ml={0.5}>
-                            <Chip color='primary' label={t('common:new')} size='small' />
-                          </Box>
-                        )}
-                      </Box>
-                    </TableCell>
-
-                    <TableCell>
+                  <TableCell>
+                    <Box className={classes.fingerprintField}>
                       <Tooltip
-                        title={certificate.subjectDN}
+                        title={certificate.fingerprint}
                         classes={{ tooltip: classes.tooltip }}
                         placement='right'
-                        interactive
                         arrow
                       >
-                        <div className={classes.truncatedText}>{certificate.subjectDN}</div>
+                        <div className={classes.truncatedText}>{certificate.fingerprint}</div>
                       </Tooltip>
-                    </TableCell>
 
-                    <TableCell>
-                      {certificate.belongsTo?.device ? (
-                        <RouterLink
-                          to={`/devices/${certificate.belongsTo.device}`}
-                          className={classes.deviceIdLink}
-                        >
-                          {certificate.belongsTo.device}
-                        </RouterLink>
-                      ) : (
-                        t('dataTableBody.noDeviceAssociated')
+                      <CopyTextToClipboardButton textToCopy={certificate.fingerprint} />
+
+                      {isNew && (
+                        <Box ml={0.5}>
+                          <Chip color='primary' label={t('common:new')} size='small' />
+                        </Box>
                       )}
-                    </TableCell>
+                    </Box>
+                  </TableCell>
 
-                    <TableCell>
-                      {validityInitialDate && validityFinalDate
-                        ? `${validityInitialDate} - ${validityFinalDate}`
-                        : t('validityNotDefined')}
-                    </TableCell>
+                  <TableCell>
+                    <Tooltip
+                      title={certificate.subjectDN}
+                      classes={{ tooltip: classes.tooltip }}
+                      placement='right'
+                      interactive
+                      arrow
+                    >
+                      <div className={classes.truncatedText}>{certificate.subjectDN}</div>
+                    </Tooltip>
+                  </TableCell>
 
-                    <TableCell>
-                      <Chip
-                        style={{ background: statusColor, color: '#22252F' }}
-                        label={statusText}
-                        size='small'
-                      />
-                    </TableCell>
+                  <TableCell>
+                    {certificate.belongsTo?.device ? (
+                      <RouterLink
+                        to={`/devices/${certificate.belongsTo.device}`}
+                        className={classes.deviceIdLink}
+                      >
+                        {certificate.belongsTo.device}
+                      </RouterLink>
+                    ) : (
+                      t('dataTableBody.noDeviceAssociated')
+                    )}
+                  </TableCell>
 
-                    <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={handleShowOptionsMenu}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  <TableCell>{validityInitialDate}</TableCell>
+
+                  <TableCell>{validityFinalDate}</TableCell>
+
+                  <TableCell>
+                    <Chip
+                      style={{ background: statusColor, color: '#22252F' }}
+                      label={statusText}
+                      size='small'
+                    />
+                  </TableCell>
+
+                  <TableCell onClick={handleStopPropagation}>
+                    <IconButton onClick={handleShowOptionsMenu}>
+                      <MoreHoriz />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

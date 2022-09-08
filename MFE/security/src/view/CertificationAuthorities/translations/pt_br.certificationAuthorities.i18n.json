@@ -11,11 +11,14 @@
   "numberOfSelectedItems_plural": "{{count}} Linhas Selecionadas",
   "labelRowsPerPage": "Itens por página:",
   "emptyListMessage": "Nenhuma CA Encontrada",
-  "validityNotDefined": "Validade Não Definida",
   "dataTableHead": {
     "caFingerprint": "CA Fingerprint",
     "subjectDN": "Subject DN",
-    "validity": "Período de Validade",
+    "validity": {
+      "both": "Período de Validade",
+      "notBefore": "Validade Inicial",
+      "notAfter": "Validade Final"
+    },
     "status": "Status",
     "actions": "Ações"
   },
@@ -37,5 +40,9 @@
     "message": "Tem certeza que deseja excluir esta CA?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "sorting": {
+    "order": "Ordem",
+    "orderBy": "Ordenar Por"
   }
 }

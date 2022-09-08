@@ -34,6 +34,7 @@ export const constants = {
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
   page: payload.page,
   filter: payload.filter,
+  sortBy: payload.sortBy,
 }));
 
 export const getCertificateByFingerprint = createAction(

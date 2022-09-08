@@ -14,6 +14,8 @@ import {
   ROWS_PER_PAGE_OPTIONS,
   TEMPLATE_ATTRIBUTES_PAGE_KEYS,
   VIEW_MODE,
+  TEMPLATE_ATTR_TYPES,
+  TEMPLATE_ATTR_VALUE_TYPES,
 } from 'sharedComponents/Constants';
 import { useIsLoading, usePersistentState, useSearchParamState } from 'sharedComponents/Hooks';
 import { actions as attrActions } from '../../redux/modules/templateAttrs';
@@ -32,6 +34,16 @@ import OptionsMenu from './layout/OptionsMenu';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
+
+const ATTR_TYPE_TRANSLATIONS = {};
+Object.values(TEMPLATE_ATTR_TYPES).forEach(({ value, translation }) => {
+  ATTR_TYPE_TRANSLATIONS[value] = translation;
+});
+
+const ATTR_VALUE_TYPE_TRANSLATIONS = {};
+Object.values(TEMPLATE_ATTR_VALUE_TYPES).forEach(({ value, translation }) => {
+  ATTR_VALUE_TYPE_TRANSLATIONS[value] = translation;
+});
 
 const TemplateAttrs = () => {
   const { t } = useTranslation('templateAttrs');
@@ -107,6 +119,18 @@ const TemplateAttrs = () => {
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [isShowingAttrManagementModal, setIsShowingAttrManagementModal] = useState(false);
+
+  const valueFormatters = useMemo(
+    () => ({
+      type(attr) {
+        return t(ATTR_TYPE_TRANSLATIONS[attr.type]) || attr.type;
+      },
+      valueType(attr) {
+        return t(ATTR_VALUE_TYPE_TRANSLATIONS[attr.valueType]) || attr.valueType;
+      },
+    }),
+    [t],
+  );
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -290,6 +314,7 @@ const TemplateAttrs = () => {
                   orderBy={orderBy}
                   rowsPerPage={rowsPerPage}
                   selectedAttrs={selectedAttrs}
+                  valueFormatters={valueFormatters}
                   setOrder={setOrder}
                   setOrderBy={setOrderBy}
                   handleSelectAttr={setSelectedAttrs}
@@ -301,7 +326,12 @@ const TemplateAttrs = () => {
                 <Cards
                   page={page}
                   attrs={attrs}
+                  order={order}
+                  orderBy={orderBy}
                   rowsPerPage={rowsPerPage}
+                  valueFormatters={valueFormatters}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSetAttrOptionsMenu={setAttrOptionsMenu}
                 />
               )}

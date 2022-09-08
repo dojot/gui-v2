@@ -30,6 +30,8 @@
   "new": "New",
   "dojotPageTitle": "Dojot - Do IoT",
   "copiedToClipboard": "Copied",
+  "asc": "Ascending",
+  "desc": "Descending",
   "viewGrid": "View in grid",
   "viewList": "View in list"
 }

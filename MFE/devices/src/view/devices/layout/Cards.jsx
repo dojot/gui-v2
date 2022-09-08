@@ -1,6 +1,16 @@
 import React from 'react';
 
-import { Box, Checkbox, Chip, Grid, IconButton, Tooltip, Typography } from '@material-ui/core';
+import {
+  Box,
+  Checkbox,
+  Chip,
+  Grid,
+  IconButton,
+  Tooltip,
+  Typography,
+  MenuItem,
+  TextField,
+} from '@material-ui/core';
 import { Check, Close, DevicesOther, Star, StarBorderOutlined } from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
@@ -8,11 +18,15 @@ import { useTranslation } from 'react-i18next';
 
 import { DataCard } from 'sharedComponents/Cards';
 import { isSomeHoursAgo } from 'sharedComponents/Utils';
-import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { NEW_CHIP_HOURS_AGO, DATA_ORDER } from 'sharedComponents/Constants';
 import { useCardsStyles } from './style';
 
 const Cards = ({
+  order,
+  orderBy,
   devices,
+  setOrder,
+  setOrderBy,
   handleClickDevice,
   handleFavoriteDevice,
   handleSetDeviceOptionsMenu,
@@ -22,9 +36,52 @@ const Cards = ({
 
   return (
     <Box padding={2}>
+      <Box mb={1}>
+        <Grid spacing={2} container>
+          <Grid xs={2} item>
+            <TextField
+              value={orderBy}
+              variant='outlined'
+              label={t('sorting.orderBy')}
+              onChange={e => setOrderBy(e.target.value)}
+              fullWidth
+              select
+            >
+              <MenuItem value=''>{t('common:none')}</MenuItem>
+
+              {['label', 'id', 'created', 'updated'].map(orderByItem => {
+                return (
+                  <MenuItem key={orderByItem} value={orderByItem}>
+                    {t(`dataTableHead.${orderByItem}`)}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+          </Grid>
+
+          <Grid xs={2} item>
+            <TextField
+              value={order}
+              variant='outlined'
+              label={t('sorting.order')}
+              onChange={e => setOrder(e.target.value)}
+              fullWidth
+              select
+            >
+              {Object.values(DATA_ORDER).map(dataOrder => {
+                return (
+                  <MenuItem key={dataOrder} value={dataOrder}>
+                    {t(`common:${dataOrder.toLowerCase()}`)}
+                  </MenuItem>
+                );
+              })}
+            </TextField>
+          </Grid>
+        </Grid>
+      </Box>
+
       <Grid spacing={2} container>
         {devices.map(device => {
-          const lastUpdate = device.updated || device.created;
           const attrsLength = device.attrs?.length || 0;
           const hasCertificate = !!device.certificate?.fingerprint;
           const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
@@ -101,10 +158,19 @@ const Cards = ({
                   <Typography variant='body2'>{t('cardData.properties')}</Typography>
                 </Box>
 
-                {!!lastUpdate && (
+                {!!device.created && (
                   <Box marginBottom={1}>
                     <Typography variant='body2'>
-                      <strong>{moment(lastUpdate).format('L LTS')}</strong>
+                      <strong>{moment(device.created).format('L LTS')}</strong>
+                    </Typography>
+                    <Typography variant='body2'>{t('cardData.created')}</Typography>
+                  </Box>
+                )}
+
+                {!!device.updated && (
+                  <Box>
+                    <Typography variant='body2'>
+                      <strong>{moment(device.updated).format('L LTS')}</strong>
                     </Typography>
                     <Typography variant='body2'>{t('cardData.updated')}</Typography>
                   </Box>
@@ -119,14 +185,22 @@ const Cards = ({
 };
 
 Cards.propTypes = {
+  order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]),
+  orderBy: PropTypes.string,
   devices: PropTypes.array,
+  setOrder: PropTypes.func,
+  setOrderBy: PropTypes.func,
   handleClickDevice: PropTypes.func,
   handleFavoriteDevice: PropTypes.func,
   handleSetDeviceOptionsMenu: PropTypes.func,
 };
 
 Cards.defaultProps = {
+  order: DATA_ORDER.ASC,
+  orderBy: '',
   devices: [],
+  setOrder: null,
+  setOrderBy: null,
   handleClickDevice: null,
   handleFavoriteDevice: null,
   handleSetDeviceOptionsMenu: null,

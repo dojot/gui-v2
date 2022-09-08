@@ -19,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
-import { getComparator, isSomeHoursAgo } from 'sharedComponents/Utils';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -47,12 +47,13 @@ const DataTable = ({
         label: t('dataTableHead.id'),
       },
       {
-        id: 'attrsLength',
-        label: t('dataTableHead.attrsLength'),
-      },
-      {
         id: 'created',
         label: t('dataTableHead.created'),
+      },
+      {
+        id: 'attrsLength',
+        label: t('dataTableHead.attrsLength'),
+        disableOrderBy: true,
       },
       {
         id: 'actions',
@@ -61,15 +62,6 @@ const DataTable = ({
       },
     ],
     [t],
-  );
-
-  const valueFormatters = useMemo(
-    () => ({
-      attrsLength(template) {
-        return template.attrs?.length || 0;
-      },
-    }),
-    [],
   );
 
   const handleRequestSort = (_, property) => {
@@ -134,71 +126,68 @@ const DataTable = ({
           />
 
           <TableBody>
-            {templates
-              .slice()
-              .sort(getComparator(order === DATA_ORDER.DESC, orderBy, valueFormatters[orderBy]))
-              .map(template => {
-                const isSelected = selectedTemplates.indexOf(template.id) !== -1;
-                const attrsLength = template.attrs?.length || 0;
-                const isNew = isSomeHoursAgo(template.created, NEW_CHIP_HOURS_AGO);
+            {templates.map(template => {
+              const isSelected = selectedTemplates.indexOf(template.id) !== -1;
+              const attrsLength = template.attrs?.length || 0;
+              const isNew = isSomeHoursAgo(template.created, NEW_CHIP_HOURS_AGO);
 
-                const handleClickInThisTemplate = () => {
-                  handleClickTemplate(template);
-                };
+              const handleClickInThisTemplate = () => {
+                handleClickTemplate(template);
+              };
 
-                const handleSelectThisRow = () => {
-                  handleSelectRow(template.id);
-                };
+              const handleSelectThisRow = () => {
+                handleSelectRow(template.id);
+              };
 
-                const handleShowOptionsMenu = e => {
-                  handleSetTemplateOptionsMenu({
-                    anchorElement: e.target,
-                    template,
-                  });
-                };
+              const handleShowOptionsMenu = e => {
+                handleSetTemplateOptionsMenu({
+                  anchorElement: e.target,
+                  template,
+                });
+              };
 
-                return (
-                  <TableRow
-                    key={template.id}
-                    tabIndex={-1}
-                    role='checkbox'
-                    selected={isSelected}
-                    aria-checked={isSelected}
-                    onClick={handleClickInThisTemplate}
-                    hover
-                  >
-                    <TableCell onClick={handleStopPropagation}>
-                      <Checkbox
-                        color='secondary'
-                        checked={isSelected}
-                        onChange={handleSelectThisRow}
-                      />
-                    </TableCell>
+              return (
+                <TableRow
+                  key={template.id}
+                  tabIndex={-1}
+                  role='checkbox'
+                  selected={isSelected}
+                  aria-checked={isSelected}
+                  onClick={handleClickInThisTemplate}
+                  hover
+                >
+                  <TableCell onClick={handleStopPropagation}>
+                    <Checkbox
+                      color='secondary'
+                      checked={isSelected}
+                      onChange={handleSelectThisRow}
+                    />
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>
-                      <Box mr={isNew ? 1 : 0} component='span'>
-                        {template.label}
-                      </Box>
+                  <TableCell className={classes.clickableCell}>
+                    <Box mr={isNew ? 1 : 0} component='span'>
+                      {template.label}
+                    </Box>
 
-                      {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
-                    </TableCell>
+                    {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>{template.id}</TableCell>
+                  <TableCell className={classes.clickableCell}>{template.id}</TableCell>
 
-                    <TableCell className={classes.clickableCell}>{attrsLength}</TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    {moment(template.created).format('L LTS')}
+                  </TableCell>
 
-                    <TableCell className={classes.clickableCell}>
-                      {moment(template.created).format('L LTS')}
-                    </TableCell>
+                  <TableCell className={classes.clickableCell}>{attrsLength}</TableCell>
 
-                    <TableCell onClick={handleStopPropagation}>
-                      <IconButton onClick={handleShowOptionsMenu}>
-                        <MoreHoriz />
-                      </IconButton>
-                    </TableCell>
-                  </TableRow>
-                );
-              })}
+                  <TableCell onClick={handleStopPropagation}>
+                    <IconButton onClick={handleShowOptionsMenu}>
+                      <MoreHoriz />
+                    </IconButton>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </TableContainer>

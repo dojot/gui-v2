@@ -11,6 +11,7 @@
     "favoriteDevice": "Não foi possível favoritar este dispositivo",
     "editDevice": "Não foi possível editar este dispositivo",
     "createDevice": "Não foi possível criar um dispositivo",
+    "deviceUniqueLabel": "Já existe um dispositivo com este nome",
 
     "getTemplates": "Não foi possível obter os modelos",
     "getTemplateById": "Não foi possível obter os dados do modelo",
@@ -19,11 +20,13 @@
     "createTemplate": "Não foi possível criar o modelo",
     "editTemplate": "Não foi possível editar este modelo",
     "duplicateTemplate": "Não foi possível duplicar este modelo",
+    "templateUniqueLabel": "Já existe um modelo com este nome",
 
     "deleteAttr": "Não foi possível excluir este atributo",
     "deleteMultipleAttrs": "Não foi possível excluir estes atributos",
     "createAttr": "Não foi possível criar um atributo",
     "editAttr": "Não foi possível editar este atributo",
+    "attrUnique": "Já existe um atributo com mesmo nome e tipo",
 
     "getCertificates": "Não foi possível obter os certificados",
     "deleteCertificate": "Não foi possível excluir este certificado",

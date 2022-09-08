@@ -21,14 +21,16 @@
     "id": "ID",
     "label": "Nome",
     "attrsLength": "Nº de Propriedades",
-    "updated": "Última Atualização",
+    "created": "Data de Criação",
+    "updated": "Última Modificação",
     "hasCertificate": "Tem Certificado",
     "actions": "Ações"
   },
   "cardData": {
     "deviceId": "ID do Dispositivo",
-    "properties": "Propriedades",
-    "updated": "Última Atualização"
+    "properties": "Nº de Propriedades",
+    "created": "Data de Criação",
+    "updated": "Última Modificação"
   },
   "deleteDeviceAlert": {
     "title": "Excluir Dispositivo",
@@ -41,5 +43,9 @@
     "message": "Tem certeza que deseja excluir todos os dispositivos selecionados?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "sorting": {
+    "order": "Ordem",
+    "orderBy": "Ordenar Por"
   }
 }

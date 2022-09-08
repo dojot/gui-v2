@@ -35,6 +35,7 @@ export const useSearchBarStyles = makeStyles(theme => ({
 
 export const useCardsStyles = makeStyles(theme => ({
   card: {
+    height: '100%',
     cursor: 'pointer',
     transition: 'background 0.1s ease-in-out',
     '&:hover': {

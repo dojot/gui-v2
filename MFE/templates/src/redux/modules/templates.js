@@ -24,6 +24,7 @@ export const constants = {
 export const getTemplates = createAction(GET_TEMPLATES, payload => ({
   page: payload.page,
   filter: payload.filter,
+  sortBy: payload.sortBy,
 }));
 
 export const getTemplateById = createAction(GET_TEMPLATE_BY_ID, payload => ({

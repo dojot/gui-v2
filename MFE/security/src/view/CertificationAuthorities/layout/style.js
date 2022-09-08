@@ -90,7 +90,7 @@ export const useDataTableStyles = makeStyles(theme => ({
     cursor: 'pointer',
   },
   truncatedText: {
-    maxWidth: '200px',
+    maxWidth: '125px',
     whiteSpace: 'nowrap',
     textOverflow: 'ellipsis',
     overflow: 'hidden',

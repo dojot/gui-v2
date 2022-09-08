@@ -194,9 +194,10 @@ const Certificates = () => {
         filter: {
           fingerprint: searchText,
         },
+        sortBy: orderBy ? `${order}:${orderBy}` : undefined,
       }),
     );
-  }, [dispatch, page, rowsPerPage, searchText]);
+  }, [dispatch, order, orderBy, page, rowsPerPage, searchText]);
 
   useEffect(() => {
     if (viewMode) setSelectedCertificates([]);
@@ -304,7 +305,11 @@ const Certificates = () => {
 
               {viewMode === VIEW_MODE.CARD && certificates.length > 0 && (
                 <Cards
+                  order={order}
+                  orderBy={orderBy}
                   certificates={certificates}
+                  setOrder={setOrder}
+                  setOrderBy={setOrderBy}
                   handleSetCertificateOptionsMenu={setCertificatesOptionsMenu}
                   handleShowDevicesToAssociate={handleShowDevicesToAssociate}
                 />

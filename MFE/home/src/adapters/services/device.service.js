@@ -1,10 +1,10 @@
 import { protectAPI } from '../api';
 
-export const getDevicesList = (page, filter) => {
+export const getDevicesList = (page, filter, sortBy) => {
   return protectAPI({
     query: `
-      query getDevices($page: PageInput, $filter: FilterDeviceInput) {
-        getDevices(page: $page, filter: $filter) {
+      query getDevices($page: PageInput, $filter: FilterDeviceInput, $sortBy: String) {
+        getDevices(page: $page, filter: $filter, sortBy: $sortBy) {
           totalPages
           currentPage
           devices {
@@ -32,6 +32,7 @@ export const getDevicesList = (page, filter) => {
     variables: JSON.stringify({
       page,
       filter,
+      sortBy,
     }),
   });
 };

@@ -61,9 +61,14 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
         label: t('associateToDeviceModal.table.id'),
       },
       {
-        id: 'lastUpdate',
+        id: 'created',
         className: classes.tableHeadCell,
-        label: t('associateToDeviceModal.table.lastUpdate'),
+        label: t('associateToDeviceModal.table.created'),
+      },
+      {
+        id: 'updated',
+        className: classes.tableHeadCell,
+        label: t('associateToDeviceModal.table.updated'),
       },
     ],
     [classes.tableHeadCell, t],
@@ -177,8 +182,10 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
 
                       <TableCell>{device.id}</TableCell>
 
+                      <TableCell>{moment(device.created).format('L LTS')}</TableCell>
+
                       <TableCell>
-                        {moment(device.updated || device.created).format('L LTS')}
+                        {device.updated ? moment(device.updated).format('L LTS') : ''}
                       </TableCell>
                     </TableRow>
                   );

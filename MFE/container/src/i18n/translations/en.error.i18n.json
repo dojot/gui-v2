@@ -11,6 +11,7 @@
     "favoriteDevice": "Could not favorite this device",
     "editDevice": "Could not edit this device",
     "createDevice": "Could not create a device",
+    "deviceUniqueLabel": "A device with this name already exists",
 
     "getTemplates": "Could not get templates",
     "getTemplateById": "Could not get the template data",
@@ -19,11 +20,13 @@
     "createTemplate": "Could not create a template",
     "editTemplate": "Could not edit this template",
     "duplicateTemplate": "Could not duplicate this template",
+    "templateUniqueLabel": "A template with this name already exists",
 
     "deleteAttr": "Could not delete this attribute",
     "deleteMultipleAttrs": "Could not delete these attributes",
     "createAttr": "Could not create a attribute",
     "editAttr": "Could not edit this attribute",
+    "attrUnique": "An attribute with the same name and type already exists",
 
     "getCertificates": "Could not get certificates",
     "deleteCertificate": "Could not delete this certificate",

@@ -21,14 +21,16 @@
     "id": "ID",
     "label": "Name",
     "attrsLength": "Number of Properties",
-    "updated": "Last Update",
+    "created": "Creation Date",
+    "updated": "Last Modification",
     "hasCertificate": "Has Certificate",
     "actions": "Actions"
   },
   "cardData": {
     "deviceId": "Device ID",
     "properties": "Properties",
-    "updated": "Last Update"
+    "created": "Creation Date",
+    "updated": "Last Modification"
   },
   "deleteDeviceAlert": {
     "title": "Delete Device",
@@ -41,5 +43,9 @@
     "message": "Are you sure you want to delete all selected devices?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
+  },
+  "sorting": {
+    "order": "Order",
+    "orderBy": "Order By"
   }
 }
