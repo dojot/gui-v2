@@ -25,7 +25,7 @@
     "i18next": "^21.6.14",
     "immutable": "^4.0.0-rc.12",
     "lodash": "^4.17.21",
-    "moment": "^2.29.1",
+    "moment": "^2.29.4",
     "mui-rff": "^3.0.3",
     "numeral": "^2.0.6",
     "prop-types": "^15.8.1",
