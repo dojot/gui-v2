@@ -39,8 +39,7 @@
     "confirmButton": "Delete"
   },
   "deleteMultipleDeviceAlert": {
-    "title": "Delete Selected Devices",
-    "message": "Are you sure you want to delete all selected devices?",
+    "title": "Do you want to delete the {{count}} devices mentioned below?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
   },

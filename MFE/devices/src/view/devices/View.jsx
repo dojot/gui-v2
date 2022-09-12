@@ -21,6 +21,7 @@ import { devicesSelector, paginationControlSelector } from '../../redux/selector
 import { ViewContainer } from 'sharedComponents/Containers';
 import Cards from './layout/Cards';
 import DataTable from './layout/DataTable';
+import DeleteMultipleDevicesConfirmation from './layout/DeleteMultipleDevicesConfirmation';
 import DeviceOptionsMenu from './layout/DeviceOptionsMenu';
 import DevicesLoading from './layout/DevicesLoading';
 import MassActions from './layout/MassActions';
@@ -119,7 +120,9 @@ const Devices = () => {
   };
 
   const handleConfirmMultipleDevicesDeletion = () => {
-    dispatch(deviceActions.deleteMultipleDevices({ deviceIdArray: selectedDevices }));
+    dispatch(
+      deviceActions.deleteMultipleDevices({ deviceIdArray: selectedDevices.map(({ id }) => id) }),
+    );
     handleHideMassActions();
   };
 
@@ -210,14 +213,14 @@ const Devices = () => {
           confirmButtonText={t('deleteDeviceAlert.confirmButton')}
         />
 
-        <AlertDialog
+        <DeleteMultipleDevicesConfirmation
           isOpen={isShowingMultipleDeleteAlert}
-          title={t('deleteMultipleDeviceAlert.title')}
-          message={t('deleteMultipleDeviceAlert.message')}
+          title={t('deleteMultipleDeviceAlert.title', { count: selectedDevices.length })}
           handleConfirm={handleConfirmMultipleDevicesDeletion}
           handleClose={handleCloseMultipleDeviceDeletionAlert}
           cancelButtonText={t('deleteMultipleDeviceAlert.cancelButton')}
           confirmButtonText={t('deleteMultipleDeviceAlert.confirmButton')}
+          selectedDevices={selectedDevices}
         />
 
         <Box className={classes.container}>
