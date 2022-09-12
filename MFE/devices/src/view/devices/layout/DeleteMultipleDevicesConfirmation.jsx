@@ -23,10 +23,6 @@ const DeleteMultipleDevicesConfirmation = ({
   handleCancel,
   selectedDevices,
 }) => {
-  useEffect(() => {
-    console.log(selectedDevices);
-  }, [selectedDevices]);
-
   const handleCancelDialog = () => {
     if (handleCancel) handleCancel();
     if (shouldCloseWhenCancel) handleClose();
