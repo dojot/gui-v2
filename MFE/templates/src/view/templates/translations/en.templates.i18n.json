@@ -30,10 +30,15 @@
     "confirmButton": "Delete"
   },
   "deleteMultipleTemplateAlert": {
-    "title": "Delete Selected Templates",
-    "message": "Are you sure you want to delete all selected templates?",
+    "title": "Do you want to delete the {{count}} templates mentioned below?",
     "cancelButton": "Cancel",
     "confirmButton": "Delete"
+  },
+  "multipleTemplatesDeletionError": {
+    "alertMessage": "The models below could not be deleted as they contain devices attached",
+    "hasAssociatedDevice": "{{count}} associated devices",
+    "theOtherTemplatesWereExcluded": "The other models were excluded",
+    "closeButtonText": "I got it"
   },
   "sorting": {
     "order": "Order",
