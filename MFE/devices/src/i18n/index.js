@@ -11,6 +11,8 @@ import constantsEn from './translations/en.constants.i18n.json';
 import constantsPtBr from './translations/pt_br.constants.i18n.json';
 import createDeviceEn from '../view/createDevice/translations/en.createDevice.i18n.json';
 import createDevicePtBr from '../view/createDevice/translations/pt_br.createDevice.i18n.json';
+import createMultipleDevicesEn from '../view/createMultipleDevices/translations/en.createMultipleDevices.i18n.json';
+import createMultipleDevicesPtBr from '../view/createMultipleDevices/translations/pt_br.createMultipleDevices.i18n.json';
 import deviceDetailsEn from '../view/deviceDetails/translations/en.deviceDetails.i18n.json';
 import deviceDetailsPtBr from '../view/deviceDetails/translations/pt_br.deviceDetails.i18n.json';
 import devicesEn from '../view/devices/translations/en.devices.i18n.json';
@@ -35,57 +37,68 @@ const deviceInstance = i18n.createInstance();
 import 'moment/locale/pt-br';
 
 const resources = {
-    en: {
-        common: commonEn,
-        constants: constantsEn,
-        createDevice: createDeviceEn,
-        deviceDetails: deviceDetailsEn,
-        devices: devicesEn,
-        editDevice: editDeviceEn,
-        error: errorEn,
-        languages: languagesEn,
-        success: successEn,
-        templatesTable: templatesTableEn,
-        attrs: attrsEn,
-        userInfo: userInfoEN,
-        templateCreation: templateCreationEn,
-    },
-    'pt-BR': {
-        common: commonPtBr,
-        constants: constantsPtBr,
-        createDevice: createDevicePtBr,
-        deviceDetails: deviceDetailsPtBr,
-        devices: devicesPtBr,
-        editDevice: editDevicePtBr,
-        error: errorPtBr,
-        languages: languagesPtBr,
-        success: successPtBr,
-        templatesTable: templatesTablePtBr,
-        attrs: attrsPtBr,
-        userInfo: userInfoPtBr,
-        templateCreation: templateCreationBr,
-    },
+  en: {
+    common: commonEn,
+    constants: constantsEn,
+    createDevice: createDeviceEn,
+    createMultipleDevices: createMultipleDevicesEn,
+    deviceDetails: deviceDetailsEn,
+    devices: devicesEn,
+    editDevice: editDeviceEn,
+    error: errorEn,
+    languages: languagesEn,
+    success: successEn,
+    templatesTable: templatesTableEn,
+    attrs: attrsEn,
+    userInfo: userInfoEN,
+    templateCreation: templateCreationEn,
+  },
+  'pt-BR': {
+    common: commonPtBr,
+    constants: constantsPtBr,
+    createDevice: createDevicePtBr,
+    createMultipleDevices: createMultipleDevicesPtBr,
+    deviceDetails: deviceDetailsPtBr,
+    devices: devicesPtBr,
+    editDevice: editDevicePtBr,
+    error: errorPtBr,
+    languages: languagesPtBr,
+    success: successPtBr,
+    templatesTable: templatesTablePtBr,
+    attrs: attrsPtBr,
+    userInfo: userInfoPtBr,
+    templateCreation: templateCreationBr,
+  },
 };
 
 const preferredLanguage = localStorage.getItem(LANGUAGE_KEYS.LANGUAGE);
 const lng = preferredLanguage || navigator.language || navigator.userLanguage;
 
-deviceInstance
-    .use(initReactI18next)
-    .init({
-        ns: ['common', 'constants', 'createDevice', 'deviceDetails', 'devices', 'editDevice', 'error', 'languages', 'success'],
-        defaultNS: 'common',
-        fallbackLng: 'en',
-        lng,
-        resources,
-        keySeparator: '.',
-        interpolation: {
-            escapeValue: false,
-        },
-    });
+deviceInstance.use(initReactI18next).init({
+  ns: [
+    'common',
+    'constants',
+    'createDevice',
+    'createMultipleDevices',
+    'deviceDetails',
+    'devices',
+    'editDevice',
+    'error',
+    'languages',
+    'success',
+  ],
+  defaultNS: 'common',
+  fallbackLng: 'en',
+  lng,
+  resources,
+  keySeparator: '.',
+  interpolation: {
+    escapeValue: false,
+  },
+});
 
 const handleLoadMomentLocale = lang => {
-    if(lang) moment.locale(lang.toLowerCase());
+  if (lang) moment.locale(lang.toLowerCase());
 };
 
 deviceInstance.on('languageChanged', handleLoadMomentLocale);

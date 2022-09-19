@@ -197,6 +197,37 @@ export function* handleCreateDevice(action) {
   }
 }
 
+export function* handleCreateMultipleDevices(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.CREATE_MULTIPLE_DEVICES));
+    const { devicesPrefix, quantity, initialSuffixNumber, templates, attrs, successCallback } =
+      action.payload;
+
+    const { createMultipleDevices } = yield call(Device.createMultipleDevices, {
+      devicesPrefix,
+      quantity,
+      initialSuffixNumber,
+      templates,
+      attrs,
+    });
+
+    if (createMultipleDevices.devicesWithError) yield call(successCallback);
+  } catch (e) {
+    const i18nMessage = getErrorTranslation(e, 'createDevice', {
+      devices_label_key: 'deviceUniqueLabel',
+    });
+
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      i18nMessage,
+      type: 'error',
+      duration: 15000,
+      message: e.message,
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.CREATE_MULTIPLE_DEVICES));
+  }
+}
+
 export function* handleFavoriteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
@@ -265,6 +296,10 @@ export function* watchCreateDevice() {
   yield takeLatest(constants.CREATE_DEVICE, handleCreateDevice);
 }
 
+export function* watchCreateMultipleDevices() {
+  yield takeLatest(constants.CREATE_MULTIPLE_DEVICES, handleCreateMultipleDevices);
+}
+
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchGetFavoriteDevicesList),
@@ -274,4 +309,5 @@ export const deviceSaga = [
   fork(watchFavoriteDevice),
   fork(watchEditDevice),
   fork(watchCreateDevice),
+  fork(watchCreateMultipleDevices),
 ];

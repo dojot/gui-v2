@@ -1,0 +1,30 @@
+{
+  "title": "Criar vários dispositivos",
+  "stepper": {
+    "templates": "Modelos",
+    "attrs": "Atributos",
+    "parameterization": "Parametrização",
+    "summary": "Resumo"
+  },
+  "parameterizationStep": {
+    "devicesPrefixTitle": "Estamos quase lá! Para finalizar dê um nome que será usado como prefixo de seus dispositivos:",
+    "devicesPrefixPh": "Prefixo dos nomes dos dispositivos",
+    "devicesPrefixHint": "Observação: os dispositivos serão criados com o nome acima como prefixo, um hífen para dividir o prefixo (nome) dos sufixos (numeração), e uma numeração crescente ao final do nome para distingui-los, partindo da numeração inicial escolhida (seu valor padrão é 1).",
+    "devicesAmountTitle": "Quantidade de dispositivos a ser criada: (mínimo 1, máximo 999)",
+    "devicesAmountPh": "Quantidade de dispositivos",
+    "initialValueSuffixTitle": "Valor inicial da numeração no sufixo dos dispositivos:",
+    "initialValueSuffixPh": "Valor inicial da numeração",
+    "initialValueSuffixHint": "Se já houver dispositivo com o nome e numeração existente, ele não será criado. A operação será abortada - o sistema tentará criar os demais dispositivos normalmente."
+  },
+  "summaryStep": {
+    "title": "Nesta etapa você visualiza o resumo de tudo que foi feito.",
+    "createDevicesLoadingMessage": "Aguarde, os dispositivos estão sendo criados!",
+    "templatesListTitle": "Modelos",
+    "devicesPrefixTitle": "Prefixo dos nomes dos dispositivos",
+    "devicesAmountTitle": "Quantidade de dispositivos",
+    "goToDevicesList": "Ir para dispositivos",
+    "devicesNotCreatedMsg": "Observação: alguns dispositivos não foram criados pois já existia dispositivo com o mesmo nome.",
+    "initialValueSuffixTitle": "Valor inicial da numeração no sufixo dos dispositivos",
+    "devicesCreatedSuccessfully": "Dispositivos criados com sucesso!"
+  }
+}

@@ -47,5 +47,10 @@
   "sorting": {
     "order": "Ordem",
     "orderBy": "Ordenar Por"
+  },
+  "devicesCreationMenu": {
+    "createOneDevice": "Criar um dispositivo",
+    "createManyDevices": "Criar vários dispositivos",
+    "importUsingCSV": "Importar usando CSV"
   }
 }

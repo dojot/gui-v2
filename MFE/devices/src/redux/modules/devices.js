@@ -10,6 +10,7 @@ const DELETE_DEVICE = 'app/devices/DELETE_DEVICE';
 const DELETE_MULTIPLE_DEVICES = 'app/devices/DELETE_MULTIPLE_DEVICES';
 const EDIT_DEVICE = 'app/devices/EDIT_DEVICE';
 const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
+const CREATE_MULTIPLE_DEVICES = 'app/devices/CREATE_MULTIPLE_DEVICES';
 
 export const constants = {
   GET_DEVICES,
@@ -21,6 +22,7 @@ export const constants = {
   DELETE_MULTIPLE_DEVICES,
   EDIT_DEVICE,
   CREATE_DEVICE,
+  CREATE_MULTIPLE_DEVICES,
 };
 
 export const getDevices = createAction(GET_DEVICES, payload => ({
@@ -82,6 +84,15 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
   successCallback: payload.successCallback,
 }));
 
+export const createMultipleDevices = createAction(CREATE_MULTIPLE_DEVICES, payload => ({
+  devicesPrefix: payload.devicesPrefix,
+  quantity: payload.quantity,
+  initialSuffixNumber: payload.initialSuffixNumber,
+  templates: payload.templates,
+  attrs: payload.attrs,
+  successCallback: payload.successCallback,
+}));
+
 export const actions = {
   getDevices,
   getDeviceById,
@@ -92,6 +103,7 @@ export const actions = {
   deleteMultipleDevices,
   editDevice,
   createDevice,
+  createMultipleDevices,
 };
 
 export const reducers = {
