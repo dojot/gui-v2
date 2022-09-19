@@ -161,9 +161,7 @@ const ParameterizationStep = ({
 };
 
 ParameterizationStep.propTypes = {
-  selectedCertificate: PropTypes.object.isRequired,
   handleGoToNextStep: PropTypes.func.isRequired,
-  setSelectedCertificate: PropTypes.func.isRequired,
   handleCancelDeviceCreation: PropTypes.func.isRequired,
   devicesPrefix: PropTypes.string.isRequired,
   setDevicesPrefix: PropTypes.func.isRequired,

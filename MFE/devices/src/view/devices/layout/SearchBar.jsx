@@ -11,7 +11,6 @@ import {
 import { ViewModule, List, Search, Add, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 
 import { VIEW_MODE } from 'sharedComponents/Constants';
 import { useDebounce } from 'sharedComponents/Hooks';
@@ -26,7 +25,6 @@ const SearchBar = ({
 }) => {
   const { t } = useTranslation(['devices', 'common']);
   const classes = useSearchBarStyles();
-  const history = useHistory();
 
   const searchInputRef = useRef(null);
 

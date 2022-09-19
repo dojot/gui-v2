@@ -4,7 +4,7 @@ import { Box, Typography, CircularProgress, Button } from '@material-ui/core';
 import { Done } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 
-import { Trans, useTranslation } from 'react-i18next';
+import { useTranslation } from 'react-i18next';
 import { useSummaryStepStyles } from './style';
 
 const SummaryStep = ({
