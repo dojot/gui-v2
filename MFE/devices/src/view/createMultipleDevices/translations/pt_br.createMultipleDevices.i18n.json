@@ -1,5 +1,7 @@
 {
   "title": "Criar vários dispositivos",
+  "cancelDeviceCreationTitle": "Cancelar criação de vários dispositivos",
+  "cancelDeviceCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!",
   "stepper": {
     "templates": "Modelos",
     "attrs": "Atributos",

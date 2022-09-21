@@ -1,5 +1,7 @@
 {
   "title": "Create multiple devices",
+  "cancelDeviceCreationTitle": "Cancel multiple devices creation",
+  "cancelDeviceCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
   "stepper": {
     "templates": "Templates",
     "attrs": "Attributes",
