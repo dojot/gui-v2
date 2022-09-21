@@ -1,6 +1,7 @@
 {
   "title": "Home",
-  "createDevice": "Criar Dispositivo",
+  "createDevice": "Criar um dispositivo",
+  "createMultipleDevices": "Criar vários dispositivos",
   "createDashboard": "Criar Dashboard",
   "createTemplate": "Criar Modelo",
   "createCertificate": "Criar Certificado",
