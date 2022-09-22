@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import { ExpandMore, SubdirectoryArrowRight } from '@material-ui/icons';
 
-const TemplateNotExcludedItem = ({ id, label, associateDevices }) => {
+const TemplateNotExcludedItem = ({ id, label, associatedDevices }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const classes = useDeleteMultipleTemplatesErrorAlert();
@@ -22,7 +22,7 @@ const TemplateNotExcludedItem = ({ id, label, associateDevices }) => {
           <small className={classes.description}>
             <i>
               {t('multipleTemplatesDeletionError.hasAssociatedDevice', {
-                count: associateDevices.length,
+                count: associatedDevices.length,
               })}
             </i>
           </small>
@@ -42,7 +42,7 @@ const TemplateNotExcludedItem = ({ id, label, associateDevices }) => {
 
       <Collapse in={isOpen}>
         <div className={classes.collapseContent}>
-          {associateDevices.map(associatedDevice => (
+          {associatedDevices.map(associatedDevice => (
             <React.Fragment key={associatedDevice.id}>
               <SubdirectoryArrowRight />
               <span>{associatedDevice.label}</span>
@@ -56,10 +56,9 @@ const TemplateNotExcludedItem = ({ id, label, associateDevices }) => {
 };
 
 TemplateNotExcludedItem.propTypes = {
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  associateDevices: PropTypes.array.isRequired,
+  associatedDevices: PropTypes.array.isRequired,
 };
 
 export default TemplateNotExcludedItem;

@@ -102,7 +102,8 @@ const Templates = () => {
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [multipleDeletionError, setMultipleDeletionError] = useState({
     isShowing: false,
-    templatesNotExcluded: [],
+    notDeletedTemplates: [],
+    deletedTemplates: [],
   });
 
   const handleChangePage = (_, newPage) => {
@@ -126,12 +127,12 @@ const Templates = () => {
     setIsShowingMultipleDeleteAlert(true);
   };
 
-  const handleShowMultipleTemplatesDeletionError = templatesNotExcluded => {
-    setMultipleDeletionError({ showing: true, templatesNotExcluded });
+  const handleShowMultipleTemplatesDeletionError = (notDeletedTemplates, deletedTemplates) => {
+    setMultipleDeletionError({ isShowing: true, notDeletedTemplates, deletedTemplates });
   };
 
   const handleCloseMultipleTemplatesDeletionError = () => {
-    setMultipleDeletionError({ showing: false, templatesNotExcluded: [] });
+    setMultipleDeletionError({ isShowing: false, notDeletedTemplates: [], deletedTemplates: [] });
   };
 
   const handleConfirmMultipleTemplatesDeletion = () => {
@@ -238,7 +239,8 @@ const Templates = () => {
       <DeleteMultipleTemplatesErrorAlert
         isOpen={multipleDeletionError.isShowing}
         handleClose={handleCloseMultipleTemplatesDeletionError}
-        templates={multipleDeletionError.templatesNotExcluded}
+        notDeletedTemplates={multipleDeletionError.notDeletedTemplates}
+        deletedTemplates={multipleDeletionError.deletedTemplates}
       />
 
       <Box className={classes.container}>

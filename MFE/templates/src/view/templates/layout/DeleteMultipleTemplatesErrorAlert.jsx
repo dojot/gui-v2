@@ -15,7 +15,12 @@ import { useDeleteMultipleTemplatesErrorAlert } from './style';
 import { useTranslation } from 'react-i18next';
 import TemplateNotExcludedItem from './TemplateNotExcludedItem';
 
-const DeleteMultipleTemplatesErrorAlert = ({ isOpen, handleClose, templates }) => {
+const DeleteMultipleTemplatesErrorAlert = ({
+  isOpen,
+  handleClose,
+  notDeletedTemplates,
+  deletedTemplates,
+}) => {
   const classes = useDeleteMultipleTemplatesErrorAlert();
   const { t } = useTranslation('templates');
 
@@ -31,25 +36,29 @@ const DeleteMultipleTemplatesErrorAlert = ({ isOpen, handleClose, templates }) =
       <DialogTitle className={classes.dialogTitle} id='alert-dialog-title'>
         <Warning className={classes.icon} />
         <Typography id='alert-dialog-description'>
-          {t('multipleTemplatesDeletionError.alertMessage')}
+          <strong>{t('multipleTemplatesDeletionError.alertMessage')}</strong>
         </Typography>
       </DialogTitle>
 
       <DialogContent className={classes.dialogContent}>
-        {!!templates &&
-          templates.map(({ id, label, associate_devices }) => (
+        {!!notDeletedTemplates &&
+          notDeletedTemplates.map(({ id, label, associatedDevices }) => (
             <TemplateNotExcludedItem
               key={id}
               id={id}
               label={label}
-              associateDevices={associate_devices}
+              associatedDevices={associatedDevices}
             />
           ))}
       </DialogContent>
 
       <DialogActions className={classes.dialogActions}>
-        <Typography>{t('multipleTemplatesDeletionError.theOtherTemplatesWereExcluded')}</Typography>
-        <Button color='primary' className={classes.cancelButton} onClick={handleClose}>
+        {!!deletedTemplates.length && (
+          <Typography>
+            {t('multipleTemplatesDeletionError.theOtherTemplatesWereExcluded')}
+          </Typography>
+        )}
+        <Button color='inherit' className={classes.cancelButton} onClick={handleClose}>
           {t('multipleTemplatesDeletionError.closeButtonText')}
         </Button>
       </DialogActions>
@@ -60,7 +69,8 @@ const DeleteMultipleTemplatesErrorAlert = ({ isOpen, handleClose, templates }) =
 DeleteMultipleTemplatesErrorAlert.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  templates: PropTypes.array.isRequired,
+  notDeletedTemplates: PropTypes.array.isRequired,
+  deletedTemplates: PropTypes.array.isRequired,
 };
 
 export default DeleteMultipleTemplatesErrorAlert;

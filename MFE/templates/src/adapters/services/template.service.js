@@ -73,6 +73,32 @@ export const deleteTemplates = templateIds => {
   });
 };
 
+export const deleteMultipleTemplates = templateIds => {
+  return protectAPI({
+    query: `
+      mutation deleteMultipleTemplates($templateIds: [String]!) {
+        deleteMultipleTemplates(templateIds: $templateIds) {
+          deletedTemplates {
+            id
+            label
+          }
+          notDeletedTemplates {
+            id
+            label
+            associatedDevices {
+              id
+              label
+            }
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      templateIds,
+    }),
+  });
+};
+
 export const createTemplate = ({ label, attrs }) => {
   return protectAPI({
     query: `
