@@ -100,7 +100,6 @@ const DataTable = ({
   const handleSelectRow = device => {
     const selectedIndex = selectedDevices.indexOf(device);
     let newSelected = [];
-    console.log(selectedIndex);
 
     if (selectedIndex === -1) {
       newSelected = newSelected.concat(selectedDevices, device);
@@ -115,7 +114,6 @@ const DataTable = ({
       );
     }
 
-    console.log(newSelected);
     handleSelectDevice(newSelected);
   };
 
