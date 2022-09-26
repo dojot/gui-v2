@@ -1,6 +1,7 @@
 {
   "title": "Home",
-  "createDevice": "Create Device",
+  "createDevice": "Create one device",
+  "createMultipleDevices": "Create multiple devices",
   "createDashboard": "Create Dashboard",
   "createTemplate": "Create Model",
   "createCertificate": "Create Certificate",

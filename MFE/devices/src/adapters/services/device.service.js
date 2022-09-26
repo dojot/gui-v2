@@ -158,6 +158,31 @@ export const createDevice = ({ label, templates, attrs, fingerprint }) => {
   });
 };
 
+export const createMultipleDevices = ({
+  devicesPrefix,
+  quantity,
+  initialSuffixNumber,
+  templates,
+  attrs,
+}) => {
+  return protectAPI({
+    query: `
+      mutation createMultipleDevices($devicesPrefix: String!, $quantity: String!, $initialSuffixNumber: String!, $templates: [Int]!, $attrs: [DeviceAttributes]) {
+        createMultipleDevices(devicesPrefix: $devicesPrefix, quantity: $quantity, initialSuffixNumber: $initialSuffixNumber, templates: $templates, attrs: $attrs) {
+          devicesWithError
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      devicesPrefix,
+      quantity,
+      initialSuffixNumber,
+      templates,
+      attrs,
+    }),
+  });
+};
+
 export const getDevicesHistoryParsed = filter => {
   return protectAPI(filter);
 };
