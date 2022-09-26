@@ -33,6 +33,8 @@ import OptionsMenu from './layout/OptionsMenu';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
+import DeleteMultipleTemplatesConfirmation from './layout/DeleteMultipleTemplatesConfirmation';
+import DeleteMultipleTemplatesErrorAlert from './layout/DeleteMultipleTemplatesErrorAlert';
 
 const Templates = () => {
   const { t } = useTranslation('templates');
@@ -98,6 +100,11 @@ const Templates = () => {
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
+  const [multipleDeletionError, setMultipleDeletionError] = useState({
+    isShowing: false,
+    notDeletedTemplates: [],
+    deletedTemplates: [],
+  });
 
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
@@ -120,8 +127,21 @@ const Templates = () => {
     setIsShowingMultipleDeleteAlert(true);
   };
 
+  const handleShowMultipleTemplatesDeletionError = (notDeletedTemplates, deletedTemplates) => {
+    setMultipleDeletionError({ isShowing: true, notDeletedTemplates, deletedTemplates });
+  };
+
+  const handleCloseMultipleTemplatesDeletionError = () => {
+    setMultipleDeletionError({ isShowing: false, notDeletedTemplates: [], deletedTemplates: [] });
+  };
+
   const handleConfirmMultipleTemplatesDeletion = () => {
-    dispatch(templateActions.deleteMultipleTemplates({ templateIds: selectedTemplates }));
+    dispatch(
+      templateActions.deleteMultipleTemplates({
+        templateIds: selectedTemplates.map(({ id }) => id),
+        failCallback: handleShowMultipleTemplatesDeletionError,
+      }),
+    );
     handleHideMassActions();
   };
 
@@ -206,14 +226,21 @@ const Templates = () => {
         confirmButtonText={t('deleteTemplateAlert.confirmButton')}
       />
 
-      <AlertDialog
+      <DeleteMultipleTemplatesConfirmation
         isOpen={isShowingMultipleDeleteAlert}
-        title={t('deleteMultipleTemplateAlert.title')}
-        message={t('deleteMultipleTemplateAlert.message')}
+        title={t('deleteMultipleTemplateAlert.title', { count: selectedTemplates.length })}
         handleConfirm={handleConfirmMultipleTemplatesDeletion}
         handleClose={handleCloseMultipleTemplateDeletionAlert}
         cancelButtonText={t('deleteMultipleTemplateAlert.cancelButton')}
         confirmButtonText={t('deleteMultipleTemplateAlert.confirmButton')}
+        selectedTemplates={selectedTemplates}
+      />
+
+      <DeleteMultipleTemplatesErrorAlert
+        isOpen={multipleDeletionError.isShowing}
+        handleClose={handleCloseMultipleTemplatesDeletionError}
+        notDeletedTemplates={multipleDeletionError.notDeletedTemplates}
+        deletedTemplates={multipleDeletionError.deletedTemplates}
       />
 
       <Box className={classes.container}>

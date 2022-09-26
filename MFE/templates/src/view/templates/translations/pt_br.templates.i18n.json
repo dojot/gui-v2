@@ -30,10 +30,15 @@
     "confirmButton": "Excluir"
   },
   "deleteMultipleTemplateAlert": {
-    "title": "Excluir Modelos Selecionados",
-    "message": "Tem certeza que deseja excluir todos os modelos selecionados?",
+    "title": "Deseja excluir os {{count}} modelos citados abaixo?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "multipleTemplatesDeletionError": {
+    "alertMessage": "Os modelos abaixo não puderam ser excluídos pois contêm dispositivos atrelados",
+    "hasAssociatedDevice": "{{count}} dispositivos associados",
+    "theOtherTemplatesWereExcluded": "Os demais modelos foram excluídos",
+    "closeButtonText": "Entendi"
   },
   "sorting": {
     "order": "Ordem",

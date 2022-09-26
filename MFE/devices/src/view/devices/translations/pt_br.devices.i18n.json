@@ -39,8 +39,7 @@
     "confirmButton": "Excluir"
   },
   "deleteMultipleDeviceAlert": {
-    "title": "Excluir Dispositivos Selecionados",
-    "message": "Tem certeza que deseja excluir todos os dispositivos selecionados?",
+    "title": "Deseja excluir os {{count}} dispositivos citados abaixo?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
   },

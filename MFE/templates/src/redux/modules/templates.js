@@ -53,6 +53,7 @@ export const deleteTemplate = createAction(DELETE_TEMPLATE, payload => ({
 
 export const deleteMultipleTemplates = createAction(DELETE_MULTIPLE_TEMPLATES, payload => ({
   templateIds: payload.templateIds,
+  failCallback: payload.failCallback,
 }));
 
 export const createTemplate = createAction(CREATE_TEMPLATE, payload => ({
