@@ -101,7 +101,7 @@ export function* handleDeleteMultipleTemplates(action) {
     } = yield call(Template.deleteMultipleTemplates, templateIds);
     if (!!notDeletedTemplates.length) failCallback(notDeletedTemplates, deletedTemplates);
     yield call(getCurrentTemplatesPageAgain);
-    if (!!!notDeletedTemplates.length)
+    if (!notDeletedTemplates.length)
       dispatchEvent(EVENT.GLOBAL_TOAST, {
         duration: 15000,
         i18nMessage: 'deleteMultipleTemplates',

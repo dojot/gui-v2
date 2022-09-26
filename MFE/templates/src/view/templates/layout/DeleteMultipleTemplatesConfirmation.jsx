@@ -1,14 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  Typography,
-} from '@material-ui/core';
+import { Button, Dialog, DialogTitle, DialogActions, DialogContent } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 const DeleteMultipleTemplatesConfirmation = ({
