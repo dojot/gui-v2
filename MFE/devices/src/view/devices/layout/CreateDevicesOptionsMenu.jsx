@@ -31,7 +31,7 @@ const CreateDevicesOptionsMenu = ({ anchorElement, handleClose }) => {
         <ListItemText primary={t('devicesCreationMenu.createManyDevices')} />
       </MenuItem>
 
-      <MenuItem onClick={() => history.push('/devices/new')}>
+      <MenuItem onClick={() => history.push('/devices/new/csv')}>
         <ListItemIcon>
           <Publish />
         </ListItemIcon>

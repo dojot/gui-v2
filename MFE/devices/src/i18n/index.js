@@ -13,6 +13,8 @@ import createDeviceEn from '../view/createDevice/translations/en.createDevice.i1
 import createDevicePtBr from '../view/createDevice/translations/pt_br.createDevice.i18n.json';
 import createMultipleDevicesEn from '../view/createMultipleDevices/translations/en.createMultipleDevices.i18n.json';
 import createMultipleDevicesPtBr from '../view/createMultipleDevices/translations/pt_br.createMultipleDevices.i18n.json';
+import createDevicesCSVEn from '../view/createDevicesCSV/translations/en.createDevicesCSV.i18n.json';
+import createDevicesCSVPtBr from '../view/createDevicesCSV/translations/pt_br.createDevicesCSV.i18n.json';
 import deviceDetailsEn from '../view/deviceDetails/translations/en.deviceDetails.i18n.json';
 import deviceDetailsPtBr from '../view/deviceDetails/translations/pt_br.deviceDetails.i18n.json';
 import devicesEn from '../view/devices/translations/en.devices.i18n.json';
@@ -42,6 +44,7 @@ const resources = {
     constants: constantsEn,
     createDevice: createDeviceEn,
     createMultipleDevices: createMultipleDevicesEn,
+    createDevicesCSV: createDevicesCSVEn,
     deviceDetails: deviceDetailsEn,
     devices: devicesEn,
     editDevice: editDeviceEn,
@@ -58,6 +61,7 @@ const resources = {
     constants: constantsPtBr,
     createDevice: createDevicePtBr,
     createMultipleDevices: createMultipleDevicesPtBr,
+    createDevicesCSV: createDevicesCSVPtBr,
     deviceDetails: deviceDetailsPtBr,
     devices: devicesPtBr,
     editDevice: editDevicePtBr,
