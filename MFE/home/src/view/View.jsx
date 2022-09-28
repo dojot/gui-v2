@@ -40,7 +40,7 @@ const Home = ({ isMenuOpen }) => {
 
   const HOME_CARDS = {
     CREATE_DEVICE: {
-      icon: <PhoneIphone style={{ color: '#FFF' }} fontSize='large' />,
+      icon: <PhoneIphone color='inherit' fontSize='large' />,
       translationKey: 'createDevice',
       route: '/devices/new',
     },
