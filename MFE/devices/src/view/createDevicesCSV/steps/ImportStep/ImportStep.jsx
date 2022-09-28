@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
 import { Box, Button, TextField, Typography } from '@material-ui/core';
