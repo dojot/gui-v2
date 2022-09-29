@@ -30,6 +30,10 @@
     "generateCertificate": "Gerar Certificado",
     "certificateAddedMessage": "O certificado foi adicionado com sucesso e já poder ser utilizado!"
   },
+  "importCertificates": {
+    "title": "Submeter uma Solicitação de Assinatura de Certificado (CSR)",
+    "subTitle": "Mais seguro: A plataforma gera um certificado, mas não tem conhecimento da chave privada."
+  },
   "generatedCertificateResume": {
     "certificateAndKeysTitle": "(<strong>Importante:</strong> as <strong>chaves não serão armazenadas,</strong> por isso é <strong>necessário baixá-las</strong>)",
     "certificate": "Certificado",
