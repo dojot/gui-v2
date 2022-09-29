@@ -8,11 +8,8 @@ import { useActionButtonStyles } from './style';
 
 const ActionButtons = ({
   isLastStep,
-  withBackButton,
-  isBackButtonDisabled,
   isNextButtonDisabled,
   isCancelButtonDisabled,
-  handleClickBackButton,
   handleClickNextButton,
   handleClickCancelButton,
 }) => {
@@ -31,19 +28,6 @@ const ActionButtons = ({
         {t('cancel')}
       </Button>
 
-      {withBackButton && (
-        <Button
-          className={classes.backButton}
-          size='large'
-          color='secondary'
-          variant='outlined'
-          disabled={isBackButtonDisabled}
-          onClick={handleClickBackButton}
-        >
-          {t('back')}
-        </Button>
-      )}
-
       <Button
         className={classes.nextButton}
         size='large'
@@ -60,22 +44,16 @@ const ActionButtons = ({
 
 ActionButtons.propTypes = {
   isLastStep: PropTypes.bool,
-  withBackButton: PropTypes.bool,
-  isBackButtonDisabled: PropTypes.bool,
   isNextButtonDisabled: PropTypes.bool,
   isCancelButtonDisabled: PropTypes.bool,
-  handleClickBackButton: PropTypes.func,
   handleClickNextButton: PropTypes.func,
   handleClickCancelButton: PropTypes.func,
 };
 
 ActionButtons.defaultProps = {
   isLastStep: false,
-  withBackButton: false,
-  isBackButtonDisabled: false,
   isNextButtonDisabled: false,
   isCancelButtonDisabled: false,
-  handleClickBackButton: null,
   handleClickNextButton: null,
   handleClickCancelButton: null,
 };

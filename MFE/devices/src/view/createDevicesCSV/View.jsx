@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { useIsLoading } from 'sharedComponents/Hooks';
 
 import { ViewContainer } from 'sharedComponents/Containers';
+import { AlertDialog } from 'sharedComponents/Dialogs';
 import useStyles from './style';
 import ImportStep from './steps/ImportStep';
 import SummaryStep from './steps/SummaryStep';
@@ -25,9 +26,14 @@ const CreateDevicesCSV = () => {
   const [file, setFile] = useState(null);
   const [createdDevices, setCreatedDevices] = useState(0);
   const [notCreatedDevices, setNotCreatedDevices] = useState([]);
+  const [isShowingCancelModal, setIsShowingCancelModal] = useState(false);
 
   const handleGoToDevicesPage = () => {
     history.push('/devices');
+  };
+
+  const handleHideCancelModal = () => {
+    setIsShowingCancelModal(false);
   };
 
   const successCallbackCreation = (devicesSuccess, devicesFail) => {
@@ -46,6 +52,17 @@ const CreateDevicesCSV = () => {
 
   return (
     <ViewContainer headerTitle={t('title')}>
+      <AlertDialog
+        isOpen={isShowingCancelModal}
+        cancelButtonText={t('common:no')}
+        autoFocusConfirmationButton={false}
+        title={t('cancelDeviceCreationTitle')}
+        confirmButtonText={t('common:yesImSure')}
+        message={t('cancelDeviceCreationMessage')}
+        handleConfirm={handleGoToDevicesPage}
+        handleClose={handleHideCancelModal}
+      />
+
       <Box className={classes.container}>
         <Grid className={classes.content} alignItems='stretch' wrap='nowrap' container>
           <Grid className={classes.step} xs item>
@@ -57,6 +74,8 @@ const CreateDevicesCSV = () => {
                   fileName={fileName}
                   setFileName={setFileName}
                   setCurrentStep={setCurrentStep}
+                  handleGoToDevicesPage={handleGoToDevicesPage}
+                  setIsShowingCancelModal={setIsShowingCancelModal}
                 />
               )}
 

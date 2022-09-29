@@ -1,5 +1,7 @@
 {
   "title": "Import using CSV",
+  "cancelDeviceCreationTitle": "Cancel multiple devices creation",
+  "cancelDeviceCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
   "importStep": {
     "csvFileInputTitle": "Enter the CSV file to load the devices:",
     "csvFileInputPh": "CSV file",

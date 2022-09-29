@@ -8,9 +8,20 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useImportStepStyles } from './style';
 
-const ImportStep = ({ file, setFile, fileName, setFileName, setCurrentStep }) => {
+const ImportStep = ({
+  file,
+  setFile,
+  fileName,
+  setFileName,
+  setCurrentStep,
+  setIsShowingCancelModal,
+}) => {
   const classes = useImportStepStyles();
   const { t } = useTranslation('createDevicesCSV');
+
+  const handleOpenCancelModal = () => {
+    setIsShowingCancelModal(true);
+  };
 
   const handleChangeCsvFile = e => {
     const maxFileSize = 1024 * 1024; // 1mb
@@ -99,6 +110,7 @@ const ImportStep = ({ file, setFile, fileName, setFileName, setCurrentStep }) =>
         isLastStep
         isNextButtonDisabled={!file}
         handleClickNextButton={() => setCurrentStep(1)}
+        handleClickCancelButton={handleOpenCancelModal}
       />
     </Box>
   );
@@ -110,6 +122,7 @@ ImportStep.propTypes = {
   fileName: PropTypes.string.isRequired,
   setFileName: PropTypes.func.isRequired,
   setCurrentStep: PropTypes.func.isRequired,
+  setIsShowingCancelModal: PropTypes.func.isRequired,
 };
 
 export default ImportStep;
