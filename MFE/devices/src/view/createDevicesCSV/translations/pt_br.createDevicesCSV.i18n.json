@@ -3,6 +3,7 @@
   "cancelDeviceCreationTitle": "Cancelar criação de vários dispositivos",
   "cancelDeviceCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!",
   "importStep": {
+    "devicesBoilerplate": "Baixar template",
     "csvFileInputTitle": "Informe o arquivo CSV para fazer a carga dos dispositivos:",
     "csvFileInputPh": "Arquivo CSV",
     "fileUploadButtonText": "Importar arquivo",

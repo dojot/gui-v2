@@ -7,6 +7,7 @@ import ActionButtons from '../../layout/ActionButtons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { useImportStepStyles } from './style';
+import DevicesBoilerplateCSV from 'Assets/devicesBoilerplate.csv';
 
 const ImportStep = ({
   file,
@@ -15,6 +16,7 @@ const ImportStep = ({
   setFileName,
   setCurrentStep,
   setIsShowingCancelModal,
+  handleCreateDevicesCSV,
 }) => {
   const classes = useImportStepStyles();
   const { t } = useTranslation('createDevicesCSV');
@@ -83,7 +85,9 @@ const ImportStep = ({
           <Typography>{t('importStep.csvBoilerplateTitle')}</Typography>
 
           <Button variant='text' className={classes.boilerplateButton} startIcon={<GetApp />}>
-            <u>dispositivos.csv</u>
+            <a href={DevicesBoilerplateCSV} download>
+              <u>{t('importStep.devicesBoilerplate')}</u>
+            </a>
           </Button>
         </Box>
 
@@ -123,6 +127,7 @@ ImportStep.propTypes = {
   setFileName: PropTypes.func.isRequired,
   setCurrentStep: PropTypes.func.isRequired,
   setIsShowingCancelModal: PropTypes.func.isRequired,
+  handleCreateDevicesCSV: PropTypes.func.isRequired,
 };
 
 export default ImportStep;

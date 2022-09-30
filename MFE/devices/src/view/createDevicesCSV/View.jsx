@@ -76,6 +76,7 @@ const CreateDevicesCSV = () => {
                   setCurrentStep={setCurrentStep}
                   handleGoToDevicesPage={handleGoToDevicesPage}
                   setIsShowingCancelModal={setIsShowingCancelModal}
+                  handleCreateDevicesCSV={handleCreateDevicesCSV}
                 />
               )}
 

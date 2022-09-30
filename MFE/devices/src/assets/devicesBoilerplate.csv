@@ -1,0 +1,7 @@
+Nome do dispositivo,ID do dispositivo,Nome do modelo,Nome atributo estático 1,Valor atributo estático 1,Nome atributo estático 2,Valor atributo estático 2,Nome atributo estático 3,Valor atributo estático 3
+Sensor Temperatura 1,,TemperModel,,,,,,
+Sensor Temperatura 2,e459b6,TemperModel,,,,,,
+Data Logger XPTO,,Modelo Data Logger,Numero de serie,AC92309Z4910,,,,
+Data Logger Fuzzy,,Modelo Data Logger,Numero de serie,DE9530D92301,,,,
+Queclinck 350M s1,,350QL Template,Model,,imei,1.23E+14,status,enabled
+Queclinck 350M s2,,350QL Template,Model,,imei,8.56E+14,status,disabled
