@@ -82,7 +82,6 @@ const CreateDevicesCSV = () => {
 
               {currentStep === 1 && (
                 <SummaryStep
-                  handleCreateDevicesCSV={handleCreateDevicesCSV}
                   createdDevices={createdDevices}
                   notCreatedDevices={notCreatedDevices}
                   isLoadingCreateDevicesCSV={isLoadingCreateDevicesCSV}

@@ -29,4 +29,7 @@ export const useImportStepStyles = makeStyles(theme => ({
     gap: '20px',
     wordBreak: 'keep-all',
   },
+  link: {
+    color: theme.palette.primary.light,
+  },
 }));

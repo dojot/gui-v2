@@ -43,6 +43,11 @@ const ImportStep = ({
     }
   };
 
+  const handleFinish = () => {
+    handleCreateDevicesCSV();
+    setCurrentStep(1);
+  };
+
   return (
     <Box className={classes.container}>
       <Box className={classes.content}>
@@ -85,7 +90,7 @@ const ImportStep = ({
           <Typography>{t('importStep.csvBoilerplateTitle')}</Typography>
 
           <Button variant='text' className={classes.boilerplateButton} startIcon={<GetApp />}>
-            <a href={DevicesBoilerplateCSV} download>
+            <a className={classes.link} href={DevicesBoilerplateCSV} download>
               <u>{t('importStep.devicesBoilerplate')}</u>
             </a>
           </Button>
@@ -113,7 +118,7 @@ const ImportStep = ({
       <ActionButtons
         isLastStep
         isNextButtonDisabled={!file}
-        handleClickNextButton={() => setCurrentStep(1)}
+        handleClickNextButton={handleFinish}
         handleClickCancelButton={handleOpenCancelModal}
       />
     </Box>

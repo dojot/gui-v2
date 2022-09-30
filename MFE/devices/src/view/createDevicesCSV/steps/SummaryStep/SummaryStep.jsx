@@ -7,7 +7,6 @@ import { useSummaryStepStyles } from './style';
 import DevicesErrorTable from './DevicesErrorTable';
 
 const SummaryStep = ({
-  handleCreateDevicesCSV,
   createdDevices,
   notCreatedDevices,
   isLoadingCreateDevicesCSV,
@@ -15,10 +14,6 @@ const SummaryStep = ({
 }) => {
   const classes = useSummaryStepStyles();
   const { t } = useTranslation('createDevicesCSV');
-
-  useEffect(() => {
-    handleCreateDevicesCSV();
-  }, []);
 
   return (
     <Box className={classes.container}>
@@ -74,7 +69,6 @@ const SummaryStep = ({
 };
 
 SummaryStep.propTypes = {
-  handleCreateDevicesCSV: PropTypes.func.isRequired,
   createdDevices: PropTypes.number.isRequired,
   notCreatedDevices: PropTypes.array.isRequired,
   isLoadingCreateDevicesCSV: PropTypes.bool.isRequired,
