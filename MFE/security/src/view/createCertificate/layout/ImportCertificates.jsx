@@ -20,6 +20,7 @@ const ImportCertificates = ({ certificateData }) => {
       subtitle={t('importCertificates.subTitle')}
       disabled={!!certificateData}
       handleToggleContent={!!certificateData ? null : handleGoToImportationPage}
+      isContentVisible={false}
     />
   );
 };
