@@ -31,8 +31,8 @@
     "certificateAddedMessage": "O certificado foi adicionado com sucesso e já poder ser utilizado!"
   },
   "importCertificates": {
-    "title": "Submeter uma Solicitação de Assinatura de Certificado (CSR)",
-    "subTitle": "Mais seguro: A plataforma gera um certificado, mas não tem conhecimento da chave privada."
+    "title": "Importar meus certificados",
+    "subTitle": "Possibilita utilizar a sua infraestrutura de chaves publicas já existente paara importar diversas chaves de uma mesma CA raiz."
   },
   "generatedCertificateResume": {
     "certificateAndKeysTitle": "(<strong>Importante:</strong> as <strong>chaves não serão armazenadas,</strong> por isso é <strong>necessário baixá-las</strong>)",

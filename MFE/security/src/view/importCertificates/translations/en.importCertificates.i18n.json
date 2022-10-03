@@ -1,0 +1,12 @@
+{
+  "title": "Import my certificates",
+  "caPemLabel": "Paste the content of the .pem file here.",
+  "cancelCaCreationTitle": "Cancel import of certificates",
+  "cancelCaCreationMessage": "Are you sure you want to abandon the import process?",
+  "formTitle": "We are almost there! Finally, enter the root CA file and the certificate files:",
+  "caRootInputTitle": "Enter the root CA file:",
+  "caRootInputPh": "Root CA",
+  "certificatesInputTitle": "Enter the certificate files:",
+  "certificatesInputPh": "Certificates",
+  "importFile": "Import file"
+}

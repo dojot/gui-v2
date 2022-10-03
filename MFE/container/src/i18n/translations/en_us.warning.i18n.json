@@ -3,6 +3,7 @@
     "requiredDevice": "Device is required",
     "requiredTemplate": "Template is required",
     "chooseAtLeastOne": "Choose at least one item",
-    "requiredFiled": "Required Field"
+    "requiredFiled": "Required Field",
+    "maxNumberFiles": "Maximum number of files: 999"
   }
 }

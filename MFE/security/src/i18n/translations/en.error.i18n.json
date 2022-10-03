@@ -36,6 +36,7 @@
     "createCertificate": "Could not create a certificate",
     "getCertificateByFingerprint": "Could not get the certificate by fingerprint",
     "addedCertificate": "Could not add the certificate",
+    "importedCertificates": "Cloud not add the certificates",
 
     "getCertificationAuthorities": "Could not get CAs",
     "deleteCertificationAuthority": "Could not delete this CA",

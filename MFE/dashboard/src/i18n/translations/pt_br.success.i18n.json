@@ -25,6 +25,7 @@
     "disassociateDevice": "Certificado desassociado do dispositivo",
     "associateDevice": "Certificado associado ao dispositivo",
     "addedCertificate": "Certificado adicionado",
+    "importedCertificates": "Certificados criados com sucesso",
 
     "deleteCertificationAuthority": "CA excluída",
     "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
