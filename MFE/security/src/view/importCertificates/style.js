@@ -19,7 +19,6 @@ export default makeStyles(theme => ({
     fontWeight: 500,
   },
   actionButtonsWrapper: {
-    margin: '0 32px',
     paddingBottom: '16px',
     display: 'flex',
     flexDirection: 'column',
