@@ -11,7 +11,7 @@
   "removeFromFavoriteTooltip": "Remover dos Favoritos",
   "labelRowsPerPage": "Itens por página:",
   "massActions": "Ações em massa:",
-  "createCertificates": "Criar Certificados",
+  "associateCertificatesInBatch": "Associar certificados em lote",
   "favorite": "Adicionar aos Favoritos",
   "numberOfSelectedDevices": "{{count}} Linha Selecionada",
   "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
