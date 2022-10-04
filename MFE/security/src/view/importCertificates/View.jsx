@@ -9,7 +9,6 @@ import { useHistory } from 'react-router-dom';
 import { AlertDialog } from 'sharedComponents/Dialogs';
 import { useIsLoading, dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
-// import { dispatchEvent } from 'Hooks';
 import { actions, constants } from '../../redux/modules/certificates';
 import { ViewContainer } from 'sharedComponents/Containers';
 import ActionButtons from './layout/ActionButtons';
