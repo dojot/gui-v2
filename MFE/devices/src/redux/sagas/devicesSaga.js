@@ -264,6 +264,40 @@ export function* handleFavoriteDevice(action) {
   }
 }
 
+export function* handleAssociateDevicesInBatch(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.ASSOCIATE_DEVICES_IN_BATCH));
+    const { deviceIdArray } = action.payload;
+    const {
+      associateDevicesInBatch: {
+        associatedDevices,
+        devicesWithOtherCertificates,
+        notAssociatedDevices,
+      },
+    } = yield call(Device.associateDevicesInBatch, {
+      deviceIdArray,
+    });
+
+    if (associatedDevices)
+      yield put(actions.updateDevices({ associatedDevices: associatedDevices }));
+    if (devicesWithOtherCertificates)
+      yield put(
+        actions.updateDevices({ devicesWithOtherCertificates: devicesWithOtherCertificates }),
+      );
+    if (notAssociatedDevices)
+      yield put(actions.updateDevices({ notAssociatedDevices: notAssociatedDevices }));
+  } catch (e) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: 'favoriteDevice',
+      type: 'error',
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.ASSOCIATE_DEVICES_IN_BATCH));
+  }
+}
+
 export function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
@@ -300,6 +334,10 @@ export function* watchCreateMultipleDevices() {
   yield takeLatest(constants.CREATE_MULTIPLE_DEVICES, handleCreateMultipleDevices);
 }
 
+export function* watchAssociateDevicesInBatch() {
+  yield takeLatest(constants.ASSOCIATE_DEVICES_IN_BATCH, handleAssociateDevicesInBatch);
+}
+
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchGetFavoriteDevicesList),
@@ -310,4 +348,5 @@ export const deviceSaga = [
   fork(watchEditDevice),
   fork(watchCreateDevice),
   fork(watchCreateMultipleDevices),
+  fork(watchAssociateDevicesInBatch),
 ];

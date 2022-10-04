@@ -201,3 +201,26 @@ export const parseHistoryQuery = (filter, configs, isRealTime) => {
     isRealTime,
   };
 };
+
+export const associateDevicesInBatch = ({ deviceIdArray }) => {
+  return protectAPI({
+    query: `
+      mutation associateDevicesInBatch($deviceIdArray: [String]!) {
+        associateDevicesInBatch(deviceIdArray: $deviceIdArray) {
+          associatedDevices {
+            label
+          }
+          devicesWithOtherCertificates {
+            label
+          }
+          notAssociatedDevices {
+            label
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      deviceIdArray,
+    }),
+  });
+};

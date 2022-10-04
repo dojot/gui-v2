@@ -114,8 +114,14 @@ const Devices = () => {
     setSelectedDevices([]);
   };
 
-  const handleCreateCertificates = () => {
-    history.push('/certificates');
+  const handleAssociateCertificatesInBatch = () => {
+    dispatch(
+      deviceActions.associateDevicesInBatch({
+        deviceIdArray: selectedDevices.map(({ id }) => id),
+      }),
+    );
+    handleHideMassActions();
+    history.push('/devices/associate-certificates');
   };
 
   const handleDeleteMultipleDevices = () => {
@@ -251,7 +257,7 @@ const Devices = () => {
           {selectedDevices.length > 0 && (
             <MassActions
               handleHideMassActions={handleHideMassActions}
-              handleCreateCertificates={handleCreateCertificates}
+              handleAssociateCertificatesInBatch={handleAssociateCertificatesInBatch}
               handleDeleteMultipleDevices={handleDeleteMultipleDevices}
             />
           )}

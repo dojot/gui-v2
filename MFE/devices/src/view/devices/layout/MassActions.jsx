@@ -9,7 +9,7 @@ import { useMassActionsStyles } from './style';
 
 const MassActions = ({
   handleHideMassActions,
-  handleCreateCertificates,
+  handleAssociateCertificatesInBatch,
   handleDeleteMultipleDevices,
 }) => {
   const { t } = useTranslation(['devices', 'common']);
@@ -25,11 +25,11 @@ const MassActions = ({
         <Grid item xs='auto'>
           <Button
             className={classes.massActionsButton}
-            onClick={handleCreateCertificates}
+            onClick={handleAssociateCertificatesInBatch}
             startIcon={<VerifiedUser />}
             variant='contained'
           >
-            {t('createCertificates')}
+            {t('associateCertificatesInBatch')}
           </Button>
         </Grid>
 
@@ -60,13 +60,13 @@ const MassActions = ({
 
 MassActions.propTypes = {
   handleHideMassActions: PropTypes.func,
-  handleCreateCertificates: PropTypes.func,
+  handleAssociateCertificatesInBatch: PropTypes.func,
   handleDeleteMultipleDevices: PropTypes.func,
 };
 
 MassActions.defaultProps = {
   handleHideMassActions: null,
-  handleCreateCertificates: null,
+  handleAssociateCertificatesInBatch: null,
   handleDeleteMultipleDevices: null,
 };
 

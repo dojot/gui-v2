@@ -19,3 +19,18 @@ export const deviceDataSelector = createSelector(
   state => state.devices,
   map => map.get('deviceData'),
 );
+
+export const associatedDevicesSelector = createSelector(
+  state => state.devices,
+  map => map.get('associatedDevices'),
+);
+
+export const devicesWithOtherCertificatesSelector = createSelector(
+  state => state.devices,
+  map => map.get('devicesWithOtherCertificates'),
+);
+
+export const notAssociatedDevicesSelector = createSelector(
+  state => state.devices,
+  map => map.get('notAssociatedDevices'),
+);

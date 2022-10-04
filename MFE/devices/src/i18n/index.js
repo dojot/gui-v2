@@ -9,6 +9,8 @@ import commonEn from './translations/en.common.i18n.json';
 import commonPtBr from './translations/pt_br.common.i18n.json';
 import constantsEn from './translations/en.constants.i18n.json';
 import constantsPtBr from './translations/pt_br.constants.i18n.json';
+import associateCertificatesEn from '../view/associateCertificates/translations/en.associateCertificates.i18n.json';
+import associateCertificatesPtBr from '../view/associateCertificates/translations/pt_br.associateCertificates.i18n.json';
 import createDeviceEn from '../view/createDevice/translations/en.createDevice.i18n.json';
 import createDevicePtBr from '../view/createDevice/translations/pt_br.createDevice.i18n.json';
 import createMultipleDevicesEn from '../view/createMultipleDevices/translations/en.createMultipleDevices.i18n.json';
@@ -40,6 +42,7 @@ const resources = {
   en: {
     common: commonEn,
     constants: constantsEn,
+    associateCertificates: associateCertificatesEn,
     createDevice: createDeviceEn,
     createMultipleDevices: createMultipleDevicesEn,
     deviceDetails: deviceDetailsEn,
@@ -56,6 +59,7 @@ const resources = {
   'pt-BR': {
     common: commonPtBr,
     constants: constantsPtBr,
+    associateCertificates: associateCertificatesPtBr,
     createDevice: createDevicePtBr,
     createMultipleDevices: createMultipleDevicesPtBr,
     deviceDetails: deviceDetailsPtBr,
@@ -78,6 +82,7 @@ deviceInstance.use(initReactI18next).init({
   ns: [
     'common',
     'constants',
+    'associateCertificates',
     'createDevice',
     'createMultipleDevices',
     'deviceDetails',
