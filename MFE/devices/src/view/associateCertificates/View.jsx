@@ -24,7 +24,7 @@ const CreateDevice = () => {
   const history = useHistory();
   const classes = useStyles();
 
-  const isLoadindAssociation = useIsLoading(constants.ASSOCIATE_CERTIFICATES_IN_BATCH);
+  const isLoadindAssociation = useIsLoading(constants.ASSOCIATE_DEVICES_IN_BATCH);
 
   const associatedDevices = useSelector(associatedDevicesSelector);
   const devicesWithOtherCertificates = useSelector(devicesWithOtherCertificatesSelector);
