@@ -291,10 +291,12 @@ export function* handleImportCertificatesInBatch(action) {
     const caRootToBase64 = yield call(toBase64, caRoot);
     const certificatesToBase64 = [];
 
-    Object.values(certificates).forEach(async certificate => {
-      const convertedCertificate = await toBase64(certificate);
-      return certificatesToBase64.push(convertedCertificate);
-    });
+    const certificatesArray = Object.values(certificates);
+
+    for (let item of certificatesArray) {
+      const convertedCertificate = yield call(toBase64, item);
+      certificatesToBase64.push(convertedCertificate);
+    }
 
     yield call(Certificates.importCertificatesInBatch, caRootToBase64, certificatesToBase64);
 
