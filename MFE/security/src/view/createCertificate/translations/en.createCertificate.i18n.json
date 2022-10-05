@@ -31,8 +31,8 @@
     "certificateAddedMessage": "The certificate was added with success and you can already use it!"
   },
   "importCertificates": {
-    "title": "Importar my certificates",
-    "subTitle": "It makes it possible to use your existing public key infrastructure to import several keys from the same root CA."
+    "title": "Import my certificates",
+    "subTitle": "It makes possible to use your existing public key infrastructure to import several keys from the same root CA."
   },
   "generatedCertificateResume": {
     "certificateAndKeysTitle": "(<strong>Important:</strong> the <strong>keys will not be stored</strong>, so it is <strong>necessary to download them</strong)",
