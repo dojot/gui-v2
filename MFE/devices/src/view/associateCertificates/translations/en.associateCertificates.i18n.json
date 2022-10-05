@@ -1,0 +1,9 @@
+{
+  "title": "Batch binding devices to certificates",
+  "associatingLoadingMessage": "Wait, the devices are being associated with the certificates available in the system!",
+  "completeAssociationMessage": "Association completed successfully!",
+  "associatedDevices": "Devices that have been associated:",
+  "devicesWithOtherCertificates": "Devices that could not be associated because they already have an associated certificate:",
+  "notAssociatedDevices": "Devices that could not be joined because they did not have enough certificates:",
+  "goToDevices": "Go to devices"
+}

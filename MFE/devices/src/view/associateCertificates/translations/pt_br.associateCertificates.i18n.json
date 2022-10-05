@@ -1,0 +1,9 @@
+{
+  "title": "Associação de dispositivos à certificados em lote",
+  "associatingLoadingMessage": "Aguarde, os dispositivos estão sendo associados aos certificados disponíveis no sistema!",
+  "completeAssociationMessage": "Associação concluída com sucesso!",
+  "associatedDevices": "Dispositivos que foram associados:",
+  "devicesWithOtherCertificates": "Dispositivos que não puderam ser associados por já terem um certificado associado:",
+  "notAssociatedDevices": "Dispositivos que não puderam ser associados por não ter certificados o suficiente:",
+  "goToDevices": "Ir para dispositivos"
+}
