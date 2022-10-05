@@ -4,6 +4,7 @@ import EditDevice from './view/editDevice';
 import Devices from './view/devices';
 import CreateDevice from './view/createDevice';
 import createMultipleDevices from './view/createMultipleDevices';
+import createDevicesCSV from './view/createDevicesCSV';
 import DeviceDetails from './view/deviceDetails';
 import associateCertificates from './view/associateCertificates';
 import { Provider } from 'react-redux';
@@ -21,8 +22,9 @@ export default ({ history }) => {
           <Switch>
             <Route path='/devices/edit/:deviceId' component={EditDevice} exact />
             <Route path='/devices/associate-certificates' component={associateCertificates} exact />
-            <Route path='/devices/new/multiple' component={createMultipleDevices} exact />
             <Route path='/devices/new' component={CreateDevice} exact />
+            <Route path='/devices/new/multiple' component={createMultipleDevices} exact />
+            <Route path='/devices/new/csv' component={createDevicesCSV} exact />
             <Route path='/devices/:deviceId' component={DeviceDetails} exact />
             <Route path='/devices' component={Devices} exact />
           </Switch>

@@ -14,6 +14,7 @@ const CREATE_CERTIFICATE_CSR = 'app/certificates/CREATE_CERTIFICATE_CSR';
 const GET_NEW_GENERATED_CERTIFICATE = 'app/certificates/GET_NEW_GENERATED_CERTIFICATE';
 const REGISTER_EXTERNAL_CERTIFICATE = 'app/certificates/REGISTER_EXTERNAL_CERTIFICATE';
 const SET_CERTIFICATE_DETAILS = 'app/certificates/SET_CERTIFICATE_DETAILS';
+const IMPORT_CERTIFICATES_IN_BATCH = 'app/certificates/IMPORT_CERTIFICATES_IN_BATCH';
 
 export const constants = {
   GET_CERTIFICATES,
@@ -29,6 +30,7 @@ export const constants = {
   GET_NEW_GENERATED_CERTIFICATE,
   REGISTER_EXTERNAL_CERTIFICATE,
   SET_CERTIFICATE_DETAILS,
+  IMPORT_CERTIFICATES_IN_BATCH,
 };
 
 export const getCertificates = createAction(GET_CERTIFICATES, payload => ({
@@ -105,6 +107,12 @@ export const setCertificateDetails = createAction(SET_CERTIFICATE_DETAILS, paylo
   certificateDetails: payload.certificateDetails,
 }));
 
+export const importCertificatesInBatch = createAction(IMPORT_CERTIFICATES_IN_BATCH, payload => ({
+  caRoot: payload.caRoot,
+  certificates: payload.certificates,
+  successCallback: payload.successCallback,
+}));
+
 export const actions = {
   getCertificates,
   getCertificateById,
@@ -119,6 +127,7 @@ export const actions = {
   getNewGeneratedCertificate,
   registerExternalCertificate,
   setCertificateDetails,
+  importCertificatesInBatch,
 };
 
 export const reducers = {

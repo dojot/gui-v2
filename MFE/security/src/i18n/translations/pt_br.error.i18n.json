@@ -36,12 +36,14 @@
     "createCertificate": "Não foi possível criar o certificado",
     "getCertificateByFingerprint": "Não foi possível obter o certificado pelo fingerprint",
     "addedCertificate": "Não foi possível adicionar o certificado",
+    "importedCertificates": "Não foi possível criar os certificados",
 
     "getCertificationAuthorities": "Não foi possível obter as CAs",
     "deleteCertificationAuthority": "Não foi possível excluir esta CA",
     "deleteMultipleCertificationAuthorities": "Não foi possível excluir estas CAs",
     "createCertificationAuthority": "Não foi possível criar uma CA",
 
-    "failedToCopy": "Falhou ao copiar"
+    "failedToCopy": "Falhou ao copiar",
+    "fileSizeLimit": "O tamanho máximo do arquivo deve ser de 1MB"
   }
 }

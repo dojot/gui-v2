@@ -183,6 +183,26 @@ export const createMultipleDevices = ({
   });
 };
 
+export const createDevicesCSV = ({ csvFile }) => {
+  return protectAPI({
+    query: `
+      mutation createDevicesCSV($csvFile: String!) {
+        createDevicesCSV(csvFile: $csvFile) {
+          createdDevices
+          notCreatedDevices {
+            id
+            label
+            errorMessage
+          }
+        }
+      }
+    `,
+    variables: JSON.stringify({
+      csvFile,
+    }),
+  });
+};
+
 export const getDevicesHistoryParsed = filter => {
   return protectAPI(filter);
 };

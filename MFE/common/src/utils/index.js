@@ -8,3 +8,4 @@ export * from './module/color';
 export * from './module/comparators';
 export * from './module/download';
 export * from './module/error';
+export * from './module/file';
