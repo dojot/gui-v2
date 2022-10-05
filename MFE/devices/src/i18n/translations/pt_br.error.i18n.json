@@ -36,6 +36,7 @@
     "createCertificate": "Não foi possível criar o certificado",
     "getCertificateByFingerprint": "Não foi possível obter o certificado pelo fingerprint",
     "addedCertificate": "Não foi possível adicionar o certificado",
+    "importedCertificates": "Não foi possível criar os certificados",
 
     "getCertificationAuthorities": "Não foi possível obter as CAs",
     "deleteCertificationAuthority": "Não foi possível excluir esta CA",

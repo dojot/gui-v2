@@ -81,7 +81,7 @@ CollapsibleList.propTypes = {
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
   caption: PropTypes.string,
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
   isContentVisible: PropTypes.bool.isRequired,
   isCaptionHighlighted: PropTypes.bool,
   handleToggleContent: PropTypes.func.isRequired,
@@ -95,6 +95,7 @@ CollapsibleList.defaultProps = {
   caption: '',
   disabled: false,
   canToggleContent: true,
+  children: undefined,
 };
 
 export default CollapsibleList;

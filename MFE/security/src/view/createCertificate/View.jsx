@@ -12,6 +12,7 @@ import { CONSTANTS } from './constants';
 import CreateCertificateCA from './layout/CreateCertificateCA';
 import CreateCertificateCSR from './layout/CreateCertificateCSR';
 import CreateCertificateOneClick from './layout/CreateCertificateOneClick';
+import ImportCertificates from './layout/ImportCertificates';
 import useStyles from './style';
 
 const CreateCertificate = () => {
@@ -101,6 +102,8 @@ const CreateCertificate = () => {
             handleChangeCertificateChain={handleChangeCertificateChain}
             handleRegisterExternalCertificate={handleRegisterExternalCertificate}
           />
+
+          <ImportCertificates certificateData={certificateData} />
         </Box>
 
         <Box className={classes.footer}>

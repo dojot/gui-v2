@@ -2,6 +2,7 @@
   "messages": {
     "requiredDevice": "Device deleted",
     "chooseAtLeastOne": "All devices were deleted",
-    "requiredFiled": "Device added to favorites"
+    "requiredFiled": "Device added to favorites",
+    "maxNumberFiles": "Quantidade máxima de arquivos: 999"
   }
 }
