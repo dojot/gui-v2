@@ -42,6 +42,7 @@
     "deleteMultipleCertificationAuthorities": "Could not delete these CAs",
     "createCertificationAuthority": "Could not create a CA",
 
-    "failedToCopy": "Failed to copy"
+    "failedToCopy": "Failed to copy",
+    "fileSizeLimit": "The maximum file size must be 1MB"
   }
 }

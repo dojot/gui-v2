@@ -11,6 +11,7 @@ const DELETE_MULTIPLE_DEVICES = 'app/devices/DELETE_MULTIPLE_DEVICES';
 const EDIT_DEVICE = 'app/devices/EDIT_DEVICE';
 const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
 const CREATE_MULTIPLE_DEVICES = 'app/devices/CREATE_MULTIPLE_DEVICES';
+const CREATE_DEVICES_CSV = 'app/devices/CREATE_DEVICES_CSV';
 
 export const constants = {
   GET_DEVICES,
@@ -23,6 +24,7 @@ export const constants = {
   EDIT_DEVICE,
   CREATE_DEVICE,
   CREATE_MULTIPLE_DEVICES,
+  CREATE_DEVICES_CSV,
 };
 
 export const getDevices = createAction(GET_DEVICES, payload => ({
@@ -93,6 +95,11 @@ export const createMultipleDevices = createAction(CREATE_MULTIPLE_DEVICES, paylo
   successCallback: payload.successCallback,
 }));
 
+export const createDevicesCSV = createAction(CREATE_DEVICES_CSV, payload => ({
+  csvFile: payload.csvFile,
+  successCallback: payload.successCallback,
+}));
+
 export const actions = {
   getDevices,
   getDeviceById,
@@ -104,6 +111,7 @@ export const actions = {
   editDevice,
   createDevice,
   createMultipleDevices,
+  createDevicesCSV,
 };
 
 export const reducers = {

@@ -1,6 +1,6 @@
 import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { Device } from '../../adapters/services';
-import { getUserInformation, getErrorTranslation } from 'sharedComponents/Utils';
+import { getUserInformation, getErrorTranslation, toBase64 } from 'sharedComponents/Utils';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
 
@@ -228,6 +228,36 @@ export function* handleCreateMultipleDevices(action) {
   }
 }
 
+export function* handleCreateDevicesCSV(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.CREATE_DEVICES_CSV));
+    const { csvFile, successCallback } = action.payload;
+
+    const csvFileToBase64 = yield call(toBase64, csvFile);
+
+    const {
+      createDevicesCSV: { createdDevices, notCreatedDevices },
+    } = yield call(Device.createDevicesCSV, {
+      csvFile: csvFileToBase64,
+    });
+
+    if (successCallback) successCallback(createdDevices, notCreatedDevices);
+  } catch (e) {
+    const i18nMessage = getErrorTranslation(e, 'createDevice', {
+      devices_label_key: 'deviceUniqueLabel',
+    });
+
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      i18nMessage,
+      type: 'error',
+      duration: 15000,
+      message: e.message,
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.CREATE_DEVICES_CSV));
+  }
+}
+
 export function* handleFavoriteDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.FAVORITE_DEVICE));
@@ -300,6 +330,10 @@ export function* watchCreateMultipleDevices() {
   yield takeLatest(constants.CREATE_MULTIPLE_DEVICES, handleCreateMultipleDevices);
 }
 
+export function* watchCreateDevicesCSV() {
+  yield takeLatest(constants.CREATE_DEVICES_CSV, handleCreateDevicesCSV);
+}
+
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchGetFavoriteDevicesList),
@@ -310,4 +344,5 @@ export const deviceSaga = [
   fork(watchEditDevice),
   fork(watchCreateDevice),
   fork(watchCreateMultipleDevices),
+  fork(watchCreateDevicesCSV),
 ];
