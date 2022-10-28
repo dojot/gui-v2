@@ -1,0 +1,8 @@
+{
+  "title": "Novo Modelo",
+  "subtitle": "Dica: Aproveite para criar um modelo que possa ser reutilizado em outros dispositivos.",
+  "requiredHint": "Campos com * são obrigatórios",
+  "templateLabelPh": "Nome do Modelo",
+  "createAttrButton": "Criar Atributo",
+  "noAttr": "Nenhum atributo foi criado"
+}

@@ -7,10 +7,10 @@ const commonConfig = require('./webpack.common');
 const devConfig = {
   mode: 'development',
   output: {
-    publicPath: 'http://localhost:8080/',
+    publicPath: 'http://localhost:8087/',
   },
   devServer: {
-    port: 8080,
+    port: 8087,
     historyApiFallback: {
       index: '/index.html',
     },
@@ -25,6 +25,7 @@ const devConfig = {
         devices: 'devices@http://localhost:8084/remoteEntry.js',
         templates: 'templates@http://localhost:8085/remoteEntry.js',
         security: 'security@http://localhost:8086/remoteEntry.js',
+        reports: 'reports@http://localhost:8088/remoteEntry.js',
       },
       shared: {
         ...dependencies,

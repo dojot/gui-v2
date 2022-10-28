@@ -5,5 +5,8 @@
   "templates": "Modelos",
   "security": "Segurança",
   "certificates": "Certificados",
-  "CA": "CA"
+  "CA": "CA",
+  "reports": "Relatórios",
+  "create-report": "Criar relatório",
+  "my-reports": "Meus relatórios"
 }

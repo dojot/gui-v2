@@ -29,3 +29,7 @@ cd ..
 cd templates
 yarn install
 cd ..
+
+cd reports
+yarn install
+cd ..

@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
+import {
+  Checkbox,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Tooltip,
+} from '@material-ui/core';
+import { HelpOutline } from '@material-ui/icons';
 import { DATA_ORDER } from 'Constants';
 import PropTypes from 'prop-types';
 
@@ -21,6 +29,8 @@ const DataTableHead = ({
   const createSortHandler = property => event => {
     if (onRequestSort) onRequestSort(event, property);
   };
+
+  console.log('Chegou na table head');
 
   return (
     <TableHead className={className}>
@@ -55,6 +65,11 @@ const DataTableHead = ({
                 onClick={createSortHandler(headCell.id)}
                 direction={isOrderingByThisCell ? order : DATA_ORDER.ASC}
               >
+                {headCell.withHelpIcon && headCell.helpText && (
+                  <Tooltip arrow placement='top' title={headCell.helpText}>
+                    <HelpOutline fontSize='small' />
+                  </Tooltip>
+                )}
                 {headCell.label}
               </TableSortLabel>
             </TableCell>
@@ -88,6 +103,8 @@ DataTableHead.propTypes = {
   endExtraCells: PropTypes.node,
   disableOrderBy: PropTypes.bool,
   disableCheckbox: PropTypes.bool,
+  withHelpIcon: PropTypes.bool,
+  helpText: PropTypes.string,
 };
 
 DataTableHead.defaultProps = {

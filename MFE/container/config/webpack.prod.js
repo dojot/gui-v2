@@ -25,6 +25,7 @@ const prodConfig = {
         devices: `devices@${domain}/devices/remoteEntry.js`,
         templates: `templates@${domain}/templates/remoteEntry.js`,
         security: `security@${domain}/security/remoteEntry.js`,
+        reports: `reports@${domain}/reports/remoteEntry.js`,
       },
       shared: {
         ...dependencies,

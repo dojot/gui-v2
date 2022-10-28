@@ -29,6 +29,9 @@
 
     "deleteCertificationAuthority": "CA deletes",
     "deleteMultipleCertificationAuthorities": "All CAs were deleted",
-    "createCertificationAuthority": "CA created"
+    "createCertificationAuthority": "CA created",
+
+    "createReport": "Report created successfully",
+    "deleteReport": "Report deleted"
   }
 }

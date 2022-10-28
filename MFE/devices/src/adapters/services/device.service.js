@@ -165,6 +165,8 @@ export const createMultipleDevices = ({
   templates,
   attrs,
 }) => {
+  console.log(templates);
+  console.log(attrs);
   return protectAPI({
     query: `
       mutation createMultipleDevices($devicesPrefix: String!, $quantity: String!, $initialSuffixNumber: String!, $templates: [Int]!, $attrs: [DeviceAttributes]) {
