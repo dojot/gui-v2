@@ -144,19 +144,19 @@ export function* handleDeleteReport(action) {
 export function* handleDownloadReport(action) {
   try {
     yield put(loadingActions.addLoading(constants.DOWNLOAD_REPORT));
-    const { path } = action.payload;
+    const { path, filename } = action.payload;
     const { downloadReport } = yield call(Reports.downloadReport, path);
 
     if (path.includes('.csv')) {
-      yield call(downloadCSV, downloadReport, 'test.csv');
+      yield call(downloadCSV, downloadReport, filename);
     }
 
     if (path.includes('.pdf')) {
-      yield call(downloadPDF, downloadReport, 'testPDF.pdf');
+      yield call(downloadPDF, downloadReport, filename);
     }
 
     if (path.includes('.zip')) {
-      yield call(downloadZIP, downloadReport, 'testZIP.zip');
+      yield call(downloadZIP, downloadReport, filename);
     }
   } catch (e) {
     dispatchEvent(EVENT.GLOBAL_TOAST, {

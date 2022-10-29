@@ -44,6 +44,7 @@ export const deleteReport = createAction(DELETE_REPORT, payload => ({
 }));
 
 export const downloadReport = createAction(DOWNLOAD_REPORT, payload => ({
+  filename: payload.filename,
   path: payload.path,
 }));
 

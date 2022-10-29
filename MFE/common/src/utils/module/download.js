@@ -22,11 +22,11 @@ export const downloadCSV = (csv, filename) => {
 };
 
 export const downloadPDF = (pdf, filename) => {
-  const href = 'data:application/pdf;base64,' + encodeURIComponent(pdf);
+  const href = 'data:application/pdf;base64,' + pdf;
   downloadFile(href, filename);
 };
 
 export const downloadZIP = (zip, filename) => {
-  const href = 'data:binary/octet-stream;base64,' + encodeURIComponent(zip);
+  const href = 'data:text/plain;base64,' + zip;
   downloadFile(href, filename);
 };

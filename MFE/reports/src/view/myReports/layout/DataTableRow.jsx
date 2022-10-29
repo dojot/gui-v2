@@ -53,7 +53,7 @@ const DataTableRow = ({ report, handleDeleteReport, handleDownloadFile }) => {
           {report.file?.createdAt ? (
             moment(report.file?.createdAt).format('L LTS')
           ) : (
-            <CircularProgress size={16} color='secondary' />
+            <CircularProgress size={16} color='inherit' />
           )}
         </TableCell>
 
@@ -75,7 +75,7 @@ const DataTableRow = ({ report, handleDeleteReport, handleDownloadFile }) => {
           {report.file?.path && (
             <Button
               className={classes.availableButton}
-              onClick={() => handleDownloadFile(report.file)}
+              onClick={() => handleDownloadFile(report.name, report.file.path)}
               startIcon={<GetApp />}
               variant='text'
             >

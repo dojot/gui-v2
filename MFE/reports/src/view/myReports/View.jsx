@@ -107,11 +107,11 @@ const MyReports = () => {
     history.push('/create-report');
   };
 
-  const handleDownloadFile = file => {
-    console.log(file);
+  const handleDownloadFile = (filename, path) => {
     dispatch(
       reportActions.downloadReport({
-        path: file.path,
+        filename,
+        path,
       }),
     );
   };
