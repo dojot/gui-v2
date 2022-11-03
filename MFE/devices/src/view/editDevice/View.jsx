@@ -8,6 +8,8 @@ import {
   InputAdornment,
   TextField,
   Typography,
+  FormControlLabel,
+  Checkbox,
 } from '@material-ui/core';
 import { Close, Check } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
@@ -55,6 +57,7 @@ const EditDevice = () => {
   const [searchTemplateText, setSearchTemplateText] = useState('');
 
   const [deviceName, setDeviceName] = useState('');
+  const [isDisabled, setIsDisabled] = useState(false);
   const [selectedTemplates, setSelectedTemplates] = useState({});
   const [staticAttrValues, setStaticAttrValues] = useState({});
 
@@ -124,6 +127,10 @@ const EditDevice = () => {
     });
   };
 
+  const handleToggleDisabled = () => {
+    setIsDisabled(currentValue => !currentValue);
+  };
+
   const handleEditDevice = e => {
     e.preventDefault();
 
@@ -146,6 +153,7 @@ const EditDevice = () => {
         label: deviceName,
         templates: templateIds,
         attrs: attrsToSave,
+        disabled: isDisabled,
         successCallback: handleGoBack,
       }),
     );
@@ -262,13 +270,22 @@ const EditDevice = () => {
               )}
             </Box>
 
-            <Box>
+            <Box marginBottom={4}>
               <AttrsTable
                 attrs={attrs}
                 isShowingAttrs={isShowingAttrs}
                 staticAttrValues={staticAttrValues}
                 handleToggleAttrs={handleToggleAttrs}
                 handleSetAttrValue={handleSetAttrValue}
+              />
+            </Box>
+
+            <Box>
+              <FormControlLabel
+                label={t('disabledCheckboxLabel')}
+                control={
+                  <Checkbox checked={isDisabled} onChange={handleToggleDisabled} color='primary' />
+                }
               />
             </Box>
           </Box>

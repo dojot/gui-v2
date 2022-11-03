@@ -122,11 +122,11 @@ export const favoriteDevices = ({ deviceIds, userName, tenant }) => {
   });
 };
 
-export const editDevice = ({ id, label, templates, attrs }) => {
+export const editDevice = ({ id, label, templates, attrs, disabled }) => {
   return protectAPI({
     query: `
-      mutation editDevice($id: String!, $label: String!, $templates: [Int]!, $attrs: [DeviceAttributes]) {
-        editDevice(id: $id, label: $label, templates: $templates, attrs: $attrs) {
+      mutation editDevice($id: String!, $label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $disabled: Boolean) {
+        editDevice(id: $id, label: $label, templates: $templates, attrs: $attrs, disabled: $disabled) {
           id
         }
       }
@@ -136,15 +136,16 @@ export const editDevice = ({ id, label, templates, attrs }) => {
       label,
       templates,
       attrs,
+      disabled,
     }),
   });
 };
 
-export const createDevice = ({ label, templates, attrs, fingerprint }) => {
+export const createDevice = ({ label, templates, attrs, fingerprint, disabled }) => {
   return protectAPI({
     query: `
-      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $fingerprint: String) {
-        createDevice(label: $label, templates: $templates, attrs: $attrs, fingerprint: $fingerprint) {
+      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $fingerprint: String, $disabled: Boolean) {
+        createDevice(label: $label, templates: $templates, attrs: $attrs, fingerprint: $fingerprint, disabled: $disabled) {
           id
         }
       }
@@ -154,6 +155,7 @@ export const createDevice = ({ label, templates, attrs, fingerprint }) => {
       templates,
       attrs,
       fingerprint,
+      disabled,
     }),
   });
 };

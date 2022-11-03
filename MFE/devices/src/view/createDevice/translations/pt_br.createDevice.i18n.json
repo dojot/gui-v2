@@ -59,6 +59,7 @@
     "publicKey": "Chave Pública (Opcional)",
     "caCertificate": "Certificado de CA",
     "certificateAndKeysWarning": "(<strong>Importante:</strong> as <strong>chaves não serão armazenadas,</strong> por isso é <strong>necessário baixá-las</strong>)",
-    "certificateAndKeys": "Certificado e chaves"
+    "certificateAndKeys": "Certificado e chaves",
+    "disabledCheckboxLabel": "Dispositivo desabilitado"
   }
 }

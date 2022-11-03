@@ -139,8 +139,8 @@ export function* handleDeleteMultipleDevices(action) {
 export function* handleEditDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.EDIT_DEVICE));
-    const { id, label, templates, attrs, successCallback } = action.payload;
-    yield call(Device.editDevice, { id, label, templates, attrs });
+    const { id, label, templates, attrs, disabled, successCallback } = action.payload;
+    yield call(Device.editDevice, { id, label, templates, attrs, disabled });
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'editDevice',
@@ -166,8 +166,8 @@ export function* handleEditDevice(action) {
 export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
-    const { label, templates, attrs, fingerprint, successCallback } = action.payload;
-    yield call(Device.createDevice, { label, templates, attrs, fingerprint });
+    const { label, templates, attrs, fingerprint, disabled, successCallback } = action.payload;
+    yield call(Device.createDevice, { label, templates, attrs, fingerprint, disabled });
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'createDevice',

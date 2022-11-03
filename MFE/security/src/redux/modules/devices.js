@@ -74,6 +74,7 @@ export const editDevice = createAction(EDIT_DEVICE, payload => ({
   label: payload.label,
   templates: payload.templates,
   attrs: payload.attrs,
+  disabled: payload.disabled,
   successCallback: payload.successCallback,
 }));
 
@@ -82,6 +83,7 @@ export const createDevice = createAction(CREATE_DEVICE, payload => ({
   templates: payload.templates,
   attrs: payload.attrs,
   fingerprint: payload.fingerprint,
+  disabled: payload.disabled,
   successCallback: payload.successCallback,
 }));
 
