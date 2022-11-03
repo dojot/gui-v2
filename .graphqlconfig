@@ -1,0 +1,16 @@
+{
+  "name": "Untitled GraphQL Schema",
+  "schemaPath": "schema.graphql",
+  "extensions": {
+    "endpoints": {
+      "Default GraphQL Endpoint": {
+        "url": "http://localhost:8000/backstage/graphql",
+        "headers": {
+          "user-agent": "JS GraphQL",
+          "Cookie": "dojot-backstage-cookie=s%3AaRCaIq51vR1dZRjJfcD7a7WPTz4tGFcJ.gpmSHTg8wdkQOX%2B43DuJCyMfZohKxvPrabhwsJUWjas"
+        },
+        "introspect": false
+      }
+    }
+  }
+}

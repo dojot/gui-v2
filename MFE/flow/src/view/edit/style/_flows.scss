@@ -1,0 +1,202 @@
+.maybeNotSaved{
+  font-family: Raleway;
+  font-style: normal;
+  position: fixed;
+  top: 19px;
+  right: 240px;
+  z-index: 1000;
+  font-weight: 600;
+  color: #2f2f2f;
+  background-color: #ffd300;
+  -webkit-transition: width 2s; /* Safari */
+  transition: width 2s;
+  height: 38px;
+  width: 360px;
+
+  .boxLine{
+    position: absolute;
+    background: #c1c1c1;
+    width:3px;
+    height: 100%;
+    left: 0;
+    top:0;
+    display: inline-block;
+  }
+
+  span
+  {
+    width: calc(100% - 10px);
+    display: inline-block;
+    padding: 8px 45px 7px 0;
+  }
+
+  i{
+    font-size: 19px;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 5px;
+  }
+}
+
+
+.flows-wrapper {
+  width: 100%;
+  height: calc(100% - 64px);
+
+  @import 'red/style';
+
+  #main-container {
+    height: 100%;
+    position: relative;
+  }
+
+  #workspace {
+    right: 0;
+  }
+
+  #editor-stack {
+    right: 250px;
+  }
+
+  #chart {
+    top: 0;
+    bottom: 0;
+  }
+
+  .form-row {
+    [type="checkbox"],
+    [type="radio"]{
+      width: auto !important;
+      position: initial;
+      opacity: initial;
+      pointer-events: auto;
+    }
+
+    label >  [type="checkbox"]    {
+      padding-left: 4px;
+    }
+
+    [type="checkbox"] + label:before,
+    [type="checkbox"]:not(.filled-in) + label:after,
+    [type="radio"] + label:before,
+    [type="radio"] + label:after {
+      display: none;
+      width: auto !important;
+    }
+
+    [type="checkbox"] + label,
+    [type="radio"] + label {
+      width: auto !important;
+      padding-left: 3px;
+    }
+
+    label:has( + [type="checkbox"]), label:has( + [type="radio"]){
+      width: auto !important;
+      padding-left: 3px;
+    }
+
+    input[type=checkbox],
+    input[type=radio]{
+      transform: scale(1.25);
+    }
+  }
+
+  .palette-scroll {
+    top: 0;
+  }
+
+  .leaflet-clickable {
+    cursor: pointer;
+  }
+
+  .leaflet-marker-pane .leaflet-clickable {
+    pointer-events: auto !important;
+  }
+
+  .leaflet-dragging .leaflet-container,
+  .leaflet-dragging .leaflet-clickable {
+    cursor: move;
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+  }
+
+  .expanded {
+    width: auto;
+  }
+}
+
+/* animations for ReactCSSTransitionGroup */
+/* begin */
+.flowsSubHeader-enter {
+  opacity: 0.2;
+  height: 0;
+}
+
+.flowsSubHeader-enter.flowsSubHeader-enter-active {
+  opacity: 1;
+  height: 98px;
+}
+
+.flowsSubHeader-leave {
+  opacity: 0.8;
+  height: 98px;
+}
+
+.flowsSubHeader-leave.flowsSubHeader-leave-active {
+  padding-top: 0;
+  opacity: 0.2;
+  height: 0;
+}
+
+/* end */
+
+
+.show-dy {
+  visibility: visible;
+
+}
+
+.hide-dy {
+  visibility: hidden;
+}
+
+.flowsSubHeader {
+  background-color: #fff;
+  color: #2c3e50;
+  // height: 90px;
+  margin: 0;
+  z-index: 1000;
+  overflow: hidden;
+  width: 100%;
+  position: relative;
+  transition: all 500ms ease;
+  padding-top: 10px;
+
+  .main-title {
+    font-family: "Raleway", sans-serif;
+    padding-left: 4em;
+    position: relative;
+    font-size: 16px;
+  }
+
+  .header-info {
+    position: relative;
+
+    .title {
+      font-family: "Open Sans", sans-serif;
+      font-size: 10pt;
+      color: $silver;
+    }
+
+    .subtitle {
+      font-family: "Droid Sans", sans-serif;
+      font-size: 12pt;
+      color: $dark-silver;
+    }
+  }
+
+  .btn-flat {
+    top: 15px;
+  }
+}

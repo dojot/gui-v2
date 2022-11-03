@@ -5,6 +5,7 @@ import {
   Home,
   VerifiedUser,
   Description,
+  DeviceHub,
 } from '@material-ui/icons';
 
 export const MENU_ITEMS = [
@@ -31,6 +32,12 @@ export const MENU_ITEMS = [
     name: 'templates',
     path: '/templates',
     icon: FilterNone,
+  },
+  {
+    visible: true,
+    name: 'flows',
+    path: '/flows',
+    icon: DeviceHub,
   },
   {
     visible: true,

@@ -1,0 +1,14 @@
+{
+  "tenant": "Tenant: {{tenant}}",
+  "version": "Version: {{version}}",
+  "profile": "See Profile",
+  "darkMode": "Dark Mode",
+  "changePassword": "Change Password",
+  "logout": "Logout",
+  "logoutModal": {
+    "title": "Logout",
+    "message": "Are you sure you want to quit?",
+    "confirmButton": "Logout",
+    "cancelButton": "Cancel"
+  }
+}

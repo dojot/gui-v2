@@ -1,0 +1,473 @@
+# This file was generated based on ".graphqlconfig". Do not edit manually.
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type AllFlows {
+    flows: [FlowMeta]
+}
+
+type AssociatedDevice {
+    id: String!
+    label: String!
+}
+
+type Attr {
+    created: String!
+    id: String!
+    isDynamic: Boolean!
+    label: String!
+    staticValue: String
+    templateId: String!
+    type: String!
+    valueType: String!
+}
+
+type AttrReportItem {
+    id: String!
+    label: String!
+    type: String!
+    valueType: String!
+}
+
+type Attributes {
+    created: String
+    id: Int
+    label: String
+    metadata: [Metadata]
+    static_value: String
+    template_id: String
+    type: String
+    value_type: String
+}
+
+type AttributesData {
+    date: String
+    label: String
+    value: String
+}
+
+type CertDevice {
+    device: String
+}
+
+type CertKeys {
+    caPem: String
+    certAndKeysAs64: String
+    certificateFingerprint: String
+    certificatePem: String
+    privateKeyPEM: String
+    publicKeyPEM: String
+}
+
+type Certificate {
+    fingerprint: String
+}
+
+type Certificates {
+    autoRegistered: Boolean
+    belongsTo: CertDevice
+    createdAt: String
+    fingerprint: String
+    issuedByDojotPki: Boolean
+    modifiedAt: String
+    pem: String
+    subjectDN: String
+    tenant: String
+    validity: Validity
+}
+
+type CertificationAuthority {
+    allowAutoRegistration: Boolean
+    caFingerprint: String
+    caPem: String
+    createdAt: String
+    modifiedAt: String
+    subjectDN: String
+    tenant: String
+    validity: Validity
+}
+
+type CertificationAuthorityList {
+    certificationAuthorities: [CertificationAuthority]
+    pagination: SecurityPagination
+}
+
+type Certs {
+    certificates: [Certificates]
+    pagination: SecurityPagination
+}
+
+type Config {
+    config: String!
+}
+
+type CreatedDevicesCSV {
+    createdDevices: Int!
+    notCreatedDevices: [NotCreatedDeviceCSV]
+}
+
+type CreatedReport {
+    id: String!
+}
+
+type DeleteDevicesResponse {
+    id: String!
+    message: String!
+    type: String!
+}
+
+type DeleteMultipleTemplatesResponse {
+    deletedTemplates: [TemplateList]!
+    notDeletedTemplates: [NotDeletedTemplate]!
+}
+
+type Device {
+    attrs: [Attr]
+    certificate: Certificate
+    created: String
+    disabled: Boolean
+    favorite: Boolean
+    id: String!
+    label: String!
+    lastUpdate: [AttributesData]
+    templates: [TemplatesObj]
+    updated: String
+}
+
+type DeviceAssociated {
+    label: String!
+}
+
+type DeviceCreatedList {
+    id: String
+    label: String
+}
+
+type DeviceListPage {
+    currentPage: Int!
+    devices: [Device]
+    totalPages: Int!
+}
+
+type DeviceReportItem {
+    attrs: [AttrReportItem]
+    id: String!
+    label: String!
+}
+
+type DevicesAssociatedResponse {
+    associatedDevices: [DeviceAssociated]!
+    devicesWithOtherCertificates: [DeviceAssociated]!
+    notAssociatedDevices: [DeviceAssociated]!
+}
+
+type EditedFlow {
+    flow: FlowMeta
+}
+
+type FavoriteDevice {
+    id: String!
+    label: String!
+}
+
+type FlowMeta {
+    created: Int
+    enabled: Boolean
+    flow: String
+    id: String
+    name: String
+    updated: Int
+}
+
+type FlowNode {
+    enabled: Boolean
+    id: String
+    local: Boolean
+    module: String
+    name: String
+    types: [String]
+    version: String
+}
+
+type FlowRequest {
+    enabled: Boolean
+    flow: [String]
+    name: String
+}
+
+type FlowResponse {
+    flow: [FlowMeta]
+    message: String
+}
+
+type History {
+    attrs: [HistoryAttr]
+    deviceID: String!
+    label: String!
+}
+
+type HistoryAttr {
+    label: String!
+    timestamp: String!
+    value: String!
+    valueType: String!
+}
+
+type MapStringToString {
+    key: String
+    value: String
+}
+
+type Metadata {
+    created: String
+    id: Int
+    label: String
+    static_value: String
+    type: String
+    updated: String
+    value_type: String
+}
+
+type MultipleDevicesCreated {
+    devicesWithError: Boolean
+}
+
+type Mutation {
+    actuate(deviceId: String!, labels: [String]!, values: [String]!): String
+    associateDevice(deviceId: String!, fingerprint: String!): String
+    associateDevicesInBatch(deviceIdArray: [String]!): DevicesAssociatedResponse
+    createCertificateCSR(csrPEM: String): CertKeys
+    createCertificateOneClick(commonName: String): CertKeys
+    createCertificationAuthority(caPem: String!): String
+    createDevice(attrs: [DeviceAttributes], disabled: Boolean, fingerprint: String, id: String, label: String!, templates: [Int]!): [DeviceCreatedList]
+    createDevicesCSV(csvFile: String!): CreatedDevicesCSV
+    createFlow(flow: String!): String
+    createMultipleDevices(devicesPrefix: String!, initialSuffixNumber: Int!, quantity: Int!, templates: [Int]!): MultipleDevicesCreated
+    createReport(devices: [DeviceReportInput]!, finalDate: String, format: String!, initialDate: String, name: String!, singleReportFile: Boolean!): CreatedReport
+    createTemplate(attrs: [TemplateAttr]!, label: String!): TemplateList
+    createTemplateAttr(attr: TemplateAttr!, templateId: String!): TemplateList
+    deleteCertificates(fingerprints: [String]!): String
+    deleteCertificationAuthorities(fingerprints: [String]!): String
+    deleteDevices(deviceIds: [String]!, tenant: String!, userName: String!): DeleteDevicesResponse
+    deleteFlowByID(id: String!): String
+    deleteMultipleTemplates(templateIds: [String]!): DeleteMultipleTemplatesResponse
+    deleteReport(id: String!): String
+    deleteTemplateAttrs(attrIds: [String]!, templateId: String!): TemplateList
+    deleteTemplates(templateIds: [String]!): String
+    disassociateDevice(fingerprint: String!): String
+    downloadReport(path: String!): String
+    duplicateTemplate(templateId: String!): TemplateList
+    editDevice(attrs: [DeviceAttributes], disabled: Boolean!, id: String!, label: String!, templates: [Int]!): DeviceCreatedList
+    editFlow(flow: String, id: String!): String
+    editTemplate(attrs: [TemplateAttr]!, id: String!, label: String!): TemplateList
+    editTemplateAttr(attr: TemplateAttr!, attrId: String!, templateId: String!): TemplateList
+    favoriteDevices(deviceIds: [String]!, tenant: String!, userName: String!): Boolean
+    importCertificatesInBatch(caRoot: String!, certificates: [String]!): String
+    registerExternalCertificate(certificateChain: String!): externalCertRegistration
+    updateConfig(config: String!, tenant: String!, user: String): String
+}
+
+type NotCreatedDeviceCSV {
+    errorMessage: String!
+    id: String!
+    label: String!
+}
+
+type NotDeletedTemplate {
+    associatedDevices: [AssociatedDevice]!
+    id: String!
+    label: String!
+}
+
+type Query {
+    findManyReports(name: String, page: Int, pageSize: Int): ReportListPage
+    getAllFlows(id: String): AllFlows
+    getAllNodes(id: String): [FlowNode]
+    getCertificateByFingerprint(fingerprint: String!): Certificates
+    getCertificateById(filter: FilterCertificateInput, id: String!, page: PageInput): Certs
+    getCertificateList(filter: FilterCertificateInput, page: PageInput, sortBy: String): Certs
+    getCertificationAuthorities(filter: FilterCertificationAuthoritiesInput, page: PageInput, sortBy: String): CertificationAuthorityList
+    getConfig(tenant: String!, user: String): String
+    getDeviceById(deviceId: String!): Device
+    getDeviceHistoryForDashboard(configs: ConfigsInput, filter: HistoryInput!): String
+    getDevices(filter: FilterDeviceInput, page: PageInput, sortBy: String): DeviceListPage
+    getFavoriteDevicesList(tenant: String!, user: String!): [FavoriteDevice]
+    getFlowByID(id: String!): FlowResponse
+    getTemplateById(templateId: String!): TemplateList
+    getTemplates(filter: FilterTemplateInput, page: PageInput, sortBy: String): TemplatesListPage
+    templatesHasImageFirmware(templatesId: [Int]!): [MapStringToString]
+}
+
+type Report {
+    attempts: [ReportAttempt]
+    createdAt: String
+    file: ReportFile
+    finalDate: String
+    format: String!
+    id: String
+    initialDate: String
+    name: String
+    params: [DeviceReportItem]
+    singleReportFile: Boolean
+    updatedAt: String
+}
+
+type ReportAttempt {
+    canceledAt: String
+    createdAt: String
+    error: String
+    failedAt: String
+    finishedAt: String
+    id: String!
+    updatedAt: String
+}
+
+type ReportFile {
+    createdAt: String!
+    expiresAt: String
+    fileSizeKb: Float!
+    filename: String!
+    id: String!
+    mimeType: String!
+    path: String!
+    reportId: String!
+    updatedAt: String
+}
+
+type ReportListPage {
+    page: Int!
+    pageSize: Int!
+    reports: [Report]
+    total: Int!
+}
+
+type SecurityPagination {
+    currentPage: Int
+    hasNextPage: Boolean
+    limitPerPage: Int
+    nextPage: Int
+    totalItems: Int
+    totalPages: Int
+}
+
+type Template {
+    attrs: [Attributes]
+    config_attrs: [Attributes]
+    created: String
+    data_attrs: [Attributes]
+    id: Int
+    img_attrs: [Attributes]
+    label: String!
+}
+
+type TemplateList {
+    attrs: [Attr]
+    created: String!
+    id: String!
+    label: String!
+}
+
+type TemplatesListPage {
+    currentPage: Int!
+    templates: [TemplateList]
+    totalPages: Int!
+}
+
+type TemplatesObj {
+    id: Int
+    label: String
+}
+
+type Validity {
+    notAfter: String
+    notBefore: String
+}
+
+type externalCertRegistration {
+    certificateFingerprint: String
+}
+
+input AttrReportInput {
+    id: String!
+    label: String!
+    type: String!
+    valueType: String!
+}
+
+input ConfigInput {
+    config: String!
+}
+
+input ConfigsInput {
+    operationType: Int
+    sourceType: Int
+    widgetType: Int
+}
+
+input DeviceAttributes {
+    created: String
+    id: Int
+    label: String
+    staticValue: String
+    templateId: String
+    type: String
+    valueType: String
+}
+
+input DeviceReportInput {
+    attrs: [AttrReportInput]!
+    id: String!
+    label: String!
+}
+
+input FilterCertificateInput {
+    fingerprint: String
+}
+
+input FilterCertificationAuthoritiesInput {
+    caFingerprint: String
+}
+
+input FilterDeviceInput {
+    label: String
+}
+
+input FilterTemplateInput {
+    label: String
+}
+
+input HistoryDeviceInput {
+    deviceID: String!
+    dynamicAttrs: [String]
+    staticAttrs: [String]
+}
+
+input HistoryInput {
+    dateFrom: String
+    dateTo: String
+    devices: [HistoryDeviceInput]!
+    lastN: Int
+    templates: [HistoryTemplateInput]
+}
+
+input HistoryTemplateInput {
+    dynamicAttrs: [String]
+    staticAttrs: [String]
+    templateID: String!
+}
+
+input PageInput {
+    number: Int
+    size: Int
+}
+
+input TemplateAttr {
+    created: String
+    label: String!
+    staticValue: String
+    type: String!
+    valueType: String!
+}
