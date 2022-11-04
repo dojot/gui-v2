@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { clearUserInformation, redirectToLogout } from 'Utils';
 
-const baseURL = `${window.location.origin}/backstage/`;
+const baseURL = '/backstage';
 
 const rest = axios.create({
   baseURL,
