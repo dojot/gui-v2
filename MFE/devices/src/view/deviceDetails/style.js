@@ -59,4 +59,18 @@ export default makeStyles(theme => ({
   link: {
     color: theme.palette.primary.light,
   },
+  disabledChip: {
+    background: theme.palette.error.main,
+    color: theme.palette.common.white,
+    '& > *': {
+      color: theme.palette.common.white,
+    },
+  },
+  enabledChip: {
+    background: theme.palette.secondary.main,
+    color: theme.palette.secondary.contrastText,
+    '& > *': {
+      color: theme.palette.secondary.contrastText,
+    },
+  },
 }));

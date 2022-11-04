@@ -13,6 +13,7 @@ export const getDevicesList = (page, filter, sortBy) => {
             created
             updated
             favorite
+            disabled
             certificate {
               fingerprint
             }
@@ -46,6 +47,7 @@ export const getDeviceById = deviceId => {
           label
           created
           updated
+          disabled
           attrs {
             id
             type

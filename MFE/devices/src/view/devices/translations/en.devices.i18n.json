@@ -6,6 +6,8 @@
   "backIconButtonText": "Previous Page",
   "pageInfo": "Page {{page}} of {{totalOfPages}}",
   "hasCertificateTooltip": "Has Certificate",
+  "disabledTooltip": "Device Disabled",
+  "enabledTooltip": "Device Enabled",
   "noCertificateTooltip": "No Associated Certificate",
   "favoriteTooltip": "Add to Favorites",
   "removeFromFavoriteTooltip": "Remove from Favorites",
@@ -24,6 +26,7 @@
     "created": "Creation Date",
     "updated": "Last Modification",
     "hasCertificate": "Has Certificate",
+    "status": "Status",
     "actions": "Actions"
   },
   "cardData": {
