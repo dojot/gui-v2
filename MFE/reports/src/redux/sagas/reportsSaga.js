@@ -1,13 +1,6 @@
 import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { Reports } from '../../adapters/services';
-import {
-  getUserInformation,
-  getErrorTranslation,
-  toBase64,
-  downloadCSV,
-  downloadPDF,
-  downloadZIP,
-} from 'sharedComponents/Utils';
+import { downloadCSV, downloadPDF, downloadZIP } from 'sharedComponents/Utils';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
 

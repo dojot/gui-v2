@@ -1,5 +1,3 @@
-import { toBase64 } from './file';
-
 export const downloadTextFile = (filenameWithExtension, fileContent) => {
   const element = document.createElement('a');
   element.setAttribute('href', `data:text/plain;charset=utf-8,${encodeURIComponent(fileContent)}`);

@@ -1,18 +1,10 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import {
-  Box,
-  CircularProgress,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Tooltip,
-} from '@material-ui/core';
-import { ViewModule, List, Search, Add, Close } from '@material-ui/icons';
+import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@material-ui/core';
+import { Search, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { VIEW_MODE } from 'sharedComponents/Constants';
 import { useDebounce } from 'sharedComponents/Hooks';
 import { useSearchBarStyles } from './style';
 

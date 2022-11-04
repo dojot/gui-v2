@@ -1,5 +1,5 @@
 import React from 'react';
-import { Table, TableHead, TableBody, TableCell, TableRow, Collapse, Box } from '@material-ui/core';
+import { Table, TableHead, TableCell, TableRow, Collapse, Box } from '@material-ui/core';
 import { Today } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDataTableStyles } from './style';
