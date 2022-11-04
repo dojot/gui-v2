@@ -27,6 +27,6 @@ export const downloadPDF = (pdf, filename) => {
 };
 
 export const downloadZIP = (zip, filename) => {
-  const href = 'data:text/plain;base64,' + zip;
+  const href = 'data:application/zip;base64,' + zip;
   downloadFile(href, filename);
 };

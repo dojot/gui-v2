@@ -60,11 +60,7 @@ const ReportContent = ({ isOpen, report }) => {
 
 ReportContent.propTypes = {
   isOpen: PropTypes.bool.isRequired,
-  attributes: PropTypes.array.isRequired,
-  device: PropTypes.object.isRequired,
-  selectedDevices: PropTypes.object.isRequired,
-  setSelectedDevices: PropTypes.func.isRequired,
-  isDeviceSelected: PropTypes.bool.isRequired,
+  report: PropTypes.object.isRequired,
 };
 
 export default ReportContent;

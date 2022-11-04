@@ -74,71 +74,12 @@ export const usePaginationStyles = makeStyles(() => ({
   },
 }));
 
-export const useMassActionsStyles = makeStyles(theme => ({
-  massActionsContainer: {
-    background: theme.palette.secondary.main,
-  },
-  massActionsLabel: {
-    color: theme.palette.background.default,
-  },
-  massActionsButton: {
-    color: theme.palette.text.primary,
-    background: theme.palette.background.default,
-    '&:disabled': {
-      background: 'rgba(255,255,255,0.7)',
-      color: theme.palette.text.primary,
-    },
-    '&:hover': {
-      backgroundColor: theme.palette.background.paper,
-    },
-  },
-  massActionsCloseButton: {
-    color: theme.palette.background.default,
-  },
-  periodWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-  periodInput: {
-    color: theme.palette.text.primary,
-    background: theme.palette.background.default,
-    margin: 0,
-  },
-  popover: {
-    padding: '20px',
-    display: 'flex',
-    flexDirection: 'column',
-    maxWidth: '300px',
-    gap: '32px',
-  },
-  popoverHeader: {},
-  popoverBody: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '12px',
-  },
-  popoverFooter: {
-    textAlign: 'center',
-  },
-  radioButtonWrapper: {
-    display: 'flex',
-    alignItems: 'center',
-    gap: '12px',
-  },
-}));
-
 export const useDataTableStyles = makeStyles(theme => ({
   tableHead: {
     background: theme.palette.background.shade[500],
   },
   clickableCell: {
     cursor: 'pointer',
-  },
-  dataTableRow: {
-    '& > *': {
-      // borderBottom: `solid 1px ${theme.palette.divider}`,
-    },
   },
   dataTableRowCollapsed: {
     background: theme.palette.background.shade[500],
@@ -164,5 +105,40 @@ export const useDataTableStyles = makeStyles(theme => ({
   },
   errorButton: {
     color: theme.palette.error.main,
+  },
+}));
+
+export const useReportErrorAlert = makeStyles(theme => ({
+  dialogTitle: {
+    borderTop: `solid 4px ${theme.palette.error.dark}`,
+    textAlign: 'center',
+  },
+  icon: {
+    color: theme.palette.error.dark,
+    fontSize: '72px !important',
+  },
+  dialogContent: {
+    textAlign: 'center',
+    '&::-webkit-scrollbar': {
+      width: '0.4em',
+    },
+    '&::-webkit-scrollbar-track': {
+      boxShadow: 'inset 0 0 6px rgba(0,0,0,0.00)',
+      background: theme.palette.divider,
+    },
+    '&::-webkit-scrollbar-thumb': {
+      backgroundColor: theme.palette.secondary.main,
+    },
+  },
+  dialogActions: {
+    marginTop: theme.spacing(4),
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '24px',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  cancelButton: {
+    textTransform: 'uppercase',
   },
 }));

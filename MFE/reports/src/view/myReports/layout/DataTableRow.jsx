@@ -1,21 +1,6 @@
 import React, { useState } from 'react';
-import {
-  Box,
-  Button,
-  CircularProgress,
-  IconButton,
-  TableCell,
-  TableRow,
-  Tooltip,
-} from '@material-ui/core';
-import {
-  ChevronRight,
-  ExpandMore,
-  Delete,
-  GetApp,
-  HighlightOff,
-  WarningTwoTone,
-} from '@material-ui/icons';
+import { Box, Button, CircularProgress, IconButton, TableCell, TableRow } from '@material-ui/core';
+import { ChevronRight, ExpandMore, Delete, GetApp, HighlightOff } from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -23,7 +8,7 @@ import clsx from 'clsx';
 import ReportContent from './ReportContent';
 import { useDataTableStyles } from './style';
 
-const DataTableRow = ({ report, handleDeleteReport, handleDownloadFile }) => {
+const DataTableRow = ({ report, handleDeleteReport, handleDownloadFile, handleOpenErrorAlert }) => {
   const classes = useDataTableStyles();
   const { t } = useTranslation('myReports');
 
@@ -84,7 +69,12 @@ const DataTableRow = ({ report, handleDeleteReport, handleDownloadFile }) => {
           )}
 
           {report.failedAt && (
-            <Button className={classes.errorButton} startIcon={<HighlightOff />} variant='text'>
+            <Button
+              className={classes.errorButton}
+              onClick={handleOpenErrorAlert}
+              startIcon={<HighlightOff />}
+              variant='text'
+            >
               {t('dataTableRow.error')}
             </Button>
           )}
@@ -102,11 +92,11 @@ const DataTableRow = ({ report, handleDeleteReport, handleDownloadFile }) => {
   );
 };
 
-// DataTableRow.propTypes = {
-//   device: PropTypes.object.isRequired,
-//   handleStopPropagation: PropTypes.func.isRequired,
-//   selectedReports: PropTypes.object.isRequired,
-//   setSelectedDevices: PropTypes.func.isRequired,
-// };
+DataTableRow.propTypes = {
+  report: PropTypes.object.isRequired,
+  handleDeleteReport: PropTypes.func.isRequired,
+  handleDownloadFile: PropTypes.func.isRequired,
+  handleOpenErrorAlert: PropTypes.func.isRequired,
+};
 
 export default DataTableRow;

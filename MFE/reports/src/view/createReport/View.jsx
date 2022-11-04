@@ -3,10 +3,9 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { isNumber } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 
 import { DATA_ORDER, ROWS_PER_PAGE_OPTIONS } from 'sharedComponents/Constants';
-import { useIsLoading, usePersistentState, useSearchParamState } from 'sharedComponents/Hooks';
+import { useIsLoading, useSearchParamState } from 'sharedComponents/Hooks';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
 import { devicesSelector, paginationControlSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from 'sharedComponents/Containers';
@@ -20,7 +19,7 @@ import { useTranslation } from 'react-i18next';
 
 const CreateReport = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
+
   const classes = useStyles();
   const { t } = useTranslation('createReport');
   const devices = useSelector(devicesSelector);

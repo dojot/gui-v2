@@ -1,20 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Popover,
-  Typography,
-  Button,
-  Radio,
-  TextField,
-  IconButton,
-  Box,
-  Tooltip,
-} from '@material-ui/core';
+import { Popover, Typography, Button, Radio, TextField } from '@material-ui/core';
 import { useDispatch } from 'react-redux';
 import { actions } from '../../../redux/modules/reports';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
+import PropTypes from 'prop-types';
 import { useMassActionsStyles } from './style';
-import { ChevronLeft } from '@material-ui/icons';
 
 const GenerateReportPopover = ({
   anchorEl,
@@ -170,6 +161,18 @@ const GenerateReportPopover = ({
       </div>
     </Popover>
   );
+};
+
+GenerateReportPopover.propTypes = {
+  anchorEl: PropTypes.object,
+  handleClose: PropTypes.func.isRequired,
+  numberOfSelectedDevices: PropTypes.number.isRequired,
+  reportPeriod: PropTypes.object.isRequired,
+  selectedDevices: PropTypes.object.isRequired,
+};
+
+GenerateReportPopover.defaultProps = {
+  anchorEl: null,
 };
 
 export default GenerateReportPopover;

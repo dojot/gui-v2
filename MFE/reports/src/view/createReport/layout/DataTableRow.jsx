@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Checkbox, IconButton, TableCell, TableRow, Tooltip } from '@material-ui/core';
+import { Checkbox, IconButton, TableCell, TableRow } from '@material-ui/core';
 import { ChevronRight, ExpandMore } from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
-import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import AttributesDataTable from './AttributesDataTable';
 import { useDataTableStyles } from './style';
@@ -11,7 +10,6 @@ import { useDataTableStyles } from './style';
 const DataTableRow = ({ device, handleStopPropagation, selectedDevices, setSelectedDevices }) => {
   const [isAttrsCollapsed, setIsAttrsCollapsed] = useState(false);
   const classes = useDataTableStyles();
-  const { t } = useTranslation('createReport');
 
   const isUnableToReport = !device.attrs.length;
   const isDeviceSelected = !!selectedDevices[device.id];
@@ -37,7 +35,9 @@ const DataTableRow = ({ device, handleStopPropagation, selectedDevices, setSelec
       let parsedAttrs = {};
 
       for (let item of device.attrs) {
-        parsedAttrs[item.id] = item;
+        if (item.type !== 'static') {
+          parsedAttrs[item.id] = item;
+        }
       }
 
       const parsedDevice = {

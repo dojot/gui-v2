@@ -30,8 +30,6 @@ const DataTableHead = ({
     if (onRequestSort) onRequestSort(event, property);
   };
 
-  console.log('Chegou na table head');
-
   return (
     <TableHead className={className}>
       <TableRow>

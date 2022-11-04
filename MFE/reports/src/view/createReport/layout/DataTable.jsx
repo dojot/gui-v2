@@ -1,28 +1,11 @@
-import React, { useCallback, useMemo } from 'react';
-
-import {
-  Box,
-  Checkbox,
-  Chip,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Tooltip,
-} from '@material-ui/core';
-import { ArrowForwardIos } from '@material-ui/icons';
-import moment from 'moment';
+import React, { useMemo } from 'react';
+import { Paper, Table, TableBody, TableCell, TableContainer } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
-import { isSomeHoursAgo } from 'sharedComponents/Utils';
-import { useDataTableStyles } from './style';
+import { DATA_ORDER } from 'sharedComponents/Constants';
 import DataTableRow from './DataTableRow';
+import { useDataTableStyles } from './style';
 
 const DataTable = ({
   order,
@@ -89,7 +72,13 @@ const DataTable = ({
     } else {
       for (let item of validDevicesToSelect) {
         let parsedAttrs = {};
-        item.attrs.forEach(attr => (parsedAttrs[attr.id] = attr));
+
+        item.attrs.forEach(attr => {
+          if (attr.type !== 'static') {
+            parsedAttrs[attr.id] = attr;
+          }
+        });
+
         setSelectedDevices(prevState => ({
           ...prevState,
           [item.id]: {

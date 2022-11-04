@@ -2,13 +2,7 @@
   "title": "My reports",
   "createNewReport": "Create new report",
   "emptyListMessage": "No Reports Found",
-  "massActions": {
-    "numberOfSelectedDevices": "{{count}} Selected devices",
-    "setPeriod": "Set the period",
-    "generateReport": "Generate report",
-    "initialPeriod": "Initial period",
-    "finalPeriod": "Final period"
-  },
+  "reportErrorAlertMessage": "Unable to generate this report",
   "dataTableHead": {
     "label": "Report name",
     "requestDate": "Request date",

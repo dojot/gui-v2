@@ -17,7 +17,6 @@ import { paginationControlSelector } from '../selectors/reportsSelector';
 
 export function* getCurrentDevicesPageAgain() {
   const pagination = yield select(paginationControlSelector);
-  console.log(pagination);
   yield put(
     actions.getReports({
       page: pagination.currentPage,
@@ -29,10 +28,8 @@ export function* getCurrentDevicesPageAgain() {
 export function* handleGetReports(action) {
   try {
     yield put(loadingActions.addLoading(constants.GET_REPORTS));
-    const { page, pageSize } = action.payload;
-    console.log(page, pageSize);
-    const { findManyReports } = yield call(Reports.findManyReports, { page, pageSize });
-
+    const { page, pageSize, name } = action.payload;
+    const { findManyReports } = yield call(Reports.findManyReports, { page, pageSize, name });
     if (findManyReports) {
       yield put(actions.updateReports({ reports: findManyReports.reports }));
     }
@@ -129,7 +126,6 @@ export function* handleDeleteReport(action) {
       type: 'success',
     });
   } catch (e) {
-    console.log(e.message);
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       message: e.message,

@@ -12,13 +12,14 @@ import { actions as reportActions, constants } from '../../redux/modules/reports
 import { reportsSelector, paginationControlSelector } from '../../redux/selectors/reportsSelector';
 import { ViewContainer } from 'sharedComponents/Containers';
 import DataTable from './layout/DataTable';
-import DevicesLoading from './layout/DevicesLoading';
+import ReportsLoading from './layout/ReportsLoading';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import { useTranslation } from 'react-i18next';
 import { Description } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import useStyles from './style';
+import ReportErrorAlert from './layout/ReportErrorAlert';
 
 const MyReports = () => {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ const MyReports = () => {
   const { t } = useTranslation('myReports');
   const classes = useStyles();
 
+  const [isShowingErrorAlert, setIsShowingErrorAlert] = useState(false);
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState({
     isShowing: false,
     reportId: null,
@@ -107,6 +109,14 @@ const MyReports = () => {
     history.push('/create-report');
   };
 
+  const handleOpenErrorAlert = () => {
+    setIsShowingErrorAlert(true);
+  };
+
+  const handleCloseErrorAlert = () => {
+    setIsShowingErrorAlert(false);
+  };
+
   const handleDownloadFile = (filename, path) => {
     dispatch(
       reportActions.downloadReport({
@@ -121,8 +131,15 @@ const MyReports = () => {
       reportActions.getReports({
         page: page,
         pageSize: rowsPerPage,
+        name: searchText,
       }),
     );
+  }, [dispatch, searchText, rowsPerPage, page]);
+
+  useEffect(() => {
+    return () => {
+      dispatch(reportActions.updateReports({ reports: [] }));
+    };
   }, [dispatch]);
 
   return (
@@ -138,12 +155,14 @@ const MyReports = () => {
           confirmButtonText={t('deleteReportAlert.confirmButton')}
         />
 
+        <ReportErrorAlert isOpen={isShowingErrorAlert} handleClose={handleCloseErrorAlert} />
+
         <Box className={classes.container}>
           <SearchBar lastSearchedText={searchText} handleSearchReport={handleSearchReport} />
 
           <Box className={classes.content}>
             {isLoadingReports ? (
-              <DevicesLoading />
+              <ReportsLoading />
             ) : (
               <>
                 {reports.length > 0 && (
@@ -155,6 +174,7 @@ const MyReports = () => {
                     setOrderBy={setOrderBy}
                     handleDeleteReport={handleDeleteReport}
                     handleDownloadFile={handleDownloadFile}
+                    handleOpenErrorAlert={handleOpenErrorAlert}
                   />
                 )}
               </>

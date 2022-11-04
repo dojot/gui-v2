@@ -2,13 +2,7 @@
   "title": "Meus relatórios",
   "createNewReport": "Criar novo relatório",
   "emptyListMessage": "Nenhum relatório encontrado",
-  "massActions": {
-    "numberOfSelectedDevices": "{{count}} Dispositivos selecionados",
-    "setPeriod": "Selecione o período",
-    "generateReport": "Gerar relatório",
-    "initialPeriod": "Período inicial",
-    "finalPeriod": "Período final"
-  },
+  "reportErrorAlertMessage": "Não será possível gerar este relatório",
   "dataTableHead": {
     "label": "Nome do relatório",
     "requestDate": "Data de solicitação",

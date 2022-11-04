@@ -2,7 +2,7 @@ import React from 'react';
 
 import { Grid, CircularProgress } from '@material-ui/core';
 
-const DevicesLoading = () => {
+const ReportsLoading = () => {
   return (
     <Grid style={{ height: '100%' }} container alignItems='center' justifyContent='center'>
       <CircularProgress />
@@ -10,4 +10,4 @@ const DevicesLoading = () => {
   );
 };
 
-export default DevicesLoading;
+export default ReportsLoading;

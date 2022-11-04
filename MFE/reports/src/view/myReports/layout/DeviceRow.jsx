@@ -9,13 +9,11 @@ import {
   Box,
   TableBody,
 } from '@material-ui/core';
-
-import { useDataTableStyles } from './style';
 import { ChevronRight, ExpandMore } from '@material-ui/icons';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 const DeviceRow = ({ device }) => {
-  const classes = useDataTableStyles();
   const { t } = useTranslation('myReports');
 
   const [isOpen, setIsOpen] = useState(false);
@@ -57,7 +55,7 @@ const DeviceRow = ({ device }) => {
                 </TableHead>
                 <TableBody>
                   {device.attrs.map(attr => (
-                    <TableRow>
+                    <TableRow key={attr.id}>
                       <TableCell />
                       <TableCell />
                       <TableCell>{attr.label}</TableCell>
@@ -88,6 +86,10 @@ const DeviceRow = ({ device }) => {
       </TableRow>
     </>
   );
+};
+
+DeviceRow.propTypes = {
+  device: PropTypes.object.isRequired,
 };
 
 export default DeviceRow;

@@ -1,10 +1,10 @@
 import { protectAPI } from '../api';
 
-export const findManyReports = ({ page, pageSize }) => {
+export const findManyReports = ({ page, pageSize, name }) => {
   return protectAPI({
     query: `
-      query findManyReports($page: Int, $pageSize: Int) {
-        findManyReports(page: $page, pageSize: $pageSize) {
+      query findManyReports($page: Int, $pageSize: Int, $name: String) {
+        findManyReports(page: $page, pageSize: $pageSize, name: $name) {
           total
           page
           pageSize
@@ -54,6 +54,7 @@ export const findManyReports = ({ page, pageSize }) => {
     variables: JSON.stringify({
       page,
       pageSize,
+      name,
     }),
   });
 };

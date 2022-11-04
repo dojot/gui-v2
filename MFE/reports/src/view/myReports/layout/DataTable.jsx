@@ -1,44 +1,22 @@
-import React, { useCallback, useMemo } from 'react';
+import React, { useMemo } from 'react';
 
-import {
-  Box,
-  Checkbox,
-  Chip,
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableRow,
-  Tooltip,
-} from '@material-ui/core';
-import { ArrowForwardIos } from '@material-ui/icons';
-import moment from 'moment';
+import { Paper, Table, TableBody, TableCell, TableContainer } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
-import { isSomeHoursAgo } from 'sharedComponents/Utils';
-import { useDataTableStyles } from './style';
+import { DATA_ORDER } from 'sharedComponents/Constants';
 import DataTableRow from './DataTableRow';
+import { useDataTableStyles } from './style';
 
 const DataTable = ({
   order,
   orderBy,
   reports,
-  selectedDevices,
-  setSelectedDevices,
   setOrder,
   setOrderBy,
-  handleClickDevice,
-  handleSelectDevice,
-  handleFavoriteDevice,
-  handleSelectAttr,
-  handleDeselectAttr,
   handleDeleteReport,
   handleDownloadFile,
+  handleOpenErrorAlert,
 }) => {
   const { t } = useTranslation(['myReports', 'common']);
   const classes = useDataTableStyles();
@@ -107,10 +85,12 @@ const DataTable = ({
           <TableBody>
             {reports.map(report => (
               <DataTableRow
+                key={report.id}
                 report={report}
                 handleStopPropagation={handleStopPropagation}
                 handleDeleteReport={handleDeleteReport}
                 handleDownloadFile={handleDownloadFile}
+                handleOpenErrorAlert={handleOpenErrorAlert}
               />
             ))}
           </TableBody>
@@ -124,13 +104,11 @@ DataTable.propTypes = {
   order: PropTypes.oneOf([DATA_ORDER.ASC, DATA_ORDER.DESC]).isRequired,
   orderBy: PropTypes.string.isRequired,
   reports: PropTypes.array.isRequired,
-  selectedDevices: PropTypes.object.isRequired,
-  setSelectedDevices: PropTypes.func.isRequired,
   setOrder: PropTypes.func.isRequired,
   setOrderBy: PropTypes.func.isRequired,
-  handleClickDevice: PropTypes.func.isRequired,
-  handleFavoriteDevice: PropTypes.func.isRequired,
   handleDeleteReport: PropTypes.func.isRequired,
+  handleDownloadFile: PropTypes.func.isRequired,
+  handleOpenErrorAlert: PropTypes.func.isRequired,
 };
 
 export default DataTable;

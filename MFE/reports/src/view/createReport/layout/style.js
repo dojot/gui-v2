@@ -106,11 +106,7 @@ export const useDataTableStyles = makeStyles(theme => ({
   clickableCell: {
     cursor: 'pointer',
   },
-  dataTableRow: {
-    '& > *': {
-      borderBottom: `solid 1px ${theme.palette.divider}`,
-    },
-  },
+  dataTableRow: {},
   dataTableRowCollapsed: {
     background: theme.palette.background.shade[500],
   },

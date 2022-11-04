@@ -25,6 +25,7 @@ export const updateReports = createAction(UPDATE_REPORTS, payload => {
 export const getReports = createAction(GET_REPORTS, payload => ({
   page: payload.page,
   pageSize: payload.pageSize,
+  name: payload.name,
 }));
 
 export const createReport = createAction(CREATE_REPORT, payload => ({
