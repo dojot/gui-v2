@@ -125,7 +125,7 @@ export const favoriteDevices = ({ deviceIds, userName, tenant }) => {
 export const editDevice = ({ id, label, templates, attrs, disabled }) => {
   return protectAPI({
     query: `
-      mutation editDevice($id: String!, $label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $disabled: Boolean) {
+      mutation editDevice($id: String!, $label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $disabled: Boolean!) {
         editDevice(id: $id, label: $label, templates: $templates, attrs: $attrs, disabled: $disabled) {
           id
         }
@@ -144,7 +144,7 @@ export const editDevice = ({ id, label, templates, attrs, disabled }) => {
 export const createDevice = ({ label, templates, attrs, fingerprint, disabled }) => {
   return protectAPI({
     query: `
-      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $fingerprint: String, $disabled: Boolean) {
+      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $fingerprint: String, $disabled: Boolean!) {
         createDevice(label: $label, templates: $templates, attrs: $attrs, fingerprint: $fingerprint, disabled: $disabled) {
           id
         }
