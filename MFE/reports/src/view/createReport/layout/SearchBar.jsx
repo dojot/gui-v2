@@ -5,7 +5,6 @@ import { Search, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
-import { VIEW_MODE } from 'sharedComponents/Constants';
 import { useDebounce } from 'sharedComponents/Hooks';
 import { useSearchBarStyles } from './style';
 
