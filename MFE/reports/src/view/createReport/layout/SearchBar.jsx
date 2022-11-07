@@ -86,17 +86,13 @@ const SearchBar = ({ lastSearchedText, handleSearchDevice }) => {
 };
 
 SearchBar.propTypes = {
-  viewMode: PropTypes.oneOf(Object.values(VIEW_MODE)),
   lastSearchedText: PropTypes.string,
   handleSearchDevice: PropTypes.func,
-  handleChangeViewMode: PropTypes.func,
 };
 
 SearchBar.defaultProps = {
-  viewMode: VIEW_MODE.TABLE,
   lastSearchedText: '',
   handleSearchDevice: null,
-  handleChangeViewMode: null,
 };
 
 export default SearchBar;

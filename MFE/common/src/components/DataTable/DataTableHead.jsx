@@ -101,8 +101,6 @@ DataTableHead.propTypes = {
   endExtraCells: PropTypes.node,
   disableOrderBy: PropTypes.bool,
   disableCheckbox: PropTypes.bool,
-  withHelpIcon: PropTypes.bool,
-  helpText: PropTypes.string,
 };
 
 DataTableHead.defaultProps = {

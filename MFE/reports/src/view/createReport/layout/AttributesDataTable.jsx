@@ -100,7 +100,7 @@ const AttributesDataTable = ({
                   }
                   const isAttrSelected = !!selectedDevices[device.id]?.attrs[attr.id];
 
-                  const handleSelectAttribute = (e, device, attr) => {
+                  const handleSelectAttribute = (device, attr) => {
                     if (isDeviceSelected && isAttrSelected) {
                       handleDeselectAttr(device.id, attr.id);
                     } else {
@@ -121,7 +121,7 @@ const AttributesDataTable = ({
                         <Checkbox
                           color='secondary'
                           size='small'
-                          onChange={e => handleSelectAttribute(e, device, attr)}
+                          onChange={() => handleSelectAttribute(device, attr)}
                           checked={isAttrSelected}
                         />
                       </TableCell>
