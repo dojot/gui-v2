@@ -162,6 +162,7 @@ const EditDevice = () => {
   useEffect(() => {
     if (deviceData) {
       setDeviceName(deviceData.label);
+      setIsDisabled(deviceData.disabled);
 
       setSelectedTemplates(() => {
         const templatesObject = {};
