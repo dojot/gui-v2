@@ -12,6 +12,7 @@
     "editDevice": "Could not edit this device",
     "createDevice": "Could not create a device",
     "deviceUniqueLabel": "A device with this name already exists",
+    "actuate": "Could not send the value",
 
     "getTemplates": "Could not get templates",
     "getTemplateById": "Could not get the template data",

@@ -328,6 +328,36 @@ export function* handleAssociateDevicesInBatch(action) {
   }
 }
 
+export function* handleActuate(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.ACTUATE));
+    const { deviceId, labels, values, successCallback } = action.payload;
+
+    yield call(Device.actuate, {
+      deviceId,
+      labels,
+      values,
+    });
+
+    if (successCallback) yield call(successCallback);
+
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'actuate',
+      type: 'success',
+    });
+  } catch (e) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      type: 'error',
+      duration: 15000,
+      message: e.message,
+      i18nMessage: 'actuate',
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.ACTUATE));
+  }
+}
+
 export function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
@@ -372,6 +402,10 @@ export function* watchCreateDevicesCSV() {
   yield takeLatest(constants.CREATE_DEVICES_CSV, handleCreateDevicesCSV);
 }
 
+export function* watchActuate() {
+  yield takeLatest(constants.ACTUATE, handleActuate);
+}
+
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchGetFavoriteDevicesList),
@@ -384,4 +418,5 @@ export const deviceSaga = [
   fork(watchCreateMultipleDevices),
   fork(watchAssociateDevicesInBatch),
   fork(watchCreateDevicesCSV),
+  fork(watchActuate),
 ];

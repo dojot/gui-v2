@@ -14,7 +14,8 @@
     "templates": "Modelos",
     "staticAttrs": "Atributos Estáticos",
     "lastUpdate": "Última Atualização Recebida",
-    "associatedCertificate": "Certificado Associado"
+    "associatedCertificate": "Certificado Associado",
+    "acting": "Atuação"
   },
   "lastUpdateTable": {
     "date": "Data",
@@ -26,5 +27,11 @@
     "message": "Tem certeza que deseja excluir este dispositivo?",
     "cancelButton": "Cancelar",
     "confirmButton": "Excluir"
+  },
+  "acting": {
+    "sendButton": "Enviar",
+    "valueLabel": "Valor",
+    "actuatorLabelPh": "Selecione um atuador",
+    "emptyFieldError": "Preencha este campo"
   }
 }

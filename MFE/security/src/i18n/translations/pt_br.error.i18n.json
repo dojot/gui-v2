@@ -12,6 +12,7 @@
     "editDevice": "Não foi possível editar este dispositivo",
     "createDevice": "Não foi possível criar um dispositivo",
     "deviceUniqueLabel": "Já existe um dispositivo com este nome",
+    "actuate": "Não foi possível enviar o valor",
 
     "getTemplates": "Não foi possível obter os modelos",
     "getTemplateById": "Não foi possível obter os dados do modelo",

@@ -59,4 +59,10 @@ export default makeStyles(theme => ({
   link: {
     color: theme.palette.primary.light,
   },
+  actingListItem: {
+    padding: 16,
+  },
+  actingButton: {
+    height: 40,
+  },
 }));

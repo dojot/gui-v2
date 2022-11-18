@@ -13,6 +13,7 @@ const CREATE_DEVICE = 'app/devices/CREATE_DEVICE';
 const CREATE_MULTIPLE_DEVICES = 'app/devices/CREATE_MULTIPLE_DEVICES';
 const ASSOCIATE_DEVICES_IN_BATCH = 'app/devices/ASSOCIATE_DEVICES_IN_BATCH';
 const CREATE_DEVICES_CSV = 'app/devices/CREATE_DEVICES_CSV';
+const ACTUATE = 'app/devices/ACTUATE';
 
 export const constants = {
   GET_DEVICES,
@@ -27,6 +28,7 @@ export const constants = {
   CREATE_MULTIPLE_DEVICES,
   ASSOCIATE_DEVICES_IN_BATCH,
   CREATE_DEVICES_CSV,
+  ACTUATE,
 };
 
 export const getDevices = createAction(GET_DEVICES, payload => ({
@@ -109,6 +111,13 @@ export const createDevicesCSV = createAction(CREATE_DEVICES_CSV, payload => ({
   successCallback: payload.successCallback,
 }));
 
+export const actuate = createAction(ACTUATE, payload => ({
+  deviceId: payload.deviceId,
+  labels: payload.labels,
+  values: payload.values,
+  successCallback: payload.successCallback,
+}));
+
 export const actions = {
   getDevices,
   getDeviceById,
@@ -122,6 +131,7 @@ export const actions = {
   createMultipleDevices,
   associateDevicesInBatch,
   createDevicesCSV,
+  actuate,
 };
 
 export const reducers = {

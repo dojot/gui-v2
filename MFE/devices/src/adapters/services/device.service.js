@@ -244,3 +244,18 @@ export const associateDevicesInBatch = ({ deviceIdArray }) => {
     }),
   });
 };
+
+export const actuate = ({ deviceId, labels, values }) => {
+  return protectAPI({
+    query: `
+      mutation actuate($deviceId: String!, $labels: [String]!, $values: [String]!) {
+        actuate(deviceId: $deviceId, labels: $labels, values: $values)
+      }
+    `,
+    variables: JSON.stringify({
+      deviceId,
+      labels,
+      values,
+    }),
+  });
+};

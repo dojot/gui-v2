@@ -7,6 +7,7 @@
     "removedFavoriteDevice": "Device removed from favorites",
     "editDevice": "Device edited",
     "createDevice": "Device created",
+    "actuate": "Value sent to device",
 
     "deleteTemplate": "Template deleted",
     "deleteMultipleTemplates": "All templates were deleted",
