@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 
 import {
   Box,
@@ -44,7 +44,6 @@ import {
 import { deviceDataSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from 'sharedComponents/Containers';
 import useStyles from './style';
-import { useRef } from 'react';
 
 const DeviceDetails = () => {
   const { t } = useTranslation('deviceDetails');
