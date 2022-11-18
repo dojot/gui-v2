@@ -6,7 +6,7 @@
   "backIconButtonText": "Página Anterior",
   "pageInfo": "Página {{page}} de {{totalOfPages}}",
   "hasCertificateTooltip": "Possui Certificado",
-  "disabledTooltip": "Dispositivo Desativado",
+  "disabledTooltip": "Dispositivo Desabilitado",
   "enabledTooltip": "Dispositivo Habilitado",
   "noCertificateTooltip": "Nenhum Certificado Associado",
   "favoriteTooltip": "Adicionar aos Favoritos",
