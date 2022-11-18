@@ -341,6 +341,8 @@ export function* handleActuate(action) {
 
     if (successCallback) yield call(successCallback);
 
+    yield put(actions.updateActuatorData({ labels, values }));
+
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'actuate',

@@ -14,6 +14,7 @@ const CREATE_MULTIPLE_DEVICES = 'app/devices/CREATE_MULTIPLE_DEVICES';
 const ASSOCIATE_DEVICES_IN_BATCH = 'app/devices/ASSOCIATE_DEVICES_IN_BATCH';
 const CREATE_DEVICES_CSV = 'app/devices/CREATE_DEVICES_CSV';
 const ACTUATE = 'app/devices/ACTUATE';
+const UPDATE_ACTUATOR_DATA = 'app/devices/UPDATE_ACTUATOR_DATA';
 
 export const constants = {
   GET_DEVICES,
@@ -118,6 +119,11 @@ export const actuate = createAction(ACTUATE, payload => ({
   successCallback: payload.successCallback,
 }));
 
+export const updateActuatorData = createAction(UPDATE_ACTUATOR_DATA, payload => ({
+  labels: payload.labels,
+  values: payload.values,
+}));
+
 export const actions = {
   getDevices,
   getDeviceById,
@@ -132,11 +138,27 @@ export const actions = {
   associateDevicesInBatch,
   createDevicesCSV,
   actuate,
+  updateActuatorData,
 };
 
 export const reducers = {
   [UPDATE_DEVICES]: (state, { payload }) => {
     return state.merge({ ...payload });
+  },
+  [UPDATE_ACTUATOR_DATA]: (state, { payload }) => {
+    if (!state.get('deviceData')) return state;
+
+    const newLastUpdate = state.getIn(['deviceData', 'lastUpdate'], []).map(lastUpdate => {
+      const index = payload.labels.indexOf(lastUpdate.label);
+      if (index === -1) return lastUpdate;
+      return {
+        ...lastUpdate,
+        date: new Date().toISOString(),
+        value: payload.values[index],
+      };
+    });
+
+    return state.setIn(['deviceData', 'lastUpdate'], newLastUpdate);
   },
 };
 
