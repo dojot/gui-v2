@@ -21,6 +21,8 @@ const config = {
     '^Services(.*)$': '<rootDir>/src/adapters/services$1',
     '^Themes(.*)$': '<rootDir>/src/themes$1',
     '^sharedComponents/Utils(.*)$': '<rootDir>/../common/src/utils$1',
+    '^sharedComponents/Hooks(.*)$': '<rootDir>/../common/src/hooks$1',
+    '^sharedComponents/Constants(.*)$': '<rootDir>/../common/src/constants$1',
   },
   automock: false,
   testRegex: '(/__tests__/.*|\\.(test|spec))\\.(js|jsx|json)$',

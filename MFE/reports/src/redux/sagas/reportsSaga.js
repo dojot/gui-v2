@@ -8,7 +8,7 @@ import { constants, actions } from '../modules/reports';
 import { actions as loadingActions } from '../modules/loading';
 import { paginationControlSelector } from '../selectors/reportsSelector';
 
-export function* getCurrentDevicesPageAgain() {
+export function* getCurrentReportsPageAgain() {
   const pagination = yield select(paginationControlSelector);
   yield put(
     actions.getReports({
@@ -112,7 +112,7 @@ export function* handleDeleteReport(action) {
     const { id, successCallback, shouldGetCurrentPageAgain } = action.payload;
     yield call(Reports.deleteReport, id);
     if (successCallback) yield call(successCallback);
-    if (shouldGetCurrentPageAgain) yield call(getCurrentDevicesPageAgain);
+    if (shouldGetCurrentPageAgain) yield call(getCurrentReportsPageAgain);
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'deleteReport',

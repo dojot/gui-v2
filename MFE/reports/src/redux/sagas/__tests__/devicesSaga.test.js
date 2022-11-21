@@ -26,6 +26,24 @@ import {
   watchGetDevices,
 } from '../devicesSaga';
 
+jest.mock('sharedComponents/Utils', () => ({
+  __esModule: true,
+  default: 'mockedDefaultExport',
+  getErrorTranslation: jest.fn(),
+  getUserInformation: jest.fn(),
+  toBase64: jest.fn(),
+}));
+
+jest.mock('sharedComponents/Hooks', () => ({
+  __esModule: true,
+  dispatchEvent: jest.fn(),
+}));
+
+jest.mock('sharedComponents/Constants', () => ({
+  __esModule: true,
+  EVENT: 'mocked',
+}));
+
 describe('devicesSaga', () => {
   beforeAll(() => {
     // Using fake timers because errorActions.addError uses Date.now()
@@ -164,8 +182,18 @@ describe('devicesSaga', () => {
 
     const apiRequest = matchers.call.fn(Device.deleteDevices);
 
+    const getCurrentPageCall = matchers.call.fn(getCurrentDevicesPageAgain);
+
+    const getUserInformationCall = matchers.call.fn(getUserInformation);
+
+    const userInformation = { userName: 'admin', tenant: 'admin' };
+
     return expectSaga(handleDeleteDevice, action)
-      .provide([[apiRequest, null]])
+      .provide([
+        [apiRequest, null],
+        [getCurrentPageCall, null],
+        [getUserInformationCall, userInformation],
+      ])
       .put(loadingActions.addLoading(constants.DELETE_DEVICE))
       .call(successCallback)
       .put(loadingActions.removeLoading(constants.DELETE_DEVICE))

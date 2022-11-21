@@ -25,6 +25,22 @@ import {
   watchGetTemplates,
 } from '../templatesSaga';
 
+jest.mock('sharedComponents/Utils', () => ({
+  __esModule: true,
+  default: 'mockedDefaultExport',
+  getErrorTranslation: jest.fn(),
+}));
+
+jest.mock('sharedComponents/Hooks', () => ({
+  __esModule: true,
+  dispatchEvent: jest.fn(),
+}));
+
+jest.mock('sharedComponents/Constants', () => ({
+  __esModule: true,
+  EVENT: 'mocked',
+}));
+
 describe('templatesSaga', () => {
   beforeAll(() => {
     // Using fake timers because errorActions.addError uses Date.now()
