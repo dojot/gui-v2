@@ -65,7 +65,7 @@ const DataTableHead = ({
               >
                 {headCell.withHelpIcon && headCell.helpText && (
                   <Tooltip arrow placement='top' title={headCell.helpText}>
-                    <HelpOutline fontSize='small' />
+                    <HelpOutline fontSize='small' style={{ marginRight: '4px' }} />
                   </Tooltip>
                 )}
                 {headCell.label}

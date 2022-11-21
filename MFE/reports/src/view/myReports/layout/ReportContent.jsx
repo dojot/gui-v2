@@ -30,10 +30,12 @@ const ReportContent = ({ isOpen, report }) => {
                     <Box className={classes.selectedFilters}>
                       {t('reportContent.selectedFilters')}
                       <Box className={classes.period}>
-                        <Today /> {report.initialDate && moment(report.initialDate).format('L LTS')}
+                        {report.initialDate && <Today />}
+                        {report.initialDate && moment(report.initialDate).format('L LTS')}
                       </Box>
                       <Box className={classes.period}>
-                        <Today /> {report.finalDate && moment(report.finalDate).format('L LTS')}
+                        {report.finalDate && <Today />}
+                        {report.finalDate && moment(report.finalDate).format('L LTS')}
                       </Box>
                     </Box>
                   </TableCell>
