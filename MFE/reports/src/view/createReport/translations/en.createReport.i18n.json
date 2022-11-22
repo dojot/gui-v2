@@ -1,0 +1,53 @@
+{
+  "title": "Create report",
+  "massActions": {
+    "numberOfSelectedDevices": "{{count}} Selected devices",
+    "setPeriod": "Set the period",
+    "generateReport": "Generate report",
+    "initialPeriod": "Initial period",
+    "finalPeriod": "Final period"
+  },
+  "dataTableHead": {
+    "label": "Device",
+    "id": "ID",
+    "updated": "Last update",
+    "attributes": "Number of attributes",
+    "attributesHelpText": "Devices without one or more attributes in their models are not eligible for reporting"
+  },
+  "attrDataTableHead": {
+    "attributes": "Attributes",
+    "attrType": "Attribute type",
+    "valueType": "Value type"
+  },
+  "attrDataTableRow": {
+    "static": "Static",
+    "dynamic": "Dynamic",
+    "actuator": "Actuator",
+    "boolean": "Boolean",
+    "geo": "Geo",
+    "float": "Float",
+    "integer": "Integer",
+    "text": "Text",
+    "json": "JSON"
+  },
+  "generateReportPopover": {
+    "headerTitle": "{{count}} devices have been selected. Do you want to generate a single report or individual reports?",
+    "reportNameInputPh": "Report name *",
+    "generateUniqueReport": "Generate unique report",
+    "generateIndividualReportPerDevice": "Generate an individual report per device",
+    "reportFormat": "Report format *",
+    "csv": "CSV",
+    "pdf": "PDF",
+    "generateButtonText": "To generate"
+  },
+  "pagination": {
+    "totalOfPages": "Total of pages: {{count}}",
+    "labelRowsPerPage": "Items per page",
+    "nextIconButtonText": "Next page",
+    "backIconButtonText": "Previous page",
+    "pageInfo": "Page {{page}} of {{totalOfPages}}"
+  },
+  "searchBar": {
+    "searchInputPh": "Search device by name"
+  }
+}

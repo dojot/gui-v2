@@ -1,0 +1,53 @@
+{
+  "title": "Criar relatório",
+  "massActions": {
+    "numberOfSelectedDevices": "{{count}} Dispositivos selecionados",
+    "setPeriod": "Selecione o período",
+    "generateReport": "Gerar relatório",
+    "initialPeriod": "Período inicial",
+    "finalPeriod": "Período final"
+  },
+  "dataTableHead": {
+    "label": "Dispositivo",
+    "id": "ID",
+    "updated": "Última atualização",
+    "attributes": "Número de atributos",
+    "attributesHelpText": "Dispositivos sem um ou mais atributos em seus modelos não são elegíveis para criação de relatórios"
+  },
+  "attrDataTableHead": {
+    "attributes": "Atributos",
+    "attrType": "Tipo do atributo",
+    "valueType": "Tipo do valor"
+  },
+  "attrDataTableRow": {
+    "static": "Estático",
+    "dynamic": "Dinâmico",
+    "actuator": "Atuador",
+    "boolean": "Booleano",
+    "geo": "Geo",
+    "float": "Float",
+    "integer": "Inteiro",
+    "text": "Texto",
+    "json": "JSON"
+  },
+  "generateReportPopover": {
+    "headerTitle": "{{count}} dispositivos foram selecionados. Deseja gerar um único relatório ou relatórios individuais?",
+    "reportNameInputPh": "Nome do relatório *",
+    "generateUniqueReport": "Gerar único relatório",
+    "generateIndividualReportPerDevice": "Gerar um relatório individual por dispositivo",
+    "reportFormat": "Formato do relatório *",
+    "csv": "CSV",
+    "pdf": "PDF",
+    "generateButtonText": "Gerar"
+  },
+  "pagination": {
+    "totalOfPages": "Total de páginas: {{count}}",
+    "labelRowsPerPage": "Itens por página",
+    "nextIconButtonText": "Próxima página",
+    "backIconButtonText": "Página anterior",
+    "pageInfo": "Página {{page}} de {{totalOfPages}}"
+  },
+  "searchBar": {
+    "searchInputPh": "Pesquisar dispositivo por nome"
+  }
+}

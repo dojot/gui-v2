@@ -1,6 +1,14 @@
 import React from 'react';
 
-import { Checkbox, TableCell, TableHead, TableRow, TableSortLabel } from '@material-ui/core';
+import {
+  Checkbox,
+  TableCell,
+  TableHead,
+  TableRow,
+  TableSortLabel,
+  Tooltip,
+} from '@material-ui/core';
+import { HelpOutline } from '@material-ui/icons';
 import { DATA_ORDER } from 'Constants';
 import PropTypes from 'prop-types';
 
@@ -55,6 +63,11 @@ const DataTableHead = ({
                 onClick={createSortHandler(headCell.id)}
                 direction={isOrderingByThisCell ? order : DATA_ORDER.ASC}
               >
+                {headCell.withHelpIcon && headCell.helpText && (
+                  <Tooltip arrow placement='top' title={headCell.helpText}>
+                    <HelpOutline fontSize='small' style={{ marginRight: '4px' }} />
+                  </Tooltip>
+                )}
                 {headCell.label}
               </TableSortLabel>
             </TableCell>

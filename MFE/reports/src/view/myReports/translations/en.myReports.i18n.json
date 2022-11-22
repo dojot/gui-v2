@@ -1,0 +1,55 @@
+{
+  "title": "My reports",
+  "createNewReport": "Create new report",
+  "emptyListMessage": "No Reports Found",
+  "reportErrorAlertMessage": "Unable to generate this report",
+  "dataTableHead": {
+    "label": "Report name",
+    "requestDate": "Request date",
+    "dateAvailable": "Available date",
+    "expiresIn": "Expires in",
+    "status": "Status",
+    "actions": "Actions"
+  },
+  "reportContent": {
+    "selectedFilters": "Selected filters:"
+  },
+  "dataTableRow": {
+    "neverExpires": "Never expires",
+    "generating": "Generating...",
+    "available": "Available",
+    "error": "Error"
+  },
+  "attrDataTableHead": {
+    "attribute": "Attribute",
+    "attrType": "Attribute type",
+    "valueType": "Value type"
+  },
+  "attrDataTableRow": {
+    "static": "Static",
+    "dynamic": "Dynamic",
+    "actuator": "Actuator",
+    "boolean": "Boolean",
+    "geo": "Geo",
+    "float": "Float",
+    "integer": "Integer",
+    "text": "Text",
+    "json": "JSON"
+  },
+  "deleteReportAlert": {
+    "title": "Delete Report",
+    "message": "Are you sure you want to delete this report?",
+    "cancelButton": "Cancel",
+    "confirmButton": "Delete"
+  },
+  "pagination": {
+    "totalOfPages": "Total of pages",
+    "labelRowsPerPage": "Items per page",
+    "nextIconButtonText": "Next page",
+    "backIconButtonText": "Previous page",
+    "pageInfo": "Page {{page}} of {{totalOfPages}}"
+  },
+  "searchBar": {
+    "searchInputPh": "Search report by name"
+  }
+}
