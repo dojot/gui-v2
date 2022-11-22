@@ -47,6 +47,13 @@ const Dashboard = React.lazy(() =>
   }),
 );
 
+const Reports = React.lazy(() =>
+  import('./components/Reports').catch(err => {
+    console.error(err);
+    return import('./view/pageNotFound');
+  }),
+);
+
 export default () => {
   const [isMenuOpen, setMenuOpen] = useState(getMenuState());
   const handleMenu = e => {
@@ -72,6 +79,8 @@ export default () => {
             attrs={{ isMenuOpen }}
           />
           <PrivateRoute path='/templates' component={Templates} attrs={{ isMenuOpen }} />
+          <PrivateRoute path='/create-report' component={Reports} attrs={{ isMenuOpen }} />
+          <PrivateRoute path='/reports' component={Reports} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/*' component={PageNotFound} />
         </Switch>
       </Router>

@@ -5,5 +5,6 @@
   "templateName": "Template Name",
   "attrsTableTitle": "Device Attrs",
   "attrsTableCaption": "(The static attrs are editable)",
-  "noAttrs": "No Attr to Show"
+  "noAttrs": "No Attr to Show",
+  "disabledCheckboxLabel": "Device disabled"
 }

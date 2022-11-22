@@ -30,6 +30,9 @@
 
     "deleteCertificationAuthority": "CA excluída",
     "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
-    "createCertificationAuthority": "CA criada"
+    "createCertificationAuthority": "CA criada",
+
+    "createReport": "Relatório criado com sucesso",
+    "deleteReport": "Relatório excluído"
   }
 }

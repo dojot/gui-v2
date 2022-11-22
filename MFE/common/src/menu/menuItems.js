@@ -1,4 +1,11 @@
-import { Dashboard, DevicesOther, FilterNone, Home, VerifiedUser } from '@material-ui/icons';
+import {
+  Dashboard,
+  DevicesOther,
+  FilterNone,
+  Home,
+  VerifiedUser,
+  Description,
+} from '@material-ui/icons';
 
 export const MENU_ITEMS = [
   {
@@ -40,6 +47,24 @@ export const MENU_ITEMS = [
         visible: true,
         name: 'CA',
         path: '/certification-authorities',
+      },
+    ],
+  },
+  {
+    visible: true,
+    collapsible: true,
+    name: 'reports',
+    icon: Description,
+    subItems: [
+      {
+        visible: true,
+        name: 'create-report',
+        path: '/create-report',
+      },
+      {
+        visible: true,
+        name: 'my-reports',
+        path: '/reports',
       },
     ],
   },

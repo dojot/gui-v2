@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useState, useRef } from 'react';
 import {
   Box,
   Button,
+  Chip,
   CircularProgress,
   Grid,
   List,
@@ -19,6 +20,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import {
+  Block,
+  CheckCircle,
   Delete,
   DevicesOther,
   Edit,
@@ -305,6 +308,15 @@ const DeviceDetails = () => {
                     </ListItem>
                   )}
                 </List>
+
+                <Box>
+                  <Chip
+                    size='large'
+                    icon={deviceData.disabled ? <Block /> : <CheckCircle />}
+                    label={deviceData.disabled ? t('disabledLabel') : t('enabledLabel')}
+                    className={deviceData.disabled ? classes.disabledChip : classes.enabledChip}
+                  />
+                </Box>
               </Grid>
 
               <Grid item xs={12} sm={12} md={8}>

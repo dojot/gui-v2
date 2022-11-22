@@ -11,7 +11,15 @@ import {
   MenuItem,
   TextField,
 } from '@material-ui/core';
-import { Check, Close, DevicesOther, Star, StarBorderOutlined } from '@material-ui/icons';
+import {
+  Block,
+  Check,
+  CheckCircle,
+  Close,
+  DevicesOther,
+  Star,
+  StarBorderOutlined,
+} from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -138,6 +146,22 @@ const Cards = ({
                       <div>
                         <IconButton size='small' disabled>
                           {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
+                        </IconButton>
+                      </div>
+                    </Tooltip>
+
+                    <Tooltip
+                      title={t(device.disabled ? 'disabledTooltip' : 'enabledTooltip')}
+                      placement='right'
+                      arrow
+                    >
+                      <div>
+                        <IconButton size='small' disabled>
+                          {device.disabled ? (
+                            <Block color='error' />
+                          ) : (
+                            <CheckCircle color='secondary' />
+                          )}
                         </IconButton>
                       </div>
                     </Tooltip>

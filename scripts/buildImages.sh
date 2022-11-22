@@ -29,3 +29,7 @@ cd ..
 cd templates
 sudo docker build -t templates-nx:latest -f Dockerfile .
 cd ..
+
+cd reports
+sudo docker build -t reports-nx:latest -f Dockerfile .
+cd ..

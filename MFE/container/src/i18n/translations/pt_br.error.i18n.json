@@ -45,6 +45,8 @@
     "createCertificationAuthority": "Não foi possível criar uma CA",
 
     "failedToCopy": "Falhou ao copiar",
-    "fileSizeLimit": "O tamanho máximo do arquivo deve ser de 1MB"
+    "fileSizeLimit": "O tamanho máximo do arquivo deve ser de 1MB",
+
+    "createReport": "Não foi possível criar o relatório"
   }
 }

@@ -1,0 +1,37 @@
+{
+  "closeToastText": "Close",
+  "messages": {
+    "deleteDevice": "Device deleted",
+    "deleteMultipleDevices": "All devices were deleted",
+    "favoriteDevice": "Device added to favorites",
+    "removedFavoriteDevice": "Device removed from favorites",
+    "editDevice": "Device edited",
+    "createDevice": "Device created",
+
+    "deleteTemplate": "Template deleted",
+    "deleteMultipleTemplates": "All templates were deleted",
+    "createTemplate": "Template created",
+    "editTemplate": "Template edited",
+    "duplicateTemplate": "Duplicate template",
+
+    "deleteAttr": "Attribute deleted",
+    "deleteMultipleAttrs": "All Attributes were deleted",
+    "createAttr": "Attribute created",
+    "editAttr": "Attribute edited",
+
+    "createCertificate": "Certificate created",
+    "deleteCertificate": "Certificate deleted",
+    "deleteMultipleCertificates": "All certificates were deleted",
+    "disassociateDevice": "Certificate disassociated from device",
+    "associateDevice": "Certificate associated with the device",
+    "addedCertificate": "Added certificate",
+    "importedCertificates": "Certificates created successfully",
+
+    "deleteCertificationAuthority": "CA deletes",
+    "deleteMultipleCertificationAuthorities": "All CAs were deleted",
+    "createCertificationAuthority": "CA created",
+
+    "createReport": "Report created successfully",
+    "deleteReport": "Report deleted"
+  }
+}

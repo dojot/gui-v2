@@ -5,5 +5,8 @@
   "templates": "Templates",
   "security": "Security",
   "certificates": "Certificates",
-  "CA": "CA"
+  "CA": "CA",
+  "reports": "Reports",
+  "create-report": "Create report",
+  "my-reports": "My reports"
 }

@@ -1,0 +1,37 @@
+{
+  "closeToastText": "Fechar",
+  "messages": {
+    "deleteDevice": "Dispositivo excluído",
+    "deleteMultipleDevices": "Todos os dispositivos foram excluídos",
+    "favoriteDevice": "Dispositivo adicionado aos favoritos",
+    "removedFavoriteDevice": "Dispositivo removido dos favoritos",
+    "editDevice": "Dispositivo editado",
+    "createDevice": "Dispositivo criado",
+
+    "deleteTemplate": "Modelo excluído",
+    "deleteMultipleTemplates": "Todos os modelos foram excluídos",
+    "createTemplate": "Modelo criado",
+    "editTemplate": "Modelo editado",
+    "duplicateTemplate": "Modelo duplicado",
+
+    "deleteAttr": "Atributo excluído",
+    "deleteMultipleAttrs": "Todos os atributos foram excluídos",
+    "createAttr": "Atributo criado",
+    "editAttr": "Atributo editado",
+
+    "createCertificate": "Certificado criado",
+    "deleteCertificate": "Certificado excluído",
+    "deleteMultipleCertificates": "Todos os certificados foram excluídos",
+    "disassociateDevice": "Certificado desassociado do dispositivo",
+    "associateDevice": "Certificado associado ao dispositivo",
+    "addedCertificate": "Certificado adicionado",
+    "importedCertificates": "Certificados criados com sucesso",
+
+    "deleteCertificationAuthority": "CA excluída",
+    "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
+    "createCertificationAuthority": "CA criada",
+
+    "createReport": "Relatório criado com sucesso",
+    "deleteReport": "Relatório excluído"
+  }
+}

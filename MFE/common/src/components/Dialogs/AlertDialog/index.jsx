@@ -52,7 +52,7 @@ const AlertDialog = ({
         <Button onClick={handleCancelDialog}>{cancelButtonText}</Button>
 
         <Button
-          color='primary'
+          color='secondary'
           onClick={handleConfirmDialog}
           autoFocus={autoFocusConfirmationButton}
         >

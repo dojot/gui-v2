@@ -1,6 +1,15 @@
 import React from 'react';
 
-import { Box, IconButton, InputAdornment, Link, TextField, Typography } from '@material-ui/core';
+import {
+  Box,
+  IconButton,
+  InputAdornment,
+  Link,
+  TextField,
+  Typography,
+  FormControlLabel,
+  Checkbox,
+} from '@material-ui/core';
 import { Close, Warning, CloudDownloadTwoTone } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import b64ToBlob from 'b64-to-blob';
@@ -13,11 +22,13 @@ import { useSummaryStepStyles } from './style';
 
 const SummaryStep = ({
   deviceName,
+  isDisabled,
   isCreatingDevice,
   selectedTemplates,
   selectedCertificate,
   setDeviceName,
   handleCreateService,
+  handleToggleDisabled,
   handleGoToPreviousStep,
   handleCancelDeviceCreation,
 }) => {
@@ -69,6 +80,15 @@ const SummaryStep = ({
             }}
             required
             fullWidth
+          />
+        </Box>
+
+        <Box marginBottom={3}>
+          <FormControlLabel
+            label={t('summaryStep.disabledCheckboxLabel')}
+            control={
+              <Checkbox checked={isDisabled} onChange={handleToggleDisabled} color='primary' />
+            }
           />
         </Box>
 
@@ -158,10 +178,12 @@ const SummaryStep = ({
 
 SummaryStep.propTypes = {
   deviceName: PropTypes.string.isRequired,
+  isDisabled: PropTypes.bool.isRequired,
   isCreatingDevice: PropTypes.bool.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   setDeviceName: PropTypes.func.isRequired,
   handleCreateService: PropTypes.func.isRequired,
+  handleToggleDisabled: PropTypes.func.isRequired,
   handleGoToPreviousStep: PropTypes.func.isRequired,
   handleCancelDeviceCreation: PropTypes.func.isRequired,
 };

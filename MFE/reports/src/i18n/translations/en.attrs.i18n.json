@@ -1,0 +1,25 @@
+{
+  "attrValueHint": "You can only set the value for static attributes.",
+  "attrLabelHint": "Cannot contain special characteres or whitespaces",
+  "attrTypeHint": "<strong>Dynamic:</strong> <i>Data is sent from devices to dojot.</i><br /><strong>Actuator:</strong> <i>Data is sent from dojot to devices.</i><br /><strong>Static:</strong> <i>Attribute informed by user that contains some information about the device</i>",
+  "valueTypeHint": "Use Boolean for true/false, Integer or Float for numeric values, Text or JSON for texts and strings, Geo for geolocation",
+  "attrLabel": {
+    "attrLabel": "Attribute Name",
+    "attrType": "Attribute Type",
+    "attrValueType": "Value Type",
+    "attrValue": "Value"
+  },
+  "attrType": {
+    "dynamic": "Dynamic Value",
+    "static": "Static Value",
+    "actuator": "Actuator"
+  },
+  "attrValueType": {
+    "bool": "Boolean",
+    "geo_point": "Geo",
+    "float": "Float",
+    "integer": "Integer",
+    "string": "Text",
+    "json": "JSON"
+  }
+}
