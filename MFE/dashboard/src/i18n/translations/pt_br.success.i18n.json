@@ -7,6 +7,7 @@
     "removedFavoriteDevice": "Dispositivo removido dos favoritos",
     "editDevice": "Dispositivo editado",
     "createDevice": "Dispositivo criado",
+    "actuate": "Valor enviado para o dispositivo",
 
     "deleteTemplate": "Modelo excluído",
     "deleteMultipleTemplates": "Todos os modelos foram excluídos",

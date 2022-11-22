@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState, useRef } from 'react';
 
 import {
   Box,
@@ -10,11 +10,13 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  MenuItem,
   Table,
   TableBody,
   TableCell,
   TableHead,
   TableRow,
+  TextField,
   Typography,
 } from '@material-ui/core';
 import {
@@ -26,6 +28,7 @@ import {
   FilterNone,
   History,
   Label,
+  Send,
   VerifiedUser,
 } from '@material-ui/icons';
 import moment from 'moment';
@@ -35,7 +38,7 @@ import { useHistory, useParams } from 'react-router-dom';
 import { Link as RouterLink } from 'react-router-dom';
 
 import { AlertDialog } from 'sharedComponents/Dialogs';
-import { TEMPLATE_ATTR_TYPES } from 'sharedComponents/Constants';
+import { TEMPLATE_ATTR_TYPES, TEMPLATE_ATTR_VALUE_TYPES } from 'sharedComponents/Constants';
 import { useAttrTranslation, useIsLoading } from 'sharedComponents/Hooks';
 import {
   actions as deviceActions,
@@ -57,13 +60,37 @@ const DeviceDetails = () => {
   const deviceData = useSelector(deviceDataSelector);
   const isDeletingDevice = useIsLoading(deviceConstants.DELETE_DEVICE);
   const isLoadingDevice = useIsLoading(deviceConstants.GET_DEVICE_BY_ID);
+  const isSendingActuatorData = useIsLoading(deviceConstants.ACTUATE);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
+
+  const actuatorValueRef = useRef(null);
+  const [actuatorLabel, setActuatorLabel] = useState('');
+  const [actuatorValue, setActuatorValue] = useState('');
+  const [actuatingErrors, setActuatingErrors] = useState({
+    isLabelEmpty: false,
+    isValueEmpty: false,
+  });
 
   const hasStaticAttrs = useMemo(() => {
     if (!deviceData?.attrs?.length) return false;
     return deviceData.attrs.some(attr => attr.type === TEMPLATE_ATTR_TYPES.STATIC.value);
   }, [deviceData?.attrs]);
+
+  const actuators = useMemo(() => {
+    if (!deviceData?.attrs?.length) return [];
+    return deviceData.attrs.filter(attr => attr.type === TEMPLATE_ATTR_TYPES.ACTUATOR.value);
+  }, [deviceData?.attrs]);
+
+  const isActuatorTypeNumeric = useMemo(() => {
+    if (!actuators.length) return false;
+    const selectedActuator = actuators.find(actuator => actuator.label === actuatorLabel);
+    if (!selectedActuator) return false;
+    return [
+      TEMPLATE_ATTR_VALUE_TYPES.INTEGER.value,
+      TEMPLATE_ATTR_VALUE_TYPES.FLOAT.value,
+    ].includes(selectedActuator.valueType);
+  }, [actuators, actuatorLabel]);
 
   const handleGoBack = () => {
     history.push('/devices');
@@ -83,6 +110,29 @@ const DeviceDetails = () => {
         deviceId,
         successCallback: handleGoBack,
         shouldGetCurrentPageAgain: false,
+      }),
+    );
+  };
+
+  const handleActuatingValuesInvalid = () => {
+    const isLabelEmpty = actuatorLabel.trim() === '';
+    const isValueEmpty = actuatorValue.trim() === '';
+    setActuatingErrors({ isLabelEmpty, isValueEmpty });
+    return isLabelEmpty || isValueEmpty;
+  };
+
+  const handleSendActuatorData = e => {
+    e.preventDefault();
+    if (handleActuatingValuesInvalid()) return;
+    dispatch(
+      deviceActions.actuate({
+        deviceId,
+        labels: [actuatorLabel],
+        values: [actuatorValue],
+        successCallback() {
+          setActuatorValue('');
+          if (actuatorValueRef.current) actuatorValueRef.current.focus();
+        },
       }),
     );
   };
@@ -270,6 +320,90 @@ const DeviceDetails = () => {
               </Grid>
 
               <Grid item xs={12} sm={12} md={8}>
+                {actuators.length > 0 && (
+                  <List className={classes.dataGroupWithBottomBorder} disablePadding>
+                    <ListItem divider>
+                      <ListItemIcon className={classes.dataGroupTitleIcon}>
+                        <Send fontSize='small' style={{ color: '#6c6cf4' }} />
+                      </ListItemIcon>
+                      <ListItemText>{t('sectionTitles.acting')}</ListItemText>
+                    </ListItem>
+
+                    <ListItem
+                      className={classes.actingListItem}
+                      component='form'
+                      onSubmit={handleSendActuatorData}
+                      noValidate
+                    >
+                      <Grid spacing={2} container>
+                        <Grid xs={12} sm={12} md={6} lg={4} item>
+                          <TextField
+                            size='small'
+                            variant='outlined'
+                            value={actuatorLabel}
+                            error={actuatingErrors.isLabelEmpty}
+                            helperText={actuatingErrors.isLabelEmpty && t('acting.emptyFieldError')}
+                            SelectProps={{
+                              displayEmpty: true,
+                              renderValue: value => value || t('acting.actuatorLabelPh'),
+                            }}
+                            onChange={e => {
+                              setActuatorLabel(e.target.value);
+                              setActuatorValue('');
+                            }}
+                            select
+                            fullWidth
+                          >
+                            {actuators.map(actuator => {
+                              return (
+                                <MenuItem key={actuator.label} value={actuator.label}>
+                                  {actuator.label}
+                                </MenuItem>
+                              );
+                            })}
+                          </TextField>
+                        </Grid>
+
+                        <Grid xs={12} sm={12} md={6} lg={6} item>
+                          <TextField
+                            inputRef={actuatorValueRef}
+                            size='small'
+                            variant='outlined'
+                            value={actuatorValue}
+                            label={t('acting.valueLabel')}
+                            error={actuatingErrors.isValueEmpty}
+                            type={isActuatorTypeNumeric ? 'number' : 'text'}
+                            helperText={actuatingErrors.isValueEmpty && t('acting.emptyFieldError')}
+                            onChange={e => setActuatorValue(e.target.value)}
+                            fullWidth
+                          />
+                        </Grid>
+
+                        <Grid xs={12} sm={12} md={12} lg={2} item>
+                          <Button
+                            className={classes.actingButton}
+                            type='submit'
+                            size='medium'
+                            color='secondary'
+                            variant='outlined'
+                            disabled={isSendingActuatorData}
+                            endIcon={
+                              isSendingActuatorData ? (
+                                <CircularProgress size={16} color='inherit' />
+                              ) : (
+                                <Send />
+                              )
+                            }
+                            fullWidth
+                          >
+                            {t('acting.sendButton')}
+                          </Button>
+                        </Grid>
+                      </Grid>
+                    </ListItem>
+                  </List>
+                )}
+
                 <List className={classes.dataGroupWithBottomBorder} disablePadding>
                   <ListItem divider>
                     <ListItemIcon className={classes.dataGroupTitleIcon}>
