@@ -18,7 +18,7 @@ const DataCard = ({
   const classes = useStyles();
 
   return (
-    <Card className={className} onClick={onClick}>
+    <Card className={className} classes={{ root: classes.root }} onClick={onClick}>
       <CardHeader
         className={classes.header}
         title={headerTitle}

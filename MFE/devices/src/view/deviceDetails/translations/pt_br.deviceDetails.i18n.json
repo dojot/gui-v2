@@ -10,6 +10,8 @@
   "deleteDevice": "Excluir Dispositivo",
   "seeCertificate": "Ver Certificado",
   "noAssociatedCertificate": "Nenhum Certificado Associado",
+  "disabledLabel": "Dispositivo Desabilitado",
+  "enabledLabel": "Dispositivo Habilitado",
   "sectionTitles": {
     "templates": "Modelos",
     "staticAttrs": "Atributos Estáticos",

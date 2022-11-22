@@ -10,6 +10,8 @@
   "deleteDevice": "Delete Device",
   "seeCertificate": "See Certificate",
   "noAssociatedCertificate": "No Associated Certificate",
+  "disabledLabel": "Device Disabled",
+  "enabledLabel": "Device Enabled",
   "sectionTitles": {
     "templates": "Templates",
     "staticAttrs": "Static Attrs",
