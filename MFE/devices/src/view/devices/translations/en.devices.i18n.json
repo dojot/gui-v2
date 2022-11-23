@@ -6,12 +6,14 @@
   "backIconButtonText": "Previous Page",
   "pageInfo": "Page {{page}} of {{totalOfPages}}",
   "hasCertificateTooltip": "Has Certificate",
+  "disabledTooltip": "Device Disabled",
+  "enabledTooltip": "Device Enabled",
   "noCertificateTooltip": "No Associated Certificate",
   "favoriteTooltip": "Add to Favorites",
   "removeFromFavoriteTooltip": "Remove from Favorites",
   "labelRowsPerPage": "Items per page:",
   "massActions": "Mass Actions:",
-  "createCertificates": "Create Certificates",
+  "associateCertificatesInBatch": "Associate certificates in batch",
   "favorite": "Add to Favorites",
   "numberOfSelectedDevices": "{{count}} Line Selected",
   "numberOfSelectedDevices_plural": "{{count}} Lines Selected",
@@ -24,6 +26,7 @@
     "created": "Creation Date",
     "updated": "Last Modification",
     "hasCertificate": "Has Certificate",
+    "status": "Status",
     "actions": "Actions"
   },
   "cardData": {
@@ -46,5 +49,10 @@
   "sorting": {
     "order": "Order",
     "orderBy": "Order By"
+  },
+  "devicesCreationMenu": {
+    "createOneDevice": "Create one device",
+    "createManyDevices": "Create many devices",
+    "importUsingCSV": "Import using CSV"
   }
 }

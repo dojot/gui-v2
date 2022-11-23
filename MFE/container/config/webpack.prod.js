@@ -25,6 +25,7 @@ const prodConfig = {
         devices: `devices@${domain}/devices/remoteEntry.js`,
         templates: `templates@${domain}/templates/remoteEntry.js`,
         security: `security@${domain}/security/remoteEntry.js`,
+        reports: `reports@${domain}/reports/remoteEntry.js`,
       },
       shared: {
         ...dependencies,
@@ -38,7 +39,6 @@ const prodConfig = {
           requiredVersion: dependencies['react-dom'],
         },
         '@material-ui/styles': {
-          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/styles'],
         },
@@ -51,9 +51,12 @@ const prodConfig = {
           requiredVersion: dependencies['@material-ui/icons'],
         },
         '@material-ui/lab': {
-          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/lab'],
+        },
+        '@material-ui/pickers': {
+          singleton: true,
+          requiredVersion: dependencies['@material-ui/pickers'],
         },
       },
     }),

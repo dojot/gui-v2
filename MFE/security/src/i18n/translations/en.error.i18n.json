@@ -12,6 +12,7 @@
     "editDevice": "Could not edit this device",
     "createDevice": "Could not create a device",
     "deviceUniqueLabel": "A device with this name already exists",
+    "actuate": "Could not send the value",
 
     "getTemplates": "Could not get templates",
     "getTemplateById": "Could not get the template data",
@@ -36,12 +37,16 @@
     "createCertificate": "Could not create a certificate",
     "getCertificateByFingerprint": "Could not get the certificate by fingerprint",
     "addedCertificate": "Could not add the certificate",
+    "importedCertificates": "Could not add the certificates",
 
     "getCertificationAuthorities": "Could not get CAs",
     "deleteCertificationAuthority": "Could not delete this CA",
     "deleteMultipleCertificationAuthorities": "Could not delete these CAs",
     "createCertificationAuthority": "Could not create a CA",
 
-    "failedToCopy": "Failed to copy"
+    "failedToCopy": "Failed to copy",
+    "fileSizeLimit": "The maximum file size must be 1MB",
+
+    "createReport": "Could not add the report"
   }
 }

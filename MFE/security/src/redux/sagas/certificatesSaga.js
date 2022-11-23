@@ -3,6 +3,7 @@ import { paginationControlSelector } from '../selectors/certificatesSelector';
 import { Certificates } from '../../adapters/services';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
+import { toBase64 } from 'sharedComponents/Utils';
 
 import { constants, actions } from '../modules/certificates';
 import { actions as loadingActions } from '../modules/loading';
@@ -282,6 +283,42 @@ export function* handleRegisterExternalCertificate(action) {
   }
 }
 
+export function* handleImportCertificatesInBatch(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.IMPORT_CERTIFICATES_IN_BATCH));
+    const { caRoot, certificates, successCallback } = action.payload;
+
+    const caRootToBase64 = yield call(toBase64, caRoot);
+    const certificatesToBase64 = [];
+
+    const certificatesArray = Object.values(certificates);
+
+    for (let item of certificatesArray) {
+      const convertedCertificate = yield call(toBase64, item);
+      certificatesToBase64.push(convertedCertificate);
+    }
+
+    yield call(Certificates.importCertificatesInBatch, caRootToBase64, certificatesToBase64);
+
+    if (successCallback) yield call(successCallback);
+
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'importedCertificates',
+      type: 'success',
+    });
+  } catch (e) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: 'importedCertificates',
+      type: 'error',
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.IMPORT_CERTIFICATES_IN_BATCH));
+  }
+}
+
 export function* watchGetCertificates() {
   yield takeLatest(constants.GET_CERTIFICATES, handleGetCertificates);
 }
@@ -322,6 +359,10 @@ export function* watchRegisterExternalCertificate() {
   yield takeLatest(constants.REGISTER_EXTERNAL_CERTIFICATE, handleRegisterExternalCertificate);
 }
 
+export function* watchImportCertificatesInBatch() {
+  yield takeLatest(constants.IMPORT_CERTIFICATES_IN_BATCH, handleImportCertificatesInBatch);
+}
+
 export const certificatesSaga = [
   fork(watchGetCertificates),
   fork(watchGetCertificateById),
@@ -333,4 +374,5 @@ export const certificatesSaga = [
   fork(watchCreateCertificateOneClick),
   fork(watchCreateCertificateCSR),
   fork(watchRegisterExternalCertificate),
+  fork(watchImportCertificatesInBatch),
 ];

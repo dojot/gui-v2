@@ -11,16 +11,20 @@ import {
 import { ViewModule, List, Search, Add, Close } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 
 import { VIEW_MODE } from 'sharedComponents/Constants';
 import { useDebounce } from 'sharedComponents/Hooks';
 import { useSearchBarStyles } from './style';
 
-const SearchBar = ({ viewMode, lastSearchedText, handleSearchDevice, handleChangeViewMode }) => {
+const SearchBar = ({
+  viewMode,
+  lastSearchedText,
+  handleSearchDevice,
+  handleChangeViewMode,
+  handleClickCreateDevices,
+}) => {
   const { t } = useTranslation(['devices', 'common']);
   const classes = useSearchBarStyles();
-  const history = useHistory();
 
   const searchInputRef = useRef(null);
 
@@ -37,10 +41,6 @@ const SearchBar = ({ viewMode, lastSearchedText, handleSearchDevice, handleChang
       handleSearchDevice(search);
     },
   });
-
-  const handleCreateDevice = () => {
-    history.push('/devices/new');
-  };
 
   const handleClearSearch = () => {
     handleSearchDevice('');
@@ -118,7 +118,7 @@ const SearchBar = ({ viewMode, lastSearchedText, handleSearchDevice, handleChang
           className={classes.createButton}
           color='primary'
           aria-label={t('createNewDevice')}
-          onClick={handleCreateDevice}
+          onClick={handleClickCreateDevices}
         >
           <Add />
         </IconButton>

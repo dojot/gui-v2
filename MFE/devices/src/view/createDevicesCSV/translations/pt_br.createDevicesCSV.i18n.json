@@ -1,0 +1,29 @@
+{
+  "title": "Importar usando CSV",
+  "cancelDeviceCreationTitle": "Cancelar criação de vários dispositivos",
+  "cancelDeviceCreationMessage": "Tem certeza que deseja abandonar o processo de cadastro? TODOS os dados serão perdidos!",
+  "importStep": {
+    "devicesBoilerplate": "Baixar template",
+    "csvFileInputTitle": "Informe o arquivo CSV para fazer a carga dos dispositivos:",
+    "csvFileInputPh": "Arquivo CSV",
+    "fileUploadButtonText": "Importar arquivo",
+    "csvBoilerplateTitle": "Caso necessite de um template com os campos do arquivo e exemplos de referência, segue abaixo para download:",
+    "csvFormatHint": {
+      "title": "O layout do arquivo CSV acima deve ser:",
+      "paragraph1": "Nome do dispositivo (obrigatório), ID do dispositivo (opcional), ID do modelo (obrigatório), Nome atributo estático 1 (opcional), Valor atributo estático 1 (opcional), ... Nome atributo estático N (opcional), Valor atributo estático N (opcional).",
+      "paragraph2": "Cada linha do arquivo deve conter no mínimo os campos com o nome do dispositivo, o ID do modelo ao qual ele se refere, e a informação 'sim' ou 'não' se deve ser criado certificado para o dispositivo.",
+      "paragraph3": "A parte dos valores para atributos estáticos é dinâmica para cada linha do arquivo: se for informado um atributo estático do modelo, deve ser informado o valor para este atributo estático."
+    }
+  },
+  "summaryStep": {
+    "createDevicesLoadingMessage": "Aguarde enquanto os dispositivos estão sendo importados!",
+    "numberOfDevicesCreatedSuccessfully": "Quantidade de <strong>dispositivos criados</strong> com sucesso:",
+    "numberOfDevicesWithError": "Quantidade de <strong>dispositivos não criados</strong> devido a algum erro:",
+    "createdDevicesSuccessfully": "Dispositivos criados com sucesso!",
+    "tableHead": {
+      "devices": "Dispositivos",
+      "error": "Erro"
+    },
+    "goToDevices": "Ir para dispositivos"
+  }
+}

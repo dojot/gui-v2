@@ -1,6 +1,6 @@
 import { put, fork, takeLatest, select, call } from 'redux-saga/effects';
 import { Device } from '../../adapters/services';
-import { getUserInformation, getErrorTranslation } from 'sharedComponents/Utils';
+import { getUserInformation, getErrorTranslation, toBase64 } from 'sharedComponents/Utils';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 import { EVENT } from 'sharedComponents/Constants';
 
@@ -141,8 +141,8 @@ export function* handleDeleteMultipleDevices(action) {
 export function* handleEditDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.EDIT_DEVICE));
-    const { id, label, templates, attrs, successCallback } = action.payload;
-    yield call(Device.editDevice, { id, label, templates, attrs });
+    const { id, label, templates, attrs, disabled, successCallback } = action.payload;
+    yield call(Device.editDevice, { id, label, templates, attrs, disabled });
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
       i18nMessage: 'editDevice',
@@ -168,12 +168,13 @@ export function* handleEditDevice(action) {
 export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
-    const { label, templates, attrs, fingerprint, successCallback } = action.payload;
+    const { label, templates, attrs, fingerprint, disabled, successCallback } = action.payload;
     yield call(Device.createDevice, {
       label,
       templates,
       attrs,
       fingerprint,
+      disabled,
     });
     dispatchEvent(EVENT.GLOBAL_TOAST, {
       duration: 15000,
@@ -194,6 +195,67 @@ export function* handleCreateDevice(action) {
     });
   } finally {
     yield put(loadingActions.removeLoading(constants.CREATE_DEVICE));
+  }
+}
+
+export function* handleCreateMultipleDevices(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.CREATE_MULTIPLE_DEVICES));
+    const { devicesPrefix, quantity, initialSuffixNumber, templates, attrs, successCallback } =
+      action.payload;
+
+    const { createMultipleDevices } = yield call(Device.createMultipleDevices, {
+      devicesPrefix,
+      quantity,
+      initialSuffixNumber,
+      templates,
+      attrs,
+    });
+
+    if (createMultipleDevices.devicesWithError) yield call(successCallback);
+  } catch (e) {
+    const i18nMessage = getErrorTranslation(e, 'createDevice', {
+      devices_label_key: 'deviceUniqueLabel',
+    });
+
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      i18nMessage,
+      type: 'error',
+      duration: 15000,
+      message: e.message,
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.CREATE_MULTIPLE_DEVICES));
+  }
+}
+
+export function* handleCreateDevicesCSV(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.CREATE_DEVICES_CSV));
+    const { csvFile, successCallback } = action.payload;
+
+    const csvFileToBase64 = yield call(toBase64, csvFile);
+
+    const {
+      createDevicesCSV: { createdDevices, notCreatedDevices },
+    } = yield call(Device.createDevicesCSV, {
+      csvFile: csvFileToBase64,
+    });
+
+    if (successCallback) successCallback(createdDevices, notCreatedDevices);
+  } catch (e) {
+    const i18nMessage = getErrorTranslation(e, 'createDevice', {
+      devices_label_key: 'deviceUniqueLabel',
+    });
+
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      i18nMessage,
+      type: 'error',
+      duration: 15000,
+      message: e.message,
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.CREATE_DEVICES_CSV));
   }
 }
 
@@ -233,6 +295,72 @@ export function* handleFavoriteDevice(action) {
   }
 }
 
+export function* handleAssociateDevicesInBatch(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.ASSOCIATE_DEVICES_IN_BATCH));
+    const { deviceIdArray } = action.payload;
+    const {
+      associateDevicesInBatch: {
+        associatedDevices,
+        devicesWithOtherCertificates,
+        notAssociatedDevices,
+      },
+    } = yield call(Device.associateDevicesInBatch, {
+      deviceIdArray,
+    });
+
+    if (associatedDevices)
+      yield put(actions.updateDevices({ associatedDevices: associatedDevices }));
+    if (devicesWithOtherCertificates)
+      yield put(
+        actions.updateDevices({ devicesWithOtherCertificates: devicesWithOtherCertificates }),
+      );
+    if (notAssociatedDevices)
+      yield put(actions.updateDevices({ notAssociatedDevices: notAssociatedDevices }));
+  } catch (e) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      message: e.message,
+      i18nMessage: 'favoriteDevice',
+      type: 'error',
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.ASSOCIATE_DEVICES_IN_BATCH));
+  }
+}
+
+export function* handleActuate(action) {
+  try {
+    yield put(loadingActions.addLoading(constants.ACTUATE));
+    const { deviceId, labels, values, successCallback } = action.payload;
+
+    yield call(Device.actuate, {
+      deviceId,
+      labels,
+      values,
+    });
+
+    if (successCallback) yield call(successCallback);
+
+    yield put(actions.updateActuatorData({ labels, values }));
+
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      duration: 15000,
+      i18nMessage: 'actuate',
+      type: 'success',
+    });
+  } catch (e) {
+    dispatchEvent(EVENT.GLOBAL_TOAST, {
+      type: 'error',
+      duration: 15000,
+      message: e.message,
+      i18nMessage: 'actuate',
+    });
+  } finally {
+    yield put(loadingActions.removeLoading(constants.ACTUATE));
+  }
+}
+
 export function* watchGetDevices() {
   yield takeLatest(constants.GET_DEVICES, handleGetDevices);
 }
@@ -265,6 +393,22 @@ export function* watchCreateDevice() {
   yield takeLatest(constants.CREATE_DEVICE, handleCreateDevice);
 }
 
+export function* watchCreateMultipleDevices() {
+  yield takeLatest(constants.CREATE_MULTIPLE_DEVICES, handleCreateMultipleDevices);
+}
+
+export function* watchAssociateDevicesInBatch() {
+  yield takeLatest(constants.ASSOCIATE_DEVICES_IN_BATCH, handleAssociateDevicesInBatch);
+}
+
+export function* watchCreateDevicesCSV() {
+  yield takeLatest(constants.CREATE_DEVICES_CSV, handleCreateDevicesCSV);
+}
+
+export function* watchActuate() {
+  yield takeLatest(constants.ACTUATE, handleActuate);
+}
+
 export const deviceSaga = [
   fork(watchGetDevices),
   fork(watchGetFavoriteDevicesList),
@@ -274,4 +418,8 @@ export const deviceSaga = [
   fork(watchFavoriteDevice),
   fork(watchEditDevice),
   fork(watchCreateDevice),
+  fork(watchCreateMultipleDevices),
+  fork(watchAssociateDevicesInBatch),
+  fork(watchCreateDevicesCSV),
+  fork(watchActuate),
 ];

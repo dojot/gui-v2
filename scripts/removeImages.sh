@@ -12,6 +12,7 @@ if [ "$REPLY" = "y" ]; then
   sudo docker image rm home-nx
   sudo docker image rm security-nx
   sudo docker image rm templates-nx
+  sudo docker image rm reports-nx
 else
   echo 
   echo "Operation cancelled";

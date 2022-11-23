@@ -7,6 +7,7 @@
     "removedFavoriteDevice": "Dispositivo removido dos favoritos",
     "editDevice": "Dispositivo editado",
     "createDevice": "Dispositivo criado",
+    "actuate": "Valor enviado para o dispositivo",
 
     "deleteTemplate": "Modelo excluído",
     "deleteMultipleTemplates": "Todos os modelos foram excluídos",
@@ -25,9 +26,13 @@
     "disassociateDevice": "Certificado desassociado do dispositivo",
     "associateDevice": "Certificado associado ao dispositivo",
     "addedCertificate": "Certificado adicionado",
+    "importedCertificates": "Certificados criados com sucesso",
 
     "deleteCertificationAuthority": "CA excluída",
     "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
-    "createCertificationAuthority": "CA criada"
+    "createCertificationAuthority": "CA criada",
+
+    "createReport": "Relatório criado com sucesso",
+    "deleteReport": "Relatório excluído"
   }
 }

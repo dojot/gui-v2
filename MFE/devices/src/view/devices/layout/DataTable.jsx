@@ -13,7 +13,15 @@ import {
   TableRow,
   Tooltip,
 } from '@material-ui/core';
-import { Check, Close, MoreHoriz, Star, StarBorderOutlined } from '@material-ui/icons';
+import {
+  Block,
+  Check,
+  CheckCircle,
+  Close,
+  MoreHoriz,
+  Star,
+  StarBorderOutlined,
+} from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
@@ -64,6 +72,11 @@ const DataTable = ({
       {
         id: 'hasCertificate',
         label: t('dataTableHead.hasCertificate'),
+        disableOrderBy: true,
+      },
+      {
+        id: 'status',
+        label: t('dataTableHead.status'),
         disableOrderBy: true,
       },
       {
@@ -227,6 +240,20 @@ const DataTable = ({
                       arrow
                     >
                       {hasCertificate ? <Check color='primary' /> : <Close color='error' />}
+                    </Tooltip>
+                  </TableCell>
+
+                  <TableCell className={classes.clickableCell}>
+                    <Tooltip
+                      title={t(device.disabled ? 'disabledTooltip' : 'enabledTooltip')}
+                      placement='right'
+                      arrow
+                    >
+                      {device.disabled ? (
+                        <Block color='error' />
+                      ) : (
+                        <CheckCircle color='secondary' />
+                      )}
                     </Tooltip>
                   </TableCell>
 

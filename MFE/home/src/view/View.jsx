@@ -16,6 +16,7 @@ import {
   VerifiedUser,
   ImportExport,
   Star,
+  PhoneIphone,
 } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { actions as deviceActions } from '../redux/modules/devices';
@@ -39,9 +40,14 @@ const Home = ({ isMenuOpen }) => {
 
   const HOME_CARDS = {
     CREATE_DEVICE: {
-      icon: <DevicesOther style={{ color: '#34C38F' }} fontSize='large' />,
+      icon: <PhoneIphone color='inherit' fontSize='large' />,
       translationKey: 'createDevice',
       route: '/devices/new',
+    },
+    CREATE_MULTIPLE_DEVICE: {
+      icon: <DevicesOther style={{ color: '#34C38F' }} fontSize='large' />,
+      translationKey: 'createMultipleDevices',
+      route: '/devices/new/multiple',
     },
     CREATE_DASHBOARD: {
       icon: <Dashboard style={{ color: '#5B73E8' }} fontSize='large' />,

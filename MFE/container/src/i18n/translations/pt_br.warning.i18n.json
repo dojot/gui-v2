@@ -3,6 +3,7 @@
     "requiredDevice": "Dispositivo é obrigatório",
     "requiredTemplate": "Modelo é obrigatório",
     "chooseAtLeastOne": "Escolha ao menos um item",
-    "requiredFiled": "Campo Obrigatório"
+    "requiredFiled": "Campo Obrigatório",
+    "maxNumberFiles": "Quantidade máxima de arquivos: 999"
   }
 }

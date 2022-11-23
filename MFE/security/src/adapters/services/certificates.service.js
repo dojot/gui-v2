@@ -180,3 +180,17 @@ export const registerExternalCertificate = certificateChain => {
     }),
   });
 };
+
+export const importCertificatesInBatch = (caRoot, certificates) => {
+  return protectAPI({
+    query: `
+       mutation importCertificatesInBatch($caRoot: String!, $certificates: [String]!) {
+         importCertificatesInBatch(caRoot: $caRoot, certificates: $certificates)
+       }
+     `,
+    variables: JSON.stringify({
+      caRoot,
+      certificates,
+    }),
+  });
+};

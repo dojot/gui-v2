@@ -7,6 +7,7 @@
     "removedFavoriteDevice": "Device removed from favorites",
     "editDevice": "Device edited",
     "createDevice": "Device created",
+    "actuate": "Value sent to device",
 
     "deleteTemplate": "Template deleted",
     "deleteMultipleTemplates": "All templates were deleted",
@@ -25,9 +26,13 @@
     "disassociateDevice": "Certificate disassociated from device",
     "associateDevice": "Certificate associated with the device",
     "addedCertificate": "Added certificate",
+    "importedCertificates": "Certificates created successfully",
 
     "deleteCertificationAuthority": "CA deletes",
     "deleteMultipleCertificationAuthorities": "All CAs were deleted",
-    "createCertificationAuthority": "CA created"
+    "createCertificationAuthority": "CA created",
+
+    "createReport": "Report created successfully",
+    "deleteReport": "Report deleted"
   }
 }

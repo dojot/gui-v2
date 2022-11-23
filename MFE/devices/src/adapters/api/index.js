@@ -11,7 +11,12 @@ const graphql = axios.create({
 graphql.interceptors.response.use(
   response => {
     const { errors, data } = response.data;
-    if (errors) return Promise.reject(errors);
+    if (errors) {
+        if (errors.length > 0 && errors[0].message.includes('401')){
+            redirectToLogout('/v2/#/login');
+        }
+        return Promise.reject(errors);
+    }
     return data;
   },
   error => {

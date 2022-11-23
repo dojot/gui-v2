@@ -7,3 +7,24 @@ export const downloadTextFile = (filenameWithExtension, fileContent) => {
   element.click();
   document.body.removeChild(element);
 };
+
+export const downloadFile = (url, filename) => {
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+};
+
+export const downloadCSV = (csv, filename) => {
+  downloadFile(`data:text/csv;base64,${csv}`, filename);
+};
+
+export const downloadPDF = (pdf, filename) => {
+  const href = 'data:application/pdf;base64,' + pdf;
+  downloadFile(href, filename);
+};
+
+export const downloadZIP = (zip, filename) => {
+  const href = 'data:application/zip;base64,' + zip;
+  downloadFile(href, filename);
+};

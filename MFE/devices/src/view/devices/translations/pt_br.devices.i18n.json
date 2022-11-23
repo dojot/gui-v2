@@ -6,12 +6,14 @@
   "backIconButtonText": "Página Anterior",
   "pageInfo": "Página {{page}} de {{totalOfPages}}",
   "hasCertificateTooltip": "Possui Certificado",
+  "disabledTooltip": "Dispositivo Desabilitado",
+  "enabledTooltip": "Dispositivo Habilitado",
   "noCertificateTooltip": "Nenhum Certificado Associado",
   "favoriteTooltip": "Adicionar aos Favoritos",
   "removeFromFavoriteTooltip": "Remover dos Favoritos",
   "labelRowsPerPage": "Itens por página:",
   "massActions": "Ações em massa:",
-  "createCertificates": "Criar Certificados",
+  "associateCertificatesInBatch": "Associar certificados em lote",
   "favorite": "Adicionar aos Favoritos",
   "numberOfSelectedDevices": "{{count}} Linha Selecionada",
   "numberOfSelectedDevices_plural": "{{count}} Linhas Selecionadas",
@@ -24,6 +26,7 @@
     "created": "Data de Criação",
     "updated": "Última Modificação",
     "hasCertificate": "Tem Certificado",
+    "status": "Status",
     "actions": "Ações"
   },
   "cardData": {
@@ -46,5 +49,10 @@
   "sorting": {
     "order": "Ordem",
     "orderBy": "Ordenar Por"
+  },
+  "devicesCreationMenu": {
+    "createOneDevice": "Criar um dispositivo",
+    "createManyDevices": "Criar vários dispositivos",
+    "importUsingCSV": "Importar usando CSV"
   }
 }

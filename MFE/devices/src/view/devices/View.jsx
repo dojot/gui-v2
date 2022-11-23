@@ -28,6 +28,7 @@ import MassActions from './layout/MassActions';
 import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
+import CreateDevicesOptionsMenu from './layout/CreateDevicesOptionsMenu';
 
 const Devices = () => {
   const { t } = useTranslation('devices');
@@ -93,6 +94,8 @@ const Devices = () => {
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
 
+  const [createDevicesOptionsMenu, setCreateDevicesOptionsMenu] = useState(null);
+
   const handleChangePage = (_, newPage) => {
     setPage(newPage);
   };
@@ -111,8 +114,14 @@ const Devices = () => {
     setSelectedDevices([]);
   };
 
-  const handleCreateCertificates = () => {
-    history.push('/certificates');
+  const handleAssociateCertificatesInBatch = () => {
+    dispatch(
+      deviceActions.associateDevicesInBatch({
+        deviceIdArray: selectedDevices.map(({ id }) => id),
+      }),
+    );
+    handleHideMassActions();
+    history.push('/devices/associate-certificates');
   };
 
   const handleDeleteMultipleDevices = () => {
@@ -167,6 +176,14 @@ const Devices = () => {
     setSearchText(search);
   };
 
+  const handleOpenCreationDevicesMenu = event => {
+    setCreateDevicesOptionsMenu(event.currentTarget);
+  };
+
+  const handleCloseCreationDevicseMenu = () => {
+    setCreateDevicesOptionsMenu(null);
+  };
+
   useEffect(() => {
     dispatch(
       deviceActions.getDevices({
@@ -203,6 +220,11 @@ const Devices = () => {
           handleHideOptionsMenu={handleHideOptionsMenu}
         />
 
+        <CreateDevicesOptionsMenu
+          anchorElement={createDevicesOptionsMenu}
+          handleClose={handleCloseCreationDevicseMenu}
+        />
+
         <AlertDialog
           isOpen={isShowingDeleteAlert}
           title={t('deleteDeviceAlert.title')}
@@ -229,12 +251,13 @@ const Devices = () => {
             lastSearchedText={searchText}
             handleChangeViewMode={setViewMode}
             handleSearchDevice={handleSearchDevice}
+            handleClickCreateDevices={handleOpenCreationDevicesMenu}
           />
 
           {selectedDevices.length > 0 && (
             <MassActions
               handleHideMassActions={handleHideMassActions}
-              handleCreateCertificates={handleCreateCertificates}
+              handleAssociateCertificatesInBatch={handleAssociateCertificatesInBatch}
               handleDeleteMultipleDevices={handleDeleteMultipleDevices}
             />
           )}
@@ -277,7 +300,7 @@ const Devices = () => {
                     textButton={t('createNewDevice')}
                     emptyListMessage={t('emptyListMessage')}
                     icon={<DevicesOther fontSize='large' />}
-                    handleButtonClick={() => history.push('/devices/new')}
+                    handleButtonClick={handleOpenCreationDevicesMenu}
                   />
                 )}
               </>

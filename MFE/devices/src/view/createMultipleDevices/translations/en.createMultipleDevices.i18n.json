@@ -1,0 +1,32 @@
+{
+  "title": "Create multiple devices",
+  "cancelDeviceCreationTitle": "Cancel multiple devices creation",
+  "cancelDeviceCreationMessage": "Are you sure you want to abandon the registration process? ALL data will be lost!",
+  "stepper": {
+    "templates": "Templates",
+    "attrs": "Attributes",
+    "parameterization": "Parameterization",
+    "summary": "Summary"
+  },
+  "parameterizationStep": {
+    "devicesPrefixTitle": "We are almost there! Finally, give a name that will be used as a prefix for your devices:",
+    "devicesPrefixPh": "Device name prefix",
+    "devicesPrefixHint": "Note: Devices will be created with the above name as a prefix, a hyphen to divide the prefix (name) from the suffixes (numbering), and an increasing numbering at the end of the name to distinguish them, starting from the initial number chosen (its default value is 1).",
+    "devicesAmountTitle": "Number of devices to be created: (minimum 1, maximum 999)",
+    "devicesAmountPh": "Number of devices",
+    "initialValueSuffixTitle": "Initial value of numbering in devices suffix:",
+    "initialValueSuffixPh": "Numbering initial value",
+    "initialValueSuffixHint": "If there is already a device with the existing name and numbering, it will not be created. The operation will be aborted - the system will try to create the other devices normally."
+  },
+  "summaryStep": {
+    "title": "In this step, you can view the summary of everything that has been done.",
+    "createDevicesLoadingMessage": "Please wait, devices are being created!",
+    "templatesListTitle": "Templates",
+    "devicesPrefixTitle": "Device name prefix",
+    "devicesAmountTitle": "Number of devices",
+    "goToDevicesList": "Go to devices list",
+    "devicesNotCreatedMsg": "Note: some devices were not created because a device with the same name already existed.",
+    "initialValueSuffixTitle": "Initial value of numbering in devices suffix",
+    "devicesCreatedSuccessfully": "Devices created successfully!"
+  }
+}
