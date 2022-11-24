@@ -92,17 +92,12 @@ const CreateMultipleDevices = () => {
   };
 
   const handleCreateMultipleDevices = () => {
-    const selectedTemplatesAttrs = [];
-    Object.values(selectedTemplates).forEach(template => {
-      selectedTemplatesAttrs.push(...template.attrs);
-    });
-
     const templateIds = Object.values(selectedTemplates).map(({ id }) => Number(id));
 
     dispatch(
       actions.createMultipleDevices({
         devicesPrefix: devicesPrefix,
-        quantity: parseInt(quantity),
+        quantity: parseInt(devicesAmount),
         initialSuffixNumber: parseInt(initialValueSuffix),
         templates: templateIds,
         successCallback: createMultipleDevicesSuccessCallback,
