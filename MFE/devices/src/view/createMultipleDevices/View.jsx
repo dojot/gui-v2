@@ -92,29 +92,13 @@ const CreateMultipleDevices = () => {
   };
 
   const handleCreateMultipleDevices = () => {
-    const selectedTemplatesAttrs = [];
-    Object.values(selectedTemplates).forEach(template => {
-      selectedTemplatesAttrs.push(...template.attrs);
-    });
-
-    const attrsToSave = selectedTemplatesAttrs.map(attr => {
-      const attrClone = { ...attr };
-      attrClone.id = Number(attrClone.id);
-      delete attrClone.isDynamic;
-      delete attrClone.templateLabel;
-      const attrValue = staticAttrValues[attr.id];
-      if (attrValue) attrClone.staticValue = attrValue;
-      return attrClone;
-    });
-
     const templateIds = Object.values(selectedTemplates).map(({ id }) => Number(id));
 
     dispatch(
       actions.createMultipleDevices({
         devicesPrefix: devicesPrefix,
-        quantity: devicesAmount,
-        initialSuffixNumber: initialValueSuffix,
-        attrs: attrsToSave,
+        quantity: parseInt(devicesAmount),
+        initialSuffixNumber: parseInt(initialValueSuffix),
         templates: templateIds,
         successCallback: createMultipleDevicesSuccessCallback,
       }),
