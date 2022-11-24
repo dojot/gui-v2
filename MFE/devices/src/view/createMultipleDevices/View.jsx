@@ -112,9 +112,8 @@ const CreateMultipleDevices = () => {
     dispatch(
       actions.createMultipleDevices({
         devicesPrefix: devicesPrefix,
-        quantity: devicesAmount,
-        initialSuffixNumber: initialValueSuffix,
-        attrs: attrsToSave,
+        quantity: parseInt(quantity),
+        initialSuffixNumber: parseInt(initialValueSuffix),
         templates: templateIds,
         successCallback: createMultipleDevicesSuccessCallback,
       }),

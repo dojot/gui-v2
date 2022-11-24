@@ -171,8 +171,8 @@ export const createMultipleDevices = ({
 }) => {
   return protectAPI({
     query: `
-      mutation createMultipleDevices($devicesPrefix: String!, $quantity: String!, $initialSuffixNumber: String!, $templates: [Int]!, $attrs: [DeviceAttributes]) {
-        createMultipleDevices(devicesPrefix: $devicesPrefix, quantity: $quantity, initialSuffixNumber: $initialSuffixNumber, templates: $templates, attrs: $attrs) {
+      mutation createMultipleDevices($devicesPrefix: String!, $quantity: Int!, $initialSuffixNumber: Int!, $templates: [Int]!) {
+        createMultipleDevices(devicesPrefix: $devicesPrefix, quantity: $quantity, initialSuffixNumber: $initialSuffixNumber, templates: $templates) {
           devicesWithError
         }
       }
