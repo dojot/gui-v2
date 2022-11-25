@@ -1,5 +1,7 @@
 {
   "title": "Create report",
+  "createNewDevice": "Create new device",
+  "emptyListMessage": "Devices not found",
   "massActions": {
     "numberOfSelectedDevices": "{{count}} Selected devices",
     "setPeriod": "Set the period",

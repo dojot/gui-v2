@@ -1,5 +1,7 @@
 {
   "title": "Criar relatório",
+  "createNewDevice": "Criar novo dispositivo",
+  "emptyListMessage": "Nenhum dispositivo encontrado",
   "massActions": {
     "numberOfSelectedDevices": "{{count}} Dispositivos selecionados",
     "setPeriod": "Selecione o período",
