@@ -1,84 +1,83 @@
-const { merge } = require('webpack-merge')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const { CleanWebpackPlugin } = require("clean-webpack-plugin")
-const commonConfig = require('./webpack.common')
+const { merge } = require('webpack-merge');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const commonConfig = require('./webpack.common');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin')
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const path = require('path');
-const dependencies = require("../package.json").dependencies;
+const dependencies = require('../package.json').dependencies;
 
 const domain = process.env.PRODUCTION_DOMAIN || '/mfe';
 
 const prodConfig = {
-    mode: 'production',
-    entry: path.resolve('./src/index'),
-    output: {
-        filename: '[name].[contenthash].js',
-        publicPath: '/mfe/dashboard',
-        path: path.join(__dirname, "../dist")
+  mode: 'production',
+  entry: path.resolve('./src/index'),
+  output: {
+    filename: '[name].[contenthash].js',
+    publicPath: '/mfe/dashboard',
+    path: path.join(__dirname, '../dist'),
+  },
+  resolve: {
+    alias: {
+      Assets: path.resolve('./assets'),
+      Redux: path.resolve('./src/redux/modules'),
+      Sagas: path.resolve('./src/redux/sagas'),
+      Selectors: path.resolve('./src/redux/selectors'),
+      Services: path.resolve('./src/adapters/services'),
+      // src: path.resolve("./src"),
     },
-    resolve: {
-        alias: {
-            Assets: path.resolve("./assets"),
-            Redux: path.resolve("./src/redux/modules"),
-            Sagas: path.resolve("./src/redux/sagas"),
-            Selectors: path.resolve("./src/redux/selectors"),
-            Services: path.resolve("./src/adapters/services"),
-            // src: path.resolve("./src"),
+    extensions: ['.js', '.jsx'],
+  },
+  plugins: [
+    new MiniCssExtractPlugin(),
+    new CleanWebpackPlugin(),
+    new ModuleFederationPlugin({
+      name: 'dashboard',
+      filename: 'remoteEntry.js',
+      exposes: {
+        './Dashboard': './src/bootstrap',
+      },
+      shared: {
+        ...dependencies,
+        react: {
+          eager: true,
+          singleton: true,
+          requiredVersion: dependencies.react,
         },
-        extensions: [".js", ".jsx"],
-    },
-    plugins: [
-        new MiniCssExtractPlugin(),
-        new CleanWebpackPlugin(),
-        new ModuleFederationPlugin({
-            name: 'dashboard',
-            filename: 'remoteEntry.js',
-            exposes: {
-                './Dashboard': './src/bootstrap'
-            },
-            shared: {
-                ...dependencies,
-                react: {
-                    eager: true,
-                    singleton: true,
-                    requiredVersion: dependencies.react,
-                },
-                'react-dom': {
-                    eager: true,
-                    singleton: true,
-                    requiredVersion: dependencies['react-dom'],
-                },
-                '@material-ui/styles': {
-                    singleton: true,
-                    requiredVersion: dependencies['@material-ui/styles'],
-                },
-                '@material-ui/core': {
-                    singleton: true,
-                    requiredVersion: dependencies['@material-ui/core'],
-                },
-                '@material-ui/icons': {
-                    singleton: true,
-                    requiredVersion: dependencies['@material-ui/icons'],
-                },
-                '@material-ui/lab': {
-                    singleton: true,
-                    requiredVersion: dependencies['@material-ui/lab'],
-                },
-                '@material-ui/pickers': {
-                    singleton: true,
-                    requiredVersion: dependencies['@material-ui/pickers'],
-                },
-            },
-            remotes: {
-                sharedComponents: `sharedComponents@${domain}/common/remoteEntry.js`,
-            },
-        }),
-        new HtmlWebpackPlugin({
-            template: './public/index.html'
-        })
-    ]
+        'react-dom': {
+          eager: true,
+          singleton: true,
+          requiredVersion: dependencies['react-dom'],
+        },
+        '@material-ui/styles': {
+          singleton: true,
+          requiredVersion: dependencies['@material-ui/styles'],
+        },
+        '@material-ui/core': {
+          singleton: true,
+          requiredVersion: dependencies['@material-ui/core'],
+        },
+        '@material-ui/icons': {
+          singleton: true,
+          requiredVersion: dependencies['@material-ui/icons'],
+        },
+        '@material-ui/lab': {
+          singleton: true,
+          requiredVersion: dependencies['@material-ui/lab'],
+        },
+        '@material-ui/pickers': {
+          singleton: true,
+          requiredVersion: dependencies['@material-ui/pickers'],
+        },
+      },
+      remotes: {
+        sharedComponents: `sharedComponents@${domain}/common/remoteEntry.js`,
+      },
+    }),
+    new HtmlWebpackPlugin({
+      template: './public/index.html',
+    }),
+  ],
 };
 
-
-module.exports = merge(commonConfig, prodConfig)
+module.exports = merge(commonConfig, prodConfig);
