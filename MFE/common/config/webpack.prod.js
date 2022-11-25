@@ -103,7 +103,7 @@ const prodConfig = {
           singleton: true,
           requiredVersion: dependencies['react-transition-group'],
         },
-        'clsx': {
+        clsx: {
           eager: true,
           singleton: true,
           requiredVersion: dependencies['clsx'],
