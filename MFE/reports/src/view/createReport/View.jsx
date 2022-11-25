@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { DATA_ORDER, ROWS_PER_PAGE_OPTIONS } from 'sharedComponents/Constants';
 import { useIsLoading, useSearchParamState } from 'sharedComponents/Hooks';
+import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
 import { actions as deviceActions, constants } from '../../redux/modules/devices';
 import { devicesSelector, paginationControlSelector } from '../../redux/selectors/devicesSelector';
 import { ViewContainer } from 'sharedComponents/Containers';
@@ -16,6 +17,7 @@ import Pagination from './layout/Pagination';
 import SearchBar from './layout/SearchBar';
 import useStyles from './style';
 import { useTranslation } from 'react-i18next';
+import CreateDevicesOptionsMenu from './layout/CreateDevicesOptionsMenu';
 
 const CreateReport = () => {
   const dispatch = useDispatch();
@@ -27,6 +29,7 @@ const CreateReport = () => {
   const { totalPages } = useSelector(paginationControlSelector);
 
   const [selectedDevices, setSelectedDevices] = useState({});
+  const [createDevicesOptionsMenu, setCreateDevicesOptionsMenu] = useState(null);
 
   const [page, setPage] = useSearchParamState({
     key: 'p',
@@ -85,6 +88,14 @@ const CreateReport = () => {
     setSearchText(search);
   };
 
+  const handleOpenCreationDevicesMenu = event => {
+    setCreateDevicesOptionsMenu(event.currentTarget);
+  };
+
+  const handleCloseCreationDevicseMenu = () => {
+    setCreateDevicesOptionsMenu(null);
+  };
+
   useEffect(() => {
     dispatch(
       deviceActions.getDevices({
@@ -109,6 +120,11 @@ const CreateReport = () => {
   return (
     <>
       <ViewContainer headerTitle={t('title')}>
+        <CreateDevicesOptionsMenu
+          anchorElement={createDevicesOptionsMenu}
+          handleClose={handleCloseCreationDevicseMenu}
+        />
+
         <Box className={classes.container}>
           <SearchBar lastSearchedText={searchText} handleSearchDevice={handleSearchDevice} />
 
@@ -120,22 +136,27 @@ const CreateReport = () => {
           )}
 
           <Box className={classes.content}>
-            {isLoadingDevices ? (
-              <DevicesLoading />
-            ) : (
-              <>
-                {devices.length > 0 && (
-                  <DataTable
-                    order={order}
-                    orderBy={orderBy}
-                    devices={devices}
-                    selectedDevices={selectedDevices}
-                    setSelectedDevices={setSelectedDevices}
-                    setOrder={setOrder}
-                    setOrderBy={setOrderBy}
-                  />
-                )}
-              </>
+            {isLoadingDevices && <DevicesLoading />}
+
+            {devices.length > 0 && (
+              <DataTable
+                order={order}
+                orderBy={orderBy}
+                devices={devices}
+                selectedDevices={selectedDevices}
+                setSelectedDevices={setSelectedDevices}
+                setOrder={setOrder}
+                setOrderBy={setOrderBy}
+              />
+            )}
+
+            {devices.length === 0 && (
+              <EmptyPlaceholder
+                textButton={t('createNewDevice')}
+                emptyListMessage={t('emptyListMessage')}
+                icon={<DevicesOther fontSize='large' />}
+                handleButtonClick={handleOpenCreationDevicesMenu}
+              />
             )}
           </Box>
 
