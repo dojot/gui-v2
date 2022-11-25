@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Box } from '@material-ui/core';
 import { isNumber } from 'lodash';
 import { useDispatch, useSelector } from 'react-redux';
+import { DevicesOther } from '@material-ui/icons';
 
 import { DATA_ORDER, ROWS_PER_PAGE_OPTIONS } from 'sharedComponents/Constants';
 import { useIsLoading, useSearchParamState } from 'sharedComponents/Hooks';
