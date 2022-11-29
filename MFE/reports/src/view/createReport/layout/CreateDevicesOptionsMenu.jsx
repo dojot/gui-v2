@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 const CreateDevicesOptionsMenu = ({ anchorElement, handleClose }) => {
   const history = useHistory();
-  const { t } = useTranslation('devices');
+  const { t } = useTranslation('createReport');
 
   return (
     <Menu
