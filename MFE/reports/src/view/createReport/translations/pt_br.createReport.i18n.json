@@ -51,5 +51,10 @@
   },
   "searchBar": {
     "searchInputPh": "Pesquisar dispositivo por nome"
+  },
+  "devicesCreationMenu": {
+    "createOneDevice": "Criar um dispositivo",
+    "createManyDevices": "Criar vários dispositivos",
+    "importUsingCSV": "Importar usando CSV"
   }
 }
