@@ -97,11 +97,12 @@ export function* handleDeleteMultipleTemplates(action) {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_TEMPLATES));
     const { templateIds, failCallback } = action.payload;
     const {
-      deleteMultipleTemplates: { notDeletedTemplates, deletedTemplates },
+      deleteMultipleTemplates: { deletedTemplates, templatesAssociatedDevices, templatesNotFound },
     } = yield call(Template.deleteMultipleTemplates, templateIds);
-    if (!!notDeletedTemplates.length) failCallback(notDeletedTemplates, deletedTemplates);
+    if (!!templatesAssociatedDevices.length)
+      failCallback(templatesAssociatedDevices, deletedTemplates);
     yield call(getCurrentTemplatesPageAgain);
-    if (!notDeletedTemplates.length)
+    if (!templatesAssociatedDevices.length)
       dispatchEvent(EVENT.GLOBAL_TOAST, {
         duration: 15000,
         i18nMessage: 'deleteMultipleTemplates',

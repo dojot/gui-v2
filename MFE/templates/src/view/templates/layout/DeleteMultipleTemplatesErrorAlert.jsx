@@ -17,7 +17,7 @@ import TemplateNotExcludedItem from './TemplateNotExcludedItem';
 const DeleteMultipleTemplatesErrorAlert = ({
   isOpen,
   handleClose,
-  notDeletedTemplates,
+  templatesAssociatedDevices,
   deletedTemplates,
 }) => {
   const classes = useDeleteMultipleTemplatesErrorAlert();
@@ -40,13 +40,13 @@ const DeleteMultipleTemplatesErrorAlert = ({
       </DialogTitle>
 
       <DialogContent className={classes.dialogContent}>
-        {!!notDeletedTemplates &&
-          notDeletedTemplates.map(({ id, label, associatedDevices }) => (
+        {!!templatesAssociatedDevices &&
+          templatesAssociatedDevices.map(({ id, label, associated_devices }) => (
             <TemplateNotExcludedItem
               key={id}
               id={id}
               label={label}
-              associatedDevices={associatedDevices}
+              associated_devices={associated_devices}
             />
           ))}
       </DialogContent>
@@ -68,7 +68,7 @@ const DeleteMultipleTemplatesErrorAlert = ({
 DeleteMultipleTemplatesErrorAlert.propTypes = {
   isOpen: PropTypes.bool.isRequired,
   handleClose: PropTypes.func.isRequired,
-  notDeletedTemplates: PropTypes.array.isRequired,
+  templatesAssociatedDevices: PropTypes.array.isRequired,
   deletedTemplates: PropTypes.array.isRequired,
 };
 

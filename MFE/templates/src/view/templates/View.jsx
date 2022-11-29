@@ -102,7 +102,7 @@ const Templates = () => {
   const [isShowingMultipleDeleteAlert, setIsShowingMultipleDeleteAlert] = useState(false);
   const [multipleDeletionError, setMultipleDeletionError] = useState({
     isShowing: false,
-    notDeletedTemplates: [],
+    templatesAssociatedDevices: [],
     deletedTemplates: [],
   });
 
@@ -127,18 +127,25 @@ const Templates = () => {
     setIsShowingMultipleDeleteAlert(true);
   };
 
-  const handleShowMultipleTemplatesDeletionError = (notDeletedTemplates, deletedTemplates) => {
-    setMultipleDeletionError({ isShowing: true, notDeletedTemplates, deletedTemplates });
+  const handleShowMultipleTemplatesDeletionError = (
+    templatesAssociatedDevices,
+    deletedTemplates,
+  ) => {
+    setMultipleDeletionError({ isShowing: true, templatesAssociatedDevices, deletedTemplates });
   };
 
   const handleCloseMultipleTemplatesDeletionError = () => {
-    setMultipleDeletionError({ isShowing: false, notDeletedTemplates: [], deletedTemplates: [] });
+    setMultipleDeletionError({
+      isShowing: false,
+      templatesAssociatedDevices: [],
+      deletedTemplates: [],
+    });
   };
 
   const handleConfirmMultipleTemplatesDeletion = () => {
     dispatch(
       templateActions.deleteMultipleTemplates({
-        templateIds: selectedTemplates.map(({ id }) => id),
+        templateIds: selectedTemplates.map(({ id }) => parseInt(id)),
         failCallback: handleShowMultipleTemplatesDeletionError,
       }),
     );
@@ -239,7 +246,7 @@ const Templates = () => {
       <DeleteMultipleTemplatesErrorAlert
         isOpen={multipleDeletionError.isShowing}
         handleClose={handleCloseMultipleTemplatesDeletionError}
-        notDeletedTemplates={multipleDeletionError.notDeletedTemplates}
+        templatesAssociatedDevices={multipleDeletionError.templatesAssociatedDevices}
         deletedTemplates={multipleDeletionError.deletedTemplates}
       />
 
