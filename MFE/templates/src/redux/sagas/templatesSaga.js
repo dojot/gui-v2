@@ -97,7 +97,7 @@ export function* handleDeleteMultipleTemplates(action) {
     yield put(loadingActions.addLoading(constants.DELETE_MULTIPLE_TEMPLATES));
     const { templateIds, failCallback } = action.payload;
     const {
-      deleteMultipleTemplates: { deletedTemplates, templatesAssociatedDevices, templatesNotFound },
+      deleteMultipleTemplates: { deletedTemplates, templatesAssociatedDevices },
     } = yield call(Template.deleteMultipleTemplates, templateIds);
     if (!!templatesAssociatedDevices.length)
       failCallback(templatesAssociatedDevices, deletedTemplates);
