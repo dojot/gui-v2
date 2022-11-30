@@ -26,7 +26,13 @@ const TenantForm = () => {
 
   return (
     <Grid container justify='center' className={classes.root}>
-      <Card className={classes.grid} component='form' noValidate onSubmit={handleSubmit}>
+      <Card
+        className={classes.grid}
+        component='form'
+        noValidate
+        onSubmit={handleSubmit}
+        autocomplete='off'
+      >
         <Typography variant='h5' color='textPrimary'>
           {t('title')}
         </Typography>
