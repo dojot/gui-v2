@@ -16,6 +16,7 @@
     "label": "Name",
     "attrsLength": "Number of Properties",
     "created": "Creation Date",
+    "updated": "Last modification",
     "actions": "Actions"
   },
   "cardData": {
