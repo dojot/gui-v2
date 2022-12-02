@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { PhoneIphone, DevicesOther, Publish } from '@material-ui/icons';
+import { PhoneIphone, DevicesOther } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
