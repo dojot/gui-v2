@@ -31,12 +31,13 @@ const CreateDevicesOptionsMenu = ({ anchorElement, handleClose }) => {
         <ListItemText primary={t('devicesCreationMenu.createManyDevices')} />
       </MenuItem>
 
-      <MenuItem onClick={() => history.push('/devices/new/csv')}>
+      {/* Descomentar quando a funcionalidade estiver disponível */}
+      {/* <MenuItem onClick={() => history.push('/devices/new/csv')}>
         <ListItemIcon>
           <Publish />
         </ListItemIcon>
         <ListItemText primary={t('devicesCreationMenu.importUsingCSV')} />
-      </MenuItem>
+      </MenuItem> */}
     </Menu>
   );
 };
