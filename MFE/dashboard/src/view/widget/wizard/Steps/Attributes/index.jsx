@@ -31,9 +31,7 @@ import { useStyles } from './style';
 
 export const attrValidates = values => {
   const errors = {};
-  if (!values.attributes) {
-    errors.msg = 'chooseAtLeastOne';
-  } else if (Object.keys(values.attributes).length < 1) {
+  if (Object.keys(values.attributes).length < 1) {
     errors.msg = 'chooseAtLeastOne';
   }
   return errors;
