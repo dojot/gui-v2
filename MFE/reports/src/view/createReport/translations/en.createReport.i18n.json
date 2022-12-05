@@ -35,8 +35,8 @@
   "generateReportPopover": {
     "headerTitle": "{{count}} devices have been selected. Do you want to generate a single report or individual reports?",
     "reportNameInputPh": "Report name *",
-    "generateUniqueReport": "Generate unique report",
-    "generateIndividualReportPerDevice": "Generate an individual report per device",
+    "generateUniqueReport": "Generate unique file",
+    "generateIndividualReportPerDevice": "Generate an individual file for each device",
     "reportFormat": "Report format *",
     "csv": "CSV",
     "pdf": "PDF",

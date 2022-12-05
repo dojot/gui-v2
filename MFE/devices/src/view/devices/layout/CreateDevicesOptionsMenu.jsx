@@ -1,6 +1,6 @@
 import React from 'react';
 import { Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
-import { PhoneIphone, DevicesOther, Publish } from '@material-ui/icons';
+import { PhoneIphone, DevicesOther } from '@material-ui/icons';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
@@ -31,12 +31,13 @@ const CreateDevicesOptionsMenu = ({ anchorElement, handleClose }) => {
         <ListItemText primary={t('devicesCreationMenu.createManyDevices')} />
       </MenuItem>
 
-      <MenuItem onClick={() => history.push('/devices/new/csv')}>
+      {/* Descomentar quando a funcionalidade estiver disponível */}
+      {/* <MenuItem onClick={() => history.push('/devices/new/csv')}>
         <ListItemIcon>
           <Publish />
         </ListItemIcon>
         <ListItemText primary={t('devicesCreationMenu.importUsingCSV')} />
-      </MenuItem>
+      </MenuItem> */}
     </Menu>
   );
 };

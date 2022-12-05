@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Grid, Box, Typography, Button, IconButton } from '@material-ui/core';
-import { VerifiedUser, Close, Delete } from '@material-ui/icons';
+import { Close, Delete } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
@@ -9,7 +9,7 @@ import { useMassActionsStyles } from './style';
 
 const MassActions = ({
   handleHideMassActions,
-  handleAssociateCertificatesInBatch,
+  // handleAssociateCertificatesInBatch,
   handleDeleteMultipleDevices,
 }) => {
   const { t } = useTranslation(['devices', 'common']);
@@ -22,7 +22,7 @@ const MassActions = ({
           <Typography className={classes.massActionsLabel}>{t('massActions')}</Typography>
         </Grid>
 
-        <Grid item xs='auto'>
+        {/* <Grid item xs='auto'>
           <Button
             className={classes.massActionsButton}
             onClick={handleAssociateCertificatesInBatch}
@@ -31,7 +31,7 @@ const MassActions = ({
           >
             {t('associateCertificatesInBatch')}
           </Button>
-        </Grid>
+        </Grid> */}
 
         <Grid item xs='auto'>
           <Button
@@ -60,13 +60,13 @@ const MassActions = ({
 
 MassActions.propTypes = {
   handleHideMassActions: PropTypes.func,
-  handleAssociateCertificatesInBatch: PropTypes.func,
+  // handleAssociateCertificatesInBatch: PropTypes.func,
   handleDeleteMultipleDevices: PropTypes.func,
 };
 
 MassActions.defaultProps = {
   handleHideMassActions: null,
-  handleAssociateCertificatesInBatch: null,
+  // handleAssociateCertificatesInBatch: null,
   handleDeleteMultipleDevices: null,
 };
 
