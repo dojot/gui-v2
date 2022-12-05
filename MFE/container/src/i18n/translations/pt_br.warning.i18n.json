@@ -4,6 +4,8 @@
     "requiredTemplate": "Modelo é obrigatório",
     "chooseAtLeastOne": "Escolha ao menos um item",
     "requiredFiled": "Campo Obrigatório",
-    "maxNumberFiles": "Quantidade máxima de arquivos: 999"
+    "maxNumberFiles": "Quantidade máxima de arquivos: 999",
+    "requiredWidgetName": "Nome do widget obrigatório",
+    "widgetNameMin5Characters": "O nome do widget deve ter no mínimo 5 caracteres"
   }
 }

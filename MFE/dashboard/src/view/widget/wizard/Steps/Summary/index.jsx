@@ -9,18 +9,17 @@ import { object2Array } from 'sharedComponents/Utils';
 import Wizard from '../../wizard';
 import { useStyles } from './style';
 
-const schema = Yup.object().shape({
-  name: Yup.string().required('common:required').min(5, 'common:min5characters'),
-});
+export const summaryValidates = values => {
+  console.log(values);
+  const errors = {};
+  if (!values.name) {
+    errors.msg = 'requiredWidgetName';
+  } else if (values.name.length < 5) {
+    errors.msg = 'widgetNameMin5Characters';
+  }
+  return errors;
+};
 
-export const summaryValidates = makeValidate(schema, error => {
-  const { message } = error;
-  return (
-    <Translation key={`t_${message}`}>
-      {t => <span className='error'>{t(`${message}`)}</span>}
-    </Translation>
-  );
-});
 const AttributeBox = ({ name, values = [] }) => {
   const classes = useStyles();
   return (
