@@ -160,6 +160,7 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
                   staticSupported={staticSupported}
                   isDynamic={isDynamic}
                   name={name}
+                  widgetType={values.widgetType}
                 />
               );
             })
@@ -204,6 +205,7 @@ const ItemRow = ({
   staticSupported,
   isDynamic,
   name,
+  widgetType,
 }) => {
   const { id, label, attributeId } = meta;
 
@@ -308,20 +310,22 @@ const ItemRow = ({
             fullWidth={false}
             disabled={isDisabled || checkCompatibility()}
           />
-          <Button
-            variant='outlined'
-            startIcon={<Comment />}
-            className={classes.button}
-            style={{
-              '--red': color.rgb.r,
-              '--green': color.rgb.g,
-              '--blue': color.rgb.b,
-            }}
-            onClick={() => setIsOpen(!isOpen)}
-            disabled={isDisabled || checkCompatibility()}
-          >
-            {t('attributes.colorPicker')}
-          </Button>
+          {widgetType === 7 ? null : (
+            <Button
+              variant='outlined'
+              startIcon={<Comment />}
+              className={classes.button}
+              style={{
+                '--red': color.rgb.r,
+                '--green': color.rgb.g,
+                '--blue': color.rgb.b,
+              }}
+              onClick={() => setIsOpen(!isOpen)}
+              disabled={isDisabled || checkCompatibility()}
+            >
+              {t('attributes.colorPicker')}
+            </Button>
+          )}
           {isOpen ? (
             <div className={classes.picker}>
               <Field
