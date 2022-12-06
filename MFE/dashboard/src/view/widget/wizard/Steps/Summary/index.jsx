@@ -9,7 +9,6 @@ import Wizard from '../../wizard';
 import { useStyles } from './style';
 
 export const summaryValidates = values => {
-  console.log(values);
   const errors = {};
   if (!values.name) {
     errors.msg = 'requiredWidgetName';
