@@ -36,7 +36,7 @@
     "confirmButton": "Delete"
   },
   "multipleTemplatesDeletionError": {
-    "alertMessage": "The models below could not be deleted as they contain devices attached",
+    "alertMessage": "The models below could not be deleted as they contain associated devices",
     "hasAssociatedDevice": "{{count}} associated devices",
     "theOtherTemplatesWereExcluded": "The other models were excluded",
     "closeButtonText": "I got it"
