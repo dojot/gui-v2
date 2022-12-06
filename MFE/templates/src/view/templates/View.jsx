@@ -177,7 +177,13 @@ const Templates = () => {
 
   const handleConfirmTemplateDeletion = () => {
     const templateId = templateOptionsMenu.template.id;
-    dispatch(templateActions.deleteTemplate({ templateId }));
+
+    dispatch(
+      templateActions.deleteMultipleTemplates({
+        templateIds: [parseInt(templateId)],
+        failCallback: handleShowMultipleTemplatesDeletionError,
+      }),
+    );
     setSelectedTemplates(currentSelectedTemplates => {
       return currentSelectedTemplates.filter(id => id !== templateId);
     });
