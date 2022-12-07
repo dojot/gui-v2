@@ -36,7 +36,7 @@
     "confirmButton": "Excluir"
   },
   "multipleTemplatesDeletionError": {
-    "alertMessage": "Os modelos abaixo não puderam ser excluídos pois contêm dispositivos atrelados",
+    "alertMessage": "Os modelos abaixo não puderam ser excluídos pois contêm dispositivos associados",
     "hasAssociatedDevice": "{{count}} dispositivos associados",
     "theOtherTemplatesWereExcluded": "Os demais modelos foram excluídos",
     "closeButtonText": "Entendi"
