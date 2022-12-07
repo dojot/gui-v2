@@ -102,7 +102,7 @@ const DataTable = ({
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelectedDevices = [...selectedDevices, ...devices];
+      const newSelectedDevices = devices.map(row => row);
       handleSelectDevice(newSelectedDevices);
       return;
     }
