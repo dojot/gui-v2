@@ -78,7 +78,7 @@ const DataTable = ({
 
   const handleSelectAllClick = event => {
     if (event.target.checked) {
-      const newSelectedTemplates = [...selectedTemplates, ...templates];
+      const newSelectedTemplates = templates.map(row => row);
       handleSelectTemplate(newSelectedTemplates);
       return;
     }
