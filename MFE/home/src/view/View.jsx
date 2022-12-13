@@ -8,6 +8,7 @@ import {
   Box,
   CardActionArea,
   Tooltip,
+  Divider,
 } from '@material-ui/core';
 import {
   DevicesOther,
@@ -75,6 +76,11 @@ const Home = ({ isMenuOpen }) => {
   return (
     <ViewContainer headerTitle={t('home:title')} isMenuOpen={isMenuOpen}>
       <Box sx={{ flexGrow: 1 }} padding={2}>
+        <Box className={classes.headerWithDivider} marginBottom={3}>
+          <Typography>{t('fastLinks')}</Typography>
+          <Divider className={classes.divider} flexItem />
+        </Box>
+
         <Grid container wrap={'wrap'} spacing={4}>
           {Object.entries(HOME_CARDS).map(([key, card]) => {
             const isDisabled = !!card.disabled;
@@ -102,23 +108,36 @@ const Home = ({ isMenuOpen }) => {
               </Grid>
             );
           })}
-
-          {favoriteDevices.map(device => (
-            <Grid key={device.id} xs={12} sm={6} md={3} item>
-              <Card className={classes.card}>
-                <CardActionArea
-                  style={{ height: '100%' }}
-                  onClick={() => history.push(`/devices/${device.id}`)}
-                >
-                  <CardContent className={classes.cardContent}>
-                    <Star style={{ color: '#F1B44C' }} />
-                    <Typography>{device.label}</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
         </Grid>
+
+        {favoriteDevices.length > 0 && (
+          <Box marginTop={4}>
+            <Box className={classes.headerWithDivider}>
+              <Typography>{t('favoriteDevices')}</Typography>
+              <Divider className={classes.divider} flexItem />
+            </Box>
+
+            <Box marginTop={3}>
+              <Grid container wrap={'wrap'} spacing={4}>
+                {favoriteDevices.map(device => (
+                  <Grid key={device.id} xs={12} sm={6} md={3} item>
+                    <Card className={classes.card}>
+                      <CardActionArea
+                        style={{ height: '100%' }}
+                        onClick={() => history.push(`/devices/${device.id}`)}
+                      >
+                        <CardContent className={classes.cardContent}>
+                          <Star style={{ color: '#F1B44C' }} />
+                          <Typography>{device.label}</Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Box>
+        )}
       </Box>
     </ViewContainer>
   );
