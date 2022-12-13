@@ -37,12 +37,12 @@ const devConfig = {
       shared: {
         ...dependencies,
         react: {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies.react,
         },
         'react-dom': {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
