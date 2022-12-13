@@ -30,15 +30,17 @@ const prodConfig = {
       shared: {
         ...dependencies,
         react: {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies.react,
         },
         'react-dom': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
         '@material-ui/styles': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/styles'],
         },
@@ -57,6 +59,11 @@ const prodConfig = {
         '@material-ui/pickers': {
           singleton: true,
           requiredVersion: dependencies['@material-ui/pickers'],
+        },
+        'react-transition-group': {
+          eager: false,
+          singleton: true,
+          requiredVersion: dependencies['react-transition-group'],
         },
       },
     }),

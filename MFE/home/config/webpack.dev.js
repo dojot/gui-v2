@@ -35,12 +35,12 @@ const devConfig = {
       shared: {
         ...dependencies,
         react: {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies.react,
         },
         'react-dom': {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
@@ -50,11 +50,11 @@ const devConfig = {
           requiredVersion: dependencies['@material-ui/styles'],
         },
         '@material-ui/core': {
-          singleton: true,
+          singleton: false,
           requiredVersion: dependencies['@material-ui/core'],
         },
         '@material-ui/icons': {
-          singleton: true,
+          singleton: false,
           requiredVersion: dependencies['@material-ui/icons'],
         },
       },
