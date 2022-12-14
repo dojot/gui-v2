@@ -20,7 +20,6 @@ import {
 } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
 import { EVENT } from 'sharedComponents/Constants';
 import { ViewContainer } from 'sharedComponents/Containers';
 import { dispatchEvent } from 'sharedComponents/Hooks';
@@ -31,7 +30,6 @@ import useStyles from './style';
 
 const Home = ({ isMenuOpen }) => {
   const { t } = useTranslation('home');
-  const history = useHistory();
   const classes = useStyles();
 
   const favoriteDevices = useSelector(favoriteDeviceSelector);

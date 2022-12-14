@@ -77,7 +77,7 @@ const GlobalToast = () => {
   useEffect(() => {
     window.addEventListener(EVENT.GLOBAL_TOAST, handleToast);
     return () => window.removeEventListener(EVENT.GLOBAL_TOAST, handleToast, false);
-  }, [handleToast]);
+  }, []);
 
   const removeItemFromArray = index => {
     const newArr = [];
