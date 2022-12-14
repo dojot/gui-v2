@@ -61,7 +61,7 @@ const devConfig = {
           requiredVersion: dependencies['@material-ui/pickers'],
         },
         'react-transition-group': {
-          eager: false,
+          eager: true,
           singleton: true,
           requiredVersion: dependencies['react-transition-group'],
         },

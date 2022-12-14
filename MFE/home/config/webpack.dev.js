@@ -57,6 +57,11 @@ const devConfig = {
           singleton: false,
           requiredVersion: dependencies['@material-ui/icons'],
         },
+        'react-router-dom': {
+          eager: false,
+          singleton: true,
+          requiredVersion: dependencies['react-router-dom'],
+        },
       },
       remotes: {
         sharedComponents: 'sharedComponents@http://localhost:8081/remoteEntry.js',

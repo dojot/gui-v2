@@ -1,10 +1,12 @@
 import React from 'react';
-import Home from './view';
-import i18n from './i18n/i18n';
-import { Switch, Route, Router } from 'react-router-dom';
+
 import { Provider } from 'react-redux';
-import configureStore from './redux/configureStore';
+import { Switch, Route, Router } from 'react-router-dom';
 import { EventContainer } from 'sharedComponents/Containers';
+
+import i18n from './i18n/i18n';
+import configureStore from './redux/configureStore';
+import Home from './view';
 
 const store = configureStore({});
 
