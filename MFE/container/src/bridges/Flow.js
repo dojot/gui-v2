@@ -8,8 +8,9 @@ export default () => {
   const history = useHistory();
 
   useEffect(() => {
-    const { onParentNavigate } = mount(ref.current);
-    history.listen(onParentNavigate);
+    const { onParentNavigate } = mount(ref.current, history);
+    const unlisten = history.listen(onParentNavigate);
+    return () => unlisten();
   }, []);
 
   return <div style={{ height: '100%', width: '100%' }} ref={ref} />;

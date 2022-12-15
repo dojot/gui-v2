@@ -1,11 +1,12 @@
 import React from 'react';
 
+import { createBrowserHistory } from 'history';
 import ReactDOM from 'react-dom';
 
 import App from './App';
-import { history } from './history';
 
 const mount = el => {
+  const history = createBrowserHistory({ basename: '/v2/#/' });
   ReactDOM.render(<App history={history} />, el);
 
   return {

@@ -39,7 +39,7 @@ const Templates = React.lazy(() =>
   }),
 );
 const Flows = React.lazy(() =>
-  import('./components/Flow').catch(err => {
+  import('./bridges/Flow').catch(err => {
     console.error(err);
     return import('./view/pageNotFound');
   }),

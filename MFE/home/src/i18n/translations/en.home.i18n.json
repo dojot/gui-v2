@@ -7,5 +7,6 @@
   "createCertificate": "Create Certificate",
   "importExport": "Import/Export",
   "deviceTest": "Device Test",
-  "notAvailableAtTheMoment": "Not Available in The Moment"
+  "notAvailableAtTheMoment": "Not Available in The Moment",
+  "createFlow": "Create a new flow"
 }
