@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
-import PropTypes from 'prop-types';
 import { Box, Grid, Typography, Chip, TextField, MenuItem } from '@material-ui/core';
-import { DataCard } from 'sharedComponents/Cards';
-import { Link as RouterLink } from 'react-router-dom';
 import { VerifiedUserOutlined } from '@material-ui/icons';
-import { useCardsStyles } from './style';
-import { isSomeHoursAgo } from 'sharedComponents/Utils';
-import { NEW_CHIP_HOURS_AGO, DATA_ORDER } from 'sharedComponents/Constants';
-import { useCertificateComputedData } from 'sharedComponents/Hooks';
+import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
+import { DataCard } from 'sharedComponents/Cards';
+import { NEW_CHIP_HOURS_AGO, DATA_ORDER, EVENT } from 'sharedComponents/Constants';
+import { useCertificateComputedData, dispatchEvent } from 'sharedComponents/Hooks';
+import { isSomeHoursAgo } from 'sharedComponents/Utils';
+
+import { useCardsStyles } from './style';
 
 const Cards = ({
   order,
@@ -23,6 +23,10 @@ const Cards = ({
   const classes = useCardsStyles();
 
   const handleGetCertificateComputedData = useCertificateComputedData();
+
+  const handleClick = useCallback(certificate => {
+    dispatchEvent(EVENT.CHANGE_ROUTE, `/devices/${certificate.belongsTo.device}`);
+  }, []);
 
   return (
     <Box padding={2}>
@@ -112,12 +116,15 @@ const Cards = ({
                   <Typography variant='body2'>{t('dataLabels.deviceId')}</Typography>
 
                   {certificate.belongsTo?.device ? (
-                    <RouterLink
-                      to={`/devices/${certificate.belongsTo.device}`}
+                    <div
+                      tabIndex={0}
+                      role='link'
+                      onKeyDown={() => handleClick(certificate)}
+                      onClick={() => handleClick(certificate)}
                       className={classes.link}
                     >
                       {certificate.belongsTo.device}
-                    </RouterLink>
+                    </div>
                   ) : (
                     <Typography variant='body2'>
                       <strong>{t('noAssociatedDeviceTooltip')}</strong>

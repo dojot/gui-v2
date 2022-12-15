@@ -58,6 +58,8 @@ export default makeStyles(theme => ({
   },
   link: {
     color: theme.palette.primary.light,
+    cursor: 'pointer',
+    textDecoration: 'underline',
   },
   actingListItem: {
     padding: 16,
