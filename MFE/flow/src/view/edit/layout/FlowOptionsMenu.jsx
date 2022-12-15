@@ -40,16 +40,16 @@ const FlowOptionsMenu = ({
 FlowOptionsMenu.propTypes = {
   isShowingMenu: PropTypes.bool,
   anchorElement: PropTypes.object,
-  handleEditDevice: PropTypes.func,
-  handleDeleteDevice: PropTypes.func,
+  handleEditFlow: PropTypes.func,
+  handleDeleteFlow: PropTypes.func,
   handleHideOptionsMenu: PropTypes.func,
 };
 
 FlowOptionsMenu.defaultProps = {
   isShowingMenu: false,
   anchorElement: null,
-  handleEditDevice: null,
-  handleDeleteDevice: null,
+  handleEditFlow: null,
+  handleDeleteFlow: null,
   handleHideOptionsMenu: null,
 };
 

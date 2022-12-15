@@ -15,7 +15,7 @@ import { MoreHoriz } from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { isSomeHoursAgo } from 'sharedComponents/Utils';
 

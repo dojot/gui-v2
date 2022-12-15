@@ -86,10 +86,4 @@ Cards.propTypes = {
   handleSetFlowOptionsMenu: PropTypes.func.isRequired,
 };
 
-Cards.defaultProps = {
-  flows: [],
-  handleClickFlow: null,
-  handleSetFlowOptionsMenu: null,
-};
-
 export default Cards;
