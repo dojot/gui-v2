@@ -1,11 +1,13 @@
-const { merge } = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const commonConfig = require('./webpack.common');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const path = require('path');
-const dependencies = require('../package.json').dependencies;
+
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { merge } = require('webpack-merge');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
+const { dependencies } = require('../package.json');
+const commonConfig = require('./webpack.common');
 
 const devConfig = {
   mode: 'development',
@@ -37,52 +39,51 @@ const devConfig = {
       shared: {
         ...dependencies,
         react: {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies.react,
         },
         'react-dom': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
         '@material-ui/styles': {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/styles'],
         },
         '@material-ui/core': {
-          eager: true,
-          singleton: true,
+          singleton: false,
           requiredVersion: dependencies['@material-ui/core'],
         },
         '@material-ui/icons': {
-          eager: true,
-          singleton: true,
+          singleton: false,
           requiredVersion: dependencies['@material-ui/icons'],
         },
         '@material-ui/lab': {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/lab'],
         },
         '@material-ui/pickers': {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/pickers'],
         },
         'prop-types': {
-          eager: true,
-          singleton: true,
+          singleton: false,
           requiredVersion: dependencies['prop-types'],
         },
         'react-transition-group': {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['react-transition-group'],
         },
         clsx: {
-          eager: true,
+          eager: false,
           singleton: true,
-          requiredVersion: dependencies['clsx'],
+          requiredVersion: dependencies.clsx,
         },
       },
       remotes: {

@@ -3,9 +3,9 @@ import React from 'react';
 import { Chip, Radio, TableCell, TableRow, Tooltip, Box } from '@material-ui/core';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-
 import { CopyTextToClipboardButton } from 'sharedComponents/CopyTextToClipboardButton';
 import { formatDate } from 'sharedComponents/Utils';
+
 import { useSecurityTableStyles } from './style';
 
 const SecurityTableRow = ({

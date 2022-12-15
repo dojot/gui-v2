@@ -109,7 +109,6 @@ export function* checkData() {
 }
 
 export function* updateData({ payload: { layout } }) {
-  console.log('updateData');
   const { userName, tenant } = yield call(getUserInformation);
 
   try {

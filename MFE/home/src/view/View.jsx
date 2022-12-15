@@ -18,17 +18,18 @@ import {
   Star,
   PhoneIphone,
 } from '@material-ui/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { actions as deviceActions } from '../redux/modules/devices';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { EVENT } from 'sharedComponents/Constants';
 import { ViewContainer } from 'sharedComponents/Containers';
-import useStyles from './style';
+import { dispatchEvent } from 'sharedComponents/Hooks';
+
+import { actions as deviceActions } from '../redux/modules/devices';
 import { favoriteDeviceSelector } from '../redux/selectors/devicesSelector';
+import useStyles from './style';
 
 const Home = ({ isMenuOpen }) => {
   const { t } = useTranslation('home');
-  const history = useHistory();
   const classes = useStyles();
 
   const favoriteDevices = useSelector(favoriteDeviceSelector);
@@ -75,12 +76,12 @@ const Home = ({ isMenuOpen }) => {
   return (
     <ViewContainer headerTitle={t('home:title')} isMenuOpen={isMenuOpen}>
       <Box sx={{ flexGrow: 1 }} padding={2}>
-        <Grid container wrap={'wrap'} spacing={4}>
+        <Grid container wrap='wrap' spacing={4}>
           {Object.entries(HOME_CARDS).map(([key, card]) => {
             const isDisabled = !!card.disabled;
 
             const handleNavigate = () => {
-              if (card.route) history.push(card.route);
+              if (card.route) dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: card.route });
             };
 
             return (
@@ -108,7 +109,9 @@ const Home = ({ isMenuOpen }) => {
               <Card className={classes.card}>
                 <CardActionArea
                   style={{ height: '100%' }}
-                  onClick={() => history.push(`/devices/${device.id}`)}
+                  onClick={() =>
+                    dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: `/devices/${device.id}` })
+                  }
                 >
                   <CardContent className={classes.cardContent}>
                     <Star style={{ color: '#F1B44C' }} />
