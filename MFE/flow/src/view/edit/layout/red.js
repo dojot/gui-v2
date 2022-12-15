@@ -4752,7 +4752,7 @@ RED.keyboard = (function() {
             if (slot && mod.alt) {
                 slot = slot.alt;
             }
-            if (!slot[key]) {
+            if (slot && !slot[key]) {
                 return;
             }
             slot = slot[key];
