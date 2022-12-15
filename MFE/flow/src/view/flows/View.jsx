@@ -56,7 +56,7 @@ const Flows = () => {
     handleHideOptionsMenu();
     const flowId = flowOptionsMenu.flow.id;
     history.push(`/flows/edit/${flowId}`);
-  }, [flowsActions, flowOptionsMenu, handleHideOptionsMenu, history]);
+  }, [flowsActions, flowOptionsMenu, history]);
 
   const handleDeleteFlow = useCallback(() => {
     setIsShowingDeleteAlert(true);
@@ -70,7 +70,7 @@ const Flows = () => {
   const handleCloseFlowDeletionAlert = useCallback(() => {
     setIsShowingDeleteAlert(false);
     handleHideOptionsMenu();
-  }, [setIsShowingDeleteAlert, handleHideOptionsMenu]);
+  }, [setIsShowingDeleteAlert]);
 
   useEffect(() => {
     dispatch(flowsActions.getFlows());

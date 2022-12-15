@@ -191,7 +191,7 @@ RED.settings = (function () {
                 delete RED.settings[prop];
             }
         }
-        for (prop in data) {
+        for (let prop in data) {
             if (data.hasOwnProperty(prop)) {
                 RED.settings[prop] = data[prop];
             }
@@ -611,7 +611,7 @@ RED.text.format = (function() {
                         }
                     }
                 }
-                for (i = 0; i < segments.length; i++) {
+                for (let i = 0; i < segments.length; i++) {
                     segments[i].inBounds = false;
                 }
                 return segments;
@@ -685,7 +685,7 @@ RED.text.format = (function() {
                         }
                     }
                 }
-                for (i = 0; i < segments.length; i++) {
+                for (let i = 0; i < segments.length; i++) {
                     if (segments[i].keep) {
                         segments[i].keep = false;
                     } else if(segments[i].inPoints){
@@ -978,6 +978,7 @@ RED.text.format = (function() {
             let result = "";
             let checkedDir = "";
             let prevDir = "";
+            let stop = false;
             for (let i = 0; i < segments.length; i++) {
                 if (segments[i].isVisible) {
                     let dir = segments[i].textDirection;
@@ -1475,7 +1476,7 @@ RED.text.format = (function() {
                 }
                 //Indexing
                 let segments = [];
-                for (i = 0; i < tSegments.length; i++) {
+                for (let i = 0; i < tSegments.length; i++) {
                     let t = tSegments[i];
                     if (!t.ph) {
                         segments.push(new TextSegment({content: t.text, textDirection: params.msgDir}));
@@ -1851,7 +1852,7 @@ RED.nodes = (function() {
             removeNodeType: function(nt) {
                 if (nt.substring(0,8) != "subflow:") {
                     // NON-NLS - internal debug message
-                    throw new Error("this api is subflow only. called with:",nt);
+                    throw new Error(`this api is subflow only. called with: ${nt}`);
                 }
                 delete nodeDefinitions[nt];
                 RED.events.emit("registry:node-type-removed",nt);
@@ -9208,7 +9209,7 @@ RED.editor = (function() {
             }
         }
         if (node._def.credentials) {
-            for (prop in node._def.credentials) {
+            for (let prop in node._def.credentials) {
                 if (node._def.credentials.hasOwnProperty(prop)) {
                     validateNodeEditorProperty(node,node._def.credentials,prop,prefix);
                 }
