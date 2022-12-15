@@ -8330,7 +8330,6 @@ RED.palette.editor = (function() {
                     nodeEntry.container.toggleClass("disabled",(activeTypeCount === 0));
                 }
             }
-
             nodeEntry.updateButton.hide();
         }
 
@@ -8558,8 +8557,7 @@ RED.palette.editor = (function() {
                 if (activeFilter === "" ) {
                     return true;
                 }
-
-                return (activeFilter==="")||(data.index.indexOf(activeFilter) > -1);
+                return (data.index.indexOf(activeFilter) > -1);
             },
             addItem: function(container,i,object) {
                 let entry = object.info;
@@ -9905,22 +9903,20 @@ RED.editor = (function() {
                     let configAdding = adding;
                     let configTypeDef = RED.nodes.getType(configType);
 
+                    // TODO: what to pass as this to call
                     if (configTypeDef.oneditcancel) {
-                        // TODO: what to pass as this to call
-                        if (configTypeDef.oneditcancel) {
-                            let cn = RED.nodes.node(configId);
-                            if (cn) {
-                                try {
-                                    configTypeDef.oneditcancel.call(cn,false);
-                                } catch(err) {
-                                    console.log("oneditcancel",cn.id,cn.type,err.toString());
-                                }
-                            } else {
-                                try {
-                                    configTypeDef.oneditcancel.call({id:configId},true);
-                                } catch(err) {
-                                    console.log("oneditcancel",configId,configType,err.toString());
-                                }
+                        let cn = RED.nodes.node(configId);
+                        if (cn) {
+                            try {
+                                configTypeDef.oneditcancel.call(cn,false);
+                            } catch(err) {
+                                console.log("oneditcancel",cn.id,cn.type,err.toString());
+                            }
+                        } else {
+                            try {
+                                configTypeDef.oneditcancel.call({id:configId},true);
+                            } catch(err) {
+                                console.log("oneditcancel",configId,configType,err.toString());
                             }
                         }
                     }
@@ -10841,7 +10837,7 @@ RED.typeSearch = (function() {
                 if (data.recent || data.common) {
                     return false;
                 }
-                return (activeFilter==="")||(data.index.indexOf(activeFilter) > -1);
+                return (data.index.indexOf(activeFilter) > -1);
             },
             addItem: function(container,i,object) {
                 let def = object.def;
