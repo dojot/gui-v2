@@ -25,7 +25,7 @@ const Cards = ({
   const handleGetCertificateComputedData = useCertificateComputedData();
 
   const handleClick = useCallback(certificate => {
-    dispatchEvent(EVENT.CHANGE_ROUTE, `/devices/${certificate.belongsTo.device}`);
+    dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: `/devices/${certificate.belongsTo.device}` });
   }, []);
 
   return (

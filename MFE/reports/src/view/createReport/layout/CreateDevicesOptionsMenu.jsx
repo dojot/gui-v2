@@ -1,12 +1,14 @@
 import React from 'react';
+
 import { Menu, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import { PhoneIphone, DevicesOther } from '@material-ui/icons';
-import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import { EVENT } from 'sharedComponents/Constants';
+import { dispatchEvent } from 'sharedComponents/Hooks';
 
 const CreateDevicesOptionsMenu = ({ anchorElement, handleClose }) => {
-  const history = useHistory();
   const { t } = useTranslation('createReport');
 
   return (
@@ -17,14 +19,16 @@ const CreateDevicesOptionsMenu = ({ anchorElement, handleClose }) => {
       open={!!anchorElement}
       onClose={handleClose}
     >
-      <MenuItem onClick={() => history.push('/devices/new')}>
+      <MenuItem onClick={() => dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: '/devices/new' })}>
         <ListItemIcon>
           <PhoneIphone />
         </ListItemIcon>
         <ListItemText primary={t('devicesCreationMenu.createOneDevice')} />
       </MenuItem>
 
-      <MenuItem onClick={() => history.push('/devices/new/multiple')}>
+      <MenuItem
+        onClick={() => dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: '/devices/new/multiple' })}
+      >
         <ListItemIcon>
           <DevicesOther />
         </ListItemIcon>

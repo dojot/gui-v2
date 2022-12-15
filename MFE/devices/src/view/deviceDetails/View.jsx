@@ -137,7 +137,10 @@ const DeviceDetails = () => {
   };
 
   const handleClick = useCallback(() => {
-    dispatchEvent(EVENT.CHANGE_ROUTE, `/certificates?s=${deviceData.certificate.fingerprint}`);
+    dispatchEvent(EVENT.CHANGE_ROUTE, {
+      pathname: '/certificates',
+      search: `?s=${deviceData.certificate.fingerprint}`,
+    });
   }, [deviceData]);
 
   useEffect(() => {

@@ -81,7 +81,7 @@ const Home = ({ isMenuOpen }) => {
             const isDisabled = !!card.disabled;
 
             const handleNavigate = () => {
-              if (card.route) dispatchEvent(EVENT.CHANGE_ROUTE, card.route);
+              if (card.route) dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: card.route });
             };
 
             return (
@@ -109,7 +109,9 @@ const Home = ({ isMenuOpen }) => {
               <Card className={classes.card}>
                 <CardActionArea
                   style={{ height: '100%' }}
-                  onClick={() => dispatchEvent(EVENT.CHANGE_ROUTE, `/devices/${device.id}`)}
+                  onClick={() =>
+                    dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: `/devices/${device.id}` })
+                  }
                 >
                   <CardContent className={classes.cardContent}>
                     <Star style={{ color: '#F1B44C' }} />
