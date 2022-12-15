@@ -63,19 +63,19 @@ const mock = {
     }
 }
 
-var RED = {};
+let RED = {};
 
 RED.events = (function() {
-    var handlers = {};
+    let handlers = {};
 
     function on(evt,func) {
         handlers[evt] = handlers[evt]||[];
         handlers[evt].push(func);
     }
     function off(evt,func) {
-        var handler = handlers[evt];
+        let handler = handlers[evt];
         if (handler) {
-            for (var i=0;i<handler.length;i++) {
+            for (let i=0;i<handler.length;i++) {
                 if (handler[i] === func) {
                     handler.splice(i,1);
                     return;
@@ -85,7 +85,7 @@ RED.events = (function() {
     }
     function emit(evt,arg) {
         if (handlers[evt]) {
-            for (var i=0;i<handlers[evt].length;i++) {
+            for (let i=0;i<handlers[evt].length;i++) {
                 try {
                     handlers[evt][i](arg);
                 } catch(err) {
@@ -148,9 +148,9 @@ RED.i18n = (function() {
 
 RED.settings = (function () {
 
-    var loadedSettings = {};
+    let loadedSettings = {};
 
-    var hasLocalStorage = function () {
+    let hasLocalStorage = function () {
         try {
             return 'localStorage' in window && window['localStorage'] !== null;
         } catch (e) {
@@ -158,7 +158,7 @@ RED.settings = (function () {
         }
     };
 
-    var set = function (key, value) {
+    let set = function (key, value) {
         if (!hasLocalStorage()) {
             return;
         }
@@ -171,22 +171,22 @@ RED.settings = (function () {
      * @param key
      * @returns {*}
      */
-    var get = function (key) {
+    let get = function (key) {
         if (!hasLocalStorage()) {
             return undefined;
         }
         return JSON.parse(localStorage.getItem(key));
     };
 
-    var remove = function (key) {
+    let remove = function (key) {
         if (!hasLocalStorage()) {
             return;
         }
         localStorage.removeItem(key);
     };
 
-    var setProperties = function(data) {
-        for (var prop in loadedSettings) {
+    let setProperties = function(data) {
+        for (let prop in loadedSettings) {
             if (loadedSettings.hasOwnProperty(prop) && RED.settings.hasOwnProperty(prop)) {
                 delete RED.settings[prop];
             }
@@ -199,10 +199,10 @@ RED.settings = (function () {
         loadedSettings = data;
     };
 
-    var init = function (done) {
-        var accessTokenMatch = /[?&]access_token=(.*?)(?:$|&)/.exec(window.location.search);
+    let init = function (done) {
+        let accessTokenMatch = /[?&]access_token=(.*?)(?:$|&)/.exec(window.location.search);
         if (accessTokenMatch) {
-            var accessToken = accessTokenMatch[1];
+            let accessToken = accessTokenMatch[1];
             RED.settings.set("auth-tokens",{access_token: accessToken});
             window.location.search = "";
         }
@@ -211,7 +211,7 @@ RED.settings = (function () {
             beforeSend: function(jqXHR,settings) {
                 // Only attach auth header for requests to relative paths
                 if (!/^\s*(https?:|\/|\.)/.test(settings.url)) {
-                    var auth_tokens = RED.settings.get("auth-tokens");
+                    let auth_tokens = RED.settings.get("auth-tokens");
                     if (auth_tokens) {
                         jqXHR.setRequestHeader("Authorization","Bearer "+auth_tokens.access_token);
                     }
@@ -223,7 +223,7 @@ RED.settings = (function () {
         load(done);
     }
 
-    var load = function(done) {
+    let load = function(done) {
         $.ajax({
             headers: {
                 "Accept": "application/json"
@@ -257,10 +257,10 @@ RED.settings = (function () {
         if (!RED.settings.editorTheme) {
             return defaultValue;
         }
-        var parts = property.split(".");
-        var v = RED.settings.editorTheme;
+        let parts = property.split(".");
+        let v = RED.settings.editorTheme;
         try {
-            for (var i=0;i<parts.length;i++) {
+            for (let i=0;i<parts.length;i++) {
                 v = v[parts[i]];
             }
             if (v === undefined) {
@@ -284,14 +284,14 @@ RED.settings = (function () {
 ();
 RED.text = {};
 RED.text.bidi = (function() {
-    var textDir = "";
-    var LRE = "\u202A",
+    let textDir = "";
+    let LRE = "\u202A",
         RLE = "\u202B",
         PDF = "\u202C";
 
     function isRTLValue(stringValue) {
-        var length = stringValue.length;
-        for (var i=0;i<length;i++) {
+        let length = stringValue.length;
+        for (let i=0;i<length;i++) {
             if (isBidiChar(stringValue.charCodeAt(i))) {
                 return true;
             }
@@ -354,7 +354,7 @@ RED.text.bidi = (function() {
      */
     function enforceTextDirectionWithUCC(value) {
         if (value) {
-            var dir = resolveBaseTextDir(value);
+            let dir = resolveBaseTextDir(value);
             if (dir == "ltr") {
                 return LRE + value + PDF;
             }
@@ -399,8 +399,8 @@ RED.text.bidi = (function() {
 })();
 RED.text.format = (function() {
 
-    var TextSegment = (function() {
-        var TextSegment = function (obj) {
+    let TextSegment = (function() {
+        let TextSegment = function (obj) {
             this.content = "";
             this.actual = "";
             this.textDirection = "";
@@ -411,7 +411,7 @@ RED.text.format = (function() {
             this.keep = false;
             this.inBounds = false;
             this.inPoints = false;
-            var prop = "";
+            let prop = "";
             for (prop in obj) {
                 if (obj.hasOwnProperty(prop)) {
                     this[prop] = obj[prop];
@@ -421,7 +421,7 @@ RED.text.format = (function() {
         return TextSegment;
     })();
 
-    var tools = (function() {
+    let tools = (function() {
         function initBounds(bounds) {
             if (!bounds) {
                 return false;
@@ -444,13 +444,13 @@ RED.text.format = (function() {
             } else {
                 bounds.before = false;
             }
-            var startPos = parseInt(bounds.startPos, 10);
+            let startPos = parseInt(bounds.startPos, 10);
             if (!isNaN(startPos)) {
                 bounds.usePos = true;
             } else {
                 bounds.usePos = false;
             }
-            var bLength = parseInt(bounds.length, 10);
+            let bLength = parseInt(bounds.length, 10);
             if (!isNaN(bLength)) {
                 bounds.useLength = true;
             } else {
@@ -461,20 +461,20 @@ RED.text.format = (function() {
         }
 
         function getBounds(segment, src) {
-            var bounds = {};
-            for (var prop in src) {
+            let bounds = {};
+            for (let prop in src) {
                 if (src.hasOwnProperty(prop)) {
                     bounds[prop] = src[prop];
                 }
             }
-            var content = segment.content;
-            var usePos = bounds.usePos && bounds.startPos < content.length;
+            let content = segment.content;
+            let usePos = bounds.usePos && bounds.startPos < content.length;
             if (usePos) {
                 bounds.start = "";
                 bounds.loops = false;
             }
             bounds.bStart = usePos ? bounds.startPos : bounds.start.length > 0 ? content.indexOf(bounds.start) : 0;
-            var useLength = bounds.useLength && bounds.length > 0 && bounds.bStart + bounds.length < content.length;
+            let useLength = bounds.useLength && bounds.length > 0 && bounds.bStart + bounds.length < content.length;
             if (useLength) {
                 bounds.end = "";
             }
@@ -494,24 +494,24 @@ RED.text.format = (function() {
                 if (!subs.content || typeof(subs.content) !== "string" || subs.content.length === 0) {
                     return segments;
                 }
-                var sLoops = true;
+                let sLoops = true;
                 if (typeof(subs.loops) !== "undefined") {
                     sLoops = !!subs.loops;
                 }
-                for (var j = 0; true; j++) {
+                for (let j = 0; true; j++) {
                     if (j >= segments.length) {
                         break;
                     }
                     if (segments[j].isParsed || segments.keep || segments[j].isSeparator) {
                         continue;
                     }
-                    var content = segments[j].content;
-                    var start = content.indexOf(subs.content);
+                    let content = segments[j].content;
+                    let start = content.indexOf(subs.content);
                     if (start < 0) {
                         continue;
                     }
-                    var end;
-                    var length = 0;
+                    let end;
+                    let length = 0;
                     if (subs.continued) {
                         do {
                             length++;
@@ -549,24 +549,24 @@ RED.text.format = (function() {
             },
 
             handleBounds: function (segments, args, aBounds, origContent, locale) {
-                for (var i = 0; i < aBounds.length; i++) {
+                for (let i = 0; i < aBounds.length; i++) {
                     if (!initBounds(aBounds[i])) {
                         continue;
                     }
-                    for (var j = 0; true; j++) {
+                    for (let j = 0; true; j++) {
                         if (j >= segments.length) {
                             break;
                         }
                         if (segments[j].isParsed || segments[j].inBounds || segments.keep || segments[j].isSeparator) {
                             continue;
                         }
-                        var bounds = getBounds(segments[j], aBounds[i]);
-                        var start = bounds.bStart;
-                        var end = bounds.bEnd;
+                        let bounds = getBounds(segments[j], aBounds[i]);
+                        let start = bounds.bStart;
+                        let end = bounds.bEnd;
                         if (start < 0 || end < 0) {
                             continue;
                         }
-                        var content = segments[j].content;
+                        let content = segments[j].content;
 
                         segments.splice(j, 1);
                         if (start > 0) {
@@ -621,13 +621,13 @@ RED.text.format = (function() {
                 if (cases.length === 0) {
                     return segments;
                 }
-                var hArgs = {};
-                for (var prop in args) {
+                let hArgs = {};
+                for (let prop in args) {
                     if (args.hasOwnProperty(prop)) {
                         hArgs[prop] = args[prop];
                     }
                 }
-                for (var i =  0; i < cases.length; i++) {
+                for (let i =  0; i < cases.length; i++) {
                     if (!cases[i].handler || typeof(cases[i].handler.handle) !== "function") {
                         cases[i].handler = args.commonHandler;
                     }
@@ -648,16 +648,16 @@ RED.text.format = (function() {
             },
 
             handlePoints: function (segments, args, points, origContent, locale) { //jshint unused: false
-                for (var i = 0; i < points.length; i++) {
-                    for (var j = 0; true; j++) {
+                for (let i = 0; i < points.length; i++) {
+                    for (let j = 0; true; j++) {
                         if (j >= segments.length) {
                             break;
                         }
                         if (segments[j].isParsed || segments[j].keep || segments[j].isSeparator) {
                             continue;
                         }
-                        var content = segments[j].content;
-                        var pos = content.indexOf(points[i]);
+                        let content = segments[j].content;
+                        let pos = content.indexOf(points[i]);
                         if (pos >= 0) {
                             segments.splice(j, 1);
                             if (pos > 0) {
@@ -698,14 +698,14 @@ RED.text.format = (function() {
         };
     })();
 
-    var common = (function() {
+    let common = (function() {
         return {
             handle: function (content, segments, args, locale) {
-                var cases = [];
+                let cases = [];
                 if (Array.isArray(args.cases)) {
                     cases = args.cases;
                 }
-                var points = [];
+                let points = [];
                 if (typeof(args.points) !== "undefined") {
                     if (Array.isArray(args.points)) {
                         points = args.points;
@@ -713,11 +713,11 @@ RED.text.format = (function() {
                         points = args.points.split("");
                     }
                 }
-                var subs = {};
+                let subs = {};
                 if (typeof(args.subs) === "object") {
                     subs = args.subs;
                 }
-                var aBounds = [];
+                let aBounds = [];
                 if (Array.isArray(args.bounds)) {
                     aBounds = args.bounds;
                 }
@@ -731,9 +731,9 @@ RED.text.format = (function() {
         };
     })();
 
-    var misc = (function() {
-        var isBidiLocale = function (locale) {
-            var lang = !locale ? "" : locale.split("-")[0];
+    let misc = (function() {
+        let isBidiLocale = function (locale) {
+            let lang = !locale ? "" : locale.split("-")[0];
             if (!lang || lang.length < 2) {
                 return false;
             }
@@ -741,13 +741,13 @@ RED.text.format = (function() {
                 return bidiLang === lang;
             });
         };
-        var LRE = "\u202A";
-        var RLE = "\u202B";
-        var PDF = "\u202C";
-        var LRM = "\u200E";
-        var RLM = "\u200F";
-        var LRO = "\u202D";
-        var RLO = "\u202E";
+        let LRE = "\u202A";
+        let RLE = "\u202B";
+        let PDF = "\u202C";
+        let LRM = "\u200E";
+        let RLM = "\u200F";
+        let LRO = "\u202D";
+        let RLO = "\u202E";
 
         return {
             LRE: LRE,
@@ -767,7 +767,7 @@ RED.text.format = (function() {
                 }
                 locale = locale.toLowerCase();
                 if (isBidiLocale(locale)) {
-                    var full = locale.split("-");
+                    let full = locale.split("-");
                     return {lang: full[0], country: full[1] ? full[1] : ""};
                 }
                 return {lang: "not-bidi"};
@@ -792,20 +792,20 @@ RED.text.format = (function() {
                     return dir;
                 }
                 guiDir = (/^(rtl|ltr)$/i).test(guiDir) ? guiDir : "ltr";
-                var txt = !checkEnd ? text : text.split("").reverse().join("");
-                var fdc = /[A-Za-z\u05d0-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(txt);
+                let txt = !checkEnd ? text : text.split("").reverse().join("");
+                let fdc = /[A-Za-z\u05d0-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(txt);
                 return fdc ? (fdc[0] <= "z" ? "ltr" : "rtl") : guiDir;
             },
 
             hasArabicChar: function (text) {
-                var fdc = /[\u0600-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(text);
+                let fdc = /[\u0600-\u065f\u066a-\u06ef\u06fa-\u07ff\ufb1d-\ufdff\ufe70-\ufefc]/.exec(text);
                 return !!fdc;
             },
 
             showMarks: function (text, guiDir) {
-                var result = "";
-                for (var i = 0; i < text.length; i++) {
-                    var c = "" + text.charAt(i);
+                let result = "";
+                for (let i = 0; i < text.length; i++) {
+                    let c = "" + text.charAt(i);
                     switch (c) {
                         case LRM:
                             result += "<LRM>";
@@ -832,13 +832,13 @@ RED.text.format = (function() {
                             result += c;
                     }
                 }
-                var mark = typeof(guiDir) === "undefined" || !((/^(rtl|ltr)$/i).test(guiDir)) ? "" :
+                let mark = typeof(guiDir) === "undefined" || !((/^(rtl|ltr)$/i).test(guiDir)) ? "" :
                     guiDir === "rtl" ? RLO : LRO;
                 return mark + result + (mark === "" ? "" : PDF);
             },
 
             hideMarks: function (text) {
-                var txt = text.replace(/<LRM>/g, this.LRM).replace(/<RLM>/g, this.RLM).replace(/<LRE>/g, this.LRE);
+                let txt = text.replace(/<LRM>/g, this.LRM).replace(/<RLM>/g, this.RLM).replace(/<LRE>/g, this.LRE);
                 return txt.replace(/<RLE>/g, this.RLE).replace(/<LRO>/g, this.LRO).replace(/<RLO>/g, this.RLO).replace(/<PDF>/g, this.PDF);
             },
 
@@ -852,8 +852,8 @@ RED.text.format = (function() {
         };
     })();
 
-    var stext = (function() {
-        var stt = {};
+    let stext = (function() {
+        let stt = {};
 
         // args
         //   handler: main handler (default - dbidi/stt/handlers/common)
@@ -872,7 +872,7 @@ RED.text.format = (function() {
         }
 
         function checkArguments(fArgs, fullCheck) {
-            var args = Array.isArray(fArgs)? fArgs[0] : fArgs;
+            let args = Array.isArray(fArgs)? fArgs[0] : fArgs;
             if (!args.guiDir) {
                 args.guiDir = "ltr";
             }
@@ -899,14 +899,14 @@ RED.text.format = (function() {
             if (!content || !fArgs) {
                 return new TextSegment({content: ""});
             }
-            var args = checkArguments(fArgs, true);
-            var segments = [new TextSegment(
+            let args = checkArguments(fArgs, true);
+            let segments = [new TextSegment(
                 {
                     content: content,
                     actual: content,
                     localGui: args.dir
                 })];
-            var parse = common.handle;
+            let parse = common.handle;
             if (args.handler && typeof(args.handler) === "function") {
                 parse = args.handler.handle;
             }
@@ -915,7 +915,7 @@ RED.text.format = (function() {
         }
 
         function displayStructure(segments, fArgs, isHtml) {
-            var args = checkArguments(fArgs, false);
+            let args = checkArguments(fArgs, false);
             if (isHtml) {
                 return getResultWithHtml(segments, args);
             }
@@ -925,14 +925,14 @@ RED.text.format = (function() {
         }
 
         function getResultWithUcc(segments, args, isHtml) {
-            var result = "";
-            var checkedDir = "";
-            var prevDir = "";
-            var stop = false;
-            for (var i = 0; i < segments.length; i++) {
+            let result = "";
+            let checkedDir = "";
+            let prevDir = "";
+            let stop = false;
+            for (let i = 0; i < segments.length; i++) {
                 if (segments[i].isVisible) {
-                    var dir = segments[i].textDirection;
-                    var lDir = segments[i].localGui;
+                    let dir = segments[i].textDirection;
+                    let lDir = segments[i].localGui;
                     if (lDir !== "" && prevDir === "") {
                         result += (lDir === "rtl" ? misc.RLE : misc.LRE);
                     }
@@ -954,7 +954,7 @@ RED.text.format = (function() {
                         checkedDir = misc.getDirection(segments[i].content, dir, args.guiDir, true);
                     }
                     if (i < segments.length - 1) {
-                        var locDir = lDir && segments[i+1].localGui? lDir : args.dir;
+                        let locDir = lDir && segments[i+1].localGui? lDir : args.dir;
                         result += locDir === "rtl" ? misc.RLM : misc.LRM;
                     }
                     else if(prevDir !== "") {
@@ -967,7 +967,7 @@ RED.text.format = (function() {
                     stop = true;
                 }
             }
-            var sttDir = args.dir === "auto" ? misc.getDirection(segments[0].actual, args.dir, args.guiDir) : args.dir;
+            let sttDir = args.dir === "auto" ? misc.getDirection(segments[0].actual, args.dir, args.guiDir) : args.dir;
             if (sttDir !== args.guiDir) {
                 result = (sttDir === "rtl" ? misc.RLE : misc.LRE) + result + misc.PDF;
             }
@@ -975,13 +975,13 @@ RED.text.format = (function() {
         }
 
         function getResultWithHtml(segments, args, isHtml) {
-            var result = "";
-            var checkedDir = "";
-            var prevDir = "";
-            for (var i = 0; i < segments.length; i++) {
+            let result = "";
+            let checkedDir = "";
+            let prevDir = "";
+            for (let i = 0; i < segments.length; i++) {
                 if (segments[i].isVisible) {
-                    var dir = segments[i].textDirection;
-                    var lDir = segments[i].localGui;
+                    let dir = segments[i].textDirection;
+                    let lDir = segments[i].localGui;
                     if (lDir !== "" && prevDir === "") {
                         result += "<bdi dir='" + (lDir === "rtl" ? "rtl" : "ltr") + "'>";
                     }
@@ -1005,7 +1005,7 @@ RED.text.format = (function() {
                         checkedDir = misc.getDirection(segments[i].content, dir, args.guiDir, true);
                     }
                     if (i < segments.length - 1) {
-                        var locDir = lDir && segments[i+1].localGui? lDir : args.dir;
+                        let locDir = lDir && segments[i+1].localGui? lDir : args.dir;
                         result += "<span style='unicode-bidi: embed; direction: " + (locDir === "rtl" ? "rtl" : "ltr") + ";'></span>";
                     }
                     else if(prevDir !== "") {
@@ -1018,7 +1018,7 @@ RED.text.format = (function() {
                     stop = true;
                 }
             }
-            var sttDir = args.dir === "auto" ? misc.getDirection(segments[0].actual, args.dir, args.guiDir) : args.dir;
+            let sttDir = args.dir === "auto" ? misc.getDirection(segments[0].actual, args.dir, args.guiDir) : args.dir;
             if (sttDir !== args.guiDir) {
                 result = "<bdi dir='" + (sttDir === "rtl" ? "rtl" : "ltr") + "'>" + result + "</bdi>";
             }
@@ -1038,10 +1038,10 @@ RED.text.format = (function() {
         return stt;
     })();
 
-    var breadcrumb = (function() {
+    let breadcrumb = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: args.dir ? args.dir : isRtl ? "rtl" : "ltr",
@@ -1071,10 +1071,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var comma = (function() {
+    let comma = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: "ltr",
@@ -1090,12 +1090,12 @@ RED.text.format = (function() {
         };
     })();
 
-    var email = (function() {
+    let email = (function() {
         function getDir(text, locale) {
             if (misc.getLocaleDetails(locale).lang !== "ar") {
                 return "ltr";
             }
-            var ind = text.indexOf("@");
+            let ind = text.indexOf("@");
             if (ind > 0 && ind < text.length - 1) {
                 return misc.hasArabicChar(text.substring(ind + 1)) ? "rtl" : "ltr";
             }
@@ -1104,7 +1104,7 @@ RED.text.format = (function() {
 
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: getDir(text, locale),
@@ -1135,10 +1135,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var filepath = (function() {
+    let filepath = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: "ltr",
@@ -1154,10 +1154,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var formula = (function() {
+    let formula = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: "ltr",
@@ -1173,10 +1173,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var sql = (function() {
+    let sql = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: "ltr",
@@ -1233,10 +1233,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var underscore = (function() {
+    let underscore = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: "ltr",
@@ -1252,10 +1252,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var url = (function() {
+    let url = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: "ltr",
@@ -1271,10 +1271,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var word = (function() {
+    let word = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: args.dir ? args.dir : isRtl ? "rtl" : "ltr",
@@ -1290,10 +1290,10 @@ RED.text.format = (function() {
         };
     })();
 
-    var xpath = (function() {
+    let xpath = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var fArgs =
+                let fArgs =
                     {
                         guiDir: isRtl ? "rtl" : "ltr",
                         dir: "ltr",
@@ -1325,12 +1325,12 @@ RED.text.format = (function() {
         };
     })();
 
-    var custom = (function() {
+    let custom = (function() {
         return {
             format: function (text, args, isRtl, isHtml, locale, parseOnly) {
-                var hArgs = {};
-                var prop = "";
-                var sArgs = Array.isArray(args)? args[0] : args;
+                let hArgs = {};
+                let prop = "";
+                let sArgs = Array.isArray(args)? args[0] : args;
                 for (prop in sArgs) {
                     if (sArgs.hasOwnProperty(prop)) {
                         hArgs[prop] = sArgs[prop];
@@ -1348,9 +1348,9 @@ RED.text.format = (function() {
         };
     })();
 
-    var message = (function() {
-        var params = {msgLang: "en", msgDir: "", phLang: "", phDir: "", phPacking: ["{","}"], phStt: {type: "none", args: {}}, guiDir: ""};
-        var parametersChecked = false;
+    let message = (function() {
+        let params = {msgLang: "en", msgDir: "", phLang: "", phDir: "", phPacking: ["{","}"], phStt: {type: "none", args: {}}, guiDir: ""};
+        let parametersChecked = false;
 
         function getDirectionOfLanguage(lang) {
             if (lang === "he" || lang === "iw" || lang === "ar") {
@@ -1382,7 +1382,7 @@ RED.text.format = (function() {
 
         return {
             setDefaults: function (args) {
-                for (var prop in args) {
+                for (let prop in args) {
                     if (params.hasOwnProperty(prop)) {
                         params[prop] = args[prop];
                     }
@@ -1396,25 +1396,25 @@ RED.text.format = (function() {
                     checkParameters(params);
                     parametersChecked = true;
                 }
-                var isHtml = false;
-                var hasHtmlArg = false;
-                var spLength = params.phPacking[0].length;
-                var epLength = params.phPacking[1].length;
+                let isHtml = false;
+                let hasHtmlArg = false;
+                let spLength = params.phPacking[0].length;
+                let epLength = params.phPacking[1].length;
                 if (arguments.length > 0) {
-                    var last = arguments[arguments.length-1];
+                    let last = arguments[arguments.length-1];
                     if (typeof (last) === "boolean") {
                         isHtml = last;
                         hasHtmlArg = true;
                     }
                 }
                 //Message
-                var re = new RegExp(params.phPacking[0] + "\\d+" + params.phPacking[1]);
-                var m;
-                var tSegments = [];
-                var offset = 0;
-                var txt = text;
+                let re = new RegExp(params.phPacking[0] + "\\d+" + params.phPacking[1]);
+                let m;
+                let tSegments = [];
+                let offset = 0;
+                let txt = text;
                 while ((m = re.exec(txt)) != null) {
-                    var lastIndex = txt.indexOf(m[0]) + m[0].length;
+                    let lastIndex = txt.indexOf(m[0]) + m[0].length;
                     if (lastIndex > m[0].length) {
                         tSegments.push({text: txt.substring(0, lastIndex - m[0].length), ph: false});
                     }
@@ -1426,12 +1426,12 @@ RED.text.format = (function() {
                     tSegments.push({text: text.substring(offset, text.length), ph: false});
                 }
                 //Parameters
-                var tArgs = [];
-                for (var i = 1; i < arguments.length - (hasHtmlArg? 1 : 0); i++) {
-                    var arg = arguments[i];
-                    var checkArr = arg;
-                    var inLoop = false;
-                    var indArr = 0;
+                let tArgs = [];
+                for (let i = 1; i < arguments.length - (hasHtmlArg? 1 : 0); i++) {
+                    let arg = arguments[i];
+                    let checkArr = arg;
+                    let inLoop = false;
+                    let indArr = 0;
                     if (Array.isArray(checkArr)) {
                         arg = checkArr[0];
                         if (typeof(arg) === "undefined") {
@@ -1474,19 +1474,19 @@ RED.text.format = (function() {
                     } while(inLoop);
                 }
                 //Indexing
-                var segments = [];
+                let segments = [];
                 for (i = 0; i < tSegments.length; i++) {
-                    var t = tSegments[i];
+                    let t = tSegments[i];
                     if (!t.ph) {
                         segments.push(new TextSegment({content: t.text, textDirection: params.msgDir}));
                     }
                     else {
-                        var ind = parseInt(t.text.substring(spLength, t.text.length - epLength));
+                        let ind = parseInt(t.text.substring(spLength, t.text.length - epLength));
                         if (isNaN(ind) || ind >= tArgs.length) {
                             segments.push(new TextSegment({content: t.text, textDirection: params.msgDir}));
                             continue;
                         }
-                        var sttType = "none";
+                        let sttType = "none";
                         if (!tArgs[ind].stt) {
                             tArgs[ind].stt = params.phStt;
                         }
@@ -1499,9 +1499,9 @@ RED.text.format = (function() {
                             }
                         }
                         if (sttType.toLowerCase() !== "none") {
-                            var sttSegs =  getHandler(sttType).format(tArgs[ind].text, tArgs[ind].stt.args || {},
+                            let sttSegs =  getHandler(sttType).format(tArgs[ind].text, tArgs[ind].stt.args || {},
                                 params.msgDir === "rtl", false, params.msgLang, true);
-                            for (var j = 0; j < sttSegs.length; j++) {
+                            for (let j = 0; j < sttSegs.length; j++) {
                                 segments.push(sttSegs[j]);
                             }
                             segments.push(new TextSegment({isVisible: false}));
@@ -1511,13 +1511,13 @@ RED.text.format = (function() {
                         }
                     }
                 }
-                var result =  stext.displayStructure(segments, {guiDir: params.guiDir, dir: params.msgDir}, isHtml);
+                let result =  stext.displayStructure(segments, {guiDir: params.guiDir, dir: params.msgDir}, isHtml);
                 return result;
             }
         };
     })();
 
-    var event = null;
+    let event = null;
 
     function getHandler(type) {
         switch (type) {
@@ -1547,13 +1547,13 @@ RED.text.format = (function() {
     }
 
     function isInputEventSupported(element) {
-        var agent = window.navigator.userAgent;
+        let agent = window.navigator.userAgent;
         if (agent.indexOf("MSIE") >=0 || agent.indexOf("Trident") >=0 || agent.indexOf("Edge") >=0) {
             return false;
         }
-        var checked = document.createElement(element.tagName);
+        let checked = document.createElement(element.tagName);
         checked.contentEditable = true;
-        var isSupported = ("oninput" in checked);
+        let isSupported = ("oninput" in checked);
         if (!isSupported) {
             checked.setAttribute('oninput', 'return;');
             isSupported = typeof checked['oninput'] == 'function';
@@ -1572,9 +1572,9 @@ RED.text.format = (function() {
             event.initEvent('TF', true, true);
         }
         element.setAttribute("data-tf-type", type);
-        var sArgs = args === "undefined"? "{}" : JSON.stringify(Array.isArray(args)? args[0] : args);
+        let sArgs = args === "undefined"? "{}" : JSON.stringify(Array.isArray(args)? args[0] : args);
         element.setAttribute("data-tf-args", sArgs);
-        var dir = "ltr";
+        let dir = "ltr";
         if (isRtl === "undefined") {
             if (element.dir) {
                 dir = element.dir;
@@ -1587,7 +1587,7 @@ RED.text.format = (function() {
         element.setAttribute("data-tf-dir", isRtl);
         element.setAttribute("data-tf-locale", misc.getLocaleDetails(locale).lang);
         if (isInputEventSupported(element)) {
-            var ehandler = element.oninput;
+            let ehandler = element.oninput;
             element.oninput = function(event) {
                 displayWithStructure(event.target);
             };
@@ -1619,34 +1619,34 @@ RED.text.format = (function() {
     }
 
     function displayWithStructure(element) {
-        var txt = element.textContent || "";
-        var selection = document.getSelection();
+        let txt = element.textContent || "";
+        let selection = document.getSelection();
         if (txt.length === 0 || !selection || selection.rangeCount <= 0) {
             element.dispatchEvent(event);
             return;
         }
 
-        var range = selection.getRangeAt(0);
-        var tempRange = range.cloneRange(), startNode, startOffset;
+        let range = selection.getRangeAt(0);
+        let tempRange = range.cloneRange(), startNode, startOffset;
         startNode = range.startContainer;
         startOffset = range.startOffset;
-        var textOffset = 0;
+        let textOffset = 0;
         if (startNode.nodeType === 3) {
             textOffset += startOffset;
         }
         tempRange.setStart(element,0);
         tempRange.setEndBefore(startNode);
-        var div = document.createElement('div');
+        let div = document.createElement('div');
         div.appendChild(tempRange.cloneContents());
         textOffset += div.textContent.length;
 
         element.innerHTML = getHandler(element.getAttribute("data-tf-type")).
         format(txt, JSON.parse(element.getAttribute("data-tf-args")), (element.getAttribute("data-tf-dir") === "true"? true : false),
             true, element.getAttribute("data-tf-locale"));
-        var parent = element;
-        var node = element;
-        var newOffset = 0;
-        var inEnd = false;
+        let parent = element;
+        let node = element;
+        let newOffset = 0;
+        let inEnd = false;
         selection.removeAllRanges();
         range.setStart(element,0);
         range.setEnd(element,0);
@@ -1725,33 +1725,33 @@ RED.state = {
 }
 RED.nodes = (function() {
 
-    var node_defs = {};
-    var nodes = [];
-    var configNodes = {};
-    var links = [];
-    var defaultWorkspace;
-    var workspaces = {};
-    var workspacesOrder =[];
-    var subflows = {};
-    var loadedFlowVersion = null;
+    let node_defs = {};
+    let nodes = [];
+    let configNodes = {};
+    let links = [];
+    let defaultWorkspace;
+    let workspaces = {};
+    let workspacesOrder =[];
+    let subflows = {};
+    let loadedFlowVersion = null;
 
-    var initialLoad;
+    let initialLoad;
 
-    var dirty = false;
+    let dirty = false;
 
     function setDirty(d) {
         dirty = d;
         RED.events.emit("nodes:change",{dirty:dirty});
     }
 
-    var registry = (function() {
-        var moduleList = {};
-        var nodeList = [];
-        var nodeSets = {};
-        var typeToId = {};
-        var nodeDefinitions = {};
+    let registry = (function() {
+        let moduleList = {};
+        let nodeList = [];
+        let nodeSets = {};
+        let typeToId = {};
+        let nodeDefinitions = {};
 
-        var exports = {
+        let exports = {
             getModule: function(module) {
                 return moduleList[module];
             },
@@ -1769,15 +1769,15 @@ RED.nodes = (function() {
             },
             setNodeList: function(list) {
                 nodeList = [];
-                for(var i=0;i<list.length;i++) {
-                    var ns = list[i];
+                for(let i=0;i<list.length;i++) {
+                    let ns = list[i];
                     exports.addNodeSet(ns);
                 }
             },
             addNodeSet: function(ns) {
                 ns.added = false;
                 nodeSets[ns.id] = ns;
-                for (var j=0;j<ns.types.length;j++) {
+                for (let j=0;j<ns.types.length;j++) {
                     typeToId[ns.types[j]] = ns.id;
                 }
                 nodeList.push(ns);
@@ -1792,12 +1792,12 @@ RED.nodes = (function() {
                 RED.events.emit("registry:node-set-added",ns);
             },
             removeNodeSet: function(id) {
-                var ns = nodeSets[id];
-                for (var j=0;j<ns.types.length;j++) {
+                let ns = nodeSets[id];
+                for (let j=0;j<ns.types.length;j++) {
                     delete typeToId[ns.types[j]];
                 }
                 delete nodeSets[id];
-                for (var i=0;i<nodeList.length;i++) {
+                for (let i=0;i<nodeList.length;i++) {
                     if (nodeList[i].id === id) {
                         nodeList.splice(i,1);
                         break;
@@ -1814,12 +1814,12 @@ RED.nodes = (function() {
                 return nodeSets[id];
             },
             enableNodeSet: function(id) {
-                var ns = nodeSets[id];
+                let ns = nodeSets[id];
                 ns.enabled = true;
                 RED.events.emit("registry:node-set-enabled",ns);
             },
             disableNodeSet: function(id) {
-                var ns = nodeSets[id];
+                let ns = nodeSets[id];
                 ns.enabled = false;
                 RED.events.emit("registry:node-set-disabled",ns);
             },
@@ -1830,14 +1830,14 @@ RED.nodes = (function() {
                     nodeSets[typeToId[nt]].added = true;
                     nodeSets[typeToId[nt]].enabled = true;
 
-                    var ns;
+                    let ns;
                     if (def.set.module === "node-red") {
                         ns = "node-red";
                     } else {
                         ns = def.set.id;
                     }
                     def["_"] = function() {
-                        var args = Array.prototype.slice.call(arguments, 0);
+                        let args = Array.prototype.slice.call(arguments, 0);
                         if (args[0].indexOf(":") === -1) {
                             args[0] = ns+":"+args[0];
                         }
@@ -1877,14 +1877,14 @@ RED.nodes = (function() {
             n.ports = [];
             if (n.wires && (n.wires.length > n.outputs)) { n.outputs = n.wires.length; }
             if (n.outputs) {
-                for (var i=0;i<n.outputs;i++) {
+                for (let i=0;i<n.outputs;i++) {
                     n.ports.push(i);
                 }
             }
             n.dirty = true;
             updateConfigNodeUsers(n);
             if (n._def.category == "subflows" && typeof n.i === "undefined") {
-                var nextId = 0;
+                let nextId = 0;
                 RED.nodes.eachNode(function(node) {
                     nextId = Math.max(nextId,node.i||0);
                 });
@@ -1902,7 +1902,7 @@ RED.nodes = (function() {
         if (id in configNodes) {
             return configNodes[id];
         } else {
-            for (var n in nodes) {
+            for (let n in nodes) {
                 if (nodes[n].id == id) {
                     return nodes[n];
                 }
@@ -1912,9 +1912,9 @@ RED.nodes = (function() {
     }
 
     function removeNode(id) {
-        var removedLinks = [];
-        var removedNodes = [];
-        var node;
+        let removedLinks = [];
+        let removedNodes = [];
+        let node;
         if (id in configNodes) {
             node = configNodes[id];
             delete configNodes[id];
@@ -1926,21 +1926,21 @@ RED.nodes = (function() {
                 nodes.splice(nodes.indexOf(node),1);
                 removedLinks = links.filter(function(l) { return (l.source === node) || (l.target === node); });
                 removedLinks.forEach(function(l) {links.splice(links.indexOf(l), 1); });
-                var updatedConfigNode = false;
-                for (var d in node._def.defaults) {
+                let updatedConfigNode = false;
+                for (let d in node._def.defaults) {
                     if (node._def.defaults.hasOwnProperty(d)) {
-                        var property = node._def.defaults[d];
+                        let property = node._def.defaults[d];
                         if (property.type) {
-                            var type = registry.getNodeType(property.type);
+                            let type = registry.getNodeType(property.type);
                             if (type && type.category == "config") {
-                                var configNode = configNodes[node[d]];
+                                let configNode = configNodes[node[d]];
                                 if (configNode) {
                                     updatedConfigNode = true;
                                     if (configNode._def.exclusive) {
                                         removeNode(node[d]);
                                         removedNodes.push(configNode);
                                     } else {
-                                        var users = configNode.users;
+                                        let users = configNode.users;
                                         users.splice(users.indexOf(node),1);
                                     }
                                 }
@@ -1961,7 +1961,7 @@ RED.nodes = (function() {
     }
 
     function removeLink(l) {
-        var index = links.indexOf(l);
+        let index = links.indexOf(l);
         if (index != -1) {
             links.splice(index,1);
         }
@@ -1984,10 +1984,10 @@ RED.nodes = (function() {
         delete workspaces[id];
         workspacesOrder.splice(workspacesOrder.indexOf(id),1);
 
-        var removedNodes = [];
-        var removedLinks = [];
-        var n;
-        var node;
+        let removedNodes = [];
+        let removedLinks = [];
+        let n;
+        let node;
         for (n=0;n<nodes.length;n++) {
             node = nodes[n];
             if (node.z == id) {
@@ -2003,7 +2003,7 @@ RED.nodes = (function() {
             }
         }
         for (n=0;n<removedNodes.length;n++) {
-            var result = removeNode(removedNodes[n].id);
+            let result = removeNode(removedNodes[n].id);
             removedLinks = removedLinks.concat(result.links);
         }
         return {nodes:removedNodes,links:removedLinks};
@@ -2011,13 +2011,13 @@ RED.nodes = (function() {
 
     function addSubflow(sf, createNewIds) {
         if (createNewIds) {
-            var subflowNames = Object.keys(subflows).map(function(sfid) {
+            let subflowNames = Object.keys(subflows).map(function(sfid) {
                 return subflows[sfid].name;
             });
 
             subflowNames.sort();
-            var copyNumber = 1;
-            var subflowName = sf.name;
+            let copyNumber = 1;
+            let subflowName = sf.name;
             subflowNames.forEach(function(name) {
                 if (subflowName == name) {
                     copyNumber++;
@@ -2062,15 +2062,15 @@ RED.nodes = (function() {
     }
 
     function subflowContains(sfid,nodeid) {
-        for (var i=0;i<nodes.length;i++) {
-            var node = nodes[i];
+        for (let i=0;i<nodes.length;i++) {
+            let node = nodes[i];
             if (node.z === sfid) {
-                var m = /^subflow:(.+)$/.exec(node.type);
+                let m = /^subflow:(.+)$/.exec(node.type);
                 if (m) {
                     if (m[1] === nodeid) {
                         return true;
                     } else {
-                        var result = subflowContains(m[1],nodeid);
+                        let result = subflowContains(m[1],nodeid);
                         if (result) {
                             return true;
                         }
@@ -2082,16 +2082,16 @@ RED.nodes = (function() {
     }
 
     function getAllFlowNodes(node) {
-        var visited = {};
+        let visited = {};
         visited[node.id] = true;
-        var nns = [node];
-        var stack = [node];
+        let nns = [node];
+        let stack = [node];
         while(stack.length !== 0) {
-            var n = stack.shift();
-            var childLinks = links.filter(function(d) { return (d.source === n) || (d.target === n);});
-            for (var i=0;i<childLinks.length;i++) {
-                var child = (childLinks[i].source === n)?childLinks[i].target:childLinks[i].source;
-                var id = child.id;
+            let n = stack.shift();
+            let childLinks = links.filter(function(d) { return (d.source === n) || (d.target === n);});
+            for (let i=0;i<childLinks.length;i++) {
+                let child = (childLinks[i].source === n)?childLinks[i].target:childLinks[i].source;
+                let id = child.id;
                 if (!id) {
                     id = child.direction+":"+child.i;
                 }
@@ -2106,10 +2106,10 @@ RED.nodes = (function() {
     }
 
     function convertWorkspace(n) {
-        var node = {};
+        let node = {};
         node.id = n.id;
         node.type = n.type;
-        for (var d in n._def.defaults) {
+        for (let d in n._def.defaults) {
             if (n._def.defaults.hasOwnProperty(d)) {
                 node[d] = n[d];
             }
@@ -2124,26 +2124,26 @@ RED.nodes = (function() {
             return convertWorkspace(n);
         }
         exportCreds = exportCreds || false;
-        var node = {};
+        let node = {};
         node.id = n.id;
         node.type = n.type;
         node.z = n.z;
         if (node.type == "unknown") {
-            for (var p in n._orig) {
+            for (let p in n._orig) {
                 if (n._orig.hasOwnProperty(p)) {
                     node[p] = n._orig[p];
                 }
             }
         } else {
-            for (var d in n._def.defaults) {
+            for (let d in n._def.defaults) {
                 if (n._def.defaults.hasOwnProperty(d)) {
                     node[d] = n[d];
                 }
             }
             if(exportCreds && n.credentials) {
-                var credentialSet = {};
+                let credentialSet = {};
                 node.credentials = {};
-                for (var cred in n._def.credentials) {
+                for (let cred in n._def.credentials) {
                     if (n._def.credentials.hasOwnProperty(cred)) {
                         if (n._def.credentials[cred].type == 'password') {
                             if (!n.credentials._ ||
@@ -2165,12 +2165,12 @@ RED.nodes = (function() {
             node.x = n.x;
             node.y = n.y;
             node.wires = [];
-            for(var i=0;i<n.outputs;i++) {
+            for(let i=0;i<n.outputs;i++) {
                 node.wires.push([]);
             }
-            var wires = links.filter(function(d){return d.source === n;});
-            for (var j=0;j<wires.length;j++) {
-                var w = wires[j];
+            let wires = links.filter(function(d){return d.source === n;});
+            for (let j=0;j<wires.length;j++) {
+                let w = wires[j];
                 if (w.target.type != "subflow") {
                     node.wires[w.sourcePort].push(w.target.id);
                 }
@@ -2180,7 +2180,7 @@ RED.nodes = (function() {
     }
 
     function convertSubflow(n) {
-        var node = {};
+        let node = {};
         node.id = n.id;
         node.type = n.type;
         node.name = n.name;
@@ -2189,10 +2189,10 @@ RED.nodes = (function() {
         node.out = [];
 
         n.in.forEach(function(p) {
-            var nIn = {x:p.x,y:p.y,wires:[]};
-            var wires = links.filter(function(d) { return d.source === p });
-            for (var i=0;i<wires.length;i++) {
-                var w = wires[i];
+            let nIn = {x:p.x,y:p.y,wires:[]};
+            let wires = links.filter(function(d) { return d.source === p });
+            for (let i=0;i<wires.length;i++) {
+                let w = wires[i];
                 if (w.target.type != "subflow") {
                     nIn.wires.push({id:w.target.id})
                 }
@@ -2200,8 +2200,8 @@ RED.nodes = (function() {
             node.in.push(nIn);
         });
         n.out.forEach(function(p,c) {
-            var nOut = {x:p.x,y:p.y,wires:[]};
-            var wires = links.filter(function(d) { return d.target === p });
+            let nOut = {x:p.x,y:p.y,wires:[]};
+            let wires = links.filter(function(d) { return d.target === p });
             for (let i=0; i < wires.length; i++) {
                 if (wires[i].source.type != "subflow") {
                     nOut.wires.push({id:wires[i].source.id,port:wires[i].sourcePort})
@@ -2219,32 +2219,32 @@ RED.nodes = (function() {
      * Converts the current node selection to an exportable JSON Object
      **/
     function createExportableNodeSet(set) {
-        var nns = [];
-        var exportedConfigNodes = {};
-        var exportedSubflows = {};
-        for (var n=0;n<set.length;n++) {
-            var node = set[n];
+        let nns = [];
+        let exportedConfigNodes = {};
+        let exportedSubflows = {};
+        for (let n=0;n<set.length;n++) {
+            let node = set[n];
             if (node.type.substring(0,8) == "subflow:") {
-                var subflowId = node.type.substring(8);
+                let subflowId = node.type.substring(8);
                 if (!exportedSubflows[subflowId]) {
                     exportedSubflows[subflowId] = true;
-                    var subflow = getSubflow(subflowId);
-                    var subflowSet = [subflow];
+                    let subflow = getSubflow(subflowId);
+                    let subflowSet = [subflow];
                     RED.nodes.eachNode(function(n) {
                         if (n.z == subflowId) {
                             subflowSet.push(n);
                         }
                     });
-                    var exportableSubflow = createExportableNodeSet(subflowSet);
+                    let exportableSubflow = createExportableNodeSet(subflowSet);
                     nns = exportableSubflow.concat(nns);
                 }
             }
             if (node.type != "subflow") {
-                var convertedNode = RED.nodes.convertNode(node);
-                for (var d in node._def.defaults) {
+                let convertedNode = RED.nodes.convertNode(node);
+                for (let d in node._def.defaults) {
                     if (node._def.defaults[d].type && node[d] in configNodes) {
-                        var confNode = configNodes[node[d]];
-                        var exportable = registry.getNodeType(node._def.defaults[d].type).exportable;
+                        let confNode = configNodes[node[d]];
+                        let exportable = registry.getNodeType(node._def.defaults[d].type).exportable;
                         if ((exportable == null || exportable)) {
                             if (!(node[d] in exportedConfigNodes)) {
                                 exportedConfigNodes[node[d]] = true;
@@ -2257,7 +2257,7 @@ RED.nodes = (function() {
                 }
                 nns.push(convertedNode);
             } else {
-                var convertedSubflow = convertSubflow(node);
+                let convertedSubflow = convertSubflow(node);
                 nns.push(convertedSubflow);
             }
         }
@@ -2269,8 +2269,8 @@ RED.nodes = (function() {
         if (exportCredentials === undefined) {
             exportCredentials = true;
         }
-        var nns = [];
-        var i;
+        let nns = [];
+        let i;
         for (i=0;i<workspacesOrder.length;i++) {
             if (workspaces[workspacesOrder[i]].type == "tab") {
                 nns.push(convertWorkspace(workspaces[workspacesOrder[i]]));
@@ -2287,15 +2287,15 @@ RED.nodes = (function() {
             }
         }
         for (i=0;i<nodes.length;i++) {
-            var node = nodes[i];
+            let node = nodes[i];
             nns.push(convertNode(node, exportCredentials));
         }
         return nns;
     }
 
     function checkForMatchingSubflow(subflow,subflowNodes) {
-        var i;
-        var match = null;
+        let i;
+        let match = null;
         try {
             RED.nodes.eachSubflow(function(sf) {
                 if (sf.name != subflow.name ||
@@ -2304,17 +2304,17 @@ RED.nodes = (function() {
                     sf.out.length != subflow.out.length) {
                     return;
                 }
-                var sfNodes = RED.nodes.filterNodes({z:sf.id});
+                let sfNodes = RED.nodes.filterNodes({z:sf.id});
                 if (sfNodes.length != subflowNodes.length) {
                     return;
                 }
 
-                var subflowNodeSet = [subflow].concat(subflowNodes);
-                var sfNodeSet = [sf].concat(sfNodes);
+                let subflowNodeSet = [subflow].concat(subflowNodes);
+                let sfNodeSet = [sf].concat(sfNodes);
 
-                var exportableSubflowNodes = JSON.stringify(subflowNodeSet);
-                var exportableSFNodes = JSON.stringify(createExportableNodeSet(sfNodeSet));
-                var nodeMap = {};
+                let exportableSubflowNodes = JSON.stringify(subflowNodeSet);
+                let exportableSFNodes = JSON.stringify(createExportableNodeSet(sfNodeSet));
+                let nodeMap = {};
                 for (i=0;i<sfNodes.length;i++) {
                     exportableSubflowNodes = exportableSubflowNodes.replace(new RegExp("\""+subflowNodes[i].id+"\"","g"),'"'+sfNodes[i].id+'"');
                 }
@@ -2339,11 +2339,11 @@ RED.nodes = (function() {
         if (nodeA.type != nodeB.type) {
             return false;
         }
-        var def = nodeA._def;
-        for (var d in def.defaults) {
+        let def = nodeA._def;
+        for (let d in def.defaults) {
             if (def.defaults.hasOwnProperty(d)) {
-                var vA = nodeA[d];
-                var vB = nodeB[d];
+                let vA = nodeA[d];
+                let vB = nodeB[d];
                 if (typeof vA !== typeof vB) {
                     return false;
                 }
@@ -2362,10 +2362,10 @@ RED.nodes = (function() {
     }
 
     function importNodes(newNodesObj,createNewIds,createMissingWorkspace) {
-        var i;
-        var n;
-        var newNodes;
-        var nodeZmap = {};
+        let i;
+        let n;
+        let newNodes;
+        let nodeZmap = {};
         if (typeof newNodesObj === "string") {
             if (newNodesObj === "") {
                 return;
@@ -2373,7 +2373,7 @@ RED.nodes = (function() {
             try {
                 newNodes = JSON.parse(newNodesObj);
             } catch(err) {
-                var e = new Error(RED._("clipboard.invalidFlow",{message:err.message}));
+                let e = new Error(RED._("clipboard.invalidFlow",{message:err.message}));
                 e.code = "NODE_RED";
                 throw e;
             }
@@ -2387,7 +2387,7 @@ RED.nodes = (function() {
         if (!initialLoad) {
             initialLoad = JSON.parse(JSON.stringify(newNodes));
         }
-        var unknownTypes = [];
+        let unknownTypes = [];
         for (i=0;i<newNodes.length;i++) {
             n = newNodes[i];
             // TODO: remove workspace in next release+1
@@ -2407,21 +2407,21 @@ RED.nodes = (function() {
 
         }
         if (unknownTypes.length > 0) {
-            var typeList = "<ul><li>"+unknownTypes.join("</li><li>")+"</li></ul>";
-            var type = "type"+(unknownTypes.length > 1?"s":"");
+            let typeList = "<ul><li>"+unknownTypes.join("</li><li>")+"</li></ul>";
+            let type = "type"+(unknownTypes.length > 1?"s":"");
             RED.notify("<strong>"+RED._("clipboard.importUnrecognised",{count:unknownTypes.length})+"</strong>"+typeList,"error",false,10000);
         }
 
-        var activeWorkspace = RED.workspaces.active();
+        let activeWorkspace = RED.workspaces.active();
         //TODO: check the z of the subflow instance and check _that_ if it exists
-        var activeSubflow = getSubflow(activeWorkspace);
+        let activeSubflow = getSubflow(activeWorkspace);
         for (i=0;i<newNodes.length;i++) {
-            var m = /^subflow:(.+)$/.exec(newNodes[i].type);
+            let m = /^subflow:(.+)$/.exec(newNodes[i].type);
             if (m) {
-                var subflowId = m[1];
-                var parent = getSubflow(newNodes[i].z || activeWorkspace);
+                let subflowId = m[1];
+                let parent = getSubflow(newNodes[i].z || activeWorkspace);
                 if (parent) {
-                    var err;
+                    let err;
                     if (subflowId === parent.id) {
                         err = new Error(RED._("notification.errors.cannotAddSubflowToItself"));
                     }
@@ -2437,19 +2437,19 @@ RED.nodes = (function() {
             }
         }
 
-        var new_workspaces = [];
-        var workspace_map = {};
-        var new_subflows = [];
-        var subflow_map = {};
-        var subflow_blacklist = {};
-        var node_map = {};
-        var new_nodes = [];
-        var new_links = [];
-        var nid;
-        var def;
-        var configNode;
-        var missingWorkspace = null;
-        var d;
+        let new_workspaces = [];
+        let workspace_map = {};
+        let new_subflows = [];
+        let subflow_map = {};
+        let subflow_blacklist = {};
+        let node_map = {};
+        let new_nodes = [];
+        let new_links = [];
+        let nid;
+        let def;
+        let configNode;
+        let missingWorkspace = null;
+        let d;
 
         // Find all tabs and subflow templates
         for (i=0;i<newNodes.length;i++) {
@@ -2472,7 +2472,7 @@ RED.nodes = (function() {
                 RED.workspaces.add(n);
                 new_workspaces.push(n);
             } else if (n.type === "subflow") {
-                var matchingSubflow = checkForMatchingSubflow(n,nodeZmap[n.id]);
+                let matchingSubflow = checkForMatchingSubflow(n,nodeZmap[n.id]);
                 if (matchingSubflow) {
                     subflow_blacklist[n.id] = matchingSubflow;
                 } else {
@@ -2516,7 +2516,7 @@ RED.nodes = (function() {
             n = newNodes[i];
             def = registry.getNodeType(n.type);
             if (def && def.category == "config") {
-                var existingConfigNode = null;
+                let existingConfigNode = null;
                 if (createNewIds) {
                     if (n.z) {
                         if (subflow_blacklist[n.z]) {
@@ -2543,7 +2543,7 @@ RED.nodes = (function() {
                         if (n.z && existingConfigNode.z !== n.z) {
                             existingConfigNode = null;
                             // Check the config nodes on n.z
-                            for (var cn in configNodes) {
+                            for (let cn in configNodes) {
                                 if (configNodes.hasOwnProperty(cn)) {
                                     if (configNodes[cn].z === n.z && compareNodes(configNodes[cn],n,false)) {
                                         existingConfigNode = configNodes[cn];
@@ -2592,7 +2592,7 @@ RED.nodes = (function() {
             if (n.type !== "workspace" && n.type !== "tab" && n.type !== "subflow") {
                 def = registry.getNodeType(n.type);
                 if (!def || def.category != "config") {
-                    var node = {x:n.x,y:n.y,z:n.z,type:0,wires:n.wires,changed:false,_config:{}};
+                    let node = {x:n.x,y:n.y,z:n.z,type:0,wires:n.wires,changed:false,_config:{}};
                     if (createNewIds) {
                         if (subflow_blacklist[n.z]) {
                             continue;
@@ -2630,8 +2630,8 @@ RED.nodes = (function() {
                     node.type = n.type;
                     node._def = def;
                     if (n.type.substring(0,7) === "subflow") {
-                        var parentId = n.type.split(":")[1];
-                        var subflow = subflow_blacklist[parentId]||subflow_map[parentId]||getSubflow(parentId);
+                        let parentId = n.type.split(":")[1];
+                        let subflow = subflow_blacklist[parentId]||subflow_map[parentId]||getSubflow(parentId);
                         if (createNewIds) {
                             parentId = subflow.id;
                             node.type = "subflow:"+parentId;
@@ -2659,8 +2659,8 @@ RED.nodes = (function() {
                                 };
                                 node.users = [];
                             }
-                            var orig = {};
-                            for (var p in n) {
+                            let orig = {};
+                            for (let p in n) {
                                 if (n.hasOwnProperty(p) && p!="x" && p!="y" && p!="z" && p!="id" && p!="wires") {
                                     orig[p] = n[p];
                                 }
@@ -2701,7 +2701,7 @@ RED.nodes = (function() {
         }
         // TODO: make this a part of the node definition so it doesn't have to
         //       be hardcoded here
-        var nodeTypeArrayReferences = {
+        let nodeTypeArrayReferences = {
             "catch":"scope",
             "status":"scope",
             "link in":"links",
@@ -2712,12 +2712,12 @@ RED.nodes = (function() {
         for (i=0;i<new_nodes.length;i++) {
             n = new_nodes[i];
             if (n.wires) {
-                for (var w1=0;w1<n.wires.length;w1++) {
-                    var wires = (n.wires[w1] instanceof Array)?n.wires[w1]:[n.wires[w1]];
-                    for (var w2=0;w2<wires.length;w2++) {
+                for (let w1=0;w1<n.wires.length;w1++) {
+                    let wires = (n.wires[w1] instanceof Array)?n.wires[w1]:[n.wires[w1]];
+                    for (let w2=0;w2<wires.length;w2++) {
                         if (node_map.hasOwnProperty(wires[w2])) {
                             if (n.z === node_map[wires[w2]].z) {
-                                var link = {source:n,sourcePort:w1,target:node_map[wires[w2]]};
+                                let link = {source:n,sourcePort:w1,target:node_map[wires[w2]]};
                                 addLink(link);
                                 new_links.push(link);
                             } else {
@@ -2728,7 +2728,7 @@ RED.nodes = (function() {
                 }
                 delete n.wires;
             }
-            for (var d3 in n._def.defaults) {
+            for (let d3 in n._def.defaults) {
                 if (n._def.defaults.hasOwnProperty(d3)) {
                     if (n._def.defaults[d3].type && node_map[n[d3]]) {
                         n[d3] = node_map[n[d3]].id;
@@ -2737,7 +2737,7 @@ RED.nodes = (function() {
                             configNode.users.push(n);
                         }
                     } else if (nodeTypeArrayReferences.hasOwnProperty(n.type) && nodeTypeArrayReferences[n.type] === d3 && n[d3] !== undefined && n[d3] !== null) {
-                        for (var j = 0;j<n[d3].length;j++) {
+                        for (let j = 0;j<n[d3].length;j++) {
                             if (node_map[n[d3][j]]) {
                                 n[d3][j] = node_map[n[d3][j]].id;
                             }
@@ -2750,7 +2750,7 @@ RED.nodes = (function() {
             // get added
             if (activeSubflow && /^link /.test(n.type) && n.links) {
                 n.links = n.links.filter(function(id) {
-                    var otherNode = RED.nodes.node(id);
+                    let otherNode = RED.nodes.node(id);
                     return (otherNode && otherNode.z === activeWorkspace)
                 });
             }
@@ -2763,7 +2763,7 @@ RED.nodes = (function() {
             n = new_subflows[i];
             n.in.forEach(function(input) {
                 input.wires.forEach(function(wire) {
-                    var link = {source:input, sourcePort:0, target:node_map[wire.id]};
+                    let link = {source:input, sourcePort:0, target:node_map[wire.id]};
                     addLink(link);
                     new_links.push(link);
                 });
@@ -2771,7 +2771,7 @@ RED.nodes = (function() {
             });
             n.out.forEach(function(output) {
                 output.wires.forEach(function(wire) {
-                    var link;
+                    let link;
                     if (subflow_map[wire.id] && subflow_map[wire.id].id == n.id) {
                         link = {source:n.in[wire.port], sourcePort:wire.port,target:output};
                     } else {
@@ -2790,10 +2790,10 @@ RED.nodes = (function() {
 
     // TODO: supports filter.z|type
     function filterNodes(filter) {
-        var result = [];
+        let result = [];
 
-        for (var n=0;n<nodes.length;n++) {
-            var node = nodes[n];
+        for (let n=0;n<nodes.length;n++) {
+            let node = nodes[n];
             if (filter.hasOwnProperty("z") && node.z !== filter.z) {
                 continue;
             }
@@ -2805,10 +2805,10 @@ RED.nodes = (function() {
         return result;
     }
     function filterLinks(filter) {
-        var result = [];
+        let result = [];
 
-        for (var n=0;n<links.length;n++) {
-            var link = links[n];
+        for (let n=0;n<links.length;n++) {
+            let link = links[n];
             if (filter.source) {
                 if (filter.source.hasOwnProperty("id") && link.source.id !== filter.source.id) {
                     continue;
@@ -2835,13 +2835,13 @@ RED.nodes = (function() {
 
     // Update any config nodes referenced by the provided node to ensure their 'users' list is correct
     function updateConfigNodeUsers(n) {
-        for (var d in n._def.defaults) {
+        for (let d in n._def.defaults) {
             if (n._def.defaults.hasOwnProperty(d)) {
-                var property = n._def.defaults[d];
+                let property = n._def.defaults[d];
                 if (property.type) {
-                    var type = registry.getNodeType(property.type);
+                    let type = registry.getNodeType(property.type);
                     if (type && type.category == "config") {
-                        var configNode = configNodes[n[d]];
+                        let configNode = configNodes[n[d]];
                         if (configNode) {
                             if (configNode.users.indexOf(n) === -1) {
                                 configNode.users.push(n);
@@ -2866,11 +2866,11 @@ RED.nodes = (function() {
         links = [];
         configNodes = {};
         workspacesOrder = [];
-        var subflowIds = Object.keys(subflows);
+        let subflowIds = Object.keys(subflows);
         subflowIds.forEach(function(id) {
             RED.subflow.removeSubflow(id)
         });
-        var workspaceIds = Object.keys(workspaces);
+        let workspaceIds = Object.keys(workspaces);
         workspaceIds.forEach(function(id) {
             RED.workspaces.remove(workspaces[id]);
         });
@@ -2882,15 +2882,15 @@ RED.nodes = (function() {
         RED.workspaces.refresh();
         // RED.sidebar.config.refresh();
 
-        // var node_defs = {};
-        // var nodes = [];
-        // var configNodes = {};
-        // var links = [];
-        // var defaultWorkspace;
-        // var workspaces = {};
-        // var workspacesOrder =[];
-        // var subflows = {};
-        // var loadedFlowVersion = null;
+        // let node_defs = {};
+        // let nodes = [];
+        // let configNodes = {};
+        // let links = [];
+        // let defaultWorkspace;
+        // let workspaces = {};
+        // let workspacesOrder =[];
+        // let subflows = {};
+        // let loadedFlowVersion = null;
     }
 
     return {
@@ -2926,31 +2926,31 @@ RED.nodes = (function() {
         subflowContains: subflowContains,
 
         eachNode: function(cb) {
-            for (var n=0;n<nodes.length;n++) {
+            for (let n=0;n<nodes.length;n++) {
                 cb(nodes[n]);
             }
         },
         eachLink: function(cb) {
-            for (var l=0;l<links.length;l++) {
+            for (let l=0;l<links.length;l++) {
                 cb(links[l]);
             }
         },
         eachConfig: function(cb) {
-            for (var id in configNodes) {
+            for (let id in configNodes) {
                 if (configNodes.hasOwnProperty(id)) {
                     cb(configNodes[id]);
                 }
             }
         },
         eachSubflow: function(cb) {
-            for (var id in subflows) {
+            for (let id in subflows) {
                 if (subflows.hasOwnProperty(id)) {
                     cb(subflows[id]);
                 }
             }
         },
         eachWorkspace: function(cb) {
-            for (var i=0;i<workspacesOrder.length;i++) {
+            for (let i=0;i<workspacesOrder.length;i++) {
                 cb(workspaces[workspacesOrder[i]]);
             }
         },
@@ -2986,14 +2986,14 @@ RED.nodes = (function() {
     };
 })();
 RED.history = (function() {
-    var undo_history = [];
+    let undo_history = [];
 
     function undoEvent(ev) {
-        var i;
-        var len;
-        var node;
-        var subflow;
-        var modifiedTabs = {};
+        let i;
+        let len;
+        let node;
+        let subflow;
+        let modifiedTabs = {};
         if (ev) {
             if (ev.t == 'multi') {
                 len = ev.events.length;
@@ -3002,7 +3002,7 @@ RED.history = (function() {
                 }
             } else if (ev.t == 'replace') {
                 RED.nodes.clear();
-                var imported = RED.nodes.import(ev.config);
+                let imported = RED.nodes.import(ev.config);
                 imported[0].forEach(function(n) {
                     if (ev.changed[n.id]) {
                         n.changed = true;
@@ -3040,7 +3040,7 @@ RED.history = (function() {
                 if (ev.subflow) {
                     if (ev.subflow.instances) {
                         ev.subflow.instances.forEach(function(n) {
-                            var node = RED.nodes.node(n.id);
+                            let node = RED.nodes.node(n.id);
                             if (node) {
                                 node.changed = n.changed;
                                 node.dirty = true;
@@ -3079,9 +3079,9 @@ RED.history = (function() {
                     subflow = RED.nodes.subflow(ev.subflowOutputs[0].z);
                     ev.subflowOutputs.sort(function(a,b) { return a.i-b.i});
                     for (i=0;i<ev.subflowOutputs.length;i++) {
-                        var output = ev.subflowOutputs[i];
+                        let output = ev.subflowOutputs[i];
                         subflow.out.splice(output.i,0,output);
-                        for (var j=output.i+1;j<subflow.out.length;j++) {
+                        for (let j=output.i+1;j<subflow.out.length;j++) {
                             subflow.out[j].i++;
                             subflow.out[j].dirty = true;
                         }
@@ -3096,7 +3096,7 @@ RED.history = (function() {
                 }
                 if (ev.subflow && ev.subflow.hasOwnProperty('instances')) {
                     ev.subflow.instances.forEach(function(n) {
-                        var node = RED.nodes.node(n.id);
+                        let node = RED.nodes.node(n.id);
                         if (node) {
                             node.changed = n.changed;
                             node.dirty = true;
@@ -3130,7 +3130,7 @@ RED.history = (function() {
                         if (ev.changes.hasOwnProperty(i)) {
                             node = RED.nodes.node(i);
                             if (node) {
-                                for (var d in ev.changes[i]) {
+                                for (let d in ev.changes[i]) {
                                     if (ev.changes[i].hasOwnProperty(d)) {
                                         node[d] = ev.changes[i][d];
                                     }
@@ -3143,7 +3143,7 @@ RED.history = (function() {
                 }
             } else if (ev.t == "move") {
                 for (i=0;i<ev.nodes.length;i++) {
-                    var n = ev.nodes[i];
+                    let n = ev.nodes[i];
                     n.n.x = n.ox;
                     n.n.y = n.oy;
                     n.n.dirty = true;
@@ -3165,11 +3165,11 @@ RED.history = (function() {
                     if (ev.changes.hasOwnProperty(i)) {
                         if (ev.node._def.defaults[i].type) {
                             // This is a config node property
-                            var currentConfigNode = RED.nodes.node(ev.node[i]);
+                            let currentConfigNode = RED.nodes.node(ev.node[i]);
                             if (currentConfigNode) {
                                 currentConfigNode.users.splice(currentConfigNode.users.indexOf(ev.node),1);
                             }
-                            var newConfigNode = RED.nodes.node(ev.changes[i]);
+                            let newConfigNode = RED.nodes.node(ev.changes[i]);
                             if (newConfigNode) {
                                 newConfigNode.users.push(ev.node);
                             }
@@ -3194,7 +3194,7 @@ RED.history = (function() {
                     }
                     if (ev.subflow.hasOwnProperty('instances')) {
                         ev.subflow.instances.forEach(function(n) {
-                            var node = RED.nodes.node(n.id);
+                            let node = RED.nodes.node(n.id);
                             if (node) {
                                 node.changed = n.changed;
                                 node.dirty = true;
@@ -3207,10 +3207,10 @@ RED.history = (function() {
                         RED.editor.updateNodeProperties(n);
                     });
                 } else {
-                    var outputMap;
+                    let outputMap;
                     if (ev.outputMap) {
                         outputMap = {};
-                        for (var port in ev.outputMap) {
+                        for (let port in ev.outputMap) {
                             if (ev.outputMap.hasOwnProperty(port) && ev.outputMap[port] !== -1) {
                                 outputMap[ev.outputMap[port]] = port;
                             }
@@ -3256,7 +3256,7 @@ RED.history = (function() {
                 }
             }
             Object.keys(modifiedTabs).forEach(function(id) {
-                var subflow = RED.nodes.subflow(id);
+                let subflow = RED.nodes.subflow(id);
                 if (subflow) {
                     RED.editor.validateNode(subflow);
                 }
@@ -3274,7 +3274,7 @@ RED.history = (function() {
     return {
         //TODO: this function is a placeholder until there is a 'save' event that can be listened to
         markAllDirty: function() {
-            for (var i=0;i<undo_history.length;i++) {
+            for (let i=0;i<undo_history.length;i++) {
                 undo_history[i].dirty = true;
             }
         },
@@ -3288,7 +3288,7 @@ RED.history = (function() {
             undo_history.push(ev);
         },
         pop: function() {
-            var ev = undo_history.pop();
+            let ev = undo_history.pop();
             undoEvent(ev);
         },
         peek: function() {
@@ -3301,7 +3301,7 @@ RED.validators = {
     number: function(){return function(v) { return v!=='' && !isNaN(v);}},
     regex: function(re){return function(v) { return re.test(v);}},
     typedInput: function(ptypeName,isConfig) { return function(v) {
-        var ptype = $("#node-"+(isConfig?"config-":"")+"input-"+ptypeName).val() || this[ptypeName];
+        let ptype = $("#node-"+(isConfig?"config-":"")+"input-"+ptypeName).val() || this[ptypeName];
         if (ptype === 'json') {
             try {
                 JSON.parse(v);
@@ -3327,7 +3327,7 @@ RED.utils = (function() {
     }
 
     function buildMessageSummaryValue(value) {
-        var result;
+        let result;
         if (Array.isArray(value)) {
             result = $('<span class="debug-message-object-value debug-message-type-meta"></span>').html('array['+value.length+']');
         } else if (value === null) {
@@ -3341,7 +3341,7 @@ RED.utils = (function() {
                 result = $('<span class="debug-message-object-value debug-message-type-meta">object</span>');
             }
         } else if (typeof value === 'string') {
-            var subvalue;
+            let subvalue;
             if (value.length > 30) {
                 subvalue = sanitize(value.substring(0,30))+"&hellip;";
             } else {
@@ -3356,7 +3356,7 @@ RED.utils = (function() {
     function makeExpandable(el,onexpand) {
         el.addClass("debug-message-expandable");
         el.click(function(e) {
-            var parent = $(this).parent();
+            let parent = $(this).parent();
             if (parent.hasClass('collapsed')) {
                 if (onexpand && !parent.hasClass('built')) {
                     onexpand();
@@ -3371,13 +3371,13 @@ RED.utils = (function() {
     }
 
     function buildMessageElement(obj,key,typeHint,hideKey) {
-        var i;
-        var e;
-        var entryObj;
-        var header;
-        var headerHead;
-        var value;
-        var element = $('<span class="debug-message-element"></span>');
+        let i;
+        let e;
+        let entryObj;
+        let header;
+        let headerHead;
+        let value;
+        let element = $('<span class="debug-message-element"></span>');
         if (!key) {
             element.addClass("debug-message-top-level");
         }
@@ -3390,8 +3390,8 @@ RED.utils = (function() {
         }
         entryObj = $('<span class="debug-message-object-value"></span>').appendTo(header);
 
-        var isArray = Array.isArray(obj);
-        var isArrayObject = false;
+        let isArray = Array.isArray(obj);
+        let isArrayObject = false;
         if (obj && typeof obj === 'object' && obj.hasOwnProperty('type') && obj.hasOwnProperty('data') && ((obj.__encoded__ && obj.type === 'array') || obj.type === 'Buffer')) {
             isArray = true;
             isArrayObject = true;
@@ -3405,7 +3405,7 @@ RED.utils = (function() {
                 $('<i class="fa fa-caret-right debug-message-object-handle"></i> ').prependTo(header);
                 makeExpandable(header, function() {
                     $('<span class="debug-message-type-meta debug-message-object-type-header"></span>').html(typeHint||'string').appendTo(header);
-                    var row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(element);
+                    let row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(element);
                     $('<pre class="debug-message-type-string"></pre>').text(obj).appendTo(row);
                 });
             }
@@ -3419,7 +3419,7 @@ RED.utils = (function() {
             if (Number.isInteger(obj) && (obj >= 0)) { // if it's a +ve integer
                 e.addClass("debug-message-type-number-toggle");
                 e.click(function(evt) {
-                    var format = $(this).data('format') || "date";
+                    let format = $(this).data('format') || "date";
                     if (format === 'dec') {
                         $(this).text(""+obj).data('format','date');
                     } else if ((format === 'date') && (obj.toString().length===13) && (obj<=2147483647000)) {
@@ -3435,15 +3435,15 @@ RED.utils = (function() {
         } else if (isArray) {
             element.addClass('collapsed');
 
-            var originalLength = obj.length;
+            let originalLength = obj.length;
             if (typeHint) {
-                var m = /\[(\d+)\]/.exec(typeHint);
+                let m = /\[(\d+)\]/.exec(typeHint);
                 if (m) {
                     originalLength = parseInt(m[1]);
                 }
             }
-            var data = obj;
-            var type = 'array';
+            let data = obj;
+            let type = 'array';
             if (isArrayObject) {
                 data = obj.data;
                 if (originalLength === undefined) {
@@ -3456,27 +3456,27 @@ RED.utils = (function() {
             } else if (/buffer/.test(typeHint)) {
                 type = 'buffer';
             }
-            var fullLength = data.length;
+            let fullLength = data.length;
 
             if (originalLength > 0) {
                 $('<i class="fa fa-caret-right debug-message-object-handle"></i> ').prependTo(header);
-                var arrayRows = $('<div class="debug-message-array-rows"></div>').appendTo(element);
+                let arrayRows = $('<div class="debug-message-array-rows"></div>').appendTo(element);
                 element.addClass('debug-message-buffer-raw');
                 makeExpandable(header,function() {
                     if (!key) {
                         headerHead = $('<span class="debug-message-type-meta debug-message-object-type-header"></span>').html(typeHint||(type+'['+originalLength+']')).appendTo(header);
                     }
                     if (type === 'buffer') {
-                        var stringRow = $('<div class="debug-message-string-rows"></div>').appendTo(element);
-                        var sr = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(stringRow);
-                        var stringEncoding = "";
+                        let stringRow = $('<div class="debug-message-string-rows"></div>').appendTo(element);
+                        let sr = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(stringRow);
+                        let stringEncoding = "";
                         try {
                             stringEncoding = String.fromCharCode.apply(null, new Uint16Array(data))
                         } catch(err) {
                             console.log(err);
                         }
                         $('<pre class="debug-message-type-string"></pre>').text(stringEncoding).appendTo(sr);
-                        var bufferOpts = $('<span class="debug-message-buffer-opts"></span>').appendTo(headerHead);
+                        let bufferOpts = $('<span class="debug-message-buffer-opts"></span>').appendTo(headerHead);
                         $('<a href="#"></a>').addClass('selected').html('raw').appendTo(bufferOpts).click(function(e) {
                             if ($(this).text() === 'raw') {
                                 $(this).text('string');
@@ -3489,7 +3489,7 @@ RED.utils = (function() {
                             e.stopPropagation();
                         })
                     }
-                    var row;
+                    let row;
                     if (fullLength <= 10) {
                         for (i=0;i<fullLength;i++) {
                             row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(arrayRows);
@@ -3497,17 +3497,17 @@ RED.utils = (function() {
                         }
                     } else {
                         for (i=0;i<fullLength;i+=10) {
-                            var minRange = i;
+                            let minRange = i;
                             row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(arrayRows);
                             header = $('<span></span>').appendTo(row);
                             $('<i class="fa fa-caret-right debug-message-object-handle"></i> ').appendTo(header);
                             makeExpandable(header, (function() {
-                                var min = minRange;
-                                var max = Math.min(fullLength-1,(minRange+9));
-                                var parent = row;
+                                let min = minRange;
+                                let max = Math.min(fullLength-1,(minRange+9));
+                                let parent = row;
                                 return function() {
-                                    for (var i=min;i<=max;i++) {
-                                        var row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(parent);
+                                    for (let i=min;i<=max;i++) {
+                                        let row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(parent);
                                         buildMessageElement(data[i],""+i,false).appendTo(row);
                                     }
                                 }
@@ -3525,7 +3525,7 @@ RED.utils = (function() {
             } else {
                 headerHead = $('<span class="debug-message-object-header"></span>').appendTo(entryObj);
                 $('<span>[ </span>').appendTo(headerHead);
-                var arrayLength = Math.min(originalLength,10);
+                let arrayLength = Math.min(originalLength,10);
                 for (i=0;i<arrayLength;i++) {
                     buildMessageSummaryValue(data[i]).appendTo(headerHead);
                     if (i < arrayLength-1) {
@@ -3543,7 +3543,7 @@ RED.utils = (function() {
 
         } else if (typeof obj === 'object') {
             element.addClass('collapsed');
-            var keys = Object.keys(obj);
+            let keys = Object.keys(obj);
             if (key || keys.length > 0) {
                 $('<i class="fa fa-caret-right debug-message-object-handle"></i> ').prependTo(header);
                 makeExpandable(header, function() {
@@ -3551,7 +3551,7 @@ RED.utils = (function() {
                         $('<span class="debug-message-type-meta debug-message-object-type-header"></span>').html('object').appendTo(header);
                     }
                     for (i=0;i<keys.length;i++) {
-                        var row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(element);
+                        let row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(element);
                         buildMessageElement(obj[keys[i]],keys[i],false).appendTo(row);
                     }
                     if (keys.length === 0) {
@@ -3564,7 +3564,7 @@ RED.utils = (function() {
             } else {
                 headerHead = $('<span class="debug-message-object-header"></span>').appendTo(entryObj);
                 $('<span>{ </span>').appendTo(headerHead);
-                var keysLength = Math.min(keys.length,5);
+                let keysLength = Math.min(keys.length,5);
                 for (i=0;i<keysLength;i++) {
                     $('<span class="debug-message-object-key"></span>').text(keys[i]).appendTo(headerHead);
                     $('<span>: </span>').appendTo(headerHead);
@@ -3591,17 +3591,17 @@ RED.utils = (function() {
         // This must be kept in sync with normalisePropertyExpression
         // in red/runtime/util.js
 
-        var length = str.length;
+        let length = str.length;
         if (length === 0) {
             return false;
         }
-        var start = 0;
-        var inString = false;
-        var inBox = false;
-        var quoteChar;
-        var v;
-        for (var i=0;i<length;i++) {
-            var c = str[i];
+        let start = 0;
+        let inString = false;
+        let inBox = false;
+        let quoteChar;
+        let v;
+        for (let i=0;i<length;i++) {
+            let c = str[i];
             if (!inString) {
                 if (c === "'" || c === '"') {
                     if (i != start) {
@@ -3705,7 +3705,7 @@ RED.utils = (function() {
      */
     $.widget( "nodered.editableList", {
         _create: function() {
-            var that = this;
+            let that = this;
 
             this.element.addClass('red-ui-editableList-list');
             this.uiWidth = this.element.width();
@@ -3717,7 +3717,7 @@ RED.utils = (function() {
             this.topContainer.addClass('red-ui-editableList');
 
             if (this.options.addButton !== false) {
-                var addLabel;
+                let addLabel;
                 if (typeof this.options.addButton === 'string') {
                     addLabel = this.options.addButton
                 } else {
@@ -3736,7 +3736,7 @@ RED.utils = (function() {
             }
             if (this.element.css("position") === "absolute") {
                 ["top","left","bottom","right"].forEach(function(s) {
-                    var v = that.element.css(s);
+                    let v = that.element.css(s);
                     if (s!=="auto" && s!=="") {
                         that.topContainer.css(s,v);
                         that.uiContainer.css(s,"0");
@@ -3758,7 +3758,7 @@ RED.utils = (function() {
             if (this.scrollOnAdd === undefined) {
                 this.scrollOnAdd = true;
             }
-            var minHeight = this.element.css("minHeight");
+            let minHeight = this.element.css("minHeight");
             if (minHeight !== '0px') {
                 this.uiContainer.css("minHeight",minHeight);
                 this.element.css("minHeight",0);
@@ -3771,17 +3771,17 @@ RED.utils = (function() {
             }
             this.element.height('auto');
 
-            var attrStyle = this.element.attr('style');
-            var m;
+            let attrStyle = this.element.attr('style');
+            let m;
             if ((m = /width\s*:\s*(\d+%)/i.exec(attrStyle)) !== null) {
                 this.element.width('100%');
                 this.uiContainer.width(m[1]);
             }
             if (this.options.sortable) {
-                var handle = (typeof this.options.sortable === 'string')?
+                let handle = (typeof this.options.sortable === 'string')?
                     this.options.sortable :
                     ".red-ui-editableList-item-handle";
-                var sortOptions = {
+                let sortOptions = {
                     axis: "y",
                     update: function( event, ui ) {
                         if (that.options.sortItems) {
@@ -3810,9 +3810,9 @@ RED.utils = (function() {
             // this.type(this.options.default||this.types[0].value);
         },
         _resize: function() {
-            var currentFullHeight = this.topContainer.height();
-            var innerHeight = this.uiContainer.height();
-            var delta = currentFullHeight - innerHeight;
+            let currentFullHeight = this.topContainer.height();
+            let innerHeight = this.uiContainer.height();
+            let delta = currentFullHeight - innerHeight;
             if (this.uiHeight !== 0) {
                 this.uiContainer.height(this.uiHeight-delta);
             }
@@ -3820,7 +3820,7 @@ RED.utils = (function() {
                 this.options.resize();
             }
             if (this.options.resizeItem) {
-                var that = this;
+                let that = this;
                 this.element.children().each(function(i) {
                     that.options.resizeItem($(this).find(".red-ui-editableList-item-content"),i);
                 });
@@ -3829,14 +3829,14 @@ RED.utils = (function() {
         _destroy: function() {
         },
         _refreshFilter: function() {
-            var that = this;
-            var count = 0;
+            let that = this;
+            let count = 0;
             if (!this.activeFilter) {
                 this.element.children().attr("style", "display: block !important");
             }
-            var items = this.items();
+            let items = this.items();
             items.each(function (i,el) {
-                var data = el.data('data');
+                let data = el.data('data');
                 try {
                     if (that.activeFilter(data)) {
                         el.parent().attr("style", "display: block !important");
@@ -3854,8 +3854,8 @@ RED.utils = (function() {
         },
         _refreshSort: function() {
             if (this.activeSort) {
-                var items = this.element.children();
-                var that = this;
+                let items = this.element.children();
+                let that = this;
                 items.sort(function(A,B) {
                     return that.activeSort($(A).find(".red-ui-editableList-item-content").data('data'),$(B).find(".red-ui-editableList-item-content").data('data'));
                 });
@@ -3873,16 +3873,16 @@ RED.utils = (function() {
             this._resize();
         },
         addItem: function(data) {
-            var that = this;
+            let that = this;
             data = data || {};
-            var li = $('<li>');
-            var added = false;
+            let li = $('<li>');
+            let added = false;
             if (this.activeSort) {
-                var items = this.items();
-                var skip = false;
+                let items = this.items();
+                let skip = false;
                 items.each(function(i,el) {
                     if (added) { return }
-                    var itemData = el.data('data');
+                    let itemData = el.data('data');
                     if (that.activeSort(data,itemData) < 0) {
                         li.insertBefore(el.closest("li"));
                         added = true;
@@ -3892,19 +3892,19 @@ RED.utils = (function() {
             if (!added) {
                 li.appendTo(this.element);
             }
-            var row = $('<div/>').addClass("red-ui-editableList-item-content").appendTo(li);
+            let row = $('<div/>').addClass("red-ui-editableList-item-content").appendTo(li);
             row.data('data',data);
             if (this.options.sortable === true) {
                 $('<i class="red-ui-editableList-item-handle fa fa-bars"></i>').appendTo(li);
                 li.addClass("red-ui-editableList-item-sortable");
             }
             if (this.options.removable) {
-                var deleteButton = $('<a/>',{href:"#",class:"red-ui-editableList-item-remove editor-button editor-button-small"}).appendTo(li);
+                let deleteButton = $('<a/>',{href:"#",class:"red-ui-editableList-item-remove editor-button editor-button-small"}).appendTo(li);
                 $('<i/>',{class:"fa fa-remove"}).appendTo(deleteButton);
                 li.addClass("red-ui-editableList-item-removable");
                 deleteButton.click(function(evt) {
                     evt.preventDefault();
-                    var data = row.data('data');
+                    let data = row.data('data');
                     li.addClass("red-ui-editableList-item-deleting")
                     li.fadeOut(300, function() {
                         $(this).remove();
@@ -3915,7 +3915,7 @@ RED.utils = (function() {
                 });
             }
             if (this.options.addItem) {
-                var index = that.element.children().length-1;
+                let index = that.element.children().length-1;
                 setTimeout(function() {
                     that.options.addItem(row,index,data);
                     if (that.activeFilter) {
@@ -3936,7 +3936,7 @@ RED.utils = (function() {
             }
         },
         removeItem: function(data) {
-            var items = this.element.children().filter(function(f) {
+            let items = this.element.children().filter(function(f) {
                 return data === $(this).find(".red-ui-editableList-item-content").data('data');
             });
             items.remove();
@@ -3971,7 +3971,7 @@ RED.utils = (function() {
 
     $.widget( "nodered.searchBox", {
         _create: function() {
-            var that = this;
+            let that = this;
 
             this.currentTimeout = null;
             this.lastSent = "";
@@ -4008,7 +4008,7 @@ RED.utils = (function() {
 
         },
         _change: function(val,instant) {
-            var fireEvent = false;
+            let fireEvent = false;
             if (val === "") {
                 this.clearButton.hide();
                 fireEvent = true;
@@ -4016,12 +4016,12 @@ RED.utils = (function() {
                 this.clearButton.attr("style", "display: block !important");
                 fireEvent = (val.length >= (this.options.minimumLength||0));
             }
-            var current = this.element.val();
+            let current = this.element.val();
             fireEvent = fireEvent && current !== this.lastSent;
             if (fireEvent) {
                 if (!instant && this.options.delay > 0) {
                     clearTimeout(this.currentTimeout);
-                    var that = this;
+                    let that = this;
                     this.currentTimeout = setTimeout(function() {
                         that.lastSent = that.element.val();
                         that._trigger("change");
@@ -4050,9 +4050,9 @@ RED.utils = (function() {
 })(jQuery);
 RED.tabs = (function() {
     function createTabs(options) {
-        var tabs = {};
-        var currentTabWidth;
-        var currentActiveTabWidth = 0;
+        let tabs = {};
+        let currentTabWidth;
+        let currentActiveTabWidth = 0;
 
         return {
             addTab: function(tab) {
@@ -4090,7 +4090,7 @@ RED.tabs = (function() {
     }
 })();
 (function($) {
-    var allOptions = {
+    let allOptions = {
         msg: {value:"msg",label:"msg.",validate:RED.utils.validatePropertyExpression},
         flow: {value:"flow",label:"flow.",validate:RED.utils.validatePropertyExpression},
         global: {value:"global",label:"global.",validate:RED.utils.validatePropertyExpression},
@@ -4106,7 +4106,7 @@ RED.tabs = (function() {
             icon: `${baseURL}flows/red/images/typedInput/expr.png`,
             validate: function(v) { try{jsonata(v);return true;}catch(e){return false;}},
             expand:function() {
-                var that = this;
+                let that = this;
                 RED.editor.editExpression({
                     value: this.value().replace(/\t/g,"\n"),
                     complete: function(v) {
@@ -4116,27 +4116,27 @@ RED.tabs = (function() {
             }
         }
     };
-    var nlsd = false;
+    let nlsd = false;
 
     $.widget( "nodered.typedInput", {
         _create: function() {
             if (!nlsd && RED && RED._) {
-                for (var i in allOptions) {
+                for (let i in allOptions) {
                     if (allOptions.hasOwnProperty(i)) {
                         allOptions[i].label = RED._("typedInput.type."+i,{defaultValue:allOptions[i].label});
                     }
                 }
             }
             nlsd = true;
-            var that = this;
+            let that = this;
 
             this.disarmClick = false;
             this.element.addClass('red-ui-typedInput');
             this.uiWidth = this.element.outerWidth();
             this.elementDiv = this.element.wrap("<div>").parent().addClass('red-ui-typedInput-input');
             this.uiSelect = this.elementDiv.wrap( "<div>" ).parent();
-            var attrStyle = this.element.attr('style');
-            var m;
+            let attrStyle = this.element.attr('style');
+            let m;
             if ((m = /width\s*:\s*(\d+(%|px))/i.exec(attrStyle)) !== null) {
                 this.element.css('width','100%');
                 this.uiSelect.width(m[1]);
@@ -4150,7 +4150,7 @@ RED.tabs = (function() {
                 }
             }
             ["Right","Left"].forEach(function(d) {
-                var m = that.element.css("margin"+d);
+                let m = that.element.css("margin"+d);
                 that.uiSelect.css("margin"+d,m);
                 that.element.css("margin"+d,0);
             });
@@ -4166,7 +4166,7 @@ RED.tabs = (function() {
 
             if (this.options.typeField) {
                 this.typeField = $(this.options.typeField).hide();
-                var t = this.typeField.val();
+                let t = this.typeField.val();
                 if (t && this.typeMap[t]) {
                     this.options.default = t;
                 }
@@ -4233,7 +4233,7 @@ RED.tabs = (function() {
                 });
 
                 this._showMenu(this.optionMenu,this.optionSelectLabel);
-                var selectedOption = this.optionMenu.find("[value='"+this.value()+"']");
+                let selectedOption = this.optionMenu.find("[value='"+this.value()+"']");
                 if (selectedOption.length === 0) {
                     selectedOption = this.optionMenu.children(":first");
                 }
@@ -4253,13 +4253,13 @@ RED.tabs = (function() {
             }
         },
         _createMenu: function(opts,callback) {
-            var that = this;
-            var menu = $("<div>").addClass("red-ui-typedInput-options");
+            let that = this;
+            let menu = $("<div>").addClass("red-ui-typedInput-options");
             opts.forEach(function(opt) {
                 if (typeof opt === 'string') {
                     opt = {value:opt,label:opt};
                 }
-                var op = $('<a href="#"></a>').attr("value",opt.value).appendTo(menu);
+                let op = $('<a href="#"></a>').attr("value",opt.value).appendTo(menu);
                 if (opt.label) {
                     op.text(opt.label);
                 }
@@ -4297,11 +4297,11 @@ RED.tabs = (function() {
                 this.disarmClick = false;
                 return
             }
-            var that = this;
-            var pos = relativeTo.offset();
-            var height = relativeTo.height();
-            var menuHeight = menu.height();
-            var top = (height+pos.top-3);
+            let that = this;
+            let pos = relativeTo.offset();
+            let height = relativeTo.height();
+            let menuHeight = menu.height();
+            let top = (height+pos.top-3);
             if (top+menuHeight > $(window).height()) {
                 top -= (top+menuHeight)-$(window).height()+5;
             }
@@ -4324,14 +4324,14 @@ RED.tabs = (function() {
             });
         },
         _getLabelWidth: function(label) {
-            var labelWidth = label.outerWidth();
+            let labelWidth = label.outerWidth();
             if (labelWidth === 0) {
-                var container = $('<div class="red-ui-typedInput-container"></div>').css({
+                let container = $('<div class="red-ui-typedInput-container"></div>').css({
                     position:"absolute",
                     top:0,
                     left:-1000
                 }).appendTo($('.flows-wrapper'));
-                var newTrigger = label.clone().appendTo(container);
+                let newTrigger = label.clone().appendTo(container);
                 labelWidth = newTrigger.outerWidth();
                 container.remove();
             }
@@ -4342,7 +4342,7 @@ RED.tabs = (function() {
                 this.selectTrigger.addClass("red-ui-typedInput-full-width");
             } else {
                 this.selectTrigger.removeClass("red-ui-typedInput-full-width");
-                var labelWidth = this._getLabelWidth(this.selectTrigger);
+                let labelWidth = this._getLabelWidth(this.selectTrigger);
                 this.elementDiv.css('left',labelWidth+"px");
                 if (this.optionExpandButton.is(":visible")) {
                     this.elementDiv.css('right',"22px");
@@ -4358,11 +4358,11 @@ RED.tabs = (function() {
             this.menu.remove();
         },
         types: function(types) {
-            var that = this;
-            var currentType = this.type();
+            let that = this;
+            let currentType = this.type();
             this.typeMap = {};
             this.typeList = types.map(function(opt) {
-                var result;
+                let result;
                 if (typeof opt === 'string') {
                     result = allOptions[opt];
                 } else {
@@ -4402,13 +4402,13 @@ RED.tabs = (function() {
             if (!arguments.length) {
                 return this.propertyType;
             } else {
-                var that = this;
-                var opt = this.typeMap[type];
+                let that = this;
+                let opt = this.typeMap[type];
                 if (opt && this.propertyType !== type) {
                     this.propertyType = type;
                     this.typeField.val(type);
                     this.selectLabel.empty();
-                    var image;
+                    let image;
                     if (opt.icon) {
                         image = new Image();
                         image.name = opt.icon;
@@ -4428,7 +4428,7 @@ RED.tabs = (function() {
                                 that.optionSelectLabel.text(v);
                                 that.value(v);
                             });
-                            var currentVal = this.element.val();
+                            let currentVal = this.element.val();
                             if (opt.options.indexOf(currentVal) !== -1) {
                                 this.optionSelectLabel.text(currentVal);
                             } else {
@@ -4476,11 +4476,11 @@ RED.tabs = (function() {
             }
         },
         validate: function() {
-            var result;
-            var value = this.value();
-            var type = this.type();
+            let result;
+            let value = this.value();
+            let type = this.type();
             if (this.typeMap[type] && this.typeMap[type].validate) {
-                var val = this.typeMap[type].validate;
+                let val = this.typeMap[type].validate;
                 if (typeof val === 'function') {
                     result = val(value);
                 } else {
@@ -4506,7 +4506,7 @@ RED.tabs = (function() {
     });
 })(jQuery);
 RED.actions = (function() {
-    var actions = {
+    let actions = {
 
     }
 
@@ -4525,9 +4525,9 @@ RED.actions = (function() {
         }
     }
     function listActions() {
-        var result = [];
+        let result = [];
         Object.keys(actions).forEach(function(action) {
-            var shortcut = RED.keyboard.getShortcut(action);
+            let shortcut = RED.keyboard.getShortcut(action);
             result.push({id:action,scope:shortcut?shortcut.scope:undefined,key:shortcut?shortcut.key:undefined})
         })
         return result;
@@ -4542,12 +4542,12 @@ RED.actions = (function() {
 })();
 RED.keyboard = (function() {
 
-    var isMac = /Mac/i.test(window.navigator.platform);
+    let isMac = /Mac/i.test(window.navigator.platform);
 
-    var handlers = {};
-    var partialState;
+    let handlers = {};
+    let partialState;
 
-    var keyMap = {
+    let keyMap = {
         "left":37,
         "up":38,
         "right":39,
@@ -4567,27 +4567,27 @@ RED.keyboard = (function() {
         "'":222,
         "?":191 // <- QWERTY specific
     }
-    var metaKeyCodes = {
+    let metaKeyCodes = {
         16:true,
         17:true,
         18: true,
         91:true,
         93: true
     }
-    var actionToKeyMap = {}
+    let actionToKeyMap = {}
 
     // FF generates some different keycodes because reasons.
-    var firefoxKeyCodeMap = {
+    let firefoxKeyCodeMap = {
         59:186,
         61:187,
         173:189
     }
 
     function init() {
-        for (var scope in mock) {
+        for (let scope in mock) {
             if (mock.hasOwnProperty(scope)) {
-                var keys = mock[scope];
-                for (var key in keys) {
+                let keys = mock[scope];
+                for (let key in keys) {
                     if (keys.hasOwnProperty(key)) {
                         addHandler(scope,key,keys[key]);
                     }
@@ -4599,11 +4599,11 @@ RED.keyboard = (function() {
 
     }
     function parseKeySpecifier(key) {
-        var parts = key.toLowerCase().split("-");
-        var modifiers = {};
-        var keycode;
-        var blank = 0;
-        for (var i=0;i<parts.length;i++) {
+        let parts = key.toLowerCase().split("-");
+        let modifiers = {};
+        let keycode;
+        let blank = 0;
+        for (let i=0;i<parts.length;i++) {
             switch(parts[i]) {
                 case "ctrl":
                 case "cmd":
@@ -4635,7 +4635,7 @@ RED.keyboard = (function() {
     }
 
     function resolveKeyEvent(evt) {
-        var slot = partialState||handlers;
+        let slot = partialState||handlers;
         if (evt.ctrlKey || evt.metaKey) {
             slot = slot.ctrl;
         }
@@ -4645,9 +4645,9 @@ RED.keyboard = (function() {
         if (slot && evt.altKey) {
             slot = slot.alt;
         }
-        var keyCode = firefoxKeyCodeMap[evt.keyCode] || evt.keyCode;
+        let keyCode = firefoxKeyCodeMap[evt.keyCode] || evt.keyCode;
         if (slot && slot[keyCode]) {
-            var handler = slot[keyCode];
+            let handler = slot[keyCode];
             if (!handler.scope) {
                 if (partialState) {
                     partialState = null;
@@ -4658,7 +4658,7 @@ RED.keyboard = (function() {
                     return null;
                 }
             } else if (handler.scope && handler.scope !== "*") {
-                var target = evt.target;
+                let target = evt.target;
                 while (target.nodeName !== 'BODY' && target.id !== handler.scope) {
                     target = target.parentElement;
                 }
@@ -4677,7 +4677,7 @@ RED.keyboard = (function() {
         if (metaKeyCodes[d3.event.keyCode]) {
             return;
         }
-        var handler = resolveKeyEvent(d3.event);
+        let handler = resolveKeyEvent(d3.event);
         if (handler && handler.ondown) {
             if (typeof handler.ondown === "string") {
                 RED.actions.invoke(handler.ondown);
@@ -4689,21 +4689,21 @@ RED.keyboard = (function() {
     });
 
     function addHandler(scope,key,modifiers,ondown) {
-        var mod = modifiers;
-        var cbdown = ondown;
+        let mod = modifiers;
+        let cbdown = ondown;
         if (typeof modifiers == "function" || typeof modifiers === "string") {
             mod = {};
             cbdown = modifiers;
         }
-        var keys = [];
-        var i=0;
+        let keys = [];
+        let i=0;
         if (typeof key === 'string') {
             if (typeof cbdown === 'string') {
                 actionToKeyMap[cbdown] = {scope:scope,key:key};
             }
-            var parts = key.split(" ");
+            let parts = key.split(" ");
             for (i=0;i<parts.length;i++) {
-                var parsedKey = parseKeySpecifier(parts[i]);
+                let parsedKey = parseKeySpecifier(parts[i]);
                 if (parsedKey) {
                     keys.push(parsedKey);
                 } else {
@@ -4714,7 +4714,7 @@ RED.keyboard = (function() {
         } else {
             keys.push([key,mod])
         }
-        var slot = handlers;
+        let slot = handlers;
         for (i=0;i<keys.length;i++) {
             key = keys[i][0];
             mod = keys[i][1];
@@ -4739,14 +4739,14 @@ RED.keyboard = (function() {
     }
 
     function removeHandler(key,modifiers) {
-        var mod = modifiers || {};
-        var keys = [];
-        var i=0;
+        let mod = modifiers || {};
+        let keys = [];
+        let i=0;
         if (typeof key === 'string') {
             delete actionToKeyMap[key];
-            var parts = key.split(" ");
+            let parts = key.split(" ");
             for (i=0;i<parts.length;i++) {
-                var parsedKey = parseKeySpecifier(parts[i]);
+                let parsedKey = parseKeySpecifier(parts[i]);
                 if (parsedKey) {
                     keys.push(parsedKey);
                 } else {
@@ -4757,7 +4757,7 @@ RED.keyboard = (function() {
         } else {
             keys.push([key,mod])
         }
-        var slot = handlers;
+        let slot = handlers;
         for (i=0;i<keys.length;i++) {
             key = keys[i][0];
             mod = keys[i][1];
@@ -4779,9 +4779,9 @@ RED.keyboard = (function() {
         delete slot.ondown;
     }
 
-    var shortcutDialog = null;
+    let shortcutDialog = null;
 
-    var cmdCtrlKey = '<span class="help-key">'+(isMac?'&#8984;':'Ctrl')+'</span>';
+    let cmdCtrlKey = '<span class="help-key">'+(isMac?'&#8984;':'Ctrl')+'</span>';
 
     function showKeyboardHelp() {
         if (!RED.settings.theme("menu.menu-item-keyboard-shortcuts",true)) {
@@ -4798,13 +4798,13 @@ RED.keyboard = (function() {
                 '</div>')
                 .appendTo("body");
 
-            var shortcutList = $('#keyboard-shortcut-list').editableList({
+            let shortcutList = $('#keyboard-shortcut-list').editableList({
                 addButton: false,
                 scrollOnAdd: false,
                 addItem: function(container,i,object) {
-                    var item = $('<div class="keyboard-shortcut-entry">').appendTo(container);
+                    let item = $('<div class="keyboard-shortcut-entry">').appendTo(container);
 
-                    var key = $('<div class="keyboard-shortcut-entry-key">').appendTo(item);
+                    let key = $('<div class="keyboard-shortcut-entry-key">').appendTo(item);
                     if (object.key) {
                         key.append(formatKey(object.key));
                     } else {
@@ -4812,14 +4812,14 @@ RED.keyboard = (function() {
                         key.html(RED._('keyboard.unassigned'));
                     }
 
-                    var text = object.id.replace(/(^.+:([a-z]))|(-([a-z]))/g,function() {
+                    let text = object.id.replace(/(^.+:([a-z]))|(-([a-z]))/g,function() {
                         if (arguments[5] === 0) {
                             return arguments[2].toUpperCase();
                         } else {
                             return " "+arguments[4].toUpperCase();
                         }
                     });
-                    var label = $('<div>').html(text).appendTo(item);
+                    let label = $('<div>').html(text).appendTo(item);
                     if (object.scope) {
                         $('<div class="keyboard-shortcut-entry-scope">').html(object.scope).appendTo(item);
                     }
@@ -4827,7 +4827,7 @@ RED.keyboard = (function() {
 
                 },
             });
-            var shortcuts = RED.actions.list();
+            let shortcuts = RED.actions.list();
             shortcuts.sort(function(A,B) {
                 return A.id.localeCompare(B.id);
             });
@@ -4848,7 +4848,7 @@ RED.keyboard = (function() {
         shortcutDialog.dialog("open");
     }
     function formatKey(key) {
-        var formattedKey = isMac?key.replace(/ctrl-?/,"&#8984;"):key;
+        let formattedKey = isMac?key.replace(/ctrl-?/,"&#8984;"):key;
         formattedKey = isMac?formattedKey.replace(/alt-?/,"&#8997;"):key;
         formattedKey = formattedKey.replace(/shift-?/,"&#8679;")
         formattedKey = formattedKey.replace(/left/,"&#x2190;")
@@ -4871,15 +4871,15 @@ RED.keyboard = (function() {
 })();
 RED.workspaces = (function() {
 
-    var activeWorkspace = 0;
-    var workspaceIndex = 0;
+    let activeWorkspace = 0;
+    let workspaceIndex = 0;
 
     function addWorkspace(ws,skipHistoryEntry) {
         if (ws) {
             workspace_tabs.addTab(ws);
             workspace_tabs.resize();
         } else {
-            var tabId = RED.nodes.id();
+            let tabId = RED.nodes.id();
             do {
                 workspaceIndex += 1;
             } while($("#workspace-tabs a[title='"+RED._('workspace.defaultName',{number:workspaceIndex})+"']").size() !== 0);
@@ -4901,7 +4901,7 @@ RED.workspaces = (function() {
             return;
         }
         removeWorkspace(ws);
-        var historyEvent = RED.nodes.removeWorkspace(ws.id);
+        let historyEvent = RED.nodes.removeWorkspace(ws.id);
         historyEvent.t = 'delete';
         historyEvent.dirty = RED.nodes.dirty();
         historyEvent.workspaces = [ws];
@@ -4911,9 +4911,9 @@ RED.workspaces = (function() {
     }
 
     function showRenameWorkspaceDialog(id) {
-        var workspace = RED.nodes.workspace(id);
+        let workspace = RED.nodes.workspace(id);
         RED.view.state(RED.state.EDITING);
-        var trayOptions = {
+        let trayOptions = {
             title: RED._("workspace.editFlow",{name:workspace.label}),
             buttons: [
                 {
@@ -4937,12 +4937,12 @@ RED.workspaces = (function() {
                     class: "primary",
                     text: RED._("common.label.done"),
                     click: function() {
-                        var label = $( "#node-input-name" ).val();
+                        let label = $( "#node-input-name" ).val();
                         if (workspace.label != label) {
-                            var changes = {
+                            let changes = {
                                 label:workspace.label
                             }
-                            var historyEvent = {
+                            let historyEvent = {
                                 t: "edit",
                                 changes:changes,
                                 node: workspace,
@@ -4959,8 +4959,8 @@ RED.workspaces = (function() {
                 }
             ],
             open: function(tray) {
-                var trayBody = tray.find('.editor-tray-body');
-                var dialogForm = $('<form id="dialog-form" class="form-horizontal"></form>').appendTo(trayBody);
+                let trayBody = tray.find('.editor-tray-body');
+                let dialogForm = $('<form id="dialog-form" class="form-horizontal"></form>').appendTo(trayBody);
                 $('<div class="form-row">'+
                     '<label for="node-input-name" data-i18n="[append]editor:common.label.name"><i class="fa fa-tag"></i> </label>'+
                     '<input type="text" id="node-input-name">'+
@@ -4981,12 +4981,12 @@ RED.workspaces = (function() {
     }
 
 
-    var workspace_tabs;
+    let workspace_tabs;
     function createWorkspaceTabs(){
         workspace_tabs = RED.tabs.create({
             id: "workspace-tabs",
             onchange: function(tab) {
-                var event = {
+                let event = {
                     old: activeWorkspace
                 }
                 activeWorkspace = tab.id;
@@ -5077,7 +5077,7 @@ RED.workspaces = (function() {
         },
         show: function(id) {
             if (!workspace_tabs.contains(id)) {
-                var sf = RED.nodes.subflow(id);
+                let sf = RED.nodes.subflow(id);
                 if (sf) {
                     addWorkspace({type:"subflow",id:id,icon:`${baseURL}flows/red/images/subflow_tab.png`,label:sf.name, closeable: true});
                 } else {
@@ -5105,34 +5105,34 @@ RED.workspaces = (function() {
     }
 })();
 RED.view = (function() {
-    var space_width = 2000,
+    let space_width = 2000,
         space_height = 2000,
         lineCurveScale = 0.75,
         scaleFactor = 1,
         node_width = 100,
         node_height = 30;
 
-    var touchLongPressTimeout = 1000,
+    let touchLongPressTimeout = 1000,
         startTouchDistance = 0,
         startTouchCenter = [],
         moveTouchCenter = [],
         touchStartTime = 0;
 
-    var workspaceScrollPositions = {};
+    let workspaceScrollPositions = {};
 
-    var gridSize = 20;
-    var snapGrid = false;
+    let gridSize = 20;
+    let snapGrid = false;
 
-    var activeSpliceLink;
-    var spliceActive = false;
-    var spliceTimer;
+    let activeSpliceLink;
+    let spliceActive = false;
+    let spliceTimer;
 
-    var activeSubflow = null;
-    var activeNodes = [];
-    var activeLinks = [];
-    var activeFlowLinks = [];
+    let activeSubflow = null;
+    let activeNodes = [];
+    let activeLinks = [];
+    let activeFlowLinks = [];
 
-    var selected_link = null,
+    let selected_link = null,
         mousedown_link = null,
         mousedown_node = null,
         mousedown_port_type = null,
@@ -5149,9 +5149,9 @@ RED.view = (function() {
         clickTime = 0,
         clickElapsed = 0;
 
-    var clipboard = "";
+    let clipboard = "";
 
-    var status_colours = {
+    let status_colours = {
         "red":    "#c00",
         "green":  "#5a8",
         "yellow": "#F9DF31",
@@ -5159,7 +5159,7 @@ RED.view = (function() {
         "grey":   "#d3d3d3"
     }
 
-    var outer = null,
+    let outer = null,
         vis = null,
         outer_background = null,
         grid = null,
@@ -5200,18 +5200,18 @@ RED.view = (function() {
             })
             .on("touchcancel", canvasMouseUp)
             .on("touchstart", function() {
-                var touch0;
+                let touch0;
                 if (d3.event.touches.length>1) {
                     clearTimeout(touchStartTime);
                     touchStartTime = null;
                     d3.event.preventDefault();
                     touch0 = d3.event.touches.item(0);
-                    var touch1 = d3.event.touches.item(1);
-                    var a = touch0["pageY"]-touch1["pageY"];
-                    var b = touch0["pageX"]-touch1["pageX"];
+                    let touch1 = d3.event.touches.item(1);
+                    let a = touch0["pageY"]-touch1["pageY"];
+                    let b = touch0["pageX"]-touch1["pageX"];
 
-                    var offset = $("#chart").offset();
-                    var scrollPos = [$("#chart").scrollLeft(),$("#chart").scrollTop()];
+                    let offset = $("#chart").offset();
+                    let scrollPos = [$("#chart").scrollLeft(),$("#chart").scrollTop()];
                     startTouchCenter = [
                         (touch1["pageX"]+(b/2)-offset.left+scrollPos[0])/scaleFactor,
                         (touch1["pageY"]+(a/2)-offset.top+scrollPos[1])/scaleFactor
@@ -5222,12 +5222,12 @@ RED.view = (function() {
                     ]
                     startTouchDistance = Math.sqrt((a*a)+(b*b));
                 } else {
-                    var obj = d3.select(document.body);
+                    let obj = d3.select(document.body);
                     touch0 = d3.event.touches.item(0);
-                    var pos = [touch0.pageX,touch0.pageY];
+                    let pos = [touch0.pageX,touch0.pageY];
                     startTouchCenter = [touch0.pageX,touch0.pageY];
                     startTouchDistance = 0;
-                    var point = d3.touches(this)[0];
+                    let point = d3.touches(this)[0];
                     touchStartTime = setTimeout(function() {
                         touchStartTime = null;
                         showTouchMenu(obj,pos);
@@ -5250,13 +5250,13 @@ RED.view = (function() {
                     d3.event.preventDefault();
                     return;
                 }
-                var touch0;
+                let touch0;
                 if (d3.event.touches.length<2) {
                     if (touchStartTime) {
                         touch0 = d3.event.touches.item(0);
-                        var dx = (touch0.pageX-startTouchCenter[0]);
-                        var dy = (touch0.pageY-startTouchCenter[1]);
-                        var d = Math.abs(dx*dx+dy*dy);
+                        let dx = (touch0.pageX-startTouchCenter[0]);
+                        let dy = (touch0.pageY-startTouchCenter[1]);
+                        let d = Math.abs(dx*dx+dy*dy);
                         if (d > 64) {
                             clearTimeout(touchStartTime);
                             touchStartTime = null;
@@ -5267,13 +5267,13 @@ RED.view = (function() {
                     canvasMouseMove.call(this);
                 } else {
                     touch0 = d3.event.touches.item(0);
-                    var touch1 = d3.event.touches.item(1);
-                    var a = touch0["pageY"]-touch1["pageY"];
-                    var b = touch0["pageX"]-touch1["pageX"];
-                    var offset = $("#chart").offset();
-                    var scrollPos = [$("#chart").scrollLeft(),$("#chart").scrollTop()];
-                    var moveTouchDistance = Math.sqrt((a*a)+(b*b));
-                    var touchCenter = [
+                    let touch1 = d3.event.touches.item(1);
+                    let a = touch0["pageY"]-touch1["pageY"];
+                    let b = touch0["pageX"]-touch1["pageX"];
+                    let offset = $("#chart").offset();
+                    let scrollPos = [$("#chart").scrollLeft(),$("#chart").scrollTop()];
+                    let moveTouchDistance = Math.sqrt((a*a)+(b*b));
+                    let touchCenter = [
                         touch1["pageX"]+(b/2),
                         touch1["pageY"]+(a/2)
                     ];
@@ -5282,7 +5282,7 @@ RED.view = (function() {
                         const oldScaleFactor = scaleFactor;
                         scaleFactor = Math.min(2,Math.max(0.3, scaleFactor + (Math.floor(((moveTouchDistance*100)-(startTouchDistance*100)))/10000)));
 
-                        var deltaTouchCenter = [                             // Try to pan whilst zooming - not 100%
+                        let deltaTouchCenter = [                             // Try to pan whilst zooming - not 100%
                             startTouchCenter[0]*(scaleFactor-oldScaleFactor),//-(touchCenter[0]-moveTouchCenter[0]),
                             startTouchCenter[1]*(scaleFactor-oldScaleFactor) //-(touchCenter[1]-moveTouchCenter[1])
                         ];
@@ -5335,12 +5335,12 @@ RED.view = (function() {
         dragGroup = vis.append("g");
     }
 
-    var gridScale = d3.scale.linear().range([0,space_width]).domain([0,space_width]);
-    var drag_lines = [];
+    let gridScale = d3.scale.linear().range([0,space_width]).domain([0,space_width]);
+    let drag_lines = [];
 
     function showDragLines(nodes) {
-        for (var i=0;i<nodes.length;i++) {
-            var node = nodes[i];
+        for (let i=0;i<nodes.length;i++) {
+            let node = nodes[i];
             node.el = dragGroup.append("svg:path").attr("class", "drag_line");
             drag_lines.push(node);
         }
@@ -5348,7 +5348,7 @@ RED.view = (function() {
     }
     function hideDragLines() {
         while(drag_lines.length) {
-            var line = drag_lines.pop();
+            let line = drag_lines.pop();
             if (line.el) {
                 line.el.remove();
             }
@@ -5356,7 +5356,7 @@ RED.view = (function() {
     }
 
     function updateActiveNodes() {
-        var activeWorkspace = RED.workspaces.active();
+        let activeWorkspace = RED.workspaces.active();
 
         activeNodes = RED.nodes.filterNodes({z:activeWorkspace});
 
@@ -5373,15 +5373,15 @@ RED.view = (function() {
     function init(cannotEdit=false) {
         domInit(cannotEdit);
         RED.events.on("workspace:change",function(event) {
-            var chart = $("#chart");
+            let chart = $("#chart");
             if (event.old !== 0) {
                 workspaceScrollPositions[event.old] = {
                     left:chart.scrollLeft(),
                     top:chart.scrollTop()
                 };
             }
-            var scrollStartLeft = chart.scrollLeft();
-            var scrollStartTop = chart.scrollTop();
+            let scrollStartLeft = chart.scrollLeft();
+            let scrollStartTop = chart.scrollTop();
 
             activeSubflow = RED.nodes.subflow(event.workspace);
 
@@ -5392,8 +5392,8 @@ RED.view = (function() {
                 chart.scrollLeft(0);
                 chart.scrollTop(0);
             }
-            var scrollDeltaLeft = chart.scrollLeft() - scrollStartLeft;
-            var scrollDeltaTop = chart.scrollTop() - scrollStartTop;
+            let scrollDeltaLeft = chart.scrollLeft() - scrollStartLeft;
+            let scrollDeltaTop = chart.scrollTop() - scrollStartTop;
             if (mouse_position != null) {
                 mouse_position[0] += scrollDeltaLeft;
                 mouse_position[1] += scrollDeltaTop;
@@ -5414,7 +5414,7 @@ RED.view = (function() {
             if ( evt.altKey ) {
                 evt.preventDefault();
                 evt.stopPropagation();
-                var move = -(evt.originalEvent.detail) || evt.originalEvent.wheelDelta;
+                let move = -(evt.originalEvent.detail) || evt.originalEvent.wheelDelta;
                 if (move <= 0) { zoomOut(); }
                 else { zoomIn(); }
             }
@@ -5425,16 +5425,16 @@ RED.view = (function() {
             accept:".palette_node",
             drop: function( event, ui ) {
                 d3.event = event;
-                var selected_tool = ui.draggable[0].type;
-                var result = addNode(selected_tool);
+                let selected_tool = ui.draggable[0].type;
+                let result = addNode(selected_tool);
                 if (!result) {
                     return;
                 }
-                var historyEvent = result.historyEvent;
-                var nn = result.node;
+                let historyEvent = result.historyEvent;
+                let nn = result.node;
 
-                var helperOffset = d3.touches(ui.helper.get(0))[0]||d3.mouse(ui.helper.get(0));
-                var mousePos = d3.touches(this)[0]||d3.mouse(this);
+                let helperOffset = d3.touches(ui.helper.get(0))[0]||d3.mouse(ui.helper.get(0));
+                let mousePos = d3.touches(this)[0]||d3.mouse(this);
 
                 mousePos[1] += this.scrollTop + ((nn.h/2)-helperOffset[1]);
                 mousePos[0] += this.scrollLeft + ((nn.w/2)-helperOffset[0]);
@@ -5448,16 +5448,16 @@ RED.view = (function() {
                 nn.x = mousePos[0];
                 nn.y = mousePos[1];
 
-                var spliceLink = $(ui.helper).data("splice");
+                let spliceLink = $(ui.helper).data("splice");
                 if (spliceLink) {
                     // TODO: DRY - droppable/nodeMouseDown/canvasMouseUp
                     RED.nodes.removeLink(spliceLink);
-                    var link1 = {
+                    let link1 = {
                         source:spliceLink.source,
                         sourcePort:spliceLink.sourcePort,
                         target: nn
                     };
-                    var link2 = {
+                    let link2 = {
                         source:nn,
                         sourcePort:0,
                         target: spliceLink.target
@@ -5531,10 +5531,10 @@ RED.view = (function() {
 
 
     function addNode(type,x,y) {
-        var m = /^subflow:(.+)$/.exec(type);
+        let m = /^subflow:(.+)$/.exec(type);
 
         if (activeSubflow && m) {
-            var subflowId = m[1];
+            let subflowId = m[1];
             if (subflowId === activeSubflow.id) {
                 RED.notify(RED._("notification.error",{message: RED._("notification.errors.cannotAddSubflowToItself")}),"error");
                 return;
@@ -5545,7 +5545,7 @@ RED.view = (function() {
             }
         }
 
-        var nn = { id:RED.nodes.id(),z:RED.workspaces.active()};
+        let nn = { id:RED.nodes.id(),z:RED.workspaces.active()};
 
         nn.type = type;
         nn._def = RED.nodes.getType(nn.type);
@@ -5554,7 +5554,7 @@ RED.view = (function() {
             nn.inputs = nn._def.inputs || 0;
             nn.outputs = nn._def.outputs;
 
-            for (var d in nn._def.defaults) {
+            for (let d in nn._def.defaults) {
                 if (nn._def.defaults.hasOwnProperty(d)) {
                     if (nn._def.defaults[d].value !== undefined) {
                         nn[d] = JSON.parse(JSON.stringify(nn._def.defaults[d].value));
@@ -5570,7 +5570,7 @@ RED.view = (function() {
                 }
             }
         } else {
-            var subflow = RED.nodes.subflow(m[1]);
+            let subflow = RED.nodes.subflow(m[1]);
             nn.inputs = subflow.in.length;
             nn.outputs = subflow.out.length;
         }
@@ -5580,13 +5580,13 @@ RED.view = (function() {
         nn.w = node_width;
         nn.h = Math.max(node_height,(nn.outputs||0) * 15);
 
-        var historyEvent = {
+        let historyEvent = {
             t:"add",
             nodes:[nn.id],
             dirty:RED.nodes.dirty()
         }
         if (activeSubflow) {
-            var subflowRefresh = RED.subflow.refresh(true);
+            let subflowRefresh = RED.subflow.refresh(true);
             if (subflowRefresh) {
                 historyEvent.subflow = {
                     id:activeSubflow.id,
@@ -5603,7 +5603,7 @@ RED.view = (function() {
     }
 
     function canvasMouseDown() {
-        var point;
+        let point;
 
         if (!mousedown_node && !mousedown_link) {
             selected_link = null;
@@ -5619,7 +5619,7 @@ RED.view = (function() {
             if (d3.event.metaKey || d3.event.ctrlKey) {
                 point = d3.mouse(this);
                 d3.event.stopPropagation();
-                var mainPos = $("#main-container").position();
+                let mainPos = $("#main-container").position();
 
                 if (mouse_mode !== RED.state.QUICK_JOINING) {
                     mouse_mode = RED.state.QUICK_JOINING;
@@ -5630,18 +5630,18 @@ RED.view = (function() {
                     x:d3.event.clientX-mainPos.left-node_width/2,
                     y:d3.event.clientY-mainPos.top-node_height/2,
                     add: function(type) {
-                        var result = addNode(type);
+                        let result = addNode(type);
                         if (!result) {
                             return;
                         }
-                        var nn = result.node;
-                        var historyEvent = result.historyEvent;
+                        let nn = result.node;
+                        let historyEvent = result.historyEvent;
                         nn.x = point[0];
                         nn.y = point[1];
                         if (mouse_mode === RED.state.QUICK_JOINING) {
                             if (drag_lines.length > 0) {
-                                var drag_line = drag_lines[0];
-                                var src = null,dst,src_port;
+                                let drag_line = drag_lines[0];
+                                let src = null,dst,src_port;
 
                                 if (drag_line.portType === 0 && nn.inputs > 0) {
                                     src = drag_line.node;
@@ -5653,7 +5653,7 @@ RED.view = (function() {
                                     src_port = 0;
                                 }
                                 if (src !== null) {
-                                    var link = {source: src, sourcePort:src_port, target: dst};
+                                    let link = {source: src, sourcePort:src_port, target: dst};
                                     RED.nodes.addLink(link);
                                     historyEvent.links = [link];
                                     hideDragLines();
@@ -5662,11 +5662,11 @@ RED.view = (function() {
                                     } else if (drag_line.portType === 1 && nn.inputs > 0) {
                                         showDragLines([{node:nn,port:0,portType:1}]);
                                     } else {
-                                        resetMouseVars();
+                                        resetMouselets();
                                     }
                                 } else {
                                     hideDragLines();
-                                    resetMouseVars();
+                                    resetMouselets();
                                 }
                             } else {
                                 if (nn.outputs > 0) {
@@ -5674,7 +5674,7 @@ RED.view = (function() {
                                 } else if (nn.inputs > 0) {
                                     showDragLines([{node:nn,port:0,portType:1}]);
                                 } else {
-                                    resetMouseVars();
+                                    resetMouselets();
                                 }
                             }
                         }
@@ -5718,8 +5718,8 @@ RED.view = (function() {
     }
 
     function canvasMouseMove() {
-        var i;
-        var node;
+        let i;
+        let node;
         mouse_position = d3.touches(this)[0]||d3.mouse(this);
         // Prevent touch scrolling...
         //if (d3.touches(this)[0]) {
@@ -5727,17 +5727,17 @@ RED.view = (function() {
         //}
 
         // TODO: auto scroll the container
-        //var point = d3.mouse(this);
+        //let point = d3.mouse(this);
         //if (point[0]-container.scrollLeft < 30 && container.scrollLeft > 0) { container.scrollLeft -= 15; }
         //console.log(d3.mouse(this),container.offsetWidth,container.offsetHeight,container.scrollLeft,container.scrollTop);
 
         if (lasso) {
-            var ox = parseInt(lasso.attr("ox"));
-            var oy = parseInt(lasso.attr("oy"));
-            var x = parseInt(lasso.attr("x"));
-            var y = parseInt(lasso.attr("y"));
-            var w;
-            var h;
+            let ox = parseInt(lasso.attr("ox"));
+            let oy = parseInt(lasso.attr("oy"));
+            let x = parseInt(lasso.attr("x"));
+            let y = parseInt(lasso.attr("y"));
+            let w;
+            let h;
             if (mouse_position[0] < ox) {
                 x = mouse_position[0];
                 w = ox-x;
@@ -5763,14 +5763,14 @@ RED.view = (function() {
             return;
         }
 
-        var mousePos;
+        let mousePos;
         if (mouse_mode == RED.state.JOINING || mouse_mode === RED.state.QUICK_JOINING) {
             // update drag line
             if (drag_lines.length === 0) {
                 if (d3.event.shiftKey) {
                     // Get all the wires we need to detach.
-                    var links = [];
-                    var existingLinks = [];
+                    let links = [];
+                    let existingLinks = [];
                     if (selected_link &&
                         ((mousedown_port_type === 0 &&
                                 selected_link.source === mousedown_node &&
@@ -5782,7 +5782,7 @@ RED.view = (function() {
                     ) {
                         existingLinks = [selected_link];
                     } else {
-                        var filter;
+                        let filter;
                         if (mousedown_port_type === 0) {
                             filter = {
                                 source:mousedown_node,
@@ -5796,7 +5796,7 @@ RED.view = (function() {
                         existingLinks = RED.nodes.filterLinks(filter);
                     }
                     for (i=0;i<existingLinks.length;i++) {
-                        var link = existingLinks[i];
+                        let link = existingLinks[i];
                         RED.nodes.removeLink(link);
                         links.push({
                             link:link,
@@ -5806,7 +5806,7 @@ RED.view = (function() {
                         })
                     }
                     if (links.length === 0) {
-                        resetMouseVars();
+                        resetMouselets();
                         redraw();
                     } else {
                         showDragLines(links);
@@ -5822,18 +5822,18 @@ RED.view = (function() {
             }
             mousePos = mouse_position;
             for (i=0;i<drag_lines.length;i++) {
-                var drag_line = drag_lines[i];
-                var numOutputs = (drag_line.portType === 0)?(drag_line.node.outputs || 1):1;
-                var sourcePort = drag_line.port;
-                var portY = -((numOutputs-1)/2)*13 +13*sourcePort;
+                let drag_line = drag_lines[i];
+                let numOutputs = (drag_line.portType === 0)?(drag_line.node.outputs || 1):1;
+                let sourcePort = drag_line.port;
+                let portY = -((numOutputs-1)/2)*13 +13*sourcePort;
 
-                var sc = (drag_line.portType === 0)?1:-1;
+                let sc = (drag_line.portType === 0)?1:-1;
 
-                var dy = mousePos[1]-(drag_line.node.y+portY);
-                var dx = mousePos[0]-(drag_line.node.x+sc*drag_line.node.w/2);
-                var delta = Math.sqrt(dy*dy+dx*dx);
-                var scale = lineCurveScale;
-                var scaleY = 0;
+                let dy = mousePos[1]-(drag_line.node.y+portY);
+                let dx = mousePos[0]-(drag_line.node.x+sc*drag_line.node.w/2);
+                let delta = Math.sqrt(dy*dy+dx*dx);
+                let scale = lineCurveScale;
+                let scaleY = 0;
 
                 if (delta < node_width) {
                     scale = 0.75-0.75*((node_width-delta)/node_width);
@@ -5858,7 +5858,7 @@ RED.view = (function() {
             if (isNaN(mousePos[0])) {
                 mousePos = d3.touches(document.body)[0];
             }
-            var d = (mouse_offset[0]-mousePos[0])*(mouse_offset[0]-mousePos[0]) + (mouse_offset[1]-mousePos[1])*(mouse_offset[1]-mousePos[1]);
+            let d = (mouse_offset[0]-mousePos[0])*(mouse_offset[0]-mousePos[0]) + (mouse_offset[1]-mousePos[1])*(mouse_offset[1]-mousePos[1]);
             if (d > 3) {
                 mouse_mode = RED.state.MOVING_ACTIVE;
                 clickElapsed = 0;
@@ -5874,11 +5874,11 @@ RED.view = (function() {
             }
         } else if (mouse_mode == RED.state.MOVING_ACTIVE || mouse_mode == RED.state.IMPORT_DRAGGING) {
             mousePos = mouse_position;
-            var minX = 0;
-            var minY = 0;
-            var maxX = space_width;
-            var maxY = space_height;
-            for (var n = 0; n<moving_set.length; n++) {
+            let minX = 0;
+            let minY = 0;
+            let maxX = space_width;
+            let maxY = space_height;
+            for (let n = 0; n<moving_set.length; n++) {
                 node = moving_set[n];
                 if (d3.event.shiftKey) {
                     node.n.ox = node.n.x;
@@ -5907,7 +5907,7 @@ RED.view = (function() {
                 }
             }
             if (snapGrid != d3.event.shiftKey && moving_set.length > 0) {
-                var gridOffset = [0,0];
+                let gridOffset = [0,0];
                 node = moving_set[0];
                 gridOffset[0] = node.n.x-(gridSize*Math.floor((node.n.x-node.n.w/2)/gridSize)+node.n.w/2);
                 gridOffset[1] = node.n.y-(gridSize*Math.floor(node.n.y/gridSize));
@@ -5927,13 +5927,13 @@ RED.view = (function() {
                 if (spliceActive) {
                     if (!spliceTimer) {
                         spliceTimer = setTimeout(function() {
-                            var nodes = [];
-                            var bestDistance = Infinity;
-                            var bestLink = null;
-                            var mouseX = node.n.x;
-                            var mouseY = node.n.y;
+                            let nodes = [];
+                            let bestDistance = Infinity;
+                            let bestLink = null;
+                            let mouseX = node.n.x;
+                            let mouseY = node.n.y;
                             if (outer[0][0].getIntersectionList) {
-                                var svgRect = outer[0][0].createSVGRect();
+                                let svgRect = outer[0][0].createSVGRect();
                                 svgRect.x = mouseX;
                                 svgRect.y = mouseY;
                                 svgRect.width = 1;
@@ -5944,12 +5944,12 @@ RED.view = (function() {
                                 // makes us sad
                                 nodes = RED.view.getLinksAtPoint(mouseX,mouseY);
                             }
-                            for (var i=0;i<nodes.length;i++) {
+                            for (let i=0;i<nodes.length;i++) {
                                 if (d3.select(nodes[i]).classed("link_background")) {
-                                    var length = nodes[i].getTotalLength();
-                                    for (var j=0;j<length;j+=10) {
-                                        var p = nodes[i].getPointAtLength(j);
-                                        var d2 = ((p.x-mouseX)*(p.x-mouseX))+((p.y-mouseY)*(p.y-mouseY));
+                                    let length = nodes[i].getTotalLength();
+                                    for (let j=0;j<length;j+=10) {
+                                        let p = nodes[i].getPointAtLength(j);
+                                        let d2 = ((p.x-mouseX)*(p.x-mouseX))+((p.y-mouseY)*(p.y-mouseY));
                                         if (d2 < 200 && d2 < bestDistance) {
                                             bestDistance = d2;
                                             bestLink = nodes[i];
@@ -5980,13 +5980,13 @@ RED.view = (function() {
     }
 
     function canvasMouseUp() {
-        var i;
-        var historyEvent;
+        let i;
+        let historyEvent;
         if (mouse_mode === RED.state.QUICK_JOINING) {
             return;
         }
         if (mousedown_node && mouse_mode == RED.state.JOINING) {
-            var removedLinks = [];
+            let removedLinks = [];
             for (i=0;i<drag_lines.length;i++) {
                 if (drag_lines[i].link) {
                     removedLinks.push(drag_lines[i].link)
@@ -6001,10 +6001,10 @@ RED.view = (function() {
             hideDragLines();
         }
         if (lasso) {
-            var x = parseInt(lasso.attr("x"));
-            var y = parseInt(lasso.attr("y"));
-            var x2 = x+parseInt(lasso.attr("width"));
-            var y2 = y+parseInt(lasso.attr("height"));
+            let x = parseInt(lasso.attr("x"));
+            let y = parseInt(lasso.attr("y"));
+            let x2 = x+parseInt(lasso.attr("width"));
+            let y2 = y+parseInt(lasso.attr("height"));
             if (!d3.event.ctrlKey) {
                 clearSelection();
             }
@@ -6042,8 +6042,8 @@ RED.view = (function() {
         }
         if (mouse_mode == RED.state.MOVING_ACTIVE) {
             if (moving_set.length > 0) {
-                var ns = [];
-                for (var j=0;j<moving_set.length;j++) {
+                let ns = [];
+                for (let j=0;j<moving_set.length;j++) {
                     ns.push({n:moving_set[j].n,ox:moving_set[j].ox,oy:moving_set[j].oy,changed:moving_set[j].n.changed});
                     moving_set[j].n.dirty = true;
                     moving_set[j].n.changed = true;
@@ -6051,14 +6051,14 @@ RED.view = (function() {
                 historyEvent = {t:"move",nodes:ns,dirty:RED.nodes.dirty()};
                 if (activeSpliceLink) {
                     // TODO: DRY - droppable/nodeMouseDown/canvasMouseUp
-                    var spliceLink = d3.select(activeSpliceLink).data()[0];
+                    let spliceLink = d3.select(activeSpliceLink).data()[0];
                     RED.nodes.removeLink(spliceLink);
-                    var link1 = {
+                    let link1 = {
                         source:spliceLink.source,
                         sourcePort:spliceLink.sourcePort,
                         target: moving_set[0].n
                     };
-                    var link2 = {
+                    let link2 = {
                         source:moving_set[0].n,
                         sourcePort:0,
                         target: spliceLink.target
@@ -6084,7 +6084,7 @@ RED.view = (function() {
             updateActiveNodes();
             RED.nodes.dirty(true);
         }
-        resetMouseVars();
+        resetMouselets();
         redraw();
     }
 
@@ -6138,8 +6138,8 @@ RED.view = (function() {
     }
 
     function clearSelection() {
-        for (var i=0;i<moving_set.length;i++) {
-            var n = moving_set[i];
+        for (let i=0;i<moving_set.length;i++) {
+            let n = moving_set[i];
             n.n.dirty = true;
             n.n.selected = false;
         }
@@ -6148,7 +6148,7 @@ RED.view = (function() {
     }
 
     function updateSelection() {
-        var selection = {};
+        let selection = {};
 
         if (moving_set.length > 0) {
             selection.nodes = moving_set.map(function(n) { return n.n;});
@@ -6156,21 +6156,21 @@ RED.view = (function() {
         if (selected_link != null) {
             selection.link = selected_link;
         }
-        var activeWorkspace = RED.workspaces.active();
+        let activeWorkspace = RED.workspaces.active();
         activeLinks = RED.nodes.filterLinks({
             source:{z:activeWorkspace},
             target:{z:activeWorkspace}
         });
-        var tabOrder = RED.nodes.getWorkspaceOrder();
-        var currentLinks = activeLinks;
-        var addedLinkLinks = {};
+        let tabOrder = RED.nodes.getWorkspaceOrder();
+        let currentLinks = activeLinks;
+        let addedLinkLinks = {};
         activeFlowLinks = [];
-        for (var i=0;i<moving_set.length;i++) {
+        for (let i=0;i<moving_set.length;i++) {
             if (moving_set[i].n.type === "link out" || moving_set[i].n.type === "link in") {
-                var linkNode = moving_set[i].n;
-                var offFlowLinks = {};
+                let linkNode = moving_set[i].n;
+                let offFlowLinks = {};
                 linkNode.links.forEach(function(id) {
-                    var target = RED.nodes.node(id);
+                    let target = RED.nodes.node(id);
                     if (target) {
                         if (linkNode.type === "link out") {
                             if (target.z === linkNode.z) {
@@ -6205,7 +6205,7 @@ RED.view = (function() {
                         }
                     }
                 });
-                var offFlows = Object.keys(offFlowLinks);
+                let offFlows = Object.keys(offFlowLinks);
                 // offFlows.sort(function(A,B) {
                 //     return tabOrder.indexOf(A) - tabOrder.indexOf(B);
                 // });
@@ -6226,8 +6226,8 @@ RED.view = (function() {
     function endKeyboardMove() {
         endMoveSet = false;
         if (moving_set.length > 0) {
-            var ns = [];
-            for (var i=0;i<moving_set.length;i++) {
+            let ns = [];
+            for (let i=0;i<moving_set.length;i++) {
                 ns.push({n:moving_set[i].n,ox:moving_set[i].ox,oy:moving_set[i].oy,changed:moving_set[i].n.changed});
                 moving_set[i].n.changed = true;
                 moving_set[i].n.dirty = true;
@@ -6239,18 +6239,18 @@ RED.view = (function() {
             RED.nodes.dirty(true);
         }
     }
-    var endMoveSet = false;
+    let endMoveSet = false;
     function moveSelection(dx,dy) {
         if (moving_set.length > 0) {
             if (!endMoveSet) {
                 $(document).one('keyup',endKeyboardMove);
                 endMoveSet = true;
             }
-            var minX = 0;
-            var minY = 0;
-            var node;
+            let minX = 0;
+            let minY = 0;
+            let node;
 
-            for (var i=0;i<moving_set.length;i++) {
+            for (let i=0;i<moving_set.length;i++) {
                 node = moving_set[i];
                 node.n.changed = true;
                 node.n.dirty = true;
@@ -6266,7 +6266,7 @@ RED.view = (function() {
             }
 
             if (minX !== 0 || minY !== 0) {
-                for (var n = 0; n<moving_set.length; n++) {
+                for (let n = 0; n<moving_set.length; n++) {
                     node = moving_set[n];
                     node.n.x -= minX;
                     node.n.y -= minY;
@@ -6279,7 +6279,7 @@ RED.view = (function() {
     function editSelection() {
         console.log('editSelection');
         if (moving_set.length > 0) {
-            var node = moving_set[0].n;
+            let node = moving_set[0].n;
             if (node.type === "subflow") {
                 RED.editor.editSubflow(activeSubflow);
             } else {
@@ -6289,24 +6289,24 @@ RED.view = (function() {
     }
     function deleteSelection() {
         if (moving_set.length > 0 || selected_link != null) {
-            var result;
-            var removedNodes = [];
-            var removedLinks = [];
-            var removedSubflowOutputs = [];
-            var removedSubflowInputs = [];
-            var subflowInstances = [];
+            let result;
+            let removedNodes = [];
+            let removedLinks = [];
+            let removedSubflowOutputs = [];
+            let removedSubflowInputs = [];
+            let subflowInstances = [];
 
-            var startDirty = RED.nodes.dirty();
-            var startChanged = false;
+            let startDirty = RED.nodes.dirty();
+            let startChanged = false;
             if (moving_set.length > 0) {
-                for (var i=0;i<moving_set.length;i++) {
-                    var node = moving_set[i].n;
+                for (let i=0;i<moving_set.length;i++) {
+                    let node = moving_set[i].n;
                     node.selected = false;
                     if (node.type != "subflow") {
                         if (node.x < 0) {
                             node.x = 25
                         }
-                        var removedEntities = RED.nodes.remove(node.id);
+                        let removedEntities = RED.nodes.remove(node.id);
                         removedNodes.push(node);
                         removedNodes = removedNodes.concat(removedEntities.nodes);
                         removedLinks = removedLinks.concat(removedEntities.links);
@@ -6332,7 +6332,7 @@ RED.view = (function() {
                         removedLinks = removedLinks.concat(result.links);
                     }
                 }
-                // var instances = RED.subflow.refresh(true);
+                // let instances = RED.subflow.refresh(true);
                 // if (instances) {
                 //     subflowInstances = instances.instances;
                 // }
@@ -6346,7 +6346,7 @@ RED.view = (function() {
                 removedLinks.push(selected_link);
                 RED.nodes.dirty(true);
             }
-            var historyEvent = {
+            let historyEvent = {
                 t:"delete",
                 nodes:removedNodes,
                 links:removedLinks,
@@ -6368,16 +6368,16 @@ RED.view = (function() {
 
     function copySelection() {
         if (moving_set.length > 0) {
-            var nns = [];
-            for (var n=0;n<moving_set.length;n++) {
-                var node = moving_set[n].n;
+            let nns = [];
+            for (let n=0;n<moving_set.length;n++) {
+                let node = moving_set[n].n;
                 // The only time a node.type == subflow can be selected is the
                 // input/output "proxy" nodes. They cannot be copied.
                 if (node.type != "subflow") {
-                    for (var d in node._def.defaults) {
+                    for (let d in node._def.defaults) {
                         if (node._def.defaults.hasOwnProperty(d)) {
                             if (node._def.defaults[d].type) {
-                                var configNode = RED.nodes.node(node[d]);
+                                let configNode = RED.nodes.node(node[d]);
                                 if (configNode && configNode._def.exclusive) {
                                     nns.push(RED.nodes.convertNode(configNode));
                                 }
@@ -6395,18 +6395,18 @@ RED.view = (function() {
 
 
     function calculateTextWidth(str, className, offset) {
-        var sp = document.createElement("span");
+        let sp = document.createElement("span");
         sp.className = className;
         sp.style.position = "absolute";
         sp.style.top = "-1000px";
         sp.textContent = (str||"");
         document.body.appendChild(sp);
-        var w = sp.offsetWidth;
+        let w = sp.offsetWidth;
         document.body.removeChild(sp);
         return offset+w;
     }
 
-    function resetMouseVars() {
+    function resetMouselets() {
         mousedown_node = null;
         mouseup_node = null;
         mousedown_link = null;
@@ -6424,7 +6424,7 @@ RED.view = (function() {
     function disableQuickJoinEventHandler(evt) {
         // Check for ctrl (all browsers), "Meta" (Chrome/FF), keyCode 91 (Safari)
         if (evt.keyCode === 17 || evt.key === "Meta" || evt.keyCode === 91) {
-            resetMouseVars();
+            resetMouselets();
             hideDragLines();
             redraw();
             $(window).off('keyup',disableQuickJoinEventHandler);
@@ -6452,7 +6452,7 @@ RED.view = (function() {
     }
 
     function portMouseUp(d,portType,portIndex) {
-        var i;
+        let i;
         if (mouse_mode === RED.state.QUICK_JOINING) {
             if (drag_lines[0].node===d) {
                 return
@@ -6463,8 +6463,8 @@ RED.view = (function() {
             if (typeof TouchEvent != "undefined" && d3.event instanceof TouchEvent) {
                 RED.nodes.eachNode(function(n) {
                     if (n.z == RED.workspaces.active()) {
-                        var hw = n.w/2;
-                        var hh = n.h/2;
+                        let hw = n.w/2;
+                        let hh = n.h/2;
                         if (n.x-hw<mouse_position[0] && n.x+hw> mouse_position[0] &&
                             n.y-hh<mouse_position[1] && n.y+hh>mouse_position[1]) {
                             mouseup_node = n;
@@ -6476,8 +6476,8 @@ RED.view = (function() {
             } else {
                 mouseup_node = d;
             }
-            var addedLinks = [];
-            var removedLinks = [];
+            let addedLinks = [];
+            let removedLinks = [];
 
             for (i=0;i<drag_lines.length;i++) {
                 if (drag_lines[i].link) {
@@ -6486,8 +6486,8 @@ RED.view = (function() {
             }
             for (i=0;i<drag_lines.length;i++) {
                 if (portType != drag_lines[i].portType && mouseup_node !== drag_lines[i].node) {
-                    var drag_line = drag_lines[i];
-                    var src,dst,src_port;
+                    let drag_line = drag_lines[i];
+                    let src,dst,src_port;
                     if (drag_line.portType === 0) {
                         src = drag_line.node;
                         src_port = drag_line.port;
@@ -6497,23 +6497,23 @@ RED.view = (function() {
                         dst = drag_line.node;
                         src_port = portIndex;
                     }
-                    var existingLink = RED.nodes.filterLinks({source:src,target:dst,sourcePort: src_port}).length !== 0;
+                    let existingLink = RED.nodes.filterLinks({source:src,target:dst,sourcePort: src_port}).length !== 0;
                     if (!existingLink) {
-                        var link = {source: src, sourcePort:src_port, target: dst};
+                        let link = {source: src, sourcePort:src_port, target: dst};
                         RED.nodes.addLink(link);
                         addedLinks.push(link);
                     }
                 }
             }
             if (addedLinks.length > 0 || removedLinks.length > 0) {
-                var historyEvent = {
+                let historyEvent = {
                     t:"add",
                     links:addedLinks,
                     removedLinks: removedLinks,
                     dirty:RED.nodes.dirty()
                 };
                 if (activeSubflow) {
-                    var subflowRefresh = RED.subflow.refresh(true);
+                    let subflowRefresh = RED.subflow.refresh(true);
                     if (subflowRefresh) {
                         historyEvent.subflow = {
                             id:activeSubflow.id,
@@ -6534,14 +6534,14 @@ RED.view = (function() {
                     } else if (portType === 0 && d.inputs > 0) {
                         showDragLines([{node:d,port:0,portType:1}]);
                     } else {
-                        resetMouseVars();
+                        resetMouselets();
                     }
                 }
                 redraw();
                 return;
             }
 
-            resetMouseVars();
+            resetMouselets();
             hideDragLines();
             selected_link = null;
             redraw();
@@ -6560,35 +6560,35 @@ RED.view = (function() {
             d3.event.stopPropagation();
             return;
         }
-        var direction = d._def? (d.inputs > 0 ? 1: 0) : (d.direction == "in" ? 0: 1)
+        let direction = d._def? (d.inputs > 0 ? 1: 0) : (d.direction == "in" ? 0: 1)
         portMouseUp(d, direction, 0);
     }
 
     function nodeMouseDown(d) {
         focusView();
-        //var touch0 = d3.event;
-        //var pos = [touch0.pageX,touch0.pageY];
+        //let touch0 = d3.event;
+        //let pos = [touch0.pageX,touch0.pageY];
         //RED.touch.radialMenu.show(d3.select(this),pos);
         if (mouse_mode == RED.state.IMPORT_DRAGGING) {
             RED.keyboard.remove("escape");
 
             if (activeSpliceLink) {
                 // TODO: DRY - droppable/nodeMouseDown/canvasMouseUp
-                var spliceLink = d3.select(activeSpliceLink).data()[0];
+                let spliceLink = d3.select(activeSpliceLink).data()[0];
                 RED.nodes.removeLink(spliceLink);
-                var link1 = {
+                let link1 = {
                     source:spliceLink.source,
                     sourcePort:spliceLink.sourcePort,
                     target: moving_set[0].n
                 };
-                var link2 = {
+                let link2 = {
                     source:moving_set[0].n,
                     sourcePort:0,
                     target: spliceLink.target
                 };
                 RED.nodes.addLink(link1);
                 RED.nodes.addLink(link2);
-                var historyEvent = RED.history.peek();
+                let historyEvent = RED.history.peek();
                 historyEvent.links = [link1,link2];
                 historyEvent.removedLinks = [spliceLink];
                 updateActiveNodes();
@@ -6597,7 +6597,7 @@ RED.view = (function() {
             updateSelection();
             RED.nodes.dirty(true);
             redraw();
-            resetMouseVars();
+            resetMouselets();
             d3.event.stopPropagation();
             return;
         } else if (mouse_mode == RED.state.QUICK_JOINING) {
@@ -6605,14 +6605,14 @@ RED.view = (function() {
             return;
         }
         mousedown_node = d;
-        var now = Date.now();
+        let now = Date.now();
         clickElapsed = now-clickTime;
         clickTime = now;
 
         dblClickPrimed = (lastClickNode == mousedown_node);
         lastClickNode = mousedown_node;
 
-        var i;
+        let i;
 
         if (d.selected && (d3.event.ctrlKey||d3.event.metaKey)) {
             mousedown_node.selected = false;
@@ -6625,8 +6625,8 @@ RED.view = (function() {
         } else {
             if (d3.event.shiftKey) {
                 clearSelection();
-                var cnodes = RED.nodes.getAllFlowNodes(mousedown_node);
-                for (var n=0;n<cnodes.length;n++) {
+                let cnodes = RED.nodes.getAllFlowNodes(mousedown_node);
+                for (let n=0;n<cnodes.length;n++) {
                     cnodes[n].selected = true;
                     cnodes[n].dirty = true;
                     moving_set.push({n:cnodes[n]});
@@ -6641,7 +6641,7 @@ RED.view = (function() {
             selected_link = null;
             if (d3.event.button != 2) {
                 mouse_mode = RED.state.MOVING;
-                var mouse = d3.touches(this)[0]||d3.mouse(this);
+                let mouse = d3.touches(this)[0]||d3.mouse(this);
                 mouse[0] += d.x-d.w/2;
                 mouse[1] += d.y-d.h/2;
                 for (i=0;i<moving_set.length;i++) {
@@ -6688,8 +6688,8 @@ RED.view = (function() {
     }
 
     function showTouchMenu(obj,pos) {
-        var mdn = mousedown_node;
-        var options = [];
+        let mdn = mousedown_node;
+        let options = [];
         options.push({name:"delete",disabled:(moving_set.length===0 && selected_link === null),onselect:function() {deleteSelection();}});
         options.push({name:"cut",disabled:(moving_set.length===0),onselect:function() {copySelection();deleteSelection();}});
         options.push({name:"copy",disabled:(moving_set.length===0),onselect:function() {copySelection();}});
@@ -6699,7 +6699,7 @@ RED.view = (function() {
         options.push({name:"undo",disabled:(RED.history.depth() === 0),onselect:function() {RED.history.pop();}});
 
         RED.touch.radialMenu.show(obj,pos,options);
-        resetMouseVars();
+        resetMouselets();
     }
     function redraw() {
         vis.attr("transform","scale("+scaleFactor+")");
@@ -6708,12 +6708,12 @@ RED.view = (function() {
         // Don't bother redrawing nodes if we're drawing links
         if (mouse_mode != RED.state.JOINING) {
 
-            var dirtyNodes = {};
+            let dirtyNodes = {};
 
             if (activeSubflow) {
-                var subflowOutputs = vis.selectAll(".subflowoutput").data(activeSubflow.out,function(d,i){ return d.id;});
+                let subflowOutputs = vis.selectAll(".subflowoutput").data(activeSubflow.out,function(d,i){ return d.id;});
                 subflowOutputs.exit().remove();
-                var outGroup = subflowOutputs.enter().insert("svg:g").attr("class","node subflowoutput").attr("transform",function(d) { return "translate("+(d.x-20)+","+(d.y-20)+")"});
+                let outGroup = subflowOutputs.enter().insert("svg:g").attr("class","node subflowoutput").attr("transform",function(d) { return "translate("+(d.x-20)+","+(d.y-20)+")"});
                 outGroup.each(function(d,i) {
                     d.w=40;
                     d.h=40;
@@ -6723,9 +6723,9 @@ RED.view = (function() {
                     .on("mouseup",nodeMouseUp)
                     .on("mousedown",nodeMouseDown)
                     .on("touchstart",function(d) {
-                        var obj = d3.select(this);
-                        var touch0 = d3.event.touches.item(0);
-                        var pos = [touch0.pageX,touch0.pageY];
+                        let obj = d3.select(this);
+                        let touch0 = d3.event.touches.item(0);
+                        let pos = [touch0.pageX,touch0.pageY];
                         startTouchCenter = [touch0.pageX,touch0.pageY];
                         startTouchDistance = 0;
                         touchStartTime = setTimeout(function() {
@@ -6748,15 +6748,15 @@ RED.view = (function() {
                     .on("touchstart", function(d,i){portMouseDown(d,1,0);} )
                     .on("mouseup", function(d,i){portMouseUp(d,1,0);})
                     .on("touchend",function(d,i){portMouseUp(d,1,0);} )
-                    .on("mouseover",function(d,i) { var port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 1)));})
-                    .on("mouseout",function(d,i) { var port = d3.select(this); port.classed("port_hovered",false);});
+                    .on("mouseover",function(d,i) { let port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 1)));})
+                    .on("mouseout",function(d,i) { let port = d3.select(this); port.classed("port_hovered",false);});
 
                 outGroup.append("svg:text").attr("class","port_label").attr("x",20).attr("y",8).style("font-size","10px").text("output");
                 outGroup.append("svg:text").attr("class","port_label port_index").attr("x",20).attr("y",24).text(function(d,i){ return i+1});
 
-                var subflowInputs = vis.selectAll(".subflowinput").data(activeSubflow.in,function(d,i){ return d.id;});
+                let subflowInputs = vis.selectAll(".subflowinput").data(activeSubflow.in,function(d,i){ return d.id;});
                 subflowInputs.exit().remove();
-                var inGroup = subflowInputs.enter().insert("svg:g").attr("class","node subflowinput").attr("transform",function(d) { return "translate("+(d.x-20)+","+(d.y-20)+")"});
+                let inGroup = subflowInputs.enter().insert("svg:g").attr("class","node subflowinput").attr("transform",function(d) { return "translate("+(d.x-20)+","+(d.y-20)+")"});
                 inGroup.each(function(d,i) {
                     d.w=40;
                     d.h=40;
@@ -6766,9 +6766,9 @@ RED.view = (function() {
                     .on("mouseup",nodeMouseUp)
                     .on("mousedown",nodeMouseDown)
                     .on("touchstart",function(d) {
-                        var obj = d3.select(this);
-                        var touch0 = d3.event.touches.item(0);
-                        var pos = [touch0.pageX,touch0.pageY];
+                        let obj = d3.select(this);
+                        let touch0 = d3.event.touches.item(0);
+                        let pos = [touch0.pageX,touch0.pageY];
                         startTouchCenter = [touch0.pageX,touch0.pageY];
                         startTouchDistance = 0;
                         touchStartTime = setTimeout(function() {
@@ -6791,15 +6791,15 @@ RED.view = (function() {
                     .on("touchstart", function(d,i){portMouseDown(d,0,i);} )
                     .on("mouseup", function(d,i){portMouseUp(d,0,i);})
                     .on("touchend",function(d,i){portMouseUp(d,0,i);} )
-                    .on("mouseover",function(d,i) { var port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 0) ));})
-                    .on("mouseout",function(d,i) { var port = d3.select(this); port.classed("port_hovered",false);});
+                    .on("mouseover",function(d,i) { let port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 0) ));})
+                    .on("mouseout",function(d,i) { let port = d3.select(this); port.classed("port_hovered",false);});
                 inGroup.append("svg:text").attr("class","port_label").attr("x",18).attr("y",20).style("font-size","10px").text("input");
 
 
 
                 subflowOutputs.each(function(d,i) {
                     if (d.dirty) {
-                        var output = d3.select(this);
+                        let output = d3.select(this);
                         output.selectAll(".subflowport").classed("node_selected",function(d) { return d.selected; })
                         output.selectAll(".port_index").text(function(d){ return d.i+1});
                         output.attr("transform", function(d) { return "translate(" + (d.x-d.w/2) + "," + (d.y-d.h/2) + ")"; });
@@ -6809,7 +6809,7 @@ RED.view = (function() {
                 });
                 subflowInputs.each(function(d,i) {
                     if (d.dirty) {
-                        var input = d3.select(this);
+                        let input = d3.select(this);
                         input.selectAll(".subflowport").classed("node_selected",function(d) { return d.selected; })
                         input.attr("transform", function(d) { return "translate(" + (d.x-d.w/2) + "," + (d.y-d.h/2) + ")"; });
                         dirtyNodes[d.id] = d;
@@ -6821,19 +6821,19 @@ RED.view = (function() {
                 vis.selectAll(".subflowinput").remove();
             }
 
-            var node = vis.selectAll(".nodegroup").data(activeNodes,function(d){return d.id});
+            let node = vis.selectAll(".nodegroup").data(activeNodes,function(d){return d.id});
             node.exit().remove();
 
-            var nodeEnter = node.enter().insert("svg:g")
+            let nodeEnter = node.enter().insert("svg:g")
                 .attr("class", "node nodegroup")
                 .classed("node_subflow",function(d) { return activeSubflow != null; })
                 .classed("node_link",function(d) { return d.type === "link in" || d.type === "link out" });
 
             nodeEnter.each(function(d,i) {
-                var node = d3.select(this);
-                var isLink = d.type === "link in" || d.type === "link out";
+                let node = d3.select(this);
+                let isLink = d.type === "link in" || d.type === "link out";
                 node.attr("id",d.id);
-                var l = d._def.label;
+                let l = d._def.label;
                 try {
                     l = (typeof l === "function" ? l.call(d) : l)||"";
                 } catch(err) {
@@ -6849,8 +6849,8 @@ RED.view = (function() {
                 d.h = Math.max(node_height,(d.outputs||0) * 15);
 
                 if (d._def.badge) {
-                    var badge = node.append("svg:g").attr("class","node_badge_group");
-                    var badgeRect = badge.append("rect").attr("class","node_badge").attr("rx",5).attr("ry",5).attr("width",40).attr("height",15);
+                    let badge = node.append("svg:g").attr("class","node_badge_group");
+                    let badgeRect = badge.append("rect").attr("class","node_badge").attr("rx",5).attr("ry",5).attr("width",40).attr("height",15);
                     badge.append("svg:text").attr("class","node_badge_label").attr("x",35).attr("y",11).attr("text-anchor","end").text(d._def.badge());
                     if (d._def.onbadgeclick) {
                         badgeRect.attr("cursor","pointer")
@@ -6859,7 +6859,7 @@ RED.view = (function() {
                 }
 
                 if (d._def.button) {
-                    var nodeButtonGroup = node.append("svg:g")
+                    let nodeButtonGroup = node.append("svg:g")
                         .attr("transform",function(d) { return "translate("+((d._def.align == "right") ? 94 : -25)+",2)"; })
                         .attr("class",function(d) { return "node_button "+((d._def.align == "right") ? "node_right_button" : "node_left_button"); });
                     nodeButtonGroup.append("rect")
@@ -6882,7 +6882,7 @@ RED.view = (function() {
                         .on("mouseup",function(d) {if (!lasso && !d.changed) { d3.select(this).attr("fill-opacity",0.4);d3.event.preventDefault();d3.event.stopPropagation();}})
                         .on("mouseover",function(d) {if (!lasso && !d.changed) { d3.select(this).attr("fill-opacity",0.4);}})
                         .on("mouseout",function(d) {if (!lasso  && !d.changed) {
-                            var op = 1;
+                            let op = 1;
                             if (d._def.button.toggle) {
                                 op = d[d._def.button.toggle]?1:0.2;
                             }
@@ -6892,7 +6892,7 @@ RED.view = (function() {
                         .on("touchstart",nodeButtonClicked)
                 }
 
-                var mainRect = node.append("rect")
+                let mainRect = node.append("rect")
                     .attr("class", "node")
                     .classed("node_unknown",function(d) { return d.type == "unknown"; })
                     .attr("rx", 5)
@@ -6901,9 +6901,9 @@ RED.view = (function() {
                     .on("mouseup",nodeMouseUp)
                     .on("mousedown",nodeMouseDown)
                     .on("touchstart",function(d) {
-                        var obj = d3.select(this);
-                        var touch0 = d3.event.touches.item(0);
-                        var pos = [touch0.pageX,touch0.pageY];
+                        let obj = d3.select(this);
+                        let touch0 = d3.event.touches.item(0);
+                        let pos = [touch0.pageX,touch0.pageY];
                         startTouchCenter = [touch0.pageX,touch0.pageY];
                         startTouchDistance = 0;
                         touchStartTime = setTimeout(function() {
@@ -6922,12 +6922,12 @@ RED.view = (function() {
                     })
                     .on("mouseover",function(d) {
                         if (mouse_mode === 0) {
-                            var node = d3.select(this);
+                            let node = d3.select(this);
                             node.classed("node_hovered",true);
                         }
                     })
                     .on("mouseout",function(d) {
-                        var node = d3.select(this);
+                        let node = d3.select(this);
                         node.classed("node_hovered",false);
                     });
 
@@ -6936,11 +6936,11 @@ RED.view = (function() {
 
                 if (d._def.icon) {
 
-                    var icon_group = node.append("g")
+                    let icon_group = node.append("g")
                         .attr("class","node_icon_group")
                         .attr("x",0).attr("y",0);
 
-                    var icon_shade = icon_group.append("rect")
+                    let icon_shade = icon_group.append("rect")
                         .attr("x",0).attr("y",0)
                         .attr("class","node_icon_shade")
                         .attr("width","30")
@@ -6949,14 +6949,14 @@ RED.view = (function() {
                         .attr("fill-opacity","0.05")
                         .attr("height",function(d){return Math.min(50,d.h-4);});
 
-                    var icon = icon_group.append("image")
+                    let icon = icon_group.append("image")
                         .attr("xlink:href",`${baseURL}flows/icons/${+d._def.icon}`)
                         .attr("class","node_icon")
                         .attr("x",0)
                         .attr("width","30")
                         .attr("height","30");
 
-                    var icon_shade_border = icon_group.append("path")
+                    let icon_shade_border = icon_group.append("path")
                         .attr("d",function(d) { return "M 30 1 l 0 "+(d.h-2)})
                         .attr("class","node_icon_shade_border")
                         .attr("stroke-opacity","0.1")
@@ -6980,7 +6980,7 @@ RED.view = (function() {
                     //    icon_shade.attr("width",35); //icon.attr("x",5);
                     //}
 
-                    var img = new Image();
+                    let img = new Image();
                     img.src = `${baseURL}flows/icons/${d._def.icon}`;
                     img.onload = function() {
                         icon.attr("width",Math.min(img.width,30));
@@ -6997,7 +6997,7 @@ RED.view = (function() {
                     icon_group.style("pointer-events","none");
                 }
                 if (!isLink) {
-                    var text = node.append("svg:text").attr("class","node_label").attr("x", 38).attr("dy", ".35em").attr("text-anchor","start");
+                    let text = node.append("svg:text").attr("class","node_label").attr("x", 38).attr("dy", ".35em").attr("text-anchor","start");
                     if (d._def.align) {
                         text.attr("class","node_label node_label_"+d._def.align);
                         if (d._def.align === "right") {
@@ -7005,13 +7005,13 @@ RED.view = (function() {
                         }
                     }
 
-                    var status = node.append("svg:g").attr("class","node_status_group").style("display","none");
+                    let status = node.append("svg:g").attr("class","node_status_group").style("display","none");
 
-                    var statusRect = status.append("rect").attr("class","node_status")
+                    let statusRect = status.append("rect").attr("class","node_status")
                         .attr("x",6).attr("y",1).attr("width",9).attr("height",9)
                         .attr("rx",2).attr("ry",2).attr("stroke-width","3");
 
-                    var statusLabel = status.append("svg:text")
+                    let statusLabel = status.append("svg:text")
                         .attr("class","node_status_label")
                         .attr("x",20).attr("y",9);
                 }
@@ -7024,24 +7024,24 @@ RED.view = (function() {
 
             node.each(function(d,i) {
                 if (d.dirty) {
-                    var isLink = d.type === "link in" || d.type === "link out";
+                    let isLink = d.type === "link in" || d.type === "link out";
                     dirtyNodes[d.id] = d;
                     //if (d.x < -50) deleteSelection();  // Delete nodes if dragged back to palette
                     if (!isLink && d.resize) {
-                        var l = d._def.label;
+                        let l = d._def.label;
                         try {
                             l = (typeof l === "function" ? l.call(d) : l)||"";
                         } catch(err) {
                             console.log("Definition error: "+d.type+".label",err);
                             l = d.type;
                         }
-                        var ow = d.w;
+                        let ow = d.w;
                         d.w = Math.max(node_width,gridSize*(Math.ceil((calculateTextWidth(l, "node_label", 50)+(d._def.inputs>0?7:0))/gridSize)) );
                         d.h = Math.max(node_height,(d.outputs||0) * 15);
                         d.x += (d.w-ow)/2;
                         d.resize = false;
                     }
-                    var thisNode = d3.select(this);
+                    let thisNode = d3.select(this);
                     //thisNode.selectAll(".centerDot").attr({"cx":function(d) { return d.w/2;},"cy":function(d){return d.h/2}});
                     thisNode.attr("transform", function(d) { return "translate(" + (d.x-d.w/2) + "," + (d.y-d.h/2) + ")"; });
 
@@ -7061,48 +7061,48 @@ RED.view = (function() {
                         //thisNode.selectAll(".node_icon_shade_right").attr("x",function(d){return d.w-30;});
                         //thisNode.selectAll(".node_icon_shade_border_right").attr("d",function(d){return "M "+(d.w-30)+" 1 l 0 "+(d.h-2)});
 
-                        var inputPorts = thisNode.selectAll(".port_input");
+                        let inputPorts = thisNode.selectAll(".port_input");
                         if (d.inputs === 0 && !inputPorts.empty()) {
                             inputPorts.remove();
                             //nodeLabel.attr("x",30);
                         } else if (d.inputs === 1 && inputPorts.empty()) {
-                            var inputGroup = thisNode.append("g").attr("class","port_input");
+                            let inputGroup = thisNode.append("g").attr("class","port_input");
                             inputGroup.append("rect").attr("class","port").attr("rx",3).attr("ry",3).attr("width",10).attr("height",10)
                                 .on("mousedown",function(d){portMouseDown(d,1,0);})
                                 .on("touchstart",function(d){portMouseDown(d,1,0);})
                                 .on("mouseup",function(d){portMouseUp(d,1,0);} )
                                 .on("touchend",function(d){portMouseUp(d,1,0);} )
-                                .on("mouseover",function(d) { var port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 1) ));})
-                                .on("mouseout",function(d) { var port = d3.select(this); port.classed("port_hovered",false);})
+                                .on("mouseover",function(d) { let port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 1) ));})
+                                .on("mouseout",function(d) { let port = d3.select(this); port.classed("port_hovered",false);})
                         }
 
-                        var numOutputs = d.outputs;
-                        var y = (d.h/2)-((numOutputs-1)/2)*13;
+                        let numOutputs = d.outputs;
+                        let y = (d.h/2)-((numOutputs-1)/2)*13;
                         d.ports = d.ports || d3.range(numOutputs);
                         d._ports = thisNode.selectAll(".port_output").data(d.ports);
-                        var output_group = d._ports.enter().append("g").attr("class","port_output");
+                        let output_group = d._ports.enter().append("g").attr("class","port_output");
 
                         output_group.append("rect").attr("class","port").attr("rx",3).attr("ry",3).attr("width",10).attr("height",10)
-                            .on("mousedown",(function(){var node = d; return function(d,i){portMouseDown(node,0,i);}})() )
-                            .on("touchstart",(function(){var node = d; return function(d,i){portMouseDown(node,0,i);}})() )
-                            .on("mouseup",(function(){var node = d; return function(d,i){portMouseUp(node,0,i);}})() )
-                            .on("touchend",(function(){var node = d; return function(d,i){portMouseUp(node,0,i);}})() )
-                            .on("mouseover",function(d,i) { var port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 0) ));})
-                            .on("mouseout",function(d,i) { var port = d3.select(this); port.classed("port_hovered",false);});
+                            .on("mousedown",(function(){let node = d; return function(d,i){portMouseDown(node,0,i);}})() )
+                            .on("touchstart",(function(){let node = d; return function(d,i){portMouseDown(node,0,i);}})() )
+                            .on("mouseup",(function(){let node = d; return function(d,i){portMouseUp(node,0,i);}})() )
+                            .on("touchend",(function(){let node = d; return function(d,i){portMouseUp(node,0,i);}})() )
+                            .on("mouseover",function(d,i) { let port = d3.select(this); port.classed("port_hovered",(mouse_mode!=RED.state.JOINING || (drag_lines.length > 0 && drag_lines[0].portType !== 0) ));})
+                            .on("mouseout",function(d,i) { let port = d3.select(this); port.classed("port_hovered",false);});
 
                         d._ports.exit().remove();
                         if (d._ports) {
                             numOutputs = d.outputs || 1;
                             y = (d.h/2)-((numOutputs-1)/2)*13;
-                            var x = d.w - 5;
+                            let x = d.w - 5;
                             d._ports.each(function(d,i) {
-                                var port = d3.select(this);
+                                let port = d3.select(this);
                                 //port.attr("y",(y+13*i)-5).attr("x",x);
                                 port.attr("transform", function(d) { return "translate("+x+","+((y+13*i)-5)+")";});
                             });
                         }
                         thisNode.selectAll("text.node_label").text(function(d,i){
-                            var l = "";
+                            let l = "";
                             if (d._def.label) {
                                 l = d._def.label;
                                 try {
@@ -7117,7 +7117,7 @@ RED.view = (function() {
                         })
                             .attr("y", function(d){return (d.h/2)-1;})
                             .attr("class",function(d){
-                                var s = "";
+                                let s = "";
                                 if (d._def.labelStyle) {
                                     s = d._def.labelStyle;
                                     try {
@@ -7133,9 +7133,9 @@ RED.view = (function() {
                             });
 
                         if (d._def.icon) {
-                            var icon = thisNode.select(".node_icon");
-                            var current_url = icon.attr("xlink:href");
-                            var icon_url;
+                            let icon = thisNode.select(".node_icon");
+                            let current_url = icon.attr("xlink:href");
+                            let icon_url;
                             if (typeof d._def.icon == "function") {
                                 try {
                                     icon_url = d._def.icon.call(d);
@@ -7148,7 +7148,7 @@ RED.view = (function() {
                             }
                             if (`${baseURL}flows/icons/${icon_url}` !== current_url) {
                                 icon.attr("xlink:href",`${baseURL}flows/icons/${icon_url}`);
-                                var img = new Image();
+                                let img = new Image();
                                 img.src = `${baseURL}flows/icons/${d._def.icon}`;
                                 img.onload = function() {
                                     icon.attr("width",Math.min(img.width,30));
@@ -7170,7 +7170,7 @@ RED.view = (function() {
                             .classed("hidden",function(d) { return d.valid; });
 
                         thisNode.selectAll(".port_input").each(function(d,i) {
-                            var port = d3.select(this);
+                            let port = d3.select(this);
                             port.attr("transform",function(d){return "translate(-5,"+((d.h/2)-5)+")";})
                         });
 
@@ -7185,7 +7185,7 @@ RED.view = (function() {
                             return (activeSubflow||d.changed)?"":"pointer";
                         });
                         thisNode.selectAll(".node_right_button").attr("transform",function(d){
-                            var x = d.w-6;
+                            let x = d.w-6;
                             if (d._def.button.toggle && !d[d._def.button.toggle]) {
                                 x = x - 8;
                             }
@@ -7224,11 +7224,11 @@ RED.view = (function() {
                         thisNode.selectAll(".node_status_group").style("display","none");
                     } else {
                         thisNode.selectAll(".node_status_group").style("display","inline").attr("transform","translate(3,"+(d.h+3)+")");
-                        var fill = status_colours[d.status.fill]; // Only allow our colours for now
+                        let fill = status_colours[d.status.fill]; // Only allow our colours for now
                         if (d.status.shape == null && fill == null) {
                             thisNode.selectAll(".node_status").style("display","none");
                         } else {
-                            var style;
+                            let style;
                             if (d.status.shape == null || d.status.shape == "dot") {
                                 style = {
                                     display: "inline",
@@ -7255,16 +7255,16 @@ RED.view = (function() {
                 }
             });
 
-            var link = vis.selectAll(".link").data(
+            let link = vis.selectAll(".link").data(
                 activeLinks,
                 function(d) {
                     return d.source.id+":"+d.sourcePort+":"+d.target.id+":"+d.target.i;
                 }
             );
-            var linkEnter = link.enter().insert("g",".node").attr("class","link");
+            let linkEnter = link.enter().insert("g",".node").attr("class","link");
 
             linkEnter.each(function(d,i) {
-                var l = d3.select(this);
+                let l = d3.select(this);
                 d.added = true;
                 l.append("svg:path").attr("class","link_background link_path")
                     .on("mousedown",function(d) {
@@ -7285,9 +7285,9 @@ RED.view = (function() {
                         focusView();
                         d3.event.stopPropagation();
 
-                        var obj = d3.select(document.body);
-                        var touch0 = d3.event.touches.item(0);
-                        var pos = [touch0.pageX,touch0.pageY];
+                        let obj = d3.select(document.body);
+                        let touch0 = d3.event.touches.item(0);
+                        let pos = [touch0.pageX,touch0.pageY];
                         touchStartTime = setTimeout(function() {
                             touchStartTime = null;
                             showTouchMenu(obj,pos);
@@ -7300,20 +7300,20 @@ RED.view = (function() {
             });
 
             link.exit().remove();
-            var links = vis.selectAll(".link_path");
+            let links = vis.selectAll(".link_path");
             links.each(function(d) {
-                var link = d3.select(this);
+                let link = d3.select(this);
                 if (d.added || d===selected_link || d.selected || dirtyNodes[d.source.id] || dirtyNodes[d.target.id]) {
                     link.attr("d",function(d){
-                        var numOutputs = d.source.outputs || 1;
-                        var sourcePort = d.sourcePort || 0;
-                        var y = -((numOutputs-1)/2)*13 +13*sourcePort;
+                        let numOutputs = d.source.outputs || 1;
+                        let sourcePort = d.sourcePort || 0;
+                        let y = -((numOutputs-1)/2)*13 +13*sourcePort;
 
-                        var dy = d.target.y-(d.source.y+y);
-                        var dx = (d.target.x-d.target.w/2)-(d.source.x+d.source.w/2);
-                        var delta = Math.sqrt(dy*dy+dx*dx);
-                        var scale = lineCurveScale;
-                        var scaleY = 0;
+                        let dy = d.target.y-(d.source.y+y);
+                        let dx = (d.target.x-d.target.w/2)-(d.source.x+d.source.w/2);
+                        let delta = Math.sqrt(dy*dy+dx*dx);
+                        let scale = lineCurveScale;
+                        let scaleY = 0;
                         if (delta < node_width) {
                             scale = 0.75-0.75*((node_width-delta)/node_width);
                         }
@@ -7343,43 +7343,43 @@ RED.view = (function() {
                 delete d.added;
                 return d.target.type == "unknown" || d.source.type == "unknown"
             });
-            var offLinks = vis.selectAll(".link_flow_link_g").data(
+            let offLinks = vis.selectAll(".link_flow_link_g").data(
                 activeFlowLinks,
                 function(d) {
                     return d.node.id+":"+d.refresh
                 }
             );
 
-            var offLinksEnter = offLinks.enter().insert("g",".node").attr("class","link_flow_link_g");
+            let offLinksEnter = offLinks.enter().insert("g",".node").attr("class","link_flow_link_g");
             offLinksEnter.each(function(d,i) {
-                var g = d3.select(this);
-                var s = 1;
-                var labelAnchor = "start";
+                let g = d3.select(this);
+                let s = 1;
+                let labelAnchor = "start";
                 if (d.node.type === "link in") {
                     s = -1;
                     labelAnchor = "end";
                 }
-                var stemLength = s*30;
-                var branchLength = s*20;
-                var l = g.append("svg:path").attr("class","link_flow_link")
+                let stemLength = s*30;
+                let branchLength = s*20;
+                let l = g.append("svg:path").attr("class","link_flow_link")
                     .attr("class","link_link").attr("d","M 0 0 h "+stemLength);
-                var links = d.links;
-                var flows = Object.keys(links);
-                var tabOrder = RED.nodes.getWorkspaceOrder();
+                let links = d.links;
+                let flows = Object.keys(links);
+                let tabOrder = RED.nodes.getWorkspaceOrder();
                 flows.sort(function(A,B) {
                     return tabOrder.indexOf(A) - tabOrder.indexOf(B);
                 });
-                var linkWidth = 10;
-                var h = node_height;
-                var y = -(flows.length-1)*h/2;
-                var linkGroups = g.selectAll(".link_group").data(flows);
-                var enterLinkGroups = linkGroups.enter().append("g").attr("class","link_group")
+                let linkWidth = 10;
+                let h = node_height;
+                let y = -(flows.length-1)*h/2;
+                let linkGroups = g.selectAll(".link_group").data(flows);
+                let enterLinkGroups = linkGroups.enter().append("g").attr("class","link_group")
                     .on('mouseover', function() { d3.select(this).classed('link_group_active',true)})
                     .on('mouseout', function() { d3.select(this).classed('link_group_active',false)})
                     .on('mousedown', function() { d3.event.preventDefault(); d3.event.stopPropagation(); })
                     .on('mouseup', function(f) {
                         d3.event.stopPropagation();
-                        var targets = d.links[f];
+                        let targets = d.links[f];
                         RED.workspaces.show(f);
                         targets.forEach(function(n) {
                             n.selected = true;
@@ -7390,7 +7390,7 @@ RED.view = (function() {
                         redraw();
                     });
                 enterLinkGroups.each(function(f) {
-                    var linkG = d3.select(this);
+                    let linkG = d3.select(this);
                     linkG.append("svg:path").attr("class","link_flow_link")
                         .attr("class","link_link")
                         .attr("d",
@@ -7431,8 +7431,8 @@ RED.view = (function() {
                         .attr("height",24)
                         .style("stroke","none")
                         .style("fill","transparent")
-                    var tab = RED.nodes.workspace(f);
-                    var label;
+                    let tab = RED.nodes.workspace(f);
+                    let label;
                     if (tab) {
                         label = tab.label || tab.id;
                     }
@@ -7451,11 +7451,11 @@ RED.view = (function() {
             offLinks.exit().remove();
             offLinks = vis.selectAll(".link_flow_link_g");
             offLinks.each(function(d) {
-                var s = 1;
+                let s = 1;
                 if (d.node.type === "link in") {
                     s = -1;
                 }
-                var link = d3.select(this);
+                let link = d3.select(this);
                 link.attr("transform", function(d) { return "translate(" + (d.node.x+(s*d.node.w/2)) + "," + (d.node.y) + ")"; });
 
             })
@@ -7481,8 +7481,8 @@ RED.view = (function() {
             // Workaround for browser unexpectedly scrolling iframe into full
             // view - record the parent scroll position and restore it after
             // setting the focus
-            var scrollX = window.parent.window.scrollX;
-            var scrollY = window.parent.window.scrollY;
+            let scrollX = window.parent.window.scrollX;
+            let scrollY = window.parent.window.scrollY;
             $("#chart").focus();
             window.parent.window.scrollTo(scrollX,scrollY);
         } catch(err) {
@@ -7500,37 +7500,37 @@ RED.view = (function() {
      */
     function importNodes(newNodesStr,addNewFlow,touchImport) {
         try {
-            var activeSubflowChanged;
+            let activeSubflowChanged;
             if (activeSubflow) {
                 activeSubflowChanged = activeSubflow.changed;
             }
-            var result = RED.nodes.import(newNodesStr,true,addNewFlow);
+            let result = RED.nodes.import(newNodesStr,true,addNewFlow);
             if (result) {
-                var new_nodes = result[0];
-                var new_links = result[1];
-                var new_workspaces = result[2];
-                var new_subflows = result[3];
-                var new_default_workspace = result[4];
+                let new_nodes = result[0];
+                let new_links = result[1];
+                let new_workspaces = result[2];
+                let new_subflows = result[3];
+                let new_default_workspace = result[4];
                 if (addNewFlow && new_default_workspace) {
                     RED.workspaces.show(new_default_workspace.id);
                 }
-                var new_ms = new_nodes.filter(function(n) { return n.hasOwnProperty("x") && n.hasOwnProperty("y") && n.z == RED.workspaces.active() }).map(function(n) { return {n:n};});
-                var new_node_ids = new_nodes.map(function(n){ return n.id; });
+                let new_ms = new_nodes.filter(function(n) { return n.hasOwnProperty("x") && n.hasOwnProperty("y") && n.z == RED.workspaces.active() }).map(function(n) { return {n:n};});
+                let new_node_ids = new_nodes.map(function(n){ return n.id; });
 
                 // TODO: pick a more sensible root node
                 if (new_ms.length > 0) {
-                    var root_node = new_ms[0].n;
-                    var dx = root_node.x;
-                    var dy = root_node.y;
+                    let root_node = new_ms[0].n;
+                    let dx = root_node.x;
+                    let dy = root_node.y;
 
                     if (mouse_position == null) {
                         mouse_position = [0,0];
                     }
 
-                    var minX = 0;
-                    var minY = 0;
-                    var i;
-                    var node;
+                    let minX = 0;
+                    let minY = 0;
+                    let i;
+                    let node;
 
                     for (i=0;i<new_ms.length;i++) {
                         node = new_ms[i];
@@ -7578,7 +7578,7 @@ RED.view = (function() {
                     moving_set = new_ms;
                 }
 
-                var historyEvent = {
+                let historyEvent = {
                     t:"add",
                     nodes:new_node_ids,
                     links:new_links,
@@ -7590,7 +7590,7 @@ RED.view = (function() {
                     RED.nodes.dirty(true);
                 }
                 if (activeSubflow) {
-                    var subflowRefresh = RED.subflow.refresh(true);
+                    let subflowRefresh = RED.subflow.refresh(true);
                     if (subflowRefresh) {
                         historyEvent.subflow = {
                             id:activeSubflow.id,
@@ -7656,7 +7656,7 @@ RED.view = (function() {
             if (typeof selection !== "undefined") {
                 clearSelection();
                 if (typeof selection == "string") {
-                    var selectedNode = RED.nodes.node(selection);
+                    let selectedNode = RED.nodes.node(selection);
                     if (selectedNode) {
                         selectedNode.selected = true;
                         selectedNode.dirty = true;
@@ -7668,7 +7668,7 @@ RED.view = (function() {
             redraw();
         },
         selection: function() {
-            var selection = {};
+            let selection = {};
             if (moving_set.length > 0) {
                 selection.nodes = moving_set.map(function(n) { return n.n;});
             }
@@ -7681,10 +7681,10 @@ RED.view = (function() {
             return scaleFactor;
         },
         getLinksAtPoint: function(x,y) {
-            var result = [];
-            var links = outer.selectAll(".link_background")[0];
-            for (var i=0;i<links.length;i++) {
-                var bb = links[i].getBBox();
+            let result = [];
+            let links = outer.selectAll(".link_background")[0];
+            for (let i=0;i<links.length;i++) {
+                let bb = links[i].getBBox();
                 if (x >= bb.x && y >= bb.y && x <= bb.x+bb.width && y <= bb.y+bb.height) {
                     result.push(links[i])
                 }
@@ -7695,18 +7695,18 @@ RED.view = (function() {
             if (RED.nodes.workspace(id) || RED.nodes.subflow(id)) {
                 RED.workspaces.show(id);
             } else {
-                var node = RED.nodes.node(id);
+                let node = RED.nodes.node(id);
                 if (node._def.category !== 'config' && node.z) {
                     node.highlighted = true;
                     node.dirty = true;
                     RED.workspaces.show(node.z);
 
-                    var screenSize = [$("#chart").width(),$("#chart").height()];
-                    var scrollPos = [$("#chart").scrollLeft(),$("#chart").scrollTop()];
+                    let screenSize = [$("#chart").width(),$("#chart").height()];
+                    let scrollPos = [$("#chart").scrollLeft(),$("#chart").scrollTop()];
 
                     if (node.x < scrollPos[0] || node.y < scrollPos[1] || node.x > screenSize[0]+scrollPos[0] || node.y > screenSize[1]+scrollPos[1]) {
-                        var deltaX = '-='+((scrollPos[0] - node.x) + screenSize[0]/2);
-                        var deltaY = '-='+((scrollPos[1] - node.y) + screenSize[1]/2);
+                        let deltaX = '-='+((scrollPos[0] - node.x) + screenSize[0]/2);
+                        let deltaY = '-='+((scrollPos[1] - node.y) + screenSize[1]/2);
                         $("#chart").animate({
                             scrollLeft: deltaX,
                             scrollTop: deltaY
@@ -7715,8 +7715,8 @@ RED.view = (function() {
 
                     if (!node._flashing) {
                         node._flashing = true;
-                        var flash = 22;
-                        var flashFunc = function() {
+                        let flash = 22;
+                        let flashFunc = function() {
                             flash--;
                             node.dirty = true;
                             if (flash >= 0) {
@@ -7744,14 +7744,14 @@ RED.view = (function() {
 
 RED.palette = (function() {
 
-    var exclusion = ['config','unknown','deprecated'];
-    var coreCategories = ['subflows', 'input', 'output', 'function', 'social', 'mobile', 'storage', 'analysis', 'advanced'];
+    let exclusion = ['config','unknown','deprecated'];
+    let coreCategories = ['subflows', 'input', 'output', 'function', 'social', 'mobile', 'storage', 'analysis', 'advanced'];
 
-    var categoryContainers = {};
+    let categoryContainers = {};
 
     function createCategoryContainer(category, label){
         label = label || category.replace("_", " ");
-        var catDiv = $('<div id="palette-container-'+category+'" class="palette-category palette-close hide">'+
+        let catDiv = $('<div id="palette-container-'+category+'" class="palette-category palette-close hide">'+
             '<div id="palette-header-'+category+'" class="palette-header"><i class="expanded fa fa-angle-down"></i><span>'+label+'</span></div>'+
             '<div class="palette-content" id="palette-base-category-'+category+'">'+
             '<div id="palette-'+category+'-input"></div>'+
@@ -7789,20 +7789,20 @@ RED.palette = (function() {
     }
 
     function setLabel(type, el,label, info) {
-        var nodeWidth = 82;
-        var nodeHeight = 25;
-        var lineHeight = 20;
-        var portHeight = 10;
+        let nodeWidth = 82;
+        let nodeHeight = 25;
+        let lineHeight = 20;
+        let portHeight = 10;
 
-        var words = label.split(/[ -]/);
+        let words = label.split(/[ -]/);
 
-        var displayLines = [];
+        let displayLines = [];
 
-        var currentLine = words[0];
-        var currentLineWidth = RED.view.calculateTextWidth(currentLine, "palette_label", 0);
+        let currentLine = words[0];
+        let currentLineWidth = RED.view.calculateTextWidth(currentLine, "palette_label", 0);
 
-        for (var i=1;i<words.length;i++) {
-            var newWidth = RED.view.calculateTextWidth(currentLine+" "+words[i], "palette_label", 0);
+        for (let i=1;i<words.length;i++) {
+            let newWidth = RED.view.calculateTextWidth(currentLine+" "+words[i], "palette_label", 0);
             if (newWidth < nodeWidth) {
                 currentLine += " "+words[i];
                 currentLineWidth = newWidth;
@@ -7814,18 +7814,18 @@ RED.palette = (function() {
         }
         displayLines.push(currentLine);
 
-        var lines = displayLines.join("<br/>");
-        var multiLineNodeHeight = 8+(lineHeight*displayLines.length);
+        let lines = displayLines.join("<br/>");
+        let multiLineNodeHeight = 8+(lineHeight*displayLines.length);
         el.css({height:multiLineNodeHeight+"px"});
 
-        var labelElement = el.find(".palette_label");
+        let labelElement = el.find(".palette_label");
         labelElement.html(lines).attr('dir', RED.text.bidi.resolveBaseTextDir(lines));
 
         el.find(".palette_port").css({top:(multiLineNodeHeight/2-5)+"px"});
 
-        var popOverContent;
+        let popOverContent;
         try {
-            var l = "<p><b>"+RED.text.bidi.enforceTextDirectionWithUCC(label)+"</b></p>";
+            let l = "<p><b>"+RED.text.bidi.enforceTextDirectionWithUCC(label)+"</b></p>";
             if (label != type) {
                 l = "<p><b>"+RED.text.bidi.enforceTextDirectionWithUCC(label)+"</b><br/><i>"+type+"</i></p>";
             }
@@ -7849,20 +7849,20 @@ RED.palette = (function() {
     }
 
     function addNodeType(nt,def) {
-        var nodeTypeId = escapeNodeType(nt);
+        let nodeTypeId = escapeNodeType(nt);
         if ($("#palette_node_" + nodeTypeId).length) {
             return;
         }
         if (exclusion.indexOf(def.category)===-1) {
 
-            var category = def.category.replace(" ","_");
-            var rootCategory = category.split("-")[0];
+            let category = def.category.replace(" ","_");
+            let rootCategory = category.split("-")[0];
 
-            var d = document.createElement("div");
+            let d = document.createElement("div");
             d.id = "palette_node_"+nodeTypeId;
             d.type = nt;
 
-            var label = /^(.*?)([ -]in|[ -]out)?$/.exec(nt)[1];
+            let label = /^(.*?)([ -]in|[ -]out)?$/.exec(nt)[1];
             if (typeof def.paletteLabel !== "undefined") {
                 try {
                     label = (typeof def.paletteLabel === "function" ? def.paletteLabel.call(def) : def.paletteLabel)||"";
@@ -7877,26 +7877,26 @@ RED.palette = (function() {
 
 
             if (def.icon) {
-                var icon_url = "arrow-in.png";
+                let icon_url = "arrow-in.png";
                 try {
                     icon_url = (typeof def.icon === "function" ? def.icon.call({}) : def.icon);
                 } catch(err) {
                     console.log("Definition error: "+nt+".icon",err);
                 }
-                var iconContainer = $('<div/>',{class:"palette_icon_container"+(def.align==="right"?" palette_icon_container_right":"")}).appendTo(d);
+                let iconContainer = $('<div/>',{class:"palette_icon_container"+(def.align==="right"?" palette_icon_container_right":"")}).appendTo(d);
                 $('<div/>',{class:"palette_icon",style:`background-image: url(${baseURL}flows/icons/${icon_url})`}).appendTo(iconContainer);
             }
 
             d.style.backgroundColor = def.color;
 
             if (def.outputs > 0) {
-                var portOut = document.createElement("div");
+                let portOut = document.createElement("div");
                 portOut.className = "palette_port palette_port_output";
                 d.appendChild(portOut);
             }
 
             if (def.inputs > 0) {
-                var portIn = document.createElement("div");
+                let portIn = document.createElement("div");
                 portIn.className = "palette_port palette_port_input";
                 d.appendChild(portIn);
             }
@@ -7905,7 +7905,7 @@ RED.palette = (function() {
                 if(coreCategories.indexOf(rootCategory) !== -1){
                     createCategoryContainer(rootCategory, RED._("node-red:palette.label."+rootCategory, {defaultValue:rootCategory}));
                 } else {
-                    var ns = def.set.id;
+                    let ns = def.set.id;
                     createCategoryContainer(rootCategory, RED._(ns+":palette.label."+rootCategory, {defaultValue:rootCategory}));
                 }
             }
@@ -7929,22 +7929,22 @@ RED.palette = (function() {
 
             $(d).click(function() {
                 RED.view.focus();
-                var helpText;
+                let helpText;
                 if (nt.indexOf("subflow:") === 0) {
                     helpText = marked(RED.nodes.subflow(nt.substring(8)).info||"");
                 } else {
                     helpText = $("script[data-help-name$='"+d.type+"']").html()||"";
                 }
-                var help = '<div class="node-help">'+helpText+"</div>";
+                let help = '<div class="node-help">'+helpText+"</div>";
                 // RED.sidebar.info.set(help);
             });
-            var chart = $("#chart");
-            var chartOffset = chart.offset();
-            var chartSVG = $("#chart>svg").get(0);
-            var activeSpliceLink;
-            var mouseX;
-            var mouseY;
-            var spliceTimer;
+            let chart = $("#chart");
+            let chartOffset = chart.offset();
+            let chartSVG = $("#chart>svg").get(0);
+            let activeSpliceLink;
+            let mouseX;
+            let mouseY;
+            let spliceTimer;
             $(d).draggable({
                 helper: 'clone',
                 appendTo: $('.flows-wrapper'),
@@ -7966,11 +7966,11 @@ RED.palette = (function() {
 
                         if (!spliceTimer) {
                             spliceTimer = setTimeout(function() {
-                                var nodes = [];
-                                var bestDistance = Infinity;
-                                var bestLink = null;
+                                let nodes = [];
+                                let bestDistance = Infinity;
+                                let bestLink = null;
                                 if (chartSVG.getIntersectionList) {
-                                    var svgRect = chartSVG.createSVGRect();
+                                    let svgRect = chartSVG.createSVGRect();
                                     svgRect.x = mouseX;
                                     svgRect.y = mouseY;
                                     svgRect.width = 1;
@@ -7985,12 +7985,12 @@ RED.palette = (function() {
                                     mouseY /= RED.view.scale();
                                     nodes = RED.view.getLinksAtPoint(mouseX,mouseY);
                                 }
-                                for (var i=0;i<nodes.length;i++) {
+                                for (let i=0;i<nodes.length;i++) {
                                     if (d3.select(nodes[i]).classed('link_background')) {
-                                        var length = nodes[i].getTotalLength();
-                                        for (var j=0;j<length;j+=10) {
-                                            var p = nodes[i].getPointAtLength(j);
-                                            var d2 = ((p.x-mouseX)*(p.x-mouseX))+((p.y-mouseY)*(p.y-mouseY));
+                                        let length = nodes[i].getTotalLength();
+                                        for (let j=0;j<length;j+=10) {
+                                            let p = nodes[i].getPointAtLength(j);
+                                            let d2 = ((p.x-mouseX)*(p.x-mouseX))+((p.y-mouseY)*(p.y-mouseY));
                                             if (d2 < 200 && d2 < bestDistance) {
                                                 bestDistance = d2;
                                                 bestLink = nodes[i];
@@ -8021,7 +8021,7 @@ RED.palette = (function() {
                 }
             });
 
-            var nodeInfo = null;
+            let nodeInfo = null;
             if (def.category == "subflows") {
                 $(d).dblclick(function(e) {
                     RED.workspaces.show(nt.substring(8));
@@ -8031,7 +8031,7 @@ RED.palette = (function() {
             }
             setLabel(nt,$(d),label,nodeInfo);
 
-            var categoryNode = $("#palette-container-"+category);
+            let categoryNode = $("#palette-container-"+category);
             if (categoryNode.find(".palette_node").length === 1) {
                 categoryContainers[category].open();
             }
@@ -8040,9 +8040,9 @@ RED.palette = (function() {
     }
 
     function removeNodeType(nt) {
-        var nodeTypeId = escapeNodeType(nt);
-        var paletteNode = $("#palette_node_"+nodeTypeId);
-        var categoryNode = paletteNode.closest(".palette-category");
+        let nodeTypeId = escapeNodeType(nt);
+        let paletteNode = $("#palette_node_"+nodeTypeId);
+        let categoryNode = paletteNode.closest(".palette-category");
         paletteNode.remove();
         if (categoryNode.find(".palette_node").length === 0) {
             if (categoryNode.find("i").hasClass("expanded")) {
@@ -8053,23 +8053,23 @@ RED.palette = (function() {
     }
 
     function hideNodeType(nt) {
-        var nodeTypeId = escapeNodeType(nt);
+        let nodeTypeId = escapeNodeType(nt);
         $("#palette_node_"+nodeTypeId).hide();
     }
 
     function showNodeType(nt) {
-        var nodeTypeId = escapeNodeType(nt);
+        let nodeTypeId = escapeNodeType(nt);
         $("#palette_node_"+nodeTypeId).attr("style", "display: block !important");
     }
 
     function refreshNodeTypes() {
         RED.nodes.eachSubflow(function(sf) {
-            var paletteNode = $("#palette_node_subflow_"+sf.id.replace(".","_"));
-            var portInput = paletteNode.find(".palette_port_input");
-            var portOutput = paletteNode.find(".palette_port_output");
+            let paletteNode = $("#palette_node_subflow_"+sf.id.replace(".","_"));
+            let portInput = paletteNode.find(".palette_port_input");
+            let portOutput = paletteNode.find(".palette_port_output");
 
             if (portInput.length === 0 && sf.in.length > 0) {
-                var portIn = document.createElement("div");
+                let portIn = document.createElement("div");
                 portIn.className = "palette_port palette_port_input";
                 paletteNode.append(portIn);
             } else if (portInput.length !== 0 && sf.in.length === 0) {
@@ -8077,7 +8077,7 @@ RED.palette = (function() {
             }
 
             if (portOutput.length === 0 && sf.out.length > 0) {
-                var portOut = document.createElement("div");
+                let portOut = document.createElement("div");
                 portOut.className = "palette_port palette_port_output";
                 paletteNode.append(portOut);
             } else if (portOutput.length !== 0 && sf.out.length === 0) {
@@ -8088,9 +8088,9 @@ RED.palette = (function() {
     }
 
     function filterChange(val) {
-        var re = new RegExp(val.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),'i');
+        let re = new RegExp(val.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'),'i');
         $("#palette-container .palette_node").each(function(i,el) {
-            var currentLabel = $(el).find(".palette_label").text();
+            let currentLabel = $(el).find(".palette_label").text();
             if (val === "" || re.test(el.id) || re.test(currentLabel)) {
                 $(this).attr("style", "display: block !important");
             } else {
@@ -8098,7 +8098,7 @@ RED.palette = (function() {
             }
         });
 
-        for (var category in categoryContainers) {
+        for (let category in categoryContainers) {
             if (categoryContainers.hasOwnProperty(category)) {
                 if (categoryContainers[category].container
                     .find(".palette_node")
@@ -8114,7 +8114,7 @@ RED.palette = (function() {
     function init() {
 
         RED.events.on('registry:node-type-added', function(nodeType) {
-            var def = RED.nodes.getType(nodeType);
+            let def = RED.nodes.getType(nodeType);
             addNodeType(nodeType,def);
             if (def.onpaletteadd && typeof def.onpaletteadd === "function") {
                 def.onpaletteadd.call(def);
@@ -8125,18 +8125,18 @@ RED.palette = (function() {
         });
 
         RED.events.on('registry:node-set-enabled', function(nodeSet) {
-            for (var j=0;j<nodeSet.types.length;j++) {
+            for (let j=0;j<nodeSet.types.length;j++) {
                 showNodeType(nodeSet.types[j]);
-                var def = RED.nodes.getType(nodeSet.types[j]);
+                let def = RED.nodes.getType(nodeSet.types[j]);
                 if (def.onpaletteadd && typeof def.onpaletteadd === "function") {
                     def.onpaletteadd.call(def);
                 }
             }
         });
         RED.events.on('registry:node-set-disabled', function(nodeSet) {
-            for (var j=0;j<nodeSet.types.length;j++) {
+            for (let j=0;j<nodeSet.types.length;j++) {
                 hideNodeType(nodeSet.types[j]);
-                var def = RED.nodes.getType(nodeSet.types[j]);
+                let def = RED.nodes.getType(nodeSet.types[j]);
                 if (def.onpaletteremove && typeof def.onpaletteremove === "function") {
                     def.onpaletteremove.call(def);
                 }
@@ -8144,9 +8144,9 @@ RED.palette = (function() {
         });
         RED.events.on('registry:node-set-removed', function(nodeSet) {
             if (nodeSet.added) {
-                for (var j=0;j<nodeSet.types.length;j++) {
+                for (let j=0;j<nodeSet.types.length;j++) {
                     removeNodeType(nodeSet.types[j]);
-                    var def = RED.nodes.getType(nodeSet.types[j]);
+                    let def = RED.nodes.getType(nodeSet.types[j]);
                     if (def.onpaletteremove && typeof def.onpaletteremove === "function") {
                         def.onpaletteremove.call(def);
                     }
@@ -8162,7 +8162,7 @@ RED.palette = (function() {
         //     }
         // })
 
-        var categoryList = coreCategories;
+        let categoryList = coreCategories;
         if (RED.settings.paletteCategories) {
             categoryList = RED.settings.paletteCategories;
         } else if (RED.settings.theme('palette.categories')) {
@@ -8179,7 +8179,7 @@ RED.palette = (function() {
         // matheusr @TODO dom manip here makes me sad
         $("#palette-collapse-all").on("click", function(e) {
             e.preventDefault();
-            for (var cat in categoryContainers) {
+            for (let cat in categoryContainers) {
                 if (categoryContainers.hasOwnProperty(cat)) {
                     categoryContainers[cat].close();
                 }
@@ -8187,7 +8187,7 @@ RED.palette = (function() {
         });
         $("#palette-expand-all").on("click", function(e) {
             e.preventDefault();
-            for (var cat in categoryContainers) {
+            for (let cat in categoryContainers) {
                 if (categoryContainers.hasOwnProperty(cat)) {
                     categoryContainers[cat].open();
                 }
@@ -8206,24 +8206,24 @@ RED.palette = (function() {
 })();
 RED.palette.editor = (function() {
 
-    var disabled = false;
+    let disabled = false;
 
-    var editorTabs;
-    var filterInput;
-    var searchInput;
-    var nodeList;
-    var packageList;
-    var loadedList = [];
-    var filteredList = [];
-    var loadedIndex = {};
+    let editorTabs;
+    let filterInput;
+    let searchInput;
+    let nodeList;
+    let packageList;
+    let loadedList = [];
+    let filteredList = [];
+    let loadedIndex = {};
 
-    var typesInUse = {};
-    var nodeEntries = {};
-    var eventTimers = {};
-    var activeFilter = "";
+    let typesInUse = {};
+    let nodeEntries = {};
+    let eventTimers = {};
+    let activeFilter = "";
 
     function delayCallback(start,callback) {
-        var delta = Date.now() - start;
+        let delta = Date.now() - start;
         if (delta < 300) {
             delta = 300;
         } else {
@@ -8235,7 +8235,7 @@ RED.palette.editor = (function() {
     }
     function changeNodeState(id,state,shade,callback) {
         shade.attr("style", "display: block !important");
-        var start = Date.now();
+        let start = Date.now();
         $.ajax({
             url:"nodes/"+id,
             type: "PUT",
@@ -8284,7 +8284,7 @@ RED.palette.editor = (function() {
     }
 
     function refreshNodeModuleList() {
-        for (var id in nodeEntries) {
+        for (let id in nodeEntries) {
             if (nodeEntries.hasOwnProperty(id)) {
                 _refreshNodeModule(id);
             }
@@ -8302,12 +8302,12 @@ RED.palette.editor = (function() {
 
 
     function getContrastingBorder(rgbColor){
-        var parts = /^rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)[,)]/.exec(rgbColor);
+        let parts = /^rgba?\(\s*(\d+),\s*(\d+),\s*(\d+)[,)]/.exec(rgbColor);
         if (parts) {
-            var r = parseInt(parts[1]);
-            var g = parseInt(parts[2]);
-            var b = parseInt(parts[3]);
-            var yiq = ((r*299)+(g*587)+(b*114))/1000;
+            let r = parseInt(parts[1]);
+            let g = parseInt(parts[2]);
+            let b = parseInt(parts[3]);
+            let yiq = ((r*299)+(g*587)+(b*114))/1000;
             if (yiq > 160) {
                 r = Math.floor(r*0.8);
                 g = Math.floor(g*0.8);
@@ -8319,9 +8319,9 @@ RED.palette.editor = (function() {
     }
 
     function formatUpdatedAt(dateString) {
-        var now = new Date();
-        var d = new Date(dateString);
-        var delta = (Date.now() - new Date(dateString).getTime())/1000;
+        let now = new Date();
+        let d = new Date(dateString);
+        let delta = (Date.now() - new Date(dateString).getTime())/1000;
 
         if (delta < 60) {
             return RED._('palette.editor.times.seconds');
@@ -8345,20 +8345,20 @@ RED.palette.editor = (function() {
         if (delta < 7) {
             return RED._('palette.editor.times.daysV',{count:delta})
         }
-        var weeks = Math.floor(delta/7);
-        var days = delta%7;
+        let weeks = Math.floor(delta/7);
+        let days = delta%7;
 
         if (weeks < 4) {
             return RED._('palette.editor.times.weeksV',{count:weeks})
         }
 
-        var months = Math.floor(weeks/4);
+        let months = Math.floor(weeks/4);
         weeks = weeks%4;
 
         if (months < 12) {
             return RED._('palette.editor.times.monthsV',{count:months})
         }
-        var years = Math.floor(months/12);
+        let years = Math.floor(months/12);
         months = months%12;
 
         if (months === 0) {
@@ -8372,8 +8372,8 @@ RED.palette.editor = (function() {
     function _refreshNodeModule(module) {
         if (!nodeEntries.hasOwnProperty(module)) {
             nodeEntries[module] = {info:RED.nodes.registry.getModule(module)};
-            var index = [module];
-            for (var s in nodeEntries[module].info.sets) {
+            let index = [module];
+            for (let s in nodeEntries[module].info.sets) {
                 if (nodeEntries[module].info.sets.hasOwnProperty(s)) {
                     index.push(s);
                     index = index.concat(nodeEntries[module].info.sets[s].types)
@@ -8384,30 +8384,30 @@ RED.palette.editor = (function() {
             nodeList.editableList('addItem', nodeEntries[module]);
 
         } else {
-            var moduleInfo = nodeEntries[module].info;
-            var nodeEntry = nodeEntries[module].elements;
+            let moduleInfo = nodeEntries[module].info;
+            let nodeEntry = nodeEntries[module].elements;
             if (nodeEntry) {
-                var activeTypeCount = 0;
-                var typeCount = 0;
+                let activeTypeCount = 0;
+                let typeCount = 0;
                 nodeEntries[module].totalUseCount = 0;
                 nodeEntries[module].setUseCount = {};
 
-                for (var setName in moduleInfo.sets) {
+                for (let setName in moduleInfo.sets) {
                     if (moduleInfo.sets.hasOwnProperty(setName)) {
-                        var inUseCount = 0;
-                        var set = moduleInfo.sets[setName];
-                        var setElements = nodeEntry.sets[setName];
+                        let inUseCount = 0;
+                        let set = moduleInfo.sets[setName];
+                        let setElements = nodeEntry.sets[setName];
 
                         if (set.enabled) {
                             activeTypeCount += set.types.length;
                         }
                         typeCount += set.types.length;
-                        for (var i=0;i<moduleInfo.sets[setName].types.length;i++) {
-                            var t = moduleInfo.sets[setName].types[i];
+                        for (let i=0;i<moduleInfo.sets[setName].types.length;i++) {
+                            let t = moduleInfo.sets[setName].types[i];
                             inUseCount += (typesInUse[t]||0);
-                            var swatch = setElements.swatches[t];
+                            let swatch = setElements.swatches[t];
                             if (set.enabled) {
-                                var def = RED.nodes.getType(t);
+                                let def = RED.nodes.getType(t);
                                 if (def && def.color) {
                                     swatch.css({background:def.color});
                                     swatch.css({border: "1px solid "+getContrastingBorder(swatch.css('backgroundColor'))})
@@ -8436,7 +8436,7 @@ RED.palette.editor = (function() {
                         setElements.setRow.toggleClass("palette-module-set-disabled",!set.enabled);
                     }
                 }
-                var nodeCount = (activeTypeCount === typeCount)?typeCount:activeTypeCount+" / "+typeCount;
+                let nodeCount = (activeTypeCount === typeCount)?typeCount:activeTypeCount+" / "+typeCount;
                 nodeEntry.setCount.html(RED._('palette.editor.nodeCount',{count:typeCount,label:nodeCount}));
 
                 if (nodeEntries[module].totalUseCount > 0) {
@@ -8504,8 +8504,8 @@ RED.palette.editor = (function() {
 
     function filterChange(val) {
         activeFilter = val.toLowerCase();
-        var visible = nodeList.editableList('filter');
-        var size = nodeList.editableList('length');
+        let visible = nodeList.editableList('filter');
+        let size = nodeList.editableList('length');
         if (val === "") {
             filterInput.searchBox('count');
         } else {
@@ -8514,12 +8514,12 @@ RED.palette.editor = (function() {
     }
 
 
-    var catalogueCount;
-    var catalogueLoadStatus = [];
-    var catalogueLoadStart;
-    var catalogueLoadErrors = false;
+    let catalogueCount;
+    let catalogueLoadStatus = [];
+    let catalogueLoadStart;
+    let catalogueLoadErrors = false;
 
-    var activeSort = sortModulesAZ;
+    let activeSort = sortModulesAZ;
 
     function handleCatalogResponse(err,catalog,index,v) {
         catalogueLoadStatus.push(err||v);
@@ -8551,7 +8551,7 @@ RED.palette.editor = (function() {
             if (catalogueLoadErrors) {
                 RED.notify(RED._('palette.editor.errors.catalogLoadFailed',{url: catalog}),"error",false,8000);
             }
-            var delta = 250-(Date.now() - catalogueLoadStart);
+            let delta = 250-(Date.now() - catalogueLoadStart);
             setTimeout(function() {
                 $("#palette-module-install-shade").hide();
             },Math.max(delta,0));
@@ -8565,7 +8565,7 @@ RED.palette.editor = (function() {
             loadedIndex = {};
             packageList.editableList('empty');
             $(".palette-module-shade-status").html(RED._('palette.editor.loading'));
-            var catalogues = RED.settings.theme('palette.catalogues')||['https://catalogue.nodered.org/catalogue.json'];
+            let catalogues = RED.settings.theme('palette.catalogues')||['https://catalogue.nodered.org/catalogue.json'];
             catalogueLoadStatus = [];
             catalogueLoadErrors = false;
             catalogueCount = catalogues.length;
@@ -8588,7 +8588,7 @@ RED.palette.editor = (function() {
     function refreshFilteredItems() {
         packageList.editableList('empty');
         filteredList.sort(activeSort);
-        for (var i=0;i<Math.min(10,filteredList.length);i++) {
+        for (let i=0;i<Math.min(10,filteredList.length);i++) {
             packageList.editableList('addItem',filteredList[i]);
         }
         if (filteredList.length === 0) {
@@ -8655,7 +8655,7 @@ RED.palette.editor = (function() {
             hidePaletteEditor();
         })
 
-        var modulesTab = $('<div>',{class:"palette-editor-tab"}).appendTo("#palette-editor");
+        let modulesTab = $('<div>',{class:"palette-editor-tab"}).appendTo("#palette-editor");
 
         editorTabs.addTab({
             id: 'nodes',
@@ -8663,7 +8663,7 @@ RED.palette.editor = (function() {
             content: modulesTab
         })
 
-        var filterDiv = $('<div>',{class:"palette-search"}).appendTo(modulesTab);
+        let filterDiv = $('<div>',{class:"palette-search"}).appendTo(modulesTab);
         filterInput = $('<input type="text" data-i18n="[placeholder]palette.filter"></input>')
             .appendTo(filterDiv)
             .searchBox({
@@ -8688,25 +8688,25 @@ RED.palette.editor = (function() {
                 return (activeFilter==="")||(data.index.indexOf(activeFilter) > -1);
             },
             addItem: function(container,i,object) {
-                var entry = object.info;
+                let entry = object.info;
                 if (entry) {
-                    var headerRow = $('<div>',{class:"palette-module-header"}).appendTo(container);
-                    var titleRow = $('<div class="palette-module-meta palette-module-name"><i class="fa fa-cube"></i></div>').appendTo(headerRow);
+                    let headerRow = $('<div>',{class:"palette-module-header"}).appendTo(container);
+                    let titleRow = $('<div class="palette-module-meta palette-module-name"><i class="fa fa-cube"></i></div>').appendTo(headerRow);
                     $('<span>').html(entry.name).appendTo(titleRow);
-                    var metaRow = $('<div class="palette-module-meta palette-module-version"><i class="fa fa-tag"></i></div>').appendTo(headerRow);
+                    let metaRow = $('<div class="palette-module-meta palette-module-version"><i class="fa fa-tag"></i></div>').appendTo(headerRow);
                     $('<span>').html(entry.version).appendTo(metaRow);
-                    var buttonRow = $('<div>',{class:"palette-module-meta"}).appendTo(headerRow);
-                    var setButton = $('<a href="#" class="editor-button editor-button-small palette-module-set-button"><i class="fa fa-angle-right palette-module-node-chevron"></i> </a>').appendTo(buttonRow);
-                    var setCount = $('<span>').appendTo(setButton);
-                    var buttonGroup = $('<div>',{class:"palette-module-button-group"}).appendTo(buttonRow);
+                    let buttonRow = $('<div>',{class:"palette-module-meta"}).appendTo(headerRow);
+                    let setButton = $('<a href="#" class="editor-button editor-button-small palette-module-set-button"><i class="fa fa-angle-right palette-module-node-chevron"></i> </a>').appendTo(buttonRow);
+                    let setCount = $('<span>').appendTo(setButton);
+                    let buttonGroup = $('<div>',{class:"palette-module-button-group"}).appendTo(buttonRow);
 
-                    var updateButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.update')).appendTo(buttonGroup);
+                    let updateButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.update')).appendTo(buttonGroup);
                     updateButton.click(function(evt) {
                         evt.preventDefault();
                     })
 
 
-                    var removeButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.remove')).appendTo(buttonGroup);
+                    let removeButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.remove')).appendTo(buttonGroup);
                     removeButton.click(function(evt) {
                         evt.preventDefault();
 
@@ -8722,10 +8722,10 @@ RED.palette.editor = (function() {
                     if (!entry.local) {
                         removeButton.hide();
                     }
-                    var enableButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.disableall')).appendTo(buttonGroup);
+                    let enableButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.disableall')).appendTo(buttonGroup);
 
-                    var contentRow = $('<div>',{class:"palette-module-content"}).appendTo(container);
-                    var shade = $('<div class="palette-module-shade hide"><img src="mashupflows/red/images/spin.svg" class="palette-spinner"/></div>').appendTo(container);
+                    let contentRow = $('<div>',{class:"palette-module-content"}).appendTo(container);
+                    let shade = $('<div class="palette-module-shade hide"><img src="mashupflows/red/images/spin.svg" class="palette-spinner"/></div>').appendTo(container);
 
                     object.elements = {
                         updateButton: updateButton,
@@ -8747,26 +8747,26 @@ RED.palette.editor = (function() {
                         }
                     })
 
-                    var setList = Object.keys(entry.sets)
+                    let setList = Object.keys(entry.sets)
                     setList.sort(function(A,B) {
                         return A.toLowerCase().localeCompare(B.toLowerCase());
                     });
                     setList.forEach(function(setName) {
-                        var set = entry.sets[setName];
-                        var setRow = $('<div>',{class:"palette-module-set"}).appendTo(contentRow);
-                        var buttonGroup = $('<div>',{class:"palette-module-set-button-group"}).appendTo(setRow);
-                        var typeSwatches = {};
+                        let set = entry.sets[setName];
+                        let setRow = $('<div>',{class:"palette-module-set"}).appendTo(contentRow);
+                        let buttonGroup = $('<div>',{class:"palette-module-set-button-group"}).appendTo(setRow);
+                        let typeSwatches = {};
                         set.types.forEach(function(t) {
-                            var typeDiv = $('<div>',{class:"palette-module-type"}).appendTo(setRow);
+                            let typeDiv = $('<div>',{class:"palette-module-type"}).appendTo(setRow);
                             typeSwatches[t] = $('<span>',{class:"palette-module-type-swatch"}).appendTo(typeDiv);
                             $('<span>',{class:"palette-module-type-node"}).html(t).appendTo(typeDiv);
                         })
 
-                        var enableButton = $('<a href="#" class="editor-button editor-button-small"></a>').appendTo(buttonGroup);
+                        let enableButton = $('<a href="#" class="editor-button editor-button-small"></a>').appendTo(buttonGroup);
                         enableButton.click(function(evt) {
                             evt.preventDefault();
                             if (object.setUseCount[setName] === 0) {
-                                var currentSet = RED.nodes.registry.getNodeSet(set.id);
+                                let currentSet = RED.nodes.registry.getNodeSet(set.id);
                                 shade.attr("style", "display: block !important");
                                 changeNodeState(set.id,!currentSet.enabled,shade,function(xhr){
                                     console.log(xhr)
@@ -8797,7 +8797,7 @@ RED.palette.editor = (function() {
 
 
 
-        var installTab = $('<div>',{class:"palette-editor-tab hide"}).appendTo("#palette-editor");
+        let installTab = $('<div>',{class:"palette-editor-tab hide"}).appendTo("#palette-editor");
 
         editorTabs.addTab({
             id: 'install',
@@ -8805,15 +8805,15 @@ RED.palette.editor = (function() {
             content: installTab
         })
 
-        var toolBar = $('<div>',{class:"palette-editor-toolbar"}).appendTo(installTab);
+        let toolBar = $('<div>',{class:"palette-editor-toolbar"}).appendTo(installTab);
 
-        var searchDiv = $('<div>',{class:"palette-search"}).appendTo(installTab);
+        let searchDiv = $('<div>',{class:"palette-search"}).appendTo(installTab);
         searchInput = $('<input type="text" data-i18n="[placeholder]palette.search"></input>')
             .appendTo(searchDiv)
             .searchBox({
                 delay: 300,
                 change: function() {
-                    var searchTerm = $(this).val().toLowerCase();
+                    let searchTerm = $(this).val().toLowerCase();
                     if (searchTerm.length > 0) {
                         filteredList = loadedList.filter(function(m) {
                             return (m.index.indexOf(searchTerm) > -1);
@@ -8829,9 +8829,9 @@ RED.palette.editor = (function() {
 
 
         $('<span>').html(RED._("palette.editor.sort")+' ').appendTo(toolBar);
-        var sortGroup = $('<span class="button-group"></span>').appendTo(toolBar);
-        var sortAZ = $('<a href="#" class="sidebar-header-button-toggle selected" data-i18n="palette.editor.sortAZ"></a>').appendTo(sortGroup);
-        var sortRecent = $('<a href="#" class="sidebar-header-button-toggle" data-i18n="palette.editor.sortRecent"></a>').appendTo(sortGroup);
+        let sortGroup = $('<span class="button-group"></span>').appendTo(toolBar);
+        let sortAZ = $('<a href="#" class="sidebar-header-button-toggle selected" data-i18n="palette.editor.sortAZ"></a>').appendTo(sortGroup);
+        let sortRecent = $('<a href="#" class="sidebar-header-button-toggle" data-i18n="palette.editor.sortRecent"></a>').appendTo(sortGroup);
 
         sortAZ.click(function(e) {
             e.preventDefault();
@@ -8856,8 +8856,8 @@ RED.palette.editor = (function() {
         });
 
 
-        var refreshSpan = $('<span>').appendTo(toolBar);
-        var refreshButton = $('<a href="#" class="sidebar-header-button"><i class="fa fa-refresh"></i></a>').appendTo(refreshSpan);
+        let refreshSpan = $('<span>').appendTo(toolBar);
+        let refreshButton = $('<a href="#" class="sidebar-header-button"><i class="fa fa-refresh"></i></a>').appendTo(refreshSpan);
         refreshButton.click(function(e) {
             e.preventDefault();
             loadedList = [];
@@ -8872,12 +8872,12 @@ RED.palette.editor = (function() {
 
                 if (object.more) {
                     container.addClass('palette-module-more');
-                    var moreRow = $('<div>',{class:"palette-module-header palette-module"}).appendTo(container);
-                    var moreLink = $('<a href="#"></a>').html(RED._('palette.editor.more',{count:object.more})).appendTo(moreRow);
+                    let moreRow = $('<div>',{class:"palette-module-header palette-module"}).appendTo(container);
+                    let moreLink = $('<a href="#"></a>').html(RED._('palette.editor.more',{count:object.more})).appendTo(moreRow);
                     moreLink.click(function(e) {
                         e.preventDefault();
                         packageList.editableList('removeItem',object);
-                        for (var i=object.start;i<Math.min(object.start+10,object.start+object.more);i++) {
+                        for (let i=object.start;i<Math.min(object.start+10,object.start+object.more);i++) {
                             packageList.editableList('addItem',filteredList[i]);
                         }
                         if (object.more > 10) {
@@ -8887,21 +8887,21 @@ RED.palette.editor = (function() {
                     return;
                 }
                 if (object.info) {
-                    var entry = object.info;
-                    var headerRow = $('<div>',{class:"palette-module-header"}).appendTo(container);
-                    var titleRow = $('<div class="palette-module-meta"><i class="fa fa-cube"></i></div>').appendTo(headerRow);
+                    let entry = object.info;
+                    let headerRow = $('<div>',{class:"palette-module-header"}).appendTo(container);
+                    let titleRow = $('<div class="palette-module-meta"><i class="fa fa-cube"></i></div>').appendTo(headerRow);
                     $('<span>',{class:"palette-module-name"}).html(entry.name||entry.id).appendTo(titleRow);
                     $('<a target="_blank" class="palette-module-link"><i class="fa fa-external-link"></i></a>').attr('href',entry.url).appendTo(titleRow);
-                    var descRow = $('<div class="palette-module-meta"></div>').appendTo(headerRow);
+                    let descRow = $('<div class="palette-module-meta"></div>').appendTo(headerRow);
                     $('<div>',{class:"palette-module-description"}).html(entry.description).appendTo(descRow);
 
-                    var metaRow = $('<div class="palette-module-meta"></div>').appendTo(headerRow);
+                    let metaRow = $('<div class="palette-module-meta"></div>').appendTo(headerRow);
                     $('<span class="palette-module-version"><i class="fa fa-tag"></i> '+entry.version+'</span>').appendTo(metaRow);
                     $('<span class="palette-module-updated"><i class="fa fa-calendar"></i> '+formatUpdatedAt(entry.updated_at)+'</span>').appendTo(metaRow);
-                    var buttonRow = $('<div>',{class:"palette-module-meta"}).appendTo(headerRow);
-                    var buttonGroup = $('<div>',{class:"palette-module-button-group"}).appendTo(buttonRow);
-                    var shade = $('<div class="palette-module-shade hide"><img src="mashupflows/red/images/spin.svg" class="palette-spinner"/></div>').appendTo(container);
-                    var installButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.install')).appendTo(buttonGroup);
+                    let buttonRow = $('<div>',{class:"palette-module-meta"}).appendTo(headerRow);
+                    let buttonGroup = $('<div>',{class:"palette-module-button-group"}).appendTo(buttonRow);
+                    let shade = $('<div class="palette-module-shade hide"><img src="mashupflows/red/images/spin.svg" class="palette-spinner"/></div>').appendTo(container);
+                    let installButton = $('<a href="#" class="editor-button editor-button-small"></a>').html(RED._('palette.editor.install')).appendTo(buttonGroup);
                     installButton.click(function(e) {
                         e.preventDefault();
                         if (!$(this).hasClass('disabled')) {
@@ -8950,7 +8950,7 @@ RED.palette.editor = (function() {
                     text: RED._("palette.editor.confirm.button.review"),
                     class: "primary palette-module-install-confirm-button-install",
                     click: function() {
-                        var url = $(this).data('url');
+                        let url = $(this).data('url');
                         window.open(url);
                     }
                 },
@@ -8958,8 +8958,8 @@ RED.palette.editor = (function() {
                     text: RED._("palette.editor.confirm.button.install"),
                     class: "primary palette-module-install-confirm-button-install",
                     click: function() {
-                        var id = $(this).data('module');
-                        var shade = $(this).data('shade');
+                        let id = $(this).data('module');
+                        let shade = $(this).data('shade');
                         installNodeModule(id,shade,function(xhr) {
                             if (xhr) {
                                 if (xhr.responseJSON) {
@@ -8974,8 +8974,8 @@ RED.palette.editor = (function() {
                     text: RED._("palette.editor.confirm.button.remove"),
                     class: "primary palette-module-install-confirm-button-remove",
                     click: function() {
-                        var id = $(this).data('module');
-                        var shade = $(this).data('shade');
+                        let id = $(this).data('module');
+                        let shade = $(this).data('shade');
                         shade.attr("style", "display: block !important");
                         removeNodeModule(id, function(xhr) {
                             shade.hide();
@@ -9000,21 +9000,21 @@ RED.palette.editor = (function() {
         });
         RED.events.on('registry:node-type-added', function(nodeType) {
             if (!/^subflow:/.test(nodeType)) {
-                var ns = RED.nodes.registry.getNodeSetForType(nodeType);
+                let ns = RED.nodes.registry.getNodeSetForType(nodeType);
                 refreshNodeModule(ns.module);
             }
         });
         RED.events.on('registry:node-type-removed', function(nodeType) {
             if (!/^subflow:/.test(nodeType)) {
-                var ns = RED.nodes.registry.getNodeSetForType(nodeType);
+                let ns = RED.nodes.registry.getNodeSetForType(nodeType);
                 refreshNodeModule(ns.module);
             }
         });
         RED.events.on('registry:node-set-added', function(ns) {
             refreshNodeModule(ns.module);
-            for (var i=0;i<filteredList.length;i++) {
+            for (let i=0;i<filteredList.length;i++) {
                 if (filteredList[i].info.id === ns.module) {
-                    var installButton = filteredList[i].elements.installButton;
+                    let installButton = filteredList[i].elements.installButton;
                     installButton.addClass('disabled');
                     installButton.html(RED._('palette.editor.installed'));
                     break;
@@ -9022,15 +9022,15 @@ RED.palette.editor = (function() {
             }
         });
         RED.events.on('registry:node-set-removed', function(ns) {
-            var module = RED.nodes.registry.getModule(ns.module);
+            let module = RED.nodes.registry.getModule(ns.module);
             if (!module) {
-                var entry = nodeEntries[ns.module];
+                let entry = nodeEntries[ns.module];
                 if (entry) {
                     nodeList.editableList('removeItem', entry);
                     delete nodeEntries[ns.module];
-                    for (var i=0;i<filteredList.length;i++) {
+                    for (let i=0;i<filteredList.length;i++) {
                         if (filteredList[i].info.id === ns.module) {
-                            var installButton = filteredList[i].elements.installButton;
+                            let installButton = filteredList[i].elements.installButton;
                             installButton.removeClass('disabled');
                             installButton.html(RED._('palette.editor.install'));
                             break;
@@ -9043,7 +9043,7 @@ RED.palette.editor = (function() {
             if (!/^subflow:/.test(n.type)) {
                 typesInUse[n.type] = (typesInUse[n.type]||0)+1;
                 if (typesInUse[n.type] === 1) {
-                    var ns = RED.nodes.registry.getNodeSetForType(n.type);
+                    let ns = RED.nodes.registry.getNodeSetForType(n.type);
                     refreshNodeModule(ns.module);
                 }
             }
@@ -9053,7 +9053,7 @@ RED.palette.editor = (function() {
                 typesInUse[n.type]--;
                 if (typesInUse[n.type] === 0) {
                     delete typesInUse[n.type];
-                    var ns = RED.nodes.registry.getNodeSetForType(n.type);
+                    let ns = RED.nodes.registry.getNodeSetForType(n.type);
                     refreshNodeModule(ns.module);
                 }
             }
@@ -9071,15 +9071,15 @@ RED.palette.editor = (function() {
 
 RED.editor = (function() {
 
-    var editStack = [];
-    var editing_node = null;
-    var editing_config_node = null;
-    var subflowEditor;
+    let editStack = [];
+    let editing_node = null;
+    let editing_config_node = null;
+    let subflowEditor;
 
-    var editTrayWidthCache = {};
+    let editTrayWidthCache = {};
 
     function getCredentialsURL(nodeType, nodeID) {
-        var dashedType = nodeType.replace(/\s+/g, '-');
+        let dashedType = nodeType.replace(/\s+/g, '-');
         return  'credentials/' + dashedType + "/" + nodeID;
     }
 
@@ -9089,12 +9089,12 @@ RED.editor = (function() {
      * @returns {boolean} whether the node is valid. Sets node.dirty if needed
      */
     function validateNode(node) {
-        var oldValue = node.valid;
-        var oldChanged = node.changed;
+        let oldValue = node.valid;
+        let oldChanged = node.changed;
         node.valid = true;
-        var subflow;
-        var isValid;
-        var hasChanged;
+        let subflow;
+        let isValid;
+        let hasChanged;
         if (node.type.indexOf("subflow:")===0) {
             subflow = RED.nodes.subflow(node.type.substring(8));
             isValid = subflow.valid;
@@ -9111,8 +9111,8 @@ RED.editor = (function() {
                 node.valid = node.valid && validateNodeProperties(node, node._def.credentials, node._def._creds);
             }
         } else if (node.type == "subflow") {
-            var subflowNodes = RED.nodes.filterNodes({z:node.id});
-            for (var i=0;i<subflowNodes.length;i++) {
+            let subflowNodes = RED.nodes.filterNodes({z:node.id});
+            for (let i=0;i<subflowNodes.length;i++) {
                 isValid = subflowNodes[i].valid;
                 hasChanged = subflowNodes[i].changed;
                 if (isValid === undefined) {
@@ -9122,8 +9122,8 @@ RED.editor = (function() {
                 node.valid = node.valid && isValid;
                 node.changed = node.changed || hasChanged;
             }
-            var subflowInstances = RED.nodes.filterNodes({type:"subflow:"+node.id});
-            var modifiedTabs = {};
+            let subflowInstances = RED.nodes.filterNodes({type:"subflow:"+node.id});
+            let modifiedTabs = {};
             for (i=0;i<subflowInstances.length;i++) {
                 subflowInstances[i].valid = node.valid;
                 subflowInstances[i].changed = subflowInstances[i].changed || node.changed;
@@ -9131,7 +9131,7 @@ RED.editor = (function() {
                 modifiedTabs[subflowInstances[i].z] = true;
             }
             Object.keys(modifiedTabs).forEach(function(id) {
-                var subflow = RED.nodes.subflow(id);
+                let subflow = RED.nodes.subflow(id);
                 if (subflow) {
                     validateNode(subflow);
                 }
@@ -9155,8 +9155,8 @@ RED.editor = (function() {
      * @returns {boolean} whether the node's properties are valid
      */
     function validateNodeProperties(node, definition, properties) {
-        var isValid = true;
-        for (var prop in definition) {
+        let isValid = true;
+        for (let prop in definition) {
             if (definition.hasOwnProperty(prop)) {
                 if (!validateNodeProperty(node, definition, prop, properties[prop])) {
                     isValid = false;
@@ -9175,7 +9175,7 @@ RED.editor = (function() {
      * @returns {boolean} whether the node proprty is valid
      */
     function validateNodeProperty(node,definition,property,value) {
-        var valid = true;
+        let valid = true;
         if (/^\$\([a-zA-Z_][a-zA-Z0-9_]*\)$/.test(value)) {
             return true;
         }
@@ -9193,7 +9193,7 @@ RED.editor = (function() {
             if (!value || value == "_ADD_") {
                 valid = definition[property].hasOwnProperty("required") && !definition[property].required;
             } else {
-                var configNode = RED.nodes.node(value);
+                let configNode = RED.nodes.node(value);
                 valid = (configNode !== null && (configNode.valid == null || configNode.valid));
             }
         }
@@ -9202,7 +9202,7 @@ RED.editor = (function() {
 
 
     function validateNodeEditor(node,prefix) {
-        for (var prop in node._def.defaults) {
+        for (let prop in node._def.defaults) {
             if (node._def.defaults.hasOwnProperty(prop)) {
                 validateNodeEditorProperty(node,node._def.defaults,prop,prefix);
             }
@@ -9216,9 +9216,9 @@ RED.editor = (function() {
         }
     }
     function validateNodeEditorProperty(node,defaults,property,prefix) {
-        var input = $("#"+prefix+"-"+property);
+        let input = $("#"+prefix+"-"+property);
         if (input.length > 0) {
-            var value = input.val();
+            let value = input.val();
             if (defaults[property].hasOwnProperty("format") && defaults[property].format !== "" && input[0].nodeName === "DIV") {
                 value = input.text();
             }
@@ -9241,7 +9241,7 @@ RED.editor = (function() {
     function updateNodeProperties(node, outputMap) {
         node.resize = true;
         node.dirty = true;
-        var removedLinks = [];
+        let removedLinks = [];
         if (node.ports) {
             if (outputMap) {
                 RED.nodes.eachLink(function(l) {
@@ -9272,7 +9272,7 @@ RED.editor = (function() {
         if (node.inputs === 0) {
             removedLinks.concat(RED.nodes.filterLinks({target:node}));
         }
-        for (var l=0;l<removedLinks.length;l++) {
+        for (let l=0;l<removedLinks.length;l++) {
             RED.nodes.removeLink(removedLinks[l]);
         }
         return removedLinks;
@@ -9285,21 +9285,21 @@ RED.editor = (function() {
      * @param type - the type of the config-node
      */
     function prepareConfigNodeSelect(node,property,type,prefix) {
-        var input = $("#"+prefix+"-"+property);
+        let input = $("#"+prefix+"-"+property);
         if (input.length === 0 ) {
             return;
         }
-        var newWidth = input.width();
-        var attrStyle = input.attr('style');
-        var m;
+        let newWidth = input.width();
+        let attrStyle = input.attr('style');
+        let m;
         if ((m = /width\s*:\s*(\d+(%|[a-z]+))/i.exec(attrStyle)) !== null) {
             newWidth = m[1];
         } else {
             newWidth = "70%";
         }
-        var outerWrap = $("<div></div>").css({display:'inline-block',position:'relative'});
-        var selectWrap = $("<div></div>").css({position:'absolute',left:0,right:'40px'}).appendTo(outerWrap);
-        var select = $('<select id="'+prefix+'-'+property+'"></select>').appendTo(selectWrap);
+        let outerWrap = $("<div></div>").css({display:'inline-block',position:'relative'});
+        let selectWrap = $("<div></div>").css({position:'absolute',left:0,right:'40px'}).appendTo(outerWrap);
+        let select = $('<select id="'+prefix+'-'+property+'"></select>').appendTo(selectWrap);
 
         outerWrap.width(newWidth).height(input.height());
         if (outerWrap.width() === 0) {
@@ -9316,9 +9316,9 @@ RED.editor = (function() {
             showEditConfigNodeDialog(property,type,select.find(":selected").val(),prefix);
             e.preventDefault();
         });
-        var label = "";
-        var configNode = RED.nodes.node(node[property]);
-        var node_def = RED.nodes.getType(type);
+        let label = "";
+        let configNode = RED.nodes.node(node[property]);
+        let node_def = RED.nodes.getType(type);
 
         if (configNode && node_def.label) {
             if (typeof node_def.label == "function") {
@@ -9342,11 +9342,11 @@ RED.editor = (function() {
      * @param type - the type of the config-node
      */
     function prepareConfigNodeButton(node,property,type,prefix) {
-        var input = $("#"+prefix+"-"+property);
+        let input = $("#"+prefix+"-"+property);
         input.val(node[property]);
         input.attr("type","hidden");
 
-        var button = $("<a>",{id:prefix+"-edit-"+property, class:"editor-button"});
+        let button = $("<a>",{id:prefix+"-edit-"+property, class:"editor-button"});
         input.after(button);
 
         if (node[property]) {
@@ -9369,7 +9369,7 @@ RED.editor = (function() {
      * @param definition - the definition of the field
      */
     function preparePropertyEditor(node,property,prefix,definition) {
-        var input = $("#"+prefix+"-"+property);
+        let input = $("#"+prefix+"-"+property);
         if (input.length === 0) {
             return;
         }
@@ -9377,7 +9377,7 @@ RED.editor = (function() {
             input.prop('checked',node[property]);
         }
         else {
-            var val = node[property];
+            let val = node[property];
             if (val == null) {
                 val = "";
             }
@@ -9401,7 +9401,7 @@ RED.editor = (function() {
      * @param prefix - the prefix to use in the input element ids (node-input|node-config-input)
      */
     function attachPropertyChangeHandler(node,definition,property,prefix) {
-        var input = $("#"+prefix+"-"+property);
+        let input = $("#"+prefix+"-"+property);
         if (definition !== undefined && "format" in definition[property] && definition[property].format !== "" && input[0].nodeName === "DIV") {
             $("#"+prefix+"-"+property).on('change keyup', function(event,skipValidation) {
                 if (!skipValidation) {
@@ -9425,7 +9425,7 @@ RED.editor = (function() {
      * @param prefix
      */
     function populateCredentialsInputs(node, credDef, credData, prefix) {
-        var cred;
+        let cred;
         for (cred in credDef) {
             if (credDef.hasOwnProperty(cred)) {
                 if (credDef[cred].type == 'password') {
@@ -9453,15 +9453,15 @@ RED.editor = (function() {
      * @return {boolean} whether anything has changed
      */
     function updateNodeCredentials(node, credDefinition, prefix) {
-        var changed = false;
+        let changed = false;
         if(!node.credentials) {
             node.credentials = {_:{}};
         }
 
-        for (var cred in credDefinition) {
+        for (let cred in credDefinition) {
             if (credDefinition.hasOwnProperty(cred)) {
-                var input = $("#" + prefix + '-' + cred);
-                var value = input.val();
+                let input = $("#" + prefix + '-' + cred);
+                let value = input.val();
                 if (credDefinition[cred].type == 'password') {
                     node.credentials['has_' + cred] = (value !== "");
                     if (value == '__PWRD__') {
@@ -9486,10 +9486,10 @@ RED.editor = (function() {
      * @param prefix - the prefix to use in the input element ids (node-input|node-config-input)
      */
     function prepareEditDialog(node,definition,prefix,done) {
-        for (var d in definition.defaults) {
+        for (let d in definition.defaults) {
             if (definition.defaults.hasOwnProperty(d)) {
                 if (definition.defaults[d].type) {
-                    var configTypeDef = RED.nodes.getType(definition.defaults[d].type);
+                    let configTypeDef = RED.nodes.getType(definition.defaults[d].type);
                     if (configTypeDef) {
                         if (configTypeDef.exclusive) {
                             prepareConfigNodeButton(node,d,definition.defaults[d].type,prefix);
@@ -9506,7 +9506,7 @@ RED.editor = (function() {
                 attachPropertyChangeHandler(node,definition.defaults,d,prefix);
             }
         }
-        var completePrepare = function() {
+        let completePrepare = function() {
             if (definition.oneditprepare) {
                 try {
                     definition.oneditprepare.call(node);
@@ -9516,7 +9516,7 @@ RED.editor = (function() {
             }
             // Now invoke any change handlers added to the fields - passing true
             // to prevent full node validation from being triggered each time
-            for (var d in definition.defaults) {
+            for (let d in definition.defaults) {
                 if (definition.defaults.hasOwnProperty(d)) {
                     $("#"+prefix+"-"+d).trigger("change",[true]);
                 }
@@ -9552,16 +9552,16 @@ RED.editor = (function() {
     }
 
     function getEditStackTitle() {
-        var title = '<ul class="editor-tray-breadcrumbs">';
-        for (var i=0;i<editStack.length;i++) {
-            var node = editStack[i];
-            var label = node.type;
+        let title = '<ul class="editor-tray-breadcrumbs">';
+        for (let i=0;i<editStack.length;i++) {
+            let node = editStack[i];
+            let label = node.type;
             if (node.type === '_expression') {
                 label = "Expression editor";
             } else if (node.type === 'subflow') {
                 label = RED._("subflow.editSubflow",{name:node.name})
             } else if (node.type.indexOf("subflow:")===0) {
-                var subflow = RED.nodes.subflow(node.type.substring(8));
+                let subflow = RED.nodes.subflow(node.type.substring(8));
                 label = RED._("subflow.editSubflow",{name:subflow.name})
             } else {
                 if (typeof node._def.paletteLabel !== "undefined") {
@@ -9586,19 +9586,19 @@ RED.editor = (function() {
     }
 
     function buildEditForm(tray,formId,type,ns) {
-        var trayBody = tray.find('.editor-tray-body');
-        var dialogForm = $('<form id="'+formId+'" class="form-horizontal" autocomplete="off"></form>').appendTo(trayBody);
+        let trayBody = tray.find('.editor-tray-body');
+        let dialogForm = $('<form id="'+formId+'" class="form-horizontal" autocomplete="off"></form>').appendTo(trayBody);
         dialogForm.html($("script[data-template-name='"+type+"']").html());
         ns = ns||"node-red";
         dialogForm.find('[data-i18n]').each(function() {
-            var current = $(this).attr("data-i18n");
-            var keys = current.split(";");
-            for (var i=0;i<keys.length;i++) {
-                var key = keys[i];
+            let current = $(this).attr("data-i18n");
+            let keys = current.split(";");
+            for (let i=0;i<keys.length;i++) {
+                let key = keys[i];
                 if (key.indexOf(":") === -1) {
-                    var prefix = "";
+                    let prefix = "";
                     if (key.indexOf("[")===0) {
-                        var parts = key.split("]");
+                        let parts = key.split("]");
                         prefix = parts[0]+"]";
                         key = parts[1];
                     }
@@ -9617,14 +9617,14 @@ RED.editor = (function() {
     }
 
     function showEditDialog(node) {
-        var editing_node = node;
+        let editing_node = node;
         editStack.push(node);
         RED.view.state(RED.state.EDITING);
-        var type = node.type;
+        let type = node.type;
         if (node.type.substring(0,8) == "subflow:") {
             type = "subflow";
         }
-        var trayOptions = {
+        let trayOptions = {
             title: getEditStackTitle(),
             buttons: [
                 {
@@ -9632,15 +9632,15 @@ RED.editor = (function() {
                     class: 'leftButton',
                     text: RED._("common.label.delete"),
                     click: function() {
-                        var startDirty = RED.nodes.dirty();
-                        var removedNodes = [];
-                        var removedLinks = [];
-                        var removedEntities = RED.nodes.remove(editing_node.id);
+                        let startDirty = RED.nodes.dirty();
+                        let removedNodes = [];
+                        let removedLinks = [];
+                        let removedEntities = RED.nodes.remove(editing_node.id);
                         removedNodes.push(editing_node);
                         removedNodes = removedNodes.concat(removedEntities.nodes);
                         removedLinks = removedLinks.concat(removedEntities.links);
 
-                        var historyEvent = {
+                        let historyEvent = {
                             t:'delete',
                             nodes:removedNodes,
                             links:removedLinks,
@@ -9667,13 +9667,13 @@ RED.editor = (function() {
                                 }
                             }
 
-                            for (var d in editing_node._def.defaults) {
+                            for (let d in editing_node._def.defaults) {
                                 if (editing_node._def.defaults.hasOwnProperty(d)) {
-                                    var def = editing_node._def.defaults[d];
+                                    let def = editing_node._def.defaults[d];
                                     if (def.type) {
-                                        var configTypeDef = RED.nodes.getType(def.type);
+                                        let configTypeDef = RED.nodes.getType(def.type);
                                         if (configTypeDef && configTypeDef.exclusive) {
-                                            var input = $("#node-input-"+d).val()||"";
+                                            let input = $("#node-input-"+d).val()||"";
                                             if (input !== "" && !editing_node[d]) {
                                                 // This node has an exclusive config node that
                                                 // has just been added. As the user is cancelling
@@ -9695,14 +9695,14 @@ RED.editor = (function() {
                     text: RED._("common.label.done"),
                     class: "primary",
                     click: function() {
-                        var changes = {};
-                        var changed = false;
-                        var wasDirty = RED.nodes.dirty();
-                        var d;
-                        var outputMap;
+                        let changes = {};
+                        let changed = false;
+                        let wasDirty = RED.nodes.dirty();
+                        let d;
+                        let outputMap;
 
                         if (editing_node._def.oneditsave) {
-                            var oldValues = {};
+                            let oldValues = {};
                             for (d in editing_node._def.defaults) {
                                 if (editing_node._def.defaults.hasOwnProperty(d)) {
                                     if (typeof editing_node[d] === "string" || typeof editing_node[d] === "number") {
@@ -9713,7 +9713,7 @@ RED.editor = (function() {
                                 }
                             }
                             try {
-                                var rc = editing_node._def.oneditsave.call(editing_node);
+                                let rc = editing_node._def.oneditsave.call(editing_node);
                                 if (rc === true) {
                                     changed = true;
                                 }
@@ -9741,8 +9741,8 @@ RED.editor = (function() {
                         if (editing_node._def.defaults) {
                             for (d in editing_node._def.defaults) {
                                 if (editing_node._def.defaults.hasOwnProperty(d)) {
-                                    var input = $("#node-input-"+d);
-                                    var newValue;
+                                    let input = $("#node-input-"+d);
+                                    let newValue;
                                     if (input.attr('type') === "checkbox") {
                                         newValue = input.prop('checked');
                                     } else if ("format" in editing_node._def.defaults[d] && editing_node._def.defaults[d].format !== "" && input[0].nodeName === "DIV") {
@@ -9760,9 +9760,9 @@ RED.editor = (function() {
                                                     newValue = "";
                                                 }
                                                 // Change to a related config node
-                                                var configNode = RED.nodes.node(editing_node[d]);
+                                                let configNode = RED.nodes.node(editing_node[d]);
                                                 if (configNode) {
-                                                    var users = configNode.users;
+                                                    let users = configNode.users;
                                                     users.splice(users.indexOf(editing_node),1);
                                                 }
                                                 configNode = RED.nodes.node(newValue);
@@ -9779,9 +9779,9 @@ RED.editor = (function() {
                             }
                         }
                         if (editing_node._def.credentials) {
-                            var prefix = 'node-input';
-                            var credDefinition = editing_node._def.credentials;
-                            var credsChanged = updateNodeCredentials(editing_node,credDefinition,prefix);
+                            let prefix = 'node-input';
+                            let credDefinition = editing_node._def.credentials;
+                            let credsChanged = updateNodeCredentials(editing_node,credDefinition,prefix);
                             changed = changed || credsChanged;
                         }
                         if (editing_node.hasOwnProperty("_outputs")) {
@@ -9791,14 +9791,14 @@ RED.editor = (function() {
                                 changed = true;
                             }
                         }
-                        var removedLinks = updateNodeProperties(editing_node,outputMap);
+                        let removedLinks = updateNodeProperties(editing_node,outputMap);
                         if (changed) {
-                            var wasChanged = editing_node.changed;
+                            let wasChanged = editing_node.changed;
                             editing_node.changed = true;
                             RED.nodes.dirty(true);
 
-                            var activeSubflow = RED.nodes.subflow(RED.workspaces.active());
-                            var subflowInstances = null;
+                            let activeSubflow = RED.nodes.subflow(RED.workspaces.active());
+                            let subflowInstances = null;
                             if (activeSubflow) {
                                 subflowInstances = [];
                                 RED.nodes.eachNode(function(n) {
@@ -9813,7 +9813,7 @@ RED.editor = (function() {
                                     }
                                 });
                             }
-                            var historyEvent = {
+                            let historyEvent = {
                                 t:'edit',
                                 node:editing_node,
                                 changes:changes,
@@ -9841,7 +9841,7 @@ RED.editor = (function() {
             resize: function(dimensions) {
                 editTrayWidthCache[type] = dimensions.width;
                 if (editing_node && editing_node._def.oneditresize) {
-                    var form = $("#dialog-form");
+                    let form = $("#dialog-form");
                     try {
                         editing_node._def.oneditresize.call(editing_node,{width:form.width(),height:form.height()});
                     } catch(err) {
@@ -9853,13 +9853,13 @@ RED.editor = (function() {
                 if (editing_node) {
                     // RED.sidebar.info.refresh(editing_node);
                 }
-                var ns;
+                let ns;
                 if (node._def.set.module === "node-red") {
                     ns = "node-red";
                 } else {
                     ns = node._def.set.id;
                 }
-                var dialogForm = buildEditForm(tray,"dialog-form",type,ns);
+                let dialogForm = buildEditForm(tray,"dialog-form",type,ns);
                 prepareEditDialog(node,node._def,"node-input", function() {
                     dialogForm.i18n();
                     done();
@@ -9888,7 +9888,7 @@ RED.editor = (function() {
         }
 
         if (type === 'subflow') {
-            var id = editing_node.type.substring(8);
+            let id = editing_node.type.substring(8);
             trayOptions.buttons.unshift({
                 class: 'leftButton',
                 text: RED._("subflow.edit"),
@@ -9908,18 +9908,18 @@ RED.editor = (function() {
      * prefix - the input prefix of the parent property
      */
     function showEditConfigNodeDialog(name,type,id,prefix) {
-        var adding = (id == "_ADD_");
-        var node_def = RED.nodes.getType(type);
-        var editing_config_node = RED.nodes.node(id);
+        let adding = (id == "_ADD_");
+        let node_def = RED.nodes.getType(type);
+        let editing_config_node = RED.nodes.node(id);
 
-        var ns;
+        let ns;
         if (node_def.set.module === "node-red") {
             ns = "node-red";
         } else {
             ns = node_def.set.id;
         }
-        var configNodeScope = ""; // default to global
-        var activeSubflow = RED.nodes.subflow(RED.workspaces.active());
+        let configNodeScope = ""; // default to global
+        let activeSubflow = RED.nodes.subflow(RED.workspaces.active());
         if (activeSubflow) {
             configNodeScope = activeSubflow.id;
         }
@@ -9931,7 +9931,7 @@ RED.editor = (function() {
                 z: configNodeScope,
                 users: []
             }
-            for (var d in node_def.defaults) {
+            for (let d in node_def.defaults) {
                 if (node_def.defaults[d].value) {
                     editing_config_node[d] = JSON.parse(JSON.stringify(node_def.defaults[d].value));
                 }
@@ -9941,11 +9941,11 @@ RED.editor = (function() {
         editStack.push(editing_config_node);
 
         RED.view.state(RED.state.EDITING);
-        var trayOptions = {
+        let trayOptions = {
             title: getEditStackTitle(), //(adding?RED._("editor.addNewConfig", {type:type}):RED._("editor.editConfig", {type:type})),
             resize: function() {
                 if (editing_config_node && editing_config_node._def.oneditresize) {
-                    var form = $("#node-config-dialog-edit-form");
+                    let form = $("#node-config-dialog-edit-form");
                     try {
                         editing_config_node._def.oneditresize.call(editing_config_node,{width:form.width(),height:form.height()});
                     } catch(err) {
@@ -9954,15 +9954,15 @@ RED.editor = (function() {
                 }
             },
             open: function(tray, done) {
-                var trayHeader = tray.find(".editor-tray-header");
-                var trayFooter = tray.find(".editor-tray-footer");
+                let trayHeader = tray.find(".editor-tray-header");
+                let trayFooter = tray.find(".editor-tray-footer");
 
                 if (node_def.hasUsers !== false) {
                     trayFooter.prepend('<div id="node-config-dialog-user-count"><i class="fa fa-info-circle"></i> <span></span></div>');
                 }
                 trayFooter.append('<span id="node-config-dialog-scope-container"><span id="node-config-dialog-scope-warning" data-i18n="[title]editor.errors.scopeChange"><i class="fa fa-warning"></i></span><select id="node-config-dialog-scope"></select></span>');
 
-                var dialogForm = buildEditForm(tray,"node-config-dialog-edit-form",type,ns);
+                let dialogForm = buildEditForm(tray,"node-config-dialog-edit-form",type,ns);
 
                 prepareEditDialog(editing_config_node,node_def,"node-config-input", function() {
                     if (editing_config_node._def.exclusive) {
@@ -9972,17 +9972,17 @@ RED.editor = (function() {
                     }
                     $("#node-config-dialog-scope-warning").hide();
 
-                    var nodeUserFlows = {};
+                    let nodeUserFlows = {};
                     editing_config_node.users.forEach(function(n) {
                         nodeUserFlows[n.z] = true;
                     });
-                    var flowCount = Object.keys(nodeUserFlows).length;
-                    var tabSelect = $("#node-config-dialog-scope").empty();
+                    let flowCount = Object.keys(nodeUserFlows).length;
+                    let tabSelect = $("#node-config-dialog-scope").empty();
                     tabSelect.off("change");
                     tabSelect.append('<option value=""'+(!editing_config_node.z?" selected":"")+' data-i18n="sidebar.config.global"></option>');
                     tabSelect.append('<option disabled data-i18n="sidebar.config.flows"></option>');
                     RED.nodes.eachWorkspace(function(ws) {
-                        var workspaceLabel = ws.label;
+                        let workspaceLabel = ws.label;
                         if (nodeUserFlows[ws.id]) {
                             workspaceLabel = "* "+workspaceLabel;
                         }
@@ -9990,7 +9990,7 @@ RED.editor = (function() {
                     });
                     tabSelect.append('<option disabled data-i18n="sidebar.config.subflows"></option>');
                     RED.nodes.eachSubflow(function(ws) {
-                        var workspaceLabel = ws.name;
+                        let workspaceLabel = ws.name;
                         if (nodeUserFlows[ws.id]) {
                             workspaceLabel = "* "+workspaceLabel;
                         }
@@ -9998,7 +9998,7 @@ RED.editor = (function() {
                     });
                     if (flowCount > 0) {
                         tabSelect.on('change',function() {
-                            var newScope = $(this).val();
+                            let newScope = $(this).val();
                             if (newScope === '') {
                                 // global scope - everyone can use it
                                 $("#node-config-dialog-scope-warning").hide();
@@ -10034,15 +10034,15 @@ RED.editor = (function() {
                 id: "node-config-dialog-cancel",
                 text: RED._("common.label.cancel"),
                 click: function() {
-                    var configType = type;
-                    var configId = editing_config_node.id;
-                    var configAdding = adding;
-                    var configTypeDef = RED.nodes.getType(configType);
+                    let configType = type;
+                    let configId = editing_config_node.id;
+                    let configAdding = adding;
+                    let configTypeDef = RED.nodes.getType(configType);
 
                     if (configTypeDef.oneditcancel) {
                         // TODO: what to pass as this to call
                         if (configTypeDef.oneditcancel) {
-                            var cn = RED.nodes.node(configId);
+                            let cn = RED.nodes.node(configId);
                             if (cn) {
                                 try {
                                     configTypeDef.oneditcancel.call(cn,false);
@@ -10066,14 +10066,14 @@ RED.editor = (function() {
                 text: adding?RED._("editor.configAdd"):RED._("editor.configUpdate"),
                 class: "primary",
                 click: function() {
-                    var configProperty = name;
-                    var configId = editing_config_node.id;
-                    var configType = type;
-                    var configAdding = adding;
-                    var configTypeDef = RED.nodes.getType(configType);
-                    var d;
-                    var input;
-                    var scope = $("#node-config-dialog-scope").val();
+                    let configProperty = name;
+                    let configId = editing_config_node.id;
+                    let configType = type;
+                    let configAdding = adding;
+                    let configTypeDef = RED.nodes.getType(configType);
+                    let d;
+                    let input;
+                    let scope = $("#node-config-dialog-scope").val();
 
                     if (configTypeDef.oneditsave) {
                         try {
@@ -10085,7 +10085,7 @@ RED.editor = (function() {
 
                     for (d in configTypeDef.defaults) {
                         if (configTypeDef.defaults.hasOwnProperty(d)) {
-                            var newValue;
+                            let newValue;
                             input = $("#node-config-input-"+d);
                             if (input.attr('type') === "checkbox") {
                                 newValue = input.prop('checked');
@@ -10100,9 +10100,9 @@ RED.editor = (function() {
                                         newValue = "";
                                     }
                                     // Change to a related config node
-                                    var configNode = RED.nodes.node(editing_config_node[d]);
+                                    let configNode = RED.nodes.node(editing_config_node[d]);
                                     if (configNode) {
-                                        var users = configNode.users;
+                                        let users = configNode.users;
                                         users.splice(users.indexOf(editing_config_node),1);
                                     }
                                     configNode = RED.nodes.node(newValue);
@@ -10121,8 +10121,8 @@ RED.editor = (function() {
                         // Search for nodes that use this one that are no longer
                         // in scope, so must be removed
                         editing_config_node.users = editing_config_node.users.filter(function(n) {
-                            var keep = true;
-                            for (var d in n._def.defaults) {
+                            let keep = true;
+                            for (let d in n._def.defaults) {
                                 if (n._def.defaults.hasOwnProperty(d)) {
                                     if (n._def.defaults[d].type === editing_config_node.type &&
                                         n[d] === editing_config_node.id &&
@@ -10149,12 +10149,12 @@ RED.editor = (function() {
                         updateNodeCredentials(editing_config_node,configTypeDef.credentials,"node-config-input");
                     }
                     validateNode(editing_config_node);
-                    var validatedNodes = {};
+                    let validatedNodes = {};
                     validatedNodes[editing_config_node.id] = true;
 
-                    var userStack = editing_config_node.users.slice();
+                    let userStack = editing_config_node.users.slice();
                     while(userStack.length > 0) {
-                        var user = userStack.pop();
+                        let user = userStack.pop();
                         if (!validatedNodes[user.id]) {
                             validatedNodes[user.id] = true;
                             if (user.users) {
@@ -10180,10 +10180,10 @@ RED.editor = (function() {
                 class: 'leftButton',
                 text: RED._("editor.configDelete"), //'<i class="fa fa-trash"></i>',
                 click: function() {
-                    var configProperty = name;
-                    var configId = editing_config_node.id;
-                    var configType = type;
-                    var configTypeDef = RED.nodes.getType(configType);
+                    let configProperty = name;
+                    let configId = editing_config_node.id;
+                    let configType = type;
+                    let configTypeDef = RED.nodes.getType(configType);
 
                     try {
 
@@ -10199,19 +10199,19 @@ RED.editor = (function() {
                         console.log("oneditdelete",editing_config_node.id,editing_config_node.type,err.toString());
                     }
 
-                    var historyEvent = {
+                    let historyEvent = {
                         t:'delete',
                         nodes:[editing_config_node],
                         changes: {},
                         dirty: RED.nodes.dirty()
                     }
-                    for (var i=0;i<editing_config_node.users.length;i++) {
-                        var user = editing_config_node.users[i];
+                    for (let i=0;i<editing_config_node.users.length;i++) {
+                        let user = editing_config_node.users[i];
                         historyEvent.changes[user.id] = {
                             changed: user.changed,
                             valid: user.valid
                         };
-                        for (var d in user._def.defaults) {
+                        for (let d in user._def.defaults) {
                             if (user._def.defaults.hasOwnProperty(d) && user[d] == configId) {
                                 historyEvent.changes[user.id][d] = configId
                                 user[d] = "";
@@ -10247,7 +10247,7 @@ RED.editor = (function() {
     function updateConfigNodeSelect(name,type,value,prefix) {
         // if prefix is null, there is no config select to update
         if (prefix) {
-            var button = $("#"+prefix+"-edit-"+name);
+            let button = $("#"+prefix+"-edit-"+name);
             if (button.length) {
                 if (value) {
                     button.text(RED._("editor.configEdit"));
@@ -10257,20 +10257,20 @@ RED.editor = (function() {
                 $("#"+prefix+"-"+name).val(value);
             } else {
 
-                var select = $("#"+prefix+"-"+name);
-                var node_def = RED.nodes.getType(type);
+                let select = $("#"+prefix+"-"+name);
+                let node_def = RED.nodes.getType(type);
                 select.children().remove();
 
-                var activeWorkspace = RED.nodes.workspace(RED.workspaces.active());
+                let activeWorkspace = RED.nodes.workspace(RED.workspaces.active());
                 if (!activeWorkspace) {
                     activeWorkspace = RED.nodes.subflow(RED.workspaces.active());
                 }
 
-                var configNodes = [];
+                let configNodes = [];
 
                 RED.nodes.eachConfig(function(config) {
                     if (config.type == type && (!config.z || config.z === activeWorkspace.id)) {
-                        var label = "";
+                        let label = "";
                         if (typeof node_def.label == "function") {
                             try {
                                 label = node_def.label.call(config);
@@ -10285,7 +10285,7 @@ RED.editor = (function() {
                         configNodes.push(config);
                     }
                 });
-                var configSortFn = defaultConfigNodeSort;
+                let configSortFn = defaultConfigNodeSort;
                 if (typeof node_def.sort == "function") {
                     configSortFn = node_def.sort;
                 }
@@ -10307,12 +10307,12 @@ RED.editor = (function() {
     }
 
     function showEditSubflowDialog(subflow) {
-        var editing_node = subflow;
+        let editing_node = subflow;
         editStack.push(subflow);
         RED.view.state(RED.state.EDITING);
-        var subflowEditor;
+        let subflowEditor;
 
-        var trayOptions = {
+        let trayOptions = {
             title: getEditStackTitle(),
             buttons: [
                 {
@@ -10327,12 +10327,12 @@ RED.editor = (function() {
                     class: "primary",
                     text: RED._("common.label.done"),
                     click: function() {
-                        var i;
-                        var changes = {};
-                        var changed = false;
-                        var wasDirty = RED.nodes.dirty();
+                        let i;
+                        let changes = {};
+                        let changed = false;
+                        let wasDirty = RED.nodes.dirty();
 
-                        var newName = $("#subflow-input-name").val();
+                        let newName = $("#subflow-input-name").val();
 
                         if (newName != editing_node.name) {
                             changes['name'] = editing_node.name;
@@ -10340,7 +10340,7 @@ RED.editor = (function() {
                             changed = true;
                         }
 
-                        var newDescription = subflowEditor.getValue();
+                        let newDescription = subflowEditor.getValue();
 
                         if (newDescription != editing_node.info) {
                             changes['info'] = editing_node.info;
@@ -10351,7 +10351,7 @@ RED.editor = (function() {
                         RED.palette.refresh();
 
                         if (changed) {
-                            var subflowInstances = [];
+                            let subflowInstances = [];
                             RED.nodes.eachNode(function(n) {
                                 if (n.type == "subflow:"+editing_node.id) {
                                     subflowInstances.push({
@@ -10363,10 +10363,10 @@ RED.editor = (function() {
                                     updateNodeProperties(n);
                                 }
                             });
-                            var wasChanged = editing_node.changed;
+                            let wasChanged = editing_node.changed;
                             editing_node.changed = true;
                             RED.nodes.dirty(true);
-                            var historyEvent = {
+                            let historyEvent = {
                                 t:'edit',
                                 node:editing_node,
                                 changes:changes,
@@ -10385,10 +10385,10 @@ RED.editor = (function() {
                 }
             ],
             resize: function() {
-                var rows = $("#dialog-form>div:not(.node-text-editor-row)");
-                var editorRow = $("#dialog-form>div.node-text-editor-row");
-                var height = $("#dialog-form").height();
-                for (var i=0;i<rows.size();i++) {
+                let rows = $("#dialog-form>div:not(.node-text-editor-row)");
+                let editorRow = $("#dialog-form>div.node-text-editor-row");
+                let height = $("#dialog-form").height();
+                for (let i=0;i<rows.size();i++) {
                     height -= $(rows[i]).outerHeight(true);
                 }
                 height -= (parseInt($("#dialog-form").css("marginTop"))+parseInt($("#dialog-form").css("marginBottom")));
@@ -10399,7 +10399,7 @@ RED.editor = (function() {
                 if (editing_node) {
                     // RED.sidebar.info.refresh(editing_node);
                 }
-                var dialogForm = buildEditForm(tray,"dialog-form","subflow-template");
+                let dialogForm = buildEditForm(tray,"dialog-form","subflow-template");
                 subflowEditor = RED.editor.createEditor({
                     id: 'subflow-input-info-editor',
                     mode: 'ace/mode/markdown',
@@ -10409,8 +10409,8 @@ RED.editor = (function() {
                 $("#subflow-input-name").val(subflow.name);
                 RED.text.bidi.prepareInput($("#subflow-input-name"));
                 subflowEditor.getSession().setValue(subflow.info||"",-1);
-                var userCount = 0;
-                var subflowType = "subflow:"+editing_node.id;
+                let userCount = 0;
+                let subflowType = "subflow:"+editing_node.id;
 
                 RED.nodes.eachNode(function(n) {
                     if (n.type === subflowType) {
@@ -10437,14 +10437,14 @@ RED.editor = (function() {
 
 
     function editExpression(options) {
-        var value = options.value;
-        var onComplete = options.complete;
-        var type = "_expression"
+        let value = options.value;
+        let onComplete = options.complete;
+        let type = "_expression"
         editStack.push({type:type});
         RED.view.state(RED.state.EDITING);
-        var expressionEditor;
+        let expressionEditor;
 
-        var trayOptions = {
+        let trayOptions = {
             title: getEditStackTitle(),
             buttons: [
                 {
@@ -10468,10 +10468,10 @@ RED.editor = (function() {
             resize: function(dimensions) {
                 editTrayWidthCache[type] = dimensions.width;
 
-                var rows = $("#dialog-form>div:not(.node-text-editor-row)");
-                var editorRow = $("#dialog-form>div.node-text-editor-row");
-                var height = $("#dialog-form").height();
-                for (var i=0;i<rows.size();i++) {
+                let rows = $("#dialog-form>div:not(.node-text-editor-row)");
+                let editorRow = $("#dialog-form>div.node-text-editor-row");
+                let height = $("#dialog-form").height();
+                for (let i=0;i<rows.size();i++) {
                     height -= $(rows[i]).outerHeight(true);
                 }
                 height -= (parseInt($("#dialog-form").css("marginTop"))+parseInt($("#dialog-form").css("marginBottom")));
@@ -10479,17 +10479,17 @@ RED.editor = (function() {
                 expressionEditor.resize();
             },
             open: function(tray) {
-                var trayBody = tray.find('.editor-tray-body');
-                var dialogForm = buildEditForm(tray,'dialog-form','_expression','editor');
-                var funcSelect = $("#node-input-expression-func");
+                let trayBody = tray.find('.editor-tray-body');
+                let dialogForm = buildEditForm(tray,'dialog-form','_expression','editor');
+                let funcSelect = $("#node-input-expression-func");
                 Object.keys(jsonata.functions).forEach(function(f) {
                     funcSelect.append($("<option></option>").val(f).text(f));
                 })
                 funcSelect.change(function(e) {
-                    var f = $(this).val();
-                    var args = RED._('jsonata:'+f+".args",{defaultValue:''});
-                    var title = "<h5>"+f+"("+args+")</h5>";
-                    var body = marked(RED._('jsonata:'+f+'.desc',{defaultValue:''}));
+                    let f = $(this).val();
+                    let args = RED._('jsonata:'+f+".args",{defaultValue:''});
+                    let title = "<h5>"+f+"("+args+")</h5>";
+                    let body = marked(RED._('jsonata:'+f+'.desc',{defaultValue:''}));
                     $("#node-input-expression-help").html(title+"<p>"+body+"</p>");
 
                 })
@@ -10503,24 +10503,24 @@ RED.editor = (function() {
                         enableLiveAutocompletion: true
                     }
                 });
-                var currentToken = null;
-                var currentTokenPos = -1;
-                var currentFunctionMarker = null;
+                let currentToken = null;
+                let currentTokenPos = -1;
+                let currentFunctionMarker = null;
 
                 expressionEditor.getSession().setValue(value||"",-1);
                 expressionEditor.on("changeSelection", function() {
-                    var c = expressionEditor.getCursorPosition();
-                    var token = expressionEditor.getSession().getTokenAt(c.row,c.column);
+                    let c = expressionEditor.getCursorPosition();
+                    let token = expressionEditor.getSession().getTokenAt(c.row,c.column);
                     if (token !== currentToken || (token && /paren/.test(token.type) && c.column !== currentTokenPos)) {
                         currentToken = token;
-                        var r,p;
-                        var scopedFunction = null;
+                        let r,p;
+                        let scopedFunction = null;
                         if (token && token.type === 'keyword') {
                             r = c.row;
                             scopedFunction = token;
                         } else {
-                            var depth = 0;
-                            var next = false;
+                            let depth = 0;
+                            let next = false;
                             if (token) {
                                 if (token.type === 'paren.rparen') {
                                     // If this is a block of parens ')))', set
@@ -10536,12 +10536,12 @@ RED.editor = (function() {
                                 p = -1;
                             }
                             while ( scopedFunction === null && r > -1) {
-                                var rowTokens = expressionEditor.getSession().getTokens(r);
+                                let rowTokens = expressionEditor.getSession().getTokens(r);
                                 if (p === -1) {
                                     p = rowTokens.length-1;
                                 }
                                 while (p > -1) {
-                                    var type = rowTokens[p].type;
+                                    let type = rowTokens[p].type;
                                     if (next) {
                                         if (type === 'keyword') {
                                             scopedFunction = rowTokens[p];
@@ -10578,9 +10578,9 @@ RED.editor = (function() {
                 dialogForm.i18n();
                 $("#node-input-expression-func-insert").click(function(e) {
                     e.preventDefault();
-                    var pos = expressionEditor.getCursorPosition();
-                    var f = funcSelect.val();
-                    var snippet = jsonata.getFunctionSnippet(f);
+                    let pos = expressionEditor.getCursorPosition();
+                    let f = funcSelect.val();
+                    let snippet = jsonata.getFunctionSnippet(f);
                     expressionEditor.insertSnippet(snippet);
                     expressionEditor.focus();
                 })
@@ -10616,9 +10616,9 @@ RED.editor = (function() {
         updateNodeProperties: updateNodeProperties, // TODO: only exposed for edit-undo
 
         createEditor: function(options) {
-            var editor = ace.edit(options.id);
+            let editor = ace.edit(options.id);
             editor.setTheme("ace/theme/tomorrow");
-            var session = editor.getSession();
+            let session = editor.getSession();
             if (options.mode) {
                 session.setMode(options.mode);
             }
@@ -10654,28 +10654,28 @@ RED.editor = (function() {
 // Handles node's configuration right-handed sidebar
 RED.tray = (function() {
 
-    var stack = [];
-    var editorStack = null;
-    var openingTray = false;
+    let stack = [];
+    let editorStack = null;
+    let openingTray = false;
 
     function resize() {}
 
     function showTray(options) {
-        var el = $('<div class="editor-tray"></div>');
-        var header = $('<div class="editor-tray-header"></div>').appendTo(el);
-        var bodyWrapper = $('<div class="editor-tray-body-wrapper"></div>').appendTo(el);
-        var body = $('<div class="editor-tray-body"></div>').appendTo(bodyWrapper);
-        var footer = $('<div class="editor-tray-footer"></div>').appendTo(el);
-        var resizer = $('<div class="editor-tray-resize-handle"></div>').appendTo(el);
+        let el = $('<div class="editor-tray"></div>');
+        let header = $('<div class="editor-tray-header"></div>').appendTo(el);
+        let bodyWrapper = $('<div class="editor-tray-body-wrapper"></div>').appendTo(el);
+        let body = $('<div class="editor-tray-body"></div>').appendTo(bodyWrapper);
+        let footer = $('<div class="editor-tray-footer"></div>').appendTo(el);
+        let resizer = $('<div class="editor-tray-resize-handle"></div>').appendTo(el);
         if (options.title) {
             $('<div class="editor-tray-titlebar">'+options.title+'</div>').appendTo(header);
         }
-        var buttonBar = $('<div class="editor-tray-toolbar"></div>').appendTo(header);
-        var primaryButton;
+        let buttonBar = $('<div class="editor-tray-toolbar"></div>').appendTo(header);
+        let primaryButton;
         if (options.buttons) {
-            for (var i=0;i<options.buttons.length;i++) {
-                var button = options.buttons[i];
-                var b = $('<button>').button().appendTo(buttonBar);
+            for (let i=0;i<options.buttons.length;i++) {
+                let button = options.buttons[i];
+                let b = $('<button>').button().appendTo(buttonBar);
                 if (button.id) {
                     b.attr('id',button.id);
                 }
@@ -10701,7 +10701,7 @@ RED.tray = (function() {
         }
 
         el.appendTo(editorStack);
-        var tray = {
+        let tray = {
             tray: el,
             header: header,
             body: body,
@@ -10718,7 +10718,7 @@ RED.tray = (function() {
                 el.width('auto');
             },
             drag: function(event,ui) {
-                var absolutePosition = editorStack.position().left+ui.position.left
+                let absolutePosition = editorStack.position().left+ui.position.left
                 if (absolutePosition < 7) {
                     ui.position.left += 7-absolutePosition;
                 }
@@ -10806,8 +10806,8 @@ RED.tray = (function() {
 
     function handleWindowResize() {
         if (stack.length > 0) {
-            var tray = stack[stack.length-1];
-            var trayHeight = tray.tray.height()-tray.header.outerHeight()-tray.footer.outerHeight();
+            let tray = stack[stack.length-1];
+            let trayHeight = tray.tray.height()-tray.header.outerHeight()-tray.footer.outerHeight();
             tray.body.height(trayHeight-40);
             if (tray.width > $("#editor-stack").position().left-8) {
                 tray.width = $("#editor-stack").position().left-8;
@@ -10832,7 +10832,7 @@ RED.tray = (function() {
             RED.events.on("sidebar:resize",handleWindowResize);
             $("#editor-shade").click(function() {
                 if (!openingTray) {
-                    var tray = stack[stack.length-1];
+                    let tray = stack[stack.length-1];
                     if (tray && tray.primaryButton) {
                         tray.primaryButton.click();
                     }
@@ -10841,7 +10841,7 @@ RED.tray = (function() {
         },
         show: function show(options) {
             if (stack.length > 0) {
-                var oldTray = stack[stack.length-1];
+                let oldTray = stack[stack.length-1];
                 oldTray.tray.css({
                     right: -(oldTray.tray.width()+10)+"px"
                 });
@@ -10889,23 +10889,23 @@ RED.notify = function(){};
 
 // Handles ctrl+click context menu for quick node insertion
 RED.typeSearch = (function() {
-    var shade;
-    var disabled = false;
-    var dialog = null;
-    var searchInput;
-    var searchResults;
-    var searchResultsDiv;
-    var selected = -1;
-    var visible = false;
+    let shade;
+    let disabled = false;
+    let dialog = null;
+    let searchInput;
+    let searchResults;
+    let searchResultsDiv;
+    let selected = -1;
+    let visible = false;
 
-    var activeFilter = "";
-    var addCallback;
+    let activeFilter = "";
+    let addCallback;
 
-    var typesUsed = {};
+    let typesUsed = {};
 
     function search(val) {
         activeFilter = val.toLowerCase();
-        var visible = searchResults.editableList('filter');
+        let visible = searchResults.editableList('filter');
         setTimeout(function() {
             selected = 0;
             searchResults.children().removeClass('selected');
@@ -10915,13 +10915,13 @@ RED.typeSearch = (function() {
     }
 
     function ensureSelectedIsVisible() {
-        var selectedEntry = searchResults.find("li.selected");
+        let selectedEntry = searchResults.find("li.selected");
         if (selectedEntry.length === 1) {
-            var scrollWindow = searchResults.parent();
-            var scrollHeight = scrollWindow.height();
-            var scrollOffset = scrollWindow.scrollTop();
-            var y = selectedEntry.position().top;
-            var h = selectedEntry.height();
+            let scrollWindow = searchResults.parent();
+            let scrollHeight = scrollWindow.height();
+            let scrollOffset = scrollWindow.scrollTop();
+            let y = selectedEntry.position().top;
+            let h = selectedEntry.height();
             if (y+h > scrollHeight) {
                 scrollWindow.animate({scrollTop: '-='+(scrollHeight-(y+h)-10)},50);
             } else if (y<0) {
@@ -10933,7 +10933,7 @@ RED.typeSearch = (function() {
     function createDialog() {
         //shade = $('<div>',{class:"red-ui-type-search-shade"}).appendTo("#main-container");
         dialog = $("<div>",{id:"red-ui-type-search",class:"red-ui-search red-ui-type-search"}).appendTo("#main-container");
-        var searchDiv = $("<div>",{class:"red-ui-search-container"}).appendTo(dialog);
+        let searchDiv = $("<div>",{class:"red-ui-search-container"}).appendTo(dialog);
         searchInput = $('<input type="text">').attr("placeholder",RED._("search.addNode")).appendTo(searchDiv).searchBox({
             delay: 50,
             change: function() {
@@ -10941,7 +10941,7 @@ RED.typeSearch = (function() {
             }
         });
         searchInput.on('keydown',function(evt) {
-            var children = searchResults.children(":visible");
+            let children = searchResults.children(":visible");
             if (children.length > 0) {
                 if (evt.keyCode === 40) {
                     // Down
@@ -10967,7 +10967,7 @@ RED.typeSearch = (function() {
                     evt.preventDefault();
                 } else if (evt.keyCode === 13) {
                     // Enter
-                    var index = Math.max(0,selected);
+                    let index = Math.max(0,selected);
                     if (index < children.length) {
                         // TODO: dips into editableList impl details
                         confirm($(children[index]).find(".red-ui-editableList-item-content").data('data'));
@@ -10989,16 +10989,16 @@ RED.typeSearch = (function() {
                 return (activeFilter==="")||(data.index.indexOf(activeFilter) > -1);
             },
             addItem: function(container,i,object) {
-                var def = object.def;
+                let def = object.def;
                 object.index = object.type.toLowerCase();
                 if (object.separator) {
                     container.addClass("red-ui-search-result-separator")
                 }
-                var div = $('<a>',{href:'#',class:"red-ui-search-result"}).appendTo(container);
+                let div = $('<a>',{href:'#',class:"red-ui-search-result"}).appendTo(container);
 
-                var nodeDiv = $('<div>',{class:"red-ui-search-result-node"}).appendTo(div);
-                var colour = def.color;
-                var icon_url = "arrow-in.png";
+                let nodeDiv = $('<div>',{class:"red-ui-search-result-node"}).appendTo(div);
+                let colour = def.color;
+                let icon_url = "arrow-in.png";
                 if (def.category === 'config') {
                     icon_url = "cog.png";
                 } else {
@@ -11010,7 +11010,7 @@ RED.typeSearch = (function() {
                 }
                 nodeDiv.css('backgroundColor',colour);
 
-                var iconContainer = $('<div/>',{class:"palette_icon_container"}).appendTo(nodeDiv);
+                let iconContainer = $('<div/>',{class:"palette_icon_container"}).appendTo(nodeDiv);
                 $('<div/>',{class:"palette_icon",style:`background-image: url(${baseURL}flows/icons/${icon_url})`}).appendTo(iconContainer);
 
                 if (def.inputs > 0) {
@@ -11020,9 +11020,9 @@ RED.typeSearch = (function() {
                     $('<div/>',{class:"red-ui-search-result-node-port red-ui-search-result-node-output"}).appendTo(nodeDiv);
                 }
 
-                var contentDiv = $('<div>',{class:"red-ui-search-result-description"}).appendTo(div);
+                let contentDiv = $('<div>',{class:"red-ui-search-result-description"}).appendTo(div);
 
-                var label = object.label;
+                let label = object.label;
                 object.index += "|"+label.toLowerCase();
 
                 $('<div>',{class:"red-ui-search-result-node-label"}).html(label).appendTo(contentDiv);
@@ -11044,7 +11044,7 @@ RED.typeSearch = (function() {
 
     function handleMouseActivity(evt) {
         if (visible) {
-            var t = $(evt.target);
+            let t = $(evt.target);
             while (t.prop('nodeName').toLowerCase() !== 'body') {
                 if (t.attr('id') === 'red-ui-type-search') {
                     return;
@@ -11101,7 +11101,7 @@ RED.typeSearch = (function() {
     }
 
     function getTypeLabel(type, def) {
-        var label = type;
+        let label = type;
         if (typeof def.paletteLabel !== "undefined") {
             try {
                 label = (typeof def.paletteLabel === "function" ? def.paletteLabel.call(def) : def.paletteLabel)||"";
@@ -11114,15 +11114,15 @@ RED.typeSearch = (function() {
     }
 
     function refreshTypeList() {
-        var i;
+        let i;
         searchResults.editableList('empty');
         searchInput.searchBox('value','');
         selected = -1;
-        var common = [
+        let common = [
             'inject','function','change','switch'
         ];
 
-        var recentlyUsed = Object.keys(typesUsed);
+        let recentlyUsed = Object.keys(typesUsed);
         recentlyUsed.sort(function(a,b) {
             return typesUsed[b]-typesUsed[a];
         });
@@ -11130,16 +11130,16 @@ RED.typeSearch = (function() {
             return common.indexOf(t) === -1;
         });
 
-        var items = [];
+        let items = [];
         RED.nodes.registry.getNodeTypes().forEach(function(t) {
-            var def = RED.nodes.getType(t);
+            let def = RED.nodes.getType(t);
             if (def.category !== 'config' && t !== 'unknown') {
                 items.push({type:t,def: def, label:getTypeLabel(t,def)});
             }
         });
         items.sort(function(a,b) {
-            var al = a.label.toLowerCase();
-            var bl = b.label.toLowerCase();
+            let al = a.label.toLowerCase();
+            let bl = b.label.toLowerCase();
             if (al < bl) {
                 return -1;
             } else if (al === bl) {
@@ -11149,8 +11149,8 @@ RED.typeSearch = (function() {
             }
         })
 
-        var commonCount = 0;
-        var item;
+        let commonCount = 0;
+        let item;
         for(i=0;i<common.length;i++) {
             item = {
                 type: common[i],
