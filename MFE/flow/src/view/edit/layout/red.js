@@ -230,7 +230,6 @@ RED.settings = (function () {
             },
             dataType: "json",
             cache: false,
-            //  url: 'http://localhost:1880/settings',
             url: `${baseURL}flows/settings`,
             success: function (data) {
                 setProperties(data);
@@ -997,7 +996,6 @@ RED.text.format = (function() {
                         dir = misc.getDirection(segments[i].content, dir, args.guiDir);
                     }
                     if ((/^(rtl|ltr)$/i).test(dir)) {
-                        //result += "<span style='unicode-bidi: embed; direction: " + (dir === "rtl" ? "rtl" : "ltr") + ";'>" + segments[i].content + "</span>";
                         result += "<bdi dir='" + (dir === "rtl" ? "rtl" : "ltr") + "'>" + segments[i].content + "</bdi>";
                         checkedDir = dir;
                     }
@@ -1564,7 +1562,6 @@ RED.text.format = (function() {
     }
 
     function attachElement(element, type, args, isRtl, locale) {
-        //if (!element || element.nodeType != 1 || !element.isContentEditable)
         if (!element || element.nodeType != 1) {
             return false;
         }
@@ -2881,17 +2878,6 @@ RED.nodes = (function() {
         RED.view.redraw(true);
         RED.palette.refresh();
         RED.workspaces.refresh();
-        // RED.sidebar.config.refresh();
-
-        // let node_defs = {};
-        // let nodes = [];
-        // let configNodes = {};
-        // let links = [];
-        // let defaultWorkspace;
-        // let workspaces = {};
-        // let workspacesOrder =[];
-        // let subflows = {};
-        // let loadedFlowVersion = null;
     }
 
     return {
@@ -3267,7 +3253,6 @@ RED.history = (function() {
             RED.view.redraw(true);
             RED.palette.refresh();
             RED.workspaces.refresh();
-            // RED.sidebar.config.refresh();
         }
 
     }
@@ -3806,9 +3791,6 @@ RED.utils = (function() {
             }
 
             this._resize();
-
-            // this.menu = this._createMenu(this.types, function(v) { that.type(v) });
-            // this.type(this.options.default||this.types[0].value);
         },
         _resize: function() {
             let currentFullHeight = this.topContainer.height();
@@ -4733,7 +4715,6 @@ RED.keyboard = (function() {
             }
             slot[key] = slot[key] || {};
             slot = slot[key];
-            //slot[key] = {scope: scope, ondown:cbdown};
         }
         slot.scope = scope;
         slot.ondown = cbdown;
@@ -4908,7 +4889,6 @@ RED.workspaces = (function() {
         historyEvent.workspaces = [ws];
         RED.history.push(historyEvent);
         RED.nodes.dirty(true);
-        // RED.sidebar.config.refresh();
     }
 
     function showRenameWorkspaceDialog(id) {
@@ -4920,7 +4900,7 @@ RED.workspaces = (function() {
                 {
                     id: "node-dialog-delete",
                     class: 'leftButton'+((workspace_tabs.count() == 1)?" disabled":""),
-                    text: RED._("common.label.delete"), //'<i class="fa fa-trash"></i>',
+                    text: RED._("common.label.delete"),
                     click: function() {
                         deleteWorkspace(workspace);
                         RED.tray.close();
@@ -4953,7 +4933,6 @@ RED.workspaces = (function() {
                             RED.history.push(historyEvent);
                             workspace_tabs.renameTab(workspace.id,label);
                             RED.nodes.dirty(true);
-                            // RED.sidebar.config.refresh();
                         }
                         RED.tray.close();
                     }
@@ -5003,10 +4982,8 @@ RED.workspaces = (function() {
                 }
             },
             onadd: function(tab) {
-                // RED.menu.setDisabled("menu-item-workspace-delete",workspace_tabs.count() == 1);
             },
             onremove: function(tab) {
-                // RED.menu.setDisabled("menu-item-workspace-delete",workspace_tabs.count() == 1);
             },
             onreorder: function(oldOrder, newOrder) {
                 RED.history.push({t:'reorder',order:oldOrder,dirty:RED.nodes.dirty()});
@@ -5023,20 +5000,10 @@ RED.workspaces = (function() {
     function init() {
         createWorkspaceTabs();
         RED.events.on("sidebar:resize",workspace_tabs.resize);
-        // RED.actions.add("core:show-next-tab",workspace_tabs.nextTab);
-        // RED.actions.add("core:show-previous-tab",workspace_tabs.previousTab);
-
-        // RED.menu.setAction('menu-item-workspace-delete',function() {
-        //     deleteWorkspace(RED.nodes.workspace(activeWorkspace));
-        // });
 
         $(window).resize(function() {
             workspace_tabs.resize();
         });
-
-        // RED.actions.add("core:add-flow",addWorkspace);
-        // RED.actions.add("core:edit-flow",editWorkspace);
-        // RED.actions.add("core:remove-flow",removeWorkspace);
 
     }
 
@@ -5232,17 +5199,6 @@ RED.view = (function() {
                     touchStartTime = setTimeout(function() {
                         touchStartTime = null;
                         showTouchMenu(obj,pos);
-                        //lasso = vis.append("rect")
-                        //    .attr("ox",point[0])
-                        //    .attr("oy",point[1])
-                        //    .attr("rx",2)
-                        //    .attr("ry",2)
-                        //    .attr("x",point[0])
-                        //    .attr("y",point[1])
-                        //    .attr("width",0)
-                        //    .attr("height",0)
-                        //    .attr("class","lasso");
-                        //outer_background.attr("fill","#e3e3f3");
                     },touchLongPressTimeout);
                 }
             })
@@ -5722,15 +5678,6 @@ RED.view = (function() {
         let i;
         let node;
         mouse_position = d3.touches(this)[0]||d3.mouse(this);
-        // Prevent touch scrolling...
-        //if (d3.touches(this)[0]) {
-        //    d3.event.preventDefault();
-        //}
-
-        // TODO: auto scroll the container
-        //let point = d3.mouse(this);
-        //if (point[0]-container.scrollLeft < 30 && container.scrollLeft > 0) { container.scrollLeft -= 15; }
-        //console.log(d3.mouse(this),container.offsetWidth,container.offsetHeight,container.scrollLeft,container.scrollTop);
 
         if (lasso) {
             let ox = parseInt(lasso.attr("ox"));
@@ -6207,14 +6154,11 @@ RED.view = (function() {
                     }
                 });
                 let offFlows = Object.keys(offFlowLinks);
-                // offFlows.sort(function(A,B) {
-                //     return tabOrder.indexOf(A) - tabOrder.indexOf(B);
-                // });
                 if (offFlows.length > 0) {
                     activeFlowLinks.push({
                         refresh: Math.floor(Math.random()*10000),
                         node: linkNode,
-                        links: offFlowLinks//offFlows.map(function(i) { return {id:i,links:offFlowLinks[i]};})
+                        links: offFlowLinks
                     });
                 }
             }
@@ -6333,10 +6277,6 @@ RED.view = (function() {
                         removedLinks = removedLinks.concat(result.links);
                     }
                 }
-                // let instances = RED.subflow.refresh(true);
-                // if (instances) {
-                //     subflowInstances = instances.instances;
-                // }
                 moving_set = [];
                 if (removedNodes.length > 0 || removedSubflowOutputs.length > 0 || removedSubflowInputs.length > 0) {
                     RED.nodes.dirty(true);
@@ -6433,9 +6373,6 @@ RED.view = (function() {
     }
 
     function portMouseDown(d,portType,portIndex) {
-        //console.log(d,portType,portIndex);
-        // disable zoom
-        //vis.call(d3.behavior.zoom().on("zoom"), null);
         mousedown_node = d;
         mousedown_port_type = portType;
         mousedown_port_index = portIndex || 0;
@@ -6567,9 +6504,6 @@ RED.view = (function() {
 
     function nodeMouseDown(d) {
         focusView();
-        //let touch0 = d3.event;
-        //let pos = [touch0.pageX,touch0.pageY];
-        //RED.touch.radialMenu.show(d3.select(this),pos);
         if (mouse_mode == RED.state.IMPORT_DRAGGING) {
             RED.keyboard.remove("escape");
 
@@ -6868,7 +6802,7 @@ RED.view = (function() {
                         .attr("ry",5)
                         .attr("width",32)
                         .attr("height",node_height-4)
-                        .attr("fill","#eee");//function(d) { return d._def.color;})
+                        .attr("fill","#eee");
                     nodeButtonGroup.append("rect")
                         .attr("class","node_button_button")
                         .attr("x",function(d) { return d._def.align == "right"? 11:5})
@@ -6932,9 +6866,6 @@ RED.view = (function() {
                         node.classed("node_hovered",false);
                     });
 
-                //node.append("rect").attr("class", "node-gradient-top").attr("rx", 6).attr("ry", 6).attr("height",30).attr("stroke","none").attr("fill","url(#gradient-top)").style("pointer-events","none");
-                //node.append("rect").attr("class", "node-gradient-bottom").attr("rx", 6).attr("ry", 6).attr("height",30).attr("stroke","none").attr("fill","url(#gradient-bottom)").style("pointer-events","none");
-
                 if (d._def.icon) {
 
                     let icon_group = node.append("g")
@@ -6967,19 +6898,7 @@ RED.view = (function() {
                     if ("right" == d._def.align) {
                         icon_group.attr("class","node_icon_group node_icon_group_"+d._def.align);
                         icon_shade_border.attr("d",function(d) { return "M 0 1 l 0 "+(d.h-2)})
-                        //icon.attr("class","node_icon node_icon_"+d._def.align);
-                        //icon.attr("class","node_icon_shade node_icon_shade_"+d._def.align);
-                        //icon.attr("class","node_icon_shade_border node_icon_shade_border_"+d._def.align);
                     }
-
-                    //if (d.inputs > 0 && d._def.align == null) {
-                    //    icon_shade.attr("width",35);
-                    //    icon.attr("transform","translate(5,0)");
-                    //    icon_shade_border.attr("transform","translate(5,0)");
-                    //}
-                    //if (d._def.outputs > 0 && "right" == d._def.align) {
-                    //    icon_shade.attr("width",35); //icon.attr("x",5);
-                    //}
 
                     let img = new Image();
                     img.src = `${baseURL}flows/icons/${d._def.icon}`;
@@ -6987,14 +6906,7 @@ RED.view = (function() {
                         icon.attr("width",Math.min(img.width,30));
                         icon.attr("height",Math.min(img.height,30));
                         icon.attr("x",15-Math.min(img.width,30)/2);
-                        //if ("right" == d._def.align) {
-                        //    icon.attr("x",function(d){return d.w-img.width-1-(d.outputs>0?5:0);});
-                        //    icon_shade.attr("x",function(d){return d.w-30});
-                        //    icon_shade_border.attr("d",function(d){return "M "+(d.w-30)+" 1 l 0 "+(d.h-2);});
-                        //}
                     }
-
-                    //icon.style("pointer-events","none");
                     icon_group.style("pointer-events","none");
                 }
                 if (!isLink) {
@@ -7016,9 +6928,8 @@ RED.view = (function() {
                         .attr("class","node_status_label")
                         .attr("x",20).attr("y",9);
                 }
-                //node.append("circle").attr({"class":"centerDot","cx":0,"cy":0,"r":5});
 
-                //node.append("path").attr("class","node_error").attr("d","M 3,-3 l 10,0 l -5,-8 z");
+
                 node.append("image").attr("class","node_error hidden").attr("xlink:href",`${baseURL}flows/icons/node-error.png`).attr("x",0).attr("y",-6).attr("width",10).attr("height",9);
                 node.append("image").attr("class","node_changed hidden").attr("xlink:href",`${baseURL}flows/icons/node-changed.png`).attr("x",12).attr("y",-6).attr("width",10).attr("height",10);
             });
@@ -7027,7 +6938,6 @@ RED.view = (function() {
                 if (d.dirty) {
                     let isLink = d.type === "link in" || d.type === "link out";
                     dirtyNodes[d.id] = d;
-                    //if (d.x < -50) deleteSelection();  // Delete nodes if dragged back to palette
                     if (!isLink && d.resize) {
                         let l = d._def.label;
                         try {
@@ -7043,7 +6953,6 @@ RED.view = (function() {
                         d.resize = false;
                     }
                     let thisNode = d3.select(this);
-                    //thisNode.selectAll(".centerDot").attr({"cx":function(d) { return d.w/2;},"cy":function(d){return d.h/2}});
                     thisNode.attr("transform", function(d) { return "translate(" + (d.x-d.w/2) + "," + (d.y-d.h/2) + ")"; });
 
                     if (mouse_mode != RED.state.MOVING_ACTIVE) {
@@ -7053,19 +6962,13 @@ RED.view = (function() {
                             .classed("node_selected",function(d) { return d.selected; })
                             .classed("node_highlighted",function(d) { return d.highlighted; })
                         ;
-                        //thisNode.selectAll(".node-gradient-top").attr("width",function(d){return d.w});
-                        //thisNode.selectAll(".node-gradient-bottom").attr("width",function(d){return d.w}).attr("y",function(d){return d.h-30});
 
                         thisNode.selectAll(".node_icon_group_right").attr("transform", function(d){return "translate("+(d.w-30)+",0)"});
                         thisNode.selectAll(".node_label_right").attr("x", function(d){return d.w-38});
-                        //thisNode.selectAll(".node_icon_right").attr("x",function(d){return d.w-d3.select(this).attr("width")-1-(d.outputs>0?5:0);});
-                        //thisNode.selectAll(".node_icon_shade_right").attr("x",function(d){return d.w-30;});
-                        //thisNode.selectAll(".node_icon_shade_border_right").attr("d",function(d){return "M "+(d.w-30)+" 1 l 0 "+(d.h-2)});
 
                         let inputPorts = thisNode.selectAll(".port_input");
                         if (d.inputs === 0 && !inputPorts.empty()) {
                             inputPorts.remove();
-                            //nodeLabel.attr("x",30);
                         } else if (d.inputs === 1 && inputPorts.empty()) {
                             let inputGroup = thisNode.append("g").attr("class","port_input");
                             inputGroup.append("rect").attr("class","port").attr("rx",3).attr("ry",3).attr("width",10).attr("height",10)
@@ -7098,7 +7001,6 @@ RED.view = (function() {
                             let x = d.w - 5;
                             d._ports.each(function(d,i) {
                                 let port = d3.select(this);
-                                //port.attr("y",(y+13*i)-5).attr("x",x);
                                 port.attr("transform", function(d) { return "translate("+x+","+((y+13*i)-5)+")";});
                             });
                         }
@@ -7198,10 +7100,6 @@ RED.view = (function() {
                             }
                             return 1;
                         });
-
-                        //thisNode.selectAll(".node_right_button").attr("transform",function(d){return "translate("+(d.w - d._def.button.width.call(d))+","+0+")";}).attr("fill",function(d) {
-                        //         return typeof d._def.button.color  === "function" ? d._def.button.color.call(d):(d._def.button.color != null ? d._def.button.color : d._def.color)
-                        //});
 
                         thisNode.selectAll(".node_badge_group").attr("transform",function(d){return "translate("+(d.w-40)+","+(d.h+3)+")";});
                         thisNode.selectAll("text.node_badge_label").text(function(d,i) {
@@ -7732,16 +7630,12 @@ RED.view = (function() {
                         flashFunc();
                     }
                 } else if (node._def.category === 'config') {
-                    // RED.sidebar.config.show(id);
                 }
             }
         }
 
     };
 })();
-
-// Handles the static sidebar used to display, node help, debug and general node-red options
-// RED.sidebar is not needed
 
 RED.palette = (function() {
 
@@ -7841,8 +7735,6 @@ RED.palette = (function() {
             console.log(err.toString());
             popOverContent = "<p><b>"+label+"</b></p><p>"+RED._("palette.noInfo")+"</p>";
         }
-
-        // el.data('popover').setContent(popOverContent);
     }
 
     function escapeNodeType(nt) {
@@ -7919,15 +7811,6 @@ RED.palette = (function() {
             $("#palette-"+category).append(d);
             d.onmousedown = function(e) { e.preventDefault(); };
 
-            // $(d).popover({
-            //     title:d.type,
-            //     placement:"right",
-            //     trigger: "hover",
-            //     delay: { show: 750, hide: 50 },
-            //     html: true,
-            //     container:'body'
-            // });
-
             $(d).click(function() {
                 RED.view.focus();
                 let helpText;
@@ -7937,7 +7820,6 @@ RED.palette = (function() {
                     helpText = $("script[data-help-name$='"+d.type+"']").html()||"";
                 }
                 let help = '<div class="node-help">'+helpText+"</div>";
-                // RED.sidebar.info.set(help);
             });
             let chart = $("#chart");
             let chartOffset = chart.offset();
@@ -7958,7 +7840,6 @@ RED.palette = (function() {
 
                     // TODO: this is the margin-left of palette node. Hard coding
                     // it here makes me sad
-                    //console.log(ui.helper.position());
                     ui.position.left += 17.5;
 
                     if (def.inputs > 0 && def.outputs > 0) {
@@ -8154,14 +8035,6 @@ RED.palette = (function() {
                 }
             }
         });
-
-        // $("#palette > .palette-spinner").attr("style", "display: block !important");
-        // $("#palette-search input").searchBox({
-        //     delay: 100,
-        //     change: function() {
-        //         filterChange($(this).val());
-        //     }
-        // })
 
         let categoryList = coreCategories;
         if (RED.settings.paletteCategories) {
@@ -9851,9 +9724,6 @@ RED.editor = (function() {
                 }
             },
             open: function(tray,done) {
-                if (editing_node) {
-                    // RED.sidebar.info.refresh(editing_node);
-                }
                 let ns;
                 if (node._def.set.module === "node-red") {
                     ns = "node-red";
@@ -9871,16 +9741,12 @@ RED.editor = (function() {
                 if (RED.view.state() != RED.state.IMPORT_DRAGGING) {
                     RED.view.state(RED.state.DEFAULT);
                 }
-                if (editing_node) {
-                    // RED.sidebar.info.refresh(editing_node);
-                }
                 RED.workspaces.refresh();
                 RED.view.redraw(true);
                 editStack.pop();
             },
             show: function() {
                 if (editing_node) {
-                    // RED.sidebar.info.refresh(editing_node);
                 }
             }
         }
@@ -10026,7 +9892,6 @@ RED.editor = (function() {
             },
             show: function() {
                 if (editing_config_node) {
-                    // RED.sidebar.info.refresh(editing_config_node);
                 }
             }
         }
@@ -10397,9 +10262,6 @@ RED.editor = (function() {
                 subflowEditor.resize();
             },
             open: function(tray) {
-                if (editing_node) {
-                    // RED.sidebar.info.refresh(editing_node);
-                }
                 let dialogForm = buildEditForm(tray,"dialog-form","subflow-template");
                 subflowEditor = RED.editor.createEditor({
                     id: 'subflow-input-info-editor',
@@ -10425,7 +10287,6 @@ RED.editor = (function() {
                 if (RED.view.state() != RED.state.IMPORT_DRAGGING) {
                     RED.view.state(RED.state.DEFAULT);
                 }
-                // RED.sidebar.info.refresh(editing_node);
                 RED.workspaces.refresh();
                 editStack.pop();
                 editing_node = null;
@@ -10546,7 +10407,6 @@ RED.editor = (function() {
                                     if (next) {
                                         if (type === 'keyword') {
                                             scopedFunction = rowTokens[p];
-                                            // console.log("HIT",scopedFunction);
                                             break;
                                         }
                                         next = false;
@@ -10560,7 +10420,6 @@ RED.editor = (function() {
                                         next = true;
                                         depth = 0;
                                     }
-                                    // console.log(r,p,depth,next,rowTokens[p]);
                                     p--;
                                 }
                                 if (!scopedFunction) {
@@ -10570,7 +10429,6 @@ RED.editor = (function() {
                         }
                         expressionEditor.session.removeMarker(currentFunctionMarker);
                         if (scopedFunction) {
-                            //console.log(token,.map(function(t) { return t.type}));
                             funcSelect.val(scopedFunction.value).change();
                         }
                     }
@@ -10781,7 +10639,6 @@ RED.tray = (function() {
                         options.resize({width:el.width()});
                     }
                     if (options.show) {
-                        // options.attr("style", "display: block !important");
                     }
                     setTimeout(function() {
                         // Delay resetting the flag, so we don't close prematurely
@@ -10813,11 +10670,9 @@ RED.tray = (function() {
             if (tray.width > $("#editor-stack").position().left-8) {
                 tray.width = $("#editor-stack").position().left-8;
                 tray.tray.width(tray.width);
-                // tray.body.parent().width(tray.width);
             } else if (tray.width < tray.preferredWidth) {
                 tray.width = Math.min($("#editor-stack").position().left-8,tray.preferredWidth);
                 tray.tray.width(tray.width);
-                // tray.body.parent().width(tray.width);
             }
             if (tray.options.resize) {
                 tray.options.resize({width:tray.width});
@@ -10932,7 +10787,6 @@ RED.typeSearch = (function() {
     }
 
     function createDialog() {
-        //shade = $('<div>',{class:"red-ui-type-search-shade"}).appendTo("#main-container");
         dialog = $("<div>",{id:"red-ui-type-search",class:"red-ui-search red-ui-type-search"}).appendTo("#main-container");
         let searchDiv = $("<div>",{class:"red-ui-search-container"}).appendTo(dialog);
         searchInput = $('<input type="text">').attr("placeholder",RED._("search.addNode")).appendTo(searchDiv).searchBox({
@@ -11074,7 +10928,6 @@ RED.typeSearch = (function() {
         refreshTypeList();
         addCallback = opts.add;
         RED.events.emit("type-search:open");
-        //shade.attr("style", "display: block !important");
         dialog.css({left:opts.x+"px",top:opts.y+"px"}).attr("style", "display: block !important");
         searchResultsDiv.slideDown(300);
         setTimeout(function() {
@@ -11091,7 +10944,6 @@ RED.typeSearch = (function() {
                     dialog.hide();
                     searchInput.searchBox('value','');
                 });
-                //shade.hide();
             }
             RED.events.emit("type-search:close");
             RED.view.focus();
@@ -11192,9 +11044,5 @@ RED.typeSearch = (function() {
     };
 
 })();
-
-// RED.subflow is not needed | TODO: implement flow reuse scheme
-// RED.touch is not needed | TODO:check viability for touch based devices (tablets)
-
 
 export default RED;
