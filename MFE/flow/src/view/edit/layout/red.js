@@ -2272,22 +2272,22 @@ RED.nodes = (function() {
         }
         let nns = [];
         let i;
-        for (i=0;i<workspacesOrder.length;i++) {
+        for (let i=0;i<workspacesOrder.length;i++) {
             if (workspaces[workspacesOrder[i]].type == "tab") {
                 nns.push(convertWorkspace(workspaces[workspacesOrder[i]]));
             }
         }
-        for (i in subflows) {
+        for (let i in subflows) {
             if (subflows.hasOwnProperty(i)) {
                 nns.push(convertSubflow(subflows[i]));
             }
         }
-        for (i in configNodes) {
+        for (let i in configNodes) {
             if (configNodes.hasOwnProperty(i)) {
                 nns.push(convertNode(configNodes[i], exportCredentials));
             }
         }
-        for (i=0;i<nodes.length;i++) {
+        for (let i=0;i<nodes.length;i++) {
             let node = nodes[i];
             nns.push(convertNode(node, exportCredentials));
         }
@@ -2316,7 +2316,7 @@ RED.nodes = (function() {
                 let exportableSubflowNodes = JSON.stringify(subflowNodeSet);
                 let exportableSFNodes = JSON.stringify(createExportableNodeSet(sfNodeSet));
                 let nodeMap = {};
-                for (i=0;i<sfNodes.length;i++) {
+                for (let i=0;i<sfNodes.length;i++) {
                     exportableSubflowNodes = exportableSubflowNodes.replace(new RegExp("\""+subflowNodes[i].id+"\"","g"),'"'+sfNodes[i].id+'"');
                 }
                 exportableSubflowNodes = exportableSubflowNodes.replace(new RegExp("\""+subflow.id+"\"","g"),'"'+sf.id+'"');
@@ -2389,7 +2389,7 @@ RED.nodes = (function() {
             initialLoad = JSON.parse(JSON.stringify(newNodes));
         }
         let unknownTypes = [];
-        for (i=0;i<newNodes.length;i++) {
+        for (let i=0;i<newNodes.length;i++) {
             n = newNodes[i];
             // TODO: remove workspace in next release+1
             if (n.type != "workspace" &&
@@ -2416,7 +2416,7 @@ RED.nodes = (function() {
         let activeWorkspace = RED.workspaces.active();
         //TODO: check the z of the subflow instance and check _that_ if it exists
         let activeSubflow = getSubflow(activeWorkspace);
-        for (i=0;i<newNodes.length;i++) {
+        for (let i=0;i<newNodes.length;i++) {
             let m = /^subflow:(.+)$/.exec(newNodes[i].type);
             if (m) {
                 let subflowId = m[1];
@@ -2453,7 +2453,7 @@ RED.nodes = (function() {
         let d;
 
         // Find all tabs and subflow templates
-        for (i=0;i<newNodes.length;i++) {
+        for (let i=0;i<newNodes.length;i++) {
             n = newNodes[i];
             // TODO: remove workspace in next release+1
             if (n.type === "workspace" || n.type === "tab") {
@@ -2513,7 +2513,7 @@ RED.nodes = (function() {
         }
 
         // Find all config nodes and add them
-        for (i=0;i<newNodes.length;i++) {
+        for (let i=0;i<newNodes.length;i++) {
             n = newNodes[i];
             def = registry.getNodeType(n.type);
             if (def && def.category == "config") {
@@ -2560,7 +2560,7 @@ RED.nodes = (function() {
 
                 if (!existingConfigNode) { //} || !compareNodes(existingConfigNode,n,true) || existingConfigNode._def.exclusive || existingConfigNode.z !== n.z) {
                     configNode = {id:n.id, z:n.z, type:n.type, users:[], _config:{}};
-                    for (d in def.defaults) {
+                    for (let d in def.defaults) {
                         if (def.defaults.hasOwnProperty(d)) {
                             configNode[d] = n[d];
                             configNode._config[d] = JSON.stringify(n[d]);
@@ -2568,7 +2568,7 @@ RED.nodes = (function() {
                     }
                     if (def.hasOwnProperty('credentials') && n.hasOwnProperty('credentials')) {
                         configNode.credentials = {};
-                        for (d in def.credentials) {
+                        for (let d in def.credentials) {
                             if (def.credentials.hasOwnProperty(d) && n.credentials.hasOwnProperty(d)) {
                                 configNode.credentials[d] = n.credentials[d];
                             }
@@ -2587,7 +2587,7 @@ RED.nodes = (function() {
         }
 
         // Find regular flow nodes and subflow instances
-        for (i=0;i<newNodes.length;i++) {
+        for (let i=0;i<newNodes.length;i++) {
             n = newNodes[i];
             // TODO: remove workspace in next release+1
             if (n.type !== "workspace" && n.type !== "tab" && n.type !== "subflow") {
@@ -2673,7 +2673,7 @@ RED.nodes = (function() {
                         if (node._def.category != "config") {
                             node.inputs = n.inputs||node._def.inputs;
                             node.outputs = n.outputs||node._def.outputs;
-                            for (d in node._def.defaults) {
+                            for (let d in node._def.defaults) {
                                 if (node._def.defaults.hasOwnProperty(d)) {
                                     node[d] = n[d];
                                     node._config[d] = JSON.stringify(n[d]);
@@ -2683,7 +2683,7 @@ RED.nodes = (function() {
                             node._config.y = node.y;
                             if (node._def.hasOwnProperty('credentials') && n.hasOwnProperty('credentials')) {
                                 node.credentials = {};
-                                for (d in node._def.credentials) {
+                                for (let d in node._def.credentials) {
                                     if (node._def.credentials.hasOwnProperty(d) && n.credentials.hasOwnProperty(d)) {
                                         node.credentials[d] = n.credentials[d];
                                     }
@@ -2710,7 +2710,7 @@ RED.nodes = (function() {
         }
 
         // Remap all wires and config node references
-        for (i=0;i<new_nodes.length;i++) {
+        for (let i=0;i<new_nodes.length;i++) {
             n = new_nodes[i];
             if (n.wires) {
                 for (let w1=0;w1<n.wires.length;w1++) {
@@ -2760,7 +2760,7 @@ RED.nodes = (function() {
             // we can validate the node
             RED.editor.validateNode(n);
         }
-        for (i=0;i<new_subflows.length;i++) {
+        for (let i=0;i<new_subflows.length;i++) {
             n = new_subflows[i];
             n.in.forEach(function(input) {
                 input.wires.forEach(function(wire) {
@@ -2998,7 +2998,7 @@ RED.history = (function() {
         if (ev) {
             if (ev.t == 'multi') {
                 len = ev.events.length;
-                for (i=len-1;i>=0;i--) {
+                for (let i=len-1;i>=0;i--) {
                     undoEvent(ev.events[i]);
                 }
             } else if (ev.t == 'replace') {
@@ -3013,7 +3013,7 @@ RED.history = (function() {
                 RED.nodes.version(ev.rev);
             } else if (ev.t == 'add') {
                 if (ev.nodes) {
-                    for (i=0;i<ev.nodes.length;i++) {
+                    for (let i=0;i<ev.nodes.length;i++) {
                         node = RED.nodes.node(ev.nodes[i]);
                         if (node.z) {
                             modifiedTabs[node.z] = true;
@@ -3022,18 +3022,18 @@ RED.history = (function() {
                     }
                 }
                 if (ev.links) {
-                    for (i=0;i<ev.links.length;i++) {
+                    for (let i=0;i<ev.links.length;i++) {
                         RED.nodes.removeLink(ev.links[i]);
                     }
                 }
                 if (ev.workspaces) {
-                    for (i=0;i<ev.workspaces.length;i++) {
+                    for (let i=0;i<ev.workspaces.length;i++) {
                         RED.nodes.removeWorkspace(ev.workspaces[i].id);
                         RED.workspaces.remove(ev.workspaces[i]);
                     }
                 }
                 if (ev.subflows) {
-                    for (i=0;i<ev.subflows.length;i++) {
+                    for (let i=0;i<ev.subflows.length;i++) {
                         RED.nodes.removeSubflow(ev.subflows[i]);
                         RED.workspaces.remove(ev.subflows[i]);
                     }
@@ -3056,14 +3056,14 @@ RED.history = (function() {
                     }
                 }
                 if (ev.removedLinks) {
-                    for (i=0;i<ev.removedLinks.length;i++) {
+                    for (let i=0;i<ev.removedLinks.length;i++) {
                         RED.nodes.addLink(ev.removedLinks[i]);
                     }
                 }
 
             } else if (ev.t == "delete") {
                 if (ev.workspaces) {
-                    for (i=0;i<ev.workspaces.length;i++) {
+                    for (let i=0;i<ev.workspaces.length;i++) {
                         RED.nodes.addWorkspace(ev.workspaces[i]);
                         RED.workspaces.add(ev.workspaces[i]);
                     }
@@ -3079,7 +3079,7 @@ RED.history = (function() {
                 if (ev.subflowOutputs && ev.subflowOutputs.length > 0) {
                     subflow = RED.nodes.subflow(ev.subflowOutputs[0].z);
                     ev.subflowOutputs.sort(function(a,b) { return a.i-b.i});
-                    for (i=0;i<ev.subflowOutputs.length;i++) {
+                    for (let i=0;i<ev.subflowOutputs.length;i++) {
                         let output = ev.subflowOutputs[i];
                         subflow.out.splice(output.i,0,output);
                         for (let j=output.i+1;j<subflow.out.length;j++) {
@@ -3116,18 +3116,18 @@ RED.history = (function() {
                     });
                 }
                 if (ev.nodes) {
-                    for (i=0;i<ev.nodes.length;i++) {
+                    for (let i=0;i<ev.nodes.length;i++) {
                         RED.nodes.add(ev.nodes[i]);
                         modifiedTabs[ev.nodes[i].z] = true;
                     }
                 }
                 if (ev.links) {
-                    for (i=0;i<ev.links.length;i++) {
+                    for (let i=0;i<ev.links.length;i++) {
                         RED.nodes.addLink(ev.links[i]);
                     }
                 }
                 if (ev.changes) {
-                    for (i in ev.changes) {
+                    for (let i in ev.changes) {
                         if (ev.changes.hasOwnProperty(i)) {
                             node = RED.nodes.node(i);
                             if (node) {
@@ -3143,7 +3143,7 @@ RED.history = (function() {
 
                 }
             } else if (ev.t == "move") {
-                for (i=0;i<ev.nodes.length;i++) {
+                for (let i=0;i<ev.nodes.length;i++) {
                     let n = ev.nodes[i];
                     n.n.x = n.ox;
                     n.n.y = n.oy;
@@ -3152,17 +3152,17 @@ RED.history = (function() {
                 }
                 // A move could have caused a link splice
                 if (ev.links) {
-                    for (i=0;i<ev.links.length;i++) {
+                    for (let i=0;i<ev.links.length;i++) {
                         RED.nodes.removeLink(ev.links[i]);
                     }
                 }
                 if (ev.removedLinks) {
-                    for (i=0;i<ev.removedLinks.length;i++) {
+                    for (let i=0;i<ev.removedLinks.length;i++) {
                         RED.nodes.addLink(ev.removedLinks[i]);
                     }
                 }
             } else if (ev.t == "edit") {
-                for (i in ev.changes) {
+                for (let i in ev.changes) {
                     if (ev.changes.hasOwnProperty(i)) {
                         if (ev.node._def.defaults[i].type) {
                             // This is a config node property
@@ -3221,7 +3221,7 @@ RED.history = (function() {
                     RED.editor.validateNode(ev.node);
                 }
                 if (ev.links) {
-                    for (i=0;i<ev.links.length;i++) {
+                    for (let i=0;i<ev.links.length;i++) {
                         RED.nodes.addLink(ev.links[i]);
                     }
                 }
@@ -3233,12 +3233,12 @@ RED.history = (function() {
                         n.z = ev.activeWorkspace;
                         n.dirty = true;
                     });
-                    for (i=0;i<ev.nodes.length;i++) {
+                    for (let i=0;i<ev.nodes.length;i++) {
                         RED.nodes.remove(ev.nodes[i]);
                     }
                 }
                 if (ev.links) {
-                    for (i=0;i<ev.links.length;i++) {
+                    for (let i=0;i<ev.links.length;i++) {
                         RED.nodes.removeLink(ev.links[i]);
                     }
                 }
@@ -3247,7 +3247,7 @@ RED.history = (function() {
                 RED.workspaces.remove(ev.subflow.subflow);
 
                 if (ev.removedLinks) {
-                    for (i=0;i<ev.removedLinks.length;i++) {
+                    for (let i=0;i<ev.removedLinks.length;i++) {
                         RED.nodes.addLink(ev.removedLinks[i]);
                     }
                 }
@@ -3492,12 +3492,12 @@ RED.utils = (function() {
                     }
                     let row;
                     if (fullLength <= 10) {
-                        for (i=0;i<fullLength;i++) {
+                        for (let i=0;i<fullLength;i++) {
                             row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(arrayRows);
                             buildMessageElement(data[i],""+i,false).appendTo(row);
                         }
                     } else {
-                        for (i=0;i<fullLength;i+=10) {
+                        for (let i=0;i<fullLength;i+=10) {
                             let minRange = i;
                             row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(arrayRows);
                             header = $('<span></span>').appendTo(row);
@@ -3527,7 +3527,7 @@ RED.utils = (function() {
                 headerHead = $('<span class="debug-message-object-header"></span>').appendTo(entryObj);
                 $('<span>[ </span>').appendTo(headerHead);
                 let arrayLength = Math.min(originalLength,10);
-                for (i=0;i<arrayLength;i++) {
+                for (let i=0;i<arrayLength;i++) {
                     buildMessageSummaryValue(data[i]).appendTo(headerHead);
                     if (i < arrayLength-1) {
                         $('<span>, </span>').appendTo(headerHead);
@@ -3551,7 +3551,7 @@ RED.utils = (function() {
                     if (!key) {
                         $('<span class="debug-message-type-meta debug-message-object-type-header"></span>').html('object').appendTo(header);
                     }
-                    for (i=0;i<keys.length;i++) {
+                    for (let i=0;i<keys.length;i++) {
                         let row = $('<div class="debug-message-object-entry collapsed"></div>').appendTo(element);
                         buildMessageElement(obj[keys[i]],keys[i],false).appendTo(row);
                     }
@@ -3566,7 +3566,7 @@ RED.utils = (function() {
                 headerHead = $('<span class="debug-message-object-header"></span>').appendTo(entryObj);
                 $('<span>{ </span>').appendTo(headerHead);
                 let keysLength = Math.min(keys.length,5);
-                for (i=0;i<keysLength;i++) {
+                for (let i=0;i<keysLength;i++) {
                     $('<span class="debug-message-object-key"></span>').text(keys[i]).appendTo(headerHead);
                     $('<span>: </span>').appendTo(headerHead);
                     buildMessageSummaryValue(obj[keys[i]]).appendTo(headerHead);
@@ -4703,7 +4703,7 @@ RED.keyboard = (function() {
                 actionToKeyMap[cbdown] = {scope:scope,key:key};
             }
             let parts = key.split(" ");
-            for (i=0;i<parts.length;i++) {
+            for (let i=0;i<parts.length;i++) {
                 let parsedKey = parseKeySpecifier(parts[i]);
                 if (parsedKey) {
                     keys.push(parsedKey);
@@ -4716,7 +4716,7 @@ RED.keyboard = (function() {
             keys.push([key,mod])
         }
         let slot = handlers;
-        for (i=0;i<keys.length;i++) {
+        for (let i=0;i<keys.length;i++) {
             key = keys[i][0];
             mod = keys[i][1];
             if (mod.ctrl) {
@@ -4746,7 +4746,7 @@ RED.keyboard = (function() {
         if (typeof key === 'string') {
             delete actionToKeyMap[key];
             let parts = key.split(" ");
-            for (i=0;i<parts.length;i++) {
+            for (let i=0;i<parts.length;i++) {
                 let parsedKey = parseKeySpecifier(parts[i]);
                 if (parsedKey) {
                     keys.push(parsedKey);
@@ -4759,7 +4759,7 @@ RED.keyboard = (function() {
             keys.push([key,mod])
         }
         let slot = handlers;
-        for (i=0;i<keys.length;i++) {
+        for (let i=0;i<keys.length;i++) {
             key = keys[i][0];
             mod = keys[i][1];
             if (mod.ctrl) {
@@ -5796,7 +5796,7 @@ RED.view = (function() {
                         }
                         existingLinks = RED.nodes.filterLinks(filter);
                     }
-                    for (i=0;i<existingLinks.length;i++) {
+                    for (let i=0;i<existingLinks.length;i++) {
                         let link = existingLinks[i];
                         RED.nodes.removeLink(link);
                         links.push({
@@ -5822,7 +5822,7 @@ RED.view = (function() {
                 selected_link = null;
             }
             mousePos = mouse_position;
-            for (i=0;i<drag_lines.length;i++) {
+            for (let i=0;i<drag_lines.length;i++) {
                 let drag_line = drag_lines[i];
                 let numOutputs = (drag_line.portType === 0)?(drag_line.node.outputs || 1):1;
                 let sourcePort = drag_line.port;
@@ -5894,14 +5894,14 @@ RED.view = (function() {
                 maxY = Math.max(node.n.y+node.n.h/2+5,maxY);
             }
             if (minX !== 0 || minY !== 0) {
-                for (i = 0; i<moving_set.length; i++) {
+                for (let i = 0; i<moving_set.length; i++) {
                     node = moving_set[i];
                     node.n.x -= minX;
                     node.n.y -= minY;
                 }
             }
             if (maxX !== space_width || maxY !== space_height) {
-                for (i = 0; i<moving_set.length; i++) {
+                for (let i = 0; i<moving_set.length; i++) {
                     node = moving_set[i];
                     node.n.x -= (maxX - space_width);
                     node.n.y -= (maxY - space_height);
@@ -5913,7 +5913,7 @@ RED.view = (function() {
                 gridOffset[0] = node.n.x-(gridSize*Math.floor((node.n.x-node.n.w/2)/gridSize)+node.n.w/2);
                 gridOffset[1] = node.n.y-(gridSize*Math.floor(node.n.y/gridSize));
                 if (gridOffset[0] !== 0 || gridOffset[1] !== 0) {
-                    for (i = 0; i<moving_set.length; i++) {
+                    for (let i = 0; i<moving_set.length; i++) {
                         node = moving_set[i];
                         node.n.x -= gridOffset[0];
                         node.n.y -= gridOffset[1];
@@ -5988,7 +5988,7 @@ RED.view = (function() {
         }
         if (mousedown_node && mouse_mode == RED.state.JOINING) {
             let removedLinks = [];
-            for (i=0;i<drag_lines.length;i++) {
+            for (let i=0;i<drag_lines.length;i++) {
                 if (drag_lines[i].link) {
                     removedLinks.push(drag_lines[i].link)
                 }
@@ -6075,7 +6075,7 @@ RED.view = (function() {
             }
         }
         if (mouse_mode == RED.state.MOVING || mouse_mode == RED.state.MOVING_ACTIVE) {
-            for (i=0;i<moving_set.length;i++) {
+            for (let i=0;i<moving_set.length;i++) {
                 delete moving_set[i].ox;
                 delete moving_set[i].oy;
             }
@@ -6480,12 +6480,12 @@ RED.view = (function() {
             let addedLinks = [];
             let removedLinks = [];
 
-            for (i=0;i<drag_lines.length;i++) {
+            for (let i=0;i<drag_lines.length;i++) {
                 if (drag_lines[i].link) {
                     removedLinks.push(drag_lines[i].link)
                 }
             }
-            for (i=0;i<drag_lines.length;i++) {
+            for (let i=0;i<drag_lines.length;i++) {
                 if (portType != drag_lines[i].portType && mouseup_node !== drag_lines[i].node) {
                     let drag_line = drag_lines[i];
                     let src,dst,src_port;
@@ -6617,7 +6617,7 @@ RED.view = (function() {
 
         if (d.selected && (d3.event.ctrlKey||d3.event.metaKey)) {
             mousedown_node.selected = false;
-            for (i=0;i<moving_set.length;i+=1) {
+            for (let i=0;i<moving_set.length;i+=1) {
                 if (moving_set[i].n === mousedown_node) {
                     moving_set.splice(i,1);
                     break;
@@ -6645,7 +6645,7 @@ RED.view = (function() {
                 let mouse = d3.touches(this)[0]||d3.mouse(this);
                 mouse[0] += d.x-d.w/2;
                 mouse[1] += d.y-d.h/2;
-                for (i=0;i<moving_set.length;i++) {
+                for (let i=0;i<moving_set.length;i++) {
                     moving_set[i].ox = moving_set[i].n.x;
                     moving_set[i].oy = moving_set[i].n.y;
                     moving_set[i].dx = moving_set[i].n.x-mouse[0];
@@ -7533,7 +7533,7 @@ RED.view = (function() {
                     let i;
                     let node;
 
-                    for (i=0;i<new_ms.length;i++) {
+                    for (let i=0;i<new_ms.length;i++) {
                         node = new_ms[i];
                         node.n.selected = true;
                         node.n.changed = true;
@@ -7544,7 +7544,7 @@ RED.view = (function() {
                         minX = Math.min(node.n.x-node_width/2-5,minX);
                         minY = Math.min(node.n.y-node_height/2-5,minY);
                     }
-                    for (i=0;i<new_ms.length;i++) {
+                    for (let i=0;i<new_ms.length;i++) {
                         node = new_ms[i];
                         node.n.x -= minX;
                         node.n.y -= minY;
@@ -9125,7 +9125,7 @@ RED.editor = (function() {
             }
             let subflowInstances = RED.nodes.filterNodes({type:"subflow:"+node.id});
             let modifiedTabs = {};
-            for (i=0;i<subflowInstances.length;i++) {
+            for (let i=0;i<subflowInstances.length;i++) {
                 subflowInstances[i].valid = node.valid;
                 subflowInstances[i].changed = subflowInstances[i].changed || node.changed;
                 subflowInstances[i].dirty = true;
@@ -9523,7 +9523,7 @@ RED.editor = (function() {
                 }
             }
             if (definition.credentials) {
-                for (d in definition.credentials) {
+                for (let d in definition.credentials) {
                     if (definition.credentials.hasOwnProperty(d)) {
                         $("#"+prefix+"-"+d).trigger("change",[true]);
                     }
@@ -9704,7 +9704,7 @@ RED.editor = (function() {
 
                         if (editing_node._def.oneditsave) {
                             let oldValues = {};
-                            for (d in editing_node._def.defaults) {
+                            for (let d in editing_node._def.defaults) {
                                 if (editing_node._def.defaults.hasOwnProperty(d)) {
                                     if (typeof editing_node[d] === "string" || typeof editing_node[d] === "number") {
                                         oldValues[d] = editing_node[d];
@@ -9722,7 +9722,7 @@ RED.editor = (function() {
                                 console.log("oneditsave",editing_node.id,editing_node.type,err.toString());
                             }
 
-                            for (d in editing_node._def.defaults) {
+                            for (let d in editing_node._def.defaults) {
                                 if (editing_node._def.defaults.hasOwnProperty(d)) {
                                     if (oldValues[d] === null || typeof oldValues[d] === "string" || typeof oldValues[d] === "number") {
                                         if (oldValues[d] !== editing_node[d]) {
@@ -9740,7 +9740,7 @@ RED.editor = (function() {
                         }
 
                         if (editing_node._def.defaults) {
-                            for (d in editing_node._def.defaults) {
+                            for (let d in editing_node._def.defaults) {
                                 if (editing_node._def.defaults.hasOwnProperty(d)) {
                                     let input = $("#node-input-"+d);
                                     let newValue;
@@ -10084,7 +10084,7 @@ RED.editor = (function() {
                         }
                     }
 
-                    for (d in configTypeDef.defaults) {
+                    for (let d in configTypeDef.defaults) {
                         if (configTypeDef.defaults.hasOwnProperty(d)) {
                             let newValue;
                             input = $("#node-config-input-"+d);
@@ -11176,7 +11176,7 @@ RED.typeSearch = (function() {
             }
             searchResults.editableList('addItem', item);
         }
-        for (i=0;i<items.length;i++) {
+        for (let i=0;i<items.length;i++) {
             searchResults.editableList('addItem', items[i]);
         }
         setTimeout(function() {
