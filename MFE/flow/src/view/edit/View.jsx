@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -98,10 +98,12 @@ const Editor = () => {
       cleanFlow();
     };
   }, [flowDom]);
-  const handleReturn = () => {
+
+  const handleReturn = useCallback(() => {
     history.push(`/flows`);
-  };
-  const handleSave = () => {
+  }, [history]);
+
+  const handleSave = useCallback(() => {
     const saveObj = {
       name: flowName,
       enabled: true,
@@ -120,7 +122,7 @@ const Editor = () => {
         flowsActions.createFlow({ flow: JSON.stringify(saveObj), successCallback: handleReturn }),
       );
     }
-  };
+  }, [RED, flowsActions, flowObj, flowName]);
 
   return (
     <ViewContainer headerTitle={t('flows:title')}>

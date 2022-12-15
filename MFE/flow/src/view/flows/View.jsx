@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 
 import { Box } from '@material-ui/core';
 import { DeviceHub } from '@material-ui/icons';
@@ -34,7 +34,6 @@ const Flows = () => {
     key: DEVICES_PAGE_KEYS.VIEW_MODE,
   });
 
-  const [selectedFlows, setSelectedFlows] = useState([]);
   const [flowOptionsMenu, setFlowOptionsMenu] = useState(null);
 
   const [isShowingDeleteAlert, setIsShowingDeleteAlert] = useState(false);
@@ -52,34 +51,30 @@ const Flows = () => {
     setFlowOptionsMenu(null);
   };
 
-  const handleEditFlow = () => {
+  const handleEditFlow = useCallback(() => {
     dispatch(flowsActions.setFlow(flowOptionsMenu.flow));
     handleHideOptionsMenu();
     const flowId = flowOptionsMenu.flow.id;
     history.push(`/flows/edit/${flowId}`);
-  };
+  }, [flowsActions, flowOptionsMenu, handleHideOptionsMenu, history]);
 
-  const handleDeleteFlow = () => {
+  const handleDeleteFlow = useCallback(() => {
     setIsShowingDeleteAlert(true);
-  };
+  }, [setIsShowingDeleteAlert]);
 
-  const handleConfirmFlowDeletion = () => {
+  const handleConfirmFlowDeletion = useCallback(() => {
     const flowID = flowOptionsMenu.flow.id;
     dispatch(flowsActions.deleteFlow({ flowID }));
-  };
+  }, [flowOptionsMenu, flowsActions]);
 
-  const handleCloseFlowDeletionAlert = () => {
+  const handleCloseFlowDeletionAlert = useCallback(() => {
     setIsShowingDeleteAlert(false);
     handleHideOptionsMenu();
-  };
+  }, [setIsShowingDeleteAlert, handleHideOptionsMenu]);
 
   useEffect(() => {
     dispatch(flowsActions.getFlows());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (viewMode) setSelectedFlows([]);
-  }, [viewMode]);
 
   return (
     <ViewContainer headerTitle={t('flows:title')}>

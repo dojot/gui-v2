@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 
 import {
   Box,
@@ -42,19 +42,21 @@ const LabelBar = ({ label, handleSaveClick, handleName, handleCancel }) => {
     },
   });
 
-  const handleClearSearch = () => {
-    // handleSearchDevice('');
+  const handleClearSearch = useCallback(() => {
     setInternalSearchText('');
     if (searchInputRef.current) {
       searchInputRef.current.value = '';
     }
-  };
+  }, [setInternalSearchText, searchInputRef]);
 
-  const handleChangeSearchText = e => {
-    const search = e.target.value;
-    setInternalSearchText(search);
-    handleDebounce(search);
-  };
+  const handleChangeSearchText = useCallback(
+    e => {
+      const search = e.target.value;
+      setInternalSearchText(search);
+      handleDebounce(search);
+    },
+    [setInternalSearchText, handleDebounce],
+  );
 
   return (
     <Box className={classes.searchContainer} paddingY={1} paddingX={2} margin={0}>

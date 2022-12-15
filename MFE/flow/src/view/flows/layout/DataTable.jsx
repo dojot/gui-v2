@@ -52,9 +52,6 @@ const DataTable = ({ flows, handleClickFlow, handleSetFlowOptionsMenu }) => {
     [t],
   );
 
-  const handleStopPropagation = e => {
-    e.stopPropagation();
-  };
   return (
     <Paper elevation={0}>
       <TableContainer>
@@ -71,23 +68,12 @@ const DataTable = ({ flows, handleClickFlow, handleSetFlowOptionsMenu }) => {
             {flows.map(device => {
               const isNew = isSomeHoursAgo(device.created, NEW_CHIP_HOURS_AGO);
 
-              const handleClickInThisDevice = () => {
-                handleClickFlow(device);
-              };
-
-              const handleShowOptionsMenu = e => {
-                handleSetFlowOptionsMenu({
-                  anchorElement: e.target,
-                  flow: device,
-                });
-              };
-
               return (
                 <TableRow
                   key={device.id}
                   tabIndex={-1}
                   role='checkbox'
-                  onClick={handleClickInThisDevice}
+                  onClick={() => handleClickFlow(device)}
                   hover
                 >
                   <TableCell className={classes.clickableCell}>
@@ -108,8 +94,16 @@ const DataTable = ({ flows, handleClickFlow, handleSetFlowOptionsMenu }) => {
                     {device.updated ? moment(device.updated).format('L LTS') : ''}
                   </TableCell>
 
-                  <TableCell onClick={handleStopPropagation}>
-                    <IconButton onClick={handleShowOptionsMenu} size='small'>
+                  <TableCell onClick={e => e.stopPropagation()}>
+                    <IconButton
+                      onClick={event =>
+                        handleSetFlowOptionsMenu({
+                          anchorElement: event.target,
+                          flow: device,
+                        })
+                      }
+                      size='small'
+                    >
                       <MoreHoriz />
                     </IconButton>
                   </TableCell>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 
 import { Box, Chip, Grid, Typography } from '@material-ui/core';
 import { DevicesOther } from '@material-ui/icons';
@@ -15,30 +15,28 @@ const Cards = ({ flows, handleClickFlow, handleSetFlowOptionsMenu }) => {
   const { t } = useTranslation(['flows', 'common']);
   const classes = useCardsStyles();
 
+  const handleShowOptionsMenu = useCallback(
+    (e, flow) => {
+      e.stopPropagation();
+      handleSetFlowOptionsMenu({
+        anchorElement: e.target,
+        flow,
+      });
+    },
+    [handleSetFlowOptionsMenu],
+  );
+
   return (
     <Box padding={2}>
       <Grid spacing={2} container>
         {flows.map(flow => {
           const isNew = isSomeHoursAgo(flow.created, NEW_CHIP_HOURS_AGO);
-
-          const handleSeeDeviceDetails = () => {
-            handleClickFlow(flow);
-          };
-
-          const handleShowOptionsMenu = e => {
-            e.stopPropagation();
-            handleSetFlowOptionsMenu({
-              anchorElement: e.target,
-              flow,
-            });
-          };
-
           return (
             <Grid key={flow.id} xs={12} sm={6} md={4} xl={3} item>
               <DataCard
                 className={classes.card}
-                onClick={handleSeeDeviceDetails}
-                onOptionsClick={handleShowOptionsMenu}
+                onClick={() => handleClickFlow(flow)}
+                onOptionsClick={event => handleShowOptionsMenu(event, flow)}
                 headerIcon={<DevicesOther className={classes.cardIcon} />}
                 headerTitle={<Typography className={classes.cardTitle}>{flow.name}</Typography>}
                 footer={

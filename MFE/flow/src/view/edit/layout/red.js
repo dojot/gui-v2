@@ -2202,7 +2202,7 @@ RED.nodes = (function() {
         n.out.forEach(function(p,c) {
             var nOut = {x:p.x,y:p.y,wires:[]};
             var wires = links.filter(function(d) { return d.target === p });
-            for (i=0;i<wires.length;i++) {
+            for (let i=0; i < wires.length; i++) {
                 if (wires[i].source.type != "subflow") {
                     nOut.wires.push({id:wires[i].source.id,port:wires[i].sourcePort})
                 } else {
@@ -5279,7 +5279,7 @@ RED.view = (function() {
                     ];
 
                     if (!isNaN(moveTouchDistance)) {
-                        oldScaleFactor = scaleFactor;
+                        const oldScaleFactor = scaleFactor;
                         scaleFactor = Math.min(2,Math.max(0.3, scaleFactor + (Math.floor(((moveTouchDistance*100)-(startTouchDistance*100)))/10000)));
 
                         var deltaTouchCenter = [                             // Try to pan whilst zooming - not 100%
