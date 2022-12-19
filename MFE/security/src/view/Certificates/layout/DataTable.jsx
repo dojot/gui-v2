@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 
 import {
   Box,
@@ -16,13 +16,12 @@ import {
 import { MoreHoriz } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { Link as RouterLink } from 'react-router-dom';
-
+import { DATA_ORDER, NEW_CHIP_HOURS_AGO, EVENT } from 'sharedComponents/Constants';
 import { CopyTextToClipboardButton } from 'sharedComponents/CopyTextToClipboardButton';
 import { DataTableHead } from 'sharedComponents/DataTable';
-import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
-import { useCertificateComputedData } from 'sharedComponents/Hooks';
+import { useCertificateComputedData, dispatchEvent } from 'sharedComponents/Hooks';
 import { isSomeHoursAgo } from 'sharedComponents/Utils';
+
 import { useDataTableStyles } from './style';
 
 const DataTable = ({
@@ -123,6 +122,10 @@ const DataTable = ({
     e.stopPropagation();
   };
 
+  const handleClick = useCallback(certificate => {
+    dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: `/devices/${certificate.belongsTo.device}` });
+  }, []);
+
   return (
     <Paper elevation={0}>
       <TableContainer>
@@ -209,12 +212,15 @@ const DataTable = ({
 
                   <TableCell>
                     {certificate.belongsTo?.device ? (
-                      <RouterLink
-                        to={`/devices/${certificate.belongsTo.device}`}
+                      <div
+                        tabIndex={0}
+                        role='link'
+                        onKeyDown={() => handleClick(certificate)}
+                        onClick={() => handleClick(certificate)}
                         className={classes.deviceIdLink}
                       >
                         {certificate.belongsTo.device}
-                      </RouterLink>
+                      </div>
                     ) : (
                       t('dataTableBody.noDeviceAssociated')
                     )}

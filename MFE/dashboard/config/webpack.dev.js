@@ -1,11 +1,13 @@
-const { merge } = require('webpack-merge');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const commonConfig = require('./webpack.common');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const path = require('path');
-const dependencies = require('../package.json').dependencies;
+
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const { merge } = require('webpack-merge');
+const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+
+const { dependencies } = require('../package.json');
+const commonConfig = require('./webpack.common');
 
 const devConfig = {
   mode: 'development',
@@ -30,6 +32,7 @@ const devConfig = {
     },
     extensions: ['.js', '.jsx'],
   },
+  devtool: 'source-map',
   plugins: [
     new MiniCssExtractPlugin(),
     new CleanWebpackPlugin(),
@@ -42,16 +45,17 @@ const devConfig = {
       shared: {
         ...dependencies,
         react: {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies.react,
         },
         'react-dom': {
-          eager: true,
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
         '@material-ui/styles': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/styles'],
         },
@@ -64,12 +68,19 @@ const devConfig = {
           requiredVersion: dependencies['@material-ui/icons'],
         },
         '@material-ui/lab': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/lab'],
         },
         '@material-ui/pickers': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/pickers'],
+        },
+        'react-transition-group': {
+          eager: false,
+          singleton: true,
+          requiredVersion: dependencies['react-transition-group'],
         },
       },
       remotes: {

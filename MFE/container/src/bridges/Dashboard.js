@@ -1,5 +1,6 @@
-import { mount } from 'templates/Templates';
 import React, { useRef, useEffect } from 'react';
+
+import { mount } from 'dashboard/Dashboard';
 import { useHistory } from 'react-router-dom';
 
 export default () => {
@@ -8,7 +9,8 @@ export default () => {
 
   useEffect(() => {
     const { onParentNavigate } = mount(ref.current);
-    history.listen(onParentNavigate);
+    const unlisten = history.listen(onParentNavigate);
+    return () => unlisten();
   }, []);
 
   return <div style={{ height: '100%', width: '100%' }} ref={ref} />;

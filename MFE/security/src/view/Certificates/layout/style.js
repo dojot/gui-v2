@@ -49,6 +49,8 @@ export const useCardsStyles = makeStyles(theme => ({
   },
   link: {
     color: theme.palette.primary.light,
+    cursor: 'pointer',
+    textDecoration: 'underline',
   },
 }));
 
@@ -110,6 +112,8 @@ export const useDataTableStyles = makeStyles(theme => ({
   },
   deviceIdLink: {
     color: theme.palette.primary.light,
+    cursor: 'pointer',
+    textDecoration: 'underline',
   },
 }));
 

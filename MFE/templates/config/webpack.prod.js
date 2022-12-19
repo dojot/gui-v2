@@ -39,14 +39,17 @@ const prodConfig = {
       shared: {
         ...dependencies,
         react: {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies.react,
         },
         'react-dom': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
         '@material-ui/styles': {
+          eager: false,
           singleton: true,
           requiredVersion: dependencies['@material-ui/styles'],
         },

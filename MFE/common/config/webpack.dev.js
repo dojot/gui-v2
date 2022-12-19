@@ -1,9 +1,11 @@
-const { merge } = require('webpack-merge');
 const path = require('path');
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const commonConfig = require('./webpack.common');
+const { merge } = require('webpack-merge');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
-const dependencies = require('../package.json').dependencies;
+
+const { dependencies } = require('../package.json');
+const commonConfig = require('./webpack.common');
 
 const devConfig = {
   mode: 'development',
@@ -68,6 +70,7 @@ const devConfig = {
           requiredVersion: dependencies.react,
         },
         'react-dom': {
+          eager: true,
           singleton: true,
           requiredVersion: dependencies['react-dom'],
         },
@@ -101,15 +104,10 @@ const devConfig = {
           singleton: true,
           requiredVersion: dependencies['prop-types'],
         },
-        'react-transition-group': {
-          eager: true,
-          singleton: true,
-          requiredVersion: dependencies['react-transition-group'],
-        },
         clsx: {
           eager: true,
           singleton: true,
-          requiredVersion: dependencies['clsx'],
+          requiredVersion: dependencies.clsx,
         },
       },
     }),

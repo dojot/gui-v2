@@ -1,4 +1,4 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
-import { createHashHistory } from 'history';
+import { createBrowserHistory } from 'history';
 
-export const history = createHashHistory();
+export const history = createBrowserHistory({ basename: '/v2/#/' });
