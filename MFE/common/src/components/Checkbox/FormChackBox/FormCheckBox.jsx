@@ -1,15 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import { Checkbox } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
-export const FormCheckBox = ({ input: { onChange, checked }, disabled, callback }) => {
-  const onChangeInternal = e => {
-    if (checked) {
+export const FormCheckBox = ({
+  input: { onChange, checked },
+  disabled,
+  callback,
+  checkCallback,
+}) => {
+  useEffect(() => {
+    if (!checked) {
       callback();
     }
-    onChange(e);
-  };
+    checkCallback(!checked);
+  }, [checked]);
 
   return (
     <Checkbox
@@ -18,7 +23,7 @@ export const FormCheckBox = ({ input: { onChange, checked }, disabled, callback 
       checked={checked}
       tabIndex={-1}
       disableRipple
-      onChange={onChangeInternal}
+      onChange={e => onChange(e)}
       inputProps={{ 'aria-labelledby': 'checkbox' }}
       color='secondary'
     />
@@ -27,6 +32,7 @@ export const FormCheckBox = ({ input: { onChange, checked }, disabled, callback 
 
 FormCheckBox.defaultProps = {
   callback: () => {},
+  checkCallback: () => {},
   disabled: false,
 };
 
@@ -34,4 +40,5 @@ FormCheckBox.propTypes = {
   input: PropTypes.object.isRequired,
   disabled: PropTypes.bool,
   callback: PropTypes.func,
+  checkCallback: PropTypes.func,
 };

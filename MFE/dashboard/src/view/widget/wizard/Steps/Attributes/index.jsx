@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useEffect, useState, useMemo } from 'react';
+import React, { Fragment, useCallback, useEffect, useState } from 'react';
 
 import {
   Button,
@@ -31,8 +31,10 @@ import { useStyles } from './style';
 
 export const attrValidates = values => {
   const errors = {};
-  if (Object.keys(values.attributes).length < 1) {
-    errors.msg = 'chooseAtLeastOne';
+  if (!values.attributes) {
+    errors.attributes = 'Required';
+  } else if (Object.keys(values.attributes).length < 1) {
+    errors.attributes = 'Choose more';
   }
   return errors;
 };
@@ -130,7 +132,7 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
               <ListItemText primary={t('attributes.notFound')} />
             </ListItem>
           ) : (
-            paginatorData.pageData.map((item, index) => {
+            paginatorData.pageData.map(item => {
               const {
                 deviceId,
                 deviceLabel,
@@ -142,7 +144,6 @@ const Index = ({ values, validate, acceptedTypes, staticSupported, name }) => {
 
               return (
                 <ItemRow
-                  index={index}
                   value={{
                     label: attributeLabel,
                     valueType: attributeValueType,
@@ -195,7 +196,6 @@ const ColorPickerAdapter = ({ input: { onChange, value }, changeColor }) => {
 };
 
 const ItemRow = ({
-  index,
   value,
   meta,
   attributes,
@@ -212,25 +212,22 @@ const ItemRow = ({
 
   const labelId = `checkbox-list-label-${attributeId}`;
 
-  const disabledColor = {
-    rgb: { r: 250, g: 250, b: 250 },
-    hex: '#FAFAFA',
-  };
+  const disabledColor = '#FAFAFA';
 
   const [isOpen, setIsOpen] = useState(false);
   const [color, setColor] = useState(disabledColor);
   const [isDisabled, setIsDisabled] = useState(true);
 
-  const randomHex = useMemo(() => randomHexColor(), []);
-
-  const attributeItem = {
-    deviceID: id,
-    attributeID: `${attributeId}`,
-    deviceLabel: label,
-    color: color.hex,
-    label: value.label,
-    isDynamic,
-  };
+  const getAttrItem = useCallback(() => {
+    return {
+      deviceID: id,
+      attributeID: `${attributeId}`,
+      deviceLabel: label,
+      color: randomHexColor(),
+      label: value.label,
+      isDynamic,
+    };
+  }, [color, value, randomHexColor]);
 
   useEffect(() => {
     if (isOpen) {
@@ -241,32 +238,16 @@ const ItemRow = ({
 
   useEffect(() => {
     if (attributes && attributes[attributeId] && !isDisabled) {
-      if (attributes[attributeId].color === disabledColor.hex) {
-        const attrColor = DEFAULT_COLORS[index] || randomHex;
-        setColor({
-          rgb: hexToRgb(attrColor),
-          hex: attrColor,
-        });
-      } else {
-        setColor({
-          rgb: hexToRgb(attributes[attributeId].color),
-          hex: attributes[attributeId].color,
-        });
-      }
+      setColor(attributes[attributeId].color);
     } else {
       setColor(disabledColor);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isDisabled, attributes, setColor]);
 
-  const handleFormat = item => {
-    if (item) {
-      setIsDisabled(item.attributeID !== attributeId);
-      return item.attributeID === attributeId;
-    }
-    setIsDisabled(true);
-    return false;
-  };
+  const handleFormat = useCallback(item => {
+    return item?.attributeID === attributeId;
+  }, []);
 
   const checkCompatibility = useCallback(
     () => !(acceptedTypes.includes(value.valueType) && (isDynamic || staticSupported)),
@@ -293,7 +274,8 @@ const ItemRow = ({
             component={FormCheckBox}
             format={handleFormat}
             disabled={checkCompatibility()}
-            parse={item => (item ? attributeItem : undefined)}
+            parse={item => (item ? getAttrItem() : undefined)}
+            checkCallback={e => setIsDisabled(e)}
           />
         </ListItemIcon>
         <Tooltip title={id} placement='bottom-start' disabled>
@@ -314,9 +296,9 @@ const ItemRow = ({
               startIcon={<Comment />}
               className={classes.button}
               style={{
-                '--red': color.rgb.r,
-                '--green': color.rgb.g,
-                '--blue': color.rgb.b,
+                '--red': hexToRgb(color).r,
+                '--green': hexToRgb(color).g,
+                '--blue': hexToRgb(color).b,
               }}
               onClick={() => setIsOpen(!isOpen)}
               disabled={isDisabled || checkCompatibility()}
