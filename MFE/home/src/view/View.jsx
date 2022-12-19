@@ -15,7 +15,6 @@ import {
   Dashboard,
   FilterNone,
   VerifiedUser,
-  ImportExport,
   Star,
   PhoneIphone,
 } from '@material-ui/icons';
