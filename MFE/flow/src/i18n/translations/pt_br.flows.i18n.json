@@ -1,0 +1,21 @@
+{
+  "title": "Fluxos",
+  "cardData": {
+    "flowId": "Flow ID",
+    "properties": "Propriedades",
+    "created": "Data de Criação",
+    "updated": "Última Modificação"
+  },
+  "nameInput": "Nome do Fluxo",
+  "deleteFlowAlert": {
+    "title": "Apagar Fluxo",
+    "message": "Você realmente quer apagar esse fluxo? Essa ação não pode ser desfeita!",
+    "cancelButton": "Cancelar",
+    "confirmButton": "Confirmar"
+  },
+  "createNewFlow": "Criar um fluxo novo",
+  "SaveChanges": "Salvar as Alterações",
+  "emptyListMessage": "Nenhum Fluxo Encontrado",
+  "createFlow": "Fluxo Criado com Sucesso",
+  "editFlow": "Fluxo Editado com Sucesso"
+}

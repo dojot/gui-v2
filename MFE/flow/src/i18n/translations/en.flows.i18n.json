@@ -1,0 +1,19 @@
+{
+  "title": "Flows",
+  "cardData": {
+    "flowId": "Flow ID",
+    "properties": "Properties",
+    "created": "Creation Date",
+    "updated": "Last Modification"
+  },
+  "nameInput": "Flow Name",
+  "deleteFlowAlert": {
+    "title": "Delete Flow",
+    "message": "Do you really want to delete this flow? this action cannot be undone!",
+    "cancelButton": "Cancel",
+    "confirmButton": "Confirm"
+  },
+  "createNewFlow": "Create a new flow",
+  "SaveChanges": "Save Changes",
+  "emptyListMessage": "No Flows Found"
+}

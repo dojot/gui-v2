@@ -25,6 +25,7 @@ const devConfig = {
         devices: 'devices@http://localhost:8084/remoteEntry.js',
         templates: 'templates@http://localhost:8085/remoteEntry.js',
         security: 'security@http://localhost:8086/remoteEntry.js',
+        flows: 'flows@http://localhost:8087/remoteEntry.js',
         reports: 'reports@http://localhost:8088/remoteEntry.js',
       },
       shared: {

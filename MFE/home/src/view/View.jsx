@@ -17,6 +17,7 @@ import {
   ImportExport,
   Star,
   PhoneIphone,
+  DeviceHub
 } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
@@ -64,6 +65,11 @@ const Home = ({ isMenuOpen }) => {
       icon: <VerifiedUser style={{ color: '#F46A6A' }} fontSize='large' />,
       translationKey: 'createCertificate',
       route: '/certificates/new',
+    },
+    CREATE_FLOW: {
+      icon: <DeviceHub style={{ color: '#804eb8' }} fontSize='large' />,
+      translationKey: 'createFlow',
+      route: '/flows/new',
     },
     IMPORT_EXPORT: {
       icon: <ImportExport style={{ color: '#50A5F1' }} fontSize='large' />,

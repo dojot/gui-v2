@@ -1,0 +1,233 @@
+[
+  {
+    "id": "dojot/change",
+    "name": "change",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "change"
+    ]
+  },
+  {
+    "id": "dojot/geofence",
+    "name": "geofence",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "geofence"
+    ]
+  },
+  {
+    "id": "dojot/http",
+    "name": "http",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "http"
+    ]
+  },
+  {
+    "id": "dojot/ftp",
+    "name": "ftp",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "ftp"
+    ]
+  },
+  {
+    "id": "dojot/switch",
+    "name": "switch",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "switch"
+    ]
+  },
+  {
+    "id": "dojot/template",
+    "name": "template",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "template"
+    ]
+  },
+  {
+    "id": "dojot/event-device-in",
+    "name": "event device in",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "event device in"
+    ]
+  },
+  {
+    "id": "dojot/device-in",
+    "name": "device in",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "device in"
+    ]
+  },
+  {
+    "id": "dojot/device-out",
+    "name": "device out",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "device out"
+    ]
+  },
+  {
+    "id": "dojot/multi-device-out",
+    "name": "multi device out",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "multi device out"
+    ]
+  },
+  {
+    "id": "dojot/publish-ftp",
+    "name": "publish-ftp",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "publish-ftp"
+    ]
+  },
+  {
+    "id": "dojot/notification",
+    "name": "notification",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "notification"
+    ]
+  },
+  {
+    "id": "dojot/event-template-in",
+    "name": "event template in",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "event template in"
+    ]
+  },
+  {
+    "id": "dojot/device-template-in",
+    "name": "device template in",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "device template in"
+    ]
+  },
+  {
+    "id": "dojot/actuate",
+    "name": "actuate",
+    "module": "dojot",
+    "version": "1.1.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "actuate"
+    ]
+  },
+  {
+    "id": "dojot/multi-actuate",
+    "name": "multi actuate",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "multi actuate"
+    ]
+  },
+  {
+    "id": "dojot/get-context",
+    "name": "get context",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "get context"
+    ]
+  },
+  {
+    "id": "dojot/cron",
+    "name": "cron",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "cron"
+    ]
+  },
+  {
+    "id": "dojot/cron-batch",
+    "name": "cron-batch",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "cron-batch"
+    ]
+  },
+  {
+    "id": "dojot/cumulative-sum",
+    "name": "cumulative sum",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "cumulative sum"
+    ]
+  },
+  {
+    "id": "dojot/merge-data",
+    "name": "merge data",
+    "module": "dojot",
+    "version": "1.0.0",
+    "enabled": true,
+    "local": true,
+    "types": [
+      "merge data"
+    ]
+  }
+]

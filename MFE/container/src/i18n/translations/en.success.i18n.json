@@ -32,6 +32,10 @@
     "deleteMultipleCertificationAuthorities": "All CAs were deleted",
     "createCertificationAuthority": "CA created",
 
+    "createFlow": "Flow Created Successfully",
+    "editFlow": "Flow Edited Successfully",
+    "deleteFlow": "Flow deleted Successfully",
+
     "createReport": "Report created successfully",
     "deleteReport": "Report deleted"
   }
