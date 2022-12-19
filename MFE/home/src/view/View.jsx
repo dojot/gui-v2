@@ -65,12 +65,6 @@ const Home = ({ isMenuOpen }) => {
       translationKey: 'createCertificate',
       route: '/certificates/new',
     },
-    IMPORT_EXPORT: {
-      icon: <ImportExport style={{ color: '#50A5F1' }} fontSize='large' />,
-      translationKey: 'importExport',
-      route: '/import-export',
-      disabled: true,
-    },
   };
 
   return (
