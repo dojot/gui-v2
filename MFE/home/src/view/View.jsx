@@ -19,6 +19,8 @@ import {
   PhoneIphone,
 } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
+import { EVENT } from 'sharedComponents/Constants';
+import { dispatchEvent } from 'sharedComponents/Hooks';
 import { actions as deviceActions } from '../redux/modules/devices';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
@@ -79,7 +81,7 @@ const Home = ({ isMenuOpen }) => {
             const isDisabled = !!card.disabled;
 
             const handleNavigate = () => {
-              if (card.route) history.push(card.route);
+              if (card.route) dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: card.route });
             };
 
             return (
@@ -117,7 +119,9 @@ const Home = ({ isMenuOpen }) => {
                     <Card className={classes.card}>
                       <CardActionArea
                         style={{ height: '100%' }}
-                        onClick={() => history.push(`/devices/${device.id}`)}
+                        onClick={() =>
+                          dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: `/devices/${device.id}` })
+                        }
                       >
                         <CardContent className={classes.cardContent}>
                           <Star style={{ color: '#F1B44C' }} />
