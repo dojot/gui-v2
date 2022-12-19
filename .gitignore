@@ -3,6 +3,8 @@
 .devcontainer
 .idea/*
 .DS_Store
+#schema.graphql
+#.graphqlconfig
 
 # Coverage directory used by tools like istanbul
 coverage
