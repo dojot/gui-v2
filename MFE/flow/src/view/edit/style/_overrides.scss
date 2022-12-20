@@ -1,0 +1,52 @@
+
+// override materializecss input field sizes
+.relative-size {
+  .input-field .prefix {
+    font-size: 3em;
+    width: 3em;
+  }
+
+  .input-field .prefix ~ label {
+    margin-left: 3em;
+  }
+
+  .input-field label {
+    font-size: 1em;
+  }
+
+  input:not([type]), input[type=text], input[type=password], input[type=email], input[type=url], input[type=time], input[type=date], input[type=datetime], input[type=datetime-local], input[type=tel], input[type=number], input[type=search], textarea.materialize-textarea {
+    font-size: 1em;
+    height: 3em;
+  }
+
+  .input-field .prefix ~ input, .input-field .prefix ~ textarea, .input-field .prefix ~ label, .input-field .prefix ~ .validate ~ label, .input-field .prefix ~ .autocomplete-content {
+    margin-left: 3em;
+    width: calc(100% - 3em);
+  }
+}
+
+input:not([type]).react-validate + label,
+input[type=text].react-validate + label,
+input[type=password].react-validate + label,
+input[type=email].react-validate + label,
+input[type=url].react-validate + label,
+input[type=time].react-validate + label,
+input[type=date].react-validate + label,
+input[type=datetime].react-validate + label,
+input[type=datetime-local].react-validate + label,
+input[type=tel].react-validate + label,
+input[type=number].react-validate + label,
+input[type=search].react-validate + label,
+textarea.materialize-textarea.validate + label {
+  width: 100%;
+  pointer-events: none;
+}
+
+.input-field label:not(.active):after {
+    font-size: 0.8rem;
+    -webkit-transform: translateY(-1.7rem);
+    -moz-transform: translateY(-1.7rem);
+    -ms-transform: translateY(-1.7rem);
+    -o-transform: translateY(-1.7rem);
+    transform: translateY(-1.7rem);
+}

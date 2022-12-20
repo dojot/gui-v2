@@ -38,6 +38,12 @@ const Templates = React.lazy(() =>
     return import('./view/pageNotFound');
   }),
 );
+const Flows = React.lazy(() =>
+  import('./bridges/Flow').catch(err => {
+    console.error(err);
+    return import('./view/pageNotFound');
+  }),
+);
 const Dashboard = React.lazy(() =>
   import('./bridges/Dashboard').catch(err => {
     console.error(err);
@@ -74,6 +80,7 @@ export default () => {
           <PrivateRoute path='/home' component={Home} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/dashboard' component={Dashboard} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/devices' component={Devices} attrs={{ isMenuOpen }} />
+          <PrivateRoute path='/flows' component={Flows} attrs={{ isMenuOpen }} />
           <PrivateRoute path='/certificates' component={Security} attrs={{ isMenuOpen }} />
           <PrivateRoute
             path='/certification-authorities'
