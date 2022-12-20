@@ -149,17 +149,18 @@ export const editDevice = ({ id, label, templates, attrs, disabled }) => {
   });
 };
 
-export const createDevice = ({ label, templates, attrs, fingerprint, disabled }) => {
+export const createDevice = ({ label, id, templates, attrs, fingerprint, disabled }) => {
   return protectAPI({
     query: `
-      mutation createDevice($label: String!, $templates: [Int]!, $attrs: [DeviceAttributes], $fingerprint: String, $disabled: Boolean!) {
-        createDevice(label: $label, templates: $templates, attrs: $attrs, fingerprint: $fingerprint, disabled: $disabled) {
+      mutation createDevice($label: String!, $id: String, $templates: [Int]!, $attrs: [DeviceAttributes], $fingerprint: String, $disabled: Boolean!) {
+        createDevice(label: $label, id: $id templates: $templates, attrs: $attrs, fingerprint: $fingerprint, disabled: $disabled) {
           id
         }
       }
     `,
     variables: JSON.stringify({
       label,
+      id,
       templates,
       attrs,
       fingerprint,

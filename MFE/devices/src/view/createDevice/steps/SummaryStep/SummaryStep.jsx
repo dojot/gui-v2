@@ -22,11 +22,13 @@ import { useSummaryStepStyles } from './style';
 
 const SummaryStep = ({
   deviceName,
+  deviceId,
   isDisabled,
   isCreatingDevice,
   selectedTemplates,
   selectedCertificate,
   setDeviceName,
+  setDeviceId,
   handleCreateService,
   handleToggleDisabled,
   handleGoToPreviousStep,
@@ -37,6 +39,10 @@ const SummaryStep = ({
 
   const handleClearDeviceName = () => {
     setDeviceName('');
+  };
+
+  const handleClearDeviceId = () => {
+    setDeviceId(null);
   };
 
   const downloadCertificateAndKeys = () => {
@@ -80,6 +86,34 @@ const SummaryStep = ({
             }}
             required
             fullWidth
+          />
+        </Box>
+
+        <Box marginBottom={3}>
+          <Box marginBottom={1.5}>
+            <Typography>{t('summaryStep.deviceIdField')}</Typography>
+
+            <Typography variant='body2'>
+              <i>{t('summaryStep.deviceIdHint')}</i>
+            </Typography>
+          </Box>
+
+          <TextField
+            variant='outlined'
+            fullWidth
+            value={deviceId || ''}
+            label={t('summaryStep.deviceIdPh')}
+            helperText={t('summaryStep.deviceIdHelperText')}
+            onChange={e => setDeviceId(e.target.value)}
+            InputProps={{
+              endAdornment: deviceId ? (
+                <InputAdornment position='end'>
+                  <IconButton onClick={handleClearDeviceId}>
+                    <Close />
+                  </IconButton>
+                </InputAdornment>
+              ) : null,
+            }}
           />
         </Box>
 
@@ -176,12 +210,18 @@ const SummaryStep = ({
   );
 };
 
+SummaryStep.defaultProps = {
+  deviceId: null,
+};
+
 SummaryStep.propTypes = {
   deviceName: PropTypes.string.isRequired,
+  deviceId: PropTypes.string,
   isDisabled: PropTypes.bool.isRequired,
   isCreatingDevice: PropTypes.bool.isRequired,
   selectedTemplates: PropTypes.object.isRequired,
   setDeviceName: PropTypes.func.isRequired,
+  setDeviceId: PropTypes.func.isRequired,
   handleCreateService: PropTypes.func.isRequired,
   handleToggleDisabled: PropTypes.func.isRequired,
   handleGoToPreviousStep: PropTypes.func.isRequired,

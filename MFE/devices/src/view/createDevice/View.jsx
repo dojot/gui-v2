@@ -34,6 +34,7 @@ const CreateDevice = () => {
   const [selectedCertificate, setSelectedCertificate] = useState({});
   const [staticAttrValues, setStaticAttrValues] = useState({});
   const [deviceName, setDeviceName] = useState('');
+  const [deviceId, setDeviceId] = useState(null);
   const [isDisabled, setIsDisabled] = useState(false);
 
   const { staticAttrs, dynamicAttrs, actuatorAttrs } = useMemo(() => {
@@ -113,6 +114,7 @@ const CreateDevice = () => {
       actions.createDevice({
         fingerprint: selectedCertificate?.fingerprint || '',
         label: deviceName,
+        id: deviceId,
         attrs: attrsToSave,
         disabled: isDisabled,
         templates: templateIds,
@@ -211,11 +213,13 @@ const CreateDevice = () => {
               {currentStep === 3 && (
                 <SummaryStep
                   deviceName={deviceName}
+                  deviceId={deviceId}
                   isDisabled={isDisabled}
                   isCreatingDevice={isCreatingDevice}
                   selectedTemplates={selectedTemplates}
                   selectedCertificate={selectedCertificate}
                   setDeviceName={setDeviceName}
+                  setDeviceId={setDeviceId}
                   handleCreateService={handleCreateService}
                   handleToggleDisabled={handleToggleDisabled}
                   handleGoToPreviousStep={handleGoToPreviousStep}
