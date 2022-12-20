@@ -22,7 +22,8 @@
   "cardData": {
     "templateId": "ID do Modelo",
     "attrsLength": "Propriedade",
-    "attrsLength_plural": "Propriedades"
+    "attrsLength_plural": "Propriedades",
+    "created": "Data de Criação"
   },
   "deleteTemplateAlert": {
     "title": "Excluir Modelo",
