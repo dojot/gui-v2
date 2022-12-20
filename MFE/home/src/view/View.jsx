@@ -8,26 +8,25 @@ import {
   Box,
   CardActionArea,
   Tooltip,
+  Divider,
 } from '@material-ui/core';
 import {
   DevicesOther,
   Dashboard,
   FilterNone,
   VerifiedUser,
-  ImportExport,
   Star,
   PhoneIphone,
-  DeviceHub
+  DeviceHub,
 } from '@material-ui/icons';
-import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { EVENT } from 'sharedComponents/Constants';
-import { ViewContainer } from 'sharedComponents/Containers';
 import { dispatchEvent } from 'sharedComponents/Hooks';
-
 import { actions as deviceActions } from '../redux/modules/devices';
-import { favoriteDeviceSelector } from '../redux/selectors/devicesSelector';
+import { useTranslation } from 'react-i18next';
+import { ViewContainer } from 'sharedComponents/Containers';
 import useStyles from './style';
+import { favoriteDeviceSelector } from '../redux/selectors/devicesSelector';
 
 const Home = ({ isMenuOpen }) => {
   const { t } = useTranslation('home');
@@ -71,18 +70,17 @@ const Home = ({ isMenuOpen }) => {
       translationKey: 'createFlow',
       route: '/flows/new',
     },
-    IMPORT_EXPORT: {
-      icon: <ImportExport style={{ color: '#50A5F1' }} fontSize='large' />,
-      translationKey: 'importExport',
-      route: '/import-export',
-      disabled: true,
-    },
   };
 
   return (
     <ViewContainer headerTitle={t('home:title')} isMenuOpen={isMenuOpen}>
       <Box sx={{ flexGrow: 1 }} padding={2}>
-        <Grid container wrap='wrap' spacing={4}>
+        <Box className={classes.headerWithDivider} marginBottom={3}>
+          <Typography>{t('fastLinks')}</Typography>
+          <Divider className={classes.divider} flexItem />
+        </Box>
+
+        <Grid container wrap={'wrap'} spacing={4}>
           {Object.entries(HOME_CARDS).map(([key, card]) => {
             const isDisabled = !!card.disabled;
 
@@ -109,25 +107,38 @@ const Home = ({ isMenuOpen }) => {
               </Grid>
             );
           })}
-
-          {favoriteDevices.map(device => (
-            <Grid key={device.id} xs={12} sm={6} md={3} item>
-              <Card className={classes.card}>
-                <CardActionArea
-                  style={{ height: '100%' }}
-                  onClick={() =>
-                    dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: `/devices/${device.id}` })
-                  }
-                >
-                  <CardContent className={classes.cardContent}>
-                    <Star style={{ color: '#F1B44C' }} />
-                    <Typography>{device.label}</Typography>
-                  </CardContent>
-                </CardActionArea>
-              </Card>
-            </Grid>
-          ))}
         </Grid>
+
+        {favoriteDevices.length > 0 && (
+          <Box marginTop={4}>
+            <Box className={classes.headerWithDivider}>
+              <Typography>{t('favoriteDevices')}</Typography>
+              <Divider className={classes.divider} flexItem />
+            </Box>
+
+            <Box marginTop={3}>
+              <Grid container wrap={'wrap'} spacing={4}>
+                {favoriteDevices.map(device => (
+                  <Grid key={device.id} xs={12} sm={6} md={3} item>
+                    <Card className={classes.card}>
+                      <CardActionArea
+                        style={{ height: '100%' }}
+                        onClick={() =>
+                          dispatchEvent(EVENT.CHANGE_ROUTE, { pathname: `/devices/${device.id}` })
+                        }
+                      >
+                        <CardContent className={classes.cardContent}>
+                          <Star style={{ color: '#F1B44C' }} />
+                          <Typography>{device.label}</Typography>
+                        </CardContent>
+                      </CardActionArea>
+                    </Card>
+                  </Grid>
+                ))}
+              </Grid>
+            </Box>
+          </Box>
+        )}
       </Box>
     </ViewContainer>
   );
