@@ -32,6 +32,10 @@
     "deleteMultipleCertificationAuthorities": "Todas as CAs foram excluídas",
     "createCertificationAuthority": "CA criada",
 
+    "createFlow": "Fluxo Criado com Sucesso",
+    "editFlow": "Fluxo Editado com Sucesso",
+    "deleteFlow": "Fluxo apagado com sucesso",
+
     "createReport": "Relatório criado com sucesso",
     "deleteReport": "Relatório excluído"
   }

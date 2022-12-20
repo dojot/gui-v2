@@ -1,0 +1,11 @@
+{
+  "title": "Fluxos",
+  "createDevice": "Criar um dispositivo",
+  "createMultipleDevices": "Criar vários dispositivos",
+  "createDashboard": "Criar Dashboard",
+  "createTemplate": "Criar Modelo",
+  "createCertificate": "Criar Certificado",
+  "importExport": "Importar/Exportar",
+  "deviceTest": "Device Test",
+  "notAvailableAtTheMoment": "Não Disponível no Momento"
+}

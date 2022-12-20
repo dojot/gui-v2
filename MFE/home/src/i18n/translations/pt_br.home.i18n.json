@@ -9,5 +9,6 @@
   "deviceTest": "Device Test",
   "notAvailableAtTheMoment": "Não Disponível no Momento",
   "fastLinks": "Links rápidos",
-  "favoriteDevices": "Dispositivos favoritos"
+  "favoriteDevices": "Dispositivos favoritos",
+  "createFlow": "Criar um novo Fluxo"
 }

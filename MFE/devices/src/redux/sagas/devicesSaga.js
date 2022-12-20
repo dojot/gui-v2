@@ -168,9 +168,10 @@ export function* handleEditDevice(action) {
 export function* handleCreateDevice(action) {
   try {
     yield put(loadingActions.addLoading(constants.CREATE_DEVICE));
-    const { label, templates, attrs, fingerprint, disabled, successCallback } = action.payload;
+    const { label, id, templates, attrs, fingerprint, disabled, successCallback } = action.payload;
     yield call(Device.createDevice, {
       label,
+      id,
       templates,
       attrs,
       fingerprint,

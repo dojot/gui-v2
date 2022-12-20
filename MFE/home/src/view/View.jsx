@@ -17,20 +17,19 @@ import {
   VerifiedUser,
   Star,
   PhoneIphone,
+  DeviceHub,
 } from '@material-ui/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import { EVENT } from 'sharedComponents/Constants';
 import { dispatchEvent } from 'sharedComponents/Hooks';
 import { actions as deviceActions } from '../redux/modules/devices';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
 import { ViewContainer } from 'sharedComponents/Containers';
 import useStyles from './style';
 import { favoriteDeviceSelector } from '../redux/selectors/devicesSelector';
 
 const Home = ({ isMenuOpen }) => {
   const { t } = useTranslation('home');
-  const history = useHistory();
   const classes = useStyles();
 
   const favoriteDevices = useSelector(favoriteDeviceSelector);
@@ -65,6 +64,11 @@ const Home = ({ isMenuOpen }) => {
       icon: <VerifiedUser style={{ color: '#F46A6A' }} fontSize='large' />,
       translationKey: 'createCertificate',
       route: '/certificates/new',
+    },
+    CREATE_FLOW: {
+      icon: <DeviceHub style={{ color: '#804eb8' }} fontSize='large' />,
+      translationKey: 'createFlow',
+      route: '/flows/new',
     },
   };
 
