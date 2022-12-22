@@ -187,7 +187,7 @@ const ColorPickerAdapter = ({ input: { onChange, value }, changeColor }) => {
       triangle='top-right'
       colors={DEFAULT_COLORS}
       onChange={props => {
-        changeColor(props);
+        changeColor(props.hex);
         onChange(props.hex);
       }}
       color={value}

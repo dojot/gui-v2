@@ -8,5 +8,7 @@
   "importExport": "Import/Export",
   "deviceTest": "Device Test",
   "notAvailableAtTheMoment": "Not Available in The Moment",
+  "fastLinks": "Fast links",
+  "favoriteDevices": "Favorite devices",
   "createFlow": "Create a new flow"
 }

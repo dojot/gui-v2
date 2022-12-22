@@ -3,6 +3,7 @@ import React from 'react';
 import { Box, Grid, Typography, Chip, MenuItem, TextField } from '@material-ui/core';
 import { FilterNone } from '@material-ui/icons';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 import { useTranslation } from 'react-i18next';
 
 import { DataCard } from 'sharedComponents/Cards';
@@ -116,6 +117,15 @@ const Cards = ({
                     {t('cardData.attrsLength', { count: attrsLength })}
                   </Typography>
                 </Box>
+
+                {!!template.created && (
+                  <Box marginTop={1}>
+                    <Typography variant='body2'>
+                      <strong>{moment(template.created).format('L LTS')}</strong>
+                    </Typography>
+                    <Typography variant='body2'>{t('cardData.created')}</Typography>
+                  </Box>
+                )}
               </DataCard>
             </Grid>
           );

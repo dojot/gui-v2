@@ -22,7 +22,8 @@
   "cardData": {
     "templateId": "Template ID",
     "attrsLength": "Property",
-    "attrsLength_plural": "Properties"
+    "attrsLength_plural": "Properties",
+    "created": "Creation Date"
   },
   "deleteTemplateAlert": {
     "title": "Delete Template",
