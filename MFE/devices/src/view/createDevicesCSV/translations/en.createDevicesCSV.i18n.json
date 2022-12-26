@@ -10,9 +10,9 @@
     "csvBoilerplateTitle": "If you need a template with the file fields and reference examples, you can download it below:",
     "csvFormatHint": {
       "title": "The layout of the CSV file above should be:",
-      "paragraph1": "Device name (required), Device ID (optional), Model ID (required), Static attribute name 1 (optional), Static attribute value 1 (optional), ... Static attribute name N (optional), Attribute value static N (optional).",
-      "paragraph2": "Each line of the file must contain at least the fields with the name of the device, the ID of the model to which it refers, and the information 'yes' or 'no' if a certificate should be created for the device.",
-      "paragraph3": "The part of values ​​for static attributes is dynamic for each line of the file: if a static attribute of the model is informed, the value for this static attribute must be informed."
+      "paragraph1": "Device name (required), Device ID (optional), Template ID (required), Static attribute name 1 (optional), Static attribute value 1 (optional), ... Static attribute name N (optional), Attribute value static N (optional).",
+      "paragraph2": "Each line of the file must contain at least the fields with the name of the device, the ID of the template to which it refers, and the information 'yes' or 'no' if a certificate should be created for the device.",
+      "paragraph3": "The part of values ​​for static attributes is dynamic for each line of the file: if a static attribute of the template is informed, the value for this static attribute must be informed."
     }
   },
   "summaryStep": {
