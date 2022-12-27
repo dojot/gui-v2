@@ -21,6 +21,7 @@ const Editor = () => {
 
   const [flowDom, setFlowDom] = useState(undefined);
   const [flowName, setFlowName] = useState('');
+  const [ready, setReady] = useState(false);
 
   const { flowid } = useParams();
 
@@ -39,29 +40,29 @@ const Editor = () => {
   }, [flowid, flowObj]);
 
   useEffect(() => {
-    setTimeout(() => {
-      if (flowObj.flow !== undefined) {
-        RED.nodes.version(null);
-        RED.nodes.import(flowObj.flow);
-        RED.nodes.dirty(false);
-        RED.view.redraw(true);
-        RED.workspaces.show(RED.__currentFlow);
-        setFlowName(flowObj.name);
-      } else {
-        RED.nodes.version(null);
-        RED.nodes.import([]);
-        RED.nodes.dirty(false);
-        RED.view.redraw(true);
-        RED.workspaces.show(RED.__currentFlow);
-      }
-    }, 1000);
-  }, [flowObj]);
+    if (!ready) return;
+    if (flowObj.flow !== undefined) {
+      RED.nodes.version(null);
+      RED.nodes.import(flowObj.flow);
+      RED.nodes.dirty(false);
+      RED.view.redraw(true);
+      RED.workspaces.show(RED.__currentFlow);
+      setFlowName(flowObj.name);
+    } else {
+      RED.nodes.version(null);
+      RED.nodes.import([]);
+      RED.nodes.dirty(false);
+      RED.view.redraw(true);
+      RED.workspaces.show(RED.__currentFlow);
+    }
+  }, [flowObj, ready]);
 
   useEffect(() => {
     if (flowDom === undefined) return;
     window.RED = RED;
     const initDOM = () => {
       $(flowDom).append(nodesHTML);
+      setReady(true);
     };
 
     const initNodes = () => {
