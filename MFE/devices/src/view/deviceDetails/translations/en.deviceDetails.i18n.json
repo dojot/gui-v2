@@ -12,6 +12,8 @@
   "noAssociatedCertificate": "No Associated Certificate",
   "disabledLabel": "Device Disabled",
   "enabledLabel": "Device Enabled",
+  "disabledDeviceHint": "A disabled device cannot send or receive data.",
+  "enabledDeviceHint": "An enabled device can send and/or receive data.",
   "sectionTitles": {
     "templates": "Templates",
     "staticAttrs": "Static Attrs",

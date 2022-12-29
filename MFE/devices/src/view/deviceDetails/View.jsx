@@ -18,6 +18,7 @@ import {
   TableRow,
   TextField,
   Typography,
+  Tooltip,
 } from '@material-ui/core';
 import {
   Block,
@@ -316,12 +317,18 @@ const DeviceDetails = () => {
               </List>
 
               <Box>
-                <Chip
-                  size='large'
-                  icon={deviceData.disabled ? <Block /> : <CheckCircle />}
-                  label={deviceData.disabled ? t('disabledLabel') : t('enabledLabel')}
-                  className={deviceData.disabled ? classes.disabledChip : classes.enabledChip}
-                />
+                <Tooltip
+                  title={deviceData.disabled ? t('disabledDeviceHint') : t('enabledDeviceHint')}
+                  arrow
+                  placement='bottom'
+                >
+                  <Chip
+                    size='large'
+                    icon={deviceData.disabled ? <Block /> : <CheckCircle />}
+                    label={deviceData.disabled ? t('disabledLabel') : t('enabledLabel')}
+                    className={deviceData.disabled ? classes.disabledChip : classes.enabledChip}
+                  />
+                </Tooltip>
               </Box>
             </Grid>
 

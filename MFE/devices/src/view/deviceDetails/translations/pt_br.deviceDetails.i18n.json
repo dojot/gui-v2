@@ -12,6 +12,8 @@
   "noAssociatedCertificate": "Nenhum Certificado Associado",
   "disabledLabel": "Dispositivo Desabilitado",
   "enabledLabel": "Dispositivo Habilitado",
+  "disabledDeviceHint": "Um dispositivo desabilitado não pode enviar ou receber dados.",
+  "enabledDeviceHint": "Um dispositivo habilitado pode enviar e/ou receber dados.",
   "sectionTitles": {
     "templates": "Modelos",
     "staticAttrs": "Atributos Estáticos",

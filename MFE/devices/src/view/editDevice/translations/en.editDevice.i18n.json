@@ -6,5 +6,6 @@
   "attrsTableTitle": "Device Attrs",
   "attrsTableCaption": "(The static attrs are editable)",
   "noAttrs": "No Attr to Show",
-  "disabledCheckboxLabel": "Device disabled"
+  "disabledCheckboxLabel": "Device disabled",
+  "disabledDeviceHint": "A disabled device cannot send or receive data."
 }
