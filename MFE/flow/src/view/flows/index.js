@@ -1,1 +1,1 @@
-export Flows from './View';
+export { default } from './View';

@@ -8,7 +8,7 @@ export default () => {
   const history = useHistory();
 
   useEffect(() => {
-    const { onParentNavigate } = mount(ref.current, history);
+    const { onParentNavigate } = mount(ref.current);
     const unlisten = history.listen(onParentNavigate);
     return () => unlisten();
   }, []);

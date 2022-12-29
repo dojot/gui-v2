@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useCallback } from 'react';
 
 import {
   Box,
@@ -15,14 +15,25 @@ import { MoreHoriz } from '@material-ui/icons';
 import moment from 'moment';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
-import { NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { useDispatch } from 'react-redux';
+import { NEW_CHIP_HOURS_AGO, DATA_ORDER } from 'sharedComponents/Constants';
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { isSomeHoursAgo } from 'sharedComponents/Utils';
 
+import { actions as flowsActions } from '../../../redux/modules/flows';
 import { useDataTableStyles } from './style';
 
-const DataTable = ({ flows, handleClickFlow, handleSetFlowOptionsMenu }) => {
+const DataTable = ({
+  flows,
+  handleClickFlow,
+  handleSetFlowOptionsMenu,
+  orderBy,
+  setOrderBy,
+  order,
+  setOrder,
+}) => {
   const { t } = useTranslation(['common']);
+  const dispatch = useDispatch();
   const classes = useDataTableStyles();
 
   const headCells = useMemo(
@@ -52,6 +63,21 @@ const DataTable = ({ flows, handleClickFlow, handleSetFlowOptionsMenu }) => {
     [t],
   );
 
+  const handleSort = useCallback(
+    (_, propertyName) => {
+      if (propertyName === orderBy) {
+        const newOrder = order === DATA_ORDER.ASC ? DATA_ORDER.DESC : DATA_ORDER.ASC;
+        setOrder(newOrder);
+        dispatch(flowsActions.sortFlows(propertyName, newOrder, flows));
+      } else {
+        setOrderBy(propertyName);
+        setOrder(DATA_ORDER.ASC);
+        dispatch(flowsActions.sortFlows(propertyName, DATA_ORDER.ASC, flows));
+      }
+    },
+    [order, orderBy, flows],
+  );
+
   return (
     <Paper elevation={0}>
       <TableContainer>
@@ -61,7 +87,9 @@ const DataTable = ({ flows, handleClickFlow, handleSetFlowOptionsMenu }) => {
             cells={headCells}
             rowCount={flows.length}
             disableCheckbox
-            disableOrderBy
+            order={order}
+            orderBy={orderBy}
+            onRequestSort={handleSort}
           />
 
           <TableBody>
