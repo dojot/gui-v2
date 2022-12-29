@@ -317,11 +317,7 @@ const DeviceDetails = () => {
               </List>
 
               <Box>
-                <Tooltip
-                  title={deviceData.disabled ? t('disabledDeviceHint') : t('enabledDeviceHint')}
-                  arrow
-                  placement='bottom'
-                >
+                <Tooltip title={t('disabledDeviceHint')} arrow placement='bottom'>
                   <Chip
                     size='large'
                     icon={deviceData.disabled ? <Block /> : <CheckCircle />}

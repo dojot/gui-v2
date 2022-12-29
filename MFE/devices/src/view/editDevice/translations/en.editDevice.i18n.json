@@ -7,5 +7,5 @@
   "attrsTableCaption": "(The static attrs are editable)",
   "noAttrs": "No Attr to Show",
   "disabledCheckboxLabel": "Device disabled",
-  "disabledDeviceHint": "A disabled device cannot send or receive data."
+  "disabledDeviceHint": "The dojot platform does not store data from disabled devices"
 }

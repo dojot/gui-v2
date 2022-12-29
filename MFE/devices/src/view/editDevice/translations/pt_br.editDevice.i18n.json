@@ -7,5 +7,5 @@
   "attrsTableCaption": "(Os atributos estáticos são editáveis)",
   "noAttrs": "Nenhum Atributo para Exibir",
   "disabledCheckboxLabel": "Dispositivo desabilitado",
-  "disabledDeviceHint": "Um dispositivo desabilitado não pode enviar ou receber dados."
+  "disabledDeviceHint": "A plataforma dojot não armazena dados de dispositivos desabilitados"
 }
