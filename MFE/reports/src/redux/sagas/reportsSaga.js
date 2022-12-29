@@ -175,9 +175,14 @@ export function* watchDownloadReport() {
   yield takeLatest(constants.DOWNLOAD_REPORT, handleDownloadReport);
 }
 
+export function* watchRefreshReportList() {
+  yield takeLatest(constants.REFRESH_REPORT_LIST, getCurrentReportsPageAgain);
+}
+
 export const reportsSaga = [
   fork(watchGetReports),
   fork(watchCreateReport),
   fork(watchDeleteReport),
   fork(watchDownloadReport),
+  fork(watchRefreshReportList),
 ];
