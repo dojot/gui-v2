@@ -26,6 +26,7 @@ const devConfig = {
     },
     extensions: ['.js', '.jsx'],
   },
+  devtool: 'source-map',
   devServer: {
     port: 8081,
     historyApiFallback: {
