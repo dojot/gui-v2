@@ -12,6 +12,7 @@
   "noAssociatedCertificate": "Nenhum Certificado Associado",
   "disabledLabel": "Dispositivo Desabilitado",
   "enabledLabel": "Dispositivo Habilitado",
+  "disabledDeviceHint": "A plataforma dojot não armazena dados de dispositivos desabilitados",
   "sectionTitles": {
     "templates": "Modelos",
     "staticAttrs": "Atributos Estáticos",

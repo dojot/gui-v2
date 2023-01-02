@@ -12,6 +12,7 @@
   "noAssociatedCertificate": "No Associated Certificate",
   "disabledLabel": "Device Disabled",
   "enabledLabel": "Device Enabled",
+  "disabledDeviceHint": "The dojot platform does not store data from disabled devices",
   "sectionTitles": {
     "templates": "Templates",
     "staticAttrs": "Static Attrs",
