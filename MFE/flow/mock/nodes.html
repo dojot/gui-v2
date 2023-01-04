@@ -1418,40 +1418,34 @@
             let node = this;
 
             // request to the device manager all devices
-            async function list_all(page) {
+            async function list_all(page = {number: 1, size: 20}) {
                 return new Promise((resolve, reject) => {
-                    if (!page) {
-                        page = 1;
-                    }
-
-                    let extra = `?page_num=${page}`
-                    let orderByLabel = 'sortBy=label';
-
-                    extra += '&' + orderByLabel;
-
-                    util.GET(`/device${extra}`).then((list) => {
-                        list.devices.map((dev) => {
-                            listDevices.append('<option data-value="' + dev.id +
-                                '" value="' + dev.label + ' (' + dev.id + ')"/>');
-                        });
-                        if (list.pagination.has_next) {
-                            return list_all(list.pagination.next_page).then(() => {
+                  Devices.getDevicesList(page)
+                    .then(({getDevices}) => {
+                      getDevices.devices.map((dev) => {
+                              listDevices.append('<option data-value="' + dev.id +
+                                  '" value="' + dev.label + ' (' + dev.id + ')"/>');
+                          });
+                      if (getDevices.currentPage !== getDevices.totalPages) {
+                                return list_all({number: getDevices.currentPage + 1, size: 20}).then(() => {
+                                    return resolve();
+                                });
+                            } else {
+                                node._devices_loaded = true;
                                 return resolve();
-                            });
-                        } else {
-                            node._devices_loaded = true;
-                            return resolve();
-                        }
-                    }).catch((error) => {
+                            }
+                    })
+                    .catch((error) => {
                         console.error(`Failed to retrieve the list of available devices. Error ${error}`);
                         node._devices_loaded = false;
                         return reject();
-                    });
+                    })
                 });
             }
 
             list_all().then(() => {
-                if (node.device_id !== '') {
+              console.log(node.device_id);
+              if (node.device_id !== '') {
                     let selectedDevice = $('#node-input-device');
                     let configuredDeviceEntry = listDevices.find('option[data-value="' + node.device_id + '"]');
                     if (configuredDeviceEntry.attr('value')) {
@@ -1464,7 +1458,8 @@
         },
         oneditsave: function () {
             let node = this;
-            let selectedDevice = $('#node-input-device');
+          console.log(node.device_id);
+          let selectedDevice = $('#node-input-device');
             let entry = $('#node-input-list_device_id').find(
                 'option[value="' + selectedDevice.val() + '"]');
             if (entry.attr('data-value')) {
@@ -1543,24 +1538,14 @@
             var listDevices = $('#node-input-list_devices_id');
 
             // this will only work from the device management interface
-            function list_all(page) {
-
-                if (page === undefined) {
-                    page = 1;
-                }
-
-                var extra = `?page_num=${page}`
-                var orderByLabel = 'sortBy=label';
-
-                extra += '&' + orderByLabel;
-
-                util.GET(`/device${extra}`).then((list) => {
-                    list.devices.map((dev) => {
+            function list_all(page = {number: 1, size: 20}) {
+              Services.getDevicesList(page).then(({getDevices}) => {
+                getDevices.devices.map((dev) => {
                         listDevices.append('<option data-value="' + dev.id +
                             '" value="' + dev.label + ' (' + dev.id + ')"/>');
                     });
-                    if (list.pagination.has_next) {
-                        list_all(list.pagination.next_page);
+                if (getDevices.currentPage !== getDevices.totalPages) {
+                  list_all({number: getDevices.currentPage + 1, size: 20})
                     }
                 }).catch((error) => {
                     console.error('Failed to retrieve the list of available devices', error);
@@ -1657,28 +1642,20 @@
             displayDeviceSourceElement();
 
             // this will only work from the device management interface
-            function list_all(page) {
-                if (page === undefined) {
-                    page = 1;
-                }
 
-                var extra = `?page_num=${page}`
-                var orderByLabel = 'sortBy=label';
-
-                extra += '&' + orderByLabel;
-
-                util.GET(`/device${extra}`).then((list) => {
-                    list.devices.map((dev) => {
-                        listDevices.append('<option data-value="' + dev.id +
-                            '" value="' + dev.label + ' (' + dev.id + ')"/>');
-                    });
-                    if (list.pagination.has_next) {
-                        list_all(list.pagination.next_page);
-                    }
-                }).catch((error) => {
-                    console.error('Failed to retrieve the list of available devices', error);
-                });
-            }
+          function list_all(page = {number: 1, size: 20}) {
+            Services.getDevicesList(page).then(({getDevices}) => {
+              getDevices.devices.map((dev) => {
+                listDevices.append('<option data-value="' + dev.id +
+                  '" value="' + dev.label + ' (' + dev.id + ')"/>');
+              });
+              if (getDevices.currentPage !== getDevices.totalPages) {
+                list_all({number: getDevices.currentPage + 1, size: 20})
+              }
+            }).catch((error) => {
+              console.error('Failed to retrieve the list of available devices', error);
+            });
+          }
 
             $('#node-input-device_source').css('width', '70%');
 
@@ -1820,30 +1797,21 @@
             });
 
             // request to the device manager all devices
-            function list_all(page) {
+            function list_all(page = {number: 1, size: 20}) {
                 return new Promise((resolve, reject) => {
-                    if (page === undefined) {
-                        page = 1;
-                    }
-
-                    var extra = `?page_num=${page}`
-                    var orderByLabel = 'sortBy=label';
-
-                    extra += '&' + orderByLabel;
-
-                    util.GET(`/device${extra}`).then((list) => {
-                        list.devices.map((dev) => {
+                  Services.getDevicesList(page).then(({getDevices}) => {
+                        getDevices.devices.map((dev) => {
                             listDevices.append('<option data-value="' + dev.id +
                                 '" value="' + dev.label + ' (' + dev.id + ')"/>');
                         });
-                        if (list.pagination.has_next) {
-                            return list_all(list.pagination.next_page).then(() => {
-                                return resolve();
-                            });
-                        } else {
-                            node._devices_loaded = true;
-                            return resolve();
-                        }
+                    if (getDevices.currentPage !== getDevices.totalPages) {
+                      return list_all({number: getDevices.currentPage + 1, size: 20}).then(() => {
+                        return resolve();
+                      });
+                    } else {
+                      node._devices_loaded = true;
+                      return resolve();
+                    }
                     }).catch((error) => {
                         console.error('Failed to retrieve the list of available devices', error);
                         node._devices_loaded = false;
@@ -1960,14 +1928,14 @@
 <script type="text/x-red" data-template-name="publish-ftp">
     <div class="form-row">
         <label for="node-input-name">
-            <i class="fa fa-tag"></i> 
+            <i class="fa fa-tag"></i>
             <span data-i18n="label.name"></span>
         </label>
         <input type="text" id="node-input-name">
     </div>
     <div class="form-row">
         <label for="node-input-encode" style="width: 22%;">
-            <i class="fa fa-file-code-o"></i> 
+            <i class="fa fa-file-code-o"></i>
             <span data-i18n="label.encode"></span>
         </label>
         <select type="text" id="node-input-encode" style="width: 70%;">
@@ -2215,30 +2183,20 @@
             let node = this;
 
             // request to the device manager all templates
-            async function list_all(page) {
+            async function list_all(page = {number: 1, size: 20}) {
                 return new Promise((resolve, reject) => {
-                    if (!page) {
-                        page = 1;
-                    }
-
-                    let extra = `?page_num=${page}`
-                    let orderByLabel = 'sortBy=label';
-
-                    extra += '&' + orderByLabel;
-
-                    util.GET(`/template${extra}`).then((list) => {
-                        list.templates.map((template) => {
+                  Services.getTemplatesList(page).then(({getTemplates}) => {
+                    getTemplates.templates.map((template) => {
                             listTemplates.append('<option data-value="' + template.id +
                                 '" value="' + template.label + ' (' + template.id + ')"/>');
                         });
-                        if (list.pagination.has_next) {
-                            return list_all(list.pagination.next_page).then(() => {
-                                return resolve();
-                            });
-                        } else {
-                            node._templates_loaded = true;
-                            return resolve();
-                        }
+                    if (getTemplates.currentPage !== getTemplates.totalPages) {
+                      return list_all({number: getTemplates.currentPage + 1, size: 20}).then(() => {
+                        return resolve();
+                      });
+                    } else {
+                      return resolve();
+                    }
                     }).catch((error) => {
                         console.error('Failed to retrieve the list of available templates', error);
                         node._templates_loaded = false;
@@ -2340,27 +2298,20 @@
             let node = this;
 
             // this will only work from the device management interface
-            function list_all(page) {
-                var orderBy = 'sortBy=label';
-                var extra = `?page_num=${page}&${orderBy}`
-                if (page === undefined) {
-                    extra = '?page_num=1&' + orderBy;
-                }
-
-                util.GET(`/template${extra}`).then((list) => {
-                    list.templates.map((dev) => {
-                        select.options[select.options.length] = new Option(dev.label, JSON.stringify({'id': dev.id}));
-                    });
-                    if (list.pagination.has_next) {
-                        list_all(list.pagination.next_page);
-                    } else {
-                        select.value = JSON.stringify(node.device_template);
-                    }
-                }).catch((error) => {
-                    console.error('Failed to retrieve the list of available devices', error);
-                });
-            }
-
+          function list_all(page = {number: 1, size: 20}) {
+            Services.getTemplatesList(page).then(({getTemplates}) => {
+              getTemplates.templates.map((dev) => {
+                select.options[select.options.length] = new Option(dev.label, JSON.stringify({'id': dev.id}));
+              });
+              if (getTemplates.currentPage !== getTemplates.totalPages) {
+                list_all({number: getTemplates.currentPage + 1, size: 20})
+              } else {
+                select.value = JSON.stringify(node.device_template);
+              }
+            }).catch((error) => {
+              console.error('Failed to retrieve the list of available devices', error);
+            });
+          }
             list_all();
         },
 
@@ -2453,41 +2404,30 @@
             displayDeviceSourceElement();
 
             // this will only work from the device management interface
-            function list_all(page) {
-                if (page === undefined) {
-                    page = 1;
-                }
+          function list_all(page = {number: 1, size: 20}) {
+            var listActuate = [];
+            Services.getCompleteDevice(page).then(({getDevices}) => {
+              getDevices.devices.map((dev) => {
+                dev.attrs.forEach(subItem => {
+                  if (subItem.type === ACTUATOR) {
+                    listActuate.push(dev);
+                  }
+                })
+              });
 
-                var extra = `?page_num=${page}`
-                var orderByLabel = 'sortBy=label';
-
-                extra += '&' + orderByLabel;
-                var listActuate = [];
-                util.GET(`/device${extra}`).then((list) => {
-                    list.devices.map((dev) => {
-                        for (let template in dev.attrs) {
-                            for (let attr of dev.attrs[template]) {
-                                if (attr.type === ACTUATOR) {
-                                    listActuate.push(dev);
-                                }
-                            }
-                        }
-                    });
-
-                    if (listActuate) {
-                        listActuate.map((dev) => {
-                            listDevices.append('<option data-value="' + dev.id +
-                                '" value="' + dev.label + ' (' + dev.id + ')"/>');
-                        });
-                    }
-
-                    if (list.pagination.has_next) {
-                        list_all(list.pagination.next_page);
-                    }
-                }).catch((error) => {
-                    console.error('Failed to retrieve the list of available devices', error);
+              if (listActuate) {
+                listActuate.map((dev) => {
+                  listDevices.append('<option data-value="' + dev.id + '" value="' + dev.label + ' (' + dev.id + ')"/>');
                 });
-            }
+              }
+
+              if (getDevices.currentPage !== getDevices.totalPages) {
+                list_all({number: getDevices.currentPage + 1, size: 20})
+              }
+            }).catch((error) => {
+              console.error('Failed to retrieve the list of available devices', error);
+            });
+          }
 
             $('#node-input-device_source').css('width', '70%');
 
@@ -2630,48 +2570,38 @@
             });
 
             // request to the device manager all devices
-            function list_all(page) {
-                return new Promise((resolve, reject) => {
-                    if (page === undefined) {
-                        page = 1;
+          function list_all(page = {number: 1, size: 20}) {
+            return new Promise((resolve, reject) => {
+              var listActuate = [];
+              Services.getCompleteDevice(page).then(({getDevices}) => {
+                getDevices.devices.map((dev) => {
+                  dev.attrs.forEach(subItem => {
+                    if (subItem.type === ACTUATOR) {
+                      listActuate.push(dev);
                     }
-
-                    var extra = `?page_num=${page}`
-                    var orderByLabel = 'sortBy=label';
-
-                    extra += '&' + orderByLabel;
-                    var listActuate = [];
-                    util.GET(`/device${extra}`).then((list) => {
-                        list.devices.map((dev) => {
-                            for (let template in dev.attrs) {
-                                for (let attr of dev.attrs[template]) {
-                                    if (attr.type === ACTUATOR) {
-                                        listActuate.push(dev);
-                                    }
-                                }
-                            }
-                        });
-                        if (listActuate) {
-                            listActuate.map((dev) => {
-                                listDevices.append('<option data-value="' + dev.id +
-                                    '" value="' + dev.label + ' (' + dev.id + ')"/>');
-                            });
-                        }
-                        if (list.pagination.has_next) {
-                            return list_all(list.pagination.next_page).then(() => {
-                                return resolve();
-                            });
-                        } else {
-                            node._devices_loaded = true;
-                            return resolve();
-                        }
-                    }).catch((error) => {
-                        console.error('Failed to retrieve the list of available devices', error);
-                        node._devices_loaded = false;
-                        return reject();
-                    });
+                  })
                 });
-            }
+                if (listActuate) {
+                  listActuate.map((dev) => {
+                    listDevices.append('<option data-value="' + dev.id +
+                      '" value="' + dev.label + ' (' + dev.id + ')"/>');
+                  });
+                }
+                if (getDevices.currentPage !== getDevices.totalPages) {
+                  return list_all({number: getDevices.currentPage + 1, size: 20}).then(() => {
+                    return resolve();
+                  });
+                } else {
+                  node._devices_loaded = true;
+                  return resolve();
+                }
+              }).catch((error) => {
+                console.error('Failed to retrieve the list of available devices', error);
+                node._devices_loaded = false;
+                return reject();
+              });
+            });
+          }
 
             $('#node-input-device_source').css('width', '70%');
 

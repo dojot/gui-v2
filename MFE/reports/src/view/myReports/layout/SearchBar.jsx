@@ -1,14 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import { Box, CircularProgress, IconButton, InputAdornment, TextField } from '@material-ui/core';
-import { Search, Close } from '@material-ui/icons';
+import {
+  Box,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  TextField,
+  Tooltip,
+} from '@material-ui/core';
+import { Search, Close, Refresh } from '@material-ui/icons';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { useDebounce } from 'sharedComponents/Hooks';
 import { useSearchBarStyles } from './style';
 
-const SearchBar = ({ lastSearchedText, handleSearchReport }) => {
+const SearchBar = ({ lastSearchedText, handleSearchReport, updateReportList }) => {
   const { t } = useTranslation(['myReports', 'common']);
   const classes = useSearchBarStyles();
 
@@ -49,6 +56,11 @@ const SearchBar = ({ lastSearchedText, handleSearchReport }) => {
   return (
     <Box className={classes.searchContainer} paddingY={1} paddingX={2} margin={0}>
       <Box className={classes.leftSide}>
+        <Tooltip title={t('updateList')} arrow>
+          <IconButton onClick={updateReportList}>
+            <Refresh />
+          </IconButton>
+        </Tooltip>
         <TextField
           inputRef={searchInputRef}
           className={classes.searchTextField}
@@ -87,6 +99,7 @@ const SearchBar = ({ lastSearchedText, handleSearchReport }) => {
 SearchBar.propTypes = {
   lastSearchedText: PropTypes.string,
   handleSearchReport: PropTypes.func,
+  updateReportList: PropTypes.func.isRequired,
 };
 
 SearchBar.defaultProps = {

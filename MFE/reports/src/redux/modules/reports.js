@@ -6,12 +6,15 @@ const CREATE_REPORT = 'app/reports/CREATE_REPORT';
 const UPDATE_REPORTS = 'app/reports/UPDATE_REPORTS';
 const DELETE_REPORT = 'app/reports/DELETE_REPORT';
 const DOWNLOAD_REPORT = 'app/reports/DOWNLOAD_REPORT';
+const REFRESH_REPORT_LIST = 'app/reports/REFRESH_REPORT_LIST';
+
 export const constants = {
   GET_REPORTS,
   CREATE_REPORT,
   UPDATE_REPORTS,
   DELETE_REPORT,
   DOWNLOAD_REPORT,
+  REFRESH_REPORT_LIST,
 };
 
 export const updateReports = createAction(UPDATE_REPORTS, payload => {
@@ -21,6 +24,8 @@ export const updateReports = createAction(UPDATE_REPORTS, payload => {
 
   return actionPayload;
 });
+
+export const refreshReportList = createAction(REFRESH_REPORT_LIST, payload => payload);
 
 export const getReports = createAction(GET_REPORTS, payload => ({
   page: payload.page,
@@ -55,6 +60,7 @@ export const actions = {
   updateReports,
   deleteReport,
   downloadReport,
+  refreshReportList,
 };
 
 export const reducers = {

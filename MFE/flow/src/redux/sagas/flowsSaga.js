@@ -24,11 +24,16 @@ export function* handleGetNodes() {
     yield put(loadingActions.removeLoading(constants.GET_NODES));
   }
 }
-export function* handleGetFlows() {
+export function* handleGetFlows(sort) {
   try {
     yield put(loadingActions.addLoading(constants.GET_FLOWS));
+    const { orderBy, order } = sort.payload;
     const { getAllFlows } = yield call(Flows.getFlowsList, '');
-    if (getAllFlows) yield put(actions.updateFlow(getAllFlows));
+    if (getAllFlows && orderBy) {
+      yield put(actions.sortFlows(orderBy, order, getAllFlows.flows));
+    } else {
+      yield put(actions.updateFlow(getAllFlows));
+    }
   } catch (e) {
     yield put(actions.updateFlow({ flows: {} }));
     dispatchEvent(EVENT.GLOBAL_TOAST, {

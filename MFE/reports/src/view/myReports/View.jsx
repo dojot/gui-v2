@@ -126,6 +126,10 @@ const MyReports = () => {
     );
   };
 
+  const handleUpdateList = () => {
+    dispatch(reportActions.refreshReportList());
+  };
+
   useEffect(() => {
     dispatch(
       reportActions.getReports({
@@ -158,7 +162,11 @@ const MyReports = () => {
         <ReportErrorAlert isOpen={isShowingErrorAlert} handleClose={handleCloseErrorAlert} />
 
         <Box className={classes.container}>
-          <SearchBar lastSearchedText={searchText} handleSearchReport={handleSearchReport} />
+          <SearchBar
+            lastSearchedText={searchText}
+            handleSearchReport={handleSearchReport}
+            updateReportList={handleUpdateList}
+          />
 
           <Box className={classes.content}>
             {isLoadingReports ? (

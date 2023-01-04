@@ -3,6 +3,7 @@
   "createNewReport": "Criar novo relatório",
   "emptyListMessage": "Nenhum relatório encontrado",
   "reportErrorAlertMessage": "Não será possível gerar este relatório",
+  "updateList": "Atualizar lista",
   "dataTableHead": {
     "label": "Nome do relatório",
     "requestDate": "Data de solicitação",

@@ -10,6 +10,7 @@ import {
   Typography,
   FormControlLabel,
   Checkbox,
+  Tooltip,
 } from '@material-ui/core';
 import { Close, Check } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
@@ -282,12 +283,18 @@ const EditDevice = () => {
             </Box>
 
             <Box>
-              <FormControlLabel
-                label={t('disabledCheckboxLabel')}
-                control={
-                  <Checkbox checked={isDisabled} onChange={handleToggleDisabled} color='primary' />
-                }
-              />
+              <Tooltip title={t('disabledDeviceHint')} arrow placement='bottom'>
+                <FormControlLabel
+                  label={t('disabledCheckboxLabel')}
+                  control={
+                    <Checkbox
+                      checked={isDisabled}
+                      onChange={handleToggleDisabled}
+                      color='primary'
+                    />
+                  }
+                />
+              </Tooltip>
             </Box>
           </Box>
 

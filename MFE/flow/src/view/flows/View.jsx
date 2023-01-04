@@ -5,11 +5,11 @@ import { DeviceHub } from '@material-ui/icons';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { DEVICES_PAGE_KEYS, VIEW_MODE } from 'sharedComponents/Constants';
+import { DEVICES_PAGE_KEYS, VIEW_MODE, DATA_ORDER } from 'sharedComponents/Constants';
 import { ViewContainer } from 'sharedComponents/Containers';
 import { AlertDialog } from 'sharedComponents/Dialogs';
 import { EmptyPlaceholder } from 'sharedComponents/EmptyPlaceholder';
-import { useIsLoading, usePersistentState } from 'sharedComponents/Hooks';
+import { useIsLoading, usePersistentState, useSearchParamState } from 'sharedComponents/Hooks';
 
 import { actions as flowsActions, constants } from '../../redux/modules/flows';
 import { flowsSelector } from '../../redux/selectors/flowsSelector';
@@ -32,6 +32,18 @@ const Flows = () => {
   const [viewMode, setViewMode] = usePersistentState({
     defaultValue: VIEW_MODE.TABLE,
     key: DEVICES_PAGE_KEYS.VIEW_MODE,
+  });
+
+  const [orderBy, setOrderBy] = useSearchParamState({
+    key: 'ob',
+    type: 'string',
+    defaultValue: 'created',
+  });
+
+  const [order, setOrder] = useSearchParamState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
   });
 
   const [flowOptionsMenu, setFlowOptionsMenu] = useState(null);
@@ -73,7 +85,7 @@ const Flows = () => {
   }, [setIsShowingDeleteAlert]);
 
   useEffect(() => {
-    dispatch(flowsActions.getFlows());
+    dispatch(flowsActions.getFlows({ orderBy, order }));
   }, [dispatch]);
 
   return (
@@ -112,6 +124,10 @@ const Flows = () => {
                   flows={flows}
                   handleClickFlow={handleClickFlow}
                   handleSetFlowOptionsMenu={setFlowOptionsMenu}
+                  orderBy={orderBy}
+                  setOrderBy={setOrderBy}
+                  order={order}
+                  setOrder={setOrder}
                 />
               )}
 

@@ -8,6 +8,7 @@ import { ViewContainer } from 'sharedComponents/Containers';
 import nodesHTML from '../../../mock/nodes.html';
 import nodesJSON from '../../../mock/nodes.json';
 import './style/app.scss';
+import { Devices as Services } from '../../adapters/services/index';
 import { actions as flowsActions } from '../../redux/modules/flows';
 import { selectedFlowSelector } from '../../redux/selectors/flowsSelector';
 import LabelBar from './layout/LabelBar';
@@ -30,6 +31,7 @@ const Editor = () => {
     RED.workspaces.remove(null);
     RED.nodes.clear();
     window.RED = null;
+    window.Services = null;
     setFlowDom(null);
   };
 
@@ -60,6 +62,7 @@ const Editor = () => {
   useEffect(() => {
     if (flowDom === undefined) return;
     window.RED = RED;
+    window.Services = Services;
     const initDOM = () => {
       $(flowDom).append(nodesHTML);
       setReady(true);
