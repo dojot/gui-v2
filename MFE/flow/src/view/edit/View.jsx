@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 
+import ace from 'ace-builds';
 import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
@@ -62,6 +63,7 @@ const Editor = () => {
   useEffect(() => {
     if (flowDom === undefined) return;
     window.RED = RED;
+    window.ace = ace;
     window.Services = Services;
     const initDOM = () => {
       $(flowDom).append(nodesHTML);

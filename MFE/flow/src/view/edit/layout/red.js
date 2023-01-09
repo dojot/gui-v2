@@ -16,7 +16,7 @@
  **/
 import HttpApi from 'i18next-http-backend'
 
-const lng = 'pt-BR';
+const lng = 'en';
 const baseURL = "/"
 
 const mock = {
