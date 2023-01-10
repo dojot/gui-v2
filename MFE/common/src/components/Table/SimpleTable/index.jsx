@@ -38,7 +38,7 @@ const SortButton = ({ changeSorting, column, sortField }) => {
   );
 };
 
-const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
+const SimpleTable = ({ columns, rows, hasTimestamp, withRank, name, updatedAt }) => {
   const { head, root, lines } = useStyles();
   const [sortField, setSortField] = useState({ order: -1, field: '' });
   const [rws, setRws] = useState([]);
@@ -84,7 +84,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
             <TableCell key='rank' classes={{ head }}>
               <SortButton
                 changeSorting={changeSorting}
-                column={{ dataKey: 'deviceLabel', name: 'Nome' }}
+                column={{ dataKey: 'deviceLabel', name: name }}
                 sortField={sortField}
               />
             </TableCell>
@@ -104,7 +104,7 @@ const SimpleTable = ({ columns, rows, hasTimestamp, withRank }) => {
               <TableCell key='timestamp' classes={{ head }} align='right'>
                 <SortButton
                   changeSorting={changeSorting}
-                  column={{ dataKey: 'ts', name: 'Atualizado às' }}
+                  column={{ dataKey: 'ts', name: updatedAt }}
                   sortField={sortField}
                 />
               </TableCell>
@@ -150,6 +150,8 @@ SimpleTable.defaultProps = {
   rows: [],
   hasTimestamp: false,
   withRank: false,
+  name: '',
+  updatedAt: '',
 };
 
 SimpleTable.propTypes = {
@@ -162,6 +164,8 @@ SimpleTable.propTypes = {
   rows: PropTypes.array,
   hasTimestamp: PropTypes.bool,
   withRank: PropTypes.bool,
+  name: PropTypes.string,
+  updatedAt: PropTypes.string,
 };
 
 export default SimpleTable;

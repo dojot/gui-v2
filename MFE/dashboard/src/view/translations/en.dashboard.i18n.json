@@ -26,7 +26,9 @@
   },
   "table": {
     "title": "Table",
-    "description": "Represents data through a tabular structure"
+    "description": "Represents data through a tabular structure",
+    "name": "Name",
+    "updatedAt": "Updated at"
   },
   "bubble": {
     "title": "Bubble Chart",
