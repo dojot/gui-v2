@@ -110,17 +110,6 @@
     ]
   },
   {
-    "id": "dojot/publish-ftp",
-    "name": "publish-ftp",
-    "module": "dojot",
-    "version": "1.0.0",
-    "enabled": true,
-    "local": true,
-    "types": [
-      "publish-ftp"
-    ]
-  },
-  {
     "id": "dojot/notification",
     "name": "notification",
     "module": "dojot",
