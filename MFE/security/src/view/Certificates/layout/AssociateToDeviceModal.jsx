@@ -22,7 +22,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
 import { DialogHeader } from 'sharedComponents/Dialogs';
-import { ROWS_PER_PAGE_OPTIONS, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
+import { ROWS_PER_PAGE_OPTIONS, NEW_CHIP_HOURS_AGO, DATA_ORDER } from 'sharedComponents/Constants';
 import { useIsLoading } from 'sharedComponents/Hooks';
 import { isSomeHoursAgo } from 'sharedComponents/Utils';
 import { actions as certificateActions } from '../../../redux/modules/certificates';
@@ -47,6 +47,22 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
   const [page, setPage] = useState(0);
   const [selectedDeviceId, setSelectedDeviceId] = useState('');
   const [rowsPerPage, setRowsPerPage] = useState(ROWS_PER_PAGE_OPTIONS[0]);
+
+  const [orderBy, setOrderBy] = useState({
+    key: 'ob',
+    type: 'string',
+    defaultValue: '',
+  });
+
+  const [order, setOrder] = useState({
+    key: 'or',
+    type: 'string',
+    defaultValue: DATA_ORDER.ASC,
+    valueFormatter(value, defaultValue) {
+      if (Object.values(DATA_ORDER).includes(value)) return value;
+      return defaultValue;
+    },
+  });
 
   const headCells = useMemo(
     () => [
@@ -97,6 +113,20 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
     );
   };
 
+  const handleRequestSort = (_, property) => {
+    console.log('_: ', _);
+    console.log('property: ', property);
+    const isSameProperty = orderBy === property;
+    if (isSameProperty) {
+      const isAsc = order === DATA_ORDER.ASC;
+      setOrder(isAsc ? DATA_ORDER.DESC : DATA_ORDER.ASC);
+      setOrderBy(isAsc ? property : '');
+    } else {
+      setOrder(DATA_ORDER.ASC);
+      setOrderBy(property);
+    }
+  };
+
   useEffect(() => {
     dispatch(
       deviceActions.getDevices({
@@ -104,9 +134,10 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
           number: page + 1,
           size: rowsPerPage,
         },
+        sortBy: orderBy ? `${order}:${orderBy}` : undefined,
       }),
     );
-  }, [dispatch, page, rowsPerPage]);
+  }, [dispatch, page, rowsPerPage, order, orderBy]);
 
   useEffect(() => {
     return () => {
@@ -136,14 +167,16 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
               cells={headCells}
               rowCount={devices.length}
               startExtraCells={<TableCell padding='checkbox' style={{ padding: '1.6rem 0' }} />}
-              disableOrderBy
               disableCheckbox
+              onRequestSort={handleRequestSort}
+              order={order}
+              orderBy={orderBy}
             />
 
             {isLoadingDevices ? (
               <TableBody>
                 <TableRow>
-                  <TableCell colSpan={4} align='center'>
+                  <TableCell align='center'>
                     <CircularProgress />
                   </TableCell>
                 </TableRow>
