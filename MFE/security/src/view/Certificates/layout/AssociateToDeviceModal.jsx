@@ -114,8 +114,6 @@ const AssociateToDeviceModal = ({ isOpen, certificate, handleHideDevicesToAssoci
   };
 
   const handleRequestSort = (_, property) => {
-    console.log('_: ', _);
-    console.log('property: ', property);
     const isSameProperty = orderBy === property;
     if (isSameProperty) {
       const isAsc = order === DATA_ORDER.ASC;
