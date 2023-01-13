@@ -22,7 +22,7 @@
 
     "createCertificate": "Certificate created",
     "deleteCertificate": "Certificate deleted",
-    "deleteMultipleCertificates": "All certificates were deleted",
+    "deleteMultipleCertificates": "All selected certificates were deleted",
     "disassociateDevice": "Certificate disassociated from device",
     "associateDevice": "Certificate associated with the device",
     "addedCertificate": "Added certificate",
