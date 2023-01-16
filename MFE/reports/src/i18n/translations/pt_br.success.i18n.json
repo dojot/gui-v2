@@ -21,7 +21,7 @@
 
     "createCertificate": "Certificado criado",
     "deleteCertificate": "Certificado excluído",
-    "deleteMultipleCertificates": "Todos os certificados foram excluídos",
+    "deleteMultipleCertificates": "Todos os certificados selecionados foram excluídos",
     "disassociateDevice": "Certificado desassociado do dispositivo",
     "associateDevice": "Certificado associado ao dispositivo",
     "addedCertificate": "Certificado adicionado",
