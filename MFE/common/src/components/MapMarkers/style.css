@@ -1,0 +1,36 @@
+.marker {
+    /* Set the marker size here */
+    width: 2rem;
+    height: 2rem;
+    border-radius: 2rem;
+    display: inline-block;
+    border-bottom-right-radius: 0;
+    position: relative;
+    transform: rotate(45deg);
+
+    /* optional fanciness */
+    border: 1px solid rgba(0,0,0,0.3);
+}
+.marker::before {
+    content: "";
+    background: white;
+    width: 50%;
+    height: 50%;
+    border-radius: 100%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid rgba(0,0,0,0.3);
+}
+
+
+.custom-div-icon i {
+    position: absolute;
+    width: 22px;
+    font-size: 22px;
+    left: 0;
+    right: 0;
+    margin: 10px auto;
+    text-align: center;
+}
