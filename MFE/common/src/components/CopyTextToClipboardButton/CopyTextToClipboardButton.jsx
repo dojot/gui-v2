@@ -10,7 +10,8 @@ const CopyTextToClipboardButton = ({ textToCopy }) => {
 
   const { t } = useTranslation('common');
 
-  const copyToClipboard = () => {
+  const copyToClipboard = e => {
+    e.stopPropagation();
     navigator.clipboard.writeText(textToCopy).then(() => {
       setIsShowingSuccessTooltip(true);
       setTimeout(() => {
