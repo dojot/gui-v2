@@ -27,6 +27,7 @@ import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 
 import { DataTableHead } from 'sharedComponents/DataTable';
+import { CopyTextToClipboardButton } from 'sharedComponents/CopyTextToClipboardButton';
 import { DATA_ORDER, NEW_CHIP_HOURS_AGO } from 'sharedComponents/Constants';
 import { isSomeHoursAgo } from 'sharedComponents/Utils';
 import { useDataTableStyles } from './style';
@@ -219,7 +220,11 @@ const DataTable = ({
                     {isNew && <Chip color='primary' label={t('common:new')} size='small' />}
                   </TableCell>
 
-                  <TableCell className={classes.clickableCell}>{device.id}</TableCell>
+                  <TableCell className={classes.clickableCell}>
+                    {device.id}
+                    &nbsp;
+                    <CopyTextToClipboardButton textToCopy={device.id} />
+                  </TableCell>
 
                   <TableCell className={classes.clickableCell}>
                     {device.created ? moment(device.created).format('L LTS') : ''}
