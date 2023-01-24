@@ -32,6 +32,7 @@ const Editor = () => {
     RED.workspaces.remove(null);
     RED.nodes.clear();
     window.RED = null;
+    window.ace = null;
     window.Services = null;
     setFlowDom(null);
   };
